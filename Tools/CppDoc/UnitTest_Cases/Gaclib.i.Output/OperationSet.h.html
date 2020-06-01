@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OperationSet.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Data Structure::Operations
+
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_COLLECTIONS_OPERATIONSET</div>
+<div class="disabled">#define VCZH_COLLECTIONS_OPERATIONSET</div>
+
+<div class="disabled">#include &quot;OperationEnumerable.h&quot;</div>
+<div class="disabled">#include &quot;OperationConcat.h&quot;</div>
+<div class="disabled">#include &quot;OperationSequence.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[13]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[9]$vl::collections"><div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div></div>
+	{
+
+<div class="token cpp_comment ">/***********************************************************************
+Intersect/Except
+***********************************************************************/</div>
+
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::IntersectExceptEnumerator::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="TA$vl::collections::IntersectExceptEnumerator::Intersect"><div><div class="token cpp_enum">Intersect</div></div></div>&gt;
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::IntersectExceptEnumerator"><div><div class="token cpp_type">IntersectExceptEnumerator</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;
+		{
+		<div class="token cpp_keyword ">protected</div>:
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;*				<div class="def" id="NI$vl::collections::IntersectExceptEnumerator::enumerator"><div><div class="token cpp_field">enumerator</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList'], [], [])"><div class="token cpp_type">SortedList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;				<div class="def" id="NI$vl::collections::IntersectExceptEnumerator::reference"><div><div class="token cpp_field">reference</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>						<div class="def" id="NI$vl::collections::IntersectExceptEnumerator::index"><div><div class="token cpp_field">index</div></div></div>;
+
+		<div class="token cpp_keyword ">public</div>:
+			<div class="def" id="FB$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">IntersectExceptEnumerator</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;* <div class="def" id="NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_enumerator"><div><div class="token cpp_argument">_enumerator</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_reference"><div><div class="token cpp_argument">_reference</div></div></div>)
+				:enumerator(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_enumerator'], [], [])"><div class="token cpp_argument">_enumerator</div></div>)
+				,index(-<div class="token cpp_number ">1</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol(['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::reference'], [], [])"><div class="token cpp_field">reference</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_reference'], [], [])"><div class="token cpp_argument">_reference</div></div>);
+			}
+
+			<div class="def" id="FB$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IntersectExceptEnumerator const &)[impl0]"><div><div class="token cpp_function">IntersectExceptEnumerator</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator'], [], [])"><div class="token cpp_type">IntersectExceptEnumerator</div></div>&amp; <div class="def" id="NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IntersectExceptEnumerator const &)[impl0]::_enumerator"><div><div class="token cpp_argument">_enumerator</div></div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IntersectExceptEnumerator const &)[impl0]::_enumerator'], [], [])"><div class="token cpp_argument">_enumerator</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">Clone</div></div>();
+				<div class="ref" onclick="jumpToSymbol(['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::reference'], [], [])"><div class="token cpp_field">reference</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IntersectExceptEnumerator const &)[impl0]::_enumerator'], [], [])"><div class="token cpp_argument">_enumerator</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::reference'], [], [])"><div class="token cpp_field">reference</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::index'], [], [])"><div class="token cpp_field">index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IntersectExceptEnumerator const &)[impl0]::_enumerator'], [], [])"><div class="token cpp_argument">_enumerator</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::index'], [], [])"><div class="token cpp_field">index</div></div>;
+			}
+
+			<div class="def" id="FB$vl::collections::IntersectExceptEnumerator::~IntersectExceptEnumerator@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">IntersectExceptEnumerator</div></div></div>()
+			{
+				<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div>;
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;* <div class="def" id="FB$vl::collections::IntersectExceptEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()[impl0]"><div><div class="token cpp_function">Clone</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator'], [], [])"><div class="token cpp_type">IntersectExceptEnumerator</div></div>(*<div class="token cpp_keyword ">this</div>);
+			}
+
+			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::collections::IntersectExceptEnumerator::Current@[T] const &()[impl0]"><div><div class="token cpp_function">Current</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Current@[T] const &()'], ['vl::collections::IEnumerator::Current@[T] const &()'], [], [])"><div class="token cpp_function">Current</div></div>();
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::IntersectExceptEnumerator::Index@::vl::vint()[impl0]"><div><div class="token cpp_function">Index</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::index'], [], [])"><div class="token cpp_field">index</div></div>;
+			}
+
+			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::IntersectExceptEnumerator::Next@bool()[impl0]"><div><div class="token cpp_function">Next</div></div></div>()<div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">while</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Next@bool()'], ['vl::collections::IEnumerator::Next@bool()'], [], [])"><div class="token cpp_function">Next</div></div>())
+				{
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedListOperations', 'vl::collections::SortedListOperations@<::vl::Ptr<[T]>>'], ['vl::collections::SortedListOperations'], [], [])"><div class="token cpp_type">SortedListOperations</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedListOperations::Contains@bool(::vl::collections::SortedList<[T]> const &, [T] const &)', 'vl::collections::SortedListOperations@<::vl::Ptr<[T]>>::Contains@bool(::vl::collections::SortedList<::vl::Ptr<[T]>> const &, ::vl::Ptr<[T]> const &)'], ['vl::collections::SortedListOperations::Contains@bool(::vl::collections::SortedList<[T]> const &, [T] const &)', 'vl::collections::SortedListOperations@<::vl::Ptr<[T]>>::Contains@bool(::vl::collections::SortedList<::vl::Ptr<[T]>> const &, ::vl::Ptr<[T]> const &)'], [], [])"><div class="token cpp_function">Contains</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::reference'], [], [])"><div class="token cpp_field">reference</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Current@[T] const &()'], ['vl::collections::IEnumerator::Current@[T] const &()'], [], [])"><div class="token cpp_function">Current</div></div>())==<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::Intersect'], [], [])"><div class="token cpp_enum">Intersect</div></div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::index'], [], [])"><div class="token cpp_field">index</div></div>++;
+						<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+					}
+				}
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+			}
+
+			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::IntersectExceptEnumerator::Reset@void()[impl0]"><div><div class="token cpp_function">Reset</div></div></div>()<div class="token cpp_keyword ">override</div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Reset@void()'], ['vl::collections::IEnumerator::Reset@void()'], [], [])"><div class="token cpp_function">Reset</div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator::index'], [], [])"><div class="token cpp_field">index</div></div>=-<div class="token cpp_number ">1</div>;
+			}
+		};
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">D</span>, <span class="cpp_type">Ss</span>&gt;(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">D</span>&gt; &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">S</span>&gt;<span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">vint</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerable': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerable</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::IEnumerable'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerator': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::IEnumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Clone</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Current@[T] const &()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Current</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Next@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Next</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Next@bool()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Reset@void()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Reset</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Reset@void()[decl0]'
+        ]
+    },
+    'vl::collections::IntersectExceptEnumerator': {
+        'displayNameInHtml': '<span class="cpp_type">IntersectExceptEnumerator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$vl::collections::IntersectExceptEnumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_enumerator': {
+        'displayNameInHtml': '_enumerator',
+        'impls': [
+            'NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_enumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_reference': {
+        'displayNameInHtml': '_reference',
+        'impls': [
+            'NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_reference'
+        ],
+        'decls': []
+    },
+    'vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IntersectExceptEnumerator const &)[impl0]::_enumerator': {
+        'displayNameInHtml': '_enumerator',
+        'impls': [
+            'NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IntersectExceptEnumerator const &)[impl0]::_enumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::IntersectExceptEnumerator::Intersect': {
+        'displayNameInHtml': 'Intersect',
+        'impls': [
+            'TA$vl::collections::IntersectExceptEnumerator::Intersect'
+        ],
+        'decls': []
+    },
+    'vl::collections::IntersectExceptEnumerator::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::collections::IntersectExceptEnumerator::T'
+        ],
+        'decls': []
+    },
+    'vl::collections::IntersectExceptEnumerator::enumerator': {
+        'displayNameInHtml': '<span class="cpp_type">IntersectExceptEnumerator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_field">enumerator</span>',
+        'impls': [
+            'NI$vl::collections::IntersectExceptEnumerator::enumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::IntersectExceptEnumerator::index': {
+        'displayNameInHtml': '<span class="cpp_type">IntersectExceptEnumerator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_field">index</span>',
+        'impls': [
+            'NI$vl::collections::IntersectExceptEnumerator::index'
+        ],
+        'decls': []
+    },
+    'vl::collections::IntersectExceptEnumerator::reference': {
+        'displayNameInHtml': '<span class="cpp_type">IntersectExceptEnumerator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_field">reference</span>',
+        'impls': [
+            'NI$vl::collections::IntersectExceptEnumerator::reference'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedList': {
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::SortedList'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedListOperations': {
+        'displayNameInHtml': '<span class="cpp_type">SortedListOperations</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::SortedListOperations'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedListOperations::Contains@bool(::vl::collections::SortedList<[T]> const &, [T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">SortedListOperations</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &, <span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::SortedListOperations::Contains@bool(::vl::collections::SortedList<[T]> const &, [T] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedListOperations@<::vl::Ptr<[T]>>': {
+        'displayNameInHtml': '<span class="cpp_type">SortedListOperations</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;&gt;',
+        'impls': [
+            'NI$vl::collections::SortedListOperations@<::vl::Ptr<[T]>>'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedListOperations@<::vl::Ptr<[T]>>::Contains@bool(::vl::collections::SortedList<::vl::Ptr<[T]>> const &, ::vl::Ptr<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">SortedListOperations</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;&gt;<span class="cpp_keyword"> const</span> &, <span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::SortedListOperations@<::vl::Ptr<[T]>>::Contains@bool(::vl::collections::SortedList<::vl::Ptr<[T]>> const &, ::vl::Ptr<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)[impl0]': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)[impl0]': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'FB$vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Next@bool()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Reset@void()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::SortedListOperations::Contains@bool(::vl::collections::SortedList<[T]> const &, [T] const &)[impl0]': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'FB$vl::collections::SortedListOperations@<::vl::Ptr<[T]>>::Contains@bool(::vl::collections::SortedList<::vl::Ptr<[T]>> const &, ::vl::Ptr<[T]> const &)[impl0]': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[13]$vl': null,
+    'NF[13]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::collections': null,
+    'NI$vl::collections::IEnumerable': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::IEnumerator': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::IntersectExceptEnumerator': null,
+    'NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_enumerator': null,
+    'NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IEnumerator<[T]> *, ::vl::collections::IEnumerable<[T]> const &)[impl0]::_reference': null,
+    'NI$vl::collections::IntersectExceptEnumerator::$__ctor@(::vl::collections::IntersectExceptEnumerator const &)[impl0]::_enumerator': null,
+    'NI$vl::collections::IntersectExceptEnumerator::enumerator': null,
+    'NI$vl::collections::IntersectExceptEnumerator::index': null,
+    'NI$vl::collections::IntersectExceptEnumerator::reference': null,
+    'NI$vl::collections::SortedList': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::SortedListOperations': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NI$vl::collections::SortedListOperations@<::vl::Ptr<[T]>>': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'TA$vl::collections::IntersectExceptEnumerator::Intersect': null,
+    'TA$vl::collections::IntersectExceptEnumerator::T': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

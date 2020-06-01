@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ktmtypes.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/*++
+
+Copyright (c) 2000  Microsoft Corporation
+
+Module Name:
+
+    ktmtypes.h
+
+Abstract:
+
+    Common types for KTM exposed at both the Nt- and Win32-layer.
+
+Revision History:
+
+--*/</div>
+
+<div class="token cpp_comment ">// begin_wdm begin_winnt</div>
+<div class="disabled">#ifndef _KTMTYPES_</div>
+<div class="disabled">#define _KTMTYPES_</div>
+
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) // padding added after data member
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$UOW"><div><div class="token cpp_type">UOW</div></div></div>, *<div class="def" id="NI$PUOW"><div><div class="token cpp_type">PUOW</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$CRM_PROTOCOL_ID"><div><div class="token cpp_type">CRM_PROTOCOL_ID</div></div></div>, *<div class="def" id="NI$PCRM_PROTOCOL_ID"><div><div class="token cpp_type">PCRM_PROTOCOL_ID</div></div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Define the TransactionManager option values</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define TRANSACTION_MANAGER_VOLATILE              0x00000001</div>
+<div class="disabled">#define TRANSACTION_MANAGER_COMMIT_DEFAULT        0x00000000</div>
+<div class="disabled">#define TRANSACTION_MANAGER_COMMIT_SYSTEM_VOLUME  0x00000002</div>
+<div class="disabled">#define TRANSACTION_MANAGER_COMMIT_SYSTEM_HIVES   0x00000004</div>
+<div class="disabled">#define TRANSACTION_MANAGER_COMMIT_LOWEST         0x00000008</div>
+<div class="disabled">#define TRANSACTION_MANAGER_CORRUPT_FOR_RECOVERY  0x00000010</div>
+<div class="disabled">#define TRANSACTION_MANAGER_CORRUPT_FOR_PROGRESS  0x00000020</div>
+<div class="disabled">#define TRANSACTION_MANAGER_MAXIMUM_OPTION        0x0000003F</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Define the Transaction option values</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define TRANSACTION_DO_NOT_PROMOTE        0x00000001</div>
+<div class="disabled">#define TRANSACTION_MAXIMUM_OPTION        0x00000001</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Define the ResourceManager option values</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define RESOURCE_MANAGER_VOLATILE            0x00000001</div>
+<div class="disabled">#define RESOURCE_MANAGER_COMMUNICATION       0x00000002</div>
+<div class="disabled">#define RESOURCE_MANAGER_MAXIMUM_OPTION      0x00000003</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Define the RegisterProtocol option values</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define CRM_PROTOCOL_EXPLICIT_MARSHAL_ONLY      0x00000001</div>
+<div class="disabled">#define CRM_PROTOCOL_DYNAMIC_MARSHAL_INFO       0x00000002</div>
+<div class="disabled">#define CRM_PROTOCOL_MAXIMUM_OPTION             0x00000003</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Define the Enlistment option values</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define ENLISTMENT_SUPERIOR                  0x00000001</div>
+<div class="disabled">#define ENLISTMENT_MAXIMUM_OPTION            0x00000001</div>
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$NOTIFICATION_MASK"><div><div class="token cpp_type">NOTIFICATION_MASK</div></div></div>;
+<div class="disabled">#define TRANSACTION_NOTIFY_MASK                 0x3FFFFFFF</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_PREPREPARE           0x00000001</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_PREPARE              0x00000002</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_COMMIT               0x00000004</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_ROLLBACK             0x00000008</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_PREPREPARE_COMPLETE  0x00000010</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_PREPARE_COMPLETE     0x00000020</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_COMMIT_COMPLETE      0x00000040</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_ROLLBACK_COMPLETE    0x00000080</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_RECOVER              0x00000100</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_SINGLE_PHASE_COMMIT  0x00000200</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_DELEGATE_COMMIT      0x00000400</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_RECOVER_QUERY        0x00000800</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_ENLIST_PREPREPARE    0x00001000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_LAST_RECOVER         0x00002000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_INDOUBT              0x00004000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_PROPAGATE_PULL       0x00008000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_PROPAGATE_PUSH       0x00010000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_MARSHAL              0x00020000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_ENLIST_MASK          0x00040000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_RM_DISCONNECTED      0x01000000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_TM_ONLINE            0x02000000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_COMMIT_REQUEST       0x04000000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_PROMOTE              0x08000000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_PROMOTE_NEW          0x10000000</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_REQUEST_OUTCOME      0x20000000</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Note that this flag is not included in the TRANSACTION_NOTIFY_MASK.</div>
+<div class="token cpp_comment ">//  The reason being that KTM does not understand this flag yet. This</div>
+<div class="token cpp_comment ">//  flag is strictly for the use of filter manager. In fact we mask it</div>
+<div class="token cpp_comment ">//  out before enlisting in any transaction.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define TRANSACTION_NOTIFY_COMMIT_FINALIZE      0x40000000 </div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Path to the transaction manager objects in the NT</div>
+<div class="token cpp_comment ">// object namespace.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define TRANSACTIONMANAGER_OBJECT_PATH  L&quot;\\TransactionManager\\&quot;</div>
+<div class="disabled">#define TRANSACTION_OBJECT_PATH         L&quot;\\Transaction\\&quot;</div>
+<div class="disabled">#define ENLISTMENT_OBJECT_PATH          L&quot;\\Enlistment\\&quot;</div>
+<div class="disabled">#define RESOURCE_MANAGER_OBJECT_PATH    L&quot;\\ResourceManager\\&quot;</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The following three defines are here to ease the allocation</div>
+<div class="token cpp_comment ">// of string buffers which are to contain a fully qualified </div>
+<div class="token cpp_comment ">// transaction manager object name, e.g., \Transaction\{GUID}</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define TRANSACTIONMANAGER_OBJECT_NAME_LENGTH_IN_BYTES      (sizeof(TRANSACTIONMANAGER_OBJECT_PATH)+(38*sizeof(WCHAR)))</div>
+<div class="disabled">#define TRANSACTION_OBJECT_NAME_LENGTH_IN_BYTES      (sizeof(TRANSACTION_OBJECT_PATH)+(38*sizeof(WCHAR)))</div>
+<div class="disabled">#define ENLISTMENT_OBJECT_NAME_LENGTH_IN_BYTES       (sizeof(ENLISTMENT_OBJECT_PATH)+(38*sizeof(WCHAR)))</div>
+<div class="disabled">#define RESOURCE_MANAGER_OBJECT_NAME_LENGTH_IN_BYTES (sizeof(RESOURCE_MANAGER_OBJECT_PATH)+(38*sizeof(WCHAR)))</div>
+
+<div class="token cpp_comment ">// TODO: warning, duplicated def in tm.h.</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION"><div><div class="token cpp_type">_TRANSACTION_NOTIFICATION</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div>         <div class="def" id="NI$_TRANSACTION_NOTIFICATION::TransactionKey"><div><div class="token cpp_field">TransactionKey</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>         <div class="def" id="NI$_TRANSACTION_NOTIFICATION::TransactionNotification"><div><div class="token cpp_field">TransactionNotification</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LARGE_INTEGER'], [], [])"><div class="token cpp_type">LARGE_INTEGER</div></div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION::TmVirtualClock"><div><div class="token cpp_field">TmVirtualClock</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>         <div class="def" id="NI$_TRANSACTION_NOTIFICATION::ArgumentLength"><div><div class="token cpp_field">ArgumentLength</div></div></div>;
+} <div class="def" id="NI$TRANSACTION_NOTIFICATION"><div><div class="token cpp_type">TRANSACTION_NOTIFICATION</div></div></div>, *<div class="def" id="NI$PTRANSACTION_NOTIFICATION"><div><div class="token cpp_type">PTRANSACTION_NOTIFICATION</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_RECOVERY_ARGUMENT"><div><div class="token cpp_type">_TRANSACTION_NOTIFICATION_RECOVERY_ARGUMENT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>   <div class="def" id="NI$_TRANSACTION_NOTIFICATION_RECOVERY_ARGUMENT::EnlistmentId"><div><div class="token cpp_field">EnlistmentId</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UOW'], [], [])"><div class="token cpp_type">UOW</div></div>    <div class="def" id="NI$_TRANSACTION_NOTIFICATION_RECOVERY_ARGUMENT::UOW"><div><div class="token cpp_field">UOW</div></div></div>;
+} <div class="def" id="NI$TRANSACTION_NOTIFICATION_RECOVERY_ARGUMENT"><div><div class="token cpp_type">TRANSACTION_NOTIFICATION_RECOVERY_ARGUMENT</div></div></div>, *<div class="def" id="NI$PTRANSACTION_NOTIFICATION_RECOVERY_ARGUMENT"><div><div class="token cpp_type">PTRANSACTION_NOTIFICATION_RECOVERY_ARGUMENT</div></div></div>;
+
+<div class="disabled">#define TRANSACTION_NOTIFICATION_TM_ONLINE_FLAG_IS_CLUSTERED 0x1</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_TM_ONLINE_ARGUMENT"><div><div class="token cpp_type">_TRANSACTION_NOTIFICATION_TM_ONLINE_ARGUMENT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_TM_ONLINE_ARGUMENT::TmIdentity"><div><div class="token cpp_field">TmIdentity</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_TM_ONLINE_ARGUMENT::Flags"><div><div class="token cpp_field">Flags</div></div></div>;
+} <div class="def" id="NI$TRANSACTION_NOTIFICATION_TM_ONLINE_ARGUMENT"><div><div class="token cpp_type">TRANSACTION_NOTIFICATION_TM_ONLINE_ARGUMENT</div></div></div>, *<div class="def" id="NI$PTRANSACTION_NOTIFICATION_TM_ONLINE_ARGUMENT"><div><div class="token cpp_type">PTRANSACTION_NOTIFICATION_TM_ONLINE_ARGUMENT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$SAVEPOINT_ID"><div><div class="token cpp_type">SAVEPOINT_ID</div></div></div>, *<div class="def" id="NI$PSAVEPOINT_ID"><div><div class="token cpp_type">PSAVEPOINT_ID</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_SAVEPOINT_ARGUMENT"><div><div class="token cpp_type">_TRANSACTION_NOTIFICATION_SAVEPOINT_ARGUMENT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['SAVEPOINT_ID'], [], [])"><div class="token cpp_type">SAVEPOINT_ID</div></div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_SAVEPOINT_ARGUMENT::SavepointId"><div><div class="token cpp_field">SavepointId</div></div></div>;
+} <div class="def" id="NI$TRANSACTION_NOTIFICATION_SAVEPOINT_ARGUMENT"><div><div class="token cpp_type">TRANSACTION_NOTIFICATION_SAVEPOINT_ARGUMENT</div></div></div>, *<div class="def" id="NI$PTRANSACTION_NOTIFICATION_SAVEPOINT_ARGUMENT"><div><div class="token cpp_type">PTRANSACTION_NOTIFICATION_SAVEPOINT_ARGUMENT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT"><div><div class="token cpp_type">_TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT::PropagationCookie"><div><div class="token cpp_field">PropagationCookie</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>  <div class="def" id="NI$_TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT::UOW"><div><div class="token cpp_field">UOW</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>  <div class="def" id="NI$_TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT::TmIdentity"><div><div class="token cpp_field">TmIdentity</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT::BufferLength"><div><div class="token cpp_field">BufferLength</div></div></div>;
+    <div class="token cpp_comment ">// Bufferlength bytes of Buffer follow</div>
+} <div class="def" id="NI$TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT"><div><div class="token cpp_type">TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT</div></div></div>, *<div class="def" id="NI$PTRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT"><div><div class="token cpp_type">PTRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_MARSHAL_ARGUMENT"><div><div class="token cpp_type">_TRANSACTION_NOTIFICATION_MARSHAL_ARGUMENT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_TRANSACTION_NOTIFICATION_MARSHAL_ARGUMENT::MarshalCookie"><div><div class="token cpp_field">MarshalCookie</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>  <div class="def" id="NI$_TRANSACTION_NOTIFICATION_MARSHAL_ARGUMENT::UOW"><div><div class="token cpp_field">UOW</div></div></div>;
+} <div class="def" id="NI$TRANSACTION_NOTIFICATION_MARSHAL_ARGUMENT"><div><div class="token cpp_type">TRANSACTION_NOTIFICATION_MARSHAL_ARGUMENT</div></div></div>, *<div class="def" id="NI$PTRANSACTION_NOTIFICATION_MARSHAL_ARGUMENT"><div><div class="token cpp_type">PTRANSACTION_NOTIFICATION_MARSHAL_ARGUMENT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT'], [], [])"><div class="token cpp_type">TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT</div></div> <div class="def" id="NI$TRANSACTION_NOTIFICATION_PROMOTE_ARGUMENT"><div><div class="token cpp_type">TRANSACTION_NOTIFICATION_PROMOTE_ARGUMENT</div></div></div>, *<div class="def" id="NI$PTRANSACTION_NOTIFICATION_PROMOTE_ARGUMENT"><div><div class="token cpp_type">PTRANSACTION_NOTIFICATION_PROMOTE_ARGUMENT</div></div></div>;
+
+<div class="disabled">#define KTM_MARSHAL_BLOB_VERSION_MAJOR 1</div>
+<div class="disabled">#define KTM_MARSHAL_BLOB_VERSION_MINOR 1</div>
+
+<div class="disabled">#define MAX_TRANSACTION_DESCRIPTION_LENGTH  64</div>
+<div class="disabled">#define MAX_RESOURCEMANAGER_DESCRIPTION_LENGTH  64</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_KCRM_MARSHAL_HEADER"><div><div class="token cpp_type">_KCRM_MARSHAL_HEADER</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_MARSHAL_HEADER::VersionMajor"><div><div class="token cpp_field">VersionMajor</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_MARSHAL_HEADER::VersionMinor"><div><div class="token cpp_field">VersionMinor</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_MARSHAL_HEADER::NumProtocols"><div><div class="token cpp_field">NumProtocols</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_MARSHAL_HEADER::Unused"><div><div class="token cpp_field">Unused</div></div></div>;        <div class="token cpp_comment ">// for alignment purposes</div>
+<div class="expandable"><div class="disabled">} KCRM_MARSHAL_HEADER, *PKCRM_MARSHAL_HEADER, *RESTRICTED_POINTER PRKCRM_MARSHAL_HEADER;</div>
+<div class="expanded">} <div class="def" id="NI$KCRM_MARSHAL_HEADER"><div><div class="token cpp_type">KCRM_MARSHAL_HEADER</div></div></div>, *<div class="def" id="NI$PKCRM_MARSHAL_HEADER"><div><div class="token cpp_type">PKCRM_MARSHAL_HEADER</div></div></div>, * <div class="def" id="NI$PRKCRM_MARSHAL_HEADER"><div><div class="token cpp_type">PRKCRM_MARSHAL_HEADER</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_KCRM_TRANSACTION_BLOB"><div><div class="token cpp_type">_KCRM_TRANSACTION_BLOB</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UOW'], [], [])"><div class="token cpp_type">UOW</div></div>                <div class="def" id="NI$_KCRM_TRANSACTION_BLOB::UOW"><div><div class="token cpp_field">UOW</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>               <div class="def" id="NI$_KCRM_TRANSACTION_BLOB::TmIdentity"><div><div class="token cpp_field">TmIdentity</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_TRANSACTION_BLOB::IsolationLevel"><div><div class="token cpp_field">IsolationLevel</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_TRANSACTION_BLOB::IsolationFlags"><div><div class="token cpp_field">IsolationFlags</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_TRANSACTION_BLOB::Timeout"><div><div class="token cpp_field">Timeout</div></div></div>;
+<div class="expandable"><div class="disabled">    WCHAR              Description[MAX_TRANSACTION_DESCRIPTION_LENGTH];</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>              <div class="def" id="NI$_KCRM_TRANSACTION_BLOB::Description"><div><div class="token cpp_field">Description</div></div></div>[<div class="token cpp_number ">64</div>];</div></div>
+<div class="expandable"><div class="disabled">} KCRM_TRANSACTION_BLOB, *PKCRM_TRANSACTION_BLOB, *RESTRICTED_POINTER PRKCRM_TRANSACTION_BLOB;</div>
+<div class="expanded">} <div class="def" id="NI$KCRM_TRANSACTION_BLOB"><div><div class="token cpp_type">KCRM_TRANSACTION_BLOB</div></div></div>, *<div class="def" id="NI$PKCRM_TRANSACTION_BLOB"><div><div class="token cpp_type">PKCRM_TRANSACTION_BLOB</div></div></div>, * <div class="def" id="NI$PRKCRM_TRANSACTION_BLOB"><div><div class="token cpp_type">PRKCRM_TRANSACTION_BLOB</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_KCRM_PROTOCOL_BLOB"><div><div class="token cpp_type">_KCRM_PROTOCOL_BLOB</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['CRM_PROTOCOL_ID'], [], [])"><div class="token cpp_type">CRM_PROTOCOL_ID</div></div>    <div class="def" id="NI$_KCRM_PROTOCOL_BLOB::ProtocolId"><div><div class="token cpp_field">ProtocolId</div></div></div>;
+<div class="expandable"><div class="disabled">    _Field_range_ (0,ULONG_MAX/2) ULONG StaticInfoLength;</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_KCRM_PROTOCOL_BLOB::StaticInfoLength"><div><div class="token cpp_field">StaticInfoLength</div></div></div>;</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_PROTOCOL_BLOB::TransactionIdInfoLength"><div><div class="token cpp_field">TransactionIdInfoLength</div></div></div>; <div class="token cpp_comment ">//??? ProtocolDynamicInfoLength;</div>
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_PROTOCOL_BLOB::Unused1"><div><div class="token cpp_field">Unused1</div></div></div>;        <div class="token cpp_comment ">// for alignment purposes</div>
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>              <div class="def" id="NI$_KCRM_PROTOCOL_BLOB::Unused2"><div><div class="token cpp_field">Unused2</div></div></div>;        <div class="token cpp_comment ">// for alignment purposes</div>
+<div class="expandable"><div class="disabled">} KCRM_PROTOCOL_BLOB, *PKCRM_PROTOCOL_BLOB, *RESTRICTED_POINTER PRKCRM_PROTOCOL_BLOB;</div>
+<div class="expanded">} <div class="def" id="NI$KCRM_PROTOCOL_BLOB"><div><div class="token cpp_type">KCRM_PROTOCOL_BLOB</div></div></div>, *<div class="def" id="NI$PKCRM_PROTOCOL_BLOB"><div><div class="token cpp_type">PKCRM_PROTOCOL_BLOB</div></div></div>, * <div class="def" id="NI$PRKCRM_PROTOCOL_BLOB"><div><div class="token cpp_type">PRKCRM_PROTOCOL_BLOB</div></div></div>;</div></div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _KTMTYPES_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'CRM_PROTOCOL_ID': {
+        'displayNameInHtml': '<span class="cpp_type">CRM_PROTOCOL_ID</span>',
+        'impls': [
+            'NI$CRM_PROTOCOL_ID'
+        ],
+        'decls': []
+    },
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'LARGE_INTEGER': {
+        'displayNameInHtml': '<span class="cpp_type">LARGE_INTEGER</span>',
+        'impls': [
+            'NI$LARGE_INTEGER'
+        ],
+        'decls': []
+    },
+    'PVOID': {
+        'displayNameInHtml': '<span class="cpp_type">PVOID</span>',
+        'impls': [
+            'NI$PVOID'
+        ],
+        'decls': []
+    },
+    'SAVEPOINT_ID': {
+        'displayNameInHtml': '<span class="cpp_type">SAVEPOINT_ID</span>',
+        'impls': [
+            'NI$SAVEPOINT_ID'
+        ],
+        'decls': []
+    },
+    'TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT': {
+        'displayNameInHtml': '<span class="cpp_type">TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT</span>',
+        'impls': [
+            'NI$TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'UOW': {
+        'displayNameInHtml': '<span class="cpp_type">UOW</span>',
+        'impls': [
+            'NI$UOW'
+        ],
+        'decls': []
+    },
+    'WCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">WCHAR</span>',
+        'impls': [
+            'NI$WCHAR'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$CRM_PROTOCOL_ID': null,
+    'NI$GUID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$LARGE_INTEGER': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PVOID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$SAVEPOINT_ID': null,
+    'NI$TRANSACTION_NOTIFICATION_PROPAGATE_ARGUMENT': null,
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$UOW': null,
+    'NI$WCHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

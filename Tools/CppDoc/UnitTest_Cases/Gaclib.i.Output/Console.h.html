@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Console.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+UI::Console
+
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_CONSOLE</div>
+<div class="disabled">#define VCZH_CONSOLE</div>
+
+<div class="disabled">#include &quot;String.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[19]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::console"><div class="ref" onclick="jumpToSymbol([], ['vl::console'], [], [])">console</div></div>
+	{
+		<div class="token cpp_comment ">/// &lt;summary&gt;A Static class for command line window operations.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::console::Console"><div><div class="token cpp_type">Console</div></div></div> <div class="token cpp_keyword ">abstract</div>
+		{
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command line window.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;length&quot;&gt;Size of the content in wchar_t. The zero terminator is not included.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::Write@void(wchar_t const *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]::string"><div>string</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]::length"><div>length</div></div>);
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command line window.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::Write@void(wchar_t const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::Write@void(wchar_t const *)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::console::Console::Write@void(wchar_t const *)[decl0]::string"><div>string</div></div>);
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command line window.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::Write@void(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::Write@void(::vl::WString const &)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::console::Console::Write@void(::vl::WString const &)[decl0]::string"><div>string</div></div>);
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command line window with a CRLF.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::WriteLine@void(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::WriteLine@void(::vl::WString const &)'], [], [])"><div class="token cpp_function">WriteLine</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::console::Console::WriteLine@void(::vl::WString const &)[decl0]::string"><div>string</div></div>);
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Read from the command line window.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The whole line read from the command line window.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="FB$vl::console::Console::Read@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::Read@::vl::WString()'], [], [])"><div class="token cpp_function">Read</div></div></div>();
+
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::SetColor@void(bool, bool, bool, bool)'], [], [])"><div class="token cpp_function">SetColor</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]::red"><div>red</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]::green"><div>green</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]::blue"><div>blue</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]::light"><div>light</div></div>);
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::SetTitle@void(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::SetTitle@void(::vl::WString const &)'], [], [])"><div class="token cpp_function">SetTitle</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::console::Console::SetTitle@void(::vl::WString const &)[decl0]::string"><div>string</div></div>);
+		};
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::console': {
+        'displayNameInHtml': 'vl::console',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::console',
+            'NF[1]$vl::console'
+        ]
+    },
+    'vl::console::Console::Read@::vl::WString()': {
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Read</span>()',
+        'impls': [
+            'FB$vl::console::Console::Read@::vl::WString()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::console::Console::Read@::vl::WString()[decl0]'
+        ]
+    },
+    'vl::console::Console::SetColor@void(bool, bool, bool, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">SetColor</span>(<span class="cpp_keyword">bool</span>, <span class="cpp_keyword">bool</span>, <span class="cpp_keyword">bool</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::console::Console::SetColor@void(bool, bool, bool, bool)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]'
+        ]
+    },
+    'vl::console::Console::SetTitle@void(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">SetTitle</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::console::Console::SetTitle@void(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::console::Console::SetTitle@void(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::console::Console::Write@void(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::console::Console::Write@void(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::console::Console::Write@void(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::console::Console::Write@void(wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$vl::console::Console::Write@void(wchar_t const *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::console::Console::Write@void(wchar_t const *)[decl0]'
+        ]
+    },
+    'vl::console::Console::Write@void(wchar_t const *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::console::Console::WriteLine@void(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">WriteLine</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::console::Console::WriteLine@void(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::console::Console::WriteLine@void(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::console::Console::Read@::vl::WString()[decl0]': null,
+    'FB$vl::console::Console::Read@::vl::WString()[impl0]': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'FB$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]': null,
+    'FB$vl::console::Console::SetColor@void(bool, bool, bool, bool)[impl0]': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'FB$vl::console::Console::SetTitle@void(::vl::WString const &)[decl0]': null,
+    'FB$vl::console::Console::SetTitle@void(::vl::WString const &)[impl0]': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'FB$vl::console::Console::Write@void(::vl::WString const &)[decl0]': null,
+    'FB$vl::console::Console::Write@void(::vl::WString const &)[impl0]': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'FB$vl::console::Console::Write@void(wchar_t const *)[decl0]': null,
+    'FB$vl::console::Console::Write@void(wchar_t const *)[impl0]': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]': null,
+    'FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[impl0]': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'FB$vl::console::Console::WriteLine@void(::vl::WString const &)[decl0]': null,
+    'FB$vl::console::Console::WriteLine@void(::vl::WString const &)[impl0]': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::console': null,
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[19]$vl': null,
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::console': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

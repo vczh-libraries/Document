@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ddeml.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default">
+
+<div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/*++ BUILD Version: 0001 // Increment this if a change has global effects --*/</div>
+
+<div class="expandable"><div class="disabled">/*****************************************************************************\
+*                                                                             *
+*  ddeml.h -    DDEML API header file                                         *
+*                                                                             *
+*               Version 3.10                                                  *
+*                                                                             *
+*               Copyright (c) Microsoft Corporation.  All rights reserved.    *
+*                                                                             *
+\*****************************************************************************/</div>
+<div class="expanded"><div class="token cpp_comment ">/****************************************************************************
+**                                                                             *
+*  ddeml.h -    DDEML API header file                                         *
+*                                                                             *
+*               Version 3.10                                                  *
+*                                                                             *
+*               Copyright (c) Microsoft Corporation.  All rights reserved.    *
+*                                                                             *
+\*****************************************************************************/</div></div></div>
+<div class="disabled">#ifndef _INC_DDEMLH</div>
+<div class="disabled">#define _INC_DDEMLH</div>
+
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) // padding added after data member
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif /* __cplusplus */</div>
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+
+<div class="token cpp_comment ">/******** public types ********/</div>
+
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HCONVLIST);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HCONVLIST__"><div><div class="token cpp_type">HCONVLIST__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HCONVLIST__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HCONVLIST__'], [], [])"><div class="token cpp_type">HCONVLIST__</div></div> *<div class="def" id="NI$HCONVLIST"><div><div class="token cpp_type">HCONVLIST</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HCONV);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HCONV__"><div><div class="token cpp_type">HCONV__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HCONV__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HCONV__'], [], [])"><div class="token cpp_type">HCONV__</div></div> *<div class="def" id="NI$HCONV"><div><div class="token cpp_type">HCONV</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HSZ);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HSZ__"><div><div class="token cpp_type">HSZ__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HSZ__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HSZ__'], [], [])"><div class="token cpp_type">HSZ__</div></div> *<div class="def" id="NI$HSZ"><div><div class="token cpp_type">HSZ</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HDDEDATA);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HDDEDATA__"><div><div class="token cpp_type">HDDEDATA__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HDDEDATA__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA__'], [], [])"><div class="token cpp_type">HDDEDATA__</div></div> *<div class="def" id="NI$HDDEDATA"><div><div class="token cpp_type">HDDEDATA</div></div></div>;</div></div>
+<div class="disabled">#define EXPENTRY        CALLBACK</div>
+
+<div class="token cpp_comment ">/* the following structure is for use with XTYP_WILDCONNECT processing. */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagHSZPAIR"><div><div class="token cpp_type">tagHSZPAIR</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$tagHSZPAIR::hszSvc"><div><div class="token cpp_field">hszSvc</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$tagHSZPAIR::hszTopic"><div><div class="token cpp_field">hszTopic</div></div></div>;
+<div class="expandable"><div class="disabled">} HSZPAIR, FAR *PHSZPAIR;</div>
+<div class="expanded">} <div class="def" id="NI$HSZPAIR"><div><div class="token cpp_type">HSZPAIR</div></div></div>,  *<div class="def" id="NI$PHSZPAIR"><div><div class="token cpp_type">PHSZPAIR</div></div></div>;</div></div>
+
+<div class="token cpp_comment ">/* The following structure is used by DdeConnect() and DdeConnectList() and
+   by XTYP_CONNECT and XTYP_WILDCONNECT callbacks. */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagCONVCONTEXT"><div><div class="token cpp_type">tagCONVCONTEXT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>        <div class="def" id="NI$tagCONVCONTEXT::cb"><div><div class="token cpp_field">cb</div></div></div>;             <div class="token cpp_comment ">/* set to sizeof(CONVCONTEXT) */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>        <div class="def" id="NI$tagCONVCONTEXT::wFlags"><div><div class="token cpp_field">wFlags</div></div></div>;         <div class="token cpp_comment ">/* none currently defined. */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>        <div class="def" id="NI$tagCONVCONTEXT::wCountryID"><div><div class="token cpp_field">wCountryID</div></div></div>;     <div class="token cpp_comment ">/* country/region code for topic/item strings used. */</div>
+    <div class="token cpp_keyword ">int</div>         <div class="def" id="NI$tagCONVCONTEXT::iCodePage"><div><div class="token cpp_field">iCodePage</div></div></div>;      <div class="token cpp_comment ">/* codepage used for topic/item strings. */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>       <div class="def" id="NI$tagCONVCONTEXT::dwLangID"><div><div class="token cpp_field">dwLangID</div></div></div>;       <div class="token cpp_comment ">/* language ID for topic/item strings. */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>       <div class="def" id="NI$tagCONVCONTEXT::dwSecurity"><div><div class="token cpp_field">dwSecurity</div></div></div>;     <div class="token cpp_comment ">/* Private security code. */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['SECURITY_QUALITY_OF_SERVICE'], [], [])"><div class="token cpp_type">SECURITY_QUALITY_OF_SERVICE</div></div> <div class="def" id="NI$tagCONVCONTEXT::qos"><div><div class="token cpp_field">qos</div></div></div>;  <div class="token cpp_comment ">/* client side&apos;s quality of service */</div>
+<div class="expandable"><div class="disabled">} CONVCONTEXT, FAR *PCONVCONTEXT;</div>
+<div class="expanded">} <div class="def" id="NI$CONVCONTEXT"><div><div class="token cpp_type">CONVCONTEXT</div></div></div>,  *<div class="def" id="NI$PCONVCONTEXT"><div><div class="token cpp_type">PCONVCONTEXT</div></div></div>;</div></div>
+
+
+<div class="token cpp_comment ">/* The following structure is used by DdeQueryConvInfo(): */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagCONVINFO"><div><div class="token cpp_type">tagCONVINFO</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagCONVINFO::cb"><div><div class="token cpp_field">cb</div></div></div>;            <div class="token cpp_comment ">/* sizeof(CONVINFO)  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$tagCONVINFO::hUser"><div><div class="token cpp_field">hUser</div></div></div>;       <div class="token cpp_comment ">/* user specified field  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>   <div class="def" id="NI$tagCONVINFO::hConvPartner"><div><div class="token cpp_field">hConvPartner</div></div></div>;  <div class="token cpp_comment ">/* hConv on other end or 0 if non-ddemgr partner  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagCONVINFO::hszSvcPartner"><div><div class="token cpp_field">hszSvcPartner</div></div></div>; <div class="token cpp_comment ">/* app name of partner if obtainable  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagCONVINFO::hszServiceReq"><div><div class="token cpp_field">hszServiceReq</div></div></div>; <div class="token cpp_comment ">/* AppName requested for connection  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagCONVINFO::hszTopic"><div><div class="token cpp_field">hszTopic</div></div></div>;      <div class="token cpp_comment ">/* Topic name for conversation  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagCONVINFO::hszItem"><div><div class="token cpp_field">hszItem</div></div></div>;       <div class="token cpp_comment ">/* transaction item name or NULL if quiescent  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagCONVINFO::wFmt"><div><div class="token cpp_field">wFmt</div></div></div>;          <div class="token cpp_comment ">/* transaction format or NULL if quiescent  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagCONVINFO::wType"><div><div class="token cpp_field">wType</div></div></div>;         <div class="token cpp_comment ">/* XTYP_ for current transaction  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagCONVINFO::wStatus"><div><div class="token cpp_field">wStatus</div></div></div>;       <div class="token cpp_comment ">/* ST_ constant for current conversation  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagCONVINFO::wConvst"><div><div class="token cpp_field">wConvst</div></div></div>;       <div class="token cpp_comment ">/* XST_ constant for current transaction  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagCONVINFO::wLastError"><div><div class="token cpp_field">wLastError</div></div></div>;    <div class="token cpp_comment ">/* last transaction error.  */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HCONVLIST'], [], [])"><div class="token cpp_type">HCONVLIST</div></div> <div class="def" id="NI$tagCONVINFO::hConvList"><div><div class="token cpp_field">hConvList</div></div></div>;   <div class="token cpp_comment ">/* parent hConvList if this conversation is in a list */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['CONVCONTEXT'], [], [])"><div class="token cpp_type">CONVCONTEXT</div></div> <div class="def" id="NI$tagCONVINFO::ConvCtxt"><div><div class="token cpp_field">ConvCtxt</div></div></div>;  <div class="token cpp_comment ">/* conversation context */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div>    <div class="def" id="NI$tagCONVINFO::hwnd"><div><div class="token cpp_field">hwnd</div></div></div>;          <div class="token cpp_comment ">/* window handle for this conversation */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div>    <div class="def" id="NI$tagCONVINFO::hwndPartner"><div><div class="token cpp_field">hwndPartner</div></div></div>;   <div class="token cpp_comment ">/* partner window handle for this conversation */</div>
+<div class="expandable"><div class="disabled">} CONVINFO, FAR *PCONVINFO;</div>
+<div class="expanded">} <div class="def" id="NI$CONVINFO"><div><div class="token cpp_type">CONVINFO</div></div></div>,  *<div class="def" id="NI$PCONVINFO"><div><div class="token cpp_type">PCONVINFO</div></div></div>;</div></div>
+
+<div class="token cpp_comment ">/***** conversation states (usState) *****/</div>
+
+<div class="disabled">#define     XST_NULL              0  /* quiescent states */</div>
+<div class="disabled">#define     XST_INCOMPLETE        1</div>
+<div class="disabled">#define     XST_CONNECTED         2</div>
+<div class="disabled">#define     XST_INIT1             3  /* mid-initiation states */</div>
+<div class="disabled">#define     XST_INIT2             4</div>
+<div class="disabled">#define     XST_REQSENT           5  /* active conversation states */</div>
+<div class="disabled">#define     XST_DATARCVD          6</div>
+<div class="disabled">#define     XST_POKESENT          7</div>
+<div class="disabled">#define     XST_POKEACKRCVD       8</div>
+<div class="disabled">#define     XST_EXECSENT          9</div>
+<div class="disabled">#define     XST_EXECACKRCVD      10</div>
+<div class="disabled">#define     XST_ADVSENT          11</div>
+<div class="disabled">#define     XST_UNADVSENT        12</div>
+<div class="disabled">#define     XST_ADVACKRCVD       13</div>
+<div class="disabled">#define     XST_UNADVACKRCVD     14</div>
+<div class="disabled">#define     XST_ADVDATASENT      15</div>
+<div class="disabled">#define     XST_ADVDATAACKRCVD   16</div>
+
+<div class="token cpp_comment ">/* used in LOWORD(dwData1) of XTYP_ADVREQ callbacks... */</div>
+<div class="disabled">#define     CADV_LATEACK         0xFFFF</div>
+
+<div class="token cpp_comment ">/***** conversation status bits (fsStatus) *****/</div>
+
+<div class="disabled">#define     ST_CONNECTED            0x0001</div>
+<div class="disabled">#define     ST_ADVISE               0x0002</div>
+<div class="disabled">#define     ST_ISLOCAL              0x0004</div>
+<div class="disabled">#define     ST_BLOCKED              0x0008</div>
+<div class="disabled">#define     ST_CLIENT               0x0010</div>
+<div class="disabled">#define     ST_TERMINATED           0x0020</div>
+<div class="disabled">#define     ST_INLIST               0x0040</div>
+<div class="disabled">#define     ST_BLOCKNEXT            0x0080</div>
+<div class="disabled">#define     ST_ISSELF               0x0100</div>
+
+<div class="token cpp_comment ">/* DDE constants for wStatus field */</div>
+
+<div class="disabled">#define DDE_FACK                0x8000</div>
+<div class="disabled">#define DDE_FBUSY               0x4000</div>
+<div class="disabled">#define DDE_FDEFERUPD           0x4000</div>
+<div class="disabled">#define DDE_FACKREQ             0x8000</div>
+<div class="disabled">#define DDE_FRELEASE            0x2000</div>
+<div class="disabled">#define DDE_FREQUESTED          0x1000</div>
+<div class="disabled">#define DDE_FAPPSTATUS          0x00ff</div>
+<div class="disabled">#define DDE_FNOTPROCESSED       0x0000</div>
+
+<div class="disabled">#define DDE_FACKRESERVED        (~(DDE_FACK | DDE_FBUSY | DDE_FAPPSTATUS))</div>
+<div class="disabled">#define DDE_FADVRESERVED        (~(DDE_FACKREQ | DDE_FDEFERUPD))</div>
+<div class="disabled">#define DDE_FDATRESERVED        (~(DDE_FACKREQ | DDE_FRELEASE | DDE_FREQUESTED))</div>
+<div class="disabled">#define DDE_FPOKRESERVED        (~(DDE_FRELEASE))</div>
+
+<div class="token cpp_comment ">/***** message filter hook types *****/</div>
+
+<div class="disabled">#define     MSGF_DDEMGR             0x8001</div>
+
+<div class="token cpp_comment ">/***** codepage constants ****/</div>
+
+<div class="disabled">#define CP_WINANSI      1004    /* default codepage for windows &amp; old DDE convs. */</div>
+<div class="disabled">#define CP_WINUNICODE   1200</div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define CP_WINNEUTRAL   CP_WINUNICODE</div>
+<div class="disabled">#else  // !UNICODE</div>
+<div class="disabled">#define CP_WINNEUTRAL   CP_WINANSI
+#endif // !UNICODE</div>
+
+<div class="token cpp_comment ">/***** transaction types *****/</div>
+
+<div class="disabled">#define     XTYPF_NOBLOCK            0x0002  /* CBR_BLOCK will not work */</div>
+<div class="disabled">#define     XTYPF_NODATA             0x0004  /* DDE_FDEFERUPD */</div>
+<div class="disabled">#define     XTYPF_ACKREQ             0x0008  /* DDE_FACKREQ */</div>
+
+<div class="disabled">#define     XCLASS_MASK              0xFC00</div>
+<div class="disabled">#define     XCLASS_BOOL              0x1000</div>
+<div class="disabled">#define     XCLASS_DATA              0x2000</div>
+<div class="disabled">#define     XCLASS_FLAGS             0x4000</div>
+<div class="disabled">#define     XCLASS_NOTIFICATION      0x8000</div>
+
+<div class="disabled">#define     XTYP_ERROR              (0x0000 | XCLASS_NOTIFICATION | XTYPF_NOBLOCK )</div>
+<div class="disabled">#define     XTYP_ADVDATA            (0x0010 | XCLASS_FLAGS         )</div>
+<div class="disabled">#define     XTYP_ADVREQ             (0x0020 | XCLASS_DATA | XTYPF_NOBLOCK )</div>
+<div class="disabled">#define     XTYP_ADVSTART           (0x0030 | XCLASS_BOOL          )</div>
+<div class="disabled">#define     XTYP_ADVSTOP            (0x0040 | XCLASS_NOTIFICATION)</div>
+<div class="disabled">#define     XTYP_EXECUTE            (0x0050 | XCLASS_FLAGS         )</div>
+<div class="disabled">#define     XTYP_CONNECT            (0x0060 | XCLASS_BOOL | XTYPF_NOBLOCK)</div>
+<div class="disabled">#define     XTYP_CONNECT_CONFIRM    (0x0070 | XCLASS_NOTIFICATION | XTYPF_NOBLOCK)</div>
+<div class="disabled">#define     XTYP_XACT_COMPLETE      (0x0080 | XCLASS_NOTIFICATION  )</div>
+<div class="disabled">#define     XTYP_POKE               (0x0090 | XCLASS_FLAGS         )</div>
+<div class="disabled">#define     XTYP_REGISTER           (0x00A0 | XCLASS_NOTIFICATION | XTYPF_NOBLOCK)</div>
+<div class="disabled">#define     XTYP_REQUEST            (0x00B0 | XCLASS_DATA          )</div>
+<div class="disabled">#define     XTYP_DISCONNECT         (0x00C0 | XCLASS_NOTIFICATION | XTYPF_NOBLOCK)</div>
+<div class="disabled">#define     XTYP_UNREGISTER         (0x00D0 | XCLASS_NOTIFICATION | XTYPF_NOBLOCK)</div>
+<div class="disabled">#define     XTYP_WILDCONNECT        (0x00E0 | XCLASS_DATA | XTYPF_NOBLOCK)</div>
+
+<div class="disabled">#define     XTYP_MASK                0x00F0</div>
+<div class="disabled">#define     XTYP_SHIFT               4  /* shift to turn XTYP_ into an index */</div>
+
+<div class="token cpp_comment ">/***** Timeout constants *****/</div>
+
+<div class="disabled">#define     TIMEOUT_ASYNC           0xFFFFFFFF</div>
+
+<div class="token cpp_comment ">/***** Transaction ID constants *****/</div>
+
+<div class="disabled">#define     QID_SYNC                0xFFFFFFFF</div>
+
+<div class="token cpp_comment ">/****** public strings used in DDE ******/</div>
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define SZDDESYS_TOPIC         L&quot;System&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_TOPICS   L&quot;Topics&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_SYSITEMS L&quot;SysItems&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_RTNMSG   L&quot;ReturnMessage&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_STATUS   L&quot;Status&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_FORMATS  L&quot;Formats&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_HELP     L&quot;Help&quot;</div>
+<div class="disabled">#define SZDDE_ITEM_ITEMLIST    L&quot;TopicItemList&quot;</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define SZDDESYS_TOPIC         &quot;System&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_TOPICS   &quot;Topics&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_SYSITEMS &quot;SysItems&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_RTNMSG   &quot;ReturnMessage&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_STATUS   &quot;Status&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_FORMATS  &quot;Formats&quot;</div>
+<div class="disabled">#define SZDDESYS_ITEM_HELP     &quot;Help&quot;</div>
+<div class="disabled">#define SZDDE_ITEM_ITEMLIST    &quot;TopicItemList&quot;
+#endif</div>
+
+
+<div class="token cpp_comment ">/****** API entry points ******/</div>
+
+<div class="expandable"><div class="disabled">typedef HDDEDATA CALLBACK FNCALLBACK(UINT wType, UINT wFmt, HCONV hConv,</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="NI$FNCALLBACK"><div><div class="token cpp_type">FNCALLBACK</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> wType, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> wFmt, <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> hConv,</div></div>
+        <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> hsz1, <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> hsz2, <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> hData, <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div> dwData1, <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div> dwData2);
+<div class="expandable"><div class="disabled">typedef HDDEDATA (CALLBACK *PFNCALLBACK)(UINT wType, UINT wFmt, HCONV hConv,</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> (<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$PFNCALLBACK"><div><div class="token cpp_type">PFNCALLBACK</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> wType, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> wFmt, <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> hConv,</div></div>
+        <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> hsz1, <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> hsz2, <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> hData, <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div> dwData1, <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div> dwData2);
+
+<div class="disabled">#define     CBR_BLOCK           ((HDDEDATA)-1)</div>
+
+<div class="token cpp_comment ">/* DLL registration functions */</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeInitializeA@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">DdeInitializeA</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ LPDWORD pidInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$DdeInitializeA@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]::pidInst"><div>pidInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ PFNCALLBACK pfnCallback,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PFNCALLBACK'], [], [])"><div class="token cpp_type">PFNCALLBACK</div></div> <div class="def" id="NI$DdeInitializeA@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]::pfnCallback"><div>pfnCallback</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD afCmd,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeInitializeA@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]::afCmd"><div>afCmd</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ DWORD ulRes);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeInitializeA@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]::ulRes"><div>ulRes</div></div>);</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeInitializeW@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">DdeInitializeW</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ LPDWORD pidInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$DdeInitializeW@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]::pidInst"><div>pidInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ PFNCALLBACK pfnCallback,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PFNCALLBACK'], [], [])"><div class="token cpp_type">PFNCALLBACK</div></div> <div class="def" id="NI$DdeInitializeW@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]::pfnCallback"><div>pfnCallback</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD afCmd,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeInitializeW@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]::afCmd"><div>afCmd</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ DWORD ulRes);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeInitializeW@::UINT(::LPDWORD, ::PFNCALLBACK, ::DWORD, ::DWORD)[decl0]::ulRes"><div>ulRes</div></div>);</div></div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define DdeInitialize  DdeInitializeW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DdeInitialize  DdeInitializeA
+#endif // !UNICODE</div>
+
+<div class="token cpp_comment ">/*
+ * Callback filter flags for use with standard apps.
+ */</div>
+
+<div class="disabled">#define     CBF_FAIL_SELFCONNECTIONS     0x00001000</div>
+<div class="disabled">#define     CBF_FAIL_CONNECTIONS         0x00002000</div>
+<div class="disabled">#define     CBF_FAIL_ADVISES             0x00004000</div>
+<div class="disabled">#define     CBF_FAIL_EXECUTES            0x00008000</div>
+<div class="disabled">#define     CBF_FAIL_POKES               0x00010000</div>
+<div class="disabled">#define     CBF_FAIL_REQUESTS            0x00020000</div>
+<div class="disabled">#define     CBF_FAIL_ALLSVRXACTIONS      0x0003f000</div>
+
+<div class="disabled">#define     CBF_SKIP_CONNECT_CONFIRMS    0x00040000</div>
+<div class="disabled">#define     CBF_SKIP_REGISTRATIONS       0x00080000</div>
+<div class="disabled">#define     CBF_SKIP_UNREGISTRATIONS     0x00100000</div>
+<div class="disabled">#define     CBF_SKIP_DISCONNECTS         0x00200000</div>
+<div class="disabled">#define     CBF_SKIP_ALLNOTIFICATIONS    0x003c0000</div>
+
+<div class="token cpp_comment ">/*
+ * Application command flags
+ */</div>
+<div class="disabled">#define     APPCMD_CLIENTONLY            0x00000010L</div>
+<div class="disabled">#define     APPCMD_FILTERINITS           0x00000020L</div>
+<div class="disabled">#define     APPCMD_MASK                  0x00000FF0L</div>
+
+<div class="token cpp_comment ">/*
+ * Application classification flags
+ */</div>
+<div class="disabled">#define     APPCLASS_STANDARD            0x00000000L</div>
+<div class="disabled">#define     APPCLASS_MASK                0x0000000FL</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeUninitialize@::BOOL(::DWORD)[decl0]"><div><div class="token cpp_function">DdeUninitialize</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeUninitialize@::BOOL(::DWORD)[decl0]::idInst"><div>idInst</div></div>);</div></div>
+
+<div class="token cpp_comment ">/*
+ * conversation enumeration functions
+ */</div>
+<div class="ref" onclick="jumpToSymbol([], ['HCONVLIST'], [], [])"><div class="token cpp_type">HCONVLIST</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeConnectList@::HCONVLIST(::DWORD, ::HSZ, ::HSZ, ::HCONVLIST, ::PCONVCONTEXT)[decl0]"><div><div class="token cpp_function">DdeConnectList</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeConnectList@::HCONVLIST(::DWORD, ::HSZ, ::HSZ, ::HCONVLIST, ::PCONVCONTEXT)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hszService,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeConnectList@::HCONVLIST(::DWORD, ::HSZ, ::HSZ, ::HCONVLIST, ::PCONVCONTEXT)[decl0]::hszService"><div>hszService</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hszTopic,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeConnectList@::HCONVLIST(::DWORD, ::HSZ, ::HSZ, ::HCONVLIST, ::PCONVCONTEXT)[decl0]::hszTopic"><div>hszTopic</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HCONVLIST hConvList,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONVLIST'], [], [])"><div class="token cpp_type">HCONVLIST</div></div> <div class="def" id="NI$DdeConnectList@::HCONVLIST(::DWORD, ::HSZ, ::HSZ, ::HCONVLIST, ::PCONVCONTEXT)[decl0]::hConvList"><div>hConvList</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PCONVCONTEXT pCC);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PCONVCONTEXT'], [], [])"><div class="token cpp_type">PCONVCONTEXT</div></div> <div class="def" id="NI$DdeConnectList@::HCONVLIST(::DWORD, ::HSZ, ::HSZ, ::HCONVLIST, ::PCONVCONTEXT)[decl0]::pCC"><div>pCC</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeQueryNextServer@::HCONV(::HCONVLIST, ::HCONV)[decl0]"><div><div class="token cpp_function">DdeQueryNextServer</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HCONVLIST hConvList,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONVLIST'], [], [])"><div class="token cpp_type">HCONVLIST</div></div> <div class="def" id="NI$DdeQueryNextServer@::HCONV(::HCONVLIST, ::HCONV)[decl0]::hConvList"><div>hConvList</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HCONV hConvPrev);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeQueryNextServer@::HCONV(::HCONVLIST, ::HCONV)[decl0]::hConvPrev"><div>hConvPrev</div></div>);</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeDisconnectList@::BOOL(::HCONVLIST)[decl0]"><div><div class="token cpp_function">DdeDisconnectList</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HCONVLIST hConvList);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONVLIST'], [], [])"><div class="token cpp_type">HCONVLIST</div></div> <div class="def" id="NI$DdeDisconnectList@::BOOL(::HCONVLIST)[decl0]::hConvList"><div>hConvList</div></div>);</div></div>
+
+<div class="token cpp_comment ">/*
+ * conversation control functions
+ */</div>
+<div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeConnect@::HCONV(::DWORD, ::HSZ, ::HSZ, ::PCONVCONTEXT)[decl0]"><div><div class="token cpp_function">DdeConnect</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeConnect@::HCONV(::DWORD, ::HSZ, ::HSZ, ::PCONVCONTEXT)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hszService,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeConnect@::HCONV(::DWORD, ::HSZ, ::HSZ, ::PCONVCONTEXT)[decl0]::hszService"><div>hszService</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hszTopic,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeConnect@::HCONV(::DWORD, ::HSZ, ::HSZ, ::PCONVCONTEXT)[decl0]::hszTopic"><div>hszTopic</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PCONVCONTEXT pCC);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PCONVCONTEXT'], [], [])"><div class="token cpp_type">PCONVCONTEXT</div></div> <div class="def" id="NI$DdeConnect@::HCONV(::DWORD, ::HSZ, ::HSZ, ::PCONVCONTEXT)[decl0]::pCC"><div>pCC</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeDisconnect@::BOOL(::HCONV)[decl0]"><div><div class="token cpp_function">DdeDisconnect</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HCONV hConv);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeDisconnect@::BOOL(::HCONV)[decl0]::hConv"><div>hConv</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeReconnect@::HCONV(::HCONV)[decl0]"><div><div class="token cpp_function">DdeReconnect</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HCONV hConv);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeReconnect@::HCONV(::HCONV)[decl0]::hConv"><div>hConv</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeQueryConvInfo@::UINT(::HCONV, ::DWORD, ::PCONVINFO)[decl0]"><div><div class="token cpp_function">DdeQueryConvInfo</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HCONV hConv,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeQueryConvInfo@::UINT(::HCONV, ::DWORD, ::PCONVINFO)[decl0]::hConv"><div>hConv</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD idTransaction,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeQueryConvInfo@::UINT(::HCONV, ::DWORD, ::PCONVINFO)[decl0]::idTransaction"><div>idTransaction</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ PCONVINFO pConvInfo);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PCONVINFO'], [], [])"><div class="token cpp_type">PCONVINFO</div></div> <div class="def" id="NI$DdeQueryConvInfo@::UINT(::HCONV, ::DWORD, ::PCONVINFO)[decl0]::pConvInfo"><div>pConvInfo</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeSetUserHandle@::BOOL(::HCONV, ::DWORD, ::DWORD_PTR)[decl0]"><div><div class="token cpp_function">DdeSetUserHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HCONV hConv,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeSetUserHandle@::BOOL(::HCONV, ::DWORD, ::DWORD_PTR)[decl0]::hConv"><div>hConv</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD id,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeSetUserHandle@::BOOL(::HCONV, ::DWORD, ::DWORD_PTR)[decl0]::id"><div>id</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD_PTR hUser);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$DdeSetUserHandle@::BOOL(::HCONV, ::DWORD, ::DWORD_PTR)[decl0]::hUser"><div>hUser</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeAbandonTransaction@::BOOL(::DWORD, ::HCONV, ::DWORD)[decl0]"><div><div class="token cpp_function">DdeAbandonTransaction</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeAbandonTransaction@::BOOL(::DWORD, ::HCONV, ::DWORD)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HCONV hConv,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeAbandonTransaction@::BOOL(::DWORD, ::HCONV, ::DWORD)[decl0]::hConv"><div>hConv</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD idTransaction);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeAbandonTransaction@::BOOL(::DWORD, ::HCONV, ::DWORD)[decl0]::idTransaction"><div>idTransaction</div></div>);</div></div>
+
+
+<div class="token cpp_comment ">/*
+ * app server interface functions
+ */</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdePostAdvise@::BOOL(::DWORD, ::HSZ, ::HSZ)[decl0]"><div><div class="token cpp_function">DdePostAdvise</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdePostAdvise@::BOOL(::DWORD, ::HSZ, ::HSZ)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hszTopic,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdePostAdvise@::BOOL(::DWORD, ::HSZ, ::HSZ)[decl0]::hszTopic"><div>hszTopic</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hszItem);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdePostAdvise@::BOOL(::DWORD, ::HSZ, ::HSZ)[decl0]::hszItem"><div>hszItem</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeEnableCallback@::BOOL(::DWORD, ::HCONV, ::UINT)[decl0]"><div><div class="token cpp_function">DdeEnableCallback</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeEnableCallback@::BOOL(::DWORD, ::HCONV, ::UINT)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HCONV hConv,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeEnableCallback@::BOOL(::DWORD, ::HCONV, ::UINT)[decl0]::hConv"><div>hConv</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT wCmd);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$DdeEnableCallback@::BOOL(::DWORD, ::HCONV, ::UINT)[decl0]::wCmd"><div>wCmd</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeImpersonateClient@::BOOL(::HCONV)[decl0]"><div><div class="token cpp_function">DdeImpersonateClient</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HCONV hConv);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeImpersonateClient@::BOOL(::HCONV)[decl0]::hConv"><div>hConv</div></div>);</div></div>
+
+
+<div class="disabled">#define EC_ENABLEALL            0</div>
+<div class="disabled">#define EC_ENABLEONE            ST_BLOCKNEXT</div>
+<div class="disabled">#define EC_DISABLE              ST_BLOCKED</div>
+<div class="disabled">#define EC_QUERYWAITING         2</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeNameService@::HDDEDATA(::DWORD, ::HSZ, ::HSZ, ::UINT)[decl0]"><div><div class="token cpp_function">DdeNameService</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeNameService@::HDDEDATA(::DWORD, ::HSZ, ::HSZ, ::UINT)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HSZ hsz1,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeNameService@::HDDEDATA(::DWORD, ::HSZ, ::HSZ, ::UINT)[decl0]::hsz1"><div>hsz1</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HSZ hsz2,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeNameService@::HDDEDATA(::DWORD, ::HSZ, ::HSZ, ::UINT)[decl0]::hsz2"><div>hsz2</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT afCmd);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$DdeNameService@::HDDEDATA(::DWORD, ::HSZ, ::HSZ, ::UINT)[decl0]::afCmd"><div>afCmd</div></div>);</div></div>
+
+<div class="disabled">#define DNS_REGISTER        0x0001</div>
+<div class="disabled">#define DNS_UNREGISTER      0x0002</div>
+<div class="disabled">#define DNS_FILTERON        0x0004</div>
+<div class="disabled">#define DNS_FILTEROFF       0x0008</div>
+
+<div class="token cpp_comment ">/*
+ * app client interface functions
+ */</div>
+<div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">DdeClientTransaction</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPBYTE pData,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPBYTE'], [], [])"><div class="token cpp_type">LPBYTE</div></div> <div class="def" id="NI$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]::pData"><div>pData</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cbData,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]::cbData"><div>cbData</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HCONV hConv,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div> <div class="def" id="NI$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]::hConv"><div>hConv</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HSZ hszItem,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]::hszItem"><div>hszItem</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT wFmt,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]::wFmt"><div>wFmt</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT wType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]::wType"><div>wType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwTimeout,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]::dwTimeout"><div>dwTimeout</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD pdwResult);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$DdeClientTransaction@::HDDEDATA(::LPBYTE, ::DWORD, ::HCONV, ::HSZ, ::UINT, ::UINT, ::DWORD, ::LPDWORD)[decl0]::pdwResult"><div>pdwResult</div></div>);</div></div>
+
+
+<div class="token cpp_comment ">/*
+ *data transfer functions
+ */</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeCreateDataHandle@::HDDEDATA(::DWORD, ::LPBYTE, ::DWORD, ::DWORD, ::HSZ, ::UINT, ::UINT)[decl0]"><div><div class="token cpp_function">DdeCreateDataHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeCreateDataHandle@::HDDEDATA(::DWORD, ::LPBYTE, ::DWORD, ::DWORD, ::HSZ, ::UINT, ::UINT)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_opt_(cb) LPBYTE pSrc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPBYTE'], [], [])"><div class="token cpp_type">LPBYTE</div></div> <div class="def" id="NI$DdeCreateDataHandle@::HDDEDATA(::DWORD, ::LPBYTE, ::DWORD, ::DWORD, ::HSZ, ::UINT, ::UINT)[decl0]::pSrc"><div>pSrc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cb,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeCreateDataHandle@::HDDEDATA(::DWORD, ::LPBYTE, ::DWORD, ::DWORD, ::HSZ, ::UINT, ::UINT)[decl0]::cb"><div>cb</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cbOff,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeCreateDataHandle@::HDDEDATA(::DWORD, ::LPBYTE, ::DWORD, ::DWORD, ::HSZ, ::UINT, ::UINT)[decl0]::cbOff"><div>cbOff</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HSZ hszItem,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeCreateDataHandle@::HDDEDATA(::DWORD, ::LPBYTE, ::DWORD, ::DWORD, ::HSZ, ::UINT, ::UINT)[decl0]::hszItem"><div>hszItem</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT wFmt,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$DdeCreateDataHandle@::HDDEDATA(::DWORD, ::LPBYTE, ::DWORD, ::DWORD, ::HSZ, ::UINT, ::UINT)[decl0]::wFmt"><div>wFmt</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT afCmd);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$DdeCreateDataHandle@::HDDEDATA(::DWORD, ::LPBYTE, ::DWORD, ::DWORD, ::HSZ, ::UINT, ::UINT)[decl0]::afCmd"><div>afCmd</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeAddData@::HDDEDATA(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">DdeAddData</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HDDEDATA hData,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> <div class="def" id="NI$DdeAddData@::HDDEDATA(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]::hData"><div>hData</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_(cb) LPBYTE pSrc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPBYTE'], [], [])"><div class="token cpp_type">LPBYTE</div></div> <div class="def" id="NI$DdeAddData@::HDDEDATA(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]::pSrc"><div>pSrc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cb,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeAddData@::HDDEDATA(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]::cb"><div>cb</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cbOff);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeAddData@::HDDEDATA(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]::cbOff"><div>cbOff</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeGetData@::DWORD(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">DdeGetData</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HDDEDATA hData,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> <div class="def" id="NI$DdeGetData@::DWORD(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]::hData"><div>hData</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_opt_(cbMax) LPBYTE pDst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPBYTE'], [], [])"><div class="token cpp_type">LPBYTE</div></div> <div class="def" id="NI$DdeGetData@::DWORD(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]::pDst"><div>pDst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cbMax,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeGetData@::DWORD(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]::cbMax"><div>cbMax</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cbOff);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeGetData@::DWORD(::HDDEDATA, ::LPBYTE, ::DWORD, ::DWORD)[decl0]::cbOff"><div>cbOff</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['LPBYTE'], [], [])"><div class="token cpp_type">LPBYTE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeAccessData@::LPBYTE(::HDDEDATA, ::LPDWORD)[decl0]"><div><div class="token cpp_function">DdeAccessData</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HDDEDATA hData,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> <div class="def" id="NI$DdeAccessData@::LPBYTE(::HDDEDATA, ::LPDWORD)[decl0]::hData"><div>hData</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD pcbDataSize);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$DdeAccessData@::LPBYTE(::HDDEDATA, ::LPDWORD)[decl0]::pcbDataSize"><div>pcbDataSize</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeUnaccessData@::BOOL(::HDDEDATA)[decl0]"><div><div class="token cpp_function">DdeUnaccessData</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HDDEDATA hData);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> <div class="def" id="NI$DdeUnaccessData@::BOOL(::HDDEDATA)[decl0]::hData"><div>hData</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeFreeDataHandle@::BOOL(::HDDEDATA)[decl0]"><div><div class="token cpp_function">DdeFreeDataHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HDDEDATA hData);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> <div class="def" id="NI$DdeFreeDataHandle@::BOOL(::HDDEDATA)[decl0]::hData"><div>hData</div></div>);</div></div>
+
+<div class="disabled">#define     HDATA_APPOWNED          0x0001</div>
+
+
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeGetLastError@::UINT(::DWORD)[decl0]"><div><div class="token cpp_function">DdeGetLastError</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeGetLastError@::UINT(::DWORD)[decl0]::idInst"><div>idInst</div></div>);</div></div>
+
+
+<div class="disabled">#define     DMLERR_NO_ERROR                    0       /* must be 0 */</div>
+
+<div class="disabled">#define     DMLERR_FIRST                       0x4000</div>
+
+<div class="disabled">#define     DMLERR_ADVACKTIMEOUT               0x4000</div>
+<div class="disabled">#define     DMLERR_BUSY                        0x4001</div>
+<div class="disabled">#define     DMLERR_DATAACKTIMEOUT              0x4002</div>
+<div class="disabled">#define     DMLERR_DLL_NOT_INITIALIZED         0x4003</div>
+<div class="disabled">#define     DMLERR_DLL_USAGE                   0x4004</div>
+<div class="disabled">#define     DMLERR_EXECACKTIMEOUT              0x4005</div>
+<div class="disabled">#define     DMLERR_INVALIDPARAMETER            0x4006</div>
+<div class="disabled">#define     DMLERR_LOW_MEMORY                  0x4007</div>
+<div class="disabled">#define     DMLERR_MEMORY_ERROR                0x4008</div>
+<div class="disabled">#define     DMLERR_NOTPROCESSED                0x4009</div>
+<div class="disabled">#define     DMLERR_NO_CONV_ESTABLISHED         0x400a</div>
+<div class="disabled">#define     DMLERR_POKEACKTIMEOUT              0x400b</div>
+<div class="disabled">#define     DMLERR_POSTMSG_FAILED              0x400c</div>
+<div class="disabled">#define     DMLERR_REENTRANCY                  0x400d</div>
+<div class="disabled">#define     DMLERR_SERVER_DIED                 0x400e</div>
+<div class="disabled">#define     DMLERR_SYS_ERROR                   0x400f</div>
+<div class="disabled">#define     DMLERR_UNADVACKTIMEOUT             0x4010</div>
+<div class="disabled">#define     DMLERR_UNFOUND_QUEUE_ID            0x4011</div>
+
+<div class="disabled">#define     DMLERR_LAST                        0x4011</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeCreateStringHandleA@::HSZ(::DWORD, ::LPCSTR, int)[decl0]"><div><div class="token cpp_function">DdeCreateStringHandleA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeCreateStringHandleA@::HSZ(::DWORD, ::LPCSTR, int)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR psz,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$DdeCreateStringHandleA@::HSZ(::DWORD, ::LPCSTR, int)[decl0]::psz"><div>psz</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int iCodePage);</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$DdeCreateStringHandleA@::HSZ(::DWORD, ::LPCSTR, int)[decl0]::iCodePage"><div>iCodePage</div></div>);</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeCreateStringHandleW@::HSZ(::DWORD, ::LPCWSTR, int)[decl0]"><div><div class="token cpp_function">DdeCreateStringHandleW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeCreateStringHandleW@::HSZ(::DWORD, ::LPCWSTR, int)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR psz,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$DdeCreateStringHandleW@::HSZ(::DWORD, ::LPCWSTR, int)[decl0]::psz"><div>psz</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int iCodePage);</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$DdeCreateStringHandleW@::HSZ(::DWORD, ::LPCWSTR, int)[decl0]::iCodePage"><div>iCodePage</div></div>);</div></div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define DdeCreateStringHandle  DdeCreateStringHandleW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DdeCreateStringHandle  DdeCreateStringHandleA
+#endif // !UNICODE</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeQueryStringA@::DWORD(::DWORD, ::HSZ, ::LPSTR, ::DWORD, int)[decl0]"><div><div class="token cpp_function">DdeQueryStringA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeQueryStringA@::DWORD(::DWORD, ::HSZ, ::LPSTR, ::DWORD, int)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hsz,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeQueryStringA@::DWORD(::DWORD, ::HSZ, ::LPSTR, ::DWORD, int)[decl0]::hsz"><div>hsz</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_opt_(cchMax) LPSTR psz,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$DdeQueryStringA@::DWORD(::DWORD, ::HSZ, ::LPSTR, ::DWORD, int)[decl0]::psz"><div>psz</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cchMax,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeQueryStringA@::DWORD(::DWORD, ::HSZ, ::LPSTR, ::DWORD, int)[decl0]::cchMax"><div>cchMax</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int iCodePage);</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$DdeQueryStringA@::DWORD(::DWORD, ::HSZ, ::LPSTR, ::DWORD, int)[decl0]::iCodePage"><div>iCodePage</div></div>);</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeQueryStringW@::DWORD(::DWORD, ::HSZ, ::LPWSTR, ::DWORD, int)[decl0]"><div><div class="token cpp_function">DdeQueryStringW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeQueryStringW@::DWORD(::DWORD, ::HSZ, ::LPWSTR, ::DWORD, int)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hsz,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeQueryStringW@::DWORD(::DWORD, ::HSZ, ::LPWSTR, ::DWORD, int)[decl0]::hsz"><div>hsz</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_opt_(cchMax) LPWSTR psz,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$DdeQueryStringW@::DWORD(::DWORD, ::HSZ, ::LPWSTR, ::DWORD, int)[decl0]::psz"><div>psz</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD cchMax,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeQueryStringW@::DWORD(::DWORD, ::HSZ, ::LPWSTR, ::DWORD, int)[decl0]::cchMax"><div>cchMax</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int iCodePage);</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$DdeQueryStringW@::DWORD(::DWORD, ::HSZ, ::LPWSTR, ::DWORD, int)[decl0]::iCodePage"><div>iCodePage</div></div>);</div></div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define DdeQueryString  DdeQueryStringW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DdeQueryString  DdeQueryStringA
+#endif // !UNICODE</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeFreeStringHandle@::BOOL(::DWORD, ::HSZ)[decl0]"><div><div class="token cpp_function">DdeFreeStringHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeFreeStringHandle@::BOOL(::DWORD, ::HSZ)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hsz);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeFreeStringHandle@::BOOL(::DWORD, ::HSZ)[decl0]::hsz"><div>hsz</div></div>);</div></div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeKeepStringHandle@::BOOL(::DWORD, ::HSZ)[decl0]"><div><div class="token cpp_function">DdeKeepStringHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD idInst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DdeKeepStringHandle@::BOOL(::DWORD, ::HSZ)[decl0]::idInst"><div>idInst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hsz);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeKeepStringHandle@::BOOL(::DWORD, ::HSZ)[decl0]::hsz"><div>hsz</div></div>);</div></div>
+
+<div class="token cpp_keyword ">int</div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DdeCmpStringHandles@int(::HSZ, ::HSZ)[decl0]"><div><div class="token cpp_function">DdeCmpStringHandles</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HSZ hsz1,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeCmpStringHandles@int(::HSZ, ::HSZ)[decl0]::hsz1"><div>hsz1</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HSZ hsz2);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div> <div class="def" id="NI$DdeCmpStringHandles@int(::HSZ, ::HSZ)[decl0]::hsz2"><div>hsz2</div></div>);</div></div>
+
+<div class="disabled">#ifndef NODDEMLSPY</div>
+<div class="token cpp_comment ">/*
+ * DDEML public debugging header file info
+ */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagDDEML_MSG_HOOK_DATA"><div><div class="token cpp_type">tagDDEML_MSG_HOOK_DATA</div></div></div> {    <div class="token cpp_comment ">// new for NT</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT_PTR'], [], [])"><div class="token cpp_type">UINT_PTR</div></div> <div class="def" id="NI$tagDDEML_MSG_HOOK_DATA::uiLo"><div><div class="token cpp_field">uiLo</div></div></div>;  <div class="token cpp_comment ">// unpacked lo and hi parts of lParam</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT_PTR'], [], [])"><div class="token cpp_type">UINT_PTR</div></div> <div class="def" id="NI$tagDDEML_MSG_HOOK_DATA::uiHi"><div><div class="token cpp_field">uiHi</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagDDEML_MSG_HOOK_DATA::cbData"><div><div class="token cpp_field">cbData</div></div></div>;   <div class="token cpp_comment ">// amount of data in message, if any. May be &gt; than 32 bytes.</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagDDEML_MSG_HOOK_DATA::Data"><div><div class="token cpp_field">Data</div></div></div>[<div class="token cpp_number ">8</div>];  <div class="token cpp_comment ">// data peeking by DDESPY is limited to 32 bytes.</div>
+} <div class="def" id="NI$DDEML_MSG_HOOK_DATA"><div><div class="token cpp_type">DDEML_MSG_HOOK_DATA</div></div></div>, *<div class="def" id="NI$PDDEML_MSG_HOOK_DATA"><div><div class="token cpp_type">PDDEML_MSG_HOOK_DATA</div></div></div>;
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagMONMSGSTRUCT"><div><div class="token cpp_type">tagMONMSGSTRUCT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagMONMSGSTRUCT::cb"><div><div class="token cpp_field">cb</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div>    <div class="def" id="NI$tagMONMSGSTRUCT::hwndTo"><div><div class="token cpp_field">hwndTo</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagMONMSGSTRUCT::dwTime"><div><div class="token cpp_field">dwTime</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>  <div class="def" id="NI$tagMONMSGSTRUCT::hTask"><div><div class="token cpp_field">hTask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagMONMSGSTRUCT::wMsg"><div><div class="token cpp_field">wMsg</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WPARAM'], [], [])"><div class="token cpp_type">WPARAM</div></div>  <div class="def" id="NI$tagMONMSGSTRUCT::wParam"><div><div class="token cpp_field">wParam</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div>  <div class="def" id="NI$tagMONMSGSTRUCT::lParam"><div><div class="token cpp_field">lParam</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DDEML_MSG_HOOK_DATA'], [], [])"><div class="token cpp_type">DDEML_MSG_HOOK_DATA</div></div> <div class="def" id="NI$tagMONMSGSTRUCT::dmhd"><div><div class="token cpp_field">dmhd</div></div></div>;       <div class="token cpp_comment ">// new for NT</div>
+} <div class="def" id="NI$MONMSGSTRUCT"><div><div class="token cpp_type">MONMSGSTRUCT</div></div></div>, *<div class="def" id="NI$PMONMSGSTRUCT"><div><div class="token cpp_type">PMONMSGSTRUCT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagMONCBSTRUCT"><div><div class="token cpp_type">tagMONCBSTRUCT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>   <div class="def" id="NI$tagMONCBSTRUCT::cb"><div><div class="token cpp_field">cb</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>  <div class="def" id="NI$tagMONCBSTRUCT::dwTime"><div><div class="token cpp_field">dwTime</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$tagMONCBSTRUCT::hTask"><div><div class="token cpp_field">hTask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>  <div class="def" id="NI$tagMONCBSTRUCT::dwRet"><div><div class="token cpp_field">dwRet</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>   <div class="def" id="NI$tagMONCBSTRUCT::wType"><div><div class="token cpp_field">wType</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>   <div class="def" id="NI$tagMONCBSTRUCT::wFmt"><div><div class="token cpp_field">wFmt</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>  <div class="def" id="NI$tagMONCBSTRUCT::hConv"><div><div class="token cpp_field">hConv</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>    <div class="def" id="NI$tagMONCBSTRUCT::hsz1"><div><div class="token cpp_field">hsz1</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>    <div class="def" id="NI$tagMONCBSTRUCT::hsz2"><div><div class="token cpp_field">hsz2</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HDDEDATA'], [], [])"><div class="token cpp_type">HDDEDATA</div></div> <div class="def" id="NI$tagMONCBSTRUCT::hData"><div><div class="token cpp_field">hData</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div> <div class="def" id="NI$tagMONCBSTRUCT::dwData1"><div><div class="token cpp_field">dwData1</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div> <div class="def" id="NI$tagMONCBSTRUCT::dwData2"><div><div class="token cpp_field">dwData2</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['CONVCONTEXT'], [], [])"><div class="token cpp_type">CONVCONTEXT</div></div> <div class="def" id="NI$tagMONCBSTRUCT::cc"><div><div class="token cpp_field">cc</div></div></div>;                 <div class="token cpp_comment ">// new for NT for XTYP_CONNECT callbacks</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>  <div class="def" id="NI$tagMONCBSTRUCT::cbData"><div><div class="token cpp_field">cbData</div></div></div>;                  <div class="token cpp_comment ">// new for NT for data peeking</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>  <div class="def" id="NI$tagMONCBSTRUCT::Data"><div><div class="token cpp_field">Data</div></div></div>[<div class="token cpp_number ">8</div>];                 <div class="token cpp_comment ">// new for NT for data peeking</div>
+} <div class="def" id="NI$MONCBSTRUCT"><div><div class="token cpp_type">MONCBSTRUCT</div></div></div>, *<div class="def" id="NI$PMONCBSTRUCT"><div><div class="token cpp_type">PMONCBSTRUCT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagMONHSZSTRUCTA"><div><div class="token cpp_type">tagMONHSZSTRUCTA</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>   <div class="def" id="NI$tagMONHSZSTRUCTA::cb"><div><div class="token cpp_field">cb</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>   <div class="def" id="NI$tagMONHSZSTRUCTA::fsAction"><div><div class="token cpp_field">fsAction</div></div></div>;    <div class="token cpp_comment ">/* MH_ value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>  <div class="def" id="NI$tagMONHSZSTRUCTA::dwTime"><div><div class="token cpp_field">dwTime</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>    <div class="def" id="NI$tagMONHSZSTRUCTA::hsz"><div><div class="token cpp_field">hsz</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$tagMONHSZSTRUCTA::hTask"><div><div class="token cpp_field">hTask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>    <div class="def" id="NI$tagMONHSZSTRUCTA::str"><div><div class="token cpp_field">str</div></div></div>[<div class="token cpp_number ">1</div>];
+} <div class="def" id="NI$MONHSZSTRUCTA"><div><div class="token cpp_type">MONHSZSTRUCTA</div></div></div>, *<div class="def" id="NI$PMONHSZSTRUCTA"><div><div class="token cpp_type">PMONHSZSTRUCTA</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagMONHSZSTRUCTW"><div><div class="token cpp_type">tagMONHSZSTRUCTW</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>   <div class="def" id="NI$tagMONHSZSTRUCTW::cb"><div><div class="token cpp_field">cb</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>   <div class="def" id="NI$tagMONHSZSTRUCTW::fsAction"><div><div class="token cpp_field">fsAction</div></div></div>;    <div class="token cpp_comment ">/* MH_ value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>  <div class="def" id="NI$tagMONHSZSTRUCTW::dwTime"><div><div class="token cpp_field">dwTime</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>    <div class="def" id="NI$tagMONHSZSTRUCTW::hsz"><div><div class="token cpp_field">hsz</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$tagMONHSZSTRUCTW::hTask"><div><div class="token cpp_field">hTask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>   <div class="def" id="NI$tagMONHSZSTRUCTW::str"><div><div class="token cpp_field">str</div></div></div>[<div class="token cpp_number ">1</div>];
+} <div class="def" id="NI$MONHSZSTRUCTW"><div><div class="token cpp_type">MONHSZSTRUCTW</div></div></div>, *<div class="def" id="NI$PMONHSZSTRUCTW"><div><div class="token cpp_type">PMONHSZSTRUCTW</div></div></div>;
+<div class="disabled">#ifdef UNICODE</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['MONHSZSTRUCTW'], [], [])"><div class="token cpp_type">MONHSZSTRUCTW</div></div> <div class="def" id="NI$MONHSZSTRUCT"><div><div class="token cpp_type">MONHSZSTRUCT</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['PMONHSZSTRUCTW'], [], [])"><div class="token cpp_type">PMONHSZSTRUCTW</div></div> <div class="def" id="NI$PMONHSZSTRUCT"><div><div class="token cpp_type">PMONHSZSTRUCT</div></div></div>;
+<div class="disabled">#else</div>
+<div class="disabled">typedef MONHSZSTRUCTA MONHSZSTRUCT;</div>
+<div class="disabled">typedef PMONHSZSTRUCTA PMONHSZSTRUCT;
+#endif // UNICODE</div>
+
+<div class="disabled">#define MH_CREATE   1</div>
+<div class="disabled">#define MH_KEEP     2</div>
+<div class="disabled">#define MH_DELETE   3</div>
+<div class="disabled">#define MH_CLEANUP  4</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagMONERRSTRUCT"><div><div class="token cpp_type">tagMONERRSTRUCT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagMONERRSTRUCT::cb"><div><div class="token cpp_field">cb</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagMONERRSTRUCT::wLastError"><div><div class="token cpp_field">wLastError</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagMONERRSTRUCT::dwTime"><div><div class="token cpp_field">dwTime</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>  <div class="def" id="NI$tagMONERRSTRUCT::hTask"><div><div class="token cpp_field">hTask</div></div></div>;
+} <div class="def" id="NI$MONERRSTRUCT"><div><div class="token cpp_type">MONERRSTRUCT</div></div></div>, *<div class="def" id="NI$PMONERRSTRUCT"><div><div class="token cpp_type">PMONERRSTRUCT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagMONLINKSTRUCT"><div><div class="token cpp_type">tagMONLINKSTRUCT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagMONLINKSTRUCT::cb"><div><div class="token cpp_field">cb</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagMONLINKSTRUCT::dwTime"><div><div class="token cpp_field">dwTime</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>  <div class="def" id="NI$tagMONLINKSTRUCT::hTask"><div><div class="token cpp_field">hTask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>    <div class="def" id="NI$tagMONLINKSTRUCT::fEstablished"><div><div class="token cpp_field">fEstablished</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>    <div class="def" id="NI$tagMONLINKSTRUCT::fNoData"><div><div class="token cpp_field">fNoData</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagMONLINKSTRUCT::hszSvc"><div><div class="token cpp_field">hszSvc</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagMONLINKSTRUCT::hszTopic"><div><div class="token cpp_field">hszTopic</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagMONLINKSTRUCT::hszItem"><div><div class="token cpp_field">hszItem</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagMONLINKSTRUCT::wFmt"><div><div class="token cpp_field">wFmt</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>    <div class="def" id="NI$tagMONLINKSTRUCT::fServer"><div><div class="token cpp_field">fServer</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>   <div class="def" id="NI$tagMONLINKSTRUCT::hConvServer"><div><div class="token cpp_field">hConvServer</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>   <div class="def" id="NI$tagMONLINKSTRUCT::hConvClient"><div><div class="token cpp_field">hConvClient</div></div></div>;
+} <div class="def" id="NI$MONLINKSTRUCT"><div><div class="token cpp_type">MONLINKSTRUCT</div></div></div>, *<div class="def" id="NI$PMONLINKSTRUCT"><div><div class="token cpp_type">PMONLINKSTRUCT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagMONCONVSTRUCT"><div><div class="token cpp_type">tagMONCONVSTRUCT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagMONCONVSTRUCT::cb"><div><div class="token cpp_field">cb</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>    <div class="def" id="NI$tagMONCONVSTRUCT::fConnect"><div><div class="token cpp_field">fConnect</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagMONCONVSTRUCT::dwTime"><div><div class="token cpp_field">dwTime</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>  <div class="def" id="NI$tagMONCONVSTRUCT::hTask"><div><div class="token cpp_field">hTask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagMONCONVSTRUCT::hszSvc"><div><div class="token cpp_field">hszSvc</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HSZ'], [], [])"><div class="token cpp_type">HSZ</div></div>     <div class="def" id="NI$tagMONCONVSTRUCT::hszTopic"><div><div class="token cpp_field">hszTopic</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>   <div class="def" id="NI$tagMONCONVSTRUCT::hConvClient"><div><div class="token cpp_field">hConvClient</div></div></div>;        <div class="token cpp_comment ">// Globally unique value != apps local hConv</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HCONV'], [], [])"><div class="token cpp_type">HCONV</div></div>   <div class="def" id="NI$tagMONCONVSTRUCT::hConvServer"><div><div class="token cpp_field">hConvServer</div></div></div>;        <div class="token cpp_comment ">// Globally unique value != apps local hConv</div>
+} <div class="def" id="NI$MONCONVSTRUCT"><div><div class="token cpp_type">MONCONVSTRUCT</div></div></div>, *<div class="def" id="NI$PMONCONVSTRUCT"><div><div class="token cpp_type">PMONCONVSTRUCT</div></div></div>;
+
+<div class="disabled">#define     MAX_MONITORS            4</div>
+<div class="disabled">#define     APPCLASS_MONITOR        0x00000001L</div>
+<div class="disabled">#define     XTYP_MONITOR            (0x00F0 | XCLASS_NOTIFICATION | XTYPF_NOBLOCK)</div>
+
+<div class="token cpp_comment ">/*
+ * Callback filter flags for use with MONITOR apps - 0 implies no monitor
+ * callbacks.
+ */</div>
+<div class="disabled">#define     MF_HSZ_INFO                  0x01000000</div>
+<div class="disabled">#define     MF_SENDMSGS                  0x02000000</div>
+<div class="disabled">#define     MF_POSTMSGS                  0x04000000</div>
+<div class="disabled">#define     MF_CALLBACKS                 0x08000000</div>
+<div class="disabled">#define     MF_ERRORS                    0x10000000</div>
+<div class="disabled">#define     MF_LINKS                     0x20000000</div>
+<div class="disabled">#define     MF_CONV                      0x40000000</div>
+
+<div class="disabled">#define     MF_MASK                      0xFF000000
+#endif /* NODDEMLSPY */</div>
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif  /* __cplusplus */</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+
+<div class="disabled">#endif /* _INC_DDEMLH */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'CHAR': {
+        'displayNameInHtml': '<span class="cpp_type">CHAR</span>',
+        'impls': [
+            'NI$CHAR'
+        ],
+        'decls': []
+    },
+    'CONVCONTEXT': {
+        'displayNameInHtml': '<span class="cpp_type">CONVCONTEXT</span>',
+        'impls': [
+            'NI$CONVCONTEXT'
+        ],
+        'decls': []
+    },
+    'DDEML_MSG_HOOK_DATA': {
+        'displayNameInHtml': '<span class="cpp_type">DDEML_MSG_HOOK_DATA</span>',
+        'impls': [
+            'NI$DDEML_MSG_HOOK_DATA'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'DWORD_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD_PTR</span>',
+        'impls': [
+            'NI$DWORD_PTR'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'HCONV': {
+        'displayNameInHtml': '<span class="cpp_type">HCONV</span>',
+        'impls': [
+            'NI$HCONV'
+        ],
+        'decls': []
+    },
+    'HCONVLIST': {
+        'displayNameInHtml': '<span class="cpp_type">HCONVLIST</span>',
+        'impls': [
+            'NI$HCONVLIST'
+        ],
+        'decls': []
+    },
+    'HCONVLIST__': {
+        'displayNameInHtml': '<span class="cpp_type">HCONVLIST__</span>',
+        'impls': [
+            'NI$HCONVLIST__'
+        ],
+        'decls': []
+    },
+    'HCONV__': {
+        'displayNameInHtml': '<span class="cpp_type">HCONV__</span>',
+        'impls': [
+            'NI$HCONV__'
+        ],
+        'decls': []
+    },
+    'HDDEDATA': {
+        'displayNameInHtml': '<span class="cpp_type">HDDEDATA</span>',
+        'impls': [
+            'NI$HDDEDATA'
+        ],
+        'decls': []
+    },
+    'HDDEDATA__': {
+        'displayNameInHtml': '<span class="cpp_type">HDDEDATA__</span>',
+        'impls': [
+            'NI$HDDEDATA__'
+        ],
+        'decls': []
+    },
+    'HSZ': {
+        'displayNameInHtml': '<span class="cpp_type">HSZ</span>',
+        'impls': [
+            'NI$HSZ'
+        ],
+        'decls': []
+    },
+    'HSZ__': {
+        'displayNameInHtml': '<span class="cpp_type">HSZ__</span>',
+        'impls': [
+            'NI$HSZ__'
+        ],
+        'decls': []
+    },
+    'HWND': {
+        'displayNameInHtml': '<span class="cpp_type">HWND</span>',
+        'impls': [
+            'NI$HWND'
+        ],
+        'decls': []
+    },
+    'LPARAM': {
+        'displayNameInHtml': '<span class="cpp_type">LPARAM</span>',
+        'impls': [
+            'NI$LPARAM'
+        ],
+        'decls': []
+    },
+    'LPBYTE': {
+        'displayNameInHtml': '<span class="cpp_type">LPBYTE</span>',
+        'impls': [
+            'NI$LPBYTE'
+        ],
+        'decls': []
+    },
+    'LPCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCSTR</span>',
+        'impls': [
+            'NI$LPCSTR'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTR</span>',
+        'impls': [
+            'NI$LPSTR'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'MONHSZSTRUCTW': {
+        'displayNameInHtml': '<span class="cpp_type">MONHSZSTRUCTW</span>',
+        'impls': [
+            'NI$MONHSZSTRUCTW'
+        ],
+        'decls': []
+    },
+    'PCONVCONTEXT': {
+        'displayNameInHtml': '<span class="cpp_type">PCONVCONTEXT</span>',
+        'impls': [
+            'NI$PCONVCONTEXT'
+        ],
+        'decls': []
+    },
+    'PCONVINFO': {
+        'displayNameInHtml': '<span class="cpp_type">PCONVINFO</span>',
+        'impls': [
+            'NI$PCONVINFO'
+        ],
+        'decls': []
+    },
+    'PFNCALLBACK': {
+        'displayNameInHtml': '<span class="cpp_type">PFNCALLBACK</span>',
+        'impls': [
+            'NI$PFNCALLBACK'
+        ],
+        'decls': []
+    },
+    'PMONHSZSTRUCTW': {
+        'displayNameInHtml': '<span class="cpp_type">PMONHSZSTRUCTW</span>',
+        'impls': [
+            'NI$PMONHSZSTRUCTW'
+        ],
+        'decls': []
+    },
+    'SECURITY_QUALITY_OF_SERVICE': {
+        'displayNameInHtml': '<span class="cpp_type">SECURITY_QUALITY_OF_SERVICE</span>',
+        'impls': [
+            'NI$SECURITY_QUALITY_OF_SERVICE'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'UINT_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">UINT_PTR</span>',
+        'impls': [
+            'NI$UINT_PTR'
+        ],
+        'decls': []
+    },
+    'ULONG_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG_PTR</span>',
+        'impls': [
+            'NI$ULONG_PTR'
+        ],
+        'decls': []
+    },
+    'WCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">WCHAR</span>',
+        'impls': [
+            'NI$WCHAR'
+        ],
+        'decls': []
+    },
+    'WPARAM': {
+        'displayNameInHtml': '<span class="cpp_type">WPARAM</span>',
+        'impls': [
+            'NI$WPARAM'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$CHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$CONVCONTEXT': null,
+    'NI$DDEML_MSG_HOOK_DATA': null,
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HCONV': null,
+    'NI$HCONVLIST': null,
+    'NI$HCONVLIST__': null,
+    'NI$HCONV__': null,
+    'NI$HDDEDATA': null,
+    'NI$HDDEDATA__': null,
+    'NI$HSZ': null,
+    'NI$HSZ__': null,
+    'NI$HWND': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$LPARAM': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPBYTE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$MONHSZSTRUCTW': null,
+    'NI$PCONVCONTEXT': null,
+    'NI$PCONVINFO': null,
+    'NI$PFNCALLBACK': null,
+    'NI$PMONHSZSTRUCTW': null,
+    'NI$SECURITY_QUALITY_OF_SERVICE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$UINT_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$ULONG_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$WCHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$WPARAM': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

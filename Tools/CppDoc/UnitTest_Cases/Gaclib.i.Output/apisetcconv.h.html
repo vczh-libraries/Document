@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>apisetcconv.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/************************************************************************
+*                                                                       *
+*   apisetcconv.h -- Contains Win32 Calling Conventions for APISETs     *
+*                    that were a part of the old legacy APIs            *
+*   Copyright (c) Microsoft Corp. All rights reserved.                  *
+*                                                                       *
+************************************************************************/</div>
+<div class="disabled">#ifndef _APISETCCONV_</div>
+<div class="disabled">#define _APISETCCONV_</div>
+
+
+<div class="disabled">#if !defined(WINADVAPI)</div>
+<div class="disabled">#if !defined(_ADVAPI32_)</div>
+<div class="disabled">#define WINADVAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINADVAPI
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(WINBASEAPI)</div>
+<div class="disabled">#if !defined(_KERNEL32_)</div>
+<div class="disabled">#define WINBASEAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINBASEAPI
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(ZAWPROXYAPI)</div>
+<div class="disabled">#if !defined(_ZAWPROXY_)</div>
+<div class="disabled">#define ZAWPROXYAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define ZAWPROXYAPI
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(WINUSERAPI)</div>
+<div class="disabled">#if !defined(_USER32_)</div>
+<div class="disabled">#define WINUSERAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#define WINABLEAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINUSERAPI</div>
+<div class="disabled">#define WINABLEAPI
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(WINABLEAPI)</div>
+<div class="disabled">#if !defined(_USER32_)</div>
+<div class="disabled">#define WINABLEAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINABLEAPI</div>
+<div class="disabled">#endif
+#endif</div>
+
+<div class="disabled">#if !defined(WINCFGMGR32API)</div>
+<div class="disabled">#if !defined(_SETUPAPI_)</div>
+<div class="disabled">#define WINCFGMGR32API DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINCFGMGR32API
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(WINDEVQUERYAPI)</div>
+<div class="disabled">#if !defined(_CFGMGR32_)</div>
+<div class="disabled">#define WINDEVQUERYAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINDEVQUERYAPI
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(WINSWDEVICEAPI)</div>
+<div class="disabled">#if !defined(_CFGMGR32_)</div>
+<div class="disabled">#define WINSWDEVICEAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINSWDEVICEAPI
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(CMAPI)</div>
+<div class="disabled">#if !defined(_CFGMGR32_)</div>
+<div class="disabled">#define CMAPI     DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define CMAPI
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(WINPATHCCHAPI)</div>
+<div class="disabled">#if !defined(STATIC_PATHCCH)  </div>
+<div class="disabled">#define WINPATHCCHAPI WINBASEAPI </div>
+<div class="disabled">#else  </div>
+<div class="disabled">#define WINPATHCCHAPI
+#endif  
+#endif</div>
+
+<div class="disabled">#endif // _APISETCCONV_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

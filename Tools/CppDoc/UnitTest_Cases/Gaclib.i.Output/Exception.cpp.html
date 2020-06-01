@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exception.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;Exception.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[29]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+
+<div class="token cpp_comment ">/***********************************************************************
+Exception
+***********************************************************************/</div>
+	<div class="ref" onclick="jumpToSymbol([], ['vl::Exception'], [], [])"><div class="token cpp_type">Exception</div></div>::<div class="def" id="FB$vl::Exception::$__ctor@(::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Exception::$__ctor@(::vl::WString const &)'], [], [])"><div class="token cpp_function">Exception</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::Exception::$__ctor@(::vl::WString const &)[impl0]::_message"><div><div class="token cpp_argument">_message</div></div></div>)
+		:message(<div class="ref" onclick="jumpToSymbol([], ['vl::Exception::$__ctor@(::vl::WString const &)[impl0]::_message'], [], [])"><div class="token cpp_argument">_message</div></div>)
+	{
+	}
+
+	<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::Exception'], [], [])"><div class="token cpp_type">Exception</div></div>::<div class="def" id="FB$vl::Exception::Message@::vl::WString const &()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Exception::Message@::vl::WString const &()'], [], [])"><div class="token cpp_function">Message</div></div></div>()<div class="token cpp_keyword ">const</div>
+	{
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Exception::message'], [], [])"><div class="token cpp_field">message</div></div>;
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+ArgumentException
+***********************************************************************/</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException'], [], [])"><div class="token cpp_type">ArgumentException</div></div>::<div class="def" id="FB$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)'], [], [])"><div class="token cpp_function">ArgumentException</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_message"><div><div class="token cpp_argument">_message</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_function"><div><div class="token cpp_argument">_function</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_name"><div><div class="token cpp_argument">_name</div></div></div>)
+		:<div class="ref" onclick="jumpToSymbol([], ['vl::Exception'], [], [])"><div class="token cpp_type">Exception</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_message'], [], [])"><div class="token cpp_argument">_message</div></div>)
+		,function(<div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_function'], [], [])"><div class="token cpp_argument">_function</div></div>)
+		,name(<div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_name'], [], [])"><div class="token cpp_argument">_name</div></div>)
+	{
+	}
+
+	<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException'], [], [])"><div class="token cpp_type">ArgumentException</div></div>::<div class="def" id="FB$vl::ArgumentException::GetFunction@::vl::WString const &()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException::GetFunction@::vl::WString const &()'], [], [])"><div class="token cpp_function">GetFunction</div></div></div>()<div class="token cpp_keyword ">const</div>
+	{
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException::function'], [], [])"><div class="token cpp_field">function</div></div>;
+	}
+
+	<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException'], [], [])"><div class="token cpp_type">ArgumentException</div></div>::<div class="def" id="FB$vl::ArgumentException::GetName@::vl::WString const &()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException::GetName@::vl::WString const &()'], [], [])"><div class="token cpp_function">GetName</div></div></div>()<div class="token cpp_keyword ">const</div>
+	{
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ArgumentException::name'], [], [])"><div class="token cpp_field">name</div></div>;
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+ParsingException
+***********************************************************************/</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException'], [], [])"><div class="token cpp_type">ParsingException</div></div>::<div class="def" id="FB$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)'], [], [])"><div class="token cpp_function">ParsingException</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_message"><div><div class="token cpp_argument">_message</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_expression"><div><div class="token cpp_argument">_expression</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_position"><div><div class="token cpp_argument">_position</div></div></div>)
+		:<div class="ref" onclick="jumpToSymbol([], ['vl::Exception'], [], [])"><div class="token cpp_type">Exception</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_message'], [], [])"><div class="token cpp_argument">_message</div></div>)
+		,expression(<div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_expression'], [], [])"><div class="token cpp_argument">_expression</div></div>)
+		,position(<div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_position'], [], [])"><div class="token cpp_argument">_position</div></div>)
+	{
+	}
+
+	<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException'], [], [])"><div class="token cpp_type">ParsingException</div></div>::<div class="def" id="FB$vl::ParsingException::GetExpression@::vl::WString const &()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException::GetExpression@::vl::WString const &()'], [], [])"><div class="token cpp_function">GetExpression</div></div></div>()<div class="token cpp_keyword ">const</div>
+	{
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException'], [], [])"><div class="token cpp_type">ParsingException</div></div>::<div class="def" id="FB$vl::ParsingException::GetPosition@::vl::vint()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException::GetPosition@::vl::vint()'], [], [])"><div class="token cpp_function">GetPosition</div></div></div>()<div class="token cpp_keyword ">const</div>
+	{
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ParsingException::position'], [], [])"><div class="token cpp_field">position</div></div>;
+	}
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::ArgumentException': {
+        'displayNameInHtml': '<span class="cpp_type">ArgumentException</span>',
+        'impls': [
+            'NI$vl::ArgumentException'
+        ],
+        'decls': []
+    },
+    'vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ArgumentException</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_function': {
+        'displayNameInHtml': '_function',
+        'impls': [
+            'NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_function'
+        ],
+        'decls': []
+    },
+    'vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_message': {
+        'displayNameInHtml': '_message',
+        'impls': [
+            'NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_message'
+        ],
+        'decls': []
+    },
+    'vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_name': {
+        'displayNameInHtml': '_name',
+        'impls': [
+            'NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_name'
+        ],
+        'decls': []
+    },
+    'vl::ArgumentException::GetFunction@::vl::WString const &()': {
+        'displayNameInHtml': '<span class="cpp_type">ArgumentException</span>::<span class="cpp_function">GetFunction</span>()',
+        'impls': [
+            'FB$vl::ArgumentException::GetFunction@::vl::WString const &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::ArgumentException::GetFunction@::vl::WString const &()[decl0]'
+        ]
+    },
+    'vl::ArgumentException::GetName@::vl::WString const &()': {
+        'displayNameInHtml': '<span class="cpp_type">ArgumentException</span>::<span class="cpp_function">GetName</span>()',
+        'impls': [
+            'FB$vl::ArgumentException::GetName@::vl::WString const &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::ArgumentException::GetName@::vl::WString const &()[decl0]'
+        ]
+    },
+    'vl::ArgumentException::function': {
+        'displayNameInHtml': '<span class="cpp_type">ArgumentException</span>::<span class="cpp_field">function</span>',
+        'impls': [
+            'NI$vl::ArgumentException::function'
+        ],
+        'decls': []
+    },
+    'vl::ArgumentException::name': {
+        'displayNameInHtml': '<span class="cpp_type">ArgumentException</span>::<span class="cpp_field">name</span>',
+        'impls': [
+            'NI$vl::ArgumentException::name'
+        ],
+        'decls': []
+    },
+    'vl::Exception': {
+        'displayNameInHtml': '<span class="cpp_type">Exception</span>',
+        'impls': [
+            'NI$vl::Exception'
+        ],
+        'decls': []
+    },
+    'vl::Exception::$__ctor@(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Exception</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Exception::$__ctor@(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Exception::$__ctor@(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::Exception::$__ctor@(::vl::WString const &)[impl0]::_message': {
+        'displayNameInHtml': '_message',
+        'impls': [
+            'NI$vl::Exception::$__ctor@(::vl::WString const &)[impl0]::_message'
+        ],
+        'decls': []
+    },
+    'vl::Exception::Message@::vl::WString const &()': {
+        'displayNameInHtml': '<span class="cpp_type">Exception</span>::<span class="cpp_function">Message</span>()',
+        'impls': [
+            'FB$vl::Exception::Message@::vl::WString const &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Exception::Message@::vl::WString const &()[decl0]'
+        ]
+    },
+    'vl::Exception::message': {
+        'displayNameInHtml': '<span class="cpp_type">Exception</span>::<span class="cpp_field">message</span>',
+        'impls': [
+            'NI$vl::Exception::message'
+        ],
+        'decls': []
+    },
+    'vl::ParsingException': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingException</span>',
+        'impls': [
+            'NI$vl::ParsingException'
+        ],
+        'decls': []
+    },
+    'vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingException</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_expression': {
+        'displayNameInHtml': '_expression',
+        'impls': [
+            'NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_expression'
+        ],
+        'decls': []
+    },
+    'vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_message': {
+        'displayNameInHtml': '_message',
+        'impls': [
+            'NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_message'
+        ],
+        'decls': []
+    },
+    'vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_position': {
+        'displayNameInHtml': '_position',
+        'impls': [
+            'NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_position'
+        ],
+        'decls': []
+    },
+    'vl::ParsingException::GetExpression@::vl::WString const &()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingException</span>::<span class="cpp_function">GetExpression</span>()',
+        'impls': [
+            'FB$vl::ParsingException::GetExpression@::vl::WString const &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::ParsingException::GetExpression@::vl::WString const &()[decl0]'
+        ]
+    },
+    'vl::ParsingException::GetPosition@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingException</span>::<span class="cpp_function">GetPosition</span>()',
+        'impls': [
+            'FB$vl::ParsingException::GetPosition@::vl::vint()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::ParsingException::GetPosition@::vl::vint()[decl0]'
+        ]
+    },
+    'vl::ParsingException::expression': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingException</span>::<span class="cpp_field">expression</span>',
+        'impls': [
+            'NI$vl::ParsingException::expression'
+        ],
+        'decls': []
+    },
+    'vl::ParsingException::position': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingException</span>::<span class="cpp_field">position</span>',
+        'impls': [
+            'NI$vl::ParsingException::position'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[decl0]': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'FB$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]': null,
+    'FB$vl::ArgumentException::GetFunction@::vl::WString const &()[decl0]': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'FB$vl::ArgumentException::GetFunction@::vl::WString const &()[impl0]': null,
+    'FB$vl::ArgumentException::GetName@::vl::WString const &()[decl0]': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'FB$vl::ArgumentException::GetName@::vl::WString const &()[impl0]': null,
+    'FB$vl::Exception::$__ctor@(::vl::WString const &)[decl0]': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'FB$vl::Exception::$__ctor@(::vl::WString const &)[impl0]': null,
+    'FB$vl::Exception::Message@::vl::WString const &()[decl0]': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'FB$vl::Exception::Message@::vl::WString const &()[impl0]': null,
+    'FB$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[decl0]': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'FB$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]': null,
+    'FB$vl::ParsingException::GetExpression@::vl::WString const &()[decl0]': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'FB$vl::ParsingException::GetExpression@::vl::WString const &()[impl0]': null,
+    'FB$vl::ParsingException::GetPosition@::vl::vint()[decl0]': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'FB$vl::ParsingException::GetPosition@::vl::vint()[impl0]': null,
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': null,
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NI$vl::ArgumentException': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_function': null,
+    'NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_message': null,
+    'NI$vl::ArgumentException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_name': null,
+    'NI$vl::ArgumentException::function': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NI$vl::ArgumentException::name': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NI$vl::Exception': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NI$vl::Exception::$__ctor@(::vl::WString const &)[impl0]::_message': null,
+    'NI$vl::Exception::message': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NI$vl::ParsingException': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_expression': null,
+    'NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_message': null,
+    'NI$vl::ParsingException::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_position': null,
+    'NI$vl::ParsingException::expression': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NI$vl::ParsingException::position': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

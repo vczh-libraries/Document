@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>mcx.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/************************************************************************
+*                                                                       *
+*   mcx.h -- This module defines the 32-Bit Windows MCX APIs            *
+*                                                                       *
+*   Copyright (c) 1990-1999, Microsoft Corp. All rights reserved.       *
+*                                                                       *
+************************************************************************/</div>
+
+<div class="disabled">#ifndef _MCX_H_</div>
+<div class="disabled">#define _MCX_H_</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) // padding added after data member
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_MODEMDEVCAPS"><div><div class="token cpp_type">_MODEMDEVCAPS</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwActualSize"><div><div class="token cpp_field">dwActualSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwRequiredSize"><div><div class="token cpp_field">dwRequiredSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwDevSpecificOffset"><div><div class="token cpp_field">dwDevSpecificOffset</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwDevSpecificSize"><div><div class="token cpp_field">dwDevSpecificSize</div></div></div>;
+
+    <div class="token cpp_comment ">// product and version identification</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwModemProviderVersion"><div><div class="token cpp_field">dwModemProviderVersion</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwModemManufacturerOffset"><div><div class="token cpp_field">dwModemManufacturerOffset</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwModemManufacturerSize"><div><div class="token cpp_field">dwModemManufacturerSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwModemModelOffset"><div><div class="token cpp_field">dwModemModelOffset</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwModemModelSize"><div><div class="token cpp_field">dwModemModelSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwModemVersionOffset"><div><div class="token cpp_field">dwModemVersionOffset</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwModemVersionSize"><div><div class="token cpp_field">dwModemVersionSize</div></div></div>;
+
+    <div class="token cpp_comment ">// local option capabilities</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwDialOptions"><div><div class="token cpp_field">dwDialOptions</div></div></div>;          <div class="token cpp_comment ">// bitmap of supported values</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwCallSetupFailTimer"><div><div class="token cpp_field">dwCallSetupFailTimer</div></div></div>;   <div class="token cpp_comment ">// maximum in seconds</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwInactivityTimeout"><div><div class="token cpp_field">dwInactivityTimeout</div></div></div>;    <div class="token cpp_comment ">// maximum in seconds</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwSpeakerVolume"><div><div class="token cpp_field">dwSpeakerVolume</div></div></div>;        <div class="token cpp_comment ">// bitmap of supported values</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwSpeakerMode"><div><div class="token cpp_field">dwSpeakerMode</div></div></div>;          <div class="token cpp_comment ">// bitmap of supported values</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwModemOptions"><div><div class="token cpp_field">dwModemOptions</div></div></div>;         <div class="token cpp_comment ">// bitmap of supported values</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwMaxDTERate"><div><div class="token cpp_field">dwMaxDTERate</div></div></div>;           <div class="token cpp_comment ">// maximum value in bit/s</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMDEVCAPS::dwMaxDCERate"><div><div class="token cpp_field">dwMaxDCERate</div></div></div>;           <div class="token cpp_comment ">// maximum value in bit/s</div>
+
+    <div class="token cpp_comment ">// Variable portion for proprietary expansion</div>
+    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div>    <div class="def" id="NI$_MODEMDEVCAPS::abVariablePortion"><div><div class="token cpp_field">abVariablePortion</div></div></div> [<div class="token cpp_number ">1</div>];
+} <div class="def" id="NI$MODEMDEVCAPS"><div><div class="token cpp_type">MODEMDEVCAPS</div></div></div>, *<div class="def" id="NI$PMODEMDEVCAPS"><div><div class="token cpp_type">PMODEMDEVCAPS</div></div></div>, *<div class="def" id="NI$LPMODEMDEVCAPS"><div><div class="token cpp_type">LPMODEMDEVCAPS</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_MODEMSETTINGS"><div><div class="token cpp_type">_MODEMSETTINGS</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwActualSize"><div><div class="token cpp_field">dwActualSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwRequiredSize"><div><div class="token cpp_field">dwRequiredSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwDevSpecificOffset"><div><div class="token cpp_field">dwDevSpecificOffset</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwDevSpecificSize"><div><div class="token cpp_field">dwDevSpecificSize</div></div></div>;
+
+    <div class="token cpp_comment ">// static local options (read/write)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwCallSetupFailTimer"><div><div class="token cpp_field">dwCallSetupFailTimer</div></div></div>;       <div class="token cpp_comment ">// seconds</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwInactivityTimeout"><div><div class="token cpp_field">dwInactivityTimeout</div></div></div>;        <div class="token cpp_comment ">// seconds</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwSpeakerVolume"><div><div class="token cpp_field">dwSpeakerVolume</div></div></div>;            <div class="token cpp_comment ">// level</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwSpeakerMode"><div><div class="token cpp_field">dwSpeakerMode</div></div></div>;              <div class="token cpp_comment ">// mode</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwPreferredModemOptions"><div><div class="token cpp_field">dwPreferredModemOptions</div></div></div>;    <div class="token cpp_comment ">// bitmap</div>
+
+    <div class="token cpp_comment ">// negotiated options (read only) for current or last call</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwNegotiatedModemOptions"><div><div class="token cpp_field">dwNegotiatedModemOptions</div></div></div>;   <div class="token cpp_comment ">// bitmap</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_MODEMSETTINGS::dwNegotiatedDCERate"><div><div class="token cpp_field">dwNegotiatedDCERate</div></div></div>;        <div class="token cpp_comment ">// bit/s</div>
+
+    <div class="token cpp_comment ">// Variable portion for proprietary expansion</div>
+    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div>    <div class="def" id="NI$_MODEMSETTINGS::abVariablePortion"><div><div class="token cpp_field">abVariablePortion</div></div></div> [<div class="token cpp_number ">1</div>];
+} <div class="def" id="NI$MODEMSETTINGS"><div><div class="token cpp_type">MODEMSETTINGS</div></div></div>, *<div class="def" id="NI$PMODEMSETTINGS"><div><div class="token cpp_type">PMODEMSETTINGS</div></div></div>, *<div class="def" id="NI$LPMODEMSETTINGS"><div><div class="token cpp_type">LPMODEMSETTINGS</div></div></div>;
+
+<div class="token cpp_comment ">// Dial Options</div>
+<div class="disabled">#define DIALOPTION_BILLING  0x00000040  // Supports wait for bong &quot;$&quot;</div>
+<div class="disabled">#define DIALOPTION_QUIET    0x00000080  // Supports wait for quiet &quot;@&quot;</div>
+<div class="disabled">#define DIALOPTION_DIALTONE 0x00000100  // Supports wait for dial tone &quot;W&quot;</div>
+
+<div class="token cpp_comment ">// SpeakerVolume for MODEMDEVCAPS</div>
+<div class="disabled">#define MDMVOLFLAG_LOW      0x00000001</div>
+<div class="disabled">#define MDMVOLFLAG_MEDIUM   0x00000002</div>
+<div class="disabled">#define MDMVOLFLAG_HIGH     0x00000004</div>
+
+<div class="token cpp_comment ">// SpeakerVolume for MODEMSETTINGS</div>
+<div class="disabled">#define MDMVOL_LOW          0x00000000</div>
+<div class="disabled">#define MDMVOL_MEDIUM       0x00000001</div>
+<div class="disabled">#define MDMVOL_HIGH         0x00000002</div>
+
+<div class="token cpp_comment ">// SpeakerMode for MODEMDEVCAPS</div>
+<div class="disabled">#define MDMSPKRFLAG_OFF         0x00000001</div>
+<div class="disabled">#define MDMSPKRFLAG_DIAL        0x00000002</div>
+<div class="disabled">#define MDMSPKRFLAG_ON          0x00000004</div>
+<div class="disabled">#define MDMSPKRFLAG_CALLSETUP   0x00000008</div>
+
+<div class="token cpp_comment ">// SpeakerMode for MODEMSETTINGS</div>
+<div class="disabled">#define MDMSPKR_OFF         0x00000000</div>
+<div class="disabled">#define MDMSPKR_DIAL        0x00000001</div>
+<div class="disabled">#define MDMSPKR_ON          0x00000002</div>
+<div class="disabled">#define MDMSPKR_CALLSETUP   0x00000003</div>
+
+<div class="token cpp_comment ">// Modem Options</div>
+<div class="disabled">#define MDM_COMPRESSION      0x00000001</div>
+<div class="disabled">#define MDM_ERROR_CONTROL    0x00000002</div>
+<div class="disabled">#define MDM_FORCED_EC        0x00000004</div>
+<div class="disabled">#define MDM_CELLULAR         0x00000008</div>
+<div class="disabled">#define MDM_FLOWCONTROL_HARD 0x00000010</div>
+<div class="disabled">#define MDM_FLOWCONTROL_SOFT 0x00000020</div>
+<div class="disabled">#define MDM_CCITT_OVERRIDE   0x00000040</div>
+<div class="disabled">#define MDM_SPEED_ADJUST     0x00000080</div>
+<div class="disabled">#define MDM_TONE_DIAL        0x00000100</div>
+<div class="disabled">#define MDM_BLIND_DIAL       0x00000200</div>
+<div class="disabled">#define MDM_V23_OVERRIDE     0x00000400</div>
+<div class="disabled">#define MDM_DIAGNOSTICS      0x00000800</div>
+
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      EXTENDED MODEM OPTIONS INFORMATION</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      THE following macros define additional bits in dwPreferredModemOptions.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      These bits specify information relevant to making ISDN and GSM</div>
+<div class="token cpp_comment ">//      calls, such as which protocol to use.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+
+<div class="disabled">#define MDM_MASK_BEARERMODE   0x0000f000</div>
+<div class="disabled">#define MDM_SHIFT_BEARERMODE 12</div>
+
+<div class="disabled">#define MDM_MASK_PROTOCOLID   0x000f0000</div>
+<div class="disabled">#define MDM_SHIFT_PROTOCOLID  16</div>
+
+<div class="disabled">#define MDM_MASK_PROTOCOLDATA 0x0ff00000</div>
+<div class="disabled">#define MDM_SHIFT_PROTOCOLDATA  20</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// PROTOCOLINFO is the union of PROTOCOLID and PROTOCOLDATA ...</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_MASK_PROTOCOLINFO  (MDM_MASK_PROTOCOLID|MDM_MASK_PROTOCOLDATA)</div>
+<div class="disabled">#define MDM_SHIFT_PROTOCOLINFO MDM_SHIFT_PROTOCOLID</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// EXTENDEDINFO is the union of BEARERMODE and PROTOCOLINFO</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_MASK_EXTENDEDINFO (MDM_MASK_BEARERMODE|MDM_MASK_PROTOCOLINFO)</div>
+<div class="disabled">#define MDM_SHIFT_EXTENDEDINFO  MDM_SHIFT_BEARERMODE</div>
+
+
+<div class="disabled">#define MDM_GET_BEARERMODE(_dwOptions) \</div>
+<div class="disabled">                   (((_dwOptions)&amp;MDM_MASK_BEARERMODE) &gt;&gt; MDM_SHIFT_BEARERMODE)</div>
+
+<div class="disabled">#define MDM_SET_BEARERMODE(_dwOptions,_bm)     \</div>
+<div class="disabled">    (((_dwOptions) &amp;= ~MDM_MASK_BEARERMODE), \</div>
+<div class="disabled">    ((_dwOptions)  |= (((_bm)&lt;&lt;MDM_SHIFT_BEARERMODE)&amp;MDM_MASK_BEARERMODE)))</div>
+
+<div class="disabled">#define MDM_GET_PROTOCOLID(_dwOptions) \</div>
+<div class="disabled">               (((_dwOptions)&amp;MDM_MASK_PROTOCOLID) &gt;&gt; MDM_SHIFT_PROTOCOLID)</div>
+
+<div class="disabled">#define MDM_SET_PROTOCOLID(_dwOptions,_prot)     \</div>
+<div class="disabled">    (((_dwOptions) &amp;= ~MDM_MASK_PROTOCOLID), \</div>
+<div class="disabled">    ((_dwOptions)  |= (((_prot)&lt;&lt;MDM_SHIFT_PROTOCOLID)&amp;MDM_MASK_PROTOCOLID)))</div>
+
+<div class="disabled">#define MDM_GET_PROTOCOLDATA(_dwOptions) \</div>
+<div class="disabled">               (((_dwOptions)&amp;MDM_MASK_PROTOCOLDATA) &gt;&gt; MDM_SHIFT_PROTOCOLDATA)</div>
+
+<div class="disabled">#define MDM_SET_PROTOCOLDATA(_dwOptions,_pd)     \</div>
+<div class="disabled">   (((_dwOptions) &amp;= ~MDM_MASK_PROTOCOLDATA), \</div>
+<div class="disabled">   ((_dwOptions)  |= (((_pd)&lt;&lt;MDM_SHIFT_PROTOCOLDATA)&amp;MDM_MASK_PROTOCOLDATA)))</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// MDM_GET_PROTOCOLINFO gets the protocol-id and info bits in</div>
+<div class="token cpp_comment ">// their IN-PLACE form (preserving their place in dwModemPreferredOptions)</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_GET_PROTOCOLINFO(_dwOptions) \</div>
+<div class="disabled">               ((_dwOptions)&amp;MDM_MASK_PROTOCOLINFO)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// MDM_SET_PROTOCOLINFO takes as its argument the protocol-id and info bits in</div>
+<div class="token cpp_comment ">// their IN-PLACE form (final position within dwModemPreferredOptions)</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_SET_PROTOCOLINFO(_dwOptions,_pinfo)     \</div>
+<div class="disabled">  (((_dwOptions) &amp;= ~MDM_MASK_PROTOCOLINFO), \</div>
+<div class="disabled">  ((_dwOptions)  |= ((_pinfo)&amp;MDM_MASK_PROTOCOLINFO)))</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// MDM_GEN_PROTOCOLINFO generates the  the protocol-id and info bits in</div>
+<div class="token cpp_comment ">// their IN-PLACE form (final position  within dwModemPreferredOptions).</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_GEN_PROTOCOLINFO(_pid, _pdata) \</div>
+<div class="disabled">        ((((_pid  )&lt;&lt;MDM_SHIFT_PROTOCOLID  )&amp;MDM_MASK_PROTOCOLID  )   \</div>
+<div class="disabled">        |(((_pdata)&lt;&lt;MDM_SHIFT_PROTOCOLDATA)&amp;MDM_MASK_PROTOCOLDATA))</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// MDM_GET_EXTENDEDIONFO gets the bearermode and protocol information in</div>
+<div class="token cpp_comment ">// their IN-PLACE form (preserving their place in dwModemPreferredOptions)</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_GET_EXTENDEDINFO(_dwOptions) \</div>
+<div class="disabled">               ((_dwOptions)&amp;MDM_MASK_EXTENDEDINFO)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// MDM_SET_PROTOCOLINFO takes as its argument the bearermode and</div>
+<div class="token cpp_comment ">// protocol bits in their IN-PLACE form (final position within</div>
+<div class="token cpp_comment ">// dwModemPreferredOptions)</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_SET_EXTENDEDINFO(_dwOptions,_extinfo)     \</div>
+<div class="disabled">  (((_dwOptions) &amp;= ~MDM_MASK_EXTENDEDINFO), \</div>
+<div class="disabled">  ((_dwOptions)  |= ((_extinfo) &amp; MDM_MASK_EXTENDEDINFO)))</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// MDM_GEN_EXTENDEDINFO generates the bearermode and protocol information</div>
+<div class="token cpp_comment ">// in their IN-PLACE form (final position within dwModemPreferredOptions0.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_GEN_EXTENDEDINFO(_bearermode, _pinfo)   \</div>
+<div class="disabled">        (((_pinfo)&amp;MDM_MASK_PROTOCOLINFO  )         \</div>
+<div class="disabled">         |(((_bearermode)&lt;&lt;MDM_SHIFT_BEARERMODE)&amp;MDM_MASK_BEARERMODE))</div>
+
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  BEARER MODES</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_BEARERMODE_ANALOG   0x0</div>
+<div class="disabled">#define MDM_BEARERMODE_ISDN     0x1</div>
+<div class="disabled">#define MDM_BEARERMODE_GSM      0x2</div>
+
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  PROTOCOL IDs</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_PROTOCOLID_DEFAULT  0x0</div>
+<div class="disabled">#define MDM_PROTOCOLID_HDLCPPP  0x1</div>
+<div class="disabled">#define MDM_PROTOCOLID_V128     0x2</div>
+<div class="disabled">#define MDM_PROTOCOLID_X75      0x3</div>
+<div class="disabled">#define MDM_PROTOCOLID_V110     0x4</div>
+<div class="disabled">#define MDM_PROTOCOLID_V120     0x5</div>
+<div class="disabled">#define MDM_PROTOCOLID_AUTO     0x6 // Auto protocol detection.</div>
+<div class="disabled">#define MDM_PROTOCOLID_ANALOG   0x7 // Applicable only to GSM</div>
+<div class="disabled">#define MDM_PROTOCOLID_GPRS     0x8</div>
+<div class="disabled">#define MDM_PROTOCOLID_PIAFS    0x9</div>
+
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  HDLC PPP PROTOCOL INFORMATION</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Following are specific to the HDLC-PPP protocol.</div>
+<div class="token cpp_comment ">// The shifts are w.r.t. the start of the PROTOCOLDATA field.</div>
+
+<div class="disabled">#define MDM_SHIFT_HDLCPPP_SPEED    0x0</div>
+<div class="disabled">#define MDM_MASK_HDLCPPP_SPEED     0x7  // 3 bits</div>
+
+<div class="disabled">#define MDM_HDLCPPP_SPEED_DEFAULT  0x0</div>
+<div class="disabled">#define MDM_HDLCPPP_SPEED_64K      0x1</div>
+<div class="disabled">#define MDM_HDLCPPP_SPEED_56K      0x2</div>
+
+
+<div class="disabled">#define MDM_SHIFT_HDLCPPP_AUTH     0x3</div>
+<div class="disabled">#define MDM_MASK_HDLCPPP_AUTH      (0x7&lt;&lt;3)  // 3 bits</div>
+
+<div class="disabled">#define MDM_HDLCPPP_AUTH_DEFAULT   0x0</div>
+<div class="disabled">#define MDM_HDLCPPP_AUTH_NONE      0x1</div>
+<div class="disabled">#define MDM_HDLCPPP_AUTH_PAP       0x2</div>
+<div class="disabled">#define MDM_HDLCPPP_AUTH_CHAP      0x3</div>
+<div class="disabled">#define MDM_HDLCPPP_AUTH_MSCHAP    0x4</div>
+
+
+<div class="disabled">#define MDM_SHIFT_HDLCPPP_ML       0x6</div>
+<div class="disabled">#define MDM_MASK_HDLCPPP_ML        (0x3&lt;&lt;6)  // 2 bits</div>
+
+<div class="disabled">#define MDM_HDLCPPP_ML_DEFAULT     0x0</div>
+<div class="disabled">#define MDM_HDLCPPP_ML_NONE        0x1</div>
+<div class="disabled">#define MDM_HDLCPPP_ML_2           0x2</div>
+
+<div class="disabled">#define MDM_GEN_HDLCPPP_PROTOCOL_DATA(_speed, _auth, _ml)           \</div>
+<div class="disabled">    ((((_speed)&lt;&lt;MDM_SHIFT_HDLCPPP_SPEED)&amp;MDM_MASK_HDLCPPP_SPEED)   \</div>
+<div class="disabled">    |(((_auth )&lt;&lt;MDM_SHIFT_HDLCPPP_AUTH )&amp;MDM_MASK_HDLCPPP_AUTH )   \</div>
+<div class="disabled">    |(((_ml   )&lt;&lt;MDM_SHIFT_HDLCPPP_ML   )&amp;MDM_MASK_HDLCPPP_ML   ))</div>
+
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_64K        \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_64K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_DEFAULT,   \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_DEFAULT      \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_56K        \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_56K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_DEFAULT,   \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_DEFAULT      \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_112K       \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_56K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_DEFAULT,   \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_2            \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_112K_PAP   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_56K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_PAP,       \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_2            \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_112K_CHAP  \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_56K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_CHAP,      \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_2            \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_112K_MSCHAP\</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_56K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_MSCHAP,    \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_2            \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_128K       \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_64K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_DEFAULT,   \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_2            \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_128K_PAP   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_64K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_PAP,       \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_2            \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_128K_CHAP  \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_64K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_CHAP,      \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_2            \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_HDLCPPP_128K_MSCHAP\</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_HDLCPPP,         \</div>
+<div class="disabled">        MDM_GEN_HDLCPPP_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_HDLCPPP_SPEED_64K,      \</div>
+<div class="disabled">            MDM_HDLCPPP_AUTH_MSCHAP,    \</div>
+<div class="disabled">            MDM_HDLCPPP_ML_2            \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  V120 PROTOCOL INFORMATION</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The shifts are w.r.t. the start of the PROTOCOLDATA field.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+
+<div class="disabled">#define MDM_SHIFT_V120_SPEED    0x0</div>
+<div class="disabled">#define MDM_MASK_V120_SPEED     0x7  // 3 bits</div>
+
+<div class="disabled">#define MDM_V120_SPEED_DEFAULT  0x0</div>
+<div class="disabled">#define MDM_V120_SPEED_64K      0x1</div>
+<div class="disabled">#define MDM_V120_SPEED_56K      0x2</div>
+
+
+<div class="disabled">#define MDM_SHIFT_V120_ML       0x6</div>
+<div class="disabled">#define MDM_MASK_V120_ML        (0x3&lt;&lt;6)  // 2 bits</div>
+
+<div class="disabled">#define MDM_V120_ML_DEFAULT     0x0</div>
+<div class="disabled">#define MDM_V120_ML_NONE        0x1</div>
+<div class="disabled">#define MDM_V120_ML_2           0x2</div>
+
+
+<div class="disabled">#define MDM_GEN_V120_PROTOCOL_DATA(_speed, _ml)               \</div>
+<div class="disabled">    ((((_speed)&lt;&lt;MDM_SHIFT_V120_SPEED)&amp;MDM_MASK_V120_SPEED)   \</div>
+<div class="disabled">    |(((_ml   )&lt;&lt;MDM_SHIFT_V120_ML   )&amp;MDM_MASK_V120_ML   ))</div>
+
+
+<div class="disabled">#define MDM_PROTOCOL_V120_64K       \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V120,        \</div>
+<div class="disabled">        MDM_GEN_V120_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V120_SPEED_64K,     \</div>
+<div class="disabled">            MDM_V120_ML_NONE        \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V120_56K       \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V120,        \</div>
+<div class="disabled">        MDM_GEN_V120_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V120_SPEED_56K,     \</div>
+<div class="disabled">            MDM_V120_ML_NONE        \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V120_112K      \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V120,        \</div>
+<div class="disabled">        MDM_GEN_V120_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V120_SPEED_56K,     \</div>
+<div class="disabled">            MDM_V120_ML_2           \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V120_128K      \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V120,        \</div>
+<div class="disabled">        MDM_GEN_V120_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V120_SPEED_64K,     \</div>
+<div class="disabled">            MDM_V120_ML_2           \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  X75 PROTOCOL INFORMATION</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The shifts are w.r.t. the start of the PROTOCOLDATA field.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+
+
+<div class="disabled">#define MDM_SHIFT_X75_DATA    0x0</div>
+<div class="disabled">#define MDM_MASK_X75_DATA     0x7  // 3 bits</div>
+
+<div class="disabled">#define MDM_X75_DATA_DEFAULT  0x0</div>
+<div class="disabled">#define MDM_X75_DATA_64K      0x1</div>
+<div class="disabled">#define MDM_X75_DATA_128K     0x2</div>
+<div class="disabled">#define MDM_X75_DATA_T_70     0x3</div>
+<div class="disabled">#define MDM_X75_DATA_BTX      0x4</div>
+
+<div class="disabled">#define MDM_GEN_X75_PROTOCOL_DATA(_data) \</div>
+<div class="disabled">    (((_data)&lt;&lt;MDM_SHIFT_X75_DATA)&amp;MDM_MASK_X75_DATA)</div>
+
+
+<div class="disabled">#define MDM_PROTOCOL_X75_64K        \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_X75,         \</div>
+<div class="disabled">        MDM_GEN_X75_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_X75_DATA_64K        \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_X75_128K       \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_X75,         \</div>
+<div class="disabled">        MDM_GEN_X75_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_X75_DATA_128K       \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_X75_T_70       \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_X75,         \</div>
+<div class="disabled">        MDM_GEN_X75_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_X75_DATA_T_70       \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )                           \</div>
+
+<div class="disabled">#define MDM_PROTOCOL_X75_BTX        \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_X75,         \</div>
+<div class="disabled">        MDM_GEN_X75_PROTOCOL_DATA ( \</div>
+<div class="disabled">            MDM_X75_DATA_BTX        \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  V110 PROTOCOL INFORMATION</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The shifts are w.r.t. the start of the PROTOCOLDATA field.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+
+
+<div class="disabled">#define MDM_SHIFT_V110_SPEED   0x0</div>
+<div class="disabled">#define MDM_MASK_V110_SPEED    0xf  // 4 bits</div>
+
+<div class="disabled">#define MDM_V110_SPEED_DEFAULT 0x0</div>
+<div class="disabled">#define MDM_V110_SPEED_1DOT2K  0x1</div>
+<div class="disabled">#define MDM_V110_SPEED_2DOT4K  0x2</div>
+<div class="disabled">#define MDM_V110_SPEED_4DOT8K  0x3</div>
+<div class="disabled">#define MDM_V110_SPEED_9DOT6K  0x4</div>
+<div class="disabled">#define MDM_V110_SPEED_12DOT0K 0x5</div>
+<div class="disabled">#define MDM_V110_SPEED_14DOT4K 0x6</div>
+<div class="disabled">#define MDM_V110_SPEED_19DOT2K 0x7</div>
+<div class="disabled">#define MDM_V110_SPEED_28DOT8K 0x8</div>
+<div class="disabled">#define MDM_V110_SPEED_38DOT4K 0x9</div>
+<div class="disabled">#define MDM_V110_SPEED_57DOT6K 0xA</div>
+
+<div class="disabled">#define MDM_GEN_V110_PROTOCOL_DATA(_data) \</div>
+<div class="disabled">    (((_data)&lt;&lt;MDM_SHIFT_V110_SPEED)&amp;MDM_MASK_V110_SPEED)</div>
+
+
+<div class="disabled">#define MDM_PROTOCOL_V110_1DOT2K    \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_1DOT2K   \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_2DOT4K    \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_2DOT4K   \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_4DOT8K    \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_4DOT8K   \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_9DOT6K    \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_9DOT6K   \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_12DOT0K   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_12DOT0K  \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_14DOT4K   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_14DOT4K  \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_19DOT2K   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_19DOT2K  \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_28DOT8K   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_28DOT8K  \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_38DOT4K   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_38DOT4K  \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_V110_57DOT6K   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_V110,        \</div>
+<div class="disabled">        MDM_GEN_V110_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_V110_SPEED_57DOT6K  \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  AUTO PROTOCOL INFORMATION (ie, when the protocol is detected automatically)</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The shifts are w.r.t. the start of the PROTOCOLDATA field.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Following are specific to the AUTO-protocol</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define MDM_SHIFT_AUTO_SPEED    0x0</div>
+<div class="disabled">#define MDM_MASK_AUTO_SPEED     0x7  // 3 bits</div>
+<div class="disabled">#define MDM_AUTO_SPEED_DEFAULT  0x0</div>
+
+<div class="disabled">#define MDM_SHIFT_AUTO_ML       0x6</div>
+<div class="disabled">#define MDM_MASK_AUTO_ML        (0x3&lt;&lt;6)  // 2 bits</div>
+<div class="disabled">#define MDM_AUTO_ML_DEFAULT     0x0</div>
+<div class="disabled">#define MDM_AUTO_ML_NONE        0x1</div>
+<div class="disabled">#define MDM_AUTO_ML_2           0x2</div>
+
+<div class="disabled">#define MDM_GEN_AUTO_PROTOCOL_DATA(_speed, _ml)             \</div>
+<div class="disabled">    ((((_speed)&lt;&lt;MDM_SHIFT_AUTO_SPEED)&amp;MDM_MASK_AUTO_SPEED) \</div>
+<div class="disabled">    |(((_ml   )&lt;&lt;MDM_SHIFT_AUTO_ML   )&amp;MDM_MASK_AUTO_ML))</div>
+
+
+<div class="disabled">#define MDM_PROTOCOL_AUTO_1CH       \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_AUTO,        \</div>
+<div class="disabled">        MDM_GEN_AUTO_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_AUTO_SPEED_DEFAULT, \</div>
+<div class="disabled">            MDM_AUTO_ML_NONE        \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_AUTO_2CH       \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(           \</div>
+<div class="disabled">        MDM_PROTOCOLID_AUTO,        \</div>
+<div class="disabled">        MDM_GEN_AUTO_PROTOCOL_DATA (\</div>
+<div class="disabled">            MDM_AUTO_SPEED_DEFAULT, \</div>
+<div class="disabled">            MDM_AUTO_ML_2           \</div>
+<div class="disabled">            )                       \</div>
+<div class="disabled">        )</div>
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  ANALOG PROTOCOL INFORMATION (Applicable only to GSM)</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Following are specific to GSM Analog protocol</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define MDM_ANALOG_RLP_ON       0x0</div>
+<div class="disabled">#define MDM_ANALOG_RLP_OFF      0x1</div>
+<div class="disabled">#define MDM_ANALOG_V34          0x2</div>
+
+<div class="disabled">#define MDM_GEN_ANALOG_PROTOCOL_DATA(_rlp) \</div>
+<div class="disabled">    (_rlp)</div>
+
+
+<div class="disabled">#define MDM_PROTOCOL_ANALOG_RLP         \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_ANALOG,          \</div>
+<div class="disabled">        MDM_GEN_ANALOG_PROTOCOL_DATA (  \</div>
+<div class="disabled">            MDM_ANALOG_RLP_ON           \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_ANALOG_NRLP        \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_ANALOG,          \</div>
+<div class="disabled">        MDM_GEN_ANALOG_PROTOCOL_DATA (  \</div>
+<div class="disabled">            MDM_ANALOG_RLP_OFF          \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  v34 anolog for isdn</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define MDM_PROTOCOL_ANALOG_V34         \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(               \</div>
+<div class="disabled">        MDM_PROTOCOLID_ANALOG,          \</div>
+<div class="disabled">        MDM_GEN_ANALOG_PROTOCOL_DATA (  \</div>
+<div class="disabled">            MDM_ANALOG_V34              \</div>
+<div class="disabled">            )                           \</div>
+<div class="disabled">        )</div>
+
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  GPRS PROTOCOL INFORMATION (Applicable only to GSM)</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Following are specific to GPRS protocol</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define MDM_PROTOCOL_GPRS             \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(             \</div>
+<div class="disabled">        MDM_PROTOCOLID_GPRS,          \</div>
+<div class="disabled">        0                             \</div>
+<div class="disabled">        )</div>
+
+
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//  PIAFS PROTOCOL INFORMATION</div>
+<div class="token cpp_comment ">//=========================================================================</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Following are specific to PIAFS protocol</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define MDM_PIAFS_INCOMING            0</div>
+<div class="disabled">#define MDM_PIAFS_OUTGOING            1</div>
+
+<div class="disabled">#define MDM_PROTOCOL_PIAFS_INCOMING   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(             \</div>
+<div class="disabled">        MDM_PROTOCOLID_PIAFS,         \</div>
+<div class="disabled">        MDM_PIAFS_INCOMING            \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#define MDM_PROTOCOL_PIAFS_OUTGOING   \</div>
+<div class="disabled">    MDM_GEN_PROTOCOLINFO(             \</div>
+<div class="disabled">        MDM_PROTOCOLID_PIAFS,         \</div>
+<div class="disabled">        MDM_PIAFS_OUTGOING           \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* _MCX_H_ */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BYTE': {
+        'displayNameInHtml': '<span class="cpp_type">BYTE</span>',
+        'impls': [
+            'NI$BYTE'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BYTE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

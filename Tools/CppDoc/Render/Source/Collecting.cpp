@@ -742,7 +742,35 @@ Ptr<GlobalLinesRecord> Collect(
 			else
 			{
 				auto flr = global->fileLines[currentFilePath];
-				flr->lines.Add(currentLineNumber, hlr);
+				// some header file will be included multiple times
+				// ignore them if we generated the same HTML code
+				// e.g. pshpack4.h
+
+				vint index = flr->lines.Keys().IndexOf(currentLineNumber);
+				if (index == -1)
+				{
+					flr->lines.Add(currentLineNumber, hlr);
+				}
+				else
+				{
+					auto& hlr2 = flr->lines.Values()[index];
+					if (hlr.htmlCode != hlr2.htmlCode)
+					{
+						if (hlr.htmlCode == L"")
+						{
+							// ignore since the incomming code is empty
+						}
+						else if (hlr2.htmlCode == L"")
+						{
+							// replace the previous generated empty code
+							flr->lines.Set(currentLineNumber, hlr);
+						}
+						else
+						{
+							throw Exception(L"Generated different HTML code for same part of a file.");
+						}
+					}
+				}
 				currentLineNumber += hlr.lineCount;
 			}
 		});

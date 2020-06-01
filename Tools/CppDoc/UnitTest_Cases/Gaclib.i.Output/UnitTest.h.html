@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UnitTest.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+UI::Console
+
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_UNITTEST</div>
+<div class="disabled">#define VCZH_UNITTEST</div>
+
+<div class="disabled">#include &quot;../String.h&quot;</div>
+<div class="disabled">#include &quot;../Function.h&quot;</div>
+<div class="disabled">#include &quot;../Exception.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[22]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::unittest"><div class="ref" onclick="jumpToSymbol([], ['vl::unittest'], [], [])">unittest</div></div>
+	{
+		<div class="token cpp_keyword ">using</div> <div class="def" id="NI$vl::unittest::UnitTestFileProc"><div><div class="token cpp_type">UnitTestFileProc</div></div></div> = <div class="token cpp_keyword ">void</div>(*)();
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// A static class containing all unit test operations.</div>
+		<div class="token cpp_comment ">/// 1) Writing test cases:</div>
+		<div class="token cpp_comment ">///   TEST_FILE</div>
+		<div class="token cpp_comment ">///   {</div>
+		<div class="token cpp_comment ">///     TEST_CATEGORY(L&quot;Category Description&quot;){ ... });</div>
+		<div class="token cpp_comment ">///     TEST_CASE(L&quot;Test Case Description&quot;){ ... });</div>
+		<div class="token cpp_comment ">///   }</div>
+		<div class="token cpp_comment ">///   A category could contains other categories and cases, but a case should only contain assertions.</div>
+		<div class="token cpp_comment ">/// 2) Writing asserts:</div>
+		<div class="token cpp_comment ">///   TEST_CASE_ASSERT(condition): An assertion that is also a test case, only legal to call inside a category, with a description equivalents to the condition.</div>
+		<div class="token cpp_comment ">///   TEST_ASSERT(condition); Only legal to call inside a case. It passes when condition evaluates to true.</div>
+		<div class="token cpp_comment ">///   TEST_ERROR(condition); Only legal to call inside a case. It passes when condition throws vl::Error</div>
+		<div class="token cpp_comment ">///   TEST_EXCEPTION(statement, exception, callback); Only legal to call inside a case. It passes when an exception of the expected type is thrown, and callback(exception) passes.</div>
+		<div class="token cpp_comment ">/// 3) Other functions</div>
+		<div class="token cpp_comment ">///   TEST_PRINT(message); Print neutral message.</div>
+		<div class="token cpp_comment ">/// 4)</div>
+		<div class="token cpp_comment ">///   You should call [M:vl.unittest.UnitTest.RunAndDisposeTests] in your main function to run all test cases, and return the value from this function.</div>
+		<div class="token cpp_comment ">///   When &quot;/D&quot; is provided, the test program crashes at any failed assertiong.</div>
+		<div class="token cpp_comment ">///   When &quot;/R&quot; is provided, the test program consumes all failed assertions and run all cases. A test case stopped at the first failed assertion. Exit code will be 1 when any case fails.</div>
+		<div class="token cpp_comment ">///   When no argument is provided</div>
+		<div class="token cpp_comment ">///     In Windows, it becomes &quot;/D&quot; only when a debugger is attached, in other cases it becomes &quot;/R&quot;.</div>
+		<div class="token cpp_comment ">///     In other platforms, it becomes &quot;/R&quot;</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::unittest::UnitTest"><div><div class="token cpp_type">UnitTest</div></div></div>
+		{
+		<div class="token cpp_keyword ">public</div>:
+			<div class="def" id="FB$vl::unittest::UnitTest::$__ctor@()[decl0]"><div><div class="token cpp_function">UnitTest</div></div></div>() = <div class="token cpp_keyword ">delete</div>;
+
+			<div class="token cpp_keyword ">enum</div> <div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::unittest::UnitTest::MessageKind"><div><div class="token cpp_type">MessageKind</div></div></div>
+			{
+				<div class="def" id="NI$vl::unittest::UnitTest::MessageKind::Info"><div><div class="token cpp_enum">Info</div></div></div>,
+				<div class="def" id="NI$vl::unittest::UnitTest::MessageKind::Error"><div><div class="token cpp_enum">Error</div></div></div>,
+				<div class="def" id="NI$vl::unittest::UnitTest::MessageKind::File"><div><div class="token cpp_enum">File</div></div></div>,
+				<div class="def" id="NI$vl::unittest::UnitTest::MessageKind::Category"><div><div class="token cpp_enum">Category</div></div></div>,
+				<div class="def" id="NI$vl::unittest::UnitTest::MessageKind::Case"><div><div class="token cpp_enum">Case</div></div></div>,
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Print a message with specified color.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The content.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;kind&quot;&gt;The kind of the content.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)'], [], [])"><div class="token cpp_function">PrintMessage</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)[decl0]::string"><div>string</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTest::MessageKind'], [], [])"><div class="token cpp_type">MessageKind</div></div> <div class="def" id="NI$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)[decl0]::kind"><div>kind</div></div>);
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Run all test cases.&lt;/summary&gt;</div>
+<div class="disabled">#ifdef VCZH_MSVC</div>
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)'], [], [])"><div class="token cpp_function">RunAndDisposeTests</div></div></div>(<div class="token cpp_keyword ">int</div> <div class="def" id="NI$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]::argc"><div>argc</div></div>, <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]::argv"><div>argv</div></div>[]);
+<div class="disabled">#else</div>
+<div class="disabled">			static int RunAndDisposeTests(int argc, char* argv[]);
+#endif</div>
+
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)'], [], [])"><div class="token cpp_function">RegisterTestFile</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)[decl0]::fileName"><div>fileName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTestFileProc'], [], [])"><div class="token cpp_type">UnitTestFileProc</div></div> <div class="def" id="NI$vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)[decl0]::testProc"><div>testProc</div></div>);
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)'], [], [])"><div class="token cpp_function">RunCategoryOrCase</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[decl0]::description"><div>description</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[decl0]::isCategory"><div>isCategory</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>()&gt;&amp;&amp; <div class="def" id="NI$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[decl0]::callback"><div>callback</div></div>);
+			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::unittest::UnitTest::EnsureLegalToAssert@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTest::EnsureLegalToAssert@void()'], [], [])"><div class="token cpp_function">EnsureLegalToAssert</div></div></div>();
+		};
+
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::unittest::UnitTestFile"><div><div class="token cpp_type">UnitTestFile</div></div></div>
+		{
+		<div class="token cpp_keyword ">public</div>:
+			<div class="def" id="FB$vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]"><div><div class="token cpp_function">UnitTestFile</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::fileName"><div><div class="token cpp_argument">fileName</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTestFileProc'], [], [])"><div class="token cpp_type">UnitTestFileProc</div></div> <div class="def" id="NI$vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::testProc"><div><div class="token cpp_argument">testProc</div></div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTest'], [], [])"><div class="token cpp_type">UnitTest</div></div>::<div class="ref" onclick="jumpToSymbol(['vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)'], ['vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)'], [], [])"><div class="token cpp_function">RegisterTestFile</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::fileName'], [], [])"><div class="token cpp_argument">fileName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::testProc'], [], [])"><div class="token cpp_argument">testProc</div></div>);
+			}
+		};
+
+		<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::unittest::UnitTestAssertError"><div><div class="token cpp_type">UnitTestAssertError</div></div></div>
+		{
+			<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>*				<div class="def" id="NI$vl::unittest::UnitTestAssertError::message"><div><div class="token cpp_field">message</div></div></div>;
+
+			<div class="def" id="FB$vl::unittest::UnitTestAssertError::$__ctor@(wchar_t const *)[impl0]"><div><div class="token cpp_function">UnitTestAssertError</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::unittest::UnitTestAssertError::$__ctor@(wchar_t const *)[impl0]::_message"><div><div class="token cpp_argument">_message</div></div></div>) :message(<div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTestAssertError::$__ctor@(wchar_t const *)[impl0]::_message'], [], [])"><div class="token cpp_argument">_message</div></div>) {}
+		};
+
+		<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::unittest::UnitTestConfigError"><div><div class="token cpp_type">UnitTestConfigError</div></div></div>
+		{
+			<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>*				<div class="def" id="NI$vl::unittest::UnitTestConfigError::message"><div><div class="token cpp_field">message</div></div></div>;
+
+			<div class="def" id="FB$vl::unittest::UnitTestConfigError::$__ctor@(wchar_t const *)[impl0]"><div><div class="token cpp_function">UnitTestConfigError</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::unittest::UnitTestConfigError::$__ctor@(wchar_t const *)[impl0]::_message"><div><div class="token cpp_argument">_message</div></div></div>) :message(<div class="ref" onclick="jumpToSymbol([], ['vl::unittest::UnitTestConfigError::$__ctor@(wchar_t const *)[impl0]::_message'], [], [])"><div class="token cpp_argument">_message</div></div>) {}
+		};
+
+<div class="disabled">#define TEST_FILE\</div>
+<div class="disabled">		static void VLPPTEST_TESTFILE();\</div>
+<div class="disabled">		static ::vl::unittest::UnitTestFile VLPPTEST_TESTFILE_INSTANCE(__FILE__, &amp;VLPPTEST_TESTFILE);\</div>
+<div class="disabled">		static void VLPPTEST_TESTFILE()\</div>
+
+<div class="disabled">#define TEST_CATEGORY(DESCRIPTION)\</div>
+<div class="disabled">		::vl::unittest::UnitTest::RunCategoryOrCase((DESCRIPTION), true, [&amp;]()\</div>
+
+<div class="disabled">#define TEST_CASE(DESCRIPTION)\</div>
+<div class="disabled">		::vl::unittest::UnitTest::RunCategoryOrCase((DESCRIPTION), false, [&amp;]()\</div>
+
+<div class="disabled">#define TEST_ASSERT(CONDITION)\</div>
+<div class="disabled">		do{\</div>
+<div class="disabled">			::vl::unittest::UnitTest::EnsureLegalToAssert();\</div>
+<div class="disabled">			if(!(CONDITION))throw ::vl::unittest::UnitTestAssertError(L&quot;Assertion failure: &quot; #CONDITION);\</div>
+<div class="disabled">		}while(0)\</div>
+
+<div class="disabled">#define TEST_ERROR(STATEMENT)\</div>
+<div class="disabled">		do{\</div>
+<div class="disabled">			::vl::unittest::UnitTest::EnsureLegalToAssert();\</div>
+<div class="disabled">			try{STATEMENT; throw ::vl::unittest::UnitTestAssertError(L&quot;Expect an error but nothing occurred: &quot; #STATEMENT);}\</div>
+<div class="disabled">			catch(const ::vl::Error&amp;){}\</div>
+<div class="disabled">			catch(const ::vl::unittest::UnitTestAssertError&amp;) { throw; }\</div>
+<div class="disabled">			catch (const ::vl::unittest::UnitTestConfigError&amp;) { throw; }\</div>
+<div class="disabled">		}while(0)\</div>
+
+<div class="disabled">#define TEST_EXCEPTION(STATEMENT,EXCEPTION,ASSERT_FUNCTION)\</div>
+<div class="disabled">		do{\</div>
+<div class="disabled">			auto __ASSERT_FUNCTION__ = ASSERT_FUNCTION;\</div>
+<div class="disabled">			try{STATEMENT; throw ::vl::unittest::UnitTestAssertError(L&quot;Expect [&quot; #EXCEPTION &quot;] but nothing occurred: &quot; #STATEMENT);}\</div>
+<div class="disabled">			catch(const EXCEPTION&amp; e){ __ASSERT_FUNCTION__(e); }\</div>
+<div class="disabled">			catch(...){ throw ::vl::unittest::UnitTestAssertError(L&quot;Expect [&quot; #EXCEPTION &quot;] but get unexpected exception: &quot; #STATEMENT); }\</div>
+<div class="disabled">		}while(0)\</div>
+
+<div class="disabled">#define TEST_PRINT(MESSAGE)\</div>
+<div class="disabled">		::vl::unittest::UnitTest::PrintMessage((MESSAGE), ::vl::unittest::UnitTest::MessageKind::Info)\</div>
+
+<div class="disabled">#define TEST_CASE_ASSERT(CONDITION)\</div>
+<div class="disabled">		TEST_CASE(L ## # CONDITION) { TEST_ASSERT(CONDITION); })\</div>
+
+	}
+}
+
+<div class="disabled">#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::Func': {
+        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Func'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::unittest': {
+        'displayNameInHtml': 'vl::unittest',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::unittest',
+            'NF[1]$vl::unittest'
+        ]
+    },
+    'vl::unittest::UnitTest': {
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>',
+        'impls': [
+            'NI$vl::unittest::UnitTest'
+        ],
+        'decls': []
+    },
+    'vl::unittest::UnitTest::EnsureLegalToAssert@void()': {
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">EnsureLegalToAssert</span>()',
+        'impls': [
+            'FB$vl::unittest::UnitTest::EnsureLegalToAssert@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::unittest::UnitTest::EnsureLegalToAssert@void()[decl0]'
+        ]
+    },
+    'vl::unittest::UnitTest::MessageKind': {
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_type">MessageKind</span>',
+        'impls': [
+            'NI$vl::unittest::UnitTest::MessageKind'
+        ],
+        'decls': []
+    },
+    'vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)': {
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">PrintMessage</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">MessageKind</span>)',
+        'impls': [
+            'FB$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)[decl0]'
+        ]
+    },
+    'vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)': {
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">RegisterTestFile</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">UnitTestFileProc</span>)',
+        'impls': [
+            'FB$vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)[decl0]'
+        ]
+    },
+    'vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)': {
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">RunAndDisposeTests</span>(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">wchar_t</span> * *)',
+        'impls': [
+            'FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]'
+        ]
+    },
+    'vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)': {
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">RunCategoryOrCase</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>, <span class="cpp_type">Func</span>&lt;<span class="cpp_keyword">void</span>()&gt; &&)',
+        'impls': [
+            'FB$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[decl0]'
+        ]
+    },
+    'vl::unittest::UnitTestAssertError::$__ctor@(wchar_t const *)[impl0]::_message': {
+        'displayNameInHtml': '_message',
+        'impls': [
+            'NI$vl::unittest::UnitTestAssertError::$__ctor@(wchar_t const *)[impl0]::_message'
+        ],
+        'decls': []
+    },
+    'vl::unittest::UnitTestConfigError::$__ctor@(wchar_t const *)[impl0]::_message': {
+        'displayNameInHtml': '_message',
+        'impls': [
+            'NI$vl::unittest::UnitTestConfigError::$__ctor@(wchar_t const *)[impl0]::_message'
+        ],
+        'decls': []
+    },
+    'vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::fileName': {
+        'displayNameInHtml': 'fileName',
+        'impls': [
+            'NI$vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::fileName'
+        ],
+        'decls': []
+    },
+    'vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::testProc': {
+        'displayNameInHtml': 'testProc',
+        'impls': [
+            'NI$vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::testProc'
+        ],
+        'decls': []
+    },
+    'vl::unittest::UnitTestFileProc': {
+        'displayNameInHtml': '<span class="cpp_type">UnitTestFileProc</span>',
+        'impls': [
+            'NI$vl::unittest::UnitTestFileProc'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::unittest::UnitTest::EnsureLegalToAssert@void()[decl0]': null,
+    'FB$vl::unittest::UnitTest::EnsureLegalToAssert@void()[impl0]': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'FB$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)[decl0]': null,
+    'FB$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)[impl0]': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'FB$vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)[decl0]': null,
+    'FB$vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)[impl0]': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]': null,
+    'FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[impl0]': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'FB$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[decl0]': null,
+    'FB$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[impl0]': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::unittest': null,
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::unittest': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': null,
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NI$vl::Func': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::unittest::UnitTest': null,
+    'NI$vl::unittest::UnitTest::MessageKind': null,
+    'NI$vl::unittest::UnitTestAssertError::$__ctor@(wchar_t const *)[impl0]::_message': null,
+    'NI$vl::unittest::UnitTestConfigError::$__ctor@(wchar_t const *)[impl0]::_message': null,
+    'NI$vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::fileName': null,
+    'NI$vl::unittest::UnitTestFile::$__ctor@(char const *, ::vl::unittest::UnitTestFileProc)[impl0]::testProc': null,
+    'NI$vl::unittest::UnitTestFileProc': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

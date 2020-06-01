@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;Basic.h&quot;
+#include &lt;time.h&gt;</div>
+<div class="disabled">#if defined VCZH_MSVC
+#include &lt;Windows.h&gt;</div>
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">#include &lt;memory.h&gt;</div>
+<div class="disabled">#include &lt;sys/time.h&gt;
+#endif</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[27]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+
+<div class="token cpp_comment ">/***********************************************************************
+NotCopyable
+***********************************************************************/</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>::<div class="def" id="FB$vl::NotCopyable::$__ctor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable::$__ctor@()'], [], [])"><div class="token cpp_function">NotCopyable</div></div></div>()
+	{
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>::<div class="def" id="FB$vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)'], [], [])"><div class="token cpp_function">NotCopyable</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>&amp;)
+	{
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>::<div class="def" id="FB$vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>&amp;)
+	{
+		<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+Error
+***********************************************************************/</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>::<div class="def" id="FB$vl::Error::$__ctor@(wchar_t const *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Error::$__ctor@(wchar_t const *)'], [], [])"><div class="token cpp_function">Error</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::Error::$__ctor@(wchar_t const *)[impl0]::_description"><div><div class="token cpp_argument">_description</div></div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['vl::Error::description'], [], [])"><div class="token cpp_field">description</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::Error::$__ctor@(wchar_t const *)[impl0]::_description'], [], [])"><div class="token cpp_argument">_description</div></div>;
+	}
+
+	<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>::<div class="def" id="FB$vl::Error::Description@wchar_t const *()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Error::Description@wchar_t const *()'], [], [])"><div class="token cpp_function">Description</div></div></div>()<div class="token cpp_keyword ">const</div>
+	{
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error::description'], [], [])"><div class="token cpp_field">description</div></div>;
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+Object
+***********************************************************************/</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>::<div class="def" id="FB$vl::Object::~Object@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Object::~Object@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">Object</div></div></div>()
+	{
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+DateTime
+***********************************************************************/</div>
+
+<div class="disabled">#if defined VCZH_MSVC</div>
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="def" id="FB$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]"><div><div class="token cpp_function">SystemTimeToDateTime</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>&amp; <div class="def" id="NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime"><div><div class="token cpp_argument">systemTime</div></div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="def" id="NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime"><div>dateTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::year'], [], [])"><div class="token cpp_field">year</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wYear'], [], [])"><div class="token cpp_field">wYear</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::month'], [], [])"><div class="token cpp_field">month</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wMonth'], [], [])"><div class="token cpp_field">wMonth</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::dayOfWeek'], [], [])"><div class="token cpp_field">dayOfWeek</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wDayOfWeek'], [], [])"><div class="token cpp_field">wDayOfWeek</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::day'], [], [])"><div class="token cpp_field">day</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wDay'], [], [])"><div class="token cpp_field">wDay</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::hour'], [], [])"><div class="token cpp_field">hour</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wHour'], [], [])"><div class="token cpp_field">wHour</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::minute'], [], [])"><div class="token cpp_field">minute</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wMinute'], [], [])"><div class="token cpp_field">wMinute</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::second'], [], [])"><div class="token cpp_field">second</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wSecond'], [], [])"><div class="token cpp_field">wSecond</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::milliseconds'], [], [])"><div class="token cpp_field">milliseconds</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wMilliseconds'], [], [])"><div class="token cpp_field">wMilliseconds</div></div>;
+
+		<div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div> <div class="def" id="NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::fileTime"><div>fileTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)'], ['SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)'], [], [])"><div class="token cpp_function">SystemTimeToFileTime</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'], [], [])"><div class="token cpp_argument">systemTime</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::fileTime'], [], [])">fileTime</div>);
+		<div class="ref" onclick="jumpToSymbol([], ['ULARGE_INTEGER'], [], [])"><div class="token cpp_type">ULARGE_INTEGER</div></div> <div class="def" id="NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::largeInteger"><div>largeInteger</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::HighPart'], [], [])"><div class="token cpp_field">HighPart</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::fileTime'], [], [])">fileTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_FILETIME::dwHighDateTime'], [], [])"><div class="token cpp_field">dwHighDateTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::LowPart'], [], [])"><div class="token cpp_field">LowPart</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::fileTime'], [], [])">fileTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_FILETIME::dwLowDateTime'], [], [])"><div class="token cpp_field">dwLowDateTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::filetime'], [], [])"><div class="token cpp_field">filetime</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::QuadPart'], [], [])"><div class="token cpp_field">QuadPart</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::totalMilliseconds'], [], [])"><div class="token cpp_field">totalMilliseconds</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::filetime'], [], [])"><div class="token cpp_field">filetime</div></div>/<div class="token cpp_number ">10000</div>;
+
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'], [], [])">dateTime</div>;
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="FB$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]"><div><div class="token cpp_function">DateTimeToSystemTime</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>&amp; <div class="def" id="NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::dateTime"><div><div class="token cpp_argument">dateTime</div></div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['ULARGE_INTEGER'], [], [])"><div class="token cpp_type">ULARGE_INTEGER</div></div> <div class="def" id="NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::largeInteger"><div>largeInteger</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::QuadPart'], [], [])"><div class="token cpp_field">QuadPart</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::dateTime'], [], [])"><div class="token cpp_argument">dateTime</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::filetime'], [], [])"><div class="token cpp_field">filetime</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div> <div class="def" id="NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::fileTime"><div>fileTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::fileTime'], [], [])">fileTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_FILETIME::dwHighDateTime'], [], [])"><div class="token cpp_field">dwHighDateTime</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::HighPart'], [], [])"><div class="token cpp_field">HighPart</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::fileTime'], [], [])">fileTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_FILETIME::dwLowDateTime'], [], [])"><div class="token cpp_field">dwLowDateTime</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::LowPart'], [], [])"><div class="token cpp_field">LowPart</div></div>;
+
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::systemTime"><div>systemTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)'], ['FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)'], [], [])"><div class="token cpp_function">FileTimeToSystemTime</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::fileTime'], [], [])">fileTime</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::systemTime'], [], [])">systemTime</div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::systemTime'], [], [])">systemTime</div>;
+	}
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">	DateTime ConvertTMToDateTime(tm* timeinfo, vint milliseconds)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		time_t timer = mktime(timeinfo);</div>
+<div class="disabled">		DateTime dt;</div>
+<div class="disabled">		dt.year = timeinfo-&gt;tm_year+1900;</div>
+<div class="disabled">		dt.month = timeinfo-&gt;tm_mon+1;</div>
+<div class="disabled">		dt.day = timeinfo-&gt;tm_mday;</div>
+<div class="disabled">		dt.dayOfWeek = timeinfo-&gt;tm_wday;</div>
+<div class="disabled">		dt.hour = timeinfo-&gt;tm_hour;</div>
+<div class="disabled">		dt.minute = timeinfo-&gt;tm_min;</div>
+<div class="disabled">		dt.second = timeinfo-&gt;tm_sec;</div>
+<div class="disabled">		dt.milliseconds = milliseconds;</div>
+<div class="disabled">        dt.filetime = (vuint64_t)timer * 1000 + milliseconds;</div>
+<div class="disabled">		dt.totalMilliseconds = (vuint64_t)timer * 1000 + milliseconds;</div>
+<div class="disabled">		return dt;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	vint GetCurrentMilliseconds()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct timeval tv;</div>
+<div class="disabled">		gettimeofday(&amp;tv, nullptr);</div>
+<div class="disabled">		return tv.tv_usec / 1000;</div>
+<div class="disabled">	}
+#endif</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::LocalTime@::vl::DateTime()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::LocalTime@::vl::DateTime()'], [], [])"><div class="token cpp_function">LocalTime</div></div></div>()
+	{
+<div class="disabled">#if defined VCZH_MSVC</div>
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTime::LocalTime@::vl::DateTime()[impl0]::systemTime"><div>systemTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['GetLocalTime@void(::LPSYSTEMTIME)'], ['GetLocalTime@void(::LPSYSTEMTIME)'], [], [])"><div class="token cpp_function">GetLocalTime</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::LocalTime@::vl::DateTime()[impl0]::systemTime'], [], [])">systemTime</div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], [], [])"><div class="token cpp_function">SystemTimeToDateTime</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::LocalTime@::vl::DateTime()[impl0]::systemTime'], [], [])">systemTime</div>);
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">		time_t timer = time(nullptr);</div>
+<div class="disabled">		tm* timeinfo = localtime(&amp;timer);</div>
+<div class="disabled">		return ConvertTMToDateTime(timeinfo, GetCurrentMilliseconds());
+#endif</div>
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::UtcTime@::vl::DateTime()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::UtcTime@::vl::DateTime()'], [], [])"><div class="token cpp_function">UtcTime</div></div></div>()
+	{
+<div class="disabled">#if defined VCZH_MSVC</div>
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTime::UtcTime@::vl::DateTime()[impl0]::utcTime"><div>utcTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['GetSystemTime@void(::LPSYSTEMTIME)'], ['GetSystemTime@void(::LPSYSTEMTIME)'], [], [])"><div class="token cpp_function">GetSystemTime</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::UtcTime@::vl::DateTime()[impl0]::utcTime'], [], [])">utcTime</div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], [], [])"><div class="token cpp_function">SystemTimeToDateTime</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::UtcTime@::vl::DateTime()[impl0]::utcTime'], [], [])">utcTime</div>);
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">		time_t timer = time(nullptr);</div>
+<div class="disabled">		tm* timeinfo = gmtime(&amp;timer);</div>
+<div class="disabled">		return ConvertTMToDateTime(timeinfo, GetCurrentMilliseconds());
+#endif</div>
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">FromDateTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_year"><div><div class="token cpp_argument">_year</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_month"><div><div class="token cpp_argument">_month</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_day"><div><div class="token cpp_argument">_day</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_hour"><div><div class="token cpp_argument">_hour</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_minute"><div><div class="token cpp_argument">_minute</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_second"><div><div class="token cpp_argument">_second</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_milliseconds"><div><div class="token cpp_argument">_milliseconds</div></div></div>)
+	{
+<div class="disabled">#if defined VCZH_MSVC</div>
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime"><div>systemTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>));
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wYear'], [], [])"><div class="token cpp_field">wYear</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_year'], [], [])"><div class="token cpp_argument">_year</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wMonth'], [], [])"><div class="token cpp_field">wMonth</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_month'], [], [])"><div class="token cpp_argument">_month</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wDay'], [], [])"><div class="token cpp_field">wDay</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_day'], [], [])"><div class="token cpp_argument">_day</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wHour'], [], [])"><div class="token cpp_field">wHour</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_hour'], [], [])"><div class="token cpp_argument">_hour</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wMinute'], [], [])"><div class="token cpp_field">wMinute</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_minute'], [], [])"><div class="token cpp_argument">_minute</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wSecond'], [], [])"><div class="token cpp_field">wSecond</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_second'], [], [])"><div class="token cpp_argument">_second</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_SYSTEMTIME::wMilliseconds'], [], [])"><div class="token cpp_field">wMilliseconds</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_milliseconds'], [], [])"><div class="token cpp_argument">_milliseconds</div></div>;
+
+		<div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::fileTime"><div>fileTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)'], ['SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)'], [], [])"><div class="token cpp_function">SystemTimeToFileTime</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::fileTime'], [], [])">fileTime</div>);
+		<div class="ref" onclick="jumpToSymbol(['FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)'], ['FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)'], [], [])"><div class="token cpp_function">FileTimeToSystemTime</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::fileTime'], [], [])">fileTime</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], [], [])"><div class="token cpp_function">SystemTimeToDateTime</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'], [], [])">systemTime</div>);
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">		tm timeinfo;</div>
+<div class="disabled">		memset(&amp;timeinfo, 0, sizeof(timeinfo));</div>
+<div class="disabled">		timeinfo.tm_year = _year-1900;</div>
+<div class="disabled">		timeinfo.tm_mon = _month-1;</div>
+<div class="disabled">		timeinfo.tm_mday = _day;</div>
+<div class="disabled">		timeinfo.tm_hour = _hour;</div>
+<div class="disabled">		timeinfo.tm_min = _minute;</div>
+<div class="disabled">		timeinfo.tm_sec = _second;</div>
+<div class="disabled">		timeinfo.tm_isdst = -1;</div>
+
+<div class="disabled">		return ConvertTMToDateTime(&amp;timeinfo, _milliseconds);
+#endif</div>
+	}
+
+    <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)'], [], [])"><div class="token cpp_function">FromFileTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div> <div class="def" id="NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::filetime"><div><div class="token cpp_argument">filetime</div></div></div>)
+	{
+<div class="disabled">#if defined VCZH_MSVC</div>
+		<div class="ref" onclick="jumpToSymbol([], ['ULARGE_INTEGER'], [], [])"><div class="token cpp_type">ULARGE_INTEGER</div></div> <div class="def" id="NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::largeInteger"><div>largeInteger</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::QuadPart'], [], [])"><div class="token cpp_field">QuadPart</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::filetime'], [], [])"><div class="token cpp_argument">filetime</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div> <div class="def" id="NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::fileTime"><div>fileTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::fileTime'], [], [])">fileTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_FILETIME::dwHighDateTime'], [], [])"><div class="token cpp_field">dwHighDateTime</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::HighPart'], [], [])"><div class="token cpp_field">HighPart</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::fileTime'], [], [])">fileTime</div>.<div class="ref" onclick="jumpToSymbol([], ['_FILETIME::dwLowDateTime'], [], [])"><div class="token cpp_field">dwLowDateTime</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::largeInteger'], [], [])">largeInteger</div>.<div class="ref" onclick="jumpToSymbol([], ['_ULARGE_INTEGER::LowPart'], [], [])"><div class="token cpp_field">LowPart</div></div>;
+
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::systemTime"><div>systemTime</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)'], ['FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)'], [], [])"><div class="token cpp_function">FileTimeToSystemTime</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::fileTime'], [], [])">fileTime</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::systemTime'], [], [])">systemTime</div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], [], [])"><div class="token cpp_function">SystemTimeToDateTime</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::systemTime'], [], [])">systemTime</div>);
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">		time_t timer = (time_t)(filetime / 1000);</div>
+<div class="disabled">		tm* timeinfo = localtime(&amp;timer);</div>
+<div class="disabled">		return ConvertTMToDateTime(timeinfo, filetime % 1000);
+#endif</div>
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::$__ctor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::$__ctor@()'], [], [])"><div class="token cpp_function">DateTime</div></div></div>()
+		:year(<div class="token cpp_number ">0</div>)
+		,month(<div class="token cpp_number ">0</div>)
+		,day(<div class="token cpp_number ">0</div>)
+		,hour(<div class="token cpp_number ">0</div>)
+		,minute(<div class="token cpp_number ">0</div>)
+		,second(<div class="token cpp_number ">0</div>)
+		,milliseconds(<div class="token cpp_number ">0</div>)
+		,filetime(<div class="token cpp_number ">0</div>)
+	{
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::ToLocalTime@::vl::DateTime()'], [], [])"><div class="token cpp_function">ToLocalTime</div></div></div>()
+	{
+<div class="disabled">#if defined VCZH_MSVC</div>
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::utcTime"><div>utcTime</div></div>=<div class="ref" onclick="jumpToSymbol(['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)'], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)'], [], [])"><div class="token cpp_function">DateTimeToSystemTime</div></div>(*<div class="token cpp_keyword ">this</div>);
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::localTime"><div>localTime</div></div>;
+<div class="expandable"><div class="disabled">		SystemTimeToTzSpecificLocalTime(NULL, &amp;utcTime, &amp;localTime);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)'], ['SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)'], [], [])"><div class="token cpp_function">SystemTimeToTzSpecificLocalTime</div></div>(<div class="token cpp_number ">0</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::utcTime'], [], [])">utcTime</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::localTime'], [], [])">localTime</div>);</div></div>
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], [], [])"><div class="token cpp_function">SystemTimeToDateTime</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::localTime'], [], [])">localTime</div>);
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">		time_t localTimer = time(nullptr);</div>
+<div class="disabled">		time_t utcTimer = mktime(gmtime(&amp;localTimer));</div>
+<div class="disabled">		time_t timer = (time_t)(filetime / 1000) + localTimer - utcTimer;</div>
+<div class="disabled">		tm* timeinfo = localtime(&amp;timer);</div>
+
+<div class="disabled">		return ConvertTMToDateTime(timeinfo, milliseconds);
+#endif</div>
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::ToUtcTime@::vl::DateTime()'], [], [])"><div class="token cpp_function">ToUtcTime</div></div></div>()
+	{
+<div class="disabled">#if defined VCZH_MSVC</div>
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::localTime"><div>localTime</div></div>=<div class="ref" onclick="jumpToSymbol(['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)'], ['vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)'], [], [])"><div class="token cpp_function">DateTimeToSystemTime</div></div>(*<div class="token cpp_keyword ">this</div>);
+		<div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::utcTime"><div>utcTime</div></div>;
+<div class="expandable"><div class="disabled">		TzSpecificLocalTimeToSystemTime(NULL, &amp;localTime, &amp;utcTime);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)'], ['TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)'], [], [])"><div class="token cpp_function">TzSpecificLocalTimeToSystemTime</div></div>(<div class="token cpp_number ">0</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::localTime'], [], [])">localTime</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::utcTime'], [], [])">utcTime</div>);</div></div>
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], ['vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)'], [], [])"><div class="token cpp_function">SystemTimeToDateTime</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::utcTime'], [], [])">utcTime</div>);
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">		time_t timer = (time_t)(filetime / 1000);</div>
+<div class="disabled">		tm* timeinfo = gmtime(&amp;timer);</div>
+
+<div class="disabled">		return ConvertTMToDateTime(timeinfo, milliseconds);
+#endif</div>
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)'], [], [])"><div class="token cpp_function">Forward</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div> <div class="def" id="NI$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds"><div><div class="token cpp_argument">milliseconds</div></div></div>)
+	{
+<div class="disabled">#if defined VCZH_MSVC</div>
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)'], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)'], [], [])"><div class="token cpp_function">FromFileTime</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::filetime'], [], [])"><div class="token cpp_field">filetime</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds'], [], [])"><div class="token cpp_argument">milliseconds</div></div>*<div class="token cpp_number ">10000</div>);
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">		return FromFileTime(filetime+milliseconds);
+#endif</div>
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>::<div class="def" id="FB$vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)'], [], [])"><div class="token cpp_function">Backward</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div> <div class="def" id="NI$vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds"><div><div class="token cpp_argument">milliseconds</div></div></div>)
+	{
+<div class="disabled">#if defined VCZH_MSVC</div>
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)'], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)'], [], [])"><div class="token cpp_function">FromFileTime</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::filetime'], [], [])"><div class="token cpp_field">filetime</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds'], [], [])"><div class="token cpp_argument">milliseconds</div></div>*<div class="token cpp_number ">10000</div>);
+<div class="disabled">#elif defined VCZH_GCC</div>
+<div class="disabled">		return FromFileTime(filetime-milliseconds);
+#endif</div>
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+Interface
+***********************************************************************/</div>
+
+	<div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>::<div class="def" id="FB$vl::Interface::~Interface@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Interface::~Interface@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">Interface</div></div></div>()
+	{
+	}
+}
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'FILETIME': {
+        'displayNameInHtml': '<span class="cpp_type">FILETIME</span>',
+        'impls': [
+            'NI$FILETIME'
+        ],
+        'decls': []
+    },
+    'FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)': {
+        'displayNameInHtml': '<span class="cpp_function">FileTimeToSystemTime</span>(<span class="cpp_type">FILETIME</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
+        'impls': [],
+        'decls': [
+            'FB$FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)[decl0]'
+        ]
+    },
+    'GetLocalTime@void(::LPSYSTEMTIME)': {
+        'displayNameInHtml': '<span class="cpp_function">GetLocalTime</span>(<span class="cpp_type">LPSYSTEMTIME</span>)',
+        'impls': [],
+        'decls': [
+            'FB$GetLocalTime@void(::LPSYSTEMTIME)[decl0]'
+        ]
+    },
+    'GetSystemTime@void(::LPSYSTEMTIME)': {
+        'displayNameInHtml': '<span class="cpp_function">GetSystemTime</span>(<span class="cpp_type">LPSYSTEMTIME</span>)',
+        'impls': [],
+        'decls': [
+            'FB$GetSystemTime@void(::LPSYSTEMTIME)[decl0]'
+        ]
+    },
+    'SYSTEMTIME': {
+        'displayNameInHtml': '<span class="cpp_type">SYSTEMTIME</span>',
+        'impls': [
+            'NI$SYSTEMTIME'
+        ],
+        'decls': []
+    },
+    'SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)': {
+        'displayNameInHtml': '<span class="cpp_function">SystemTimeToFileTime</span>(<span class="cpp_type">SYSTEMTIME</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">LPFILETIME</span>)',
+        'impls': [],
+        'decls': [
+            'FB$SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)[decl0]'
+        ]
+    },
+    'SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)': {
+        'displayNameInHtml': '<span class="cpp_function">SystemTimeToTzSpecificLocalTime</span>(<span class="cpp_type">TIME_ZONE_INFORMATION</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">SYSTEMTIME</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
+        'impls': [],
+        'decls': [
+            'FB$SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]'
+        ]
+    },
+    'TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)': {
+        'displayNameInHtml': '<span class="cpp_function">TzSpecificLocalTimeToSystemTime</span>(<span class="cpp_type">TIME_ZONE_INFORMATION</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">SYSTEMTIME</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
+        'impls': [],
+        'decls': [
+            'FB$TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]'
+        ]
+    },
+    'ULARGE_INTEGER': {
+        'displayNameInHtml': '<span class="cpp_type">ULARGE_INTEGER</span>',
+        'impls': [
+            'NI$ULARGE_INTEGER'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    },
+    '_FILETIME::dwHighDateTime': {
+        'displayNameInHtml': '<span class="cpp_type">_FILETIME</span>::<span class="cpp_field">dwHighDateTime</span>',
+        'impls': [
+            'NI$_FILETIME::dwHighDateTime'
+        ],
+        'decls': []
+    },
+    '_FILETIME::dwLowDateTime': {
+        'displayNameInHtml': '<span class="cpp_type">_FILETIME</span>::<span class="cpp_field">dwLowDateTime</span>',
+        'impls': [
+            'NI$_FILETIME::dwLowDateTime'
+        ],
+        'decls': []
+    },
+    '_SYSTEMTIME::wDay': {
+        'displayNameInHtml': '<span class="cpp_type">_SYSTEMTIME</span>::<span class="cpp_field">wDay</span>',
+        'impls': [
+            'NI$_SYSTEMTIME::wDay'
+        ],
+        'decls': []
+    },
+    '_SYSTEMTIME::wDayOfWeek': {
+        'displayNameInHtml': '<span class="cpp_type">_SYSTEMTIME</span>::<span class="cpp_field">wDayOfWeek</span>',
+        'impls': [
+            'NI$_SYSTEMTIME::wDayOfWeek'
+        ],
+        'decls': []
+    },
+    '_SYSTEMTIME::wHour': {
+        'displayNameInHtml': '<span class="cpp_type">_SYSTEMTIME</span>::<span class="cpp_field">wHour</span>',
+        'impls': [
+            'NI$_SYSTEMTIME::wHour'
+        ],
+        'decls': []
+    },
+    '_SYSTEMTIME::wMilliseconds': {
+        'displayNameInHtml': '<span class="cpp_type">_SYSTEMTIME</span>::<span class="cpp_field">wMilliseconds</span>',
+        'impls': [
+            'NI$_SYSTEMTIME::wMilliseconds'
+        ],
+        'decls': []
+    },
+    '_SYSTEMTIME::wMinute': {
+        'displayNameInHtml': '<span class="cpp_type">_SYSTEMTIME</span>::<span class="cpp_field">wMinute</span>',
+        'impls': [
+            'NI$_SYSTEMTIME::wMinute'
+        ],
+        'decls': []
+    },
+    '_SYSTEMTIME::wMonth': {
+        'displayNameInHtml': '<span class="cpp_type">_SYSTEMTIME</span>::<span class="cpp_field">wMonth</span>',
+        'impls': [
+            'NI$_SYSTEMTIME::wMonth'
+        ],
+        'decls': []
+    },
+    '_SYSTEMTIME::wSecond': {
+        'displayNameInHtml': '<span class="cpp_type">_SYSTEMTIME</span>::<span class="cpp_field">wSecond</span>',
+        'impls': [
+            'NI$_SYSTEMTIME::wSecond'
+        ],
+        'decls': []
+    },
+    '_SYSTEMTIME::wYear': {
+        'displayNameInHtml': '<span class="cpp_type">_SYSTEMTIME</span>::<span class="cpp_field">wYear</span>',
+        'impls': [
+            'NI$_SYSTEMTIME::wYear'
+        ],
+        'decls': []
+    },
+    '_ULARGE_INTEGER::HighPart': {
+        'displayNameInHtml': '<span class="cpp_type">_ULARGE_INTEGER</span>::<span class="cpp_field">HighPart</span>',
+        'impls': [
+            'NI$_ULARGE_INTEGER::HighPart'
+        ],
+        'decls': []
+    },
+    '_ULARGE_INTEGER::LowPart': {
+        'displayNameInHtml': '<span class="cpp_type">_ULARGE_INTEGER</span>::<span class="cpp_field">LowPart</span>',
+        'impls': [
+            'NI$_ULARGE_INTEGER::LowPart'
+        ],
+        'decls': []
+    },
+    '_ULARGE_INTEGER::QuadPart': {
+        'displayNameInHtml': '<span class="cpp_type">_ULARGE_INTEGER</span>::<span class="cpp_field">QuadPart</span>',
+        'impls': [
+            'NI$_ULARGE_INTEGER::QuadPart'
+        ],
+        'decls': []
+    },
+    'memset@void *(void *, int, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">memset</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$memset@void *(void *, int, ::size_t)[decl0]'
+        ]
+    },
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::DateTime': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>',
+        'impls': [
+            'NI$vl::DateTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::DateTime::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">Backward</span>(<span class="cpp_type">vuint64_t</span>)',
+        'impls': [
+            'FB$vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[decl0]'
+        ]
+    },
+    'vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds': {
+        'displayNameInHtml': 'milliseconds',
+        'impls': [
+            'NI$vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">Forward</span>(<span class="cpp_type">vuint64_t</span>)',
+        'impls': [
+            'FB$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[decl0]'
+        ]
+    },
+    'vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds': {
+        'displayNameInHtml': 'milliseconds',
+        'impls': [
+            'NI$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">FromDateTime</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_day': {
+        'displayNameInHtml': '_day',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_day'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_hour': {
+        'displayNameInHtml': '_hour',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_hour'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_milliseconds': {
+        'displayNameInHtml': '_milliseconds',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_milliseconds'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_minute': {
+        'displayNameInHtml': '_minute',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_minute'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_month': {
+        'displayNameInHtml': '_month',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_month'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_second': {
+        'displayNameInHtml': '_second',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_second'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_year': {
+        'displayNameInHtml': '_year',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_year'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::fileTime': {
+        'displayNameInHtml': 'fileTime',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::fileTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime': {
+        'displayNameInHtml': 'systemTime',
+        'impls': [
+            'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">FromFileTime</span>(<span class="cpp_type">vuint64_t</span>)',
+        'impls': [
+            'FB$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[decl0]'
+        ]
+    },
+    'vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::fileTime': {
+        'displayNameInHtml': 'fileTime',
+        'impls': [
+            'NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::fileTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::filetime': {
+        'displayNameInHtml': 'filetime',
+        'impls': [
+            'NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::filetime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::largeInteger': {
+        'displayNameInHtml': 'largeInteger',
+        'impls': [
+            'NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::largeInteger'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::systemTime': {
+        'displayNameInHtml': 'systemTime',
+        'impls': [
+            'NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::systemTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::LocalTime@::vl::DateTime()': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">LocalTime</span>()',
+        'impls': [
+            'FB$vl::DateTime::LocalTime@::vl::DateTime()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::LocalTime@::vl::DateTime()[decl0]'
+        ]
+    },
+    'vl::DateTime::LocalTime@::vl::DateTime()[impl0]::systemTime': {
+        'displayNameInHtml': 'systemTime',
+        'impls': [
+            'NI$vl::DateTime::LocalTime@::vl::DateTime()[impl0]::systemTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::ToLocalTime@::vl::DateTime()': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">ToLocalTime</span>()',
+        'impls': [
+            'FB$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::ToLocalTime@::vl::DateTime()[decl0]'
+        ]
+    },
+    'vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::localTime': {
+        'displayNameInHtml': 'localTime',
+        'impls': [
+            'NI$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::localTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::utcTime': {
+        'displayNameInHtml': 'utcTime',
+        'impls': [
+            'NI$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::utcTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::ToUtcTime@::vl::DateTime()': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">ToUtcTime</span>()',
+        'impls': [
+            'FB$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::ToUtcTime@::vl::DateTime()[decl0]'
+        ]
+    },
+    'vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::localTime': {
+        'displayNameInHtml': 'localTime',
+        'impls': [
+            'NI$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::localTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::utcTime': {
+        'displayNameInHtml': 'utcTime',
+        'impls': [
+            'NI$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::utcTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::UtcTime@::vl::DateTime()': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_function">UtcTime</span>()',
+        'impls': [
+            'FB$vl::DateTime::UtcTime@::vl::DateTime()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::DateTime::UtcTime@::vl::DateTime()[decl0]'
+        ]
+    },
+    'vl::DateTime::UtcTime@::vl::DateTime()[impl0]::utcTime': {
+        'displayNameInHtml': 'utcTime',
+        'impls': [
+            'NI$vl::DateTime::UtcTime@::vl::DateTime()[impl0]::utcTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::day': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">day</span>',
+        'impls': [
+            'NI$vl::DateTime::day'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::dayOfWeek': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">dayOfWeek</span>',
+        'impls': [
+            'NI$vl::DateTime::dayOfWeek'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::filetime': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">filetime</span>',
+        'impls': [
+            'NI$vl::DateTime::filetime'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::hour': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">hour</span>',
+        'impls': [
+            'NI$vl::DateTime::hour'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::milliseconds': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">milliseconds</span>',
+        'impls': [
+            'NI$vl::DateTime::milliseconds'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::minute': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">minute</span>',
+        'impls': [
+            'NI$vl::DateTime::minute'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::month': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">month</span>',
+        'impls': [
+            'NI$vl::DateTime::month'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::second': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">second</span>',
+        'impls': [
+            'NI$vl::DateTime::second'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::totalMilliseconds': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">totalMilliseconds</span>',
+        'impls': [
+            'NI$vl::DateTime::totalMilliseconds'
+        ],
+        'decls': []
+    },
+    'vl::DateTime::year': {
+        'displayNameInHtml': '<span class="cpp_type">DateTime</span>::<span class="cpp_field">year</span>',
+        'impls': [
+            'NI$vl::DateTime::year'
+        ],
+        'decls': []
+    },
+    'vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)': {
+        'displayNameInHtml': '<span class="cpp_function">DateTimeToSystemTime</span>(<span class="cpp_type">DateTime</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::dateTime': {
+        'displayNameInHtml': 'dateTime',
+        'impls': [
+            'NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::dateTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::fileTime': {
+        'displayNameInHtml': 'fileTime',
+        'impls': [
+            'NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::fileTime'
+        ],
+        'decls': []
+    },
+    'vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::largeInteger': {
+        'displayNameInHtml': 'largeInteger',
+        'impls': [
+            'NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::largeInteger'
+        ],
+        'decls': []
+    },
+    'vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::systemTime': {
+        'displayNameInHtml': 'systemTime',
+        'impls': [
+            'NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::systemTime'
+        ],
+        'decls': []
+    },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
+        ],
+        'decls': []
+    },
+    'vl::Error::$__ctor@(wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$vl::Error::$__ctor@(wchar_t const *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Error::$__ctor@(wchar_t const *)[decl0]'
+        ]
+    },
+    'vl::Error::$__ctor@(wchar_t const *)[impl0]::_description': {
+        'displayNameInHtml': '_description',
+        'impls': [
+            'NI$vl::Error::$__ctor@(wchar_t const *)[impl0]::_description'
+        ],
+        'decls': []
+    },
+    'vl::Error::Description@wchar_t const *()': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>::<span class="cpp_function">Description</span>()',
+        'impls': [
+            'FB$vl::Error::Description@wchar_t const *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Error::Description@wchar_t const *()[decl0]'
+        ]
+    },
+    'vl::Error::description': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>::<span class="cpp_field">description</span>',
+        'impls': [
+            'NI$vl::Error::description'
+        ],
+        'decls': []
+    },
+    'vl::Interface': {
+        'displayNameInHtml': '<span class="cpp_type">Interface</span>',
+        'impls': [
+            'NI$vl::Interface'
+        ],
+        'decls': []
+    },
+    'vl::Interface::~Interface@()': {
+        'displayNameInHtml': '<span class="cpp_type">Interface</span>::<span class="cpp_function">~Interface</span>()',
+        'impls': [
+            'FB$vl::Interface::~Interface@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Interface::~Interface@()[decl0]'
+        ]
+    },
+    'vl::NotCopyable': {
+        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>',
+        'impls': [
+            'NI$vl::NotCopyable'
+        ],
+        'decls': []
+    },
+    'vl::NotCopyable::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::NotCopyable::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::NotCopyable::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)': {
+        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">NotCopyable</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)[decl0]'
+        ]
+    },
+    'vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)': {
+        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>::<span class="cpp_function">operator =</span>(<span class="cpp_type">NotCopyable</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)[decl0]'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::Object::~Object@()': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>::<span class="cpp_function">~Object</span>()',
+        'impls': [
+            'FB$vl::Object::~Object@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::Object::~Object@()[decl0]'
+        ]
+    },
+    'vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)': {
+        'displayNameInHtml': '<span class="cpp_function">SystemTimeToDateTime</span>(<span class="cpp_type">SYSTEMTIME</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime': {
+        'displayNameInHtml': 'dateTime',
+        'impls': [
+            'NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime'
+        ],
+        'decls': []
+    },
+    'vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::fileTime': {
+        'displayNameInHtml': 'fileTime',
+        'impls': [
+            'NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::fileTime'
+        ],
+        'decls': []
+    },
+    'vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::largeInteger': {
+        'displayNameInHtml': 'largeInteger',
+        'impls': [
+            'NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::largeInteger'
+        ],
+        'decls': []
+    },
+    'vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime': {
+        'displayNameInHtml': 'systemTime',
+        'impls': [
+            'NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    },
+    'vl::vuint64_t': {
+        'displayNameInHtml': '<span class="cpp_type">vuint64_t</span>',
+        'impls': [
+            'NI$vl::vuint64_t'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)[decl0]': { 'htmlFileName': 'timezoneapi.h', 'displayName': 'timezoneapi.h' },
+    'FB$GetLocalTime@void(::LPSYSTEMTIME)[decl0]': { 'htmlFileName': 'sysinfoapi.h', 'displayName': 'sysinfoapi.h' },
+    'FB$GetSystemTime@void(::LPSYSTEMTIME)[decl0]': { 'htmlFileName': 'sysinfoapi.h', 'displayName': 'sysinfoapi.h' },
+    'FB$SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)[decl0]': { 'htmlFileName': 'timezoneapi.h', 'displayName': 'timezoneapi.h' },
+    'FB$SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]': { 'htmlFileName': 'timezoneapi.h', 'displayName': 'timezoneapi.h' },
+    'FB$TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]': { 'htmlFileName': 'timezoneapi.h', 'displayName': 'timezoneapi.h' },
+    'FB$memset@void *(void *, int, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$vl::DateTime::$__ctor@()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::$__ctor@()[impl0]': null,
+    'FB$vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[impl0]': null,
+    'FB$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[impl0]': null,
+    'FB$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]': null,
+    'FB$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]': null,
+    'FB$vl::DateTime::LocalTime@::vl::DateTime()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::LocalTime@::vl::DateTime()[impl0]': null,
+    'FB$vl::DateTime::ToLocalTime@::vl::DateTime()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]': null,
+    'FB$vl::DateTime::ToUtcTime@::vl::DateTime()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]': null,
+    'FB$vl::DateTime::UtcTime@::vl::DateTime()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::DateTime::UtcTime@::vl::DateTime()[impl0]': null,
+    'FB$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]': null,
+    'FB$vl::Error::$__ctor@(wchar_t const *)[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::Error::$__ctor@(wchar_t const *)[impl0]': null,
+    'FB$vl::Error::Description@wchar_t const *()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::Error::Description@wchar_t const *()[impl0]': null,
+    'FB$vl::Interface::~Interface@()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::Interface::~Interface@()[impl0]': null,
+    'FB$vl::NotCopyable::$__ctor@()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::NotCopyable::$__ctor@()[impl0]': null,
+    'FB$vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)[impl0]': null,
+    'FB$vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)[impl0]': null,
+    'FB$vl::Object::~Object@()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'FB$vl::Object::~Object@()[impl0]': null,
+    'FB$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]': null,
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': null,
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[7]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NI$FILETIME': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$SYSTEMTIME': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$ULARGE_INTEGER': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$_FILETIME::dwHighDateTime': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$_FILETIME::dwLowDateTime': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$_SYSTEMTIME::wDay': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$_SYSTEMTIME::wDayOfWeek': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$_SYSTEMTIME::wHour': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$_SYSTEMTIME::wMilliseconds': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$_SYSTEMTIME::wMinute': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$_SYSTEMTIME::wMonth': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$_SYSTEMTIME::wSecond': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$_SYSTEMTIME::wYear': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$_ULARGE_INTEGER::HighPart': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$_ULARGE_INTEGER::LowPart': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$_ULARGE_INTEGER::QuadPart': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$vl::DateTime': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds': null,
+    'NI$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[impl0]::milliseconds': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_day': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_hour': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_milliseconds': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_minute': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_month': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_second': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::_year': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::fileTime': null,
+    'NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::systemTime': null,
+    'NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::fileTime': null,
+    'NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::filetime': null,
+    'NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::largeInteger': null,
+    'NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[impl0]::systemTime': null,
+    'NI$vl::DateTime::LocalTime@::vl::DateTime()[impl0]::systemTime': null,
+    'NI$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::localTime': null,
+    'NI$vl::DateTime::ToLocalTime@::vl::DateTime()[impl0]::utcTime': null,
+    'NI$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::localTime': null,
+    'NI$vl::DateTime::ToUtcTime@::vl::DateTime()[impl0]::utcTime': null,
+    'NI$vl::DateTime::UtcTime@::vl::DateTime()[impl0]::utcTime': null,
+    'NI$vl::DateTime::day': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::dayOfWeek': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::filetime': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::hour': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::milliseconds': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::minute': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::month': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::second': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::totalMilliseconds': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTime::year': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::dateTime': null,
+    'NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::fileTime': null,
+    'NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::largeInteger': null,
+    'NI$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]::systemTime': null,
+    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Error::$__ctor@(wchar_t const *)[impl0]::_description': null,
+    'NI$vl::Error::description': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Interface': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::NotCopyable': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::dateTime': null,
+    'NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::fileTime': null,
+    'NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::largeInteger': null,
+    'NI$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]::systemTime': null,
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::vuint64_t': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

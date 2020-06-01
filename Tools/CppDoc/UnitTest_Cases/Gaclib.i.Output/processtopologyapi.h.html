@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>processtopologyapi.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* processtopologyapi.h -- ApiSet Contract for api-ms-win-core-processtopology-l1 *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _PROCESSTOPOLOGYAPI_H_</div>
+<div class="disabled">#define _PROCESSTOPOLOGYAPI_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetProcessGroupAffinity@::BOOL(::HANDLE, ::PUSHORT, ::PUSHORT)[decl0]"><div><div class="token cpp_function">GetProcessGroupAffinity</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hProcess,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetProcessGroupAffinity@::BOOL(::HANDLE, ::PUSHORT, ::PUSHORT)[decl0]::hProcess"><div>hProcess</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ PUSHORT GroupCount,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PUSHORT'], [], [])"><div class="token cpp_type">PUSHORT</div></div> <div class="def" id="NI$GetProcessGroupAffinity@::BOOL(::HANDLE, ::PUSHORT, ::PUSHORT)[decl0]::GroupCount"><div>GroupCount</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_(*GroupCount) PUSHORT GroupArray</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PUSHORT'], [], [])"><div class="token cpp_type">PUSHORT</div></div> <div class="def" id="NI$GetProcessGroupAffinity@::BOOL(::HANDLE, ::PUSHORT, ::PUSHORT)[decl0]::GroupArray"><div>GroupArray</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetThreadGroupAffinity@::BOOL(::HANDLE, ::PGROUP_AFFINITY)[decl0]"><div><div class="token cpp_function">GetThreadGroupAffinity</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hThread,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetThreadGroupAffinity@::BOOL(::HANDLE, ::PGROUP_AFFINITY)[decl0]::hThread"><div>hThread</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PGROUP_AFFINITY GroupAffinity</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PGROUP_AFFINITY'], [], [])"><div class="token cpp_type">PGROUP_AFFINITY</div></div> <div class="def" id="NI$GetThreadGroupAffinity@::BOOL(::HANDLE, ::PGROUP_AFFINITY)[decl0]::GroupAffinity"><div>GroupAffinity</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetThreadGroupAffinity@::BOOL(::HANDLE, ::GROUP_AFFINITY const *, ::PGROUP_AFFINITY)[decl0]"><div><div class="token cpp_function">SetThreadGroupAffinity</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hThread,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$SetThreadGroupAffinity@::BOOL(::HANDLE, ::GROUP_AFFINITY const *, ::PGROUP_AFFINITY)[decl0]::hThread"><div>hThread</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ CONST GROUP_AFFINITY* GroupAffinity,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GROUP_AFFINITY'], [], [])"><div class="token cpp_type">GROUP_AFFINITY</div></div>* <div class="def" id="NI$SetThreadGroupAffinity@::BOOL(::HANDLE, ::GROUP_AFFINITY const *, ::PGROUP_AFFINITY)[decl0]::GroupAffinity"><div>GroupAffinity</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ PGROUP_AFFINITY PreviousGroupAffinity</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PGROUP_AFFINITY'], [], [])"><div class="token cpp_type">PGROUP_AFFINITY</div></div> <div class="def" id="NI$SetThreadGroupAffinity@::BOOL(::HANDLE, ::GROUP_AFFINITY const *, ::PGROUP_AFFINITY)[decl0]::PreviousGroupAffinity"><div>PreviousGroupAffinity</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _PROCESSTOPOLOGYAPI_H_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'GROUP_AFFINITY': {
+        'displayNameInHtml': '<span class="cpp_type">GROUP_AFFINITY</span>',
+        'impls': [
+            'NI$GROUP_AFFINITY'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'PGROUP_AFFINITY': {
+        'displayNameInHtml': '<span class="cpp_type">PGROUP_AFFINITY</span>',
+        'impls': [
+            'NI$PGROUP_AFFINITY'
+        ],
+        'decls': []
+    },
+    'PUSHORT': {
+        'displayNameInHtml': '<span class="cpp_type">PUSHORT</span>',
+        'impls': [
+            'NI$PUSHORT'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$GROUP_AFFINITY': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PGROUP_AFFINITY': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PUSHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

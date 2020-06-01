@@ -61,8 +61,6 @@
 
 ### Making Demos
 
-- [ ] Next Demo! (Vlpp)
-  - [ ] Redirect `#include <Vlpp.h>` in VlppOS to `Vlpp/Release/IncludeOnly/Vlpp.h`
 - [ ] New Demo! (VlppOS)
 - [ ] New Demo! (VlppRegex)
 - [ ] New Demo! (VlppReflection)

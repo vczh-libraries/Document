@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>pmmintrin.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***
+***
+*** Copyright (C) 1985-2015 Intel Corporation.  All rights reserved.
+***
+*** The information and source code contained herein is the exclusive
+*** property of Intel Corporation and may not be disclosed, examined
+*** or reproduced in whole or in part except as expressly provided
+*** by the accompanying LICENSE AGREEMENT
+***
+****/</div>
+<div class="token cpp_comment ">/*
+ * pmmintrin.h
+ *
+ * Principal header file for Intel(R) Pentium(R) 4 processor SSE3 intrinsics
+ */</div>
+
+#pragma once
+
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
+#endif</div>
+
+<div class="disabled">#ifndef _INCLUDED_PMM</div>
+<div class="disabled">#define _INCLUDED_PMM</div>
+<div class="disabled">#ifndef __midl</div>
+
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: EMM intrinsics not supported in the pure mode!
+#else  /* defined (_M_CEE_PURE) */</div>
+
+<div class="token cpp_comment ">/*
+ * We need emmintrin.h for the basic type declarations.
+ */</div>
+<div class="disabled">#include &lt;emmintrin.h&gt;</div>
+
+ <div class="token cpp_comment ">/*****************************************************/</div>
+ <div class="token cpp_comment ">/*     MACROS FOR USE WITH INTRINSICS                */</div>
+ <div class="token cpp_comment ">/*****************************************************/</div>
+
+<div class="token cpp_comment ">/*
+ * MACRO functions for setting and reading the DAZ bit in the MXCSR
+ */</div>
+<div class="disabled">#define _MM_DENORMALS_ZERO_MASK   0x0040</div>
+<div class="disabled">#define _MM_DENORMALS_ZERO_ON     0x0040</div>
+<div class="disabled">#define _MM_DENORMALS_ZERO_OFF    0x0000</div>
+
+<div class="disabled">#define _MM_SET_DENORMALS_ZERO_MODE(mode)                                   \</div>
+<div class="disabled">            _mm_setcsr((_mm_getcsr() &amp; ~_MM_DENORMALS_ZERO_MASK) | (mode))</div>
+<div class="disabled">#define _MM_GET_DENORMALS_ZERO_MODE()                                       \</div>
+<div class="disabled">            (_mm_getcsr() &amp; _MM_DENORMALS_ZERO_MASK)</div>
+
+
+ <div class="token cpp_comment ">/*****************************************************/</div>
+ <div class="token cpp_comment ">/*     INTRINSICS FUNCTION PROTOTYPES START HERE     */</div>
+ <div class="token cpp_comment ">/*****************************************************/</div>
+
+<div class="disabled">#if defined __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> { <div class="token cpp_comment ">/* Begin &quot;C&quot; */</div>
+  <div class="token cpp_comment ">/* Intrinsics use C name-mangling. */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
+
+<div class="token cpp_comment ">/*
+ * New Single precision vector instructions.
+ */</div>
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_addsub_ps@::__m128(::__m128, ::__m128)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_addsub_ps@::__m128(::__m128, ::__m128)'], [], [])"><div class="token cpp_function">_mm_addsub_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="token cpp_comment ">/* a */</div>, <div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="token cpp_comment ">/* b */</div>);
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_hadd_ps@::__m128(::__m128, ::__m128)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hadd_ps@::__m128(::__m128, ::__m128)'], [], [])"><div class="token cpp_function">_mm_hadd_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="token cpp_comment ">/* a */</div>, <div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="token cpp_comment ">/* b */</div>);
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_hsub_ps@::__m128(::__m128, ::__m128)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hsub_ps@::__m128(::__m128, ::__m128)'], [], [])"><div class="token cpp_function">_mm_hsub_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="token cpp_comment ">/* a */</div>, <div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="token cpp_comment ">/* b */</div>);
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_movehdup_ps@::__m128(::__m128)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_movehdup_ps@::__m128(::__m128)'], [], [])"><div class="token cpp_function">_mm_movehdup_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="token cpp_comment ">/* a */</div>);
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="def" id="FB$_mm_moveldup_ps@::__m128(::__m128)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_moveldup_ps@::__m128(::__m128)'], [], [])"><div class="token cpp_function">_mm_moveldup_ps</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128'], [], [])"><div class="token cpp_type">__m128</div></div> <div class="token cpp_comment ">/* a */</div>);
+
+<div class="token cpp_comment ">/*
+ * New double precision vector instructions.
+ */</div>
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="def" id="FB$_mm_addsub_pd@::__m128d(::__m128d, ::__m128d)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_addsub_pd@::__m128d(::__m128d, ::__m128d)'], [], [])"><div class="token cpp_function">_mm_addsub_pd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="token cpp_comment ">/* a */</div>, <div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="token cpp_comment ">/* b */</div>);
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="def" id="FB$_mm_hadd_pd@::__m128d(::__m128d, ::__m128d)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hadd_pd@::__m128d(::__m128d, ::__m128d)'], [], [])"><div class="token cpp_function">_mm_hadd_pd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="token cpp_comment ">/* a */</div>, <div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="token cpp_comment ">/* b */</div>);
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="def" id="FB$_mm_hsub_pd@::__m128d(::__m128d, ::__m128d)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hsub_pd@::__m128d(::__m128d, ::__m128d)'], [], [])"><div class="token cpp_function">_mm_hsub_pd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="token cpp_comment ">/* a */</div>, <div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="token cpp_comment ">/* b */</div>);
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="def" id="FB$_mm_loaddup_pd@::__m128d(double const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_loaddup_pd@::__m128d(double const *)'], [], [])"><div class="token cpp_function">_mm_loaddup_pd</div></div></div>(<div class="token cpp_keyword ">double</div> <div class="token cpp_keyword ">const</div> * <div class="token cpp_comment ">/* dp */</div>);
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="def" id="FB$_mm_movedup_pd@::__m128d(::__m128d)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_movedup_pd@::__m128d(::__m128d)'], [], [])"><div class="token cpp_function">_mm_movedup_pd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128d'], [], [])"><div class="token cpp_type">__m128d</div></div> <div class="token cpp_comment ">/* a */</div>);
+
+<div class="token cpp_comment ">/*
+ * New unaligned integer vector load instruction.
+ */</div>
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_lddqu_si128@::__m128i(::__m128i const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_lddqu_si128@::__m128i(::__m128i const *)'], [], [])"><div class="token cpp_function">_mm_lddqu_si128</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="token cpp_keyword ">const</div> * <div class="token cpp_comment ">/* p */</div>);
+
+<div class="token cpp_comment ">/*
+ * Miscellaneous new instructions.
+ */</div>
+<div class="token cpp_comment ">/*
+ * For _mm_monitor p goes in eax, extensions goes in ecx, hints goes in edx.
+ */</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_monitor@void(void const *, unsigned int, unsigned int)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_monitor@void(void const *, unsigned int, unsigned int)'], [], [])"><div class="token cpp_function">_mm_monitor</div></div></div>(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div> * <div class="token cpp_comment ">/* p */</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_comment ">/* extensions */</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_comment ">/* hints */</div>);
+
+<div class="token cpp_comment ">/*
+ * For _mm_mwait, extensions goes in ecx, hints goes in eax.
+ */</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$_mm_mwait@void(unsigned int, unsigned int)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mwait@void(unsigned int, unsigned int)'], [], [])"><div class="token cpp_function">_mm_mwait</div></div></div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_comment ">/* extensions */</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_comment ">/* hints */</div>);
+
+<div class="disabled">#if defined __cplusplus</div>
+}; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
+<div class="disabled">#endif  /* defined __cplusplus */</div>
+
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
+#endif  /* __midl */
+#endif  /* _INCLUDED_PMM */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '__m128': {
+        'displayNameInHtml': '<span class="cpp_type">__m128</span>',
+        'impls': [
+            'NI$__m128'
+        ],
+        'decls': []
+    },
+    '__m128d': {
+        'displayNameInHtml': '<span class="cpp_type">__m128d</span>',
+        'impls': [
+            'NI$__m128d'
+        ],
+        'decls': []
+    },
+    '__m128i': {
+        'displayNameInHtml': '<span class="cpp_type">__m128i</span>',
+        'impls': [
+            'NI$__m128i'
+        ],
+        'decls': []
+    },
+    '_mm_addsub_pd@::__m128d(::__m128d, ::__m128d)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_addsub_pd</span>(<span class="cpp_type">__m128d</span>, <span class="cpp_type">__m128d</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_addsub_pd@::__m128d(::__m128d, ::__m128d)[decl0]',
+            'FB$_mm_addsub_pd@::__m128d(::__m128d, ::__m128d)[decl1]'
+        ]
+    },
+    '_mm_addsub_ps@::__m128(::__m128, ::__m128)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_addsub_ps</span>(<span class="cpp_type">__m128</span>, <span class="cpp_type">__m128</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_addsub_ps@::__m128(::__m128, ::__m128)[decl0]',
+            'FB$_mm_addsub_ps@::__m128(::__m128, ::__m128)[decl1]'
+        ]
+    },
+    '_mm_hadd_pd@::__m128d(::__m128d, ::__m128d)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hadd_pd</span>(<span class="cpp_type">__m128d</span>, <span class="cpp_type">__m128d</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadd_pd@::__m128d(::__m128d, ::__m128d)[decl0]',
+            'FB$_mm_hadd_pd@::__m128d(::__m128d, ::__m128d)[decl1]'
+        ]
+    },
+    '_mm_hadd_ps@::__m128(::__m128, ::__m128)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hadd_ps</span>(<span class="cpp_type">__m128</span>, <span class="cpp_type">__m128</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadd_ps@::__m128(::__m128, ::__m128)[decl0]',
+            'FB$_mm_hadd_ps@::__m128(::__m128, ::__m128)[decl1]'
+        ]
+    },
+    '_mm_hsub_pd@::__m128d(::__m128d, ::__m128d)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hsub_pd</span>(<span class="cpp_type">__m128d</span>, <span class="cpp_type">__m128d</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsub_pd@::__m128d(::__m128d, ::__m128d)[decl0]',
+            'FB$_mm_hsub_pd@::__m128d(::__m128d, ::__m128d)[decl1]'
+        ]
+    },
+    '_mm_hsub_ps@::__m128(::__m128, ::__m128)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hsub_ps</span>(<span class="cpp_type">__m128</span>, <span class="cpp_type">__m128</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsub_ps@::__m128(::__m128, ::__m128)[decl0]',
+            'FB$_mm_hsub_ps@::__m128(::__m128, ::__m128)[decl1]'
+        ]
+    },
+    '_mm_lddqu_si128@::__m128i(::__m128i const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_lddqu_si128</span>(<span class="cpp_type">__m128i</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_lddqu_si128@::__m128i(::__m128i const *)[decl0]',
+            'FB$_mm_lddqu_si128@::__m128i(::__m128i const *)[decl1]'
+        ]
+    },
+    '_mm_loaddup_pd@::__m128d(double const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_loaddup_pd</span>(<span class="cpp_keyword">double</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_loaddup_pd@::__m128d(double const *)[decl0]',
+            'FB$_mm_loaddup_pd@::__m128d(double const *)[decl1]'
+        ]
+    },
+    '_mm_monitor@void(void const *, unsigned int, unsigned int)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_monitor</span>(<span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_monitor@void(void const *, unsigned int, unsigned int)[decl0]',
+            'FB$_mm_monitor@void(void const *, unsigned int, unsigned int)[decl1]'
+        ]
+    },
+    '_mm_movedup_pd@::__m128d(::__m128d)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_movedup_pd</span>(<span class="cpp_type">__m128d</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_movedup_pd@::__m128d(::__m128d)[decl0]',
+            'FB$_mm_movedup_pd@::__m128d(::__m128d)[decl1]'
+        ]
+    },
+    '_mm_movehdup_ps@::__m128(::__m128)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_movehdup_ps</span>(<span class="cpp_type">__m128</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_movehdup_ps@::__m128(::__m128)[decl0]',
+            'FB$_mm_movehdup_ps@::__m128(::__m128)[decl1]'
+        ]
+    },
+    '_mm_moveldup_ps@::__m128(::__m128)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_moveldup_ps</span>(<span class="cpp_type">__m128</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_moveldup_ps@::__m128(::__m128)[decl0]',
+            'FB$_mm_moveldup_ps@::__m128(::__m128)[decl1]'
+        ]
+    },
+    '_mm_mwait@void(unsigned int, unsigned int)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_mwait</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_mwait@void(unsigned int, unsigned int)[decl0]',
+            'FB$_mm_mwait@void(unsigned int, unsigned int)[decl1]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$_mm_addsub_pd@::__m128d(::__m128d, ::__m128d)[decl0]': null,
+    'FB$_mm_addsub_pd@::__m128d(::__m128d, ::__m128d)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_addsub_ps@::__m128(::__m128, ::__m128)[decl0]': null,
+    'FB$_mm_addsub_ps@::__m128(::__m128, ::__m128)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadd_pd@::__m128d(::__m128d, ::__m128d)[decl0]': null,
+    'FB$_mm_hadd_pd@::__m128d(::__m128d, ::__m128d)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadd_ps@::__m128(::__m128, ::__m128)[decl0]': null,
+    'FB$_mm_hadd_ps@::__m128(::__m128, ::__m128)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_pd@::__m128d(::__m128d, ::__m128d)[decl0]': null,
+    'FB$_mm_hsub_pd@::__m128d(::__m128d, ::__m128d)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_ps@::__m128(::__m128, ::__m128)[decl0]': null,
+    'FB$_mm_hsub_ps@::__m128(::__m128, ::__m128)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_lddqu_si128@::__m128i(::__m128i const *)[decl0]': null,
+    'FB$_mm_lddqu_si128@::__m128i(::__m128i const *)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_loaddup_pd@::__m128d(double const *)[decl0]': null,
+    'FB$_mm_loaddup_pd@::__m128d(double const *)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_monitor@void(void const *, unsigned int, unsigned int)[decl0]': null,
+    'FB$_mm_monitor@void(void const *, unsigned int, unsigned int)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_movedup_pd@::__m128d(::__m128d)[decl0]': null,
+    'FB$_mm_movedup_pd@::__m128d(::__m128d)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_movehdup_ps@::__m128(::__m128)[decl0]': null,
+    'FB$_mm_movehdup_ps@::__m128(::__m128)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_moveldup_ps@::__m128(::__m128)[decl0]': null,
+    'FB$_mm_moveldup_ps@::__m128(::__m128)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_mwait@void(unsigned int, unsigned int)[decl0]': null,
+    'FB$_mm_mwait@void(unsigned int, unsigned int)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'NI$__m128': { 'htmlFileName': 'xmmintrin.h', 'displayName': 'xmmintrin.h' },
+    'NI$__m128d': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' },
+    'NI$__m128i': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

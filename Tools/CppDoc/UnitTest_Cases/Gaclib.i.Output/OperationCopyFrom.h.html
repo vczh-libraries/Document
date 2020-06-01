@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OperationCopyFrom.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Data Structure::Operations
+
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_COLLECTIONS_OPERATIONCOPYFROM</div>
+<div class="disabled">#define VCZH_COLLECTIONS_OPERATIONCOPYFROM</div>
+
+<div class="disabled">#include &quot;Interfaces.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[7]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[3]$vl::collections"><div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div></div>
+	{
+
+<div class="token cpp_comment ">/***********************************************************************
+Copy Functions for Containers
+***********************************************************************/</div>
+
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::collections::copyfrom_internal"><div>copyfrom_internal</div></div>
+		{
+			<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal'], [], [])">randomaccess_internal</div>;
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm::Ds"><div><div class="token cpp_type">Ds</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm::Ss"><div><div class="token cpp_type">Ss</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm::DsRA"><div><div class="token cpp_enum">DsRA</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm::SsRA"><div><div class="token cpp_enum">SsRA</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm"><div class="ref" onclick="jumpToSymbol([], [], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4'], [])"><div class="token cpp_type">CopyFromAlgorithm</div></div></div>
+			{
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds"><div><div class="token cpp_type">Ds</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ss"><div><div class="token cpp_type">Ss</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::collections::copyfrom_internal::CopyFromAlgorithm'])"><div class="token cpp_type">CopyFromAlgorithm</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>, <div class="token cpp_keyword ">true</div>, <div class="token cpp_keyword ">true</div>&gt;
+			{
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]"><div><div class="token cpp_function">Perform</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&amp; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds"><div><div class="token cpp_argument">ds</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&amp; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss"><div><div class="token cpp_argument">ss</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append"><div><div class="token cpp_argument">append</div></div></div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount"><div>copyCount</div></div>=<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)'], ['vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)'], [], [])"><div class="token cpp_function">GetCount</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'], [], [])"><div class="token cpp_argument">ss</div></div>);
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index"><div>index</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append'], [], [])"><div class="token cpp_argument">append</div></div>?<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)'], ['vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)'], [], [])"><div class="token cpp_function">GetCount</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>):<div class="token cpp_number ">0</div>);
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount"><div>resizeCount</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index'], [], [])">index</div>+<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount'], [], [])">copyCount</div>;
+					<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::SetCount@void([T] &, ::vl::vint)'], ['vl::collections::randomaccess_internal::RandomAccess::SetCount@void([T] &, ::vl::vint)'], [], [])"><div class="token cpp_function">SetCount</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount'], [], [])">resizeCount</div>);
+					<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount'], [], [])">copyCount</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'], [], [])">i</div>++)
+					{
+						<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::SetValue@void([T] &, ::vl::vint, ElementType const &)'], ['vl::collections::randomaccess_internal::RandomAccess::SetValue@void([T] &, ::vl::vint, ElementType const &)'], [], [])"><div class="token cpp_function">SetValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index'], [], [])">index</div>+<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'], [], [])">i</div>, <div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::GetValue@ElementType const &([T] const &, ::vl::vint)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetValue@::vl::collections::Pair<[KT], [VT]>(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &, ::vl::vint)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)'], ['vl::collections::randomaccess_internal::RandomAccess::GetValue@ElementType const &([T] const &, ::vl::vint)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetValue@::vl::collections::Pair<[KT], [VT]>(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &, ::vl::vint)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)'], [], [])"><div class="token cpp_function">GetValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'], [], [])"><div class="token cpp_argument">ss</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'], [], [])">i</div>));
+					}
+				}
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ds"><div><div class="token cpp_type">Ds</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ss"><div><div class="token cpp_type">Ss</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::collections::copyfrom_internal::CopyFromAlgorithm'])"><div class="token cpp_type">CopyFromAlgorithm</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>, <div class="token cpp_keyword ">false</div>, <div class="token cpp_keyword ">true</div>&gt;
+			{
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]"><div><div class="token cpp_function">Perform</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&amp; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds"><div><div class="token cpp_argument">ds</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&amp; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss"><div><div class="token cpp_argument">ss</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append"><div><div class="token cpp_argument">append</div></div></div>)
+				{
+					<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append'], [], [])"><div class="token cpp_argument">append</div></div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>.Clear();
+					}
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount"><div>copyCount</div></div>=<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)'], ['vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)'], [], [])"><div class="token cpp_function">GetCount</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'], [], [])"><div class="token cpp_argument">ss</div></div>);
+					<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount'], [], [])">copyCount</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'], [], [])">i</div>++)
+					{
+						<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::AppendValue@void([T] &, ElementType const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::AppendValue@void(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> &, ::vl::collections::Pair<[KT], [VT]> const &)'], ['vl::collections::randomaccess_internal::RandomAccess::AppendValue@void([T] &, ElementType const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::AppendValue@void(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> &, ::vl::collections::Pair<[KT], [VT]> const &)'], [], [])"><div class="token cpp_function">AppendValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::GetValue@ElementType const &([T] const &, ::vl::vint)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetValue@::vl::collections::Pair<[KT], [VT]>(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &, ::vl::vint)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)'], ['vl::collections::randomaccess_internal::RandomAccess::GetValue@ElementType const &([T] const &, ::vl::vint)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetValue@::vl::collections::Pair<[KT], [VT]>(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &, ::vl::vint)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)'], [], [])"><div class="token cpp_function">GetValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'], [], [])"><div class="token cpp_argument">ss</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'], [], [])">i</div>));
+					}
+				}
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds"><div><div class="token cpp_type">Ds</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ss"><div><div class="token cpp_type">Ss</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::collections::copyfrom_internal::CopyFromAlgorithm'])"><div class="token cpp_type">CopyFromAlgorithm</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>, <div class="token cpp_keyword ">true</div>, <div class="token cpp_keyword ">false</div>&gt;
+			{
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]"><div><div class="token cpp_function">Perform</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&amp; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds"><div><div class="token cpp_argument">ds</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&amp; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss"><div><div class="token cpp_argument">ss</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append"><div><div class="token cpp_argument">append</div></div></div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>::ElementType&gt;&gt; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator"><div>enumerator</div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount"><div>copyCount</div></div>=<div class="token cpp_number ">0</div>;
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'], [], [])">enumerator</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'], [], [])"><div class="token cpp_argument">ss</div></div>.CreateEnumerator();
+					<div class="token cpp_keyword ">while</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'], [], [])">enumerator</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Next@bool()'], ['vl::collections::IEnumerator::Next@bool()'], [], [])"><div class="token cpp_function">Next</div></div>())
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount'], [], [])">copyCount</div>++;
+					}
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index"><div>index</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append'], [], [])"><div class="token cpp_argument">append</div></div>?<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)'], ['vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)'], [], [])"><div class="token cpp_function">GetCount</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>):<div class="token cpp_number ">0</div>);
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount"><div>resizeCount</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index'], [], [])">index</div>+<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount'], [], [])">copyCount</div>;
+					<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::SetCount@void([T] &, ::vl::vint)'], ['vl::collections::randomaccess_internal::RandomAccess::SetCount@void([T] &, ::vl::vint)'], [], [])"><div class="token cpp_function">SetCount</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount'], [], [])">resizeCount</div>);
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'], [], [])">enumerator</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'], [], [])"><div class="token cpp_argument">ss</div></div>.CreateEnumerator();
+					<div class="token cpp_keyword ">while</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'], [], [])">enumerator</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Next@bool()'], ['vl::collections::IEnumerator::Next@bool()'], [], [])"><div class="token cpp_function">Next</div></div>())
+					{
+						<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::SetValue@void([T] &, ::vl::vint, ElementType const &)'], ['vl::collections::randomaccess_internal::RandomAccess::SetValue@void([T] &, ::vl::vint, ElementType const &)'], [], [])"><div class="token cpp_function">SetValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index'], [], [])">index</div>++, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'], [], [])">enumerator</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Current@[T] const &()'], ['vl::collections::IEnumerator::Current@[T] const &()'], [], [])"><div class="token cpp_function">Current</div></div>());
+					}
+				}
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ds"><div><div class="token cpp_type">Ds</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ss"><div><div class="token cpp_type">Ss</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::collections::copyfrom_internal::CopyFromAlgorithm'])"><div class="token cpp_type">CopyFromAlgorithm</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>, <div class="token cpp_keyword ">false</div>, <div class="token cpp_keyword ">false</div>&gt;
+			{
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]"><div><div class="token cpp_function">Perform</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&amp; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds"><div><div class="token cpp_argument">ds</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&amp; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss"><div><div class="token cpp_argument">ss</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append"><div><div class="token cpp_argument">append</div></div></div>)
+				{
+					<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append'], [], [])"><div class="token cpp_argument">append</div></div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>.Clear();
+					}
+					<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>::ElementType&gt;&gt; <div class="def" id="NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator"><div>enumerator</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'], [], [])"><div class="token cpp_argument">ss</div></div>.CreateEnumerator();
+					<div class="token cpp_keyword ">while</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'], [], [])">enumerator</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Next@bool()'], ['vl::collections::IEnumerator::Next@bool()'], [], [])"><div class="token cpp_function">Next</div></div>())
+					{
+						<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccess'], [], [])"><div class="token cpp_type">RandomAccess</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccess::AppendValue@void([T] &, ElementType const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::AppendValue@void(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> &, ::vl::collections::Pair<[KT], [VT]> const &)'], ['vl::collections::randomaccess_internal::RandomAccess::AppendValue@void([T] &, ElementType const &)', 'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::AppendValue@void(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> &, ::vl::collections::Pair<[KT], [VT]> const &)'], [], [])"><div class="token cpp_function">AppendValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'], [], [])">enumerator</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Current@[T] const &()'], ['vl::collections::IEnumerator::Current@[T] const &()'], [], [])"><div class="token cpp_function">Current</div></div>());
+					}
+				}
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::copyfrom_internal::Slice::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::copyfrom_internal::Slice"><div><div class="token cpp_type">Slice</div></div></div>
+			{
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice::T'], [], [])"><div class="token cpp_type">T</div></div>*	<div class="def" id="NI$vl::collections::copyfrom_internal::Slice::items"><div><div class="token cpp_field">items</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>		<div class="def" id="NI$vl::collections::copyfrom_internal::Slice::count"><div><div class="token cpp_field">count</div></div></div>;
+			};
+		}
+
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[2]$vl::collections::randomaccess_internal"><div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal'], [], [])">randomaccess_internal</div></div>
+		{
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::collections::randomaccess_internal::RandomAccessable'])"><div class="token cpp_type">RandomAccessable</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal'], [], [])">copyfrom_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice'], [], [])"><div class="token cpp_type">Slice</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt;
+			{
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanRead"><div><div class="token cpp_field">CanRead</div></div></div> = <div class="token cpp_keyword ">true</div>;
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanResize"><div><div class="token cpp_field">CanResize</div></div></div> = <div class="token cpp_keyword ">true</div>;
+			};
+		
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::collections::randomaccess_internal::RandomAccess'])"><div class="token cpp_type">RandomAccess</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal'], [], [])">copyfrom_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice'], [], [])"><div class="token cpp_type">Slice</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt;
+			{
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)[impl0]"><div><div class="token cpp_function">GetCount</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal'], [], [])">copyfrom_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice'], [], [])"><div class="token cpp_type">Slice</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)[impl0]::t"><div><div class="token cpp_argument">t</div></div></div>)
+				{
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)[impl0]::t'], [], [])"><div class="token cpp_argument">t</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice::count'], [], [])"><div class="token cpp_field">count</div></div>;
+				}
+
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]"><div><div class="token cpp_function">GetValue</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal'], [], [])">copyfrom_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice'], [], [])"><div class="token cpp_type">Slice</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::t"><div><div class="token cpp_argument">t</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)
+				{
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::t'], [], [])"><div class="token cpp_argument">t</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice::items'], [], [])"><div class="token cpp_field">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>];
+				}
+			};
+		}
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Copy containers.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Ds&quot;&gt;Type of the destination container.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Ss&quot;&gt;Type of the source container.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;ds&quot;&gt;The destination container.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;ss&quot;&gt;The source container.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;append&quot;&gt;Set to false to delete everything in the destination container before copying.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ds"><div><div class="token cpp_type">Ds</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ss"><div><div class="token cpp_type">Ss</div></div></div>&gt;
+		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]"><div><div class="token cpp_function">CopyFrom</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&amp; <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ds"><div><div class="token cpp_argument">ds</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&amp; <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ss"><div><div class="token cpp_argument">ss</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::append"><div><div class="token cpp_argument">append</div></div></div>=<div class="token cpp_keyword ">false</div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal'], [], [])">copyfrom_internal</div>::<div class="ref" onclick="jumpToSymbol(['vl::collections::copyfrom_internal::CopyFromAlgorithm', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4'], ['vl::collections::copyfrom_internal::CopyFromAlgorithm'], [], [])"><div class="token cpp_type">CopyFromAlgorithm</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal'], [], [])">randomaccess_internal</div>::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccessable', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccessable'], [], [])"><div class="token cpp_type">RandomAccessable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccessable::CanResize', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>::CanResize', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::CanResize', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>::CanResize', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>::CanResize', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanResize'], [], [])"><div class="token cpp_field">CanResize</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal'], [], [])">randomaccess_internal</div>::<div class="ref" onclick="jumpToSymbol(['vl::collections::randomaccess_internal::RandomAccessable', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>'], ['vl::collections::randomaccess_internal::RandomAccessable'], [], [])"><div class="token cpp_type">RandomAccessable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ss'], [], [])"><div class="token cpp_type">Ss</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::randomaccess_internal::RandomAccessable::CanRead', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>::CanRead', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::CanRead', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>::CanRead', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>::CanRead', 'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanRead'], [], [])"><div class="token cpp_field">CanRead</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)'], ['vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)', 'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">Perform</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ss'], [], [])"><div class="token cpp_argument">ss</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::append'], [], [])"><div class="token cpp_argument">append</div></div>);
+		}
+		
+		<div class="token cpp_comment ">/// &lt;summary&gt;Copy containers.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Ds&quot;&gt;Type of the destination container.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;S&quot;&gt;Type of the elements in the source container.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;ds&quot;&gt;The destination container.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;buffer&quot;&gt;Pointer to the source array.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The number of elements to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;append&quot;&gt;Set to false to delete everything in the destination container before copying.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::Ds"><div><div class="token cpp_type">Ds</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::S"><div><div class="token cpp_type">S</div></div></div>&gt;
+		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]"><div><div class="token cpp_function">CopyFrom</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&amp; <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::ds"><div><div class="token cpp_argument">ds</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::S'], [], [])"><div class="token cpp_type">S</div></div>* <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::buffer"><div><div class="token cpp_argument">buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::append"><div><div class="token cpp_argument">append</div></div></div>=<div class="token cpp_keyword ">false</div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal'], [], [])">copyfrom_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice'], [], [])"><div class="token cpp_type">Slice</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::S'], [], [])"><div class="token cpp_type">S</div></div>&gt; <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::slice"><div>slice</div></div>={<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::buffer'], [], [])"><div class="token cpp_argument">buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>};
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::slice'], [], [])">slice</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::append'], [], [])"><div class="token cpp_argument">append</div></div>);
+		}
+		
+		<div class="token cpp_comment ">/// &lt;summary&gt;Copy containers.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Ds&quot;&gt;Type of the destination container.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;S&quot;&gt;Type of the elements in the source container.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;ds&quot;&gt;The destination container.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;begin&quot;&gt;Pointer to the first element in the source array.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;end&quot;&gt;Pointer to the element after the last element in the source array.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;append&quot;&gt;Set to false to delete everything in the destination container before copying.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::Ds"><div><div class="token cpp_type">Ds</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::S"><div><div class="token cpp_type">S</div></div></div>&gt;
+		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]"><div><div class="token cpp_function">CopyFrom</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::Ds'], [], [])"><div class="token cpp_type">Ds</div></div>&amp; <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::ds"><div><div class="token cpp_argument">ds</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::S'], [], [])"><div class="token cpp_type">S</div></div>* <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::begin"><div><div class="token cpp_argument">begin</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::S'], [], [])"><div class="token cpp_type">S</div></div>* <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::end"><div><div class="token cpp_argument">end</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::append"><div><div class="token cpp_argument">append</div></div></div>=<div class="token cpp_keyword ">false</div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal'], [], [])">copyfrom_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::copyfrom_internal::Slice'], [], [])"><div class="token cpp_type">Slice</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::S'], [], [])"><div class="token cpp_type">S</div></div>&gt; <div class="def" id="NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::slice"><div>slice</div></div>={<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::begin'], [], [])"><div class="token cpp_argument">begin</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::end'], [], [])"><div class="token cpp_argument">end</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::begin'], [], [])"><div class="token cpp_argument">begin</div></div>};
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::ds'], [], [])"><div class="token cpp_argument">ds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::slice'], [], [])">slice</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::append'], [], [])"><div class="token cpp_argument">append</div></div>);
+		}
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator ->@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator -&gt;</span>()',
+        'impls': [
+            'FB$vl::Ptr::operator ->@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">D</span>, <span class="cpp_type">Ss</span>&gt;(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">D</span>&gt; &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">S</span>&gt;<span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">vint</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::Ds': {
+        'displayNameInHtml': '<span class="cpp_type">Ds</span>',
+        'impls': [
+            'TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::Ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::S': {
+        'displayNameInHtml': '<span class="cpp_type">S</span>',
+        'impls': [
+            'TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::S'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::append': {
+        'displayNameInHtml': 'append',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::append'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::buffer': {
+        'displayNameInHtml': 'buffer',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::buffer'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::count': {
+        'displayNameInHtml': 'count',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::count'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::ds': {
+        'displayNameInHtml': 'ds',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::slice': {
+        'displayNameInHtml': 'slice',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::slice'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::Ds': {
+        'displayNameInHtml': '<span class="cpp_type">Ds</span>',
+        'impls': [
+            'TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::Ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::S': {
+        'displayNameInHtml': '<span class="cpp_type">S</span>',
+        'impls': [
+            'TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::S'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::append': {
+        'displayNameInHtml': 'append',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::append'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::begin': {
+        'displayNameInHtml': 'begin',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::begin'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::ds': {
+        'displayNameInHtml': 'ds',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::end': {
+        'displayNameInHtml': 'end',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::end'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::slice': {
+        'displayNameInHtml': 'slice',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::slice'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ds': {
+        'displayNameInHtml': '<span class="cpp_type">Ds</span>',
+        'impls': [
+            'TA$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ss': {
+        'displayNameInHtml': '<span class="cpp_type">Ss</span>',
+        'impls': [
+            'TA$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::append': {
+        'displayNameInHtml': 'append',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::append'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ds': {
+        'displayNameInHtml': 'ds',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ss': {
+        'displayNameInHtml': 'ss',
+        'impls': [
+            'NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerator': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::IEnumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerator::Current@[T] const &()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Current</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Next@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Next</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Next@bool()[decl0]'
+        ]
+    },
+    'vl::collections::copyfrom_internal': {
+        'displayNameInHtml': 'vl::collections::copyfrom_internal',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections::copyfrom_internal'
+        ]
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ds': {
+        'displayNameInHtml': '<span class="cpp_type">Ds</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">Perform</span>(<span class="cpp_type">Ds</span> &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append': {
+        'displayNameInHtml': 'append',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount': {
+        'displayNameInHtml': 'copyCount',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds': {
+        'displayNameInHtml': 'ds',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss': {
+        'displayNameInHtml': 'ss',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ss': {
+        'displayNameInHtml': '<span class="cpp_type">Ss</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds': {
+        'displayNameInHtml': '<span class="cpp_type">Ds</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">Perform</span>(<span class="cpp_type">Ds</span> &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append': {
+        'displayNameInHtml': 'append',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount': {
+        'displayNameInHtml': 'copyCount',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds': {
+        'displayNameInHtml': 'ds',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator': {
+        'displayNameInHtml': 'enumerator',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount': {
+        'displayNameInHtml': 'resizeCount',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss': {
+        'displayNameInHtml': 'ss',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ss': {
+        'displayNameInHtml': '<span class="cpp_type">Ss</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ds': {
+        'displayNameInHtml': '<span class="cpp_type">Ds</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">Perform</span>(<span class="cpp_type">Ds</span> &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append': {
+        'displayNameInHtml': 'append',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds': {
+        'displayNameInHtml': 'ds',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator': {
+        'displayNameInHtml': 'enumerator',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss': {
+        'displayNameInHtml': 'ss',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ss': {
+        'displayNameInHtml': '<span class="cpp_type">Ss</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds': {
+        'displayNameInHtml': '<span class="cpp_type">Ds</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">CopyFromAlgorithm</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">Perform</span>(<span class="cpp_type">Ds</span> &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append': {
+        'displayNameInHtml': 'append',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount': {
+        'displayNameInHtml': 'copyCount',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds': {
+        'displayNameInHtml': 'ds',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount': {
+        'displayNameInHtml': 'resizeCount',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss': {
+        'displayNameInHtml': 'ss',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ss': {
+        'displayNameInHtml': '<span class="cpp_type">Ss</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ss'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::Slice': {
+        'displayNameInHtml': '<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::Slice'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::Slice::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::collections::copyfrom_internal::Slice::T'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::Slice::count': {
+        'displayNameInHtml': '<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">count</span>',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::Slice::count'
+        ],
+        'decls': []
+    },
+    'vl::collections::copyfrom_internal::Slice::items': {
+        'displayNameInHtml': '<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">items</span>',
+        'impls': [
+            'NI$vl::collections::copyfrom_internal::Slice::items'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal': {
+        'displayNameInHtml': 'vl::collections::randomaccess_internal',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections::randomaccess_internal',
+            'NF[1]$vl::collections::randomaccess_internal',
+            'NF[2]$vl::collections::randomaccess_internal',
+            'NF[3]$vl::collections::randomaccess_internal'
+        ]
+    },
+    'vl::collections::randomaccess_internal::RandomAccess': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccess'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess::AppendValue@void([T] &, ElementType const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">AppendValue</span>(<span class="cpp_type">T</span> &, <span class="cpp_type">T</span>::ElementType<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess::AppendValue@void([T] &, ElementType const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">GetCount</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess::GetValue@ElementType const &([T] const &, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">GetValue</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess::GetValue@ElementType const &([T] const &, ::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess::SetCount@void([T] &, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">SetCount</span>(<span class="cpp_type">T</span> &, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess::SetCount@void([T] &, ::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess::SetValue@void([T] &, ::vl::vint, ElementType const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">SetValue</span>(<span class="cpp_type">T</span> &, <span class="cpp_type">vint</span>, <span class="cpp_type">T</span>::ElementType<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess::SetValue@void([T] &, ::vl::vint, ElementType const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::AppendValue@void(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> &, ::vl::collections::Pair<[KT], [VT]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;&gt;::<span class="cpp_function">AppendValue</span>(<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt; &, <span class="cpp_type">Pair</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::AppendValue@void(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> &, ::vl::collections::Pair<[KT], [VT]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;&gt;::<span class="cpp_function">GetCount</span>(<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetValue@::vl::collections::Pair<[KT], [VT]>(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;&gt;::<span class="cpp_function">GetValue</span>(<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;<span class="cpp_keyword"> const</span> &, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetValue@::vl::collections::Pair<[KT], [VT]>(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &, ::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;copyfrom_internal::<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;copyfrom_internal::<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_function">GetCount</span>(copyfrom_internal::<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)[impl0]::t': {
+        'displayNameInHtml': 't',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)[impl0]::t'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccess</span>&lt;copyfrom_internal::<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_function">GetValue</span>(copyfrom_internal::<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::t': {
+        'displayNameInHtml': 't',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::t'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::T'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable::CanRead': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">CanRead</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable::CanRead'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable::CanResize': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">CanResize</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable::CanResize'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>::CanRead': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;::<span class="cpp_field">CanRead</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>::CanRead'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>::CanResize': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;::<span class="cpp_field">CanResize</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>::CanResize'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::CanRead': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;&gt;::<span class="cpp_field">CanRead</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::CanRead'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::CanResize': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;&gt;::<span class="cpp_field">CanResize</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::CanResize'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>::CanRead': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;::<span class="cpp_field">CanRead</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>::CanRead'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>::CanResize': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;::<span class="cpp_field">CanResize</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>::CanResize'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>::CanRead': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;::<span class="cpp_field">CanRead</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>::CanRead'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>::CanResize': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;&gt;::<span class="cpp_field">CanResize</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>::CanResize'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;copyfrom_internal::<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;&gt;',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanRead': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;copyfrom_internal::<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_field">CanRead</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanRead'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanResize': {
+        'displayNameInHtml': '<span class="cpp_type">RandomAccessable</span>&lt;copyfrom_internal::<span class="cpp_type">Slice</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_field">CanResize</span>',
+        'impls': [
+            'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanResize'
+        ],
+        'decls': []
+    },
+    'vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::T'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)[impl0]': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)[impl0]': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]': null,
+    'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]': null,
+    'FB$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]': null,
+    'FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Next@bool()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]': null,
+    'FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]': null,
+    'FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]': null,
+    'FB$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]': null,
+    'FB$vl::collections::randomaccess_internal::RandomAccess::AppendValue@void([T] &, ElementType const &)[impl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::randomaccess_internal::RandomAccess::GetCount@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::randomaccess_internal::RandomAccess::GetValue@ElementType const &([T] const &, ::vl::vint)[impl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::randomaccess_internal::RandomAccess::SetCount@void([T] &, ::vl::vint)[impl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::randomaccess_internal::RandomAccess::SetValue@void([T] &, ::vl::vint, ElementType const &)[impl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::AppendValue@void(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> &, ::vl::collections::Pair<[KT], [VT]> const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetCount@::vl::vint(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::GetValue@::vl::collections::Pair<[KT], [VT]>(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const &, ::vl::vint)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)[impl0]': null,
+    'FB$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]': null,
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::collections::copyfrom_internal': null,
+    'NF[0]$vl::collections::randomaccess_internal': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[11]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[17]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[19]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[1]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::collections::randomaccess_internal': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[20]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[21]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[22]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[25]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[26]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::collections::randomaccess_internal': null,
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[3]$vl::collections': null,
+    'NF[3]$vl::collections::randomaccess_internal': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[4]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[6]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[7]$vl': null,
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[8]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[9]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::append': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::buffer': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::count': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::ds': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::slice': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::append': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::begin': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::ds': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::end': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::slice': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::append': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ds': null,
+    'NI$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::ss': null,
+    'NI$vl::collections::IEnumerator': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::enumerator': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::append': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::copyCount': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ds': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::i': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::index': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::resizeCount': null,
+    'NI$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Perform@void([Ds] &, [Ss] const &, bool)[impl0]::ss': null,
+    'NI$vl::collections::copyfrom_internal::Slice': null,
+    'NI$vl::collections::copyfrom_internal::Slice::count': null,
+    'NI$vl::collections::copyfrom_internal::Slice::items': null,
+    'NI$vl::collections::randomaccess_internal::RandomAccess': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>': null,
+    'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetCount@::vl::vint(::vl::collections::copyfrom_internal::Slice<[T]> const &)[impl0]::t': null,
+    'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::index': null,
+    'NI$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::GetValue@[T] const &(::vl::collections::copyfrom_internal::Slice<[T]> const &, ::vl::vint)[impl0]::t': null,
+    'NI$vl::collections::randomaccess_internal::RandomAccessable': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable::CanRead': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable::CanResize': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>::CanRead': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Array<[T], [K]>>::CanResize': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::CanRead': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::Dictionary<[KT], [VT], [KK], [VK]>>::CanResize': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>::CanRead': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::List<[T], [K]>>::CanResize': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>::CanRead': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::SortedList<[T], [K]>>::CanResize': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>': null,
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanRead': null,
+    'NI$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::CanResize': null,
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::Ds': null,
+    'TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]::S': null,
+    'TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::Ds': null,
+    'TA$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]::S': null,
+    'TA$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ds': null,
+    'TA$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]::Ss': null,
+    'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ds': null,
+    'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>2::Ss': null,
+    'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ds': null,
+    'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>3::Ss': null,
+    'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ds': null,
+    'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>4::Ss': null,
+    'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ds': null,
+    'TA$vl::collections::copyfrom_internal::CopyFromAlgorithm@<[Ds], [Ss], *, *>::Ss': null,
+    'TA$vl::collections::copyfrom_internal::Slice::T': null,
+    'TA$vl::collections::randomaccess_internal::RandomAccess@<::vl::collections::copyfrom_internal::Slice<[T]>>::T': null,
+    'TA$vl::collections::randomaccess_internal::RandomAccessable@<::vl::collections::copyfrom_internal::Slice<[T]>>::T': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

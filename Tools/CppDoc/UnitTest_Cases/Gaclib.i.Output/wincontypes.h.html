@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>wincontypes.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/*++
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Module Name:
+
+    wincontypes.h
+
+Abstract:
+
+    This module contains the common data types
+    exported by the NT console subsystem.
+
+Created:
+    08-Sep-2017
+
+Revision History:
+    26-Oct-1990 - Originally created in wincon.h
+
+--*/</div>
+
+<div class="disabled">#ifndef _WINCONTYPES_</div>
+<div class="disabled">#define _WINCONTYPES_</div>
+
+#pragma once
+
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Application Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_COORD"><div><div class="token cpp_type">_COORD</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['SHORT'], [], [])"><div class="token cpp_type">SHORT</div></div> <div class="def" id="NI$_COORD::X"><div><div class="token cpp_field">X</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['SHORT'], [], [])"><div class="token cpp_type">SHORT</div></div> <div class="def" id="NI$_COORD::Y"><div><div class="token cpp_field">Y</div></div></div>;
+} <div class="def" id="NI$COORD"><div><div class="token cpp_type">COORD</div></div></div>, *<div class="def" id="NI$PCOORD"><div><div class="token cpp_type">PCOORD</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_SMALL_RECT"><div><div class="token cpp_type">_SMALL_RECT</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['SHORT'], [], [])"><div class="token cpp_type">SHORT</div></div> <div class="def" id="NI$_SMALL_RECT::Left"><div><div class="token cpp_field">Left</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['SHORT'], [], [])"><div class="token cpp_type">SHORT</div></div> <div class="def" id="NI$_SMALL_RECT::Top"><div><div class="token cpp_field">Top</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['SHORT'], [], [])"><div class="token cpp_type">SHORT</div></div> <div class="def" id="NI$_SMALL_RECT::Right"><div><div class="token cpp_field">Right</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['SHORT'], [], [])"><div class="token cpp_type">SHORT</div></div> <div class="def" id="NI$_SMALL_RECT::Bottom"><div><div class="token cpp_field">Bottom</div></div></div>;
+} <div class="def" id="NI$SMALL_RECT"><div><div class="token cpp_type">SMALL_RECT</div></div></div>, *<div class="def" id="NI$PSMALL_RECT"><div><div class="token cpp_type">PSMALL_RECT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_KEY_EVENT_RECORD"><div><div class="token cpp_type">_KEY_EVENT_RECORD</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$_KEY_EVENT_RECORD::bKeyDown"><div><div class="token cpp_field">bKeyDown</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_KEY_EVENT_RECORD::wRepeatCount"><div><div class="token cpp_field">wRepeatCount</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_KEY_EVENT_RECORD::wVirtualKeyCode"><div><div class="token cpp_field">wVirtualKeyCode</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_KEY_EVENT_RECORD::wVirtualScanCode"><div><div class="token cpp_field">wVirtualScanCode</div></div></div>;
+    <div class="token cpp_keyword ">union</div> {
+        <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$_KEY_EVENT_RECORD::<anonymous>264::UnicodeChar"><div><div class="token cpp_field">UnicodeChar</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>   <div class="def" id="NI$_KEY_EVENT_RECORD::<anonymous>264::AsciiChar"><div><div class="token cpp_field">AsciiChar</div></div></div>;
+    } <div class="def" id="NI$_KEY_EVENT_RECORD::uChar"><div><div class="token cpp_field">uChar</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_KEY_EVENT_RECORD::dwControlKeyState"><div><div class="token cpp_field">dwControlKeyState</div></div></div>;
+} <div class="def" id="NI$KEY_EVENT_RECORD"><div><div class="token cpp_type">KEY_EVENT_RECORD</div></div></div>, *<div class="def" id="NI$PKEY_EVENT_RECORD"><div><div class="token cpp_type">PKEY_EVENT_RECORD</div></div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// ControlKeyState flags</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define RIGHT_ALT_PRESSED     0x0001 // the right alt key is pressed.</div>
+<div class="disabled">#define LEFT_ALT_PRESSED      0x0002 // the left alt key is pressed.</div>
+<div class="disabled">#define RIGHT_CTRL_PRESSED    0x0004 // the right ctrl key is pressed.</div>
+<div class="disabled">#define LEFT_CTRL_PRESSED     0x0008 // the left ctrl key is pressed.</div>
+<div class="disabled">#define SHIFT_PRESSED         0x0010 // the shift key is pressed.</div>
+<div class="disabled">#define NUMLOCK_ON            0x0020 // the numlock light is on.</div>
+<div class="disabled">#define SCROLLLOCK_ON         0x0040 // the scrolllock light is on.</div>
+<div class="disabled">#define CAPSLOCK_ON           0x0080 // the capslock light is on.</div>
+<div class="disabled">#define ENHANCED_KEY          0x0100 // the key is enhanced.</div>
+<div class="disabled">#define NLS_DBCSCHAR          0x00010000 // DBCS for JPN: SBCS/DBCS mode.</div>
+<div class="disabled">#define NLS_ALPHANUMERIC      0x00000000 // DBCS for JPN: Alphanumeric mode.</div>
+<div class="disabled">#define NLS_KATAKANA          0x00020000 // DBCS for JPN: Katakana mode.</div>
+<div class="disabled">#define NLS_HIRAGANA          0x00040000 // DBCS for JPN: Hiragana mode.</div>
+<div class="disabled">#define NLS_ROMAN             0x00400000 // DBCS for JPN: Roman/Noroman mode.</div>
+<div class="disabled">#define NLS_IME_CONVERSION    0x00800000 // DBCS for JPN: IME conversion.</div>
+<div class="disabled">#define ALTNUMPAD_BIT         0x04000000 // AltNumpad OEM char (copied from ntuser\inc\kbd.h) ;internal_NT</div>
+<div class="disabled">#define NLS_IME_DISABLE       0x20000000 // DBCS for JPN: IME enable/disable.</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_MOUSE_EVENT_RECORD"><div><div class="token cpp_type">_MOUSE_EVENT_RECORD</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['COORD'], [], [])"><div class="token cpp_type">COORD</div></div> <div class="def" id="NI$_MOUSE_EVENT_RECORD::dwMousePosition"><div><div class="token cpp_field">dwMousePosition</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_MOUSE_EVENT_RECORD::dwButtonState"><div><div class="token cpp_field">dwButtonState</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_MOUSE_EVENT_RECORD::dwControlKeyState"><div><div class="token cpp_field">dwControlKeyState</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_MOUSE_EVENT_RECORD::dwEventFlags"><div><div class="token cpp_field">dwEventFlags</div></div></div>;
+} <div class="def" id="NI$MOUSE_EVENT_RECORD"><div><div class="token cpp_type">MOUSE_EVENT_RECORD</div></div></div>, *<div class="def" id="NI$PMOUSE_EVENT_RECORD"><div><div class="token cpp_type">PMOUSE_EVENT_RECORD</div></div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// ButtonState flags</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define FROM_LEFT_1ST_BUTTON_PRESSED    0x0001</div>
+<div class="disabled">#define RIGHTMOST_BUTTON_PRESSED        0x0002</div>
+<div class="disabled">#define FROM_LEFT_2ND_BUTTON_PRESSED    0x0004</div>
+<div class="disabled">#define FROM_LEFT_3RD_BUTTON_PRESSED    0x0008</div>
+<div class="disabled">#define FROM_LEFT_4TH_BUTTON_PRESSED    0x0010</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// EventFlags</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define MOUSE_MOVED   0x0001</div>
+<div class="disabled">#define DOUBLE_CLICK  0x0002</div>
+<div class="disabled">#define MOUSE_WHEELED 0x0004</div>
+<div class="disabled">#if(_WIN32_WINNT &gt;= 0x0600)</div>
+<div class="disabled">#define MOUSE_HWHEELED 0x0008
+#endif /* _WIN32_WINNT &gt;= 0x0600 */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_WINDOW_BUFFER_SIZE_RECORD"><div><div class="token cpp_type">_WINDOW_BUFFER_SIZE_RECORD</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['COORD'], [], [])"><div class="token cpp_type">COORD</div></div> <div class="def" id="NI$_WINDOW_BUFFER_SIZE_RECORD::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>;
+} <div class="def" id="NI$WINDOW_BUFFER_SIZE_RECORD"><div><div class="token cpp_type">WINDOW_BUFFER_SIZE_RECORD</div></div></div>, *<div class="def" id="NI$PWINDOW_BUFFER_SIZE_RECORD"><div><div class="token cpp_type">PWINDOW_BUFFER_SIZE_RECORD</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_MENU_EVENT_RECORD"><div><div class="token cpp_type">_MENU_EVENT_RECORD</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_MENU_EVENT_RECORD::dwCommandId"><div><div class="token cpp_field">dwCommandId</div></div></div>;
+} <div class="def" id="NI$MENU_EVENT_RECORD"><div><div class="token cpp_type">MENU_EVENT_RECORD</div></div></div>, *<div class="def" id="NI$PMENU_EVENT_RECORD"><div><div class="token cpp_type">PMENU_EVENT_RECORD</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_FOCUS_EVENT_RECORD"><div><div class="token cpp_type">_FOCUS_EVENT_RECORD</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$_FOCUS_EVENT_RECORD::bSetFocus"><div><div class="token cpp_field">bSetFocus</div></div></div>;
+} <div class="def" id="NI$FOCUS_EVENT_RECORD"><div><div class="token cpp_type">FOCUS_EVENT_RECORD</div></div></div>, *<div class="def" id="NI$PFOCUS_EVENT_RECORD"><div><div class="token cpp_type">PFOCUS_EVENT_RECORD</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_INPUT_RECORD"><div><div class="token cpp_type">_INPUT_RECORD</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_INPUT_RECORD::EventType"><div><div class="token cpp_field">EventType</div></div></div>;
+    <div class="token cpp_keyword ">union</div> {
+        <div class="ref" onclick="jumpToSymbol([], ['KEY_EVENT_RECORD'], [], [])"><div class="token cpp_type">KEY_EVENT_RECORD</div></div> <div class="def" id="NI$_INPUT_RECORD::<anonymous>265::KeyEvent"><div><div class="token cpp_field">KeyEvent</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['MOUSE_EVENT_RECORD'], [], [])"><div class="token cpp_type">MOUSE_EVENT_RECORD</div></div> <div class="def" id="NI$_INPUT_RECORD::<anonymous>265::MouseEvent"><div><div class="token cpp_field">MouseEvent</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['WINDOW_BUFFER_SIZE_RECORD'], [], [])"><div class="token cpp_type">WINDOW_BUFFER_SIZE_RECORD</div></div> <div class="def" id="NI$_INPUT_RECORD::<anonymous>265::WindowBufferSizeEvent"><div><div class="token cpp_field">WindowBufferSizeEvent</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['MENU_EVENT_RECORD'], [], [])"><div class="token cpp_type">MENU_EVENT_RECORD</div></div> <div class="def" id="NI$_INPUT_RECORD::<anonymous>265::MenuEvent"><div><div class="token cpp_field">MenuEvent</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['FOCUS_EVENT_RECORD'], [], [])"><div class="token cpp_type">FOCUS_EVENT_RECORD</div></div> <div class="def" id="NI$_INPUT_RECORD::<anonymous>265::FocusEvent"><div><div class="token cpp_field">FocusEvent</div></div></div>;
+    } <div class="def" id="NI$_INPUT_RECORD::Event"><div><div class="token cpp_field">Event</div></div></div>;
+} <div class="def" id="NI$INPUT_RECORD"><div><div class="token cpp_type">INPUT_RECORD</div></div></div>, *<div class="def" id="NI$PINPUT_RECORD"><div><div class="token cpp_type">PINPUT_RECORD</div></div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  EventType flags:</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define KEY_EVENT         0x0001 // Event contains key event record</div>
+<div class="disabled">#define MOUSE_EVENT       0x0002 // Event contains mouse event record</div>
+<div class="disabled">#define WINDOW_BUFFER_SIZE_EVENT 0x0004 // Event contains window change event record</div>
+<div class="disabled">#define MENU_EVENT 0x0008 // Event contains menu event record</div>
+<div class="disabled">#define FOCUS_EVENT 0x0010 // event contains focus change</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_CHAR_INFO"><div><div class="token cpp_type">_CHAR_INFO</div></div></div> {
+    <div class="token cpp_keyword ">union</div> {
+        <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$_CHAR_INFO::<anonymous>266::UnicodeChar"><div><div class="token cpp_field">UnicodeChar</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>   <div class="def" id="NI$_CHAR_INFO::<anonymous>266::AsciiChar"><div><div class="token cpp_field">AsciiChar</div></div></div>;
+    } <div class="def" id="NI$_CHAR_INFO::Char"><div><div class="token cpp_field">Char</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_CHAR_INFO::Attributes"><div><div class="token cpp_field">Attributes</div></div></div>;
+} <div class="def" id="NI$CHAR_INFO"><div><div class="token cpp_type">CHAR_INFO</div></div></div>, *<div class="def" id="NI$PCHAR_INFO"><div><div class="token cpp_type">PCHAR_INFO</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_CONSOLE_FONT_INFO"><div><div class="token cpp_type">_CONSOLE_FONT_INFO</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>  <div class="def" id="NI$_CONSOLE_FONT_INFO::nFont"><div><div class="token cpp_field">nFont</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['COORD'], [], [])"><div class="token cpp_type">COORD</div></div>  <div class="def" id="NI$_CONSOLE_FONT_INFO::dwFontSize"><div><div class="token cpp_field">dwFontSize</div></div></div>;
+} <div class="def" id="NI$CONSOLE_FONT_INFO"><div><div class="token cpp_type">CONSOLE_FONT_INFO</div></div></div>, *<div class="def" id="NI$PCONSOLE_FONT_INFO"><div><div class="token cpp_type">PCONSOLE_FONT_INFO</div></div></div>;
+
+<div class="expandable"><div class="disabled">typedef VOID* HPCON;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$HPCON"><div><div class="token cpp_type">HPCON</div></div></div>;</div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _WINCONTYPES_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'CHAR': {
+        'displayNameInHtml': '<span class="cpp_type">CHAR</span>',
+        'impls': [
+            'NI$CHAR'
+        ],
+        'decls': []
+    },
+    'COORD': {
+        'displayNameInHtml': '<span class="cpp_type">COORD</span>',
+        'impls': [
+            'NI$COORD'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'FOCUS_EVENT_RECORD': {
+        'displayNameInHtml': '<span class="cpp_type">FOCUS_EVENT_RECORD</span>',
+        'impls': [
+            'NI$FOCUS_EVENT_RECORD'
+        ],
+        'decls': []
+    },
+    'KEY_EVENT_RECORD': {
+        'displayNameInHtml': '<span class="cpp_type">KEY_EVENT_RECORD</span>',
+        'impls': [
+            'NI$KEY_EVENT_RECORD'
+        ],
+        'decls': []
+    },
+    'MENU_EVENT_RECORD': {
+        'displayNameInHtml': '<span class="cpp_type">MENU_EVENT_RECORD</span>',
+        'impls': [
+            'NI$MENU_EVENT_RECORD'
+        ],
+        'decls': []
+    },
+    'MOUSE_EVENT_RECORD': {
+        'displayNameInHtml': '<span class="cpp_type">MOUSE_EVENT_RECORD</span>',
+        'impls': [
+            'NI$MOUSE_EVENT_RECORD'
+        ],
+        'decls': []
+    },
+    'SHORT': {
+        'displayNameInHtml': '<span class="cpp_type">SHORT</span>',
+        'impls': [
+            'NI$SHORT'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'WCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">WCHAR</span>',
+        'impls': [
+            'NI$WCHAR'
+        ],
+        'decls': []
+    },
+    'WINDOW_BUFFER_SIZE_RECORD': {
+        'displayNameInHtml': '<span class="cpp_type">WINDOW_BUFFER_SIZE_RECORD</span>',
+        'impls': [
+            'NI$WINDOW_BUFFER_SIZE_RECORD'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$CHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$COORD': null,
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$FOCUS_EVENT_RECORD': null,
+    'NI$KEY_EVENT_RECORD': null,
+    'NI$MENU_EVENT_RECORD': null,
+    'NI$MOUSE_EVENT_RECORD': null,
+    'NI$SHORT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WCHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$WINDOW_BUFFER_SIZE_RECORD': null,
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

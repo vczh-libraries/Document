@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sdkddkver.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/*
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Module Name:
+
+    sdkddkver.h
+
+Abstract:
+
+    Master include file for versioning windows SDK/DDK.
+
+*/</div>
+
+<div class="disabled">#ifndef _INC_SDKDDKVER</div>
+<div class="disabled">#define _INC_SDKDDKVER</div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 800)</div>
+<div class="disabled">#if (_MSC_VER &gt;= 1200)</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4668) /* #if not_defined treated as #if 0 */
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4668</div>) </div></div>
+<div class="expandable"><div class="disabled">#pragma warning(disable:4001) /* nonstandard extension : single line comment */
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4001</div>) </div></div>
+
+#pragma once
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// _WIN32_WINNT version constants</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define _WIN32_WINNT_NT4                    0x0400</div>
+<div class="disabled">#define _WIN32_WINNT_WIN2K                  0x0500</div>
+<div class="disabled">#define _WIN32_WINNT_WINXP                  0x0501</div>
+<div class="disabled">#define _WIN32_WINNT_WS03                   0x0502</div>
+<div class="disabled">#define _WIN32_WINNT_WIN6                   0x0600</div>
+<div class="disabled">#define _WIN32_WINNT_VISTA                  0x0600</div>
+<div class="disabled">#define _WIN32_WINNT_WS08                   0x0600</div>
+<div class="disabled">#define _WIN32_WINNT_LONGHORN               0x0600</div>
+<div class="disabled">#define _WIN32_WINNT_WIN7                   0x0601</div>
+<div class="disabled">#define _WIN32_WINNT_WIN8                   0x0602</div>
+<div class="disabled">#define _WIN32_WINNT_WINBLUE                0x0603</div>
+<div class="disabled">#define _WIN32_WINNT_WINTHRESHOLD           0x0A00 /* ABRACADABRA_THRESHOLD*/</div>
+<div class="disabled">#define _WIN32_WINNT_WIN10                  0x0A00 /* ABRACADABRA_THRESHOLD*/</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// _WIN32_IE_ version constants</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define _WIN32_IE_IE20                      0x0200</div>
+<div class="disabled">#define _WIN32_IE_IE30                      0x0300</div>
+<div class="disabled">#define _WIN32_IE_IE302                     0x0302</div>
+<div class="disabled">#define _WIN32_IE_IE40                      0x0400</div>
+<div class="disabled">#define _WIN32_IE_IE401                     0x0401</div>
+<div class="disabled">#define _WIN32_IE_IE50                      0x0500</div>
+<div class="disabled">#define _WIN32_IE_IE501                     0x0501</div>
+<div class="disabled">#define _WIN32_IE_IE55                      0x0550</div>
+<div class="disabled">#define _WIN32_IE_IE60                      0x0600</div>
+<div class="disabled">#define _WIN32_IE_IE60SP1                   0x0601</div>
+<div class="disabled">#define _WIN32_IE_IE60SP2                   0x0603</div>
+<div class="disabled">#define _WIN32_IE_IE70                      0x0700</div>
+<div class="disabled">#define _WIN32_IE_IE80                      0x0800</div>
+<div class="disabled">#define _WIN32_IE_IE90                      0x0900</div>
+<div class="disabled">#define _WIN32_IE_IE100                     0x0A00</div>
+<div class="disabled">#define _WIN32_IE_IE110                     0x0A00  /* ABRACADABRA_THRESHOLD */</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// IE &lt;-&gt; OS version mapping</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// NT4 supports IE versions 2.0 -&gt; 6.0 SP1</div>
+<div class="disabled">#define _WIN32_IE_NT4                       _WIN32_IE_IE20</div>
+<div class="disabled">#define _WIN32_IE_NT4SP1                    _WIN32_IE_IE20</div>
+<div class="disabled">#define _WIN32_IE_NT4SP2                    _WIN32_IE_IE20</div>
+<div class="disabled">#define _WIN32_IE_NT4SP3                    _WIN32_IE_IE302</div>
+<div class="disabled">#define _WIN32_IE_NT4SP4                    _WIN32_IE_IE401</div>
+<div class="disabled">#define _WIN32_IE_NT4SP5                    _WIN32_IE_IE401</div>
+<div class="disabled">#define _WIN32_IE_NT4SP6                    _WIN32_IE_IE50</div>
+<div class="token cpp_comment ">// Win98 supports IE versions 4.01 -&gt; 6.0 SP1</div>
+<div class="disabled">#define _WIN32_IE_WIN98                     _WIN32_IE_IE401</div>
+<div class="token cpp_comment ">// Win98SE supports IE versions 5.0 -&gt; 6.0 SP1</div>
+<div class="disabled">#define _WIN32_IE_WIN98SE                   _WIN32_IE_IE50</div>
+<div class="token cpp_comment ">// WinME supports IE versions 5.5 -&gt; 6.0 SP1</div>
+<div class="disabled">#define _WIN32_IE_WINME                     _WIN32_IE_IE55</div>
+<div class="token cpp_comment ">// Win2k supports IE versions 5.01 -&gt; 6.0 SP1</div>
+<div class="disabled">#define _WIN32_IE_WIN2K                     _WIN32_IE_IE501</div>
+<div class="disabled">#define _WIN32_IE_WIN2KSP1                  _WIN32_IE_IE501</div>
+<div class="disabled">#define _WIN32_IE_WIN2KSP2                  _WIN32_IE_IE501</div>
+<div class="disabled">#define _WIN32_IE_WIN2KSP3                  _WIN32_IE_IE501</div>
+<div class="disabled">#define _WIN32_IE_WIN2KSP4                  _WIN32_IE_IE501</div>
+<div class="disabled">#define _WIN32_IE_XP                        _WIN32_IE_IE60</div>
+<div class="disabled">#define _WIN32_IE_XPSP1                     _WIN32_IE_IE60SP1</div>
+<div class="disabled">#define _WIN32_IE_XPSP2                     _WIN32_IE_IE60SP2</div>
+<div class="disabled">#define _WIN32_IE_WS03                      0x0602</div>
+<div class="disabled">#define _WIN32_IE_WS03SP1                   _WIN32_IE_IE60SP2</div>
+<div class="disabled">#define _WIN32_IE_WIN6                      _WIN32_IE_IE70</div>
+<div class="disabled">#define _WIN32_IE_LONGHORN                  _WIN32_IE_IE70</div>
+<div class="disabled">#define _WIN32_IE_WIN7                      _WIN32_IE_IE80</div>
+<div class="disabled">#define _WIN32_IE_WIN8                      _WIN32_IE_IE100</div>
+<div class="disabled">#define _WIN32_IE_WINBLUE                   _WIN32_IE_IE100</div>
+<div class="disabled">#define _WIN32_IE_WINTHRESHOLD              _WIN32_IE_IE110  /* ABRACADABRA_THRESHOLD */</div>
+<div class="disabled">#define _WIN32_IE_WIN10                     _WIN32_IE_IE110  /* ABRACADABRA_THRESHOLD */</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// NTDDI version constants</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define NTDDI_WIN2K                         0x05000000</div>
+<div class="disabled">#define NTDDI_WIN2KSP1                      0x05000100</div>
+<div class="disabled">#define NTDDI_WIN2KSP2                      0x05000200</div>
+<div class="disabled">#define NTDDI_WIN2KSP3                      0x05000300</div>
+<div class="disabled">#define NTDDI_WIN2KSP4                      0x05000400</div>
+
+<div class="disabled">#define NTDDI_WINXP                         0x05010000</div>
+<div class="disabled">#define NTDDI_WINXPSP1                      0x05010100</div>
+<div class="disabled">#define NTDDI_WINXPSP2                      0x05010200</div>
+<div class="disabled">#define NTDDI_WINXPSP3                      0x05010300</div>
+<div class="disabled">#define NTDDI_WINXPSP4                      0x05010400</div>
+
+<div class="disabled">#define NTDDI_WS03                          0x05020000</div>
+<div class="disabled">#define NTDDI_WS03SP1                       0x05020100</div>
+<div class="disabled">#define NTDDI_WS03SP2                       0x05020200</div>
+<div class="disabled">#define NTDDI_WS03SP3                       0x05020300</div>
+<div class="disabled">#define NTDDI_WS03SP4                       0x05020400</div>
+
+<div class="disabled">#define NTDDI_WIN6                          0x06000000</div>
+<div class="disabled">#define NTDDI_WIN6SP1                       0x06000100</div>
+<div class="disabled">#define NTDDI_WIN6SP2                       0x06000200</div>
+<div class="disabled">#define NTDDI_WIN6SP3                       0x06000300</div>
+<div class="disabled">#define NTDDI_WIN6SP4                       0x06000400</div>
+
+<div class="disabled">#define NTDDI_VISTA                         NTDDI_WIN6</div>
+<div class="disabled">#define NTDDI_VISTASP1                      NTDDI_WIN6SP1</div>
+<div class="disabled">#define NTDDI_VISTASP2                      NTDDI_WIN6SP2</div>
+<div class="disabled">#define NTDDI_VISTASP3                      NTDDI_WIN6SP3</div>
+<div class="disabled">#define NTDDI_VISTASP4                      NTDDI_WIN6SP4</div>
+
+<div class="disabled">#define NTDDI_LONGHORN  NTDDI_VISTA</div>
+
+<div class="disabled">#define NTDDI_WS08                          NTDDI_WIN6SP1</div>
+<div class="disabled">#define NTDDI_WS08SP2                       NTDDI_WIN6SP2</div>
+<div class="disabled">#define NTDDI_WS08SP3                       NTDDI_WIN6SP3</div>
+<div class="disabled">#define NTDDI_WS08SP4                       NTDDI_WIN6SP4</div>
+
+<div class="disabled">#define NTDDI_WIN7                          0x06010000</div>
+<div class="disabled">#define NTDDI_WIN8                          0x06020000</div>
+<div class="disabled">#define NTDDI_WINBLUE                       0x06030000</div>
+<div class="disabled">#define NTDDI_WINTHRESHOLD                  0x0A000000  /* ABRACADABRA_THRESHOLD */</div>
+<div class="disabled">#define NTDDI_WIN10                         0x0A000000  /* ABRACADABRA_THRESHOLD */</div>
+<div class="disabled">#define NTDDI_WIN10_TH2                     0x0A000001  /* ABRACADABRA_WIN10_TH2 */</div>
+<div class="disabled">#define NTDDI_WIN10_RS1                     0x0A000002  /* ABRACADABRA_WIN10_RS1 */</div>
+<div class="disabled">#define NTDDI_WIN10_RS2                     0x0A000003  /* ABRACADABRA_WIN10_RS2 */</div>
+<div class="disabled">#define NTDDI_WIN10_RS3                     0x0A000004  /* ABRACADABRA_WIN10_RS3 */</div>
+<div class="disabled">#define NTDDI_WIN10_RS4                     0x0A000005  /* ABRACADABRA_WIN10_RS4 */</div>
+<div class="disabled">#define NTDDI_WIN10_RS5                     0x0A000006  /* ABRACADABRA_WIN10_RS5 */</div>
+
+<div class="disabled">#define WDK_NTDDI_VERSION                   NTDDI_WIN10_RS5 /* ABRACADABRA_WIN10_RS5 */</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// masks for version macros</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define OSVERSION_MASK      0xFFFF0000</div>
+<div class="disabled">#define SPVERSION_MASK      0x0000FF00</div>
+<div class="disabled">#define SUBVERSION_MASK     0x000000FF</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// macros to extract various version fields from the NTDDI version</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define OSVER(Version)  ((Version) &amp; OSVERSION_MASK)</div>
+<div class="disabled">#define SPVER(Version)  (((Version) &amp; SPVERSION_MASK) &gt;&gt; 8)</div>
+<div class="disabled">#define SUBVER(Version) (((Version) &amp; SUBVERSION_MASK) )</div>
+
+
+<div class="disabled">#if defined(DECLSPEC_DEPRECATED_DDK)</div>
+
+<div class="disabled">// deprecate in 2k or later</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN2K)</div>
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_WIN2K DECLSPEC_DEPRECATED_DDK</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_WIN2K</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">// deprecate in XP or later</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_WINXP DECLSPEC_DEPRECATED_DDK</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_WINXP</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">// deprecate in WS03 or later</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_WIN2003 DECLSPEC_DEPRECATED_DDK</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_WIN2003</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">// deprecate in WIN6 or later</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN6)</div>
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_WIN6 DECLSPEC_DEPRECATED_DDK</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_WIN6</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define DECLSPEC_DEPRECATED_DDK_LONGHORN DECLSPEC_DEPRECATED_DDK_WIN6</div>
+
+<div class="disabled">#endif // defined(DECLSPEC_DEPRECATED_DDK)</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// if versions aren&apos;t already defined, default to most current</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define NTDDI_VERSION_FROM_WIN32_WINNT2(ver)    ver##0000</div>
+<div class="disabled">#define NTDDI_VERSION_FROM_WIN32_WINNT(ver)     NTDDI_VERSION_FROM_WIN32_WINNT2(ver)</div>
+
+<div class="disabled">#if !defined(_WIN32_WINNT) &amp;&amp; !defined(_CHICAGO_)</div>
+<div class="disabled">#define  _WIN32_WINNT   0x0A00
+#endif</div>
+
+<div class="disabled">#ifndef NTDDI_VERSION</div>
+<div class="disabled">#ifdef _WIN32_WINNT</div>
+<div class="disabled">#if (_WIN32_WINNT &lt;= _WIN32_WINNT_WINBLUE)</div>
+<div class="disabled">// set NTDDI_VERSION based on _WIN32_WINNT</div>
+<div class="disabled">#define NTDDI_VERSION   NTDDI_VERSION_FROM_WIN32_WINNT(_WIN32_WINNT)
+#elif (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN10)</div>
+<div class="token cpp_comment ">// set NTDDI_VERSION to default to WDK_NTDDI_VERSION</div>
+<div class="disabled">#define NTDDI_VERSION   WDK_NTDDI_VERSION 
+#endif // (_WIN32_WINNT &lt;= _WIN32_WINNT_WINBLUE)</div>
+<div class="disabled">#else</div>
+<div class="disabled">// set NTDDI_VERSION to default to latest if _WIN32_WINNT isn&apos;t set</div>
+<div class="disabled">#define NTDDI_VERSION   0x0A000006
+#endif // _WIN32_WINNT
+#endif // NTDDI_VERSION</div>
+
+<div class="disabled">#ifndef WINVER</div>
+<div class="disabled">#ifdef _WIN32_WINNT</div>
+<div class="token cpp_comment ">// set WINVER based on _WIN32_WINNT</div>
+<div class="disabled">#define WINVER          _WIN32_WINNT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINVER          0x0A00
+#endif
+#endif</div>
+
+<div class="disabled">#ifndef _WIN32_IE</div>
+<div class="disabled">#ifdef _WIN32_WINNT</div>
+<div class="token cpp_comment ">// set _WIN32_IE based on _WIN32_WINNT</div>
+<div class="disabled">#if (_WIN32_WINNT &lt;= _WIN32_WINNT_NT4)</div>
+<div class="disabled">#define _WIN32_IE       _WIN32_IE_IE50
+#elif (_WIN32_WINNT &lt;= _WIN32_WINNT_WIN2K)</div>
+<div class="disabled">#define _WIN32_IE       _WIN32_IE_IE501
+#elif (_WIN32_WINNT &lt;= _WIN32_WINNT_WINXP)</div>
+<div class="disabled">#define _WIN32_IE       _WIN32_IE_IE60
+#elif (_WIN32_WINNT &lt;= _WIN32_WINNT_WS03)</div>
+<div class="disabled">#define _WIN32_IE       _WIN32_IE_WS03
+#elif (_WIN32_WINNT &lt;= _WIN32_WINNT_VISTA)</div>
+<div class="disabled">#define _WIN32_IE       _WIN32_IE_LONGHORN
+#elif (_WIN32_WINNT &lt;= _WIN32_WINNT_WIN7)</div>
+<div class="disabled">#define _WIN32_IE       _WIN32_IE_WIN7
+#elif (_WIN32_WINNT &lt;= _WIN32_WINNT_WIN8)</div>
+<div class="disabled">#define _WIN32_IE       _WIN32_IE_WIN8
+#else</div>
+<div class="disabled">#define _WIN32_IE       0x0A00
+#endif</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define _WIN32_IE       0x0A00
+#endif
+#endif</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Sanity check for compatible versions</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#if defined(_WIN32_WINNT) &amp;&amp; !defined(MIDL_PASS) &amp;&amp; !defined(RC_INVOKED)</div>
+
+<div class="disabled">#if (defined(WINVER) &amp;&amp; (WINVER &lt; 0x0400) &amp;&amp; (_WIN32_WINNT &gt; 0x0400))</div>
+<div class="disabled">#error WINVER setting conflicts with _WIN32_WINNT setting
+#endif</div>
+
+<div class="disabled">#if (((OSVERSION_MASK &amp; NTDDI_VERSION) == NTDDI_WIN2K) &amp;&amp; (_WIN32_WINNT != _WIN32_WINNT_WIN2K))</div>
+<div class="disabled">#error NTDDI_VERSION setting conflicts with _WIN32_WINNT setting
+#endif</div>
+
+<div class="disabled">#if (((OSVERSION_MASK &amp; NTDDI_VERSION) == NTDDI_WINXP) &amp;&amp; (_WIN32_WINNT != _WIN32_WINNT_WINXP))</div>
+<div class="disabled">#error NTDDI_VERSION setting conflicts with _WIN32_WINNT setting
+#endif</div>
+
+<div class="disabled">#if (((OSVERSION_MASK &amp; NTDDI_VERSION) == NTDDI_WS03) &amp;&amp; (_WIN32_WINNT != _WIN32_WINNT_WS03))</div>
+<div class="disabled">#error NTDDI_VERSION setting conflicts with _WIN32_WINNT setting
+#endif</div>
+
+<div class="disabled">#if (((OSVERSION_MASK &amp; NTDDI_VERSION) == NTDDI_VISTA) &amp;&amp; (_WIN32_WINNT != _WIN32_WINNT_VISTA))</div>
+<div class="disabled">#error NTDDI_VERSION setting conflicts with _WIN32_WINNT setting
+#endif</div>
+
+<div class="disabled">#if ((_WIN32_WINNT &lt; _WIN32_WINNT_WIN2K) &amp;&amp; (_WIN32_IE &gt; _WIN32_IE_IE60SP1))</div>
+<div class="disabled">#error _WIN32_WINNT settings conflicts with _WIN32_IE setting
+#endif</div>
+
+<div class="disabled">#endif  // defined(_WIN32_WINNT) &amp;&amp; !defined(MIDL_PASS) &amp;&amp; !defined(_WINRESRC_)</div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 800)</div>
+<div class="disabled">#if (_MSC_VER &gt;= 1200)</div>
+#pragma warning(pop)
+<div class="disabled">#else</div>
+<div class="disabled">#pragma warning(default:4001) /* nonstandard extension : single line comment */
+#endif
+#endif</div>
+
+<div class="disabled">#endif  /* !_INC_SDKDDKVER */</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

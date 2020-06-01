@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>cguid.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/*+-------------------------------------------------------------------------
+
+ Microsoft Windows
+ Copyright (c) Microsoft Corporation. All rights reserved.
+
+ File:       cguid.h
+
+--------------------------------------------------------------------------*/</div>
+
+<div class="disabled">#ifndef __CGUID_H__</div>
+<div class="disabled">#define __CGUID_H__</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 800)</div>
+<div class="disabled">#if (_MSC_VER &gt;= 1200)</div>
+#pragma warning(push)
+<div class="disabled">#endif</div>
+<div class="expandable"><div class="disabled">#pragma warning(disable:4001) /* non standard extension : single line comment */
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4001</div>) </div></div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Application Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) </div>
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$GUID_NULL"><div>GUID_NULL</div></div>;
+
+<div class="disabled">#endif  /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */</div>
+#pragma endregion
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="disabled">#if(NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$CATID_MARSHALER"><div>CATID_MARSHALER</div></div>;
+<div class="disabled">#endif</div>
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IRpcChannel"><div>IID_IRpcChannel</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IRpcStub"><div>IID_IRpcStub</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IStubManager"><div>IID_IStubManager</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IRpcProxy"><div>IID_IRpcProxy</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IProxyManager"><div>IID_IProxyManager</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IPSFactory"><div>IID_IPSFactory</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IInternalMoniker"><div>IID_IInternalMoniker</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IDfReserved1"><div>IID_IDfReserved1</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IDfReserved2"><div>IID_IDfReserved2</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IDfReserved3"><div>IID_IDfReserved3</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_StdMarshal"><div>CLSID_StdMarshal</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_AggStdMarshal"><div>CLSID_AggStdMarshal</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_StdAsyncActManager"><div>CLSID_StdAsyncActManager</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IStub"><div>IID_IStub</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IProxy"><div>IID_IProxy</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IEnumGeneric"><div>IID_IEnumGeneric</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IEnumHolder"><div>IID_IEnumHolder</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IEnumCallback"><div>IID_IEnumCallback</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IOleManager"><div>IID_IOleManager</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IOlePresObj"><div>IID_IOlePresObj</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IDebug"><div>IID_IDebug</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NF[0]$IID_IDebugStream"><div>IID_IDebugStream</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_PSGenObject"><div>CLSID_PSGenObject</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_PSClientSite"><div>CLSID_PSClientSite</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_PSClassObject"><div>CLSID_PSClassObject</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_PSInPlaceActive"><div>CLSID_PSInPlaceActive</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_PSInPlaceFrame"><div>CLSID_PSInPlaceFrame</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_PSDragDrop"><div>CLSID_PSDragDrop</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_PSBindCtx"><div>CLSID_PSBindCtx</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_PSEnumerators"><div>CLSID_PSEnumerators</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_StaticMetafile"><div>CLSID_StaticMetafile</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_StaticDib"><div>CLSID_StaticDib</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CID_CDfsVolume"><div>CID_CDfsVolume</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_DCOMAccessControl"><div>CLSID_DCOMAccessControl</div></div>;
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_GlobalOptions"><div>CLSID_GlobalOptions</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_StdGlobalInterfaceTable"><div>CLSID_StdGlobalInterfaceTable</div></div>;
+
+<div class="disabled">#endif  /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_ComBinding"><div>CLSID_ComBinding</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_StdEvent"><div>CLSID_StdEvent</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_ManualResetEvent"><div>CLSID_ManualResetEvent</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_SynchronizeContainer"><div>CLSID_SynchronizeContainer</div></div>;
+
+<div class="disabled">#if(NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_AddrControl"><div>CLSID_AddrControl</div></div>;
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if(NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_ContextSwitcher"><div>CLSID_ContextSwitcher</div></div>;
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">//--------------------------------------------</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// CD Forms CLSIDs</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//--------------------------------------------</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Form Kernel objects</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDFormKrnl"><div>CLSID_CCDFormKrnl</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDPropertyPage"><div>CLSID_CCDPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDFormDialog"><div>CLSID_CCDFormDialog</div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Control objects</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDCommandButton"><div>CLSID_CCDCommandButton</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDComboBox"><div>CLSID_CCDComboBox</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDTextBox"><div>CLSID_CCDTextBox</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDCheckBox"><div>CLSID_CCDCheckBox</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDLabel"><div>CLSID_CCDLabel</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDOptionButton"><div>CLSID_CCDOptionButton</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDListBox"><div>CLSID_CCDListBox</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDScrollBar"><div>CLSID_CCDScrollBar</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDGroupBox"><div>CLSID_CCDGroupBox</div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Property Pages</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDGeneralPropertyPage"><div>CLSID_CCDGeneralPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDGenericPropertyPage"><div>CLSID_CCDGenericPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDFontPropertyPage"><div>CLSID_CCDFontPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDColorPropertyPage"><div>CLSID_CCDColorPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDLabelPropertyPage"><div>CLSID_CCDLabelPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDCheckBoxPropertyPage"><div>CLSID_CCDCheckBoxPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDTextBoxPropertyPage"><div>CLSID_CCDTextBoxPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDOptionButtonPropertyPage"><div>CLSID_CCDOptionButtonPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDListBoxPropertyPage"><div>CLSID_CCDListBoxPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDCommandButtonPropertyPage"><div>CLSID_CCDCommandButtonPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDComboBoxPropertyPage"><div>CLSID_CCDComboBoxPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDScrollBarPropertyPage"><div>CLSID_CCDScrollBarPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDGroupBoxPropertyPage"><div>CLSID_CCDGroupBoxPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CCDXObjectPropertyPage"><div>CLSID_CCDXObjectPropertyPage</div></div>;
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CStdPropertyFrame"><div>CLSID_CStdPropertyFrame</div></div>;
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CFormPropertyPage"><div>CLSID_CFormPropertyPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CGridPropertyPage"><div>CLSID_CGridPropertyPage</div></div>;
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CWSJArticlePage"><div>CLSID_CWSJArticlePage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_CSystemPage"><div>CLSID_CSystemPage</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_IdentityUnmarshal"><div>CLSID_IdentityUnmarshal</div></div>;
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+#pragma region Application Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) </div>
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_InProcFreeMarshaler"><div>CLSID_InProcFreeMarshaler</div></div>;
+
+<div class="disabled">#endif  /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */</div>
+#pragma endregion
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_Picture_Metafile"><div>CLSID_Picture_Metafile</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_Picture_EnhMetafile"><div>CLSID_Picture_EnhMetafile</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NF[0]$CLSID_Picture_Dib"><div>CLSID_Picture_Dib</div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Enumerations</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NF[0]$GUID_TRISTATE"><div>GUID_TRISTATE</div></div>;
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 800)</div>
+<div class="disabled">#if (_MSC_VER &gt;= 1200)</div>
+#pragma warning(pop)
+<div class="disabled">#else</div>
+<div class="disabled">#pragma warning(default:4001)
+#endif
+#endif</div>
+
+<div class="disabled">#endif /* __CGUID_H__ */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'CLSID': {
+        'displayNameInHtml': '<span class="cpp_type">CLSID</span>',
+        'impls': [
+            'NI$CLSID'
+        ],
+        'decls': []
+    },
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'IID': {
+        'displayNameInHtml': '<span class="cpp_type">IID</span>',
+        'impls': [
+            'NI$IID'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$CLSID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$GUID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$IID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>
