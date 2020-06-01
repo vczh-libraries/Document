@@ -34,7 +34,15 @@ void ParseVariableOrExpression(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 
 Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	if (TestToken(cursor, CppTokens::SEMICOLON))
+	if (TestToken(cursor, CppTokens::STAT_ASM))
+	{
+		// __asm { ... }
+		// skip assembly code
+		RequireToken(cursor, CppTokens::LBRACE);
+		while (!TestToken(cursor, CppTokens::RBRACE));
+		return MakePtr<EmptyStat>();
+	}
+	else if (TestToken(cursor, CppTokens::SEMICOLON))
 	{
 		// ;
 		return MakePtr<EmptyStat>();

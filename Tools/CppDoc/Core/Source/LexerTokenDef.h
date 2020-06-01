@@ -64,6 +64,7 @@ Keywords
 	F(DECL_FRIEND,				friend)					\
 	F(DECL_EXTERN,				extern)					\
 	F(DECL_TEMPLATE,			template)				\
+	F(STAT_ASM,					__asm)					\
 	F(STAT_RETURN,				return)					\
 	F(STAT_BREAK,				break)					\
 	F(STAT_CONTINUE,			continue)				\

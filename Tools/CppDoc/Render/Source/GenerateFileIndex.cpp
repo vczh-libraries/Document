@@ -111,10 +111,13 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 			}
 		}
 
-		writer.WriteString(L"<span class=\"fileGroupLabel\">");
-		WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
-		writer.WriteLine(L"</span><br>");
-		GenerateFileIndexInFolder(prefix, indentation, indentation, selectedFlrs, writer);
+		if (selectedFlrs.Count() > 0)
+		{
+			writer.WriteString(L"<span class=\"fileGroupLabel\">");
+			WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
+			writer.WriteLine(L"</span><br>");
+			GenerateFileIndexInFolder(prefix, indentation, indentation, selectedFlrs, writer);
+		}
 	}
 
 	if (flrs.Count() > 0)
