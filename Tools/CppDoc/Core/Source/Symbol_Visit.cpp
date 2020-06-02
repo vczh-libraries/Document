@@ -90,6 +90,23 @@ namespace symbol_type_resolving
 							{
 								if (symbol->GetParentScope() == current)
 								{
+									if (current->kind == symbol_component::SymbolKind::Expression)
+									{
+										auto varDecl = symbol->GetAnyForwardDecl<VariableDeclaration>();
+										auto lambdaExpr = current->GetExpr_N().Cast<LambdaExpr>();
+										if (varDecl && lambdaExpr && lambdaExpr->varDecls.Contains(varDecl.Obj()))
+										{
+											// if this is a variable defined in the capture list
+											// add const if it is not mutable
+											// lambdaExpr->type could be null when the parsing is not finished, don't care
+											if (lambdaExpr->type && !lambdaExpr->type->decoratorMutable)
+											{
+												addConst = true;
+												decoratedByLambda = true;
+											}
+										}
+									}
+
 									// no need to add decoration if we reach the scope of the variable
 									goto FINISHED_LAMBDA_EXAM;
 								}
