@@ -527,6 +527,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				// lambda expression
 				SkipToken(cursor);
 				auto expr = MakePtr<LambdaExpr>();
+				auto newPa = pa.WithScope(pa.scopeSymbol->CreateExprSymbol_NFb(expr));
 
 				if (!TestToken(cursor, CppTokens::RBRACKET))
 				{
@@ -574,6 +575,27 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 							}
 						}
 						{
+							auto oldCursor = cursor;
+							CppName cppName;
+							if (ParseCppName(cppName, cursor) && cppName.type == CppNameType::Normal)
+							{
+								if (TestToken(cursor, CppTokens::EQ))
+								{
+									auto varExpr = ParseExpr(newPa, pea_Argument(), cursor);
+									auto varDecl = MakePtr<VariableDeclaration>();
+									varDecl->name = cppName;
+									varDecl->type = MakePtr<PrimitiveType>();
+									varDecl->initializer = MakePtr<Initializer>();
+									varDecl->initializer->initializerType = CppInitializerType::Equal;
+									varDecl->initializer->arguments.Add({ varExpr,false });
+									expr->varDecls.Add(varDecl);
+									BuildSymbol(newPa, varDecl, false, cursor);
+									goto FINISH_CAPTURE_ITEM;
+								}
+							}
+							cursor = oldCursor;
+						}
+						{
 							LambdaExpr::Capture capture;
 							capture.kind = TestToken(cursor, CppTokens::AND) ? LambdaExpr::CaptureKind::Ref : LambdaExpr::CaptureKind::Copy;
 							if (!ParseCppName(capture.name, cursor)) throw StopParsingException(cursor);
@@ -590,7 +612,6 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 					}
 				}
 
-				auto newPa = pa.WithScope(pa.scopeSymbol->CreateExprSymbol_NFb(expr));
 				if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 				{
 					expr->type = ParseFunctionType(newPa, MakePtr<PrimitiveType>(), cursor);

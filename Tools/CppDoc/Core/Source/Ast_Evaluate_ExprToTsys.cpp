@@ -763,6 +763,10 @@ public:
 			}
 
 			auto newPa = pa.AdjustForDecl(self->symbol);
+			for (vint i = 0; i < self->varDecls.Count(); i++)
+			{
+				EvaluateVariableDeclaration(newPa, self->varDecls[0].Obj());
+			}
 			EvaluateStat(newPa, self->statement, false, nullptr);
 		}
 		AddType(result, pa.tsys->Any());

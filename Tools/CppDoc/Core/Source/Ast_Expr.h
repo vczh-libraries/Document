@@ -351,6 +351,7 @@ public:
 
 	CaptureDefaultKind				captureDefault = CaptureDefaultKind::None;
 	List<Capture>					captures;
+	List<Ptr<VariableDeclaration>>	varDecls;
 	Ptr<FunctionType>				type;
 	Ptr<Stat>						statement;
 	bool							statementEvaluated = false;

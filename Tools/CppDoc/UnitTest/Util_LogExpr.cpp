@@ -303,6 +303,18 @@ public:
 				break;
 			}
 		}
+
+		for (vint i = 0; i < self->varDecls.Count(); i++)
+		{
+			auto varDecl = self->varDecls[i];
+			if (self->captureDefault != LambdaExpr::CaptureDefaultKind::None || self->captures.Count() > 0 || i > 0)
+			{
+				writer.WriteString(L", ");
+			}
+			writer.WriteString(varDecl->name.name);
+			writer.WriteString(L" = ");
+			Log(varDecl->initializer->arguments[0].item, writer, indentation);
+		}
 		writer.WriteString(L"] ");
 
 		Log(Ptr<Type>(self->type), writer, indentation);
