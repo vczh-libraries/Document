@@ -636,12 +636,24 @@ void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration
 	{
 		for (vint i = 0; i < decl->initializer->arguments.Count(); i++)
 		{
-			ExprTsysList types;
-			bool typesVta = false;
-			ExprToTsysInternal(pa, decl->initializer->arguments[i].item, types, typesVta);
-			if (typesVta != decl->initializer->arguments[i].isVariadic)
+			auto expr = decl->initializer->arguments[i].item;
+			if (auto uiExpr = expr.Cast<UniversalInitializerExpr>())
 			{
-				throw TypeCheckerException();
+				for (vint j = 0; j < uiExpr->arguments.Count(); i++)
+				{
+					if (!uiExpr->arguments[j].item.Cast<LiteralExpr>())
+					{
+						ExprTsysList types;
+						bool typesVta = false;
+						ExprToTsysInternal(pa, uiExpr->arguments[j].item, types, typesVta);
+					}
+				}
+			}
+			else
+			{
+				ExprTsysList types;
+				bool typesVta = false;
+				ExprToTsysInternal(pa, expr, types, typesVta);
 			}
 		}
 	}
