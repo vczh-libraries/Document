@@ -895,70 +895,74 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 	{
 		Ptr<Declarator> declarator;
 
-		// try (TYPE::)operator TYPE
-		Ptr<MemberType> typeOpMemberType;
-		auto typeOpCursor = cursor;
-
-		if (pdc.forceSpecialMethod)
 		{
-			try
-			{
-				auto type = ParseLongType(pa, cursor);
-				RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
-				typeOpMemberType = MakePtr<MemberType>();
-				typeOpMemberType->classType = type;
-			}
-			catch (const StopParsingException&)
-			{
-				cursor = typeOpCursor;
-			}
-		}
+			// try (TYPE::)operator TYPE
+			Ptr<MemberType> typeOpMemberType;
+			auto typeOpCursor = cursor;
 
-		if (pdc.forceSpecialMethod && TestToken(cursor, CppTokens::OPERATOR, false))
-		{
-			if (declarators.Count() > 0)
+			if (pdc.forceSpecialMethod)
 			{
-				throw StopParsingException(cursor);
-			}
-
-			CppName cppName;
-			cppName.type = CppNameType::Operator;
-			cppName.name = L"$__type";
-			cppName.tokenCount = 1;
-			cppName.nameTokens[0] = cursor->token;
-			SkipToken(cursor);
-
-			auto opPdc = pda_Decls(false, false);
-			opPdc.classOfMemberInside = pdc.classOfMemberInside;
-			opPdc.classOfMemberOutside = pdc.classOfMemberOutside;
-			opPdc.scopeSymbolToReuse = pdc.scopeSymbolToReuse;
-			if (typeOpMemberType && !opPdc.classOfMemberInside && !opPdc.classOfMemberOutside)
-			{
-				opPdc.classOfMemberOutside = typeOpMemberType->classType;
-			}
-			opPdc.dr = DeclaratorRestriction::Zero;
-
-			typeResult = ParseLongType(pa, cursor);
-			declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, cursor);
-			declarator->name = cppName;
-			if (typeOpMemberType)
-			{
-				typeOpMemberType->type = declarator->type;
-				declarator->type = typeOpMemberType;
-			}
-		}
-		else
-		{
-			if (typeOpMemberType)
-			{
-				typeOpMemberType = nullptr;
-				cursor = typeOpCursor;
+				try
+				{
+					auto type = ParseLongType(pa, cursor);
+					RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
+					typeOpMemberType = MakePtr<MemberType>();
+					typeOpMemberType->classType = type;
+				}
+				catch (const StopParsingException&)
+				{
+					cursor = typeOpCursor;
+					typeOpCursor = nullptr;
+				}
 			}
 
-			// if we have already recognize a type, we can parse multiple declarators with initializers
-			auto newPdc = pdc;
-			newPdc.dr = pdc.dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : pdc.dr;
-			declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
+			if (pdc.forceSpecialMethod && TestToken(cursor, CppTokens::OPERATOR, false))
+			{
+				if (declarators.Count() > 0)
+				{
+					throw StopParsingException(cursor);
+				}
+
+				CppName cppName;
+				cppName.type = CppNameType::Operator;
+				cppName.name = L"$__type";
+				cppName.tokenCount = 1;
+				cppName.nameTokens[0] = cursor->token;
+				SkipToken(cursor);
+
+				auto opPdc = pda_Decls(false, false);
+				opPdc.classOfMemberInside = pdc.classOfMemberInside;
+				opPdc.classOfMemberOutside = pdc.classOfMemberOutside;
+				opPdc.scopeSymbolToReuse = pdc.scopeSymbolToReuse;
+				if (typeOpMemberType && !opPdc.classOfMemberInside && !opPdc.classOfMemberOutside)
+				{
+					opPdc.classOfMemberOutside = typeOpMemberType->classType;
+				}
+				opPdc.dr = DeclaratorRestriction::Zero;
+
+				typeResult = ParseLongType(pa, cursor);
+				declarator = ParseSingleDeclarator(pa, typeResult, { opPdc,false }, cursor);
+				declarator->name = cppName;
+				if (typeOpMemberType)
+				{
+					typeOpMemberType->type = declarator->type;
+					declarator->type = typeOpMemberType;
+				}
+			}
+			else
+			{
+				if (typeOpMemberType)
+				{
+					typeOpMemberType = nullptr;
+					cursor = typeOpCursor;
+					typeOpCursor = nullptr;
+				}
+
+				// if we have already recognize a type, we can parse multiple declarators with initializers
+				auto newPdc = pdc;
+				newPdc.dr = pdc.dr == DeclaratorRestriction::Many ? DeclaratorRestriction::One : pdc.dr;
+				declarator = ParseSingleDeclarator(pa, typeResult, newPdc, cursor);
+			}
 		}
 
 		InjectClassMemberCacheIfNecessary(pa, pdc, declarator, cursor, [&](const ParsingArguments& newPa)

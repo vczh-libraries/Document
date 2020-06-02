@@ -443,7 +443,7 @@ bool ResolveSymbolInTypeInternal(const ParsingArguments& pa, ITsys* tsys, Search
 ResolveSymbolInStaticScopeInternal
 ***********************************************************************/
 
-void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scope, SearchPolicy policy, ResolveSymbolArguments& rsa)
+void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scope, SearchPolicy policy, SortedList<Symbol*>& visitedNss, ResolveSymbolArguments& rsa)
 {
 	bool found = false;
 	while (scope)
@@ -529,8 +529,10 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 
 			if (found) break;
 		}
-		else
+		else if (!visitedNss.Contains(scope))
 		{
+			visitedNss.Add(scope);
+
 			if (auto pSymbols = scope->TryGetChildren_NFb(rsa.name.name))
 			{
 				PickResolvedSymbols(pa.AdjustForDecl(scope), nullptr, pSymbols, (policy & SearchPolicy::_AllowTemplateArgument), found, rsa);
@@ -541,7 +543,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				for (vint i = 0; i < scope->usingNss.Count(); i++)
 				{
 					auto usingNs = scope->usingNss[i];
-					ResolveSymbolInStaticScopeInternal(pa, usingNs, SearchPolicy::ScopedChild, rsa);
+					ResolveSymbolInStaticScopeInternal(pa, usingNs, SearchPolicy::ScopedChild, visitedNss, rsa);
 				}
 			}
 
@@ -555,7 +557,7 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 						for (vint i = 0; i < ansSymbols->Count(); i++)
 						{
 							auto anonymousNs = ansSymbols->Get(i).childSymbol.Obj();
-							ResolveSymbolInStaticScopeInternal(pa, anonymousNs, SearchPolicy::ScopedChild, rsa);
+							ResolveSymbolInStaticScopeInternal(pa, anonymousNs, SearchPolicy::ScopedChild, visitedNss, rsa);
 						}
 						index++;
 					}
@@ -613,9 +615,10 @@ ResolveSymbolInContext
 
 ResolveSymbolResult ResolveSymbolInContext(const ParsingArguments& pa, CppName& name, bool cStyleTypeReference)
 {
+	SortedList<Symbol*> visitedNss;
 	ResolveSymbolArguments rsa(name);
 	rsa.cStyleTypeReference = cStyleTypeReference;
-	ResolveSymbolInStaticScopeInternal(pa, pa.scopeSymbol, SearchPolicy::InContext, rsa);
+	ResolveSymbolInStaticScopeInternal(pa, pa.scopeSymbol, SearchPolicy::InContext, visitedNss, rsa);
 	return rsa.result;
 }
 
@@ -625,9 +628,10 @@ ResolveSymbolInNamespaceContext
 
 ResolveSymbolResult ResolveSymbolInNamespaceContext(const ParsingArguments& pa, Symbol* ns, CppName& name, bool cStyleTypeReference)
 {
+	SortedList<Symbol*> visitedNss;
 	ResolveSymbolArguments rsa(name);
 	rsa.cStyleTypeReference = cStyleTypeReference;
-	ResolveSymbolInStaticScopeInternal(pa, ns, SearchPolicy::InNamespaceContext, rsa);
+	ResolveSymbolInStaticScopeInternal(pa, ns, SearchPolicy::InNamespaceContext, visitedNss, rsa);
 	return rsa.result;
 }
 
@@ -733,7 +737,8 @@ public:
 
 	void Visit(RootType* self)override
 	{
-		ResolveSymbolInStaticScopeInternal(pa, pa.root.Obj(), SearchPolicy::ScopedChild, rsa);
+		SortedList<Symbol*> visitedNss;
+		ResolveSymbolInStaticScopeInternal(pa, pa.root.Obj(), SearchPolicy::ScopedChild, visitedNss, rsa);
 	}
 
 	void VisitIdOrChildType(Type* self, Ptr<Resolving>& resolving)
@@ -744,9 +749,10 @@ public:
 		}
 		else
 		{
+			SortedList<Symbol*> visitedNss;
 			for (vint i = 0; i < resolving->items.Count(); i++)
 			{
-				ResolveSymbolInStaticScopeInternal(pa, resolving->items[i].symbol, SearchPolicy::ScopedChild, rsa);
+				ResolveSymbolInStaticScopeInternal(pa, resolving->items[i].symbol, SearchPolicy::ScopedChild, visitedNss, rsa);
 			}
 		}
 	}
