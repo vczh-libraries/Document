@@ -486,4 +486,45 @@ struct S
 			});
 		}
 	});
+
+	TEST_CATEGORY(L"Capturing expression")
+	{
+		auto input = LR"(
+struct S
+{
+	S* t;
+};
+
+void F()
+{
+	auto l1 = [s = S(), t = s.t]
+	{
+	};
+
+	auto l1 = [s = S(), t = s.t]mutable
+	{
+	};
+}
+)";
+		COMPILE_PROGRAM(program, ppa, input);
+
+		auto statF = ppa.root
+			->TryGetChildren_NFb(L"F")->Get(0).childSymbol->GetImplSymbols_F()[0]
+			->TryGetChildren_NFb(L"$")->Get(0).childSymbol
+			->GetStat_N().Cast<BlockStat>();
+		{
+			auto lambdaSymbol = getInsideLambda(statF, L"l")->symbol;
+			auto pa = ppa.AdjustForDecl(lambdaSymbol);
+
+			AssertExpr(pa,	L"s",		L"s",		L"::S const $L"		);
+			AssertExpr(pa,	L"t",		L"t",		L"::S * const $L"	);
+		}
+		{
+			auto lambdaSymbol = getInsideLambda(statF, L"l")->symbol;
+			auto pa = ppa.AdjustForDecl(lambdaSymbol);
+
+			AssertExpr(pa,	L"s",		L"s",		L"::S $L"			);
+			AssertExpr(pa,	L"t",		L"t",		L"::S * $L"			);
+		}
+	});
 }

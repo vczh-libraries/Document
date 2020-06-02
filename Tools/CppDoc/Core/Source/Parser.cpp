@@ -238,6 +238,12 @@ bool ParseTypeOrExpr(const ParsingArguments& pa, const ParsingExprArguments& pea
 	try
 	{
 		expr = ParseExpr(pa, pea, cursor);
+
+		// the expression could be too long and make the destructor stackoverflow
+		while (oldCursor != cursor)
+		{
+			oldCursor = oldCursor->Next();
+		}
 		return false;
 	}
 	catch (const StopParsingException&)
