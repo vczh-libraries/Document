@@ -732,9 +732,9 @@ Ptr<GlobalLinesRecord> Collect(
 						while (true)
 						{
 							flr->htmlFileName = displayName + (counter == 1 ? WString::Empty : itow(counter));
-							if (!global->htmlFileNames.Contains(flr->htmlFileName))
+							if (!global->htmlFileNames.Contains(wupper(flr->htmlFileName)))
 							{
-								global->htmlFileNames.Add(flr->htmlFileName);
+								global->htmlFileNames.Add(wupper(flr->htmlFileName));
 								break;
 							}
 							counter++;
