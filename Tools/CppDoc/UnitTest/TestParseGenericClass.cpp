@@ -457,4 +457,25 @@ struct W
 		AssertExpr(pa, L"W<X1, char>::Z1",		L"W<X1, char> :: Z1",		L"bool const $L"		);
 		AssertExpr(pa, L"W<X1, X2<char>>::Z2",	L"W<X1, X2<char>> :: Z2",	L"double const $L"		);
 	});
+
+	TEST_CATEGORY(L"Variadic base types")
+	{
+		auto input = LR"(
+template<typename T, typename... Ts>
+struct X : T, Ts...
+{
+};
+
+struct A { A a; }
+struct B { B b; }
+struct C { C c; }
+
+X<A, B, C> x;
+)";
+		COMPILE_PROGRAM(program, pa, input);
+
+		AssertExpr(pa, L"x.a",		L"x.a",		L"::A $L"		);
+		AssertExpr(pa, L"x.b",		L"x.b",		L"::B $L"		);
+		AssertExpr(pa, L"x.c",		L"x.c",		L"::C $L"		);
+	});
 }
