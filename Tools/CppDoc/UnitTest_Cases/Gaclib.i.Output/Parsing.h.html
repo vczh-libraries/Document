@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parsing.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Parsing::Parser
+
+Classes:
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_PARSING_PARSING</div>
+<div class="disabled">#define VCZH_PARSING_PARSING</div>
+
+<div class="disabled">#include &quot;ParsingState.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[96]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[7]$vl::parsing"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[2]$vl::parsing::tabling"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling'], [], [])">tabling</div></div>
+		{
+
+<div class="token cpp_comment ">/***********************************************************************
+Parser
+***********************************************************************/</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Base type of all parser strategy.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser"><div><div class="token cpp_type">ParsingGeneralParser</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt;							<div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::table"><div><div class="token cpp_field">table</div></div></div>;
+				
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::tabling::ParsingGeneralParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)'], [], [])"><div class="token cpp_function">ParsingGeneralParser</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]::_table"><div>_table</div></div>);
+				<div class="def" id="FB$vl::parsing::tabling::ParsingGeneralParser::~ParsingGeneralParser@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser::~ParsingGeneralParser@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">ParsingGeneralParser</div></div></div>();
+				
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the parser table that used to do the parsing.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The parser table that used to do the parsing.&lt;/returns&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt;							<div class="def" id="FB$vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr<::vl::parsing::tabling::ParsingTable>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr<::vl::parsing::tabling::ParsingTable>()'], [], [])"><div class="token cpp_function">GetTable</div></div></div>();
+				<div class="token cpp_comment ">/// &lt;summary&gt;Initialization. It should be called before each time of parsing.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()'], [], [])"><div class="token cpp_function">BeginParse</div></div></div>();
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::TransitionResult'], [], [])"><div class="token cpp_type">TransitionResult</div></div>		<div class="def" id="FB$vl::parsing::tabling::ParsingGeneralParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div><div class="token cpp_function">ParseStep</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>)=<div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">Parse</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTransitionProcessor'], [], [])"><div class="token cpp_type">ParsingTransitionProcessor</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::processor"><div>processor</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeNode'], [], [])"><div class="token cpp_type">ParsingTreeNode</div></div>&gt;						<div class="def" id="FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">Parse</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+				<div class="token cpp_comment ">/// &lt;summary&gt;Parse an input and get an abstract syntax tree if no error happens or all errors are recovered.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The abstract syntax tree.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;input&quot;&gt;The input to parse.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;rule&quot;&gt;The name of the rule that used to parse the input.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;errors&quot;&gt;Returns all errors.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;codeIndex&quot;&gt;The code index to differentiate each input. This value will be stored in every tokens and abstract syntax nodes.&lt;/param&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeNode'], [], [])"><div class="token cpp_type">ParsingTreeNode</div></div>&gt;						<div class="def" id="FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)'], [], [])"><div class="token cpp_function">Parse</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[decl0]::input"><div>input</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[decl0]::rule"><div>rule</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[decl0]::errors"><div>errors</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[decl0]::codeIndex"><div>codeIndex</div></div> = -<div class="token cpp_number ">1</div>);
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Parser with different strategies
+***********************************************************************/</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;A strict parse. It doesn&apos;t allow ambiguity and error recovery.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingStrictParser"><div><div class="token cpp_type">ParsingStrictParser</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser'], [], [])"><div class="token cpp_type">ParsingGeneralParser</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>								<div class="def" id="FB$vl::parsing::tabling::ParsingStrictParser::OnTestErrorRecoverExists@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingStrictParser::OnTestErrorRecoverExists@bool()'], [], [])"><div class="token cpp_function">OnTestErrorRecoverExists</div></div></div>();
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::tabling::ParsingStrictParser::OnClearErrorRecover@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingStrictParser::OnClearErrorRecover@void()'], [], [])"><div class="token cpp_function">OnClearErrorRecover</div></div></div>();
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::TransitionResult'], [], [])"><div class="token cpp_type">TransitionResult</div></div>		<div class="def" id="FB$vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">OnErrorRecover</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::currentTokenIndex"><div>currentTokenIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create the parse using a parsing table.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_table&quot;&gt;The parsing table.&lt;/param&gt;</div>
+				<div class="def" id="FB$vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)'], [], [])"><div class="token cpp_function">ParsingStrictParser</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]::_table"><div>_table</div></div>=<div class="token cpp_number ">0</div>);
+				<div class="def" id="FB$vl::parsing::tabling::ParsingStrictParser::~ParsingStrictParser@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingStrictParser::~ParsingStrictParser@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">ParsingStrictParser</div></div></div>();
+				
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::TransitionResult'], [], [])"><div class="token cpp_type">TransitionResult</div></div>				<div class="def" id="FB$vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">ParseStep</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;A strict parse. It doesn&apos;t allow ambiguity but allows error recovery.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser"><div><div class="token cpp_type">ParsingAutoRecoverParser</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingStrictParser'], [], [])"><div class="token cpp_type">ParsingStrictParser</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture"><div><div class="token cpp_type">RecoverFuture</div></div></div>
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*					<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture::future"><div><div class="token cpp_field">future</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture::insertedTokenCount"><div><div class="token cpp_field">insertedTokenCount</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture::index"><div><div class="token cpp_field">index</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture::previousIndex"><div><div class="token cpp_field">previousIndex</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture::nextIndex"><div><div class="token cpp_field">nextIndex</div></div></div>;
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture::$__ctor@()[impl0]"><div><div class="token cpp_function">RecoverFuture</div></div></div>()
+						:future(<div class="token cpp_number ">0</div>)
+						, insertedTokenCount(<div class="token cpp_number ">0</div>)
+						, index(-<div class="token cpp_number ">1</div>)
+						, previousIndex(-<div class="token cpp_number ">1</div>)
+						, nextIndex(-<div class="token cpp_number ">1</div>)
+					{
+					}
+				};
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::maxInsertedTokenCount"><div><div class="token cpp_field">maxInsertedTokenCount</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture'], [], [])"><div class="token cpp_type">RecoverFuture</div></div>&gt;			<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::recoverFutures"><div><div class="token cpp_field">recoverFutures</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::recoveringFutureIndex"><div><div class="token cpp_field">recoveringFutureIndex</div></div></div>;
+				
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture'], [], [])"><div class="token cpp_type">RecoverFuture</div></div>&amp;								<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::GetRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::GetRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint)'], [], [])"><div class="token cpp_function">GetRecoverFuture</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::GetRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint)[decl0]::index"><div>index</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture'], [], [])"><div class="token cpp_type">RecoverFuture</div></div>&amp;								<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">CreateRecoverFuture</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)[decl0]::index"><div>index</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)[decl0]::previousIndex"><div>previousIndex</div></div>);
+				<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnTestErrorRecoverExists@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::OnTestErrorRecoverExists@bool()'], [], [])"><div class="token cpp_function">OnTestErrorRecoverExists</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnClearErrorRecover@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::OnClearErrorRecover@void()'], [], [])"><div class="token cpp_function">OnClearErrorRecover</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::TransitionResult'], [], [])"><div class="token cpp_type">TransitionResult</div></div>				<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">OnErrorRecover</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::currentTokenIndex"><div>currentTokenIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>)<div class="token cpp_keyword ">override</div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create the parse using a parsing table.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_table&quot;&gt;The parsing table.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_maxInsertedTokenCount&quot;&gt;The maximum number of tokens that allow to insert to recover an error.&lt;/param&gt;</div>
+				<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)'], [], [])"><div class="token cpp_function">ParsingAutoRecoverParser</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]::_table"><div>_table</div></div> = <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]::_maxInsertedTokenCount"><div>_maxInsertedTokenCount</div></div> = -<div class="token cpp_number ">1</div>);
+				<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::~ParsingAutoRecoverParser@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::~ParsingAutoRecoverParser@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">ParsingAutoRecoverParser</div></div></div>();
+
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverParser::BeginParse@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverParser::BeginParse@void()'], [], [])"><div class="token cpp_function">BeginParse</div></div></div>()<div class="token cpp_keyword ">override</div>;
+			};
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;A strict parse. It allows ambiguity but doesn&apos;t allow error recovery.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser"><div><div class="token cpp_type">ParsingAmbiguousParser</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser'], [], [])"><div class="token cpp_type">ParsingGeneralParser</div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::TransitionResult'], [], [])"><div class="token cpp_type">TransitionResult</div></div>&gt;		<div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::DecisionList"><div><div class="token cpp_type">DecisionList</div></div></div>;
+			<div class="token cpp_keyword ">protected</div>:
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::DecisionList'], [], [])"><div class="token cpp_type">DecisionList</div></div>								<div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::decisions"><div><div class="token cpp_field">decisions</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::consumedDecisionCount"><div><div class="token cpp_field">consumedDecisionCount</div></div></div>;
+
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">OnErrorRecover</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::currentTokenIndex"><div>currentTokenIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::futures"><div>futures</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::begin"><div>begin</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::end"><div>end</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">GetResolvableFutureLevels</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)[decl0]::futures"><div>futures</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)[decl0]::begin"><div>begin</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)[decl0]::end"><div>end</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">SearchPathForOneStep</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::futures"><div>futures</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::begin"><div>begin</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::end"><div>end</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &)'], [], [])"><div class="token cpp_function">GetConflictReduceCount</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &)[decl0]::futures"><div>futures</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)'], [], [])"><div class="token cpp_function">GetConflictReduceIndices</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)[decl0]::futures"><div>futures</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)[decl0]::conflictReduceCount"><div>conflictReduceCount</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)[decl0]::conflictReduceIndices"><div>conflictReduceIndices</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)'], [], [])"><div class="token cpp_function">GetAffectedStackNodeCount</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)[decl0]::futures"><div>futures</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)[decl0]::conflictReduceIndices"><div>conflictReduceIndices</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)'], [], [])"><div class="token cpp_function">BuildSingleDecisionPath</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>* <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)[decl0]::future"><div>future</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)[decl0]::lastAvailableInstructionCount"><div>lastAvailableInstructionCount</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">BuildAmbiguousDecisions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::futures"><div>futures</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::begin"><div>begin</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::end"><div>end</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::resolvableFutureLevels"><div>resolvableFutureLevels</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">BuildDecisions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::futures"><div>futures</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::begin"><div>begin</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::end"><div>end</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::resolvableFutureLevels"><div>resolvableFutureLevels</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create the parse using a parsing table.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_table&quot;&gt;The parsing table.&lt;/param&gt;</div>
+				<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)'], [], [])"><div class="token cpp_function">ParsingAmbiguousParser</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]::_table"><div>_table</div></div>=<div class="token cpp_number ">0</div>);
+				<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::~ParsingAmbiguousParser@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::~ParsingAmbiguousParser@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">ParsingAmbiguousParser</div></div></div>();
+				
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::TransitionResult'], [], [])"><div class="token cpp_type">TransitionResult</div></div>				<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">ParseStep</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>)<div class="token cpp_keyword ">override</div>;
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAmbiguousParser::BeginParse@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser::BeginParse@void()'], [], [])"><div class="token cpp_function">BeginParse</div></div></div>()<div class="token cpp_keyword ">override</div>;
+			};
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;A strict parse. It allow both ambiguity and error recovery.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser"><div><div class="token cpp_type">ParsingAutoRecoverAmbiguousParser</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAmbiguousParser'], [], [])"><div class="token cpp_type">ParsingAmbiguousParser</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::maxInsertedTokenCount"><div><div class="token cpp_field">maxInsertedTokenCount</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">OnErrorRecover</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::currentTokenIndex"><div>currentTokenIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState'], [], [])"><div class="token cpp_type">ParsingState</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingState::Future'], [], [])"><div class="token cpp_type">Future</div></div>*&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::futures"><div>futures</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::begin"><div>begin</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::end"><div>end</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>)<div class="token cpp_keyword ">override</div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create the parse using a parsing table.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_table&quot;&gt;The parsing table.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_maxInsertedTokenCount&quot;&gt;The maximum number of tokens that allow to insert to recover an error.&lt;/param&gt;</div>
+				<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)'], [], [])"><div class="token cpp_function">ParsingAutoRecoverAmbiguousParser</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]::_table"><div>_table</div></div> = <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]::_maxInsertedTokenCount"><div>_maxInsertedTokenCount</div></div> = -<div class="token cpp_number ">1</div>);
+				<div class="def" id="FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::~ParsingAutoRecoverAmbiguousParser@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::~ParsingAutoRecoverAmbiguousParser@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">ParsingAutoRecoverAmbiguousParser</div></div></div>();
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Helper Functions
+***********************************************************************/</div>
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create the correct strict parser from a parsing table.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The created parse.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;table&quot;&gt;The table to create a parser.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser'], [], [])"><div class="token cpp_type">ParsingGeneralParser</div></div>&gt;				<div class="def" id="FB$vl::parsing::tabling::CreateStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::CreateStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)'], [], [])"><div class="token cpp_function">CreateStrictParser</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::CreateStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]::table"><div>table</div></div>);
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create the correct error recoverable parser from a parsing table.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The created parse.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;table&quot;&gt;The table to create a parser.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser'], [], [])"><div class="token cpp_type">ParsingGeneralParser</div></div>&gt;				<div class="def" id="FB$vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)'], [], [])"><div class="token cpp_function">CreateAutoRecoverParser</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]::table"><div>table</div></div>);
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create the correct strict parser to parse the grammar itself.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The created parse.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser'], [], [])"><div class="token cpp_type">ParsingGeneralParser</div></div>&gt;				<div class="def" id="FB$vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()'], [], [])"><div class="token cpp_function">CreateBootstrapStrictParser</div></div></div>();
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create the correct error recoverable to parse the grammar itself.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The created parse.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingGeneralParser'], [], [])"><div class="token cpp_type">ParsingGeneralParser</div></div>&gt;				<div class="def" id="FB$vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()'], [], [])"><div class="token cpp_function">CreateBootstrapAutoRecoverParser</div></div></div>();
+		}
+	}
+}
+
+<div class="token cpp_comment ">/***********************************************************************
+Reflection for AST
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[97]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[14]$vl::reflection"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[14]$vl::reflection::description"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div></div>
+		{
+<div class="disabled">#define PARSINGREFLECTION_TYPELIST(F)\</div>
+<div class="disabled">			F(parsing::ParsingTextPos)\</div>
+<div class="disabled">			F(parsing::ParsingTextRange)\</div>
+<div class="disabled">			F(parsing::ParsingTreeNode)\</div>
+<div class="disabled">			F(parsing::ParsingTreeToken)\</div>
+<div class="disabled">			F(parsing::ParsingTreeObject)\</div>
+<div class="disabled">			F(parsing::ParsingTreeArray)\</div>
+<div class="disabled">			F(parsing::ParsingTreeCustomBase)\</div>
+<div class="disabled">			F(parsing::ParsingToken)\</div>
+<div class="disabled">			F(parsing::ParsingError)\</div>
+
+<div class="expandable"><div class="disabled">			PARSINGREFLECTION_TYPELIST(DECL_TYPE_INFO)</div>
+<div class="expanded">			<div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextPos>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTextPos'], [], [])"><div class="token cpp_type">ParsingTextPos</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextPos>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextPos>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; }; <div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextRange>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTextRange'], [], [])"><div class="token cpp_type">ParsingTextRange</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextRange>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextRange>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; }; <div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeNode>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeNode'], [], [])"><div class="token cpp_type">ParsingTreeNode</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeNode>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeNode>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; }; <div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeToken>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeToken'], [], [])"><div class="token cpp_type">ParsingTreeToken</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeToken>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeToken>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; }; <div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeObject>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeObject'], [], [])"><div class="token cpp_type">ParsingTreeObject</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeObject>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeObject>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; }; <div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeArray>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeArray'], [], [])"><div class="token cpp_type">ParsingTreeArray</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeArray>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeArray>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; }; <div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeCustomBase>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeCustomBase>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeCustomBase>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; }; <div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingToken>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingToken'], [], [])"><div class="token cpp_type">ParsingToken</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingToken>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingToken>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; }; <div class="token cpp_keyword ">template</div>&lt;&gt;<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingError>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::TypeInfo'])"><div class="token cpp_type">TypeInfo</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;{ <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfoContent'], [], [])"><div class="token cpp_type">TypeInfoContent</div></div> <div class="def" id="NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingError>::content"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeInfo@<::vl::parsing::ParsingError>::content'], [], [])"><div class="token cpp_field">content</div></div></div>; };</div></div>
+		}
+	}
+}
+
+<div class="disabled">#endif</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[98]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[15]$vl::reflection"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[15]$vl::reflection::description"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div></div>
+		{
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">bool</div>								<div class="def" id="FB$vl::reflection::description::LoadParsingTypes@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::LoadParsingTypes@bool()'], [], [])"><div class="token cpp_function">LoadParsingTypes</div></div></div>();
+		}
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl',
+            'NF[73]$vl',
+            'NF[74]$vl',
+            'NF[75]$vl',
+            'NF[76]$vl',
+            'NF[77]$vl',
+            'NF[78]$vl',
+            'NF[79]$vl',
+            'NF[80]$vl',
+            'NF[81]$vl',
+            'NF[82]$vl',
+            'NF[83]$vl',
+            'NF[84]$vl',
+            'NF[85]$vl',
+            'NF[86]$vl',
+            'NF[87]$vl',
+            'NF[88]$vl',
+            'NF[89]$vl',
+            'NF[90]$vl',
+            'NF[91]$vl',
+            'NF[92]$vl',
+            'NF[93]$vl',
+            'NF[94]$vl',
+            'NF[95]$vl',
+            'NF[96]$vl',
+            'NF[97]$vl',
+            'NF[98]$vl',
+            'NF[99]$vl',
+            'NF[100]$vl',
+            'NF[101]$vl',
+            'NF[102]$vl',
+            'NF[103]$vl',
+            'NF[104]$vl',
+            'NF[105]$vl',
+            'NF[106]$vl',
+            'NF[107]$vl',
+            'NF[108]$vl',
+            'NF[109]$vl',
+            'NF[110]$vl',
+            'NF[111]$vl',
+            'NF[112]$vl',
+            'NF[113]$vl',
+            'NF[114]$vl',
+            'NF[115]$vl',
+            'NF[116]$vl',
+            'NF[117]$vl',
+            'NF[118]$vl',
+            'NF[119]$vl',
+            'NF[120]$vl',
+            'NF[121]$vl',
+            'NF[122]$vl',
+            'NF[123]$vl',
+            'NF[124]$vl',
+            'NF[125]$vl',
+            'NF[126]$vl',
+            'NF[127]$vl',
+            'NF[128]$vl',
+            'NF[129]$vl',
+            'NF[130]$vl',
+            'NF[131]$vl'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections',
+            'NF[19]$vl::collections'
+        ]
+    },
+    'vl::collections::Array': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Array'
+        ],
+        'decls': []
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::parsing': {
+        'displayNameInHtml': 'vl::parsing',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing',
+            'NF[1]$vl::parsing',
+            'NF[2]$vl::parsing',
+            'NF[3]$vl::parsing',
+            'NF[4]$vl::parsing',
+            'NF[5]$vl::parsing',
+            'NF[6]$vl::parsing',
+            'NF[7]$vl::parsing',
+            'NF[8]$vl::parsing',
+            'NF[9]$vl::parsing',
+            'NF[10]$vl::parsing',
+            'NF[11]$vl::parsing',
+            'NF[12]$vl::parsing',
+            'NF[13]$vl::parsing',
+            'NF[14]$vl::parsing',
+            'NF[15]$vl::parsing',
+            'NF[16]$vl::parsing',
+            'NF[17]$vl::parsing',
+            'NF[18]$vl::parsing',
+            'NF[19]$vl::parsing',
+            'NF[20]$vl::parsing',
+            'NF[21]$vl::parsing',
+            'NF[22]$vl::parsing',
+            'NF[23]$vl::parsing',
+            'NF[24]$vl::parsing',
+            'NF[25]$vl::parsing',
+            'NF[26]$vl::parsing',
+            'NF[27]$vl::parsing',
+            'NF[28]$vl::parsing',
+            'NF[29]$vl::parsing',
+            'NF[30]$vl::parsing',
+            'NF[31]$vl::parsing',
+            'NF[32]$vl::parsing',
+            'NF[33]$vl::parsing',
+            'NF[34]$vl::parsing'
+        ]
+    },
+    'vl::parsing::ParsingError': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingError</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingError'
+        ],
+        'decls': []
+    },
+    'vl::parsing::ParsingTextPos': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTextPos</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTextPos'
+        ],
+        'decls': []
+    },
+    'vl::parsing::ParsingTextRange': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTextRange</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTextRange'
+        ],
+        'decls': []
+    },
+    'vl::parsing::ParsingToken': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingToken</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingToken'
+        ],
+        'decls': []
+    },
+    'vl::parsing::ParsingTreeArray': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTreeArray</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTreeArray'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::ParsingTreeArray'
+        ]
+    },
+    'vl::parsing::ParsingTreeCustomBase': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTreeCustomBase</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTreeCustomBase'
+        ],
+        'decls': []
+    },
+    'vl::parsing::ParsingTreeNode': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTreeNode</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTreeNode'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::ParsingTreeNode'
+        ]
+    },
+    'vl::parsing::ParsingTreeObject': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTreeObject</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTreeObject'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::ParsingTreeObject'
+        ]
+    },
+    'vl::parsing::ParsingTreeToken': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTreeToken</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTreeToken'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::ParsingTreeToken'
+        ]
+    },
+    'vl::parsing::tabling': {
+        'displayNameInHtml': 'vl::parsing::tabling',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing::tabling',
+            'NF[1]$vl::parsing::tabling',
+            'NF[2]$vl::parsing::tabling',
+            'NF[3]$vl::parsing::tabling',
+            'NF[4]$vl::parsing::tabling',
+            'NF[5]$vl::parsing::tabling',
+            'NF[6]$vl::parsing::tabling'
+        ]
+    },
+    'vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)': {
+        'displayNameInHtml': '<span class="cpp_function">CreateAutoRecoverParser</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingTable</span>&gt;)',
+        'impls': [
+            'FB$vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()': {
+        'displayNameInHtml': '<span class="cpp_function">CreateBootstrapAutoRecoverParser</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()': {
+        'displayNameInHtml': '<span class="cpp_function">CreateBootstrapStrictParser</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::CreateStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)': {
+        'displayNameInHtml': '<span class="cpp_function">CreateStrictParser</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingTable</span>&gt;)',
+        'impls': [
+            'FB$vl::parsing::tabling::CreateStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::CreateStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingAmbiguousParser'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingTable</span>&gt;)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::BeginParse@void()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">BeginParse</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::BeginParse@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::BeginParse@void()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">BuildAmbiguousDecisions</span>(<span class="cpp_type">ParsingState</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">BuildDecisions</span>(<span class="cpp_type">ParsingState</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">BuildSingleDecisionPath</span>(<span class="cpp_type">ParsingState</span> &, <span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::DecisionList': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_type">DecisionList</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingAmbiguousParser::DecisionList'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">GetAffectedStackNodeCount</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &, collections::<span class="cpp_type">Array</span>&lt;<span class="cpp_type">vint</span>&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">GetConflictReduceCount</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">GetConflictReduceIndices</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &, <span class="cpp_type">vint</span>, collections::<span class="cpp_type">Array</span>&lt;<span class="cpp_type">vint</span>&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">GetResolvableFutureLevels</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &, <span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">OnErrorRecover</span>(<span class="cpp_type">ParsingState</span> &, <span class="cpp_type">vint</span>, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &, <span class="cpp_type">vint</span> &, <span class="cpp_type">vint</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">ParseStep</span>(<span class="cpp_type">ParsingState</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">SearchPathForOneStep</span>(<span class="cpp_type">ParsingState</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &, <span class="cpp_type">vint</span> &, <span class="cpp_type">vint</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAmbiguousParser::~ParsingAmbiguousParser@()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAmbiguousParser</span>::<span class="cpp_function">~ParsingAmbiguousParser</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::~ParsingAmbiguousParser@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAmbiguousParser::~ParsingAmbiguousParser@()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverAmbiguousParser</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingTable</span>&gt;, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverAmbiguousParser</span>::<span class="cpp_function">OnErrorRecover</span>(<span class="cpp_type">ParsingState</span> &, <span class="cpp_type">vint</span>, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span> *&gt; &, <span class="cpp_type">vint</span> &, <span class="cpp_type">vint</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::~ParsingAutoRecoverAmbiguousParser@()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverAmbiguousParser</span>::<span class="cpp_function">~ParsingAutoRecoverAmbiguousParser</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::~ParsingAutoRecoverAmbiguousParser@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::~ParsingAutoRecoverAmbiguousParser@()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingTable</span>&gt;, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::BeginParse@void()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_function">BeginParse</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::BeginParse@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::BeginParse@void()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_function">CreateRecoverFuture</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::GetRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_function">GetRecoverFuture</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::GetRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::GetRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::OnClearErrorRecover@void()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_function">OnClearErrorRecover</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnClearErrorRecover@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnClearErrorRecover@void()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_function">OnErrorRecover</span>(<span class="cpp_type">ParsingState</span> &, <span class="cpp_type">vint</span>, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::OnTestErrorRecoverExists@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_function">OnTestErrorRecoverExists</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnTestErrorRecoverExists@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnTestErrorRecoverExists@bool()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_type">RecoverFuture</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingAutoRecoverParser::~ParsingAutoRecoverParser@()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingAutoRecoverParser</span>::<span class="cpp_function">~ParsingAutoRecoverParser</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::~ParsingAutoRecoverParser@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingAutoRecoverParser::~ParsingAutoRecoverParser@()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingGeneralParser': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingGeneralParser</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingGeneralParser'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingGeneralParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingGeneralParser</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingTable</span>&gt;)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingGeneralParser</span>::<span class="cpp_function">BeginParse</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr<::vl::parsing::tabling::ParsingTable>()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingGeneralParser</span>::<span class="cpp_function">GetTable</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr<::vl::parsing::tabling::ParsingTable>()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr<::vl::parsing::tabling::ParsingTable>()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingGeneralParser</span>::<span class="cpp_function">Parse</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingGeneralParser</span>::<span class="cpp_function">Parse</span>(<span class="cpp_type">ParsingState</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingGeneralParser</span>::<span class="cpp_function">Parse</span>(<span class="cpp_type">ParsingState</span> &, <span class="cpp_type">ParsingTransitionProcessor</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingGeneralParser::~ParsingGeneralParser@()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingGeneralParser</span>::<span class="cpp_function">~ParsingGeneralParser</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::~ParsingGeneralParser@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingGeneralParser::~ParsingGeneralParser@()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingState': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingState</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingState'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingState::Future': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingState</span>::<span class="cpp_type">Future</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingState::Future'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingState::TransitionResult': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingState</span>::<span class="cpp_type">TransitionResult</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingState::TransitionResult'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingStrictParser': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingStrictParser</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingStrictParser'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingStrictParser</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingTable</span>&gt;)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingStrictParser::OnClearErrorRecover@void()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingStrictParser</span>::<span class="cpp_function">OnClearErrorRecover</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::OnClearErrorRecover@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::OnClearErrorRecover@void()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingStrictParser</span>::<span class="cpp_function">OnErrorRecover</span>(<span class="cpp_type">ParsingState</span> &, <span class="cpp_type">vint</span>, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingStrictParser::OnTestErrorRecoverExists@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingStrictParser</span>::<span class="cpp_function">OnTestErrorRecoverExists</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::OnTestErrorRecoverExists@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::OnTestErrorRecoverExists@bool()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingStrictParser</span>::<span class="cpp_function">ParseStep</span>(<span class="cpp_type">ParsingState</span> &, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingStrictParser::~ParsingStrictParser@()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingStrictParser</span>::<span class="cpp_function">~ParsingStrictParser</span>()',
+        'impls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::~ParsingStrictParser@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::tabling::ParsingStrictParser::~ParsingStrictParser@()[decl0]'
+        ]
+    },
+    'vl::parsing::tabling::ParsingTable': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTransitionProcessor': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTransitionProcessor</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTransitionProcessor'
+        ],
+        'decls': []
+    },
+    'vl::reflection': {
+        'displayNameInHtml': 'vl::reflection',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection',
+            'NF[1]$vl::reflection',
+            'NF[2]$vl::reflection',
+            'NF[3]$vl::reflection',
+            'NF[4]$vl::reflection',
+            'NF[5]$vl::reflection',
+            'NF[6]$vl::reflection',
+            'NF[7]$vl::reflection',
+            'NF[8]$vl::reflection',
+            'NF[9]$vl::reflection',
+            'NF[10]$vl::reflection',
+            'NF[11]$vl::reflection',
+            'NF[12]$vl::reflection',
+            'NF[13]$vl::reflection',
+            'NF[14]$vl::reflection',
+            'NF[15]$vl::reflection',
+            'NF[16]$vl::reflection',
+            'NF[17]$vl::reflection',
+            'NF[18]$vl::reflection',
+            'NF[19]$vl::reflection',
+            'NF[20]$vl::reflection',
+            'NF[21]$vl::reflection'
+        ]
+    },
+    'vl::reflection::description': {
+        'displayNameInHtml': 'vl::reflection::description',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection::description',
+            'NF[1]$vl::reflection::description',
+            'NF[2]$vl::reflection::description',
+            'NF[3]$vl::reflection::description',
+            'NF[4]$vl::reflection::description',
+            'NF[5]$vl::reflection::description',
+            'NF[6]$vl::reflection::description',
+            'NF[7]$vl::reflection::description',
+            'NF[8]$vl::reflection::description',
+            'NF[9]$vl::reflection::description',
+            'NF[10]$vl::reflection::description',
+            'NF[11]$vl::reflection::description',
+            'NF[12]$vl::reflection::description',
+            'NF[13]$vl::reflection::description',
+            'NF[14]$vl::reflection::description',
+            'NF[15]$vl::reflection::description',
+            'NF[16]$vl::reflection::description',
+            'NF[17]$vl::reflection::description',
+            'NF[18]$vl::reflection::description',
+            'NF[19]$vl::reflection::description',
+            'NF[20]$vl::reflection::description',
+            'NF[21]$vl::reflection::description'
+        ]
+    },
+    'vl::reflection::description::LoadParsingTypes@bool()': {
+        'displayNameInHtml': '<span class="cpp_function">LoadParsingTypes</span>()',
+        'impls': [
+            'FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::reflection::description::LoadParsingTypes@bool()[decl0]'
+        ]
+    },
+    'vl::reflection::description::TypeInfo': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingError>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingError</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingError>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingError>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextPos>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingTextPos</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextPos>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextPos>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextRange>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingTextRange</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextRange>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextRange>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingToken>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingToken</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingToken>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingToken>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeArray>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingTreeArray</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeArray>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeArray>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeCustomBase>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingTreeCustomBase</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeCustomBase>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeCustomBase>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeNode>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingTreeNode</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeNode>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeNode>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeObject>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingTreeObject</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeObject>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeObject>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeToken>::content': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfo</span>&lt;parsing::<span class="cpp_type">ParsingTreeToken</span>&gt;::<span class="cpp_field">content</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeToken>::content'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeToken>::content'
+        ]
+    },
+    'vl::reflection::description::TypeInfoContent': {
+        'displayNameInHtml': '<span class="cpp_type">TypeInfoContent</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeInfoContent'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]': null,
+    'FB$vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[decl0]': null,
+    'FB$vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[decl0]': null,
+    'FB$vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::CreateStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]': null,
+    'FB$vl::parsing::tabling::CreateStrictParser@::vl::Ptr<::vl::parsing::tabling::ParsingGeneralParser>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::BeginParse@void()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::BeginParse@void()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildAmbiguousDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildDecisions@void(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::BuildSingleDecisionPath@void(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingState::Future *, ::vl::vint)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetAffectedStackNodeCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::collections::Array<::vl::vint> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceCount@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetConflictReduceIndices@void(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::collections::Array<::vl::vint> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::GetResolvableFutureLevels@::vl::vint(::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint, ::vl::vint)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::SearchPathForOneStep@::vl::vint(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::~ParsingAmbiguousParser@()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAmbiguousParser::~ParsingAmbiguousParser@()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::OnErrorRecover@void(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::parsing::tabling::ParsingState::Future *> &, ::vl::vint &, ::vl::vint &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::~ParsingAutoRecoverAmbiguousParser@()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::~ParsingAutoRecoverAmbiguousParser@()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::vint)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::BeginParse@void()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::BeginParse@void()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::CreateRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint, ::vl::vint)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::GetRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::GetRecoverFuture@::vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture &(::vl::vint)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnClearErrorRecover@void()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnClearErrorRecover@void()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnTestErrorRecoverExists@bool()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::OnTestErrorRecoverExists@bool()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::~ParsingAutoRecoverParser@()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingAutoRecoverParser::~ParsingAutoRecoverParser@()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingGeneralParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingGeneralParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr<::vl::parsing::tabling::ParsingTable>()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr<::vl::parsing::tabling::ParsingTable>()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::WString const &, ::vl::WString const &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &, ::vl::vint)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr<::vl::parsing::ParsingTreeNode>(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingGeneralParser::Parse@bool(::vl::parsing::tabling::ParsingState &, ::vl::parsing::tabling::ParsingTransitionProcessor &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingGeneralParser::~ParsingGeneralParser@()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingGeneralParser::~ParsingGeneralParser@()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr<::vl::parsing::tabling::ParsingTable>)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingStrictParser::OnClearErrorRecover@void()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingStrictParser::OnClearErrorRecover@void()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingStrictParser::OnErrorRecover@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingStrictParser::OnTestErrorRecoverExists@bool()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingStrictParser::OnTestErrorRecoverExists@bool()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingStrictParser::ParseStep@::vl::parsing::tabling::ParsingState::TransitionResult(::vl::parsing::tabling::ParsingState &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::parsing::tabling::ParsingStrictParser::~ParsingStrictParser@()[decl0]': null,
+    'FB$vl::parsing::tabling::ParsingStrictParser::~ParsingStrictParser@()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'FB$vl::reflection::description::LoadParsingTypes@bool()[decl0]': null,
+    'FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::ParsingTreeArray': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::ParsingTreeNode': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::ParsingTreeObject': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::ParsingTreeToken': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::tabling': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[0]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingError>::content': null,
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextPos>::content': null,
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextRange>::content': null,
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingToken>::content': null,
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeArray>::content': null,
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeCustomBase>::content': null,
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeNode>::content': null,
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeObject>::content': null,
+    'NF[0]$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeToken>::content': null,
+    'NF[100]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[101]$vl': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[102]$vl': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[103]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[104]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[105]$vl': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[106]$vl': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[107]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[108]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[109]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[10]$vl::parsing': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[10]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[10]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[110]$vl': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'NF[111]$vl': { 'htmlFileName': 'ParsingAutomaton.cpp', 'displayName': 'ParsingAutomaton.cpp' },
+    'NF[112]$vl': { 'htmlFileName': 'ParsingAutomaton_Closure.cpp', 'displayName': 'ParsingAutomaton_Closure.cpp' },
+    'NF[113]$vl': { 'htmlFileName': 'ParsingAutomaton_EPDA.cpp', 'displayName': 'ParsingAutomaton_EPDA.cpp' },
+    'NF[114]$vl': { 'htmlFileName': 'ParsingAutomaton_GenerateTable.cpp', 'displayName': 'ParsingAutomaton_GenerateTable.cpp' },
+    'NF[115]$vl': { 'htmlFileName': 'ParsingAutomaton_JPDA.cpp', 'displayName': 'ParsingAutomaton_JPDA.cpp' },
+    'NF[116]$vl': { 'htmlFileName': 'ParsingAutomaton_MergeStates.cpp', 'displayName': 'ParsingAutomaton_MergeStates.cpp' },
+    'NF[117]$vl': { 'htmlFileName': 'ParsingAutomaton_NPDA.cpp', 'displayName': 'ParsingAutomaton_NPDA.cpp' },
+    'NF[118]$vl': { 'htmlFileName': 'ParsingDefinitions.cpp', 'displayName': 'ParsingDefinitions.cpp' },
+    'NF[119]$vl': { 'htmlFileName': 'ParsingDefinitions_CreateParserDefinition.cpp', 'displayName': 'ParsingDefinitions_CreateParserDefinition.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[11]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[11]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[11]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[120]$vl': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[121]$vl': { 'htmlFileName': 'ParsingState.cpp', 'displayName': 'ParsingState.cpp' },
+    'NF[122]$vl': { 'htmlFileName': 'ParsingTable.cpp', 'displayName': 'ParsingTable.cpp' },
+    'NF[123]$vl': { 'htmlFileName': 'ParsingTree.cpp', 'displayName': 'ParsingTree.cpp' },
+    'NF[124]$vl': { 'htmlFileName': 'ParsingJson.cpp', 'displayName': 'ParsingJson.cpp' },
+    'NF[125]$vl': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[126]$vl': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[127]$vl': { 'htmlFileName': 'ParsingJson_Parser.cpp', 'displayName': 'ParsingJson_Parser.cpp' },
+    'NF[128]$vl': { 'htmlFileName': 'ParsingXml.cpp', 'displayName': 'ParsingXml.cpp' },
+    'NF[129]$vl': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[12]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[12]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[130]$vl': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[131]$vl': { 'htmlFileName': 'ParsingXml_Parser.cpp', 'displayName': 'ParsingXml_Parser.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[13]$vl::parsing': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[13]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[13]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[14]$vl::parsing': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[14]$vl::reflection': null,
+    'NF[14]$vl::reflection::description': null,
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl::parsing': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'NF[15]$vl::reflection': null,
+    'NF[15]$vl::reflection::description': null,
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.cpp', 'displayName': 'ParsingAutomaton.cpp' },
+    'NF[16]$vl::reflection': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[16]$vl::reflection::description': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[17]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_Closure.cpp', 'displayName': 'ParsingAutomaton_Closure.cpp' },
+    'NF[17]$vl::reflection': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[17]$vl::reflection::description': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[18]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_EPDA.cpp', 'displayName': 'ParsingAutomaton_EPDA.cpp' },
+    'NF[18]$vl::reflection': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[18]$vl::reflection::description': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[19]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[19]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_GenerateTable.cpp', 'displayName': 'ParsingAutomaton_GenerateTable.cpp' },
+    'NF[19]$vl::reflection': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[19]$vl::reflection::description': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[1]$vl::parsing::tabling': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[1]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[20]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_JPDA.cpp', 'displayName': 'ParsingAutomaton_JPDA.cpp' },
+    'NF[20]$vl::reflection': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[20]$vl::reflection::description': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[21]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_MergeStates.cpp', 'displayName': 'ParsingAutomaton_MergeStates.cpp' },
+    'NF[21]$vl::reflection': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[21]$vl::reflection::description': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[22]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_NPDA.cpp', 'displayName': 'ParsingAutomaton_NPDA.cpp' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[23]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions.cpp', 'displayName': 'ParsingDefinitions.cpp' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions_CreateParserDefinition.cpp', 'displayName': 'ParsingDefinitions_CreateParserDefinition.cpp' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[25]$vl::parsing': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[26]$vl::parsing': { 'htmlFileName': 'ParsingState.cpp', 'displayName': 'ParsingState.cpp' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[27]$vl::parsing': { 'htmlFileName': 'ParsingTable.cpp', 'displayName': 'ParsingTable.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[28]$vl::parsing': { 'htmlFileName': 'ParsingTree.cpp', 'displayName': 'ParsingTree.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[29]$vl::parsing': { 'htmlFileName': 'ParsingJson.cpp', 'displayName': 'ParsingJson.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[2]$vl::parsing::tabling': null,
+    'NF[2]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[2]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[30]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[31]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.cpp', 'displayName': 'ParsingJson_Parser.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[32]$vl::parsing': { 'htmlFileName': 'ParsingXml.cpp', 'displayName': 'ParsingXml.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[33]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[34]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.cpp', 'displayName': 'ParsingXml_Parser.cpp' },
+    'NF[35]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[37]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[38]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[39]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::parsing': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[3]$vl::parsing::tabling': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[3]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[40]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[42]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[44]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[46]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::parsing': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[4]$vl::parsing::tabling': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[4]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[5]$vl::parsing::tabling': { 'htmlFileName': 'ParsingState.cpp', 'displayName': 'ParsingState.cpp' },
+    'NF[5]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[62]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[63]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[64]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[65]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[66]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[67]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[68]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[69]$vl': { 'htmlFileName': 'Regex.cpp', 'displayName': 'Regex.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::parsing': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[6]$vl::parsing::tabling': { 'htmlFileName': 'ParsingTable.cpp', 'displayName': 'ParsingTable.cpp' },
+    'NF[6]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[70]$vl': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[71]$vl': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
+    'NF[72]$vl': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NF[73]$vl': { 'htmlFileName': 'RegexParser.cpp', 'displayName': 'RegexParser.cpp' },
+    'NF[74]$vl': { 'htmlFileName': 'RegexPure.cpp', 'displayName': 'RegexPure.cpp' },
+    'NF[75]$vl': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[76]$vl': { 'htmlFileName': 'RegexWriter.cpp', 'displayName': 'RegexWriter.cpp' },
+    'NF[77]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[78]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[79]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::parsing': null,
+    'NF[7]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[7]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[80]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[81]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[82]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[83]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[84]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[85]$vl': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[86]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[87]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[88]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[89]$vl': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[8]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[90]$vl': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[91]$vl': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[92]$vl': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[93]$vl': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[94]$vl': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[95]$vl': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[96]$vl': null,
+    'NF[97]$vl': null,
+    'NF[98]$vl': null,
+    'NF[99]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[9]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[9]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::Array': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::parsing::ParsingError': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTextPos': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTextRange': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingToken': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTreeArray': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTreeCustomBase': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTreeNode': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTreeObject': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTreeToken': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::tabling::ParsingAmbiguousParser': null,
+    'NI$vl::parsing::tabling::ParsingAmbiguousParser::DecisionList': null,
+    'NI$vl::parsing::tabling::ParsingAutoRecoverParser::RecoverFuture': null,
+    'NI$vl::parsing::tabling::ParsingGeneralParser': null,
+    'NI$vl::parsing::tabling::ParsingState': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NI$vl::parsing::tabling::ParsingState::Future': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NI$vl::parsing::tabling::ParsingState::TransitionResult': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NI$vl::parsing::tabling::ParsingStrictParser': null,
+    'NI$vl::parsing::tabling::ParsingTable': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NI$vl::parsing::tabling::ParsingTransitionProcessor': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NI$vl::reflection::description::TypeInfo': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingError>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextPos>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTextRange>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingToken>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeArray>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeCustomBase>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeNode>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeObject>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfo@<::vl::parsing::ParsingTreeToken>::content': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NI$vl::reflection::description::TypeInfoContent': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

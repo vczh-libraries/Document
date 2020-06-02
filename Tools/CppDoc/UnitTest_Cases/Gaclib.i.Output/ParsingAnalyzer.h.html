@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ParsingAnalyzer.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Parsing::Analyzing
+
+Classes:
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_PARSING_PARSINGANALYZER</div>
+<div class="disabled">#define VCZH_PARSING_PARSINGANALYZER</div>
+
+<div class="disabled">#include &quot;ParsingDefinitions.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[92]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[3]$vl::parsing"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::parsing::analyzing"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing'], [], [])">analyzing</div></div>
+		{
+
+<div class="token cpp_comment ">/***********************************************************************
+DefinitionTypeScopePair
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::analyzing::ParsingSymbol"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::analyzing::ParsingSymbolManager"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div></div>;
+
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair"><div><div class="token cpp_type">DefinitionTypeScopePair</div></div></div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>*		<div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::type"><div><div class="token cpp_field">type</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*							<div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::scope"><div><div class="token cpp_field">scope</div></div></div>;
+
+				<div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@()[impl0]"><div><div class="token cpp_function">DefinitionTypeScopePair</div></div></div>()
+				{
+				}
+
+				<div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]"><div><div class="token cpp_function">DefinitionTypeScopePair</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>* <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_type"><div><div class="token cpp_argument">_type</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_scope"><div><div class="token cpp_argument">_scope</div></div></div>)
+					:type(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_type'], [], [])"><div class="token cpp_argument">_type</div></div>)
+					,scope(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_scope'], [], [])"><div class="token cpp_argument">_scope</div></div>)
+				{
+				}
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]"><div><div class="token cpp_function">Compare</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair'], [], [])"><div class="token cpp_type">DefinitionTypeScopePair</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>)<div class="token cpp_keyword ">const</div>
+				{
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::type'], [], [])"><div class="token cpp_field">type</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::type'], [], [])"><div class="token cpp_field">type</div></div>) <div class="token cpp_keyword ">return</div> -<div class="token cpp_number ">1</div>;
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::type'], [], [])"><div class="token cpp_field">type</div></div>&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::type'], [], [])"><div class="token cpp_field">type</div></div>) <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">1</div>;
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::scope'], [], [])"><div class="token cpp_field">scope</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::scope'], [], [])"><div class="token cpp_field">scope</div></div>) <div class="token cpp_keyword ">return</div> -<div class="token cpp_number ">1</div>;
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::scope'], [], [])"><div class="token cpp_field">scope</div></div>&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::scope'], [], [])"><div class="token cpp_field">scope</div></div>) <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">1</div>;
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
+				}
+
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::operator ==@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>	(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair'], [], [])"><div class="token cpp_type">DefinitionTypeScopePair</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator ==@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>)<div class="token cpp_keyword ">const</div>	{<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::operator ==@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>)==<div class="token cpp_number ">0</div>;}
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::operator !=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>	(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair'], [], [])"><div class="token cpp_type">DefinitionTypeScopePair</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator !=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>)<div class="token cpp_keyword ">const</div>	{<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::operator !=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>)!=<div class="token cpp_number ">0</div>;}
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::operator >@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&gt;</div></div></div>	(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair'], [], [])"><div class="token cpp_type">DefinitionTypeScopePair</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator >@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>)<div class="token cpp_keyword ">const</div>	{<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::operator >@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>)&gt;<div class="token cpp_number ">0</div>;}
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::operator >=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&gt;</div><div class="token cpp_function">=</div></div></div>	(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair'], [], [])"><div class="token cpp_type">DefinitionTypeScopePair</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator >=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>)<div class="token cpp_keyword ">const</div>	{<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::operator >=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>)&gt;=<div class="token cpp_number ">0</div>;}
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::operator <@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&lt;</div></div></div>	(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair'], [], [])"><div class="token cpp_type">DefinitionTypeScopePair</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator <@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>)<div class="token cpp_keyword ">const</div>	{<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::operator <@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>)&lt;<div class="token cpp_number ">0</div>;}
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::parsing::analyzing::DefinitionTypeScopePair::operator <=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&lt;</div><div class="token cpp_function">=</div></div></div>	(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair'], [], [])"><div class="token cpp_type">DefinitionTypeScopePair</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator <=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair"><div><div class="token cpp_argument">pair</div></div></div>)<div class="token cpp_keyword ">const</div>	{<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], ['vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair::operator <=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'], [], [])"><div class="token cpp_argument">pair</div></div>)&lt;=<div class="token cpp_number ">0</div>;}
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+ParsingSymbol Management
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">friend</div> <div class="token cpp_keyword ">class</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>;
+
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*&gt;		<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::ParsingSymbolMap"><div><div class="token cpp_type">ParsingSymbolMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*&gt;						<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::ParsingSymbolList"><div><div class="token cpp_type">ParsingSymbolList</div></div></div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType"><div><div class="token cpp_type">SymbolType</div></div></div>
+				{
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::Global"><div><div class="token cpp_enum">Global</div></div></div>,
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::EnumType"><div><div class="token cpp_enum">EnumType</div></div></div>,
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::ClassType"><div><div class="token cpp_enum">ClassType</div></div></div>,		<div class="token cpp_comment ">// descriptor == base type</div>
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::ArrayType"><div><div class="token cpp_enum">ArrayType</div></div></div>,		<div class="token cpp_comment ">// descriptor == element type</div>
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::TokenType"><div><div class="token cpp_enum">TokenType</div></div></div>,
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::EnumItem"><div><div class="token cpp_enum">EnumItem</div></div></div>,		<div class="token cpp_comment ">// descriptor == parent</div>
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::ClassField"><div><div class="token cpp_enum">ClassField</div></div></div>,		<div class="token cpp_comment ">// descriptor == field type</div>
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::TokenDef"><div><div class="token cpp_enum">TokenDef</div></div></div>,		<div class="token cpp_comment ">// descriptor == token type</div>
+					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SymbolType::RuleDef"><div><div class="token cpp_enum">RuleDef</div></div></div>,		<div class="token cpp_comment ">// descriptor == rule type</div>
+				};
+
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>*			<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::manager"><div><div class="token cpp_field">manager</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::SymbolType'], [], [])"><div class="token cpp_type">SymbolType</div></div>						<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::type"><div><div class="token cpp_field">type</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::name"><div><div class="token cpp_field">name</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::descriptorSymbol"><div><div class="token cpp_field">descriptorSymbol</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::descriptorString"><div><div class="token cpp_field">descriptorString</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::parentSymbol"><div><div class="token cpp_field">parentSymbol</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::arrayTypeSymbol"><div><div class="token cpp_field">arrayTypeSymbol</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::ParsingSymbolList'], [], [])"><div class="token cpp_type">ParsingSymbolList</div></div>				<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::subSymbolList"><div><div class="token cpp_field">subSymbolList</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::ParsingSymbolMap'], [], [])"><div class="token cpp_type">ParsingSymbolMap</div></div>				<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::subSymbolMap"><div><div class="token cpp_field">subSymbolMap</div></div></div>;
+
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::AddSubSymbol@bool(::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::AddSubSymbol@bool(::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">AddSubSymbol</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::AddSubSymbol@bool(::vl::parsing::analyzing::ParsingSymbol *)[decl0]::subSymbol"><div>subSymbol</div></div>);
+
+				<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)'], [], [])"><div class="token cpp_function">ParsingSymbol</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[decl0]::_manager"><div>_manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::SymbolType'], [], [])"><div class="token cpp_type">SymbolType</div></div> <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[decl0]::_type"><div>_type</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[decl0]::_name"><div>_name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[decl0]::_descriptorSymbol"><div>_descriptorSymbol</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[decl0]::_descriptorString"><div>_descriptorString</div></div>);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::~ParsingSymbol@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::~ParsingSymbol@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">ParsingSymbol</div></div></div>();
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>*			<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetManager@::vl::parsing::analyzing::ParsingSymbolManager *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetManager@::vl::parsing::analyzing::ParsingSymbolManager *()'], [], [])"><div class="token cpp_function">GetManager</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::SymbolType'], [], [])"><div class="token cpp_type">SymbolType</div></div>						<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetType@::vl::parsing::analyzing::ParsingSymbol::SymbolType()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetType@::vl::parsing::analyzing::ParsingSymbol::SymbolType()'], [], [])"><div class="token cpp_function">GetType</div></div></div>();
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp;					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetName@::vl::WString const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetName@::vl::WString const &()'], [], [])"><div class="token cpp_function">GetName</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolCount@::vl::vint()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetSubSymbolCount@::vl::vint()'], [], [])"><div class="token cpp_function">GetSubSymbolCount</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::vint)'], [], [])"><div class="token cpp_function">GetSubSymbol</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::GetSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::vint)[decl0]::index"><div>index</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolByName@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetSubSymbolByName@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)'], [], [])"><div class="token cpp_function">GetSubSymbolByName</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolByName@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorSymbol@::vl::parsing::analyzing::ParsingSymbol *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetDescriptorSymbol@::vl::parsing::analyzing::ParsingSymbol *()'], [], [])"><div class="token cpp_function">GetDescriptorSymbol</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorString@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetDescriptorString@::vl::WString()'], [], [])"><div class="token cpp_function">GetDescriptorString</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::GetParentSymbol@::vl::parsing::analyzing::ParsingSymbol *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::GetParentSymbol@::vl::parsing::analyzing::ParsingSymbol *()'], [], [])"><div class="token cpp_function">GetParentSymbol</div></div></div>();
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::IsType@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::IsType@bool()'], [], [])"><div class="token cpp_function">IsType</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::SearchClassSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::SearchClassSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)'], [], [])"><div class="token cpp_function">SearchClassSubSymbol</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SearchClassSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbol::SearchCommonBaseClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol::SearchCommonBaseClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">SearchCommonBaseClass</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbol::SearchCommonBaseClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]::classType"><div>classType</div></div>);
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinition</div></div>												<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition"><div><div class="token cpp_type">ClassDefinition</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>&gt;&gt;														<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::ParsingSymbolList"><div><div class="token cpp_type">ParsingSymbolList</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::DefinitionTypeScopePair'], [], [])"><div class="token cpp_type">DefinitionTypeScopePair</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*&gt;							<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::DefinitionTypeSymbolMap"><div><div class="token cpp_type">DefinitionTypeSymbolMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*&gt;				<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::DefinitionGrammarSymbolMap"><div><div class="token cpp_type">DefinitionGrammarSymbolMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition'], [], [])"><div class="token cpp_type">ClassDefinition</div></div>*&gt;									<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::SymbolClassDefinitionMap"><div><div class="token cpp_type">SymbolClassDefinitionMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition'], [], [])"><div class="token cpp_type">ClassDefinition</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*&gt;									<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::ClassDefinitionSymbolMap"><div><div class="token cpp_type">ClassDefinitionSymbolMap</div></div></div>;
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::globalSymbol"><div><div class="token cpp_field">globalSymbol</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::tokenTypeSymbol"><div><div class="token cpp_field">tokenTypeSymbol</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::ParsingSymbolList'], [], [])"><div class="token cpp_type">ParsingSymbolList</div></div>				<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::createdSymbols"><div><div class="token cpp_field">createdSymbols</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::DefinitionTypeSymbolMap'], [], [])"><div class="token cpp_type">DefinitionTypeSymbolMap</div></div>			<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::definitionTypeSymbolCache"><div><div class="token cpp_field">definitionTypeSymbolCache</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::DefinitionGrammarSymbolMap'], [], [])"><div class="token cpp_type">DefinitionGrammarSymbolMap</div></div>		<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::definitionGrammarSymbolCache"><div><div class="token cpp_field">definitionGrammarSymbolCache</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::DefinitionGrammarSymbolMap'], [], [])"><div class="token cpp_type">DefinitionGrammarSymbolMap</div></div>		<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::definitionGrammarTypeCache"><div><div class="token cpp_field">definitionGrammarTypeCache</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::SymbolClassDefinitionMap'], [], [])"><div class="token cpp_type">SymbolClassDefinitionMap</div></div>		<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::symbolClassDefinitionCache"><div><div class="token cpp_field">symbolClassDefinitionCache</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::ClassDefinitionSymbolMap'], [], [])"><div class="token cpp_type">ClassDefinitionSymbolMap</div></div>		<div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::classDefinitionSymbolCache"><div><div class="token cpp_field">classDefinitionSymbolCache</div></div></div>;
+
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">TryAddSubSymbol</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>&gt; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::subSymbol"><div>subSymbol</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::parentSymbol"><div>parentSymbol</div></div>);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::$__ctor@()'], [], [])"><div class="token cpp_function">ParsingSymbolManager</div></div></div>();
+				<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::~ParsingSymbolManager@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::~ParsingSymbolManager@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">ParsingSymbolManager</div></div></div>();
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::GetGlobal@::vl::parsing::analyzing::ParsingSymbol *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::GetGlobal@::vl::parsing::analyzing::ParsingSymbol *()'], [], [])"><div class="token cpp_function">GetGlobal</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::GetTokenType@::vl::parsing::analyzing::ParsingSymbol *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::GetTokenType@::vl::parsing::analyzing::ParsingSymbol *()'], [], [])"><div class="token cpp_function">GetTokenType</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::GetArrayType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::GetArrayType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">GetArrayType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::GetArrayType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]::elementType"><div>elementType</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">AddClass</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinition</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::classDef"><div>classDef</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::baseType"><div>baseType</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::parentType"><div>parentType</div></div>=<div class="token cpp_number ">0</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">AddField</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::classType"><div>classType</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::fieldType"><div>fieldType</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">AddEnum</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::parentType"><div>parentType</div></div>=<div class="token cpp_number ">0</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">AddEnumItem</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::enumType"><div>enumType</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)'], [], [])"><div class="token cpp_function">AddTokenDefinition</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)[decl0]::regex"><div>regex</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">AddRuleDefinition</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::ruleType"><div>ruleType</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition'], [], [])"><div class="token cpp_type">ClassDefinition</div></div>*				<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassDefinition@::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassDefinition@::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *(::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">CacheGetClassDefinition</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassDefinition@::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]::type"><div>type</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *)'], [], [])"><div class="token cpp_function">CacheGetClassType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition'], [], [])"><div class="token cpp_type">ClassDefinition</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *)[decl0]::type"><div>type</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">CacheGetType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::type"><div>type</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::scope"><div>scope</div></div>);
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">CacheSetType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::type"><div>type</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::scope"><div>scope</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::symbol"><div>symbol</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::CacheGetSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)'], [], [])"><div class="token cpp_function">CacheGetSymbol</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheGetSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]::grammar"><div>grammar</div></div>);
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">CacheSetSymbol</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::grammar"><div>grammar</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::symbol"><div>symbol</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*					<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)'], [], [])"><div class="token cpp_function">CacheGetType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]::grammar"><div>grammar</div></div>);
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">CacheSetType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::grammar"><div>grammar</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]::type"><div>type</div></div>);
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Semantic Analyzer
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::parsing::analyzing::GetTypeFullName@::vl::WString(::vl::parsing::analyzing::ParsingSymbol *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::GetTypeFullName@::vl::WString(::vl::parsing::analyzing::ParsingSymbol *)'], [], [])"><div class="token cpp_function">GetTypeFullName</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::GetTypeFullName@::vl::WString(::vl::parsing::analyzing::ParsingSymbol *)[decl0]::type"><div>type</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>*				<div class="def" id="FB$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">FindType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>* <div class="def" id="NI$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::type"><div>type</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>* <div class="def" id="NI$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::manager"><div>manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbol'], [], [])"><div class="token cpp_type">ParsingSymbol</div></div>* <div class="def" id="NI$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::scope"><div>scope</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">PrepareSymbols</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::definition"><div>definition</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>* <div class="def" id="NI$vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::manager"><div>manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">ValidateRuleStructure</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::definition"><div>definition</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionRuleDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionRuleDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::rule"><div>rule</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::manager"><div>manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">ResolveRuleSymbols</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionRuleDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionRuleDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::rule"><div>rule</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::manager"><div>manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">ResolveSymbols</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::definition"><div>definition</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::manager"><div>manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)'], [], [])"><div class="token cpp_function">ValidateDefinition</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions'], [], [])">definitions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::definition"><div>definition</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::analyzing::ParsingSymbolManager'], [], [])"><div class="token cpp_type">ParsingSymbolManager</div></div>* <div class="def" id="NI$vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::manager"><div>manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+		}
+	}
+}
+
+<div class="disabled">#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl',
+            'NF[73]$vl',
+            'NF[74]$vl',
+            'NF[75]$vl',
+            'NF[76]$vl',
+            'NF[77]$vl',
+            'NF[78]$vl',
+            'NF[79]$vl',
+            'NF[80]$vl',
+            'NF[81]$vl',
+            'NF[82]$vl',
+            'NF[83]$vl',
+            'NF[84]$vl',
+            'NF[85]$vl',
+            'NF[86]$vl',
+            'NF[87]$vl',
+            'NF[88]$vl',
+            'NF[89]$vl',
+            'NF[90]$vl',
+            'NF[91]$vl',
+            'NF[92]$vl',
+            'NF[93]$vl',
+            'NF[94]$vl',
+            'NF[95]$vl',
+            'NF[96]$vl',
+            'NF[97]$vl',
+            'NF[98]$vl',
+            'NF[99]$vl',
+            'NF[100]$vl',
+            'NF[101]$vl',
+            'NF[102]$vl',
+            'NF[103]$vl',
+            'NF[104]$vl',
+            'NF[105]$vl',
+            'NF[106]$vl',
+            'NF[107]$vl',
+            'NF[108]$vl',
+            'NF[109]$vl',
+            'NF[110]$vl',
+            'NF[111]$vl',
+            'NF[112]$vl',
+            'NF[113]$vl',
+            'NF[114]$vl',
+            'NF[115]$vl',
+            'NF[116]$vl',
+            'NF[117]$vl',
+            'NF[118]$vl',
+            'NF[119]$vl',
+            'NF[120]$vl',
+            'NF[121]$vl',
+            'NF[122]$vl',
+            'NF[123]$vl',
+            'NF[124]$vl',
+            'NF[125]$vl',
+            'NF[126]$vl',
+            'NF[127]$vl',
+            'NF[128]$vl',
+            'NF[129]$vl',
+            'NF[130]$vl',
+            'NF[131]$vl'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections',
+            'NF[19]$vl::collections'
+        ]
+    },
+    'vl::collections::Dictionary': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Dictionary'
+        ],
+        'decls': []
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::parsing': {
+        'displayNameInHtml': 'vl::parsing',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing',
+            'NF[1]$vl::parsing',
+            'NF[2]$vl::parsing',
+            'NF[3]$vl::parsing',
+            'NF[4]$vl::parsing',
+            'NF[5]$vl::parsing',
+            'NF[6]$vl::parsing',
+            'NF[7]$vl::parsing',
+            'NF[8]$vl::parsing',
+            'NF[9]$vl::parsing',
+            'NF[10]$vl::parsing',
+            'NF[11]$vl::parsing',
+            'NF[12]$vl::parsing',
+            'NF[13]$vl::parsing',
+            'NF[14]$vl::parsing',
+            'NF[15]$vl::parsing',
+            'NF[16]$vl::parsing',
+            'NF[17]$vl::parsing',
+            'NF[18]$vl::parsing',
+            'NF[19]$vl::parsing',
+            'NF[20]$vl::parsing',
+            'NF[21]$vl::parsing',
+            'NF[22]$vl::parsing',
+            'NF[23]$vl::parsing',
+            'NF[24]$vl::parsing',
+            'NF[25]$vl::parsing',
+            'NF[26]$vl::parsing',
+            'NF[27]$vl::parsing',
+            'NF[28]$vl::parsing',
+            'NF[29]$vl::parsing',
+            'NF[30]$vl::parsing',
+            'NF[31]$vl::parsing',
+            'NF[32]$vl::parsing',
+            'NF[33]$vl::parsing',
+            'NF[34]$vl::parsing'
+        ]
+    },
+    'vl::parsing::ParsingError': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingError</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingError'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing': {
+        'displayNameInHtml': 'vl::parsing::analyzing',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing::analyzing',
+            'NF[1]$vl::parsing::analyzing',
+            'NF[2]$vl::parsing::analyzing',
+            'NF[3]$vl::parsing::analyzing',
+            'NF[4]$vl::parsing::analyzing',
+            'NF[5]$vl::parsing::analyzing',
+            'NF[6]$vl::parsing::analyzing',
+            'NF[7]$vl::parsing::analyzing',
+            'NF[8]$vl::parsing::analyzing',
+            'NF[9]$vl::parsing::analyzing',
+            'NF[10]$vl::parsing::analyzing'
+        ]
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair': {
+        'displayNameInHtml': '<span class="cpp_type">DefinitionTypeScopePair</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_scope': {
+        'displayNameInHtml': '_scope',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_scope'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_type': {
+        'displayNameInHtml': '_type',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_type'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)': {
+        'displayNameInHtml': '<span class="cpp_type">DefinitionTypeScopePair</span>::<span class="cpp_function">Compare</span>(<span class="cpp_type">DefinitionTypeScopePair</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': {
+        'displayNameInHtml': 'pair',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::operator !=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': {
+        'displayNameInHtml': 'pair',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator !=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::operator <=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': {
+        'displayNameInHtml': 'pair',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator <=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::operator <@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': {
+        'displayNameInHtml': 'pair',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator <@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::operator ==@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': {
+        'displayNameInHtml': 'pair',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator ==@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::operator >=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': {
+        'displayNameInHtml': 'pair',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator >=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::operator >@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': {
+        'displayNameInHtml': 'pair',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator >@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::scope': {
+        'displayNameInHtml': '<span class="cpp_type">DefinitionTypeScopePair</span>::<span class="cpp_field">scope</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::scope'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::DefinitionTypeScopePair::type': {
+        'displayNameInHtml': '<span class="cpp_type">DefinitionTypeScopePair</span>::<span class="cpp_field">type</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::DefinitionTypeScopePair::type'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_function">FindType</span>(definitions::<span class="cpp_type">ParsingDefinitionType</span> *, <span class="cpp_type">ParsingSymbolManager</span> *, <span class="cpp_type">ParsingSymbol</span> *, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::GetTypeFullName@::vl::WString(::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_function">GetTypeFullName</span>(<span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::GetTypeFullName@::vl::WString(::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::GetTypeFullName@::vl::WString(::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbol'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::analyzing::ParsingSymbol'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">ParsingSymbolManager</span> *, <span class="cpp_type">SymbolType</span>, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">ParsingSymbol</span> *, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::AddSubSymbol@bool(::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">AddSubSymbol</span>(<span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::AddSubSymbol@bool(::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::AddSubSymbol@bool(::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetDescriptorString@::vl::WString()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetDescriptorString</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorString@::vl::WString()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorString@::vl::WString()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetDescriptorSymbol@::vl::parsing::analyzing::ParsingSymbol *()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetDescriptorSymbol</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorSymbol@::vl::parsing::analyzing::ParsingSymbol *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorSymbol@::vl::parsing::analyzing::ParsingSymbol *()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetManager@::vl::parsing::analyzing::ParsingSymbolManager *()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetManager</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetManager@::vl::parsing::analyzing::ParsingSymbolManager *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetManager@::vl::parsing::analyzing::ParsingSymbolManager *()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetName@::vl::WString const &()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetName</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetName@::vl::WString const &()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetName@::vl::WString const &()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetParentSymbol@::vl::parsing::analyzing::ParsingSymbol *()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetParentSymbol</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetParentSymbol@::vl::parsing::analyzing::ParsingSymbol *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetParentSymbol@::vl::parsing::analyzing::ParsingSymbol *()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetSubSymbol</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetSubSymbolByName@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetSubSymbolByName</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolByName@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolByName@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetSubSymbolCount@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetSubSymbolCount</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolCount@::vl::vint()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolCount@::vl::vint()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::GetType@::vl::parsing::analyzing::ParsingSymbol::SymbolType()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">GetType</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetType@::vl::parsing::analyzing::ParsingSymbol::SymbolType()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::GetType@::vl::parsing::analyzing::ParsingSymbol::SymbolType()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::IsType@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">IsType</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::IsType@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::IsType@bool()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::ParsingSymbolList': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_type">ParsingSymbolList</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbol::ParsingSymbolList'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbol::ParsingSymbolMap': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_type">ParsingSymbolMap</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbol::ParsingSymbolMap'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbol::SearchClassSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">SearchClassSubSymbol</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::SearchClassSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::SearchClassSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::SearchCommonBaseClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">SearchCommonBaseClass</span>(<span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::SearchCommonBaseClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::SearchCommonBaseClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbol::SymbolType': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_type">SymbolType</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbol::SymbolType'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbol::~ParsingSymbol@()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbol</span>::<span class="cpp_function">~ParsingSymbol</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::~ParsingSymbol@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbol::~ParsingSymbol@()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbolManager'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::analyzing::ParsingSymbolManager'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">AddClass</span>(definitions::<span class="cpp_type">ParsingDefinitionClassDefinition</span> *, <span class="cpp_type">ParsingSymbol</span> *, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">AddEnum</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">AddEnumItem</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">AddField</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">ParsingSymbol</span> *, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">AddRuleDefinition</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">AddTokenDefinition</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassDefinition@::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *(::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">CacheGetClassDefinition</span>(<span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassDefinition@::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *(::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassDefinition@::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">CacheGetClassType</span>(<span class="cpp_type">ClassDefinition</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::CacheGetSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">CacheGetSymbol</span>(definitions::<span class="cpp_type">ParsingDefinitionGrammar</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">CacheGetType</span>(definitions::<span class="cpp_type">ParsingDefinitionGrammar</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">CacheGetType</span>(definitions::<span class="cpp_type">ParsingDefinitionType</span> *, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">CacheSetSymbol</span>(definitions::<span class="cpp_type">ParsingDefinitionGrammar</span> *, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">CacheSetType</span>(definitions::<span class="cpp_type">ParsingDefinitionGrammar</span> *, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">CacheSetType</span>(definitions::<span class="cpp_type">ParsingDefinitionType</span> *, <span class="cpp_type">ParsingSymbol</span> *, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_type">ClassDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::ClassDefinitionSymbolMap': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_type">ClassDefinitionSymbolMap</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbolManager::ClassDefinitionSymbolMap'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::DefinitionGrammarSymbolMap': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_type">DefinitionGrammarSymbolMap</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbolManager::DefinitionGrammarSymbolMap'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::DefinitionTypeSymbolMap': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_type">DefinitionTypeSymbolMap</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbolManager::DefinitionTypeSymbolMap'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::GetArrayType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">GetArrayType</span>(<span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::GetArrayType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::GetArrayType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::GetGlobal@::vl::parsing::analyzing::ParsingSymbol *()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">GetGlobal</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::GetGlobal@::vl::parsing::analyzing::ParsingSymbol *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::GetGlobal@::vl::parsing::analyzing::ParsingSymbol *()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::GetTokenType@::vl::parsing::analyzing::ParsingSymbol *()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">GetTokenType</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::GetTokenType@::vl::parsing::analyzing::ParsingSymbol *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::GetTokenType@::vl::parsing::analyzing::ParsingSymbol *()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::ParsingSymbolList': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_type">ParsingSymbolList</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbolManager::ParsingSymbolList'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::SymbolClassDefinitionMap': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_type">SymbolClassDefinitionMap</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::ParsingSymbolManager::SymbolClassDefinitionMap'
+        ],
+        'decls': []
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">TryAddSubSymbol</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingSymbol</span>&gt;, <span class="cpp_type">ParsingSymbol</span> *)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ParsingSymbolManager::~ParsingSymbolManager@()': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingSymbolManager</span>::<span class="cpp_function">~ParsingSymbolManager</span>()',
+        'impls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::~ParsingSymbolManager@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ParsingSymbolManager::~ParsingSymbolManager@()[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_function">PrepareSymbols</span>(<span class="cpp_type">Ptr</span>&lt;definitions::<span class="cpp_type">ParsingDefinition</span>&gt;, <span class="cpp_type">ParsingSymbolManager</span> *, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_function">ResolveRuleSymbols</span>(<span class="cpp_type">Ptr</span>&lt;definitions::<span class="cpp_type">ParsingDefinitionRuleDefinition</span>&gt;, <span class="cpp_type">ParsingSymbolManager</span> *, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_function">ResolveSymbols</span>(<span class="cpp_type">Ptr</span>&lt;definitions::<span class="cpp_type">ParsingDefinition</span>&gt;, <span class="cpp_type">ParsingSymbolManager</span> *, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_function">ValidateDefinition</span>(<span class="cpp_type">Ptr</span>&lt;definitions::<span class="cpp_type">ParsingDefinition</span>&gt;, <span class="cpp_type">ParsingSymbolManager</span> *, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)': {
+        'displayNameInHtml': '<span class="cpp_function">ValidateRuleStructure</span>(<span class="cpp_type">Ptr</span>&lt;definitions::<span class="cpp_type">ParsingDefinition</span>&gt;, <span class="cpp_type">Ptr</span>&lt;definitions::<span class="cpp_type">ParsingDefinitionRuleDefinition</span>&gt;, <span class="cpp_type">ParsingSymbolManager</span> *, collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">ParsingError</span>&gt;&gt; &)',
+        'impls': [
+            'FB$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]'
+        ]
+    },
+    'vl::parsing::definitions': {
+        'displayNameInHtml': 'vl::parsing::definitions',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing::definitions',
+            'NF[1]$vl::parsing::definitions',
+            'NF[2]$vl::parsing::definitions',
+            'NF[3]$vl::parsing::definitions'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinition'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionClassDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionClassDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionClassDefinition'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionClassDefinition'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionGrammar'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionRuleDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionRuleDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionRuleDefinition'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionType': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionType</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionType'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]': null,
+    'FB$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::analyzing::FindType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::GetTypeFullName@::vl::WString(::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::GetTypeFullName@::vl::WString(::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::$__ctor@(::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::parsing::analyzing::ParsingSymbol::SymbolType, ::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::WString const &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::AddSubSymbol@bool(::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::AddSubSymbol@bool(::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorString@::vl::WString()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorString@::vl::WString()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorSymbol@::vl::parsing::analyzing::ParsingSymbol *()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetDescriptorSymbol@::vl::parsing::analyzing::ParsingSymbol *()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetManager@::vl::parsing::analyzing::ParsingSymbolManager *()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetManager@::vl::parsing::analyzing::ParsingSymbolManager *()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetName@::vl::WString const &()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetName@::vl::WString const &()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetParentSymbol@::vl::parsing::analyzing::ParsingSymbol *()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetParentSymbol@::vl::parsing::analyzing::ParsingSymbol *()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::vint)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::vint)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolByName@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolByName@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolCount@::vl::vint()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetSubSymbolCount@::vl::vint()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetType@::vl::parsing::analyzing::ParsingSymbol::SymbolType()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::GetType@::vl::parsing::analyzing::ParsingSymbol::SymbolType()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::IsType@bool()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::IsType@bool()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::SearchClassSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::SearchClassSubSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::SearchCommonBaseClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::SearchCommonBaseClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbol::~ParsingSymbol@()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbol::~ParsingSymbol@()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::$__ctor@()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::$__ctor@()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddClass@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionClassDefinition *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnum@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddEnumItem@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddField@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddRuleDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::AddTokenDefinition@::vl::parsing::analyzing::ParsingSymbol *(::vl::WString const &, ::vl::WString const &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassDefinition@::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassDefinition@::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *(::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetClassType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetSymbol@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionGrammar *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheGetType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetSymbol@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::CacheSetType@bool(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::GetArrayType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::GetArrayType@::vl::parsing::analyzing::ParsingSymbol *(::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::GetGlobal@::vl::parsing::analyzing::ParsingSymbol *()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::GetGlobal@::vl::parsing::analyzing::ParsingSymbol *()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::GetTokenType@::vl::parsing::analyzing::ParsingSymbol *()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::GetTokenType@::vl::parsing::analyzing::ParsingSymbol *()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::TryAddSubSymbol@bool(::vl::Ptr<::vl::parsing::analyzing::ParsingSymbol>, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::~ParsingSymbolManager@()[decl0]': null,
+    'FB$vl::parsing::analyzing::ParsingSymbolManager::~ParsingSymbolManager@()[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::analyzing::PrepareSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::analyzing::ResolveRuleSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::analyzing::ResolveSymbols@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::analyzing::ValidateDefinition@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'FB$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]': null,
+    'FB$vl::parsing::analyzing::ValidateRuleStructure@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>, ::vl::parsing::analyzing::ParsingSymbolManager *, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[impl0]': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::analyzing': null,
+    'NF[0]$vl::parsing::analyzing::ParsingSymbol': null,
+    'NF[0]$vl::parsing::analyzing::ParsingSymbolManager': null,
+    'NF[0]$vl::parsing::definitions': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionClassDefinition': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[100]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[101]$vl': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[102]$vl': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[103]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[104]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[105]$vl': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[106]$vl': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[107]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[108]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[109]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[10]$vl::parsing': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[10]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[110]$vl': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'NF[111]$vl': { 'htmlFileName': 'ParsingAutomaton.cpp', 'displayName': 'ParsingAutomaton.cpp' },
+    'NF[112]$vl': { 'htmlFileName': 'ParsingAutomaton_Closure.cpp', 'displayName': 'ParsingAutomaton_Closure.cpp' },
+    'NF[113]$vl': { 'htmlFileName': 'ParsingAutomaton_EPDA.cpp', 'displayName': 'ParsingAutomaton_EPDA.cpp' },
+    'NF[114]$vl': { 'htmlFileName': 'ParsingAutomaton_GenerateTable.cpp', 'displayName': 'ParsingAutomaton_GenerateTable.cpp' },
+    'NF[115]$vl': { 'htmlFileName': 'ParsingAutomaton_JPDA.cpp', 'displayName': 'ParsingAutomaton_JPDA.cpp' },
+    'NF[116]$vl': { 'htmlFileName': 'ParsingAutomaton_MergeStates.cpp', 'displayName': 'ParsingAutomaton_MergeStates.cpp' },
+    'NF[117]$vl': { 'htmlFileName': 'ParsingAutomaton_NPDA.cpp', 'displayName': 'ParsingAutomaton_NPDA.cpp' },
+    'NF[118]$vl': { 'htmlFileName': 'ParsingDefinitions.cpp', 'displayName': 'ParsingDefinitions.cpp' },
+    'NF[119]$vl': { 'htmlFileName': 'ParsingDefinitions_CreateParserDefinition.cpp', 'displayName': 'ParsingDefinitions_CreateParserDefinition.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[11]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[120]$vl': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[121]$vl': { 'htmlFileName': 'ParsingState.cpp', 'displayName': 'ParsingState.cpp' },
+    'NF[122]$vl': { 'htmlFileName': 'ParsingTable.cpp', 'displayName': 'ParsingTable.cpp' },
+    'NF[123]$vl': { 'htmlFileName': 'ParsingTree.cpp', 'displayName': 'ParsingTree.cpp' },
+    'NF[124]$vl': { 'htmlFileName': 'ParsingJson.cpp', 'displayName': 'ParsingJson.cpp' },
+    'NF[125]$vl': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[126]$vl': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[127]$vl': { 'htmlFileName': 'ParsingJson_Parser.cpp', 'displayName': 'ParsingJson_Parser.cpp' },
+    'NF[128]$vl': { 'htmlFileName': 'ParsingXml.cpp', 'displayName': 'ParsingXml.cpp' },
+    'NF[129]$vl': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[130]$vl': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[131]$vl': { 'htmlFileName': 'ParsingXml_Parser.cpp', 'displayName': 'ParsingXml_Parser.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[13]$vl::parsing': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[14]$vl::parsing': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl::parsing': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.cpp', 'displayName': 'ParsingAutomaton.cpp' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[17]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_Closure.cpp', 'displayName': 'ParsingAutomaton_Closure.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[18]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_EPDA.cpp', 'displayName': 'ParsingAutomaton_EPDA.cpp' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[19]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[19]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_GenerateTable.cpp', 'displayName': 'ParsingAutomaton_GenerateTable.cpp' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[1]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[1]$vl::parsing::definitions': { 'htmlFileName': 'ParsingDefinitions.cpp', 'displayName': 'ParsingDefinitions.cpp' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[20]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_JPDA.cpp', 'displayName': 'ParsingAutomaton_JPDA.cpp' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[21]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_MergeStates.cpp', 'displayName': 'ParsingAutomaton_MergeStates.cpp' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[22]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_NPDA.cpp', 'displayName': 'ParsingAutomaton_NPDA.cpp' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[23]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions.cpp', 'displayName': 'ParsingDefinitions.cpp' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions_CreateParserDefinition.cpp', 'displayName': 'ParsingDefinitions_CreateParserDefinition.cpp' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[25]$vl::parsing': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[26]$vl::parsing': { 'htmlFileName': 'ParsingState.cpp', 'displayName': 'ParsingState.cpp' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[27]$vl::parsing': { 'htmlFileName': 'ParsingTable.cpp', 'displayName': 'ParsingTable.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[28]$vl::parsing': { 'htmlFileName': 'ParsingTree.cpp', 'displayName': 'ParsingTree.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[29]$vl::parsing': { 'htmlFileName': 'ParsingJson.cpp', 'displayName': 'ParsingJson.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[2]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'NF[2]$vl::parsing::definitions': { 'htmlFileName': 'ParsingDefinitions_CreateParserDefinition.cpp', 'displayName': 'ParsingDefinitions_CreateParserDefinition.cpp' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[30]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[31]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.cpp', 'displayName': 'ParsingJson_Parser.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[32]$vl::parsing': { 'htmlFileName': 'ParsingXml.cpp', 'displayName': 'ParsingXml.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[33]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[34]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.cpp', 'displayName': 'ParsingXml_Parser.cpp' },
+    'NF[35]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[37]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[38]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[39]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::parsing': null,
+    'NF[3]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAutomaton.cpp', 'displayName': 'ParsingAutomaton.cpp' },
+    'NF[3]$vl::parsing::definitions': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[40]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[42]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[44]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[46]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::parsing': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[4]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAutomaton_Closure.cpp', 'displayName': 'ParsingAutomaton_Closure.cpp' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[5]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAutomaton_EPDA.cpp', 'displayName': 'ParsingAutomaton_EPDA.cpp' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[62]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[63]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[64]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[65]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[66]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[67]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[68]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[69]$vl': { 'htmlFileName': 'Regex.cpp', 'displayName': 'Regex.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::parsing': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[6]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAutomaton_GenerateTable.cpp', 'displayName': 'ParsingAutomaton_GenerateTable.cpp' },
+    'NF[70]$vl': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[71]$vl': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
+    'NF[72]$vl': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NF[73]$vl': { 'htmlFileName': 'RegexParser.cpp', 'displayName': 'RegexParser.cpp' },
+    'NF[74]$vl': { 'htmlFileName': 'RegexPure.cpp', 'displayName': 'RegexPure.cpp' },
+    'NF[75]$vl': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[76]$vl': { 'htmlFileName': 'RegexWriter.cpp', 'displayName': 'RegexWriter.cpp' },
+    'NF[77]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[78]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[79]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::parsing': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[7]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAutomaton_JPDA.cpp', 'displayName': 'ParsingAutomaton_JPDA.cpp' },
+    'NF[80]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[81]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[82]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[83]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[84]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[85]$vl': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[86]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[87]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[88]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[89]$vl': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[8]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAutomaton_MergeStates.cpp', 'displayName': 'ParsingAutomaton_MergeStates.cpp' },
+    'NF[90]$vl': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[91]$vl': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[92]$vl': null,
+    'NF[93]$vl': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[94]$vl': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[95]$vl': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[96]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[97]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[98]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[99]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[9]$vl::parsing::analyzing': { 'htmlFileName': 'ParsingAutomaton_NPDA.cpp', 'displayName': 'ParsingAutomaton_NPDA.cpp' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::Dictionary': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::parsing::ParsingError': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_scope': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::$__ctor@(::vl::parsing::definitions::ParsingDefinitionType *, ::vl::parsing::analyzing::ParsingSymbol *)[impl0]::_type': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::Compare@::vl::vint(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator !=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator <=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator <@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator ==@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator >=@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::operator >@bool(::vl::parsing::analyzing::DefinitionTypeScopePair const &)[impl0]::pair': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::scope': null,
+    'NI$vl::parsing::analyzing::DefinitionTypeScopePair::type': null,
+    'NI$vl::parsing::analyzing::ParsingSymbol': null,
+    'NI$vl::parsing::analyzing::ParsingSymbol::ParsingSymbolList': null,
+    'NI$vl::parsing::analyzing::ParsingSymbol::ParsingSymbolMap': null,
+    'NI$vl::parsing::analyzing::ParsingSymbol::SymbolType': null,
+    'NI$vl::parsing::analyzing::ParsingSymbolManager': null,
+    'NI$vl::parsing::analyzing::ParsingSymbolManager::ClassDefinition': null,
+    'NI$vl::parsing::analyzing::ParsingSymbolManager::ClassDefinitionSymbolMap': null,
+    'NI$vl::parsing::analyzing::ParsingSymbolManager::DefinitionGrammarSymbolMap': null,
+    'NI$vl::parsing::analyzing::ParsingSymbolManager::DefinitionTypeSymbolMap': null,
+    'NI$vl::parsing::analyzing::ParsingSymbolManager::ParsingSymbolList': null,
+    'NI$vl::parsing::analyzing::ParsingSymbolManager::SymbolClassDefinitionMap': null,
+    'NI$vl::parsing::definitions::ParsingDefinition': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NI$vl::parsing::definitions::ParsingDefinitionClassDefinition': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NI$vl::parsing::definitions::ParsingDefinitionGrammar': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NI$vl::parsing::definitions::ParsingDefinitionRuleDefinition': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NI$vl::parsing::definitions::ParsingDefinitionType': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

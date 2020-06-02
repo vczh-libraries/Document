@@ -5,7 +5,7 @@
 #include "../../../../VlppOS/Release/IncludeOnly/VlppOS.cpp"
 #include "../../../../VlppRegex/Release/IncludeOnly/VlppRegex.cpp"
 #include "../../../../VlppReflection/Release/IncludeOnly/VlppReflection.cpp"
-//#include "../../../../VlppParser/Release/IncludeOnly/VlppParser.cpp"
+#include "../../../../VlppParser/Release/IncludeOnly/VlppParser.cpp"
 //#include "../../../../Workflow/Release/IncludeOnly/VlppWorkflowLibrary.cpp"
 //#include "../../../../Workflow/Release/IncludeOnly/VlppWorkflowRuntime.cpp"
 //#include "../../../../Workflow/Release/IncludeOnly/VlppWorkflowCompiler.cpp"

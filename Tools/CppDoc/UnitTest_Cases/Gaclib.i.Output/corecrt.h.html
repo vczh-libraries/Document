@@ -280,13 +280,19 @@
 <div class="token cpp_comment ">//</div>
 <div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
 <div class="disabled">#ifdef _DEBUG</div>
-<div class="disabled">    _ACRTIMP void __cdecl _invalid_parameter(</div>
-<div class="disabled">        _In_opt_z_ wchar_t const*,</div>
-<div class="disabled">        _In_opt_z_ wchar_t const*,</div>
-<div class="disabled">        _In_opt_z_ wchar_t const*,</div>
-<div class="disabled">        _In_       unsigned int,</div>
-<div class="disabled">        _In_       uintptr_t</div>
-<div class="disabled">        );</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP void __cdecl _invalid_parameter(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_invalid_parameter@void(wchar_t const *, wchar_t const *, wchar_t const *, unsigned int, ::uintptr_t)[decl0]"><div><div class="token cpp_function">_invalid_parameter</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_z_ wchar_t const*,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*,</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_z_ wchar_t const*,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*,</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_z_ wchar_t const*,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*,</div></div>
+<div class="expandable"><div class="disabled">        _In_       unsigned int,</div>
+<div class="expanded">                <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_       uintptr_t</div>
+<div class="expanded">                <div class="ref" onclick="jumpToSymbol([], ['uintptr_t'], [], [])"><div class="token cpp_type">uintptr_t</div></div></div></div>
+        );
 <div class="disabled">#endif</div>
 
 <div class="expandable"><div class="disabled">_ACRTIMP_ALT void __cdecl _invalid_parameter_noinfo(void);</div>
@@ -313,17 +319,17 @@
 <div class="disabled">        #define _CRT_SECURE_INVALID_PARAMETER(expr) \</div>
 <div class="disabled">            ::_invalid_parameter(_CRT_WIDE(#expr), __FUNCTIONW__, __FILEW__, __LINE__, 0)</div>
 <div class="disabled">    #else</div>
-        <div class="token cpp_comment ">// By default, _CRT_SECURE_INVALID_PARAMETER in retail invokes</div>
-        <div class="token cpp_comment ">// _invalid_parameter_noinfo_noreturn(), which is marked</div>
-        <div class="token cpp_comment ">// __declspec(noreturn) and does not return control to the application.</div>
-        <div class="token cpp_comment ">// Even if _set_invalid_parameter_handler() is used to set a new invalid</div>
-        <div class="token cpp_comment ">// parameter handler which does return control to the application,</div>
-        <div class="token cpp_comment ">// _invalid_parameter_noinfo_noreturn() will terminate the application</div>
-        <div class="token cpp_comment ">// and invoke Watson. You can overwrite the definition of</div>
-        <div class="token cpp_comment ">// _CRT_SECURE_INVALID_PARAMETER if you need.</div>
-        <div class="token cpp_comment ">//</div>
-        <div class="token cpp_comment ">// _CRT_SECURE_INVALID_PARAMETER is used in the Standard C++ Libraries</div>
-        <div class="token cpp_comment ">// and the SafeInt library.</div>
+<div class="disabled">        // By default, _CRT_SECURE_INVALID_PARAMETER in retail invokes</div>
+<div class="disabled">        // _invalid_parameter_noinfo_noreturn(), which is marked</div>
+<div class="disabled">        // __declspec(noreturn) and does not return control to the application.</div>
+<div class="disabled">        // Even if _set_invalid_parameter_handler() is used to set a new invalid</div>
+<div class="disabled">        // parameter handler which does return control to the application,</div>
+<div class="disabled">        // _invalid_parameter_noinfo_noreturn() will terminate the application</div>
+<div class="disabled">        // and invoke Watson. You can overwrite the definition of</div>
+<div class="disabled">        // _CRT_SECURE_INVALID_PARAMETER if you need.</div>
+<div class="disabled">        //</div>
+<div class="disabled">        // _CRT_SECURE_INVALID_PARAMETER is used in the Standard C++ Libraries</div>
+<div class="disabled">        // and the SafeInt library.</div>
 <div class="disabled">        #define _CRT_SECURE_INVALID_PARAMETER(expr) \</div>
 <div class="disabled">            ::_invalid_parameter_noinfo_noreturn()
     #endif

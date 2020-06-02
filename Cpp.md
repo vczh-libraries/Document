@@ -61,9 +61,6 @@
 
 ### Making Demos
 
-- [ ] New Demo! (VlppReflection)
-  - [ ] `...` on base types
-- [ ] New Demo! (VlppParsing)
 - [ ] New Demo! (Workflow)
 - [ ] New Demo! (GacUI Core)
 - [ ] New Demo! (GacUI Compiler / Reflection)
