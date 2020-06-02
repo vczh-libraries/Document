@@ -324,7 +324,7 @@ public:
 			}
 
 			auto pair = self->baseTypes[i];
-			switch (pair.f0)
+			switch (pair.item.f0)
 			{
 			case CppClassAccessor::Public:
 				writer.WriteString(L"public ");
@@ -336,7 +336,11 @@ public:
 				writer.WriteString(L"private ");
 				break;
 			}
-			Log(pair.f1, writer, indentation);
+			Log(pair.item.f1, writer, indentation);
+			if (pair.isVariadic)
+			{
+				writer.WriteString(L"...");
+			}
 		}
 		writer.WriteLine(L"");
 

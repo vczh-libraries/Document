@@ -154,7 +154,8 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 				TestToken(cursor, CppTokens::VIRTUAL);
 
 				auto type = ParseShortType(declPa, ShortTypeTypenameKind::Implicit, cursor);
-				decl->baseTypes.Add({ accessor,type });
+				bool isVariadic = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
+				decl->baseTypes.Add({ { accessor,type },isVariadic });
 
 				if (TestToken(cursor, CppTokens::LBRACE, false))
 				{

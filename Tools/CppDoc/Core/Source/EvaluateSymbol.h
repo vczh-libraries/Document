@@ -128,9 +128,26 @@ namespace symbol_type_resolving
 				auto& tsys = evPs.GetExtra(i);
 				for (vint j = 0; j < tsys.Count(); j++)
 				{
-					if (callback(ctPs, tsys[j]))
+					auto baseTsys = tsys[j];
+					if (cd->baseTypes[i].isVariadic)
 					{
-						return true;
+						if (baseTsys->GetType() == TsysType::Init)
+						{
+							for (vint k = 0; k < baseTsys->GetParamCount(); k++)
+							{
+								if (callback(ctPs, baseTsys->GetParam(k)))
+								{
+									return true;
+								}
+							}
+						}
+					}
+					else
+					{
+						if (callback(ctPs, baseTsys))
+						{
+							return true;
+						}
 					}
 				}
 			}

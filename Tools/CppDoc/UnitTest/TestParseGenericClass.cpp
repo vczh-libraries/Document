@@ -466,9 +466,9 @@ struct X : T, Ts...
 {
 };
 
-struct A { A a; }
-struct B { B b; }
-struct C { C c; }
+struct A { A a; };
+struct B { B b; };
+struct C { C c; };
 
 X<A, B, C> x;
 )";

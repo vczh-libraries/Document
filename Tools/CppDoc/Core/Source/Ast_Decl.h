@@ -267,8 +267,8 @@ class ClassDeclaration : public ForwardClassDeclaration
 public:
 	IDeclarationVisitor_ACCEPT;
 
-	List<Tuple<CppClassAccessor, Ptr<Type>>>		baseTypes;
-	List<Tuple<CppClassAccessor, Ptr<Declaration>>>	decls;
+	VariadicList<Tuple<CppClassAccessor, Ptr<Type>>>	baseTypes;
+	List<Tuple<CppClassAccessor, Ptr<Declaration>>>		decls;
 };
 
 /***********************************************************************

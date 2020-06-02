@@ -121,7 +121,12 @@ namespace symbol_type_resolving
 			{
 				auto tsysList = MakePtr<TypeTsysList>();
 				baseTsys[i] = tsysList;
-				TypeToTsysNoVta(eval.declPa, classDecl->baseTypes[i].f1, *tsysList.Obj());
+				bool isVta = false;
+				TypeToTsysInternal(eval.declPa, classDecl->baseTypes[i].item.f1, *tsysList.Obj(), isVta);
+				if (isVta != classDecl->baseTypes[i].isVariadic)
+				{
+					throw TypeCheckerException();
+				}
 			}
 
 			eval.ev.progress = symbol_component::EvaluationProgress::Evaluating;
