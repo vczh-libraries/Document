@@ -62,7 +62,7 @@
 ### Making Demos
 
 - [x] New Demo! (VlppOS)
-  - [ ] Why `Import/Vlpp.h` is indexed?
+  - [ ] `Vlpp/Source/String.h` has a wrong content
 - [ ] New Demo! (VlppRegex)
 - [ ] New Demo! (VlppReflection)
 - [ ] New Demo! (VlppParsing)
