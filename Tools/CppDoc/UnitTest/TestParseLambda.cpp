@@ -497,11 +497,11 @@ struct S
 
 void F()
 {
-	auto l1 = [s = S(), t = s.t]
+	auto l1 = [s = S(), t = s.t]()
 	{
 	};
 
-	auto l1 = [s = S(), t = s.t]mutable
+	auto l2 = [s = S(), t = s.t]()mutable
 	{
 	};
 }
@@ -513,14 +513,14 @@ void F()
 			->TryGetChildren_NFb(L"$")->Get(0).childSymbol
 			->GetStat_N().Cast<BlockStat>();
 		{
-			auto lambdaSymbol = getInsideLambda(statF, L"l")->symbol;
+			auto lambdaSymbol = getInsideLambda(statF, L"l1")->symbol;
 			auto pa = ppa.AdjustForDecl(lambdaSymbol);
 
 			AssertExpr(pa,	L"s",		L"s",		L"::S const $L"		);
 			AssertExpr(pa,	L"t",		L"t",		L"::S * const $L"	);
 		}
 		{
-			auto lambdaSymbol = getInsideLambda(statF, L"l")->symbol;
+			auto lambdaSymbol = getInsideLambda(statF, L"l2")->symbol;
 			auto pa = ppa.AdjustForDecl(lambdaSymbol);
 
 			AssertExpr(pa,	L"s",		L"s",		L"::S $L"			);

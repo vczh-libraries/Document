@@ -536,6 +536,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 						{
 							if (TestToken(cursor, CppTokens::EQ))
 							{
+								// [=]
 								if (expr->captures.Count() > 0) throw StopParsingException(cursor);
 								if (expr->captureDefault != LambdaExpr::CaptureDefaultKind::None) throw StopParsingException(cursor);
 								expr->captureDefault = LambdaExpr::CaptureDefaultKind::Copy;
@@ -552,6 +553,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 								}
 								else
 								{
+									// [&]
 									if (expr->captures.Count() > 0) throw StopParsingException(cursor);
 									if (expr->captureDefault != LambdaExpr::CaptureDefaultKind::None) throw StopParsingException(cursor);
 									expr->captureDefault = LambdaExpr::CaptureDefaultKind::Ref;
@@ -562,6 +564,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 						{
 							if (TestToken(cursor, CppTokens::EXPR_THIS))
 							{
+								// [this]
 								expr->captures.Add({ LambdaExpr::CaptureKind::RefThis });
 								goto FINISH_CAPTURE_ITEM;
 							}
@@ -569,6 +572,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 						{
 							if (TestToken(cursor, CppTokens::MUL))
 							{
+								// [*this]
 								RequireToken(cursor, CppTokens::EXPR_THIS);
 								expr->captures.Add({ LambdaExpr::CaptureKind::CopyThis });
 								goto FINISH_CAPTURE_ITEM;
@@ -581,10 +585,12 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 							{
 								if (TestToken(cursor, CppTokens::EQ))
 								{
+									// [name = expr]
 									auto varExpr = ParseExpr(newPa, pea_Argument(), cursor);
 									auto varDecl = MakePtr<VariableDeclaration>();
 									varDecl->name = cppName;
 									varDecl->type = MakePtr<PrimitiveType>();
+									varDecl->needResolveTypeFromInitializer = true;
 									varDecl->initializer = MakePtr<Initializer>();
 									varDecl->initializer->initializerType = CppInitializerType::Equal;
 									varDecl->initializer->arguments.Add({ varExpr,false });
@@ -596,6 +602,8 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 							cursor = oldCursor;
 						}
 						{
+							// [name]
+							// [&name]
 							LambdaExpr::Capture capture;
 							capture.kind = TestToken(cursor, CppTokens::AND) ? LambdaExpr::CaptureKind::Ref : LambdaExpr::CaptureKind::Copy;
 							if (!ParseCppName(capture.name, cursor)) throw StopParsingException(cursor);
