@@ -61,8 +61,6 @@
 
 ### Making Demos
 
-- [x] New Demo! (VlppOS)
-  - [ ] `Vlpp/Source/String.h` has a wrong content
 - [ ] New Demo! (VlppRegex)
 - [ ] New Demo! (VlppReflection)
 - [ ] New Demo! (VlppParsing)
