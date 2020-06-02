@@ -128,18 +128,20 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 		{
 			// for (VARIABLE-DECLARATION : EXPRESSION) STATEMENT
-			auto oldCursor = cursor;
 			Ptr<Declarator> declarator;
-			try
 			{
-				declarator = ParseNonMemberDeclarator(pa, pda_VarNoInit(), cursor);
-				RequireToken(cursor, CppTokens::COLON);
-			}
-			catch (const StopParsingException&)
-			{
-				declarator = nullptr;
-				cursor = oldCursor;
-				goto FOR_EACH_FAILED;
+				auto oldCursor = cursor;
+				try
+				{
+					declarator = ParseNonMemberDeclarator(pa, pda_VarNoInit(), cursor);
+					RequireToken(cursor, CppTokens::COLON);
+				}
+				catch (const StopParsingException&)
+				{
+					declarator = nullptr;
+					cursor = oldCursor;
+					goto FOR_EACH_FAILED;
+				}
 			}
 
 			auto stat = MakePtr<ForEachStat>();
@@ -166,16 +168,18 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
-				auto oldCursor = cursor;
 				List<Ptr<Declarator>> declarators;
-				try
 				{
-					ParseNonMemberDeclarator(newPa, pda_Decls(false, false), cursor, declarators);
-				}
-				catch (const StopParsingException&)
-				{
-					declarators.Clear();
-					cursor = oldCursor;
+					auto oldCursor = cursor;
+					try
+					{
+						ParseNonMemberDeclarator(newPa, pda_Decls(false, false), cursor, declarators);
+					}
+					catch (const StopParsingException&)
+					{
+						declarators.Clear();
+						cursor = oldCursor;
+					}
 				}
 
 				if (declarators.Count() > 0)
@@ -340,9 +344,13 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		{
 			// IDENTIFIER: STATEMENT
-			auto oldCursor = cursor;
-			bool isLabel = TestToken(cursor, CppTokens::ID) && !TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false) && TestToken(cursor, CppTokens::COLON);
-			cursor = oldCursor;
+			bool isLabel = false;
+			{
+				auto oldCursor = cursor;
+				isLabel = TestToken(cursor, CppTokens::ID) && !TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false) && TestToken(cursor, CppTokens::COLON);
+				cursor = oldCursor;
+			}
+
 			if (isLabel)
 			{
 				auto stat = MakePtr<LabelStat>();
@@ -364,6 +372,12 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				RequireToken(cursor, CppTokens::SEMICOLON);
 				auto stat = MakePtr<ExprStat>();
 				stat->expr = expr;
+
+				// the expression could be too long and make the destructor stackoverflow
+				while (oldCursor != cursor)
+				{
+					oldCursor = oldCursor->Next();
+				}
 				return stat;
 			}
 			catch (const StopParsingException&)
