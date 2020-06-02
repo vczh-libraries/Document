@@ -57,9 +57,12 @@ namespace symbol_type_resolving
 		}
 	}
 
-	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss)
+	void SearchAdlClassesAndNamespacesInternal(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss, SortedList<Symbol*>& visitedDecls, SortedList<ITsys*>& visitedTypes)
 	{
 		if (!type) return;
+		if (visitedTypes.Contains(type)) return;
+		visitedTypes.Add(type);
+
 		switch (type->GetType())
 		{
 		case TsysType::LRef:
@@ -67,34 +70,42 @@ namespace symbol_type_resolving
 		case TsysType::Ptr:
 		case TsysType::Array:
 		case TsysType::CV:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss);
+			SearchAdlClassesAndNamespacesInternal(pa, type->GetElement(), nss, visitedDecls, visitedTypes);
 			break;
 		case TsysType::Function:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss);
+			SearchAdlClassesAndNamespacesInternal(pa, type->GetElement(), nss, visitedDecls, visitedTypes);
 			for (vint i = 0; i < type->GetParamCount(); i++)
 			{
-				SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss);
+				SearchAdlClassesAndNamespacesInternal(pa, type->GetParam(i), nss, visitedDecls, visitedTypes);
 			}
 			break;
 		case TsysType::Member:
-			SearchAdlClassesAndNamespaces(pa, type->GetElement(), nss);
-			SearchAdlClassesAndNamespaces(pa, type->GetClass(), nss);
+			SearchAdlClassesAndNamespacesInternal(pa, type->GetElement(), nss, visitedDecls, visitedTypes);
+			SearchAdlClassesAndNamespacesInternal(pa, type->GetClass(), nss, visitedDecls, visitedTypes);
 			break;
 		case TsysType::DeclInstant:
 			{
+				if (!visitedDecls.Contains(type->GetDecl()))
+				{
+					visitedDecls.Add(type->GetDecl());
+					AddAdlNamespace(pa, type->GetDecl(), nss);
+				}
+
 				for (vint i = 0; i < type->GetParamCount(); i++)
 				{
-					SearchAdlClassesAndNamespaces(pa, type->GetParam(i), nss);
+					SearchAdlClassesAndNamespacesInternal(pa, type->GetParam(i), nss, visitedDecls, visitedTypes);
 				}
 				const auto& di = type->GetDeclInstant();
 				if (di.parentDeclType)
 				{
-					SearchAdlClassesAndNamespaces(pa, di.parentDeclType, nss);
+					SearchAdlClassesAndNamespacesInternal(pa, di.parentDeclType, nss, visitedDecls, visitedTypes);
 				}
 			}
 			break;
 		case TsysType::Decl:
+			if (!visitedDecls.Contains(type->GetDecl()))
 			{
+				visitedDecls.Add(type->GetDecl());
 				AddAdlNamespace(pa, type->GetDecl(), nss);
 				if (type->GetDecl()->GetImplDecl_NFb<ClassDeclaration>())
 				{
@@ -104,13 +115,20 @@ namespace symbol_type_resolving
 					symbol_type_resolving::ExtractClassType(type, cd, pdt, ata);
 					symbol_type_resolving::EnumerateClassSymbolBaseTypes(pa, cd, pdt, ata, [&](ITsys* classType, ITsys* baseType)
 					{
-						SearchAdlClassesAndNamespaces(pa, baseType, nss);
+						SearchAdlClassesAndNamespacesInternal(pa, baseType, nss, visitedDecls, visitedTypes);
 						return false;
 					});
 				}
 			}
 			break;
 		}
+	}
+
+	void SearchAdlClassesAndNamespaces(const ParsingArguments& pa, ITsys* type, SortedList<Symbol*>& nss)
+	{
+		SortedList<Symbol*> visitedDecls;
+		SortedList<ITsys*> visitedTypes;
+		SearchAdlClassesAndNamespacesInternal(pa, type, nss, visitedDecls, visitedTypes);
 	}
 
 	/***********************************************************************

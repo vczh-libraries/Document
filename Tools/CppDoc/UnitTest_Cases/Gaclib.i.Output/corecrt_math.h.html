@@ -603,11 +603,11 @@
 <div class="expandable"><div class="disabled">    _Check_return_ _ACRTIMP double    __cdecl ceil(_In_ double _X);</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">double</div>    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$ceil@double(double)[decl0]"><div><div class="token cpp_function">ceil</div></div></div>(  <div class="token cpp_keyword ">double</div> <div class="def" id="NI$ceil@double(double)[decl0]::_X"><div>_X</div></div>);</div></div>
 <div class="expandable"><div class="disabled">    _Check_return_ _ACRTIMP double    __cdecl _chgsign(_In_ double _X);</div>
-<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">double</div>    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_chgsign@double(double)[decl0]"><div><div class="token cpp_function">_chgsign</div></div></div>(  <div class="token cpp_keyword ">double</div> <div class="def" id="NI$_chgsign@double(double)[decl0]::_X"><div>_X</div></div>);</div></div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">double</div>    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_chgsign@double(double)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_chgsign@double(double)'], [], [])"><div class="token cpp_function">_chgsign</div></div></div>(  <div class="token cpp_keyword ">double</div> <div class="def" id="NI$_chgsign@double(double)[decl0]::_X"><div>_X</div></div>);</div></div>
 <div class="expandable"><div class="disabled">    _Check_return_ _ACRTIMP double    __cdecl copysign(_In_ double _Number, _In_ double _Sign);</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">double</div>    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$copysign@double(double, double)[decl0]"><div><div class="token cpp_function">copysign</div></div></div>(  <div class="token cpp_keyword ">double</div> <div class="def" id="NI$copysign@double(double, double)[decl0]::_Number"><div>_Number</div></div>,   <div class="token cpp_keyword ">double</div> <div class="def" id="NI$copysign@double(double, double)[decl0]::_Sign"><div>_Sign</div></div>);</div></div>
 <div class="expandable"><div class="disabled">    _Check_return_ _ACRTIMP double    __cdecl _copysign(_In_ double _Number, _In_ double _Sign);</div>
-<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">double</div>    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_copysign@double(double, double)[decl0]"><div><div class="token cpp_function">_copysign</div></div></div>(  <div class="token cpp_keyword ">double</div> <div class="def" id="NI$_copysign@double(double, double)[decl0]::_Number"><div>_Number</div></div>,   <div class="token cpp_keyword ">double</div> <div class="def" id="NI$_copysign@double(double, double)[decl0]::_Sign"><div>_Sign</div></div>);</div></div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">double</div>    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_copysign@double(double, double)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_copysign@double(double, double)'], [], [])"><div class="token cpp_function">_copysign</div></div></div>(  <div class="token cpp_keyword ">double</div> <div class="def" id="NI$_copysign@double(double, double)[decl0]::_Number"><div>_Number</div></div>,   <div class="token cpp_keyword ">double</div> <div class="def" id="NI$_copysign@double(double, double)[decl0]::_Sign"><div>_Sign</div></div>);</div></div>
 <div class="expandable"><div class="disabled">    _Check_return_ _ACRTIMP double    __cdecl erf(_In_ double _X);</div>
 <div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">double</div>    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$erf@double(double)[decl0]"><div><div class="token cpp_function">erf</div></div></div>(  <div class="token cpp_keyword ">double</div> <div class="def" id="NI$erf@double(double)[decl0]::_X"><div>_X</div></div>);</div></div>
 <div class="expandable"><div class="disabled">    _Check_return_ _ACRTIMP double    __cdecl erfc(_In_ double _X);</div>
@@ -1437,7 +1437,8 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_function">_chgsign</span>(<span class="cpp_keyword">double</span>)',
         'impls': [],
         'decls': [
-            'FB$_chgsign@double(double)[decl0]'
+            'FB$_chgsign@double(double)[decl0]',
+            'FB$_chgsign@double(double)[decl1]'
         ]
     },
     '_chgsignl@long double(long double)[impl0]::_X': {
@@ -1458,7 +1459,8 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_function">_copysign</span>(<span class="cpp_keyword">double</span>, <span class="cpp_keyword">double</span>)',
         'impls': [],
         'decls': [
-            'FB$_copysign@double(double, double)[decl0]'
+            'FB$_copysign@double(double, double)[decl0]',
+            'FB$_copysign@double(double, double)[decl1]'
         ]
     },
     '_copysignl@long double(long double, long double)[impl0]::_Number': {
@@ -2618,7 +2620,9 @@ symbolToFiles = {
     'FB$_atof_l@double(char const *, ::_locale_t)[decl0]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$_atof_l@double(char const *, ::_locale_t)[decl1]': null,
     'FB$_chgsign@double(double)[decl0]': null,
+    'FB$_chgsign@double(double)[decl1]': { 'htmlFileName': 'float.h', 'displayName': 'float.h' },
     'FB$_copysign@double(double, double)[decl0]': null,
+    'FB$_copysign@double(double, double)[decl1]': { 'htmlFileName': 'float.h', 'displayName': 'float.h' },
     'FB$_dpcomp@int(double, double)[decl0]': null,
     'FB$_dsign@int(double)[decl0]': null,
     'FB$_dtest@short(double *)[decl0]': null,

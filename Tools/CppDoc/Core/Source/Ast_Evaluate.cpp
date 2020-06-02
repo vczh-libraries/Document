@@ -446,14 +446,11 @@ public:
 
 	void Visit(VariableDeclaration* self) override
 	{
-		if (self->symbol)
+		if (pa.recorder) pa.recorder->BeginEvaluate(self);
 		{
-			if (pa.recorder) pa.recorder->BeginEvaluate(self);
-			{
-				EvaluateVariableDeclaration(pa, self);
-			}
-			if (pa.recorder) pa.recorder->EndEvaluate(self);
+			EvaluateVariableDeclaration(pa, self);
 		}
+		if (pa.recorder) pa.recorder->EndEvaluate(self);
 	}
 
 	void Visit(FunctionDeclaration* self) override
@@ -628,6 +625,7 @@ void EvaluateStat(const ParsingArguments& pa, Ptr<Stat> s, bool resolvingFunctio
 
 void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration* decl)
 {
+	if (!decl->symbol) return;
 	bool isVariadic = false;
 	if (!decl->type.Cast<MemberType>())
 	{

@@ -36,7 +36,7 @@ ReferenceCounterOperator
 	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;The type of the object.&lt;/typeparam&gt;</div>
 	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Enabled&quot;&gt;[T:vl.Ptr`1] will always use [T:vl.YesType] as the second type parameter. This parameter is useful when you want to do partial specialization in the SFINAE way.&lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::ReferenceCounterOperator::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::ReferenceCounterOperator::Enabled"><div><div class="token cpp_type">Enabled</div></div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::YesType'], [], [])"><div class="token cpp_type">YesType</div></div>&gt;
-	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::ReferenceCounterOperator"><div><div class="token cpp_type">ReferenceCounterOperator</div></div></div>
+	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::ReferenceCounterOperator"><div class="ref" onclick="jumpToSymbol([], [], ['vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>'], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div></div>
 	{
 		<div class="token cpp_comment ">/// &lt;summary&gt;Create a pointer to the reference counter from an object.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;The pointer to the reference counter.&lt;/returns&gt;</div>
@@ -134,10 +134,10 @@ Ptr
 		{
 			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>)
 			{
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::counter'], [], [])"><div class="token cpp_field">counter</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator'], [], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)'], ['vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)'], [], [])"><div class="token cpp_function">CreateCounter</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::counter'], [], [])"><div class="token cpp_field">counter</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::ReferenceCounterOperator', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>'], ['vl::ReferenceCounterOperator'], [], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::CreateCounter@::vl::vint volatile *([T] *)'], ['vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::CreateCounter@::vl::vint volatile *([T] *)'], [], [])"><div class="token cpp_function">CreateCounter</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::originalReference'], [], [])"><div class="token cpp_field">originalReference</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>;
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::originalDestructor'], [], [])"><div class="token cpp_field">originalDestructor</div></div> = &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator'], [], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)'], [], [])"><div class="token cpp_function">DeleteReference</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::originalDestructor'], [], [])"><div class="token cpp_field">originalDestructor</div></div> = &amp;<div class="ref" onclick="jumpToSymbol(['vl::ReferenceCounterOperator', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>'], ['vl::ReferenceCounterOperator'], [], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::DeleteReference@void(::vl::vint volatile *, void *)'], [], [])"><div class="token cpp_function">DeleteReference</div></div>;
 				<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Inc@void()'], ['vl::Ptr::Inc@void()'], [], [])"><div class="token cpp_function">Inc</div></div>();
 			}
 		}
@@ -228,10 +228,10 @@ Ptr
 			<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Dec@void(bool)'], ['vl::Ptr::Dec@void(bool)'], [], [])"><div class="token cpp_function">Dec</div></div>();
 			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>)
 			{
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::counter'], [], [])"><div class="token cpp_field">counter</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator'], [], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)'], ['vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)'], [], [])"><div class="token cpp_function">CreateCounter</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::counter'], [], [])"><div class="token cpp_field">counter</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::ReferenceCounterOperator', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>'], ['vl::ReferenceCounterOperator'], [], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::CreateCounter@::vl::vint volatile *([T] *)'], ['vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::CreateCounter@::vl::vint volatile *([T] *)'], [], [])"><div class="token cpp_function">CreateCounter</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::originalReference'], [], [])"><div class="token cpp_field">originalReference</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>;
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::originalDestructor'], [], [])"><div class="token cpp_field">originalDestructor</div></div> = &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator'], [], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)'], [], [])"><div class="token cpp_function">DeleteReference</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::originalDestructor'], [], [])"><div class="token cpp_field">originalDestructor</div></div> = &amp;<div class="ref" onclick="jumpToSymbol(['vl::ReferenceCounterOperator', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>'], ['vl::ReferenceCounterOperator'], [], [])"><div class="token cpp_type">ReferenceCounterOperator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)', 'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::DeleteReference@void(::vl::vint volatile *, void *)'], [], [])"><div class="token cpp_function">DeleteReference</div></div>;
 				<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Inc@void()'], ['vl::Ptr::Inc@void()'], [], [])"><div class="token cpp_function">Inc</div></div>();
 			}
 			<div class="token cpp_keyword ">else</div>
@@ -763,7 +763,20 @@ referencedSymbols = {
             'NF[73]$vl',
             'NF[74]$vl',
             'NF[75]$vl',
-            'NF[76]$vl'
+            'NF[76]$vl',
+            'NF[77]$vl',
+            'NF[78]$vl',
+            'NF[79]$vl',
+            'NF[80]$vl',
+            'NF[81]$vl',
+            'NF[82]$vl',
+            'NF[83]$vl',
+            'NF[84]$vl',
+            'NF[85]$vl',
+            'NF[86]$vl',
+            'NF[87]$vl',
+            'NF[88]$vl',
+            'NF[89]$vl'
         ]
     },
     'vl::AcceptType': {
@@ -1417,6 +1430,27 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>': {
+        'displayNameInHtml': '<span class="cpp_type">ReferenceCounterOperator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">PointerConvertable</span>&lt;<span class="cpp_type">T</span>, reflection::<span class="cpp_type">DescriptableObject</span>&gt;::<span class="cpp_type">YesNoType</span>&gt;',
+        'impls': [
+            'NI$vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>'
+        ],
+        'decls': []
+    },
+    'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::CreateCounter@::vl::vint volatile *([T] *)': {
+        'displayNameInHtml': '<span class="cpp_type">ReferenceCounterOperator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">PointerConvertable</span>&lt;<span class="cpp_type">T</span>, reflection::<span class="cpp_type">DescriptableObject</span>&gt;::<span class="cpp_type">YesNoType</span>&gt;::<span class="cpp_function">CreateCounter</span>(<span class="cpp_type">T</span> *)',
+        'impls': [
+            'FB$vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::CreateCounter@::vl::vint volatile *([T] *)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::DeleteReference@void(::vl::vint volatile *, void *)': {
+        'displayNameInHtml': '<span class="cpp_type">ReferenceCounterOperator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">PointerConvertable</span>&lt;<span class="cpp_type">T</span>, reflection::<span class="cpp_type">DescriptableObject</span>&gt;::<span class="cpp_type">YesNoType</span>&gt;::<span class="cpp_function">DeleteReference</span>(<span class="cpp_type">vint</span><span class="cpp_keyword"> volatile</span> *, <span class="cpp_keyword">void</span> *)',
+        'impls': [
+            'FB$vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::DeleteReference@void(::vl::vint volatile *, void *)[impl0]'
+        ],
+        'decls': []
+    },
     'vl::YesType': {
         'displayNameInHtml': '<span class="cpp_type">YesType</span>',
         'impls': [
@@ -1453,6 +1487,8 @@ symbolToFiles = {
     'FB$vl::Ptr::SetEmptyNoIncDec@void()[impl0]': null,
     'FB$vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)[impl0]': null,
     'FB$vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)[impl0]': null,
+    'FB$vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::CreateCounter@::vl::vint volatile *([T] *)[impl0]': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'FB$vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>::DeleteReference@void(::vl::vint volatile *, void *)[impl0]': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
     'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
     'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
@@ -1527,7 +1563,20 @@ symbolToFiles = {
     'NF[74]$vl': { 'htmlFileName': 'RegexPure.cpp', 'displayName': 'RegexPure.cpp' },
     'NF[75]$vl': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
     'NF[76]$vl': { 'htmlFileName': 'RegexWriter.cpp', 'displayName': 'RegexWriter.cpp' },
+    'NF[77]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[78]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[79]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
     'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[80]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[81]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[82]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[83]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[84]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[85]$vl': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[86]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[87]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[88]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[89]$vl': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
     'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
     'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
     'NI$vl::AcceptType': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
@@ -1601,6 +1650,7 @@ symbolToFiles = {
     'NI$vl::ReferenceCounterOperator': null,
     'NI$vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)[impl0]::counter': null,
     'NI$vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)[impl0]::reference': null,
+    'NI$vl::ReferenceCounterOperator@<[T], ::vl::PointerConvertable::YesNoType>': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
     'NI$vl::YesType': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'TA$vl::ComPtr::T': null,

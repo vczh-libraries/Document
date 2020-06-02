@@ -498,9 +498,8 @@ RegexTokens
 						<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken'], [], [])"><div class="token cpp_type">RegexProcessingToken</div></div> <div class="def" id="NI$vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::token"><div>token</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::result'], [], [])">result</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::start'], [], [])"><div class="token cpp_field">start</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::result'], [], [])">result</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::length'], [], [])"><div class="token cpp_field">length</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::id'], [], [])">id</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::completeToken'], [], [])">completeToken</div>, <div class="token cpp_keyword ">nullptr</div>);
 						<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::extendProc'], [], [])"><div class="token cpp_field">extendProc</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::argument'], [], [])"><div class="token cpp_field">argument</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::reading'], [], [])"><div class="token cpp_field">reading</div></div>, -<div class="token cpp_number ">1</div>, <div class="token cpp_keyword ">true</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::token'], [], [])">token</div>);
 <div class="disabled">#if _DEBUG</div>
-<div class="expandable"><div class="disabled">						CHECK_ERROR(token.interTokenState == nullptr, L&quot;RegexTokenEnumerator::Next()#The extendProc is only allowed to create interTokenState in RegexLexerColorizer.&quot;);
+<div class="disabled">						CHECK_ERROR(token.interTokenState == nullptr, L&quot;RegexTokenEnumerator::Next()#The extendProc is only allowed to create interTokenState in RegexLexerColorizer.&quot;);
 #endif</div>
-<div class="expanded">						<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::interTokenState'], [], [])"><div class="token cpp_field">interTokenState</div></div> == <div class="token cpp_keyword ">nullptr</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexTokenEnumerator::Next()#The extendProc is only allowed to create interTokenState in RegexLexerColorizer.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
 						<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::result'], [], [])">result</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::length'], [], [])"><div class="token cpp_field">length</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::length'], [], [])"><div class="token cpp_field">length</div></div>;
 						<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::id'], [], [])">id</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::token'], [], [])"><div class="token cpp_field">token</div></div>;
 						<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::completeToken'], [], [])">completeToken</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenEnumerator::Next@bool()[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::completeToken'], [], [])"><div class="token cpp_field">completeToken</div></div>;
@@ -756,30 +755,26 @@ RegexLexerColorizer
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::oldTokenLength"><div>oldTokenLength</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::length'], [], [])"><div class="token cpp_field">length</div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::extendProc'], [], [])"><div class="token cpp_field">extendProc</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::argument'], [], [])"><div class="token cpp_field">argument</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::input'], [], [])"><div class="token cpp_argument">input</div></div> + <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::start'], [], [])"><div class="token cpp_field">start</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div> - <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::start'], [], [])"><div class="token cpp_field">start</div></div>, <div class="token cpp_keyword ">false</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>);
 <div class="disabled">#if _DEBUG</div>
-			{
-				<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::pausedAtTheEnd"><div>pausedAtTheEnd</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::start'], [], [])"><div class="token cpp_field">start</div></div> + <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::length'], [], [])"><div class="token cpp_field">length</div></div> == <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div> &amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::completeToken'], [], [])"><div class="token cpp_field">completeToken</div></div>;
-<div class="expandable"><div class="disabled">				CHECK_ERROR(
-					token.completeToken || pausedAtTheEnd,
-					L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed pause before the end of the input.&quot;
-				);</div>
-<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::completeToken'], [], [])"><div class="token cpp_field">completeToken</div></div> || <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::pausedAtTheEnd'], [], [])">pausedAtTheEnd</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed pause before the end of the input.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
-<div class="expandable"><div class="disabled">				CHECK_ERROR(
-					token.completeToken || token.token != -1,
-					L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to pause without a valid token id.&quot;
-				);</div>
-<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::completeToken'], [], [])"><div class="token cpp_field">completeToken</div></div> || <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::token'], [], [])"><div class="token cpp_field">token</div></div> != -<div class="token cpp_number ">1</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to pause without a valid token id.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
-<div class="expandable"><div class="disabled">				CHECK_ERROR(
-					oldTokenLength &lt;= token.length,
-					L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to decrease the token length.&quot;
-				);</div>
-<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::oldTokenLength'], [], [])">oldTokenLength</div> &lt;= <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::length'], [], [])"><div class="token cpp_field">length</div></div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to decrease the token length.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
-<div class="expandable"><div class="disabled">				CHECK_ERROR(
-					(token.interTokenState == nullptr) == !pausedAtTheEnd,
-					L&quot;RegexLexerColorizer::Colorize(const wchar_t*, vint, void*)#The extendProc should return an inter token state object if and only if a valid token does not end at the end of the input.&quot;
-				);</div>
-<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!((<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::interTokenState'], [], [])"><div class="token cpp_field">interTokenState</div></div> == <div class="token cpp_keyword ">nullptr</div>) == !<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::pausedAtTheEnd'], [], [])">pausedAtTheEnd</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexLexerColorizer::Colorize(const wchar_t*, vint, void*)#The extendProc should return an inter token state object if and only if a valid token does not end at the end of the input.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
-			}
-<div class="disabled">#endif</div>
+<div class="disabled">			{</div>
+<div class="disabled">				bool pausedAtTheEnd = token.start + token.length == length &amp;&amp; !token.completeToken;</div>
+<div class="disabled">				CHECK_ERROR(</div>
+<div class="disabled">					token.completeToken || pausedAtTheEnd,</div>
+<div class="disabled">					L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed pause before the end of the input.&quot;</div>
+<div class="disabled">				);</div>
+<div class="disabled">				CHECK_ERROR(</div>
+<div class="disabled">					token.completeToken || token.token != -1,</div>
+<div class="disabled">					L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to pause without a valid token id.&quot;</div>
+<div class="disabled">				);</div>
+<div class="disabled">				CHECK_ERROR(</div>
+<div class="disabled">					oldTokenLength &lt;= token.length,</div>
+<div class="disabled">					L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to decrease the token length.&quot;</div>
+<div class="disabled">				);</div>
+<div class="disabled">				CHECK_ERROR(</div>
+<div class="disabled">					(token.interTokenState == nullptr) == !pausedAtTheEnd,</div>
+<div class="disabled">					L&quot;RegexLexerColorizer::Colorize(const wchar_t*, vint, void*)#The extendProc should return an inter token state object if and only if a valid token does not end at the end of the input.&quot;</div>
+<div class="disabled">				);</div>
+<div class="disabled">			}
+#endif</div>
 			<div class="token cpp_keyword ">if</div> ((<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::internalState'], [], [])"><div class="token cpp_field">internalState</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::InternalState::interTokenState'], [], [])"><div class="token cpp_field">interTokenState</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::interTokenState'], [], [])"><div class="token cpp_field">interTokenState</div></div>))
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::internalState'], [], [])"><div class="token cpp_field">internalState</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::InternalState::interTokenId'], [], [])"><div class="token cpp_field">interTokenId</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token'], [], [])"><div class="token cpp_argument">token</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::token'], [], [])"><div class="token cpp_field">token</div></div>;
@@ -798,25 +793,22 @@ RegexLexerColorizer
 				<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken'], [], [])"><div class="token cpp_type">RegexProcessingToken</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token"><div>token</div></div>(-<div class="token cpp_number ">1</div>, -<div class="token cpp_number ">1</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::internalState'], [], [])"><div class="token cpp_field">internalState</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::InternalState::interTokenId'], [], [])"><div class="token cpp_field">interTokenId</div></div>, <div class="token cpp_keyword ">false</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::internalState'], [], [])"><div class="token cpp_field">internalState</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::InternalState::interTokenState'], [], [])"><div class="token cpp_field">interTokenState</div></div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::extendProc'], [], [])"><div class="token cpp_field">extendProc</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::argument'], [], [])"><div class="token cpp_field">argument</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::input'], [], [])"><div class="token cpp_argument">input</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div>, <div class="token cpp_keyword ">false</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>);
 <div class="disabled">#if _DEBUG</div>
-				{
-					<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::pausedAtTheEnd"><div>pausedAtTheEnd</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::length'], [], [])"><div class="token cpp_field">length</div></div> == <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div> &amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::completeToken'], [], [])"><div class="token cpp_field">completeToken</div></div>;
-<div class="expandable"><div class="disabled">					CHECK_ERROR(
-						token.completeToken || pausedAtTheEnd,
-						L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to pause before the end of the input.&quot;
-					);</div>
-<div class="expanded">					<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::completeToken'], [], [])"><div class="token cpp_field">completeToken</div></div> || <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::pausedAtTheEnd'], [], [])">pausedAtTheEnd</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to pause before the end of the input.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
-<div class="expandable"><div class="disabled">					CHECK_ERROR(
-						token.completeToken || token.token == internalState.interTokenId,
-						L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to continue pausing with a different token id.&quot;
-					);</div>
-<div class="expanded">					<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::completeToken'], [], [])"><div class="token cpp_field">completeToken</div></div> || <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::token'], [], [])"><div class="token cpp_field">token</div></div> == <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::internalState'], [], [])"><div class="token cpp_field">internalState</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::InternalState::interTokenId'], [], [])"><div class="token cpp_field">interTokenId</div></div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to continue pausing with a different token id.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
-<div class="expandable"><div class="disabled">					CHECK_ERROR(
-						(token.interTokenState == nullptr) == !pausedAtTheEnd,
-						L&quot;RegexLexerColorizer::Colorize(const wchar_t*, vint, void*)#The extendProc should return an inter token state object if and only if a valid token does not end at the end of the input.&quot;
-					);</div>
-<div class="expanded">					<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!((<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::interTokenState'], [], [])"><div class="token cpp_field">interTokenState</div></div> == <div class="token cpp_keyword ">nullptr</div>) == !<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::pausedAtTheEnd'], [], [])">pausedAtTheEnd</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexLexerColorizer::Colorize(const wchar_t*, vint, void*)#The extendProc should return an inter token state object if and only if a valid token does not end at the end of the input.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
-				}
-<div class="disabled">#endif</div>
+<div class="disabled">				{</div>
+<div class="disabled">					bool pausedAtTheEnd = token.length == length &amp;&amp; !token.completeToken;</div>
+<div class="disabled">					CHECK_ERROR(</div>
+<div class="disabled">						token.completeToken || pausedAtTheEnd,</div>
+<div class="disabled">						L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to pause before the end of the input.&quot;</div>
+<div class="disabled">					);</div>
+<div class="disabled">					CHECK_ERROR(</div>
+<div class="disabled">						token.completeToken || token.token == internalState.interTokenId,</div>
+<div class="disabled">						L&quot;RegexLexerColorizer::WalkOneToken(const wchar_t*, vint, vint, bool)#The extendProc is not allowed to continue pausing with a different token id.&quot;</div>
+<div class="disabled">					);</div>
+<div class="disabled">					CHECK_ERROR(</div>
+<div class="disabled">						(token.interTokenState == nullptr) == !pausedAtTheEnd,</div>
+<div class="disabled">						L&quot;RegexLexerColorizer::Colorize(const wchar_t*, vint, void*)#The extendProc should return an inter token state object if and only if a valid token does not end at the end of the input.&quot;</div>
+<div class="disabled">					);</div>
+<div class="disabled">				}
+#endif</div>
 				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::colorize'], [], [])"><div class="token cpp_argument">colorize</div></div>)
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::colorizeProc'], [], [])"><div class="token cpp_field">colorizeProc</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::argument'], [], [])"><div class="token cpp_field">argument</div></div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::length'], [], [])"><div class="token cpp_field">length</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token'], [], [])">token</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProcessingToken::token'], [], [])"><div class="token cpp_field">token</div></div>);
@@ -1104,15 +1096,21 @@ referencedSymbols = {
             'NF[73]$vl',
             'NF[74]$vl',
             'NF[75]$vl',
-            'NF[76]$vl'
+            'NF[76]$vl',
+            'NF[77]$vl',
+            'NF[78]$vl',
+            'NF[79]$vl',
+            'NF[80]$vl',
+            'NF[81]$vl',
+            'NF[82]$vl',
+            'NF[83]$vl',
+            'NF[84]$vl',
+            'NF[85]$vl',
+            'NF[86]$vl',
+            'NF[87]$vl',
+            'NF[88]$vl',
+            'NF[89]$vl'
         ]
-    },
-    'vl::Error': {
-        'displayNameInHtml': '<span class="cpp_type">Error</span>',
-        'impls': [
-            'NI$vl::Error'
-        ],
-        'decls': []
     },
     'vl::Object': {
         'displayNameInHtml': '<span class="cpp_type">Object</span>',
@@ -1184,7 +1182,9 @@ referencedSymbols = {
             'NF[14]$vl::collections',
             'NF[15]$vl::collections',
             'NF[16]$vl::collections',
-            'NF[17]$vl::collections'
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections',
+            'NF[19]$vl::collections'
         ]
     },
     'vl::collections::Array': {
@@ -2301,20 +2301,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::oldTokenLength': {
-        'displayNameInHtml': 'oldTokenLength',
-        'impls': [
-            'NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::oldTokenLength'
-        ],
-        'decls': []
-    },
-    'vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::pausedAtTheEnd': {
-        'displayNameInHtml': 'pausedAtTheEnd',
-        'impls': [
-            'NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::pausedAtTheEnd'
-        ],
-        'decls': []
-    },
     'vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token': {
         'displayNameInHtml': 'token',
         'impls': [
@@ -2499,13 +2485,6 @@ referencedSymbols = {
         'displayNameInHtml': 'length',
         'impls': [
             'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::length'
-        ],
-        'decls': []
-    },
-    'vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::pausedAtTheEnd': {
-        'displayNameInHtml': 'pausedAtTheEnd',
-        'impls': [
-            'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::pausedAtTheEnd'
         ],
         'decls': []
     },
@@ -4359,7 +4338,9 @@ symbolToFiles = {
     'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
     'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
     'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
     'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[19]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
     'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
     'NF[1]$vl::regex': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
@@ -4438,16 +4419,28 @@ symbolToFiles = {
     'NF[74]$vl': { 'htmlFileName': 'RegexPure.cpp', 'displayName': 'RegexPure.cpp' },
     'NF[75]$vl': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
     'NF[76]$vl': { 'htmlFileName': 'RegexWriter.cpp', 'displayName': 'RegexWriter.cpp' },
+    'NF[77]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[78]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[79]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
     'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
     'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
     'NF[7]$vl::regex_internal': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[80]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[81]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[82]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[83]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[84]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[85]$vl': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[86]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[87]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[88]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[89]$vl': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
     'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
     'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
     'NF[8]$vl::regex_internal': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
     'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
     'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
     'NF[9]$vl::regex_internal': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
-    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
@@ -4561,8 +4554,6 @@ symbolToFiles = {
     'NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::colorize': null,
     'NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::input': null,
     'NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::length': null,
-    'NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::oldTokenLength': null,
-    'NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::pausedAtTheEnd': null,
     'NI$vl::regex::RegexLexerColorizer::CallExtendProcAndColorizeProc@void(wchar_t const *, ::vl::vint, ::vl::regex::RegexProcessingToken &, bool)[impl0]::token': null,
     'NI$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[impl0]::index': null,
     'NI$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[impl0]::input': null,
@@ -4581,7 +4572,6 @@ symbolToFiles = {
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::lastFinalStateLength': null,
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::lastFinalStateToken': null,
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::length': null,
-    'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::pausedAtTheEnd': null,
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::previousTokenStop': null,
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::start': null,
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token': null,

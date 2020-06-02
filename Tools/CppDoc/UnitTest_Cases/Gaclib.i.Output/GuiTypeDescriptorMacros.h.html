@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GuiTypeDescriptorMacros.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Framework::Reflection
+
+Interfaces:
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_REFLECTION_GUITYPEDESCRIPTORMACROS</div>
+<div class="disabled">#define VCZH_REFLECTION_GUITYPEDESCRIPTORMACROS</div>
+
+<div class="disabled">#include &quot;GuiTypeDescriptorBuilder.h&quot;</div>
+<div class="disabled">#include &quot;GuiTypeDescriptorBuilder_Container.h&quot;</div>
+<div class="disabled">#include &quot;GuiTypeDescriptorBuilder_Function.h&quot;</div>
+<div class="disabled">#include &quot;GuiTypeDescriptorBuilder_Struct.h&quot;</div>
+
+<div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Macros
+***********************************************************************/</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[83]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[7]$vl::reflection"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[7]$vl::reflection::description"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div></div>
+		{
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::CustomTypeDescriptorSelector::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::CustomTypeDescriptorSelector"><div class="ref" onclick="jumpToSymbol([], [], ['vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::DescriptableObject>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::VoidValue>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::IDescriptable>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::DateTime>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueEnumerator>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueEnumerable>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueReadonlyList>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueList>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueObservableList>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueReadonlyDictionary>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueDictionary>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueInterfaceProxy>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueFunctionProxy>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueSubscription>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueCallStack>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueException>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IBoxedValue>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IBoxedValue::CompareResult>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueType>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEnumType>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ISerializableType>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeInfo>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeInfo::Decorator>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMemberInfo>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEventHandler>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEventInfo>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IPropertyInfo>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IParameterInfo>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMethodInfo>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMethodGroupInfo>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::TypeDescriptorFlags>', 'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeDescriptor>'], [])"><div class="token cpp_type">CustomTypeDescriptorSelector</div></div></div>{};
+
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData"><div><div class="token cpp_type">MethodPointerBinaryData</div></div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IMethodInfo'], [], [])"><div class="token cpp_type">IMethodInfo</div></div>*&gt;		<div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::MethodMap"><div><div class="token cpp_type">MethodMap</div></div></div>;
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::IIndexer"><div><div class="token cpp_type">IIndexer</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::IIndexer::IndexMethodInfo@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::IMethodInfo *)[decl0]"><div><div class="token cpp_function">IndexMethodInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::IIndexer::IndexMethodInfo@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::IMethodInfo *)[decl0]::data"><div>data</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IMethodInfo'], [], [])"><div class="token cpp_type">IMethodInfo</div></div>* <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::IIndexer::IndexMethodInfo@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::IMethodInfo *)[decl0]::methodInfo"><div>methodInfo</div></div>) = <div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IMethodInfo'], [], [])"><div class="token cpp_type">IMethodInfo</div></div>* <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::IIndexer::GetIndexedMethodInfo@::vl::reflection::description::IMethodInfo *(::vl::reflection::description::MethodPointerBinaryData const &)[decl0]"><div><div class="token cpp_function">GetIndexedMethodInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::IIndexer::GetIndexedMethodInfo@::vl::reflection::description::IMethodInfo *(::vl::reflection::description::MethodPointerBinaryData const &)[decl0]::data"><div>data</div></div>) = <div class="token cpp_number ">0</div>;
+				};
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::data"><div><div class="token cpp_field">data</div></div></div>[<div class="token cpp_number ">4</div>];
+
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]"><div><div class="token cpp_function">Compare</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>)
+				{
+					{
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result"><div>result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::data'], [], [])"><div class="token cpp_field">data</div></div>[<div class="token cpp_number ">0</div>] - <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::data'], [], [])"><div class="token cpp_field">data</div></div>[<div class="token cpp_number ">0</div>];
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result'], [], [])">result</div> != <div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result'], [], [])">result</div>;
+					}
+					{
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result2"><div>result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::data'], [], [])"><div class="token cpp_field">data</div></div>[<div class="token cpp_number ">1</div>] - <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::data'], [], [])"><div class="token cpp_field">data</div></div>[<div class="token cpp_number ">1</div>];
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result2'], [], [])">result</div> != <div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result2'], [], [])">result</div>;
+					}
+					{
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result3"><div>result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::data'], [], [])"><div class="token cpp_field">data</div></div>[<div class="token cpp_number ">2</div>] - <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::data'], [], [])"><div class="token cpp_field">data</div></div>[<div class="token cpp_number ">2</div>];
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result3'], [], [])">result</div> != <div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result3'], [], [])">result</div>;
+					}
+					{
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result4"><div>result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::data'], [], [])"><div class="token cpp_field">data</div></div>[<div class="token cpp_number ">3</div>] - <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::data'], [], [])"><div class="token cpp_field">data</div></div>[<div class="token cpp_number ">3</div>];
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result4'], [], [])">result</div> != <div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result4'], [], [])">result</div>;
+					}
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
+				}
+
+<div class="disabled">#define COMPARE(OPERATOR)\</div>
+<div class="disabled">				inline bool operator OPERATOR(const MethodPointerBinaryData&amp; d)const\</div>
+<div class="disabled">				{\</div>
+<div class="disabled">					return Compare(*this, d) OPERATOR 0;\</div>
+<div class="disabled">				}</div>
+
+<div class="expandable"><div class="disabled">				COMPARE(&lt;)</div>
+<div class="expanded">				<div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::operator <@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">&lt;</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::operator <@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d"><div><div class="token cpp_argument">d</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::operator <@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'], [], [])"><div class="token cpp_argument">d</div></div>) &lt; <div class="token cpp_number ">0</div>; }</div></div>
+<div class="expandable"><div class="disabled">				COMPARE(&lt;=)</div>
+<div class="expanded">				<div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::operator <=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">&lt;</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::operator <=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d"><div><div class="token cpp_argument">d</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::operator <=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'], [], [])"><div class="token cpp_argument">d</div></div>) &lt;= <div class="token cpp_number ">0</div>; }</div></div>
+<div class="expandable"><div class="disabled">				COMPARE(&gt;)</div>
+<div class="expanded">				<div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::operator >@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">&gt;</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::operator >@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d"><div><div class="token cpp_argument">d</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::operator >@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'], [], [])"><div class="token cpp_argument">d</div></div>) &gt; <div class="token cpp_number ">0</div>; }</div></div>
+<div class="expandable"><div class="disabled">				COMPARE(&gt;=)</div>
+<div class="expanded">				<div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::operator >=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">&gt;</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::operator >=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d"><div><div class="token cpp_argument">d</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::operator >=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'], [], [])"><div class="token cpp_argument">d</div></div>) &gt;= <div class="token cpp_number ">0</div>; }</div></div>
+<div class="expandable"><div class="disabled">				COMPARE(==)</div>
+<div class="expanded">				<div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::operator ==@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::operator ==@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d"><div><div class="token cpp_argument">d</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::operator ==@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'], [], [])"><div class="token cpp_argument">d</div></div>) == <div class="token cpp_number ">0</div>; }</div></div>
+<div class="expandable"><div class="disabled">				COMPARE(!=)</div>
+<div class="expanded">				<div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryData::operator !=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryData::operator !=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d"><div><div class="token cpp_argument">d</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], ['vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::operator !=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'], [], [])"><div class="token cpp_argument">d</div></div>) != <div class="token cpp_number ">0</div>; }</div></div>
+<div class="disabled">#undef COMPARE</div>
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::MethodPointerBinaryDataRetriver::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+			<div class="token cpp_keyword ">union</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRetriver"><div><div class="token cpp_type">MethodPointerBinaryDataRetriver</div></div></div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRetriver::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRetriver::methodPointer"><div><div class="token cpp_field">methodPointer</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRetriver::binaryData"><div><div class="token cpp_field">binaryData</div></div></div>;
+
+				<div class="def" id="FB$vl::reflection::description::MethodPointerBinaryDataRetriver::$__ctor@([T])[impl0]"><div><div class="token cpp_function">MethodPointerBinaryDataRetriver</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRetriver::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRetriver::$__ctor@([T])[impl0]::_methodPointer"><div><div class="token cpp_argument">_methodPointer</div></div></div>)
+				{
+					<div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRetriver::binaryData'], [], [])"><div class="token cpp_field">binaryData</div></div>, <div class="token cpp_number ">0</div>, <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRetriver::binaryData'], [], [])"><div class="token cpp_field">binaryData</div></div>));
+					<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRetriver::methodPointer'], [], [])"><div class="token cpp_field">methodPointer</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRetriver::$__ctor@([T])[impl0]::_methodPointer'], [], [])"><div class="token cpp_argument">_methodPointer</div></div>;
+				}
+
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryDataRetriver::GetBinaryData@::vl::reflection::description::MethodPointerBinaryData const &()[impl0]"><div><div class="token cpp_function">GetBinaryData</div></div></div>()
+				{
+					<div class="token cpp_keyword ">static_assert</div>(<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRetriver::T'], [], [])"><div class="token cpp_type">T</div></div>) &lt;= <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>), <div class="token cpp_string ">&quot;Your C++ compiler is bad!&quot;</div>);
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRetriver::binaryData'], [], [])"><div class="token cpp_field">binaryData</div></div>;
+				}
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::MethodPointerBinaryDataRecorder::T"><div><div class="token cpp_type">T</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeDescriptorFlags'], [], [])"><div class="token cpp_type">TypeDescriptorFlags</div></div> <div class="def" id="TA$vl::reflection::description::MethodPointerBinaryDataRecorder::TDFlags"><div><div class="token cpp_enum">TDFlags</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder"><div class="ref" onclick="jumpToSymbol([], [], ['vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>'], [])"><div class="token cpp_type">MethodPointerBinaryDataRecorder</div></div></div>
+			{
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryDataRecorder::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]"><div><div class="token cpp_function">RecordMethod</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::data"><div><div class="token cpp_argument">data</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>* <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::td"><div><div class="token cpp_argument">td</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IMethodInfo'], [], [])"><div class="token cpp_type">IMethodInfo</div></div>* <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::methodInfo"><div><div class="token cpp_argument">methodInfo</div></div></div>)
+				{
+				}
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::reflection::description::MethodPointerBinaryDataRecorder'])"><div class="token cpp_type">MethodPointerBinaryDataRecorder</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeDescriptorFlags'], [], [])"><div class="token cpp_type">TypeDescriptorFlags</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeDescriptorFlags::Interface'], [], [])"><div class="token cpp_enum">Interface</div></div>&gt;
+			{
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]"><div><div class="token cpp_function">RecordMethod</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>&amp; <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::data"><div><div class="token cpp_argument">data</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>* <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::td"><div><div class="token cpp_argument">td</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IMethodInfo'], [], [])"><div class="token cpp_type">IMethodInfo</div></div>* <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::methodInfo"><div><div class="token cpp_argument">methodInfo</div></div></div>)
+				{
+					<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::impl"><div>impl</div></div> = <div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData'], [], [])"><div class="token cpp_type">MethodPointerBinaryData</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryData::IIndexer'], [], [])"><div class="token cpp_type">IIndexer</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::td'], [], [])"><div class="token cpp_argument">td</div></div>);
+<div class="expandable"><div class="disabled">					CHECK_ERROR(impl != nullptr, L&quot;Internal error: RecordMethod can only be called when registering methods.&quot;);</div>
+<div class="expanded">					<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::impl'], [], [])">impl</div> != <div class="token cpp_keyword ">nullptr</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;Internal error: RecordMethod can only be called when registering methods.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+					<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::impl'], [], [])">impl</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::reflection::description::MethodPointerBinaryData::IIndexer::IndexMethodInfo@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::IMethodInfo *)'], ['vl::reflection::description::MethodPointerBinaryData::IIndexer::IndexMethodInfo@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::IMethodInfo *)'], [], [])"><div class="token cpp_function">IndexMethodInfo</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::data'], [], [])"><div class="token cpp_argument">data</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::methodInfo'], [], [])"><div class="token cpp_argument">methodInfo</div></div>);
+				}
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::FUNCTIONNAME_AddPointer::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+			<div class="token cpp_keyword ">using</div> <div class="def" id="NI$vl::reflection::description::FUNCTIONNAME_AddPointer"><div><div class="token cpp_type">FUNCTIONNAME_AddPointer</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::FUNCTIONNAME_AddPointer::T'], [], [])"><div class="token cpp_type">T</div></div>*;
+
+<div class="token cpp_comment ">/***********************************************************************
+Type
+***********************************************************************/</div>
+
+<div class="disabled">#define BEGIN_TYPE_INFO_NAMESPACE namespace vl{namespace reflection{namespace description{</div>
+<div class="disabled">#define END_TYPE_INFO_NAMESPACE }}}</div>
+<div class="disabled">#define ADD_TYPE_INFO(TYPENAME)\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				Ptr&lt;ITypeDescriptor&gt; type=new CustomTypeDescriptorSelector&lt;TYPENAME&gt;::CustomTypeDescriptorImpl();\</div>
+<div class="disabled">				manager-&gt;SetTypeDescriptor(TypeInfo&lt;TYPENAME&gt;::content.typeName, type);\</div>
+<div class="disabled">			}</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+InterfaceProxy
+***********************************************************************/</div>
+
+<div class="disabled">#define INTERFACE_PROXY_CTOR_RAWPTR(INTERFACE)\</div>
+<div class="disabled">			static INTERFACE* Create(Ptr&lt;IValueInterfaceProxy&gt; proxy)\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				auto obj = new ValueInterfaceProxy&lt;INTERFACE&gt;();\</div>
+<div class="disabled">				obj-&gt;SetProxy(proxy);\</div>
+<div class="disabled">				return obj;\</div>
+<div class="disabled">			}\</div>
+
+<div class="disabled">#define INTERFACE_PROXY_CTOR_SHAREDPTR(INTERFACE)\</div>
+<div class="disabled">			static Ptr&lt;INTERFACE&gt; Create(Ptr&lt;IValueInterfaceProxy&gt; proxy)\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				auto obj = new ValueInterfaceProxy&lt;INTERFACE&gt;();\</div>
+<div class="disabled">				obj-&gt;SetProxy(proxy);\</div>
+<div class="disabled">				return obj;\</div>
+<div class="disabled">			}\</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_PROXY_NOPARENT_HEADER(INTERFACE)\</div>
+<div class="disabled">			template&lt;&gt;\</div>
+<div class="disabled">			class ValueInterfaceProxy&lt;INTERFACE&gt; : public ValueInterfaceImpl&lt;INTERFACE&gt;\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				typedef INTERFACE _interface_proxy_InterfaceType;\</div>
+<div class="disabled">			public:\</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR(INTERFACE)\</div>
+<div class="disabled">			BEGIN_INTERFACE_PROXY_NOPARENT_HEADER(INTERFACE)\</div>
+<div class="disabled">			INTERFACE_PROXY_CTOR_RAWPTR(INTERFACE)\</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(INTERFACE)\</div>
+<div class="disabled">			BEGIN_INTERFACE_PROXY_NOPARENT_HEADER(INTERFACE)\</div>
+<div class="disabled">			INTERFACE_PROXY_CTOR_SHAREDPTR(INTERFACE)\</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_PROXY_HEADER(INTERFACE, ...)\</div>
+<div class="disabled">			template&lt;&gt;\</div>
+<div class="disabled">			class ValueInterfaceProxy&lt;INTERFACE&gt; : public ValueInterfaceImpl&lt;INTERFACE, __VA_ARGS__&gt;\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				typedef INTERFACE _interface_proxy_InterfaceType;\</div>
+<div class="disabled">			public:\</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_PROXY_RAWPTR(INTERFACE, ...)\</div>
+<div class="disabled">			BEGIN_INTERFACE_PROXY_HEADER(INTERFACE, __VA_ARGS__)\</div>
+<div class="disabled">			INTERFACE_PROXY_CTOR_RAWPTR(INTERFACE)\</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_PROXY_SHAREDPTR(INTERFACE, ...)\</div>
+<div class="disabled">			BEGIN_INTERFACE_PROXY_HEADER(INTERFACE, __VA_ARGS__)\</div>
+<div class="disabled">			INTERFACE_PROXY_CTOR_SHAREDPTR(INTERFACE)\</div>
+
+<div class="disabled">#define END_INTERFACE_PROXY(INTERFACE)\</div>
+<div class="disabled">			};</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+InterfaceProxy::Invoke
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TClass"><div><div class="token cpp_type">TClass</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TReturn"><div><div class="token cpp_type">TReturn</div></div></div>, <div class="token cpp_keyword ">typename</div> ...<div class="def" id="TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TArgument"><div><div class="token cpp_type">TArgument</div></div></div>&gt;
+			<div class="token cpp_keyword ">auto</div> <div class="def" id="FB$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]"><div><div class="token cpp_function">MethodTypeTrait</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TArgument'], [], [])"><div class="token cpp_type">TArgument</div></div>...)-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TReturn'], [], [])"><div class="token cpp_type">TReturn</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TClass'], [], [])"><div class="token cpp_type">TClass</div></div>::*)(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TArgument'], [], [])"><div class="token cpp_type">TArgument</div></div>...)
+			{
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">nullptr</div>;
+			}
+
+<div class="disabled">#define PREPARE_INVOKE_INTERFACE_PROXY(METHODNAME, ...)\</div>
+<div class="disabled">			static ITypeDescriptor* _interface_proxy_typeDescriptor = nullptr;\</div>
+<div class="disabled">			static IMethodInfo* _interface_proxy_methodInfo = nullptr;\</div>
+<div class="disabled">			if (_interface_proxy_typeDescriptor != static_cast&lt;DescriptableObject*&gt;(this)-&gt;GetTypeDescriptor())\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				_interface_proxy_typeDescriptor = static_cast&lt;DescriptableObject*&gt;(this)-&gt;GetTypeDescriptor();\</div>
+<div class="disabled">				CHECK_ERROR(_interface_proxy_typeDescriptor != nullptr, L&quot;Internal error: The type of this interface has not been registered.&quot;);\</div>
+<div class="disabled">				auto impl = dynamic_cast&lt;MethodPointerBinaryData::IIndexer*&gt;(_interface_proxy_typeDescriptor);\</div>
+<div class="disabled">				CHECK_ERROR(impl != nullptr, L&quot;Internal error: BEGIN_INTERFACE_PROXY is the only correct way to register an interface with a proxy.&quot;);\</div>
+<div class="disabled">				auto _interface_proxy_method\</div>
+<div class="disabled">					= (decltype(MethodTypeTrait&lt;_interface_proxy_InterfaceType, decltype(METHODNAME(__VA_ARGS__))&gt;(__VA_ARGS__)))\</div>
+<div class="disabled">					&amp;_interface_proxy_InterfaceType::METHODNAME;\</div>
+<div class="disabled">				MethodPointerBinaryDataRetriver&lt;decltype(_interface_proxy_method)&gt; binaryData(_interface_proxy_method);\</div>
+<div class="disabled">				_interface_proxy_methodInfo = impl-&gt;GetIndexedMethodInfo(binaryData.GetBinaryData());\</div>
+<div class="disabled">			}\</div>
+
+<div class="disabled">#define INVOKE_INTERFACE_PROXY(METHODNAME, ...)\</div>
+<div class="disabled">			PREPARE_INVOKE_INTERFACE_PROXY(METHODNAME, __VA_ARGS__)\</div>
+<div class="disabled">			proxy-&gt;Invoke(_interface_proxy_methodInfo, IValueList::Create(collections::From((collections::Array&lt;Value&gt;&amp;)(Value_xs(), __VA_ARGS__))))</div>
+
+<div class="disabled">#define INVOKE_INTERFACE_PROXY_NOPARAMS(METHODNAME)\</div>
+<div class="disabled">			PREPARE_INVOKE_INTERFACE_PROXY(METHODNAME)\</div>
+<div class="disabled">			proxy-&gt;Invoke(_interface_proxy_methodInfo, IValueList::Create())</div>
+
+<div class="disabled">#define INVOKEGET_INTERFACE_PROXY(METHODNAME, ...)\</div>
+<div class="disabled">			PREPARE_INVOKE_INTERFACE_PROXY(METHODNAME, __VA_ARGS__)\</div>
+<div class="disabled">			return UnboxValue&lt;decltype(METHODNAME(__VA_ARGS__))&gt;(proxy-&gt;Invoke(_interface_proxy_methodInfo, IValueList::Create(collections::From((collections::Array&lt;Value&gt;&amp;)(Value_xs(), __VA_ARGS__)))))</div>
+
+<div class="disabled">#define INVOKEGET_INTERFACE_PROXY_NOPARAMS(METHODNAME)\</div>
+<div class="disabled">			PREPARE_INVOKE_INTERFACE_PROXY(METHODNAME)\</div>
+<div class="disabled">			return UnboxValue&lt;decltype(METHODNAME())&gt;(proxy-&gt;Invoke(_interface_proxy_methodInfo, IValueList::Create()))</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Enum
+***********************************************************************/</div>
+
+<div class="disabled">#define BEGIN_ENUM_ITEM_FLAG(TYPENAME, TDFLAGS)\</div>
+<div class="disabled">			template&lt;&gt;\</div>
+<div class="disabled">			struct CustomTypeDescriptorSelector&lt;TYPENAME&gt;\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">			public:\</div>
+<div class="disabled">				class CustomTypeDescriptorImpl : public EnumTypeDescriptor&lt;TYPENAME, TDFLAGS&gt;\</div>
+<div class="disabled">				{\</div>
+<div class="disabled">					typedef TYPENAME EnumType;\</div>
+<div class="disabled">				public:\</div>
+<div class="disabled">					void LoadInternal()override\</div>
+<div class="disabled">					{\</div>
+<div class="disabled">						EnumTypeDescriptor&lt;TYPENAME, TDFLAGS&gt;::LoadInternal();\</div>
+
+<div class="disabled">#define BEGIN_ENUM_ITEM(TYPENAME) BEGIN_ENUM_ITEM_FLAG(TYPENAME, TypeDescriptorFlags::NormalEnum)</div>
+<div class="disabled">#define BEGIN_ENUM_ITEM_MERGABLE(TYPENAME) BEGIN_ENUM_ITEM_FLAG(TYPENAME, TypeDescriptorFlags::FlagEnum)</div>
+
+<div class="disabled">#define END_ENUM_ITEM(TYPENAME)\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">				};\</div>
+<div class="disabled">			};</div>
+
+<div class="disabled">#define ENUM_ITEM_NAMESPACE(TYPENAME) typedef TYPENAME EnumItemNamespace;</div>
+<div class="disabled">#define ENUM_ITEM(ITEMNAME) enumType-&gt;AddItem(L ## #ITEMNAME, ITEMNAME);</div>
+<div class="disabled">#define ENUM_NAMESPACE_ITEM(ITEMNAME) enumType-&gt;AddItem(L ## #ITEMNAME, EnumItemNamespace::ITEMNAME);</div>
+<div class="disabled">#define ENUM_CLASS_ITEM(ITEMNAME) enumType-&gt;AddItem(L ## #ITEMNAME, EnumType::ITEMNAME);</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Struct
+***********************************************************************/</div>
+
+<div class="disabled">#define BEGIN_STRUCT_MEMBER_FLAG(TYPENAME, TDFLAGS)\</div>
+<div class="disabled">			template&lt;&gt;\</div>
+<div class="disabled">			struct CustomTypeDescriptorSelector&lt;TYPENAME&gt;\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">			public:\</div>
+<div class="disabled">				class CustomTypeDescriptorImpl : public StructTypeDescriptor&lt;TYPENAME, TDFLAGS&gt;\</div>
+<div class="disabled">				{\</div>
+<div class="disabled">					typedef TYPENAME StructType;\</div>
+<div class="disabled">				protected:\</div>
+<div class="disabled">					void LoadInternal()override\</div>
+<div class="disabled">					{</div>
+
+<div class="disabled">#define BEGIN_STRUCT_MEMBER(TYPENAME)\</div>
+<div class="disabled">			BEGIN_STRUCT_MEMBER_FLAG(TYPENAME, TypeDescriptorFlags::Struct)</div>
+
+<div class="disabled">#define END_STRUCT_MEMBER(TYPENAME)\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">				};\</div>
+<div class="disabled">			};</div>
+
+<div class="disabled">#define STRUCT_MEMBER(FIELDNAME)\</div>
+<div class="disabled">	fields.Add(L ## #FIELDNAME, new StructFieldInfo&lt;decltype(((StructType*)0)-&gt;FIELDNAME)&gt;(this, &amp;StructType::FIELDNAME, L ## #FIELDNAME));</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Class
+***********************************************************************/</div>
+
+<div class="disabled">#define BEGIN_CLASS_MEMBER(TYPENAME)\</div>
+<div class="disabled">			template&lt;&gt;\</div>
+<div class="disabled">			struct CustomTypeDescriptorSelector&lt;TYPENAME&gt;\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">			public:\</div>
+<div class="disabled">				class CustomTypeDescriptorImpl : public TypeDescriptorImpl\</div>
+<div class="disabled">				{\</div>
+<div class="disabled">					typedef TYPENAME ClassType;\</div>
+<div class="disabled">					static const TypeDescriptorFlags		TDFlags = TypeDescriptorFlags::Class;\</div>
+<div class="disabled">				public:\</div>
+<div class="disabled">					CustomTypeDescriptorImpl()\</div>
+<div class="disabled">						:TypeDescriptorImpl(TDFlags, &amp;TypeInfo&lt;TYPENAME&gt;::content)\</div>
+<div class="disabled">					{\</div>
+<div class="disabled">						Description&lt;TYPENAME&gt;::SetAssociatedTypeDescroptor(this);\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">					~CustomTypeDescriptorImpl()\</div>
+<div class="disabled">					{\</div>
+<div class="disabled">						Description&lt;TYPENAME&gt;::SetAssociatedTypeDescroptor(0);\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">				protected:\</div>
+<div class="disabled">					bool IsAggregatable()override\</div>
+<div class="disabled">					{\</div>
+<div class="disabled">						return AcceptValue&lt;typename PointerConvertable&lt;TYPENAME, AggregatableDescription&lt;TYPENAME&gt;&gt;::YesNoType&gt;::Result;\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">					void LoadInternal()override\</div>
+<div class="disabled">					{</div>
+
+<div class="disabled">#define CLASS_MEMBER_BASE(TYPENAME)\</div>
+<div class="disabled">			AddBaseType(description::GetTypeDescriptor&lt;TYPENAME&gt;());</div>
+
+<div class="disabled">#define END_CLASS_MEMBER(TYPENAME)\</div>
+<div class="disabled">						if (GetBaseTypeDescriptorCount() == 0) CLASS_MEMBER_BASE(DescriptableObject)\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">				};\</div>
+<div class="disabled">			};</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Interface
+***********************************************************************/</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_MEMBER_NOPROXY_FLAG(TYPENAME, TDFLAGS)\</div>
+<div class="disabled">			template&lt;&gt;\</div>
+<div class="disabled">			struct CustomTypeDescriptorSelector&lt;TYPENAME&gt;\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">			public:\</div>
+<div class="disabled">				class CustomTypeDescriptorImpl : public TypeDescriptorImpl, public MethodPointerBinaryData::IIndexer\</div>
+<div class="disabled">				{\</div>
+<div class="disabled">					typedef TYPENAME						ClassType;\</div>
+<div class="disabled">					static const TypeDescriptorFlags		TDFlags = TDFLAGS;\</div>
+<div class="disabled">					MethodPointerBinaryData::MethodMap		methodsForProxy;\</div>
+<div class="disabled">				public:\</div>
+<div class="disabled">					CustomTypeDescriptorImpl()\</div>
+<div class="disabled">						:TypeDescriptorImpl(TDFLAGS, &amp;TypeInfo&lt;TYPENAME&gt;::content)\</div>
+<div class="disabled">					{\</div>
+<div class="disabled">						Description&lt;TYPENAME&gt;::SetAssociatedTypeDescroptor(this);\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">					~CustomTypeDescriptorImpl()\</div>
+<div class="disabled">					{\</div>
+<div class="disabled">						Description&lt;TYPENAME&gt;::SetAssociatedTypeDescroptor(0);\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">					void IndexMethodInfo(const MethodPointerBinaryData&amp; data, IMethodInfo* methodInfo)override\</div>
+<div class="disabled">					{\</div>
+<div class="disabled">						methodsForProxy.Add(data, methodInfo);\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">					IMethodInfo* GetIndexedMethodInfo(const MethodPointerBinaryData&amp; data)override\</div>
+<div class="disabled">					{\</div>
+<div class="disabled">						Load();\</div>
+<div class="disabled">						return methodsForProxy[data];\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">				protected:\</div>
+<div class="disabled">					void LoadInternal()override\</div>
+<div class="disabled">					{</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_MEMBER_NOPROXY(TYPENAME)\</div>
+<div class="disabled">			BEGIN_INTERFACE_MEMBER_NOPROXY_FLAG(TYPENAME, TypeDescriptorFlags::Interface)</div>
+
+<div class="disabled">#define BEGIN_INTERFACE_MEMBER(TYPENAME)\</div>
+<div class="disabled">	BEGIN_INTERFACE_MEMBER_NOPROXY(TYPENAME)\</div>
+<div class="disabled">	CLASS_MEMBER_EXTERNALCTOR(decltype(ValueInterfaceProxy&lt;TYPENAME&gt;::Create(nullptr))(Ptr&lt;IValueInterfaceProxy&gt;), { L&quot;proxy&quot; }, vl::reflection::description::ValueInterfaceProxy&lt;TYPENAME&gt;::Create)</div>
+
+<div class="disabled">#define END_INTERFACE_MEMBER(TYPENAME)\</div>
+<div class="disabled">						if (GetBaseTypeDescriptorCount() == 0 &amp;&amp; TDFlags == TypeDescriptorFlags::Interface) CLASS_MEMBER_BASE(IDescriptable)\</div>
+<div class="disabled">					}\</div>
+<div class="disabled">				};\</div>
+<div class="disabled">			};</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Field
+***********************************************************************/</div>
+
+<div class="disabled">#define CLASS_MEMBER_FIELD(FIELDNAME)\</div>
+<div class="disabled">			AddProperty(\</div>
+<div class="disabled">				new CustomFieldInfoImpl&lt;\</div>
+<div class="disabled">					ClassType,\</div>
+<div class="disabled">					decltype(((ClassType*)0)-&gt;FIELDNAME)\</div>
+<div class="disabled">					&gt;(this, L ## #FIELDNAME, &amp;ClassType::FIELDNAME)\</div>
+<div class="disabled">				);</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Constructor
+***********************************************************************/</div>
+
+<div class="disabled">#define NO_PARAMETER {L&quot;&quot;}</div>
+<div class="disabled">#define PROTECT_PARAMETERS(...) __VA_ARGS__</div>
+
+<div class="disabled">#define CLASS_MEMBER_CONSTRUCTOR(FUNCTIONTYPE, PARAMETERNAMES)\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				const wchar_t* parameterNames[]=PARAMETERNAMES;\</div>
+<div class="disabled">				AddConstructor(new CustomConstructorInfoImpl&lt;FUNCTIONTYPE&gt;(parameterNames));\</div>
+<div class="disabled">			}</div>
+
+<div class="disabled">#define CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(FUNCTIONTYPE, PARAMETERNAMES, SOURCE, INVOKETEMPLATE, CLOSURETEMPLATE)\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				const wchar_t* parameterNames[]=PARAMETERNAMES;\</div>
+<div class="disabled">				AddConstructor(\</div>
+<div class="disabled">					new CustomStaticMethodInfoImpl&lt;FUNCTIONTYPE&gt;(parameterNames, SOURCE, INVOKETEMPLATE, CLOSURETEMPLATE)\</div>
+<div class="disabled">					);\</div>
+<div class="disabled">			}</div>
+
+<div class="disabled">#define CLASS_MEMBER_EXTERNALCTOR(FUNCTIONTYPE, PARAMETERNAMES, SOURCE)\</div>
+<div class="disabled">			CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(FUNCTIONTYPE, PROTECT_PARAMETERS(PARAMETERNAMES), (FUNCTIONNAME_AddPointer&lt;FUNCTIONTYPE&gt;)&amp;::SOURCE, L&quot;::&quot; L ## #SOURCE L&quot;($Arguments)&quot;, L&quot;::vl::Func&lt;$Func&gt;(&amp;::&quot; L ## #SOURCE L&quot;)&quot;)</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Method
+***********************************************************************/</div>
+
+<div class="disabled">#define CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(FUNCTIONNAME, PARAMETERNAMES, FUNCTIONTYPE, SOURCE, INVOKETEMPLATE, CLOSURETEMPLATE)\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				const wchar_t* parameterNames[]=PARAMETERNAMES;\</div>
+<div class="disabled">				AddMethod(\</div>
+<div class="disabled">					L ## #FUNCTIONNAME,\</div>
+<div class="disabled">					new CustomExternalMethodInfoImpl&lt;\</div>
+<div class="disabled">						ClassType,\</div>
+<div class="disabled">						vl::function_lambda::LambdaRetriveType&lt;FUNCTIONTYPE&gt;::FunctionType\</div>
+<div class="disabled">						&gt;(parameterNames, SOURCE, INVOKETEMPLATE, CLOSURETEMPLATE)\</div>
+<div class="disabled">					);\</div>
+<div class="disabled">			}</div>
+
+<div class="disabled">#define CLASS_MEMBER_EXTERNALMETHOD(FUNCTIONNAME, PARAMETERNAMES, FUNCTIONTYPE, SOURCE)\</div>
+<div class="disabled">			CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(FUNCTIONNAME, PROTECT_PARAMETERS(PARAMETERNAMES), FUNCTIONTYPE, &amp;::SOURCE, L&quot;::&quot; L ## #SOURCE L&quot;($This, $Arguments)&quot;, L&quot;::vl::Func&lt;$Func&gt;($This, &amp;::&quot; L ## #SOURCE L&quot;)&quot;)</div>
+
+<div class="disabled">#define CLASS_MEMBER_METHOD_OVERLOAD_RENAME_TEMPLATE(EXPECTEDNAME, FUNCTIONNAME, PARAMETERNAMES, FUNCTIONTYPE, INVOKETEMPLATE, CLOSURETEMPLATE)\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				const wchar_t* parameterNames[]=PARAMETERNAMES;\</div>
+<div class="disabled">				auto methodInfo = new CustomMethodInfoImpl&lt;\</div>
+<div class="disabled">						ClassType,\</div>
+<div class="disabled">						vl::function_lambda::LambdaRetriveType&lt;FUNCTIONTYPE&gt;::FunctionType\</div>
+<div class="disabled">						&gt;\</div>
+<div class="disabled">					(parameterNames, (FUNCTIONTYPE)&amp;ClassType::FUNCTIONNAME, INVOKETEMPLATE, CLOSURETEMPLATE);\</div>
+<div class="disabled">				AddMethod(\</div>
+<div class="disabled">					L ## #EXPECTEDNAME,\</div>
+<div class="disabled">					methodInfo\</div>
+<div class="disabled">					);\</div>
+<div class="disabled">				MethodPointerBinaryDataRetriver&lt;FUNCTIONTYPE&gt; binaryDataRetriver(&amp;ClassType::FUNCTIONNAME);\</div>
+<div class="disabled">				MethodPointerBinaryDataRecorder&lt;ClassType, TDFlags&gt;::RecordMethod(binaryDataRetriver.GetBinaryData(), this, methodInfo);\</div>
+<div class="disabled">			}</div>
+
+<div class="disabled">#define CLASS_MEMBER_METHOD_OVERLOAD_RENAME(EXPECTEDNAME, FUNCTIONNAME, PARAMETERNAMES, FUNCTIONTYPE)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD_OVERLOAD_RENAME_TEMPLATE(EXPECTEDNAME, FUNCTIONNAME, PROTECT_PARAMETERS(PARAMETERNAMES), FUNCTIONTYPE, L&quot;$This-&gt;&quot; L ## #FUNCTIONNAME L&quot;($Arguments)&quot;, L&quot;::vl::Func&lt;$Func&gt;($This, &amp;$Type::&quot; L ## #FUNCTIONNAME L&quot;)&quot;)</div>
+
+<div class="disabled">#define CLASS_MEMBER_METHOD_OVERLOAD(FUNCTIONNAME, PARAMETERNAMES, FUNCTIONTYPE)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD_OVERLOAD_RENAME_TEMPLATE(FUNCTIONNAME, FUNCTIONNAME, PROTECT_PARAMETERS(PARAMETERNAMES), FUNCTIONTYPE, nullptr, nullptr)</div>
+
+<div class="disabled">#define CLASS_MEMBER_METHOD_RENAME(EXPECTEDNAME, FUNCTIONNAME, PARAMETERNAMES)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD_OVERLOAD_RENAME(EXPECTEDNAME, FUNCTIONNAME, PROTECT_PARAMETERS(PARAMETERNAMES), decltype(&amp;ClassType::FUNCTIONNAME))</div>
+
+<div class="disabled">#define CLASS_MEMBER_METHOD(FUNCTIONNAME, PARAMETERNAMES)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD_OVERLOAD(FUNCTIONNAME, PROTECT_PARAMETERS(PARAMETERNAMES), decltype(&amp;ClassType::FUNCTIONNAME))</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Static Method
+***********************************************************************/</div>
+
+<div class="disabled">#define CLASS_MEMBER_STATIC_EXTERNALMETHOD_TEMPLATE(FUNCTIONNAME, PARAMETERNAMES, FUNCTIONTYPE, SOURCE, INVOKETEMPLATE, CLOSURETEMPLATE)\</div>
+<div class="disabled">			{\</div>
+<div class="disabled">				const wchar_t* parameterNames[]=PARAMETERNAMES;\</div>
+<div class="disabled">				AddMethod(\</div>
+<div class="disabled">					L ## #FUNCTIONNAME,\</div>
+<div class="disabled">					new CustomStaticMethodInfoImpl&lt;\</div>
+<div class="disabled">						vl::function_lambda::FunctionObjectRetriveType&lt;FUNCTIONTYPE&gt;::FunctionType\</div>
+<div class="disabled">						&gt;(parameterNames, (FUNCTIONTYPE)SOURCE, INVOKETEMPLATE, CLOSURETEMPLATE)\</div>
+<div class="disabled">					);\</div>
+<div class="disabled">			}</div>
+
+<div class="disabled">#define CLASS_MEMBER_STATIC_EXTERNALMETHOD(FUNCTIONNAME, PARAMETERNAMES, FUNCTIONTYPE, SOURCE)\</div>
+<div class="disabled">			CLASS_MEMBER_STATIC_EXTERNALMETHOD_TEMPLATE(FUNCTIONNAME, PROTECT_PARAMETERS(PARAMETERNAMES), FUNCTIONTYPE, &amp;::SOURCE, L&quot;::&quot; L ## #SOURCE L&quot;($Arguments)&quot;, L&quot;::vl::Func&lt;$Func&gt;(&amp;::&quot; L ## #SOURCE L&quot;)&quot;)</div>
+
+<div class="disabled">#define CLASS_MEMBER_STATIC_METHOD_OVERLOAD(FUNCTIONNAME, PARAMETERNAMES, FUNCTIONTYPE)\</div>
+<div class="disabled">			CLASS_MEMBER_STATIC_EXTERNALMETHOD_TEMPLATE(FUNCTIONNAME, PROTECT_PARAMETERS(PARAMETERNAMES), FUNCTIONTYPE, &amp;ClassType::FUNCTIONNAME, nullptr, nullptr)</div>
+
+<div class="disabled">#define CLASS_MEMBER_STATIC_METHOD(FUNCTIONNAME, PARAMETERNAMES)\</div>
+<div class="disabled">			CLASS_MEMBER_STATIC_METHOD_OVERLOAD(FUNCTIONNAME, PROTECT_PARAMETERS(PARAMETERNAMES), decltype(&amp;ClassType::FUNCTIONNAME))</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Event
+***********************************************************************/</div>
+
+<div class="disabled">#define CLASS_MEMBER_EVENT(EVENTNAME)\</div>
+<div class="disabled">			AddEvent(\</div>
+<div class="disabled">				new CustomEventInfoImpl&lt;\</div>
+<div class="disabled">					ClassType,\</div>
+<div class="disabled">					CustomEventFunctionTypeRetriver&lt;decltype(&amp;ClassType::EVENTNAME)&gt;::Type\</div>
+<div class="disabled">					&gt;(this, L ## #EVENTNAME, &amp;ClassType::EVENTNAME)\</div>
+<div class="disabled">				);</div>
+
+<div class="token cpp_comment ">/***********************************************************************
+Property
+***********************************************************************/</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY_READONLY(PROPERTYNAME, GETTER)\</div>
+<div class="disabled">			AddProperty(\</div>
+<div class="disabled">				new PropertyInfoImpl(\</div>
+<div class="disabled">					this,\</div>
+<div class="disabled">					L ## #PROPERTYNAME,\</div>
+<div class="disabled">					dynamic_cast&lt;MethodInfoImpl*&gt;(GetMethodGroupByName(L ## #GETTER, true)-&gt;GetMethod(0)),\</div>
+<div class="disabled">					nullptr,\</div>
+<div class="disabled">					nullptr\</div>
+<div class="disabled">					)\</div>
+<div class="disabled">				);</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY(PROPERTYNAME, GETTER, SETTER)\</div>
+<div class="disabled">			AddProperty(\</div>
+<div class="disabled">				new PropertyInfoImpl(\</div>
+<div class="disabled">					this,\</div>
+<div class="disabled">					L ## #PROPERTYNAME,\</div>
+<div class="disabled">					dynamic_cast&lt;MethodInfoImpl*&gt;(GetMethodGroupByName(L ## #GETTER, true)-&gt;GetMethod(0)),\</div>
+<div class="disabled">					dynamic_cast&lt;MethodInfoImpl*&gt;(GetMethodGroupByName(L ## #SETTER, true)-&gt;GetMethod(0)),\</div>
+<div class="disabled">					nullptr\</div>
+<div class="disabled">					)\</div>
+<div class="disabled">				);</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY_EVENT(PROPERTYNAME, GETTER, SETTER, EVENT)\</div>
+<div class="disabled">			AddProperty(\</div>
+<div class="disabled">				new PropertyInfoImpl(\</div>
+<div class="disabled">					this,\</div>
+<div class="disabled">					L ## #PROPERTYNAME,\</div>
+<div class="disabled">					dynamic_cast&lt;MethodInfoImpl*&gt;(GetMethodGroupByName(L ## #GETTER, true)-&gt;GetMethod(0)),\</div>
+<div class="disabled">					dynamic_cast&lt;MethodInfoImpl*&gt;(GetMethodGroupByName(L ## #SETTER, true)-&gt;GetMethod(0)),\</div>
+<div class="disabled">					dynamic_cast&lt;EventInfoImpl*&gt;(GetEventByName(L ## #EVENT, true))\</div>
+<div class="disabled">					)\</div>
+<div class="disabled">				);</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY_EVENT_READONLY(PROPERTYNAME, GETTER, EVENT)\</div>
+<div class="disabled">			AddProperty(\</div>
+<div class="disabled">				new PropertyInfoImpl(\</div>
+<div class="disabled">					this,\</div>
+<div class="disabled">					L ## #PROPERTYNAME,\</div>
+<div class="disabled">					dynamic_cast&lt;MethodInfoImpl*&gt;(GetMethodGroupByName(L ## #GETTER, true)-&gt;GetMethod(0)),\</div>
+<div class="disabled">					nullptr,\</div>
+<div class="disabled">					dynamic_cast&lt;EventInfoImpl*&gt;(GetEventByName(L ## #EVENT, true))\</div>
+<div class="disabled">					)\</div>
+<div class="disabled">				);</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY_REFERENCETEMPLATE(PROPERTYNAME, GETTER, SETTER, REFERENCETEMPLATE)\</div>
+<div class="disabled">			AddProperty(\</div>
+<div class="disabled">				new PropertyInfoImpl_StaticCpp(\</div>
+<div class="disabled">					this,\</div>
+<div class="disabled">					L ## #PROPERTYNAME,\</div>
+<div class="disabled">					dynamic_cast&lt;MethodInfoImpl*&gt;(GetMethodGroupByName(L ## #GETTER, true)-&gt;GetMethod(0)),\</div>
+<div class="disabled">					dynamic_cast&lt;MethodInfoImpl*&gt;(GetMethodGroupByName(L ## #SETTER, true)-&gt;GetMethod(0)),\</div>
+<div class="disabled">					nullptr,\</div>
+<div class="disabled">					WString(REFERENCETEMPLATE, false)\</div>
+<div class="disabled">					)\</div>
+<div class="disabled">				);</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY_READONLY_FAST(PROPERTYNAME)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD(Get##PROPERTYNAME, NO_PARAMETER)\</div>
+<div class="disabled">			CLASS_MEMBER_PROPERTY_READONLY(PROPERTYNAME, Get##PROPERTYNAME)\</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY_FAST(PROPERTYNAME)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD(Get##PROPERTYNAME, NO_PARAMETER)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD(Set##PROPERTYNAME, {L&quot;value&quot;})\</div>
+<div class="disabled">			CLASS_MEMBER_PROPERTY(PROPERTYNAME, Get##PROPERTYNAME, Set##PROPERTYNAME)\</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY_EVENT_FAST(PROPERTYNAME, EVENTNAME)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD(Get##PROPERTYNAME, NO_PARAMETER)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD(Set##PROPERTYNAME, {L&quot;value&quot;})\</div>
+<div class="disabled">			CLASS_MEMBER_PROPERTY_EVENT(PROPERTYNAME, Get##PROPERTYNAME, Set##PROPERTYNAME, EVENTNAME)\</div>
+
+<div class="disabled">#define CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(PROPERTYNAME, EVENTNAME)\</div>
+<div class="disabled">			CLASS_MEMBER_METHOD(Get##PROPERTYNAME, NO_PARAMETER)\</div>
+<div class="disabled">			CLASS_MEMBER_PROPERTY_EVENT_READONLY(PROPERTYNAME, Get##PROPERTYNAME, EVENTNAME)\</div>
+
+		}
+	}
+}
+
+<div class="disabled">#endif
+#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'memset@void *(void *, int, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">memset</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$memset@void *(void *, int, ::size_t)[decl0]'
+        ]
+    },
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl',
+            'NF[73]$vl',
+            'NF[74]$vl',
+            'NF[75]$vl',
+            'NF[76]$vl',
+            'NF[77]$vl',
+            'NF[78]$vl',
+            'NF[79]$vl',
+            'NF[80]$vl',
+            'NF[81]$vl',
+            'NF[82]$vl',
+            'NF[83]$vl',
+            'NF[84]$vl',
+            'NF[85]$vl',
+            'NF[86]$vl',
+            'NF[87]$vl',
+            'NF[88]$vl',
+            'NF[89]$vl'
+        ]
+    },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections',
+            'NF[19]$vl::collections'
+        ]
+    },
+    'vl::collections::Dictionary': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Dictionary'
+        ],
+        'decls': []
+    },
+    'vl::reflection': {
+        'displayNameInHtml': 'vl::reflection',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection',
+            'NF[1]$vl::reflection',
+            'NF[2]$vl::reflection',
+            'NF[3]$vl::reflection',
+            'NF[4]$vl::reflection',
+            'NF[5]$vl::reflection',
+            'NF[6]$vl::reflection',
+            'NF[7]$vl::reflection',
+            'NF[8]$vl::reflection',
+            'NF[9]$vl::reflection',
+            'NF[10]$vl::reflection',
+            'NF[11]$vl::reflection',
+            'NF[12]$vl::reflection',
+            'NF[13]$vl::reflection'
+        ]
+    },
+    'vl::reflection::IDescriptable': {
+        'displayNameInHtml': '<span class="cpp_type">IDescriptable</span>',
+        'impls': [
+            'NI$vl::reflection::IDescriptable'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description': {
+        'displayNameInHtml': 'vl::reflection::description',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection::description',
+            'NF[1]$vl::reflection::description',
+            'NF[2]$vl::reflection::description',
+            'NF[3]$vl::reflection::description',
+            'NF[4]$vl::reflection::description',
+            'NF[5]$vl::reflection::description',
+            'NF[6]$vl::reflection::description',
+            'NF[7]$vl::reflection::description',
+            'NF[8]$vl::reflection::description',
+            'NF[9]$vl::reflection::description',
+            'NF[10]$vl::reflection::description',
+            'NF[11]$vl::reflection::description',
+            'NF[12]$vl::reflection::description',
+            'NF[13]$vl::reflection::description'
+        ]
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::DateTime>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">DateTime</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::DateTime>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::DescriptableObject>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">DescriptableObject</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::DescriptableObject>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::IDescriptable>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IDescriptable</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::IDescriptable>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IBoxedValue::CompareResult>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IBoxedValue</span>::<span class="cpp_type">CompareResult</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IBoxedValue::CompareResult>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IBoxedValue>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IBoxedValue</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IBoxedValue>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEnumType>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IEnumType</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEnumType>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEventHandler>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IEventHandler</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEventHandler>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEventInfo>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IEventInfo</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEventInfo>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMemberInfo>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IMemberInfo</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMemberInfo>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMethodGroupInfo>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IMethodGroupInfo</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMethodGroupInfo>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMethodInfo>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IMethodInfo</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMethodInfo>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IParameterInfo>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IParameterInfo</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IParameterInfo>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IPropertyInfo>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IPropertyInfo</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IPropertyInfo>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ISerializableType>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">ISerializableType</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ISerializableType>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeDescriptor>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">ITypeDescriptor</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeDescriptor>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeInfo::Decorator>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">ITypeInfo</span>::<span class="cpp_type">Decorator</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeInfo::Decorator>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeInfo>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">ITypeInfo</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeInfo>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueCallStack>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueCallStack</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueCallStack>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueDictionary>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueDictionary</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueDictionary>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueEnumerable>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueEnumerable</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueEnumerable>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueEnumerator>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueEnumerator</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueEnumerator>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueException>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueException</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueException>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueFunctionProxy>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueFunctionProxy</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueFunctionProxy>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueInterfaceProxy>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueInterfaceProxy</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueInterfaceProxy>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueList>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueList</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueList>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueObservableList>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueObservableList</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueObservableList>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueReadonlyDictionary>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueReadonlyDictionary</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueReadonlyDictionary>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueReadonlyList>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueReadonlyList</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueReadonlyList>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueSubscription>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueSubscription</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueSubscription>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueType>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">IValueType</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueType>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::TypeDescriptorFlags>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">TypeDescriptorFlags</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::TypeDescriptorFlags>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::VoidValue>': {
+        'displayNameInHtml': '<span class="cpp_type">CustomTypeDescriptorSelector</span>&lt;<span class="cpp_type">VoidValue</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::VoidValue>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::FUNCTIONNAME_AddPointer::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::reflection::description::FUNCTIONNAME_AddPointer::T'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::IMethodInfo': {
+        'displayNameInHtml': '<span class="cpp_type">IMethodInfo</span>',
+        'impls': [
+            'NI$vl::reflection::description::IMethodInfo'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IMethodInfo'
+        ]
+    },
+    'vl::reflection::description::ITypeDescriptor': {
+        'displayNameInHtml': '<span class="cpp_type">ITypeDescriptor</span>',
+        'impls': [
+            'NI$vl::reflection::description::ITypeDescriptor'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::ITypeDescriptor'
+        ]
+    },
+    'vl::reflection::description::MethodPointerBinaryData': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryData</span>',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryData</span>::<span class="cpp_function">Compare</span>(<span class="cpp_type">MethodPointerBinaryData</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">MethodPointerBinaryData</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::a'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::b': {
+        'displayNameInHtml': 'b',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::b'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result': {
+        'displayNameInHtml': 'result',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result2': {
+        'displayNameInHtml': 'result',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result2'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result3': {
+        'displayNameInHtml': 'result',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result3'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result4': {
+        'displayNameInHtml': 'result',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result4'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::IIndexer': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryData</span>::<span class="cpp_type">IIndexer</span>',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::IIndexer'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::IIndexer::IndexMethodInfo@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::IMethodInfo *)': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryData</span>::<span class="cpp_type">IIndexer</span>::<span class="cpp_function">IndexMethodInfo</span>(<span class="cpp_type">MethodPointerBinaryData</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">IMethodInfo</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$vl::reflection::description::MethodPointerBinaryData::IIndexer::IndexMethodInfo@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::IMethodInfo *)[decl0]'
+        ]
+    },
+    'vl::reflection::description::MethodPointerBinaryData::data': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryData</span>::<span class="cpp_field">data</span>',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::data'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::operator !=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': {
+        'displayNameInHtml': 'd',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::operator !=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::operator <=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': {
+        'displayNameInHtml': 'd',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::operator <=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::operator <@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': {
+        'displayNameInHtml': 'd',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::operator <@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::operator ==@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': {
+        'displayNameInHtml': 'd',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::operator ==@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::operator >=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': {
+        'displayNameInHtml': 'd',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::operator >=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryData::operator >@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': {
+        'displayNameInHtml': 'd',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryData::operator >@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRecorder': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryDataRecorder</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRecorder'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryDataRecorder</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::data': {
+        'displayNameInHtml': 'data',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::data'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::impl': {
+        'displayNameInHtml': 'impl',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::impl'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::methodInfo': {
+        'displayNameInHtml': 'methodInfo',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::methodInfo'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::td': {
+        'displayNameInHtml': 'td',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::td'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::T'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRetriver::$__ctor@([T])[impl0]::_methodPointer': {
+        'displayNameInHtml': '_methodPointer',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRetriver::$__ctor@([T])[impl0]::_methodPointer'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRetriver::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::reflection::description::MethodPointerBinaryDataRetriver::T'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRetriver::binaryData': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryDataRetriver</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">binaryData</span>',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRetriver::binaryData'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodPointerBinaryDataRetriver::methodPointer': {
+        'displayNameInHtml': '<span class="cpp_type">MethodPointerBinaryDataRetriver</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">methodPointer</span>',
+        'impls': [
+            'NI$vl::reflection::description::MethodPointerBinaryDataRetriver::methodPointer'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TArgument': {
+        'displayNameInHtml': '<span class="cpp_type">TArgument</span>',
+        'impls': [
+            'TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TArgument'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TClass': {
+        'displayNameInHtml': '<span class="cpp_type">TClass</span>',
+        'impls': [
+            'TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TClass'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TReturn': {
+        'displayNameInHtml': '<span class="cpp_type">TReturn</span>',
+        'impls': [
+            'TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TReturn'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::TypeDescriptorFlags': {
+        'displayNameInHtml': '<span class="cpp_type">TypeDescriptorFlags</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeDescriptorFlags'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::TypeDescriptorFlags::Interface': {
+        'displayNameInHtml': '<span class="cpp_type">TypeDescriptorFlags</span>::<span class="cpp_enum">Interface</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeDescriptorFlags::Interface'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$memset@void *(void *, int, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]': null,
+    'FB$vl::reflection::description::MethodPointerBinaryData::IIndexer::IndexMethodInfo@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::IMethodInfo *)[decl0]': null,
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IMethodInfo': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::ITypeDescriptor': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[10]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[10]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[11]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[11]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[12]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[13]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[13]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[19]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[2]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[35]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[37]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[38]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[39]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[40]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[42]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[44]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[46]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[62]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[63]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[64]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[65]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[66]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[67]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[68]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[69]$vl': { 'htmlFileName': 'Regex.cpp', 'displayName': 'Regex.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[70]$vl': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[71]$vl': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
+    'NF[72]$vl': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NF[73]$vl': { 'htmlFileName': 'RegexParser.cpp', 'displayName': 'RegexParser.cpp' },
+    'NF[74]$vl': { 'htmlFileName': 'RegexPure.cpp', 'displayName': 'RegexPure.cpp' },
+    'NF[75]$vl': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[76]$vl': { 'htmlFileName': 'RegexWriter.cpp', 'displayName': 'RegexWriter.cpp' },
+    'NF[77]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[78]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[79]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::reflection': null,
+    'NF[7]$vl::reflection::description': null,
+    'NF[80]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[81]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[82]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[83]$vl': null,
+    'NF[84]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[85]$vl': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[86]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[87]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[88]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[89]$vl': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[9]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::collections::Dictionary': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NI$vl::reflection::IDescriptable': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::DateTime>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::DescriptableObject>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::IDescriptable>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IBoxedValue::CompareResult>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IBoxedValue>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEnumType>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEventHandler>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IEventInfo>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMemberInfo>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMethodGroupInfo>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IMethodInfo>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IParameterInfo>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IPropertyInfo>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ISerializableType>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeDescriptor>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeInfo::Decorator>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::ITypeInfo>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueCallStack>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueDictionary>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueEnumerable>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueEnumerator>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueException>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueFunctionProxy>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueInterfaceProxy>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueList>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueObservableList>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueReadonlyDictionary>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueReadonlyList>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueSubscription>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::IValueType>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::TypeDescriptorFlags>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::CustomTypeDescriptorSelector@<::vl::reflection::description::VoidValue>': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NI$vl::reflection::description::IMethodInfo': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::ITypeDescriptor': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::MethodPointerBinaryData': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::a': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::b': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result2': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result3': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::Compare@::vl::vint(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::result4': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::IIndexer': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::data': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::operator !=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::operator <=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::operator <@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::operator ==@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::operator >=@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': null,
+    'NI$vl::reflection::description::MethodPointerBinaryData::operator >@bool(::vl::reflection::description::MethodPointerBinaryData const &)[impl0]::d': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRecorder': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::data': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::impl': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::methodInfo': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::RecordMethod@void(::vl::reflection::description::MethodPointerBinaryData const &, ::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::IMethodInfo *)[impl0]::td': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRetriver::$__ctor@([T])[impl0]::_methodPointer': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRetriver::binaryData': null,
+    'NI$vl::reflection::description::MethodPointerBinaryDataRetriver::methodPointer': null,
+    'NI$vl::reflection::description::TypeDescriptorFlags': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::TypeDescriptorFlags::Interface': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'TA$vl::reflection::description::FUNCTIONNAME_AddPointer::T': null,
+    'TA$vl::reflection::description::MethodPointerBinaryDataRecorder@<[T], *>::T': null,
+    'TA$vl::reflection::description::MethodPointerBinaryDataRetriver::T': null,
+    'TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TArgument': null,
+    'TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TClass': null,
+    'TA$vl::reflection::description::MethodTypeTrait@[TReturn]([TArgument]...) ([TClass] ::) *([TArgument]...)[impl0]::TReturn': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>
