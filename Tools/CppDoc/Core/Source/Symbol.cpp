@@ -933,7 +933,7 @@ void TemplateArgumentContext::ReplaceValueByKey(ITsys* key, ITsys* value)
 ParsingArguments
 ***********************************************************************/
 
-ParsingArguments::ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder)
+ParsingArguments::ParsingArguments(Ptr<RootSymbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder)
 	:root(_root)
 	, scopeSymbol(_root.Obj())
 	, tsys(_tsys)

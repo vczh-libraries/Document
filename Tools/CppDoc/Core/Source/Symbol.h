@@ -378,6 +378,15 @@ public:
 	void											GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& prefix);
 };
 
+class RootSymbol : public Symbol
+{
+public:
+	RootSymbol()
+		:Symbol(symbol_component::SymbolCategory::Normal)
+	{
+	}
+};
+
 template<typename T>
 Ptr<T> TryGetDeclFromType(ITsys* type)
 {
@@ -471,7 +480,7 @@ public:
 
 struct ParsingArguments
 {
-	Ptr<Symbol>										root;
+	Ptr<RootSymbol>									root;
 	Ptr<Program>									program;
 
 	Symbol*											scopeSymbol = nullptr;
@@ -484,7 +493,7 @@ struct ParsingArguments
 	ParsingArguments() = default;
 	ParsingArguments(const ParsingArguments&) = default;
 	ParsingArguments(ParsingArguments&&) = default;
-	ParsingArguments(Ptr<Symbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder);
+	ParsingArguments(Ptr<RootSymbol> _root, Ptr<ITsysAlloc> _tsys, Ptr<IIndexRecorder> _recorder);
 
 	ParsingArguments&								operator=(const ParsingArguments&) = default;
 	ParsingArguments&								operator=(ParsingArguments&&) = default;

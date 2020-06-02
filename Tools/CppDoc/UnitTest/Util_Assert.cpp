@@ -176,7 +176,7 @@ AssertStat
 
 void AssertStat(const wchar_t* input, const wchar_t* log)
 {
-	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	AssertStat(pa, input, log);
 }
 

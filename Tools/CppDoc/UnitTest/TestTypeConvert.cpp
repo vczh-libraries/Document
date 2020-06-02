@@ -87,7 +87,7 @@ TEST_FILE
 {
 	TEST_CATEGORY(L"Test Exact type conversion")
 	{
-		ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define S Exact
 		TEST_CONV_TYPE(int,						int,									S,	S);
 		TEST_CONV_TYPE(int,						const int,								S,	S);
@@ -115,7 +115,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Test Trivial type conversion")
 	{
-		ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define S Trivial
 	#define F Illegal
 		TEST_CONV_TYPE(int*,					const int*,								S,	S);
@@ -220,7 +220,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Test Standard type conversion")
 	{
-		ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define S Standard
 	#define F Illegal
 		TEST_CONV_TYPE(signed int,				unsigned int,							S,	S);
@@ -243,7 +243,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Test ToVoidPtr type conversion")
 	{
-		ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define S ToVoidPtr
 	#define F Illegal
 		TEST_CONV_TYPE(int(*)(),				void*,									S,	S);
@@ -256,7 +256,7 @@ TEST_FILE
 
 	TEST_CATEGORY(L"Test Illegal type conversion")
 	{
-		ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define F Illegal
 		TEST_CONV_TYPE(const int&,				int&,									F,	F);
 		TEST_CONV_TYPE(volatile int&,			int&,									F,	F);

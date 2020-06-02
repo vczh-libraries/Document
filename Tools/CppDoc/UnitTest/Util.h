@@ -64,7 +64,7 @@ void AssertType(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, 
 template<typename... T>
 void AssertType(const wchar_t* input, const wchar_t* log, T... logTsys)
 {
-	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	AssertType(pa, input, log, logTsys...);
 }
 
@@ -87,7 +87,7 @@ void AssertExpr(ParsingArguments& pa, const wchar_t* input, const wchar_t* log, 
 template<typename... T>
 void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 {
-	ParsingArguments pa(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), nullptr);
+	ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	AssertExpr(pa, input, log, logTsys...);
 }
 
@@ -102,7 +102,7 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 #define COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, RECORDER)\
 	TOKEN_READER(INPUT);\
 	auto cursor = reader.GetFirstToken();\
-	ParsingArguments PA(new Symbol(symbol_component::SymbolCategory::Normal), ITsysAlloc::Create(), RECORDER);\
+	ParsingArguments PA(MakePtr<RootSymbol>(), ITsysAlloc::Create(), RECORDER);\
 	Ptr<Program> PROGRAM;\
 	TEST_CASE(L"ParseProgram + EvaluateProgram")\
 	{\
