@@ -45,6 +45,7 @@
   - [ ] `IsSameResolvedExprVisitor` on lambda expressions.
   - [ ] `std::initialization_list`.
   - [ ] Converting lambda expression to a struct instead of `any_t`.
+  - [ ] `auto` parameters on lambda expression.
   - [ ] Pass variadic template argument to placement new expression.
   - [ ] Create multiple instances if `T<THIS>` is evaluated to multiple type.
   - [ ] `GenerateMembers` on `DeclInstance`.

@@ -157,7 +157,7 @@ Interface Implementation Proxy (Implement)
 			};
 
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::ValueInterfaceProxy::T"><div><div class="token cpp_type">T</div></div></div>&gt;
-			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ValueInterfaceProxy"><div class="ref" onclick="jumpToSymbol([], [], ['vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerator>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerable>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueObservableList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyDictionary>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueDictionary>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueSubscription>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::parsing::json::JsonNode::IVisitor>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::parsing::xml::XmlNode::IVisitor>'], [])"><div class="token cpp_type">ValueInterfaceProxy</div></div></div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ValueInterfaceProxy"><div class="ref" onclick="jumpToSymbol([], [], ['vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerator>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerable>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueObservableList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyDictionary>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueDictionary>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueSubscription>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::parsing::json::JsonNode::IVisitor>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::parsing::xml::XmlNode::IVisitor>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::ICoroutine>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IAsync>'], [])"><div class="token cpp_type">ValueInterfaceProxy</div></div></div>
 			{
 			};
 
@@ -350,7 +350,13 @@ referencedSymbols = {
             'NF[128]$vl',
             'NF[129]$vl',
             'NF[130]$vl',
-            'NF[131]$vl'
+            'NF[131]$vl',
+            'NF[132]$vl',
+            'NF[133]$vl',
+            'NF[134]$vl',
+            'NF[135]$vl',
+            'NF[136]$vl',
+            'NF[137]$vl'
         ]
     },
     'vl::Event': {
@@ -453,7 +459,11 @@ referencedSymbols = {
             'NF[18]$vl::reflection',
             'NF[19]$vl::reflection',
             'NF[20]$vl::reflection',
-            'NF[21]$vl::reflection'
+            'NF[21]$vl::reflection',
+            'NF[22]$vl::reflection',
+            'NF[23]$vl::reflection',
+            'NF[24]$vl::reflection',
+            'NF[25]$vl::reflection'
         ]
     },
     'vl::reflection::DescriptableObject::FinalizeAggregation@void()': {
@@ -504,7 +514,11 @@ referencedSymbols = {
             'NF[18]$vl::reflection::description',
             'NF[19]$vl::reflection::description',
             'NF[20]$vl::reflection::description',
-            'NF[21]$vl::reflection::description'
+            'NF[21]$vl::reflection::description',
+            'NF[22]$vl::reflection::description',
+            'NF[23]$vl::reflection::description',
+            'NF[24]$vl::reflection::description',
+            'NF[25]$vl::reflection::description'
         ]
     },
     'vl::reflection::description::IMethodInfo': {
@@ -779,6 +793,20 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IAsync>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IAsync</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IAsync>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::ICoroutine>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">ICoroutine</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::ICoroutine>'
+        ],
+        'decls': []
+    },
     'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueDictionary>': {
         'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueDictionary</span>&gt;',
         'impls': [
@@ -951,6 +979,12 @@ symbolToFiles = {
     'NF[12]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
     'NF[130]$vl': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
     'NF[131]$vl': { 'htmlFileName': 'ParsingXml_Parser.cpp', 'displayName': 'ParsingXml_Parser.cpp' },
+    'NF[132]$vl': { 'htmlFileName': 'WfLibraryCppHelper.h', 'displayName': 'WfLibraryCppHelper.h' },
+    'NF[133]$vl': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[134]$vl': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[135]$vl': { 'htmlFileName': 'WfLibraryCppHelper.cpp', 'displayName': 'WfLibraryCppHelper.cpp' },
+    'NF[136]$vl': { 'htmlFileName': 'WfLibraryPredefined.cpp', 'displayName': 'WfLibraryPredefined.cpp' },
+    'NF[137]$vl': { 'htmlFileName': 'WfLibraryReflection.cpp', 'displayName': 'WfLibraryReflection.cpp' },
     'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
     'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
     'NF[13]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
@@ -990,9 +1024,17 @@ symbolToFiles = {
     'NF[21]$vl::reflection': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
     'NF[21]$vl::reflection::description': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
     'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[22]$vl::reflection': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[22]$vl::reflection::description': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
     'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[23]$vl::reflection': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[23]$vl::reflection::description': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
     'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl::reflection': { 'htmlFileName': 'WfLibraryPredefined.cpp', 'displayName': 'WfLibraryPredefined.cpp' },
+    'NF[24]$vl::reflection::description': { 'htmlFileName': 'WfLibraryPredefined.cpp', 'displayName': 'WfLibraryPredefined.cpp' },
     'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[25]$vl::reflection': { 'htmlFileName': 'WfLibraryReflection.cpp', 'displayName': 'WfLibraryReflection.cpp' },
+    'NF[25]$vl::reflection::description': { 'htmlFileName': 'WfLibraryReflection.cpp', 'displayName': 'WfLibraryReflection.cpp' },
     'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
     'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
     'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
@@ -1126,6 +1168,8 @@ symbolToFiles = {
     'NI$vl::reflection::description::ValueInterfaceProxy': null,
     'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::parsing::json::JsonNode::IVisitor>': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
     'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::parsing::xml::XmlNode::IVisitor>': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IAsync>': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::ICoroutine>': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
     'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueDictionary>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
     'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerable>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
     'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerator>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },

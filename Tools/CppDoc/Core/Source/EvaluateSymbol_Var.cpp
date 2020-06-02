@@ -22,18 +22,21 @@ namespace symbol_type_resolving
 				{
 					if (!rootVarDecl->initializer)
 					{
-						throw TypeCheckerException();
+						// TODO: [cpp.md] `auto` parameters on lambda expression.
+						eval.evaluatedTypes.Add(invokerPa.tsys->Any());
 					}
-
-					ExprTsysList types;
-					ExprToTsysInternal(eval.declPa, rootVarDecl->initializer->arguments[0].item, types, eval.ev.isVariadic);
-
-					for (vint k = 0; k < types.Count(); k++)
+					else
 					{
-						auto type = ResolvePendingType(eval.declPa, rootVarDecl->type, types[k]);
-						if (!eval.evaluatedTypes.Contains(type))
+						ExprTsysList types;
+						ExprToTsysInternal(eval.declPa, rootVarDecl->initializer->arguments[0].item, types, eval.ev.isVariadic);
+
+						for (vint k = 0; k < types.Count(); k++)
 						{
-							eval.evaluatedTypes.Add(type);
+							auto type = ResolvePendingType(eval.declPa, rootVarDecl->type, types[k]);
+							if (!eval.evaluatedTypes.Contains(type))
+							{
+								eval.evaluatedTypes.Add(type);
+							}
 						}
 					}
 				}
