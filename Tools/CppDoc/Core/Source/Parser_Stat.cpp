@@ -79,9 +79,16 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// goto IDENTIFIER;
 		auto stat = MakePtr<GotoStat>();
-		if (!ParseCppName(stat->name, cursor))
+		if (TestToken(cursor, CppTokens::ID, false) ||
+			TestToken(cursor, CppTokens::INT, false) ||
+			TestToken(cursor, CppTokens::HEX, false) ||
+			TestToken(cursor, CppTokens::BIN, false))
 		{
-			throw StopParsingException(cursor);
+			stat->name.name = WString(cursor->token.reading, cursor->token.length);
+			stat->name.tokenCount = 1;
+			stat->name.nameTokens[0] = cursor->token;
+			stat->name.type = CppNameType::Normal;
+			SkipToken(cursor);
 		}
 		RequireToken(cursor, CppTokens::SEMICOLON);
 		return stat;
@@ -347,17 +354,25 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			bool isLabel = false;
 			{
 				auto oldCursor = cursor;
-				isLabel = TestToken(cursor, CppTokens::ID) && !TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false) && TestToken(cursor, CppTokens::COLON);
+				isLabel = (
+					TestToken(cursor, CppTokens::ID) ||
+					TestToken(cursor, CppTokens::INT) ||
+					TestToken(cursor, CppTokens::HEX) ||
+					TestToken(cursor, CppTokens::BIN)
+					) &&
+					!TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false) &&
+					TestToken(cursor, CppTokens::COLON);
 				cursor = oldCursor;
 			}
 
 			if (isLabel)
 			{
 				auto stat = MakePtr<LabelStat>();
-				if (!ParseCppName(stat->name, cursor))
-				{
-					throw StopParsingException(cursor);
-				}
+				stat->name.name = WString(cursor->token.reading, cursor->token.length);
+				stat->name.tokenCount = 1;
+				stat->name.nameTokens[0] = cursor->token;
+				stat->name.type = CppNameType::Normal;
+				SkipToken(cursor);
 				RequireToken(cursor, CppTokens::COLON);
 				stat->stat = ParseStat(pa, cursor);
 				return stat;
