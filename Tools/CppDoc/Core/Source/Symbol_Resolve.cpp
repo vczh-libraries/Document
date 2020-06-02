@@ -463,9 +463,9 @@ void ResolveSymbolInStaticScopeInternal(const ParsingArguments& pa, Symbol* scop
 				if (found) break;
 
 				// for a class forward declaration, symbols are not in the class's scope
-				if (classDecl->keepTemplateArgumentAlive)
+				if (classDecl->templateScope)
 				{
-					if (auto pSymbols = classDecl->keepTemplateArgumentAlive->TryGetChildren_NFb(rsa.name.name))
+					if (auto pSymbols = classDecl->templateScope->TryGetChildren_NFb(rsa.name.name))
 					{
 						PickTemplateArgumentSymbols(pSymbols, found, rsa);
 					}

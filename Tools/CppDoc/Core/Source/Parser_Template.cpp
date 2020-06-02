@@ -15,7 +15,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 
 	if (!specSymbol)
 	{
-		specSymbol = MakePtr<Symbol>(pa.scopeSymbol);
+		specSymbol = pa.root->CreateSymbol(pa.scopeSymbol);
 	}
 	spec = MakePtr<TemplateSpec>();
 	auto newPa = pa.WithScope(specSymbol.Obj());
@@ -44,7 +44,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			}
 
 			// create symbol
-			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : MakePtr<Symbol>(specSymbol.Obj());
+			auto argumentSymbol = argument.templateSpec ? argument.templateSpecScope : pa.root->CreateSymbol(specSymbol.Obj());
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericTypeArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;
@@ -137,7 +137,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 			}
 
 			// create symbol
-			auto argumentSymbol = MakePtr<Symbol>(specSymbol.Obj());
+			auto argumentSymbol = pa.root->CreateSymbol(specSymbol.Obj());
 			argumentSymbol->kind = symbol_component::SymbolKind::GenericValueArgument;
 			argumentSymbol->ellipsis = argument.ellipsis;
 			argumentSymbol->name = argument.name.name;

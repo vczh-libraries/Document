@@ -119,10 +119,10 @@ public:
 	bool											decorator__ForceInline = false;
 	bool											needResolveTypeFromInitializer = false;
 
-	// for template forward declaration to keep symbols alive
+	// for template forward declaration to access symbols
 	// do not access it after parsing
 	// templateSpec->arguments[i].argumentSymbol will be children of it
-	Ptr<Symbol>										keepTemplateArgumentAlive;
+	Symbol*											templateScope = nullptr;
 };
 
 enum class CppMethodType
@@ -189,10 +189,10 @@ public:
 	CppClassType									classType;
 	bool											decoratorFriend = false;
 
-	// for template forward declaration to keep symbols alive
+	// for template forward declaration to access symbols
 	// do not access it after parsing
 	// templateSpec->arguments[i].argumentSymbol will be children of it
-	Ptr<Symbol>										keepTemplateArgumentAlive;
+	Symbol*											templateScope;
 };
 
 class FriendClassDeclaration : public Declaration

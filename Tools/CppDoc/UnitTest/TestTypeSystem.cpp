@@ -84,8 +84,9 @@ TEST_FILE
 
 	TEST_CASE(L"Test function type creation")
 	{
-		auto n1 = MakePtr<Symbol>();
-		auto n2 = MakePtr<Symbol>();
+		auto root = MakePtr<RootSymbol>();
+		auto n1 = root->CreateSymbol();
+		auto n2 = root->CreateSymbol();
 		auto tsys = ITsysAlloc::Create();
 		auto tvoid = tsys->Void();
 		auto tdecl1 = tsys->DeclOf(n1.Obj());
@@ -142,8 +143,9 @@ TEST_FILE
 
 	TEST_CASE(L"Test declaration type creation")
 	{
-		auto n1 = MakePtr<Symbol>();
-		auto n2 = MakePtr<Symbol>();
+		auto root = MakePtr<RootSymbol>();
+		auto n1 = root->CreateSymbol();
+		auto n2 = root->CreateSymbol();
 		auto tsys = ITsysAlloc::Create();
 		TEST_ASSERT(tsys->DeclOf(n1.Obj()) == tsys->DeclOf(n1.Obj()));
 		TEST_ASSERT(tsys->DeclOf(n1.Obj()) != tsys->DeclOf(n2.Obj()));
@@ -183,8 +185,9 @@ TEST_FILE
 
 	TEST_CASE(L"Test generic function type creation")
 	{
-		auto n = MakePtr<Symbol>();
-		auto narg = MakePtr<Symbol>();
+		auto root = MakePtr<RootSymbol>();
+		auto n = root->CreateSymbol();
+		auto narg = root->CreateSymbol();
 		auto tsys = ITsysAlloc::Create();
 		auto tdecl = tsys->DeclOf(n.Obj());
 
@@ -207,8 +210,9 @@ TEST_FILE
 
 	TEST_CASE(L"Test generic argument type creation")
 	{
-		auto narg1 = MakePtr<Symbol>();
-		auto narg2 = MakePtr<Symbol>();
+		auto root = MakePtr<RootSymbol>();
+		auto narg1 = root->CreateSymbol();
+		auto narg2 = root->CreateSymbol();
 		auto tsys = ITsysAlloc::Create();
 		TsysGenericArg arg1 = { narg1.Obj(),0,nullptr };
 		TsysGenericArg arg2 = { narg2.Obj(),0,nullptr };
@@ -223,16 +227,17 @@ TEST_FILE
 
 	TEST_CASE(L"Test generic declaration instance type creation")
 	{
+		auto root = MakePtr<RootSymbol>();
 		auto tsys = ITsysAlloc::Create();
 
-		auto createSpec = [&tsys](Symbol* declSymbol)
+		auto createSpec = [&tsys, &root](Symbol* declSymbol)
 		{
-			auto sa1 = MakePtr<Symbol>();
+			auto sa1 = root->CreateSymbol();
 			sa1->kind = symbol_component::SymbolKind::GenericTypeArgument;
 			sa1->name = L"sa1";
 			declSymbol->AddChild_NFb(sa1->name, sa1);
 
-			auto sa2 = MakePtr<Symbol>();
+			auto sa2 = root->CreateSymbol();
 			sa2->kind = symbol_component::SymbolKind::GenericTypeArgument;
 			sa2->name = L"sa2";
 			declSymbol->AddChild_NFb(sa2->name, sa2);
@@ -274,8 +279,6 @@ TEST_FILE
 			spec->AssignDeclSymbol(declSymbol);
 			return spec;
 		};
-
-		auto root = MakePtr<Symbol>();
 
 		auto bf1 = MakePtr<ClassDeclaration>();
 		bf1->name.name = L"BF1";
@@ -346,8 +349,9 @@ TEST_FILE
 
 	TEST_CASE(L"Test type flag")
 	{
-		auto n1 = MakePtr<Symbol>();
-		auto n2 = MakePtr<Symbol>();
+		auto root = MakePtr<RootSymbol>();
+		auto n1 = root->CreateSymbol();
+		auto n2 = root->CreateSymbol();
 		auto tsys = ITsysAlloc::Create();
 		auto tvoid = tsys->Void();
 		auto tdecl1 = tsys->DeclOf(n1.Obj());

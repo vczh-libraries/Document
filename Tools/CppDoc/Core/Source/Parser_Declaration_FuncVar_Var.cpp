@@ -72,7 +72,7 @@ void ParseDeclaration_Variable(
 		}
 
 		auto decl = MakePtr<ForwardVariableDeclaration>();
-		decl->keepTemplateArgumentAlive = specSymbol;
+		decl->templateScope = specSymbol.Obj();
 		FILL_VARIABLE;
 		output.Add(decl);
 
@@ -101,7 +101,7 @@ void ParseDeclaration_Variable(
 				throw StopParsingException(cursor);
 			}
 
-			decl->keepTemplateArgumentAlive = specSymbol;
+			decl->templateScope = specSymbol.Obj();
 			createdSymbol = context->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable);
 
 			if (!createdSymbol)

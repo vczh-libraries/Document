@@ -61,7 +61,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 
 		// ... ;
 		auto decl = MakePtr<ForwardClassDeclaration>();
-		decl->keepTemplateArgumentAlive = specSymbol;
+		decl->templateScope = specSymbol.Obj();
 		decl->templateSpec = spec;
 		decl->specializationSpec = specializationSpec;
 		decl->classType = classType;

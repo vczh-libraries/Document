@@ -4,9 +4,8 @@
 Predefined Types
 ***********************************************************************/
 
-ITsys* GetTsysFromCppType(Ptr<ITsysAlloc> tsys, const WString& cppType)
+ITsys* GetTsysFromCppType(const ParsingArguments& pa, const WString& cppType)
 {
-	ParsingArguments pa(nullptr, tsys, nullptr);
 	TOKEN_READER(cppType.Buffer());
 	auto cursor = reader.GetFirstToken();
 	auto type = ParseType(pa, cursor);
@@ -23,50 +22,48 @@ template<typename> struct TsysInfo;
 template<typename T>
 struct TsysInfo<T const>
 {
-	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
+	static ITsys* GetTsys(const ParsingArguments& pa)
 	{
-		return TsysInfo<T>::GetTsys(tsys)->CVOf({ true,false });
+		return TsysInfo<T>::GetTsys(pa)->CVOf({ true,false });
 	}
 };
 
 template<typename T>
 struct TsysInfo<T*>
 {
-	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
+	static ITsys* GetTsys(const ParsingArguments& pa)
 	{
-		return TsysInfo<T>::GetTsys(tsys)->PtrOf();
+		return TsysInfo<T>::GetTsys(pa)->PtrOf();
 	}
 };
 
 template<typename T>
 struct TsysInfo<T&>
 {
-	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
+	static ITsys* GetTsys(const ParsingArguments& pa)
 	{
-		return TsysInfo<T>::GetTsys(tsys)->LRefOf();
+		return TsysInfo<T>::GetTsys(pa)->LRefOf();
 	}
 };
 
 template<typename T>
 struct TsysInfo<T&&>
 {
-	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)
+	static ITsys* GetTsys(const ParsingArguments& pa)
 	{
-		return TsysInfo<T>::GetTsys(tsys)->RRefOf();
+		return TsysInfo<T>::GetTsys(pa)->RRefOf();
 	}
 };
 
 #define DEFINE_TSYS(TYPE)\
 template<> struct TsysInfo<TYPE>\
 {\
-	static ITsys* GetTsys(Ptr<ITsysAlloc> tsys)\
+	static ITsys* GetTsys(const ParsingArguments& pa)\
 	{\
-		ITsysAlloc* cachedTsys = nullptr;\
-		ITsys* cachedType = nullptr;\
-		if (cachedTsys != tsys.Obj())\
+		static ITsys* cachedType = nullptr;\
+		if (!cachedType)\
 		{\
-			cachedTsys = tsys.Obj();\
-			cachedType = GetTsysFromCppType(tsys, L#TYPE);\
+			cachedType = GetTsysFromCppType(pa, L#TYPE);\
 		}\
 		return cachedType;\
 	}\
@@ -255,7 +252,7 @@ void AssertPostfixUnary(ParsingArguments& pa, const WString& name, const WString
 {
 	auto input = name + op;
 	auto log = L"(" + name + L" " + op + L")";
-	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
+	auto tsys = TsysInfo<T>::GetTsys(pa);
 	AssertExpr_NotTestCase(pa, input.Buffer(), log.Buffer(), TsysToString(tsys).Buffer());
 }
 
@@ -264,7 +261,7 @@ void AssertPrefixUnary(ParsingArguments& pa, const WString& name, const WString&
 {
 	auto input = op + name;
 	auto log = L"(" + op + L" " + name + L")";
-	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
+	auto tsys = TsysInfo<T>::GetTsys(pa);
 	AssertExpr_NotTestCase(pa, input.Buffer(), log.Buffer(), TsysToString(tsys).Buffer());
 }
 
@@ -273,7 +270,7 @@ void AssertDereferenceUnary(ParsingArguments& pa, const WString& name)
 {
 	auto input = L"*&" + name;
 	auto log = L"(* (& " + name + L"))";
-	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
+	auto tsys = TsysInfo<T>::GetTsys(pa);
 	AssertExpr_NotTestCase(pa, input.Buffer(), log.Buffer(), TsysToString(tsys).Buffer());
 }
 
@@ -282,7 +279,7 @@ void AssertBinary(ParsingArguments& pa, const WString& name1, const WString& nam
 {
 	auto input = name1 + op + name2;
 	auto log = L"(" + name1 + L" " + op + L" " + name2 + L")";
-	auto tsys = TsysInfo<T>::GetTsys(pa.tsys);
+	auto tsys = TsysInfo<T>::GetTsys(pa);
 	AssertExpr_NotTestCase(pa, input.Buffer(), log.Buffer(), TsysToString(tsys).Buffer());
 }
 

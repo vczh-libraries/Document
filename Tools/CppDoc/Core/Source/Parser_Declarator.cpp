@@ -676,7 +676,7 @@ void InjectClassMemberCacheIfNecessary(const ParsingArguments& pa, const ParseDe
 		}
 		else
 		{
-			declarator->scopeSymbolToReuse = MakePtr<Symbol>(pa.scopeSymbol, declarator->classMemberCache);
+			declarator->scopeSymbolToReuse = pa.root->CreateSymbol(pa.scopeSymbol, declarator->classMemberCache);
 		}
 	}
 

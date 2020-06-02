@@ -255,8 +255,11 @@ namespace symbol_component
 	};
 }
 
+class RootSymbol;
+
 class Symbol : public Object
 {
+	friend class RootSymbol;
 private:
 	symbol_component::SymbolCategory				category;
 	symbol_component::SC_Data						categoryData;
@@ -277,9 +280,11 @@ public:
 	List<Symbol*>									usingNss;
 	SortedList<symbol_component::SG_Cache>			genericCaches;
 
-public:
+protected:
 	Symbol(symbol_component::SymbolCategory _category, Symbol* _parent = nullptr);
 	Symbol(Symbol* _parent = nullptr, Ptr<symbol_component::ClassMemberCache> classMemberCache = nullptr);
+
+public:
 	~Symbol();
 
 	symbol_component::SymbolCategory				GetCategory();
@@ -380,11 +385,14 @@ public:
 
 class RootSymbol : public Symbol
 {
+private:
+	List<Ptr<Symbol>>								createdSymbols;
+
 public:
-	RootSymbol()
-		:Symbol(symbol_component::SymbolCategory::Normal)
-	{
-	}
+	RootSymbol();
+	~RootSymbol();
+
+	Ptr<Symbol>										CreateSymbol(Symbol* _parent = nullptr, Ptr<symbol_component::ClassMemberCache> classMemberCache = nullptr);
 };
 
 template<typename T>

@@ -351,7 +351,7 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 
 				if (auto varDecl = forwardDecls[i].Cast<VariableDeclaration>())
 				{
-					if (varDecl->keepTemplateArgumentAlive)
+					if (varDecl->templateScope)
 					{
 						// this could be a template class field defined out of the class
 						// but the one defined in the class is not a forward variable declaration
