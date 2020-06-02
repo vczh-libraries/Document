@@ -28,6 +28,11 @@
 
 ### Bugs
 
+- [ ] Disable `MakePtr<Symbol>` by make the constructor private, and make sure all created symbols are saved somewhere, never being deleted.
+- [ ] Fix memory leaks.
+  - [ ] Add a function: when ASTs and symbols are not needed, disconnect ASTs and symbols.
+  - [ ] Or call it automatically in `Program`'s destructor.
+- [ ] No recursion in `void Visit(IfElseStat* self) override`, functions will test if `self->falseStat` is another `IfElseStat`, and loop until it is not.
 - [ ] **STL** Demo
   - [ ] Remove special handling for `common_type_t<...>`
 - [ ] **TypePrinter** Demo
