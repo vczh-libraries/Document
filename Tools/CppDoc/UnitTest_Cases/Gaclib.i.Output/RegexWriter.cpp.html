@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RegexWriter.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;RegexWriter.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[76]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[3]$vl::regex"><div class="ref" onclick="jumpToSymbol([], ['vl::regex'], [], [])">regex</div></div>
+	{
+		<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal'], [], [])">regex_internal</div>;
+
+<div class="token cpp_comment ">/***********************************************************************
+RegexNode
+***********************************************************************/</div>
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)'], [], [])"><div class="token cpp_function">RegexNode</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal'], [], [])">regex_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Expression'], [], [])"><div class="token cpp_type">Expression</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Expression::Ref'], [], [])"><div class="token cpp_type">Ref</div></div> <div class="def" id="NI$vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[impl0]::_expression"><div><div class="token cpp_argument">_expression</div></div></div>)
+			:expression(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[impl0]::_expression'], [], [])"><div class="token cpp_argument">_expression</div></div>)
+		{
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::Some@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Some@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">Some</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">Loop</div></div>(<div class="token cpp_number ">1</div>, -<div class="token cpp_number ">1</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::Any@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Any@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">Any</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">Loop</div></div>(<div class="token cpp_number ">0</div>, -<div class="token cpp_number ">1</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::Opt@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Opt@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">Opt</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">Loop</div></div>(<div class="token cpp_number ">0</div>, <div class="token cpp_number ">1</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">Loop</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::min"><div><div class="token cpp_argument">min</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::max"><div><div class="token cpp_argument">max</div></div></div>)<div class="token cpp_keyword ">const</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::LoopExpression'], [], [])"><div class="token cpp_type">LoopExpression</div></div>* <div class="def" id="NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::LoopExpression'], [], [])"><div class="token cpp_type">LoopExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::LoopExpression::min'], [], [])"><div class="token cpp_field">min</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::min'], [], [])"><div class="token cpp_argument">min</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::LoopExpression::max'], [], [])"><div class="token cpp_field">max</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::max'], [], [])"><div class="token cpp_argument">max</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::LoopExpression::preferLong'], [], [])"><div class="token cpp_field">preferLong</div></div>=<div class="token cpp_keyword ">true</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::LoopExpression::expression'], [], [])"><div class="token cpp_field">expression</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)'], [], [])"><div class="token cpp_function">AtLeast</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[impl0]::min"><div><div class="token cpp_argument">min</div></div></div>)<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], ['vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">Loop</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[impl0]::min'], [], [])"><div class="token cpp_argument">min</div></div>, -<div class="token cpp_number ">1</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">+</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>&amp; <div class="def" id="NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node"><div><div class="token cpp_argument">node</div></div></div>)<div class="token cpp_keyword ">const</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::SequenceExpression'], [], [])"><div class="token cpp_type">SequenceExpression</div></div>* <div class="def" id="NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::SequenceExpression'], [], [])"><div class="token cpp_type">SequenceExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::SequenceExpression::left'], [], [])"><div class="token cpp_field">left</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::SequenceExpression::right'], [], [])"><div class="token cpp_field">right</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">|</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>&amp; <div class="def" id="NI$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node"><div><div class="token cpp_argument">node</div></div></div>)<div class="token cpp_keyword ">const</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::AlternateExpression'], [], [])"><div class="token cpp_type">AlternateExpression</div></div>* <div class="def" id="NI$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::AlternateExpression'], [], [])"><div class="token cpp_type">AlternateExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::AlternateExpression::left'], [], [])"><div class="token cpp_field">left</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::AlternateExpression::right'], [], [])"><div class="token cpp_field">right</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator +@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">+</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PositiveExpression'], [], [])"><div class="token cpp_type">PositiveExpression</div></div>* <div class="def" id="NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PositiveExpression'], [], [])"><div class="token cpp_type">PositiveExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PositiveExpression::expression'], [], [])"><div class="token cpp_field">expression</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator -@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">-</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::NegativeExpression'], [], [])"><div class="token cpp_type">NegativeExpression</div></div>* <div class="def" id="NI$vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::NegativeExpression'], [], [])"><div class="token cpp_type">NegativeExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::NegativeExpression::expression'], [], [])"><div class="token cpp_field">expression</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator !@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div></div></div>()<div class="token cpp_keyword ">const</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>* <div class="def" id="NI$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::source"><div>source</div></div>=<div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>());
+<div class="expandable"><div class="disabled">			CHECK_ERROR(source, L&quot;RegexNode::operator!()#operator ! can only applies on charset expressions.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::source'], [], [])">source</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexNode::operator!()#operator ! can only applies on charset expressions.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>&gt; <div class="def" id="NI$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::target'], [], [])">target</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::ranges'], [], [])"><div class="token cpp_field">ranges</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::source'], [], [])">source</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::ranges'], [], [])"><div class="token cpp_field">ranges</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::target'], [], [])">target</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::reverse'], [], [])"><div class="token cpp_field">reverse</div></div>=!<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::source'], [], [])">source</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::reverse'], [], [])"><div class="token cpp_field">reverse</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>::<div class="def" id="FB$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">%</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>&amp; <div class="def" id="NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node"><div><div class="token cpp_argument">node</div></div></div>)<div class="token cpp_keyword ">const</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>* <div class="def" id="NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::left"><div>left</div></div>=<div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>());
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>* <div class="def" id="NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::right"><div>right</div></div>=<div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>());
+<div class="expandable"><div class="disabled">			CHECK_ERROR(left &amp;&amp; right &amp;&amp; !left-&gt;reverse &amp;&amp; !right-&gt;reverse, L&quot;RegexNode::operator%(const RegexNode&amp;)#operator % only connects non-reverse charset expressions.&quot;);</div>
+<div class="expanded">			<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::left'], [], [])">left</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::right'], [], [])">right</div> &amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::left'], [], [])">left</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::reverse'], [], [])"><div class="token cpp_field">reverse</div></div> &amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::right'], [], [])">right</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::reverse'], [], [])"><div class="token cpp_field">reverse</div></div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexNode::operator%(const RegexNode&amp;)#operator % only connects non-reverse charset expressions.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>&gt; <div class="def" id="NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::reverse'], [], [])"><div class="token cpp_field">reverse</div></div>=<div class="token cpp_keyword ">false</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::ranges'], [], [])"><div class="token cpp_field">ranges</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::left'], [], [])">left</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::ranges'], [], [])"><div class="token cpp_field">ranges</div></div>);
+			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::right'], [], [])">right</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::ranges'], [], [])"><div class="token cpp_field">ranges</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)'], ['vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)'], [], [])"><div class="token cpp_function">AddRangeWithConflict</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::right'], [], [])">right</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::ranges'], [], [])"><div class="token cpp_field">ranges</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::i'], [], [])">i</div>]))
+				{
+<div class="expandable"><div class="disabled">					CHECK_ERROR(false, L&quot;RegexNode::operator%(const RegexNode&amp;)#Failed to create charset expression from operator %.&quot;);</div>
+<div class="expanded">					<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="token cpp_keyword ">false</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;RegexNode::operator%(const RegexNode&amp;)#Failed to create charset expression from operator %.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+				}
+			}
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>);
+		}
+
+<div class="token cpp_comment ">/***********************************************************************
+Regex Writer
+***********************************************************************/</div>
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)'], [], [])"><div class="token cpp_function">rCapture</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::name"><div><div class="token cpp_argument">name</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>&amp; <div class="def" id="NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::node"><div><div class="token cpp_argument">node</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CaptureExpression'], [], [])"><div class="token cpp_type">CaptureExpression</div></div>* <div class="def" id="NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CaptureExpression'], [], [])"><div class="token cpp_type">CaptureExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CaptureExpression::name'], [], [])"><div class="token cpp_field">name</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::name'], [], [])"><div class="token cpp_argument">name</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CaptureExpression::expression'], [], [])"><div class="token cpp_field">expression</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode::expression'], [], [])"><div class="token cpp_field">expression</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)'], [], [])"><div class="token cpp_function">rUsing</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::name"><div><div class="token cpp_argument">name</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::UsingExpression'], [], [])"><div class="token cpp_type">UsingExpression</div></div>* <div class="def" id="NI$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::UsingExpression'], [], [])"><div class="token cpp_type">UsingExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::UsingExpression::name'], [], [])"><div class="token cpp_field">name</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::name'], [], [])"><div class="token cpp_argument">name</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)'], [], [])"><div class="token cpp_function">rMatch</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::name"><div><div class="token cpp_argument">name</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::MatchExpression'], [], [])"><div class="token cpp_type">MatchExpression</div></div>* <div class="def" id="NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::MatchExpression'], [], [])"><div class="token cpp_type">MatchExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::MatchExpression::name'], [], [])"><div class="token cpp_field">name</div></div><div class="ref" onclick="jumpToSymbol(['vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::name'], [], [])"><div class="token cpp_argument">name</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::MatchExpression::index'], [], [])"><div class="token cpp_field">index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)'], [], [])"><div class="token cpp_function">rMatch</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::MatchExpression'], [], [])"><div class="token cpp_type">MatchExpression</div></div>* <div class="def" id="NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::MatchExpression'], [], [])"><div class="token cpp_type">MatchExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::MatchExpression::index'], [], [])"><div class="token cpp_field">index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::rBegin@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rBegin@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">rBegin</div></div></div>()
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::BeginExpression'], [], [])"><div class="token cpp_type">BeginExpression</div></div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::rEnd@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rEnd@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">rEnd</div></div></div>()
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::EndExpression'], [], [])"><div class="token cpp_type">EndExpression</div></div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div></div>(<div class="token cpp_keyword ">wchar_t</div> <div class="def" id="NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="token cpp_keyword ">wchar_t</div> <div class="def" id="NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>)
+		{
+			<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>* <div class="def" id="NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::target"><div>target</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression'], [], [])"><div class="token cpp_type">CharSetExpression</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharSetExpression::reverse'], [], [])"><div class="token cpp_field">reverse</div></div>=<div class="token cpp_keyword ">false</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::target'], [], [])">target</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)'], ['vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)'], [], [])"><div class="token cpp_function">AddRangeWithConflict</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharRange'], [], [])"><div class="token cpp_type">CharRange</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>));
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::target'], [], [])">target</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::r_d@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::r_d@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">r_d</div></div></div>()
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_string ">L&apos;0&apos;</div>, <div class="token cpp_string ">L&apos;9&apos;</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::r_l@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::r_l@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">r_l</div></div></div>()
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_string ">L&apos;a&apos;</div>, <div class="token cpp_string ">L&apos;z&apos;</div>)<div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)'], [], [], [])"><div class="token cpp_function">%</div></div><div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_string ">L&apos;A&apos;</div>, <div class="token cpp_string ">L&apos;Z&apos;</div>)<div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)'], [], [], [])"><div class="token cpp_function">%</div></div><div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_string ">L&apos;_&apos;</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::r_w@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::r_w@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">r_w</div></div></div>()
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_string ">L&apos;0&apos;</div>, <div class="token cpp_string ">L&apos;9&apos;</div>)<div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)'], [], [], [])"><div class="token cpp_function">%</div></div><div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_string ">L&apos;a&apos;</div>, <div class="token cpp_string ">L&apos;z&apos;</div>)<div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)'], [], [], [])"><div class="token cpp_function">%</div></div><div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_string ">L&apos;A&apos;</div>, <div class="token cpp_string ">L&apos;Z&apos;</div>)<div class="ref" onclick="jumpToSymbol(['vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)'], [], [], [])"><div class="token cpp_function">%</div></div><div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_string ">L&apos;_&apos;</div>);
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexNode'], [], [])"><div class="token cpp_type">RegexNode</div></div> <div class="def" id="FB$vl::regex::rAnyChar@::vl::regex::RegexNode()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::rAnyChar@::vl::regex::RegexNode()'], [], [])"><div class="token cpp_function">rAnyChar</div></div></div>()
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], ['vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)'], [], [])"><div class="token cpp_function">rC</div></div>(<div class="token cpp_number ">1</div>, <div class="token cpp_number ">65535</div>);
+		}
+	}
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl',
+            'NF[73]$vl',
+            'NF[74]$vl',
+            'NF[75]$vl',
+            'NF[76]$vl'
+        ]
+    },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::Obj@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Obj</span>()',
+        'impls': [
+            'FB$vl::Ptr::Obj@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator ->@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator -&gt;</span>()',
+        'impls': [
+            'FB$vl::Ptr::operator ->@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">D</span>, <span class="cpp_type">Ss</span>&gt;(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">D</span>&gt; &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">S</span>&gt;<span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">vint</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">S</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">S</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">CopyFrom</span>&lt;<span class="cpp_type">Ds</span>, <span class="cpp_type">Ss</span>&gt;(<span class="cpp_type">Ds</span> &, <span class="cpp_type">Ss</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::regex': {
+        'displayNameInHtml': 'vl::regex',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::regex',
+            'NF[1]$vl::regex',
+            'NF[2]$vl::regex',
+            'NF[3]$vl::regex'
+        ]
+    },
+    'vl::regex::RegexNode': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>',
+        'impls': [
+            'NI$vl::regex::RegexNode'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">$__ctor</span>(vl::regex_internal::<span class="cpp_type">Expression</span>::<span class="cpp_type">Ref</span>)',
+        'impls': [
+            'FB$vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[impl0]::_expression': {
+        'displayNameInHtml': '_expression',
+        'impls': [
+            'NI$vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[impl0]::_expression'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::Any@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">Any</span>()',
+        'impls': [
+            'FB$vl::regex::RegexNode::Any@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::Any@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">AtLeast</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[impl0]::min': {
+        'displayNameInHtml': 'min',
+        'impls': [
+            'NI$vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[impl0]::min'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">Loop</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::max': {
+        'displayNameInHtml': 'max',
+        'impls': [
+            'NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::max'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::min': {
+        'displayNameInHtml': 'min',
+        'impls': [
+            'NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::min'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::Opt@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">Opt</span>()',
+        'impls': [
+            'FB$vl::regex::RegexNode::Opt@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::Opt@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::Some@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">Some</span>()',
+        'impls': [
+            'FB$vl::regex::RegexNode::Some@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::Some@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::expression': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_field">expression</span>',
+        'impls': [
+            'NI$vl::regex::RegexNode::expression'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator !@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">operator !</span>()',
+        'impls': [
+            'FB$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::source': {
+        'displayNameInHtml': 'source',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::source'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">operator %</span>(<span class="cpp_type">RegexNode</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::left': {
+        'displayNameInHtml': 'left',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::left'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node': {
+        'displayNameInHtml': 'node',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::right': {
+        'displayNameInHtml': 'right',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::right'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator +@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">operator +</span>()',
+        'impls': [
+            'FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">operator +</span>(<span class="cpp_type">RegexNode</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node': {
+        'displayNameInHtml': 'node',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator -@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">operator -</span>()',
+        'impls': [
+            'FB$vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)': {
+        'displayNameInHtml': '<span class="cpp_type">RegexNode</span>::<span class="cpp_function">operator |</span>(<span class="cpp_type">RegexNode</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[decl0]'
+        ]
+    },
+    'vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node': {
+        'displayNameInHtml': 'node',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::rAnyChar@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_function">rAnyChar</span>()',
+        'impls': [
+            'FB$vl::regex::rAnyChar@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::rAnyChar@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::rBegin@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_function">rBegin</span>()',
+        'impls': [
+            'FB$vl::regex::rBegin@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::rBegin@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)': {
+        'displayNameInHtml': '<span class="cpp_function">rC</span>(<span class="cpp_keyword">wchar_t</span>, <span class="cpp_keyword">wchar_t</span>)',
+        'impls': [
+            'FB$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[decl0]'
+        ]
+    },
+    'vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::a'
+        ],
+        'decls': []
+    },
+    'vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::b': {
+        'displayNameInHtml': 'b',
+        'impls': [
+            'NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::b'
+        ],
+        'decls': []
+    },
+    'vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)': {
+        'displayNameInHtml': '<span class="cpp_function">rCapture</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">RegexNode</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[decl0]'
+        ]
+    },
+    'vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::name': {
+        'displayNameInHtml': 'name',
+        'impls': [
+            'NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::name'
+        ],
+        'decls': []
+    },
+    'vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::node': {
+        'displayNameInHtml': 'node',
+        'impls': [
+            'NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::node'
+        ],
+        'decls': []
+    },
+    'vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::rEnd@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_function">rEnd</span>()',
+        'impls': [
+            'FB$vl::regex::rEnd@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::rEnd@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_function">rMatch</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::name': {
+        'displayNameInHtml': 'name',
+        'impls': [
+            'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::name'
+        ],
+        'decls': []
+    },
+    'vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_function">rMatch</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_function">rUsing</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::name': {
+        'displayNameInHtml': 'name',
+        'impls': [
+            'NI$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::name'
+        ],
+        'decls': []
+    },
+    'vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::target': {
+        'displayNameInHtml': 'target',
+        'impls': [
+            'NI$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::target'
+        ],
+        'decls': []
+    },
+    'vl::regex::r_d@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_function">r_d</span>()',
+        'impls': [
+            'FB$vl::regex::r_d@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::r_d@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::r_l@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_function">r_l</span>()',
+        'impls': [
+            'FB$vl::regex::r_l@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::r_l@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex::r_w@::vl::regex::RegexNode()': {
+        'displayNameInHtml': '<span class="cpp_function">r_w</span>()',
+        'impls': [
+            'FB$vl::regex::r_w@::vl::regex::RegexNode()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex::r_w@::vl::regex::RegexNode()[decl0]'
+        ]
+    },
+    'vl::regex_internal': {
+        'displayNameInHtml': 'vl::regex_internal',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::regex_internal',
+            'NF[1]$vl::regex_internal',
+            'NF[2]$vl::regex_internal',
+            'NF[3]$vl::regex_internal',
+            'NF[4]$vl::regex_internal',
+            'NF[5]$vl::regex_internal',
+            'NF[6]$vl::regex_internal',
+            'NF[7]$vl::regex_internal',
+            'NF[8]$vl::regex_internal',
+            'NF[9]$vl::regex_internal',
+            'NF[10]$vl::regex_internal',
+            'NF[11]$vl::regex_internal',
+            'NF[12]$vl::regex_internal',
+            'NF[13]$vl::regex_internal',
+            'NF[14]$vl::regex_internal'
+        ]
+    },
+    'vl::regex_internal::AlternateExpression': {
+        'displayNameInHtml': '<span class="cpp_type">AlternateExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::AlternateExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::AlternateExpression::left': {
+        'displayNameInHtml': '<span class="cpp_type">AlternateExpression</span>::<span class="cpp_field">left</span>',
+        'impls': [
+            'NI$vl::regex_internal::AlternateExpression::left'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::AlternateExpression::right': {
+        'displayNameInHtml': '<span class="cpp_type">AlternateExpression</span>::<span class="cpp_field">right</span>',
+        'impls': [
+            'NI$vl::regex_internal::AlternateExpression::right'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::BeginExpression': {
+        'displayNameInHtml': '<span class="cpp_type">BeginExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::BeginExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CaptureExpression': {
+        'displayNameInHtml': '<span class="cpp_type">CaptureExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::CaptureExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CaptureExpression::expression': {
+        'displayNameInHtml': '<span class="cpp_type">CaptureExpression</span>::<span class="cpp_field">expression</span>',
+        'impls': [
+            'NI$vl::regex_internal::CaptureExpression::expression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CaptureExpression::name': {
+        'displayNameInHtml': '<span class="cpp_type">CaptureExpression</span>::<span class="cpp_field">name</span>',
+        'impls': [
+            'NI$vl::regex_internal::CaptureExpression::name'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CharRange': {
+        'displayNameInHtml': '<span class="cpp_type">CharRange</span>',
+        'impls': [
+            'NI$vl::regex_internal::CharRange'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CharSetExpression': {
+        'displayNameInHtml': '<span class="cpp_type">CharSetExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::CharSetExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)': {
+        'displayNameInHtml': '<span class="cpp_type">CharSetExpression</span>::<span class="cpp_function">AddRangeWithConflict</span>(<span class="cpp_type">CharRange</span>)',
+        'impls': [
+            'FB$vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)[decl0]'
+        ]
+    },
+    'vl::regex_internal::CharSetExpression::ranges': {
+        'displayNameInHtml': '<span class="cpp_type">CharSetExpression</span>::<span class="cpp_field">ranges</span>',
+        'impls': [
+            'NI$vl::regex_internal::CharSetExpression::ranges'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CharSetExpression::reverse': {
+        'displayNameInHtml': '<span class="cpp_type">CharSetExpression</span>::<span class="cpp_field">reverse</span>',
+        'impls': [
+            'NI$vl::regex_internal::CharSetExpression::reverse'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::EndExpression': {
+        'displayNameInHtml': '<span class="cpp_type">EndExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::EndExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Expression': {
+        'displayNameInHtml': '<span class="cpp_type">Expression</span>',
+        'impls': [
+            'NI$vl::regex_internal::Expression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Expression::Ref': {
+        'displayNameInHtml': '<span class="cpp_type">Expression</span>::<span class="cpp_type">Ref</span>',
+        'impls': [
+            'NI$vl::regex_internal::Expression::Ref'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::LoopExpression': {
+        'displayNameInHtml': '<span class="cpp_type">LoopExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::LoopExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::LoopExpression::expression': {
+        'displayNameInHtml': '<span class="cpp_type">LoopExpression</span>::<span class="cpp_field">expression</span>',
+        'impls': [
+            'NI$vl::regex_internal::LoopExpression::expression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::LoopExpression::max': {
+        'displayNameInHtml': '<span class="cpp_type">LoopExpression</span>::<span class="cpp_field">max</span>',
+        'impls': [
+            'NI$vl::regex_internal::LoopExpression::max'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::LoopExpression::min': {
+        'displayNameInHtml': '<span class="cpp_type">LoopExpression</span>::<span class="cpp_field">min</span>',
+        'impls': [
+            'NI$vl::regex_internal::LoopExpression::min'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::LoopExpression::preferLong': {
+        'displayNameInHtml': '<span class="cpp_type">LoopExpression</span>::<span class="cpp_field">preferLong</span>',
+        'impls': [
+            'NI$vl::regex_internal::LoopExpression::preferLong'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::MatchExpression': {
+        'displayNameInHtml': '<span class="cpp_type">MatchExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::MatchExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::MatchExpression::index': {
+        'displayNameInHtml': '<span class="cpp_type">MatchExpression</span>::<span class="cpp_field">index</span>',
+        'impls': [
+            'NI$vl::regex_internal::MatchExpression::index'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::MatchExpression::name': {
+        'displayNameInHtml': '<span class="cpp_type">MatchExpression</span>::<span class="cpp_field">name</span>',
+        'impls': [
+            'NI$vl::regex_internal::MatchExpression::name'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::NegativeExpression': {
+        'displayNameInHtml': '<span class="cpp_type">NegativeExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::NegativeExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::NegativeExpression::expression': {
+        'displayNameInHtml': '<span class="cpp_type">NegativeExpression</span>::<span class="cpp_field">expression</span>',
+        'impls': [
+            'NI$vl::regex_internal::NegativeExpression::expression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PositiveExpression': {
+        'displayNameInHtml': '<span class="cpp_type">PositiveExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::PositiveExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PositiveExpression::expression': {
+        'displayNameInHtml': '<span class="cpp_type">PositiveExpression</span>::<span class="cpp_field">expression</span>',
+        'impls': [
+            'NI$vl::regex_internal::PositiveExpression::expression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::SequenceExpression': {
+        'displayNameInHtml': '<span class="cpp_type">SequenceExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::SequenceExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::SequenceExpression::left': {
+        'displayNameInHtml': '<span class="cpp_type">SequenceExpression</span>::<span class="cpp_field">left</span>',
+        'impls': [
+            'NI$vl::regex_internal::SequenceExpression::left'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::SequenceExpression::right': {
+        'displayNameInHtml': '<span class="cpp_type">SequenceExpression</span>::<span class="cpp_field">right</span>',
+        'impls': [
+            'NI$vl::regex_internal::SequenceExpression::right'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::UsingExpression': {
+        'displayNameInHtml': '<span class="cpp_type">UsingExpression</span>',
+        'impls': [
+            'NI$vl::regex_internal::UsingExpression'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::UsingExpression::name': {
+        'displayNameInHtml': '<span class="cpp_type">UsingExpression</span>::<span class="cpp_field">name</span>',
+        'impls': [
+            'NI$vl::regex_internal::UsingExpression::name'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)[impl0]': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'FB$vl::Ptr::Obj@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)[impl0]': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)[impl0]': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)[impl0]': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)[impl0]': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'FB$vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)[impl0]': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'FB$vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[impl0]': null,
+    'FB$vl::regex::RegexNode::Any@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::Any@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[impl0]': null,
+    'FB$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]': null,
+    'FB$vl::regex::RegexNode::Opt@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::Opt@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::RegexNode::Some@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::Some@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]': null,
+    'FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]': null,
+    'FB$vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]': null,
+    'FB$vl::regex::rAnyChar@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::rAnyChar@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::rBegin@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::rBegin@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]': null,
+    'FB$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]': null,
+    'FB$vl::regex::rEnd@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::rEnd@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]': null,
+    'FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]': null,
+    'FB$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]': null,
+    'FB$vl::regex::r_d@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::r_d@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::r_l@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::r_l@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex::r_w@::vl::regex::RegexNode()[decl0]': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'FB$vl::regex::r_w@::vl::regex::RegexNode()[impl0]': null,
+    'FB$vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)[decl0]': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'FB$vl::regex_internal::CharSetExpression::AddRangeWithConflict@bool(::vl::regex_internal::CharRange)[impl0]': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::regex': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[0]$vl::regex_internal': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::regex_internal': { 'htmlFileName': 'RegexParser.cpp', 'displayName': 'RegexParser.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::regex_internal': { 'htmlFileName': 'RegexPure.cpp', 'displayName': 'RegexPure.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::regex_internal': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::regex_internal': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::regex_internal': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::regex': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[1]$vl::regex_internal': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::regex': { 'htmlFileName': 'Regex.cpp', 'displayName': 'Regex.cpp' },
+    'NF[2]$vl::regex_internal': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[35]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[37]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[38]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[39]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::regex': null,
+    'NF[3]$vl::regex_internal': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[40]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[42]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[44]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[46]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::regex_internal': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::regex_internal': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[62]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[63]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[64]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[65]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[66]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[67]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[68]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[69]$vl': { 'htmlFileName': 'Regex.cpp', 'displayName': 'Regex.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::regex_internal': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[70]$vl': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[71]$vl': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
+    'NF[72]$vl': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NF[73]$vl': { 'htmlFileName': 'RegexParser.cpp', 'displayName': 'RegexParser.cpp' },
+    'NF[74]$vl': { 'htmlFileName': 'RegexPure.cpp', 'displayName': 'RegexPure.cpp' },
+    'NF[75]$vl': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[76]$vl': null,
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::regex_internal': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::regex_internal': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::regex_internal': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::regex::RegexNode': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NI$vl::regex::RegexNode::$__ctor@(::vl::regex_internal::Expression::Ref)[impl0]::_expression': null,
+    'NI$vl::regex::RegexNode::AtLeast@::vl::regex::RegexNode(::vl::vint)[impl0]::min': null,
+    'NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::max': null,
+    'NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::min': null,
+    'NI$vl::regex::RegexNode::Loop@::vl::regex::RegexNode(::vl::vint, ::vl::vint)[impl0]::target': null,
+    'NI$vl::regex::RegexNode::expression': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NI$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::source': null,
+    'NI$vl::regex::RegexNode::operator !@::vl::regex::RegexNode()[impl0]::target': null,
+    'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::i': null,
+    'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::left': null,
+    'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node': null,
+    'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::right': null,
+    'NI$vl::regex::RegexNode::operator %@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target': null,
+    'NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode()[impl0]::target': null,
+    'NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node': null,
+    'NI$vl::regex::RegexNode::operator +@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target': null,
+    'NI$vl::regex::RegexNode::operator -@::vl::regex::RegexNode()[impl0]::target': null,
+    'NI$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::node': null,
+    'NI$vl::regex::RegexNode::operator |@::vl::regex::RegexNode(::vl::regex::RegexNode const &)[impl0]::target': null,
+    'NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::a': null,
+    'NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::b': null,
+    'NI$vl::regex::rC@::vl::regex::RegexNode(wchar_t, wchar_t)[impl0]::target': null,
+    'NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::name': null,
+    'NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::node': null,
+    'NI$vl::regex::rCapture@::vl::regex::RegexNode(::vl::WString const &, ::vl::regex::RegexNode const &)[impl0]::target': null,
+    'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::index': null,
+    'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::name': null,
+    'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::WString const &, ::vl::vint)[impl0]::target': null,
+    'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::index': null,
+    'NI$vl::regex::rMatch@::vl::regex::RegexNode(::vl::vint)[impl0]::target': null,
+    'NI$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::name': null,
+    'NI$vl::regex::rUsing@::vl::regex::RegexNode(::vl::WString const &)[impl0]::target': null,
+    'NI$vl::regex_internal::AlternateExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::AlternateExpression::left': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::AlternateExpression::right': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::BeginExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::CaptureExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::CaptureExpression::expression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::CaptureExpression::name': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::CharRange': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NI$vl::regex_internal::CharSetExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::CharSetExpression::ranges': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::CharSetExpression::reverse': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::EndExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::Expression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::Expression::Ref': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::LoopExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::LoopExpression::expression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::LoopExpression::max': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::LoopExpression::min': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::LoopExpression::preferLong': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::MatchExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::MatchExpression::index': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::MatchExpression::name': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::NegativeExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::NegativeExpression::expression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::PositiveExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::PositiveExpression::expression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::SequenceExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::SequenceExpression::left': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::SequenceExpression::right': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::UsingExpression': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::regex_internal::UsingExpression::name': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

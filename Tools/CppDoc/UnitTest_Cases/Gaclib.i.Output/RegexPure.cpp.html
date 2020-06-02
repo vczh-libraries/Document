@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RegexPure.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;RegexPure.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[74]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[11]$vl::regex_internal"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal'], [], [])">regex_internal</div></div>
+	{
+
+<div class="token cpp_comment ">/***********************************************************************
+PureInterpretor
+***********************************************************************/</div>
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)'], [], [])"><div class="token cpp_function">PureInterpretor</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Automaton'], [], [])"><div class="token cpp_type">Automaton</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Automaton::Ref'], [], [])"><div class="token cpp_type">Ref</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa"><div><div class="token cpp_argument">dfa</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharRange'], [], [])"><div class="token cpp_type">CharRange</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharRange::List'], [], [])"><div class="token cpp_type">List</div></div>&amp; <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::subsets"><div><div class="token cpp_argument">subsets</div></div></div>)
+			:transition(<div class="token cpp_number ">0</div>)
+			,finalState(<div class="token cpp_number ">0</div>)
+			,relatedFinalState(<div class="token cpp_number ">0</div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa'], [], [])"><div class="token cpp_argument">dfa</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Automaton::states'], [], [])"><div class="token cpp_field">states</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charSetCount'], [], [])"><div class="token cpp_field">charSetCount</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::subsets'], [], [])"><div class="token cpp_argument">subsets</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>()+<div class="token cpp_number ">1</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::startState'], [], [])"><div class="token cpp_field">startState</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa'], [], [])"><div class="token cpp_argument">dfa</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Automaton::states'], [], [])"><div class="token cpp_field">states</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::IndexOf@::vl::vint([K] const &)'], ['vl::collections::List::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa'], [], [])"><div class="token cpp_argument">dfa</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Automaton::startState'], [], [])"><div class="token cpp_field">startState</div></div>);
+
+			<div class="token cpp_comment ">// Map char to input index (equivalent char class)</div>
+			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::SupportedCharCount'], [], [])"><div class="token cpp_field">SupportedCharCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charMap'], [], [])"><div class="token cpp_field">charMap</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i'], [], [])">i</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charSetCount'], [], [])"><div class="token cpp_field">charSetCount</div></div>-<div class="token cpp_number ">1</div>;
+			}
+			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i2"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i2'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::subsets'], [], [])"><div class="token cpp_argument">subsets</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i2'], [], [])">i</div>++)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharRange'], [], [])"><div class="token cpp_type">CharRange</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::range"><div>range</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::subsets'], [], [])"><div class="token cpp_argument">subsets</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i2'], [], [])">i</div>];
+				<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j"><div>j</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::range'], [], [])">range</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharRange::begin'], [], [])"><div class="token cpp_field">begin</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j'], [], [])">j</div>&lt;=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::range'], [], [])">range</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::CharRange::end'], [], [])"><div class="token cpp_field">end</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j'], [], [])">j</div>++)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charMap'], [], [])"><div class="token cpp_field">charMap</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j'], [], [])">j</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i2'], [], [])">i</div>;
+				}
+			}
+			
+			<div class="token cpp_comment ">// Create transitions from DFA, using input index to represent input char</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>*[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>];
+			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3'], [], [])">i</div>++)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3'], [], [])">i</div>]=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charSetCount'], [], [])"><div class="token cpp_field">charSetCount</div></div>];
+				<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j2"><div>j</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j2'], [], [])">j</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charSetCount'], [], [])"><div class="token cpp_field">charSetCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j2'], [], [])">j</div>++)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3'], [], [])">i</div>][<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j2'], [], [])">j</div>]=-<div class="token cpp_number ">1</div>;
+				}
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::State'], [], [])"><div class="token cpp_type">State</div></div>* <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::state"><div>state</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa'], [], [])"><div class="token cpp_argument">dfa</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Automaton::states'], [], [])"><div class="token cpp_field">states</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3'], [], [])">i</div>].<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>();
+				<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j3"><div>j</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j3'], [], [])">j</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::state'], [], [])">state</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::State::transitions'], [], [])"><div class="token cpp_field">transitions</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j3'], [], [])">j</div>++)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Transition'], [], [])"><div class="token cpp_type">Transition</div></div>* <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfaTransition"><div>dfaTransition</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::state'], [], [])">state</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::State::transitions'], [], [])"><div class="token cpp_field">transitions</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j3'], [], [])">j</div>];
+					<div class="token cpp_keyword ">switch</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfaTransition'], [], [])">dfaTransition</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Transition::type'], [], [])"><div class="token cpp_field">type</div></div>)
+					{
+					<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Transition'], [], [])"><div class="token cpp_type">Transition</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Transition::Type::Chars'], [], [])"><div class="token cpp_enum">Chars</div></div>:
+						{
+							<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::index"><div>index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::subsets'], [], [])"><div class="token cpp_argument">subsets</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfaTransition'], [], [])">dfaTransition</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Transition::range'], [], [])"><div class="token cpp_field">range</div></div>);
+							<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::index'], [], [])">index</div>==-<div class="token cpp_number ">1</div>)
+							{
+<div class="expandable"><div class="disabled">								CHECK_ERROR(false, L&quot;PureInterpretor::PureInterpretor(Automaton::Ref, CharRange::List&amp;)#Specified chars don&apos;t appear in the normalized char ranges.&quot;);</div>
+<div class="expanded">								<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="token cpp_keyword ">false</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;PureInterpretor::PureInterpretor(Automaton::Ref, CharRange::List&amp;)#Specified chars don&apos;t appear in the normalized char ranges.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+							}
+							<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3'], [], [])">i</div>][<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::index'], [], [])">index</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa'], [], [])"><div class="token cpp_argument">dfa</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Automaton::states'], [], [])"><div class="token cpp_field">states</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::IndexOf@::vl::vint([K] const &)'], ['vl::collections::List::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfaTransition'], [], [])">dfaTransition</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Transition::target'], [], [])"><div class="token cpp_field">target</div></div>);
+						}
+						<div class="token cpp_keyword ">break</div>;
+					<div class="token cpp_keyword ">default</div>:
+<div class="expandable"><div class="disabled">						CHECK_ERROR(false, L&quot;PureInterpretor::PureInterpretor(Automaton::Ref, CharRange::List&amp;)#PureInterpretor only accepts Transition::Chars transitions.&quot;);</div>
+<div class="expanded">						<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="token cpp_keyword ">false</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;PureInterpretor::PureInterpretor(Automaton::Ref, CharRange::List&amp;)#PureInterpretor only accepts Transition::Chars transitions.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+					}
+				}
+			}
+
+			<div class="token cpp_comment ">// Mark final states</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>=<div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">bool</div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>];
+			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i4"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i4'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i4'], [], [])">i</div>++)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i4'], [], [])">i</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa'], [], [])"><div class="token cpp_argument">dfa</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::Automaton::states'], [], [])"><div class="token cpp_field">states</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i4'], [], [])">i</div>]<div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::State::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>;
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::~PureInterpretor@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">PureInterpretor</div></div></div>()
+		{
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>) <div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>;
+			<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>;
+			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]::i'], [], [])">i</div>];
+			}
+			<div class="token cpp_keyword ">delete</div>[] <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>;
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)'], [], [])"><div class="token cpp_function">MatchHead</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input"><div><div class="token cpp_argument">input</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start"><div><div class="token cpp_argument">start</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult'], [], [])"><div class="token cpp_type">PureResult</div></div>&amp; <div class="def" id="NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result"><div><div class="token cpp_argument">result</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::start'], [], [])"><div class="token cpp_field">start</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input'], [], [])"><div class="token cpp_argument">input</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start'], [], [])"><div class="token cpp_argument">start</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::length'], [], [])"><div class="token cpp_field">length</div></div>=-<div class="token cpp_number ">1</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>=-<div class="token cpp_number ">1</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::terminateState'], [], [])"><div class="token cpp_field">terminateState</div></div>=-<div class="token cpp_number ">1</div>;
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState"><div>currentState</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::startState'], [], [])"><div class="token cpp_field">startState</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateState"><div>terminateState</div></div>=-<div class="token cpp_number ">1</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateLength"><div>terminateLength</div></div>=-<div class="token cpp_number ">1</div>;
+			<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read"><div>read</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input'], [], [])"><div class="token cpp_argument">input</div></div>;
+			<div class="token cpp_keyword ">while</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState'], [], [])">currentState</div>!=-<div class="token cpp_number ">1</div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateState'], [], [])">terminateState</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState'], [], [])">currentState</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateLength'], [], [])">terminateLength</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read'], [], [])">read</div>-<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input'], [], [])"><div class="token cpp_argument">input</div></div>;
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState'], [], [])">currentState</div>])
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::length'], [], [])"><div class="token cpp_field">length</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateLength'], [], [])">terminateLength</div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState'], [], [])">currentState</div>;
+				}
+				<div class="token cpp_keyword ">if</div>(!*<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read'], [], [])">read</div>)<div class="token cpp_keyword ">break</div>;
+<div class="disabled">#ifdef VCZH_GCC</div>
+<div class="disabled">				if(*read&gt;=SupportedCharCount)break;</div>
+<div class="disabled">#endif</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::charIndex"><div>charIndex</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charMap'], [], [])"><div class="token cpp_field">charMap</div></div>[*<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read'], [], [])">read</div>++];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState'], [], [])">currentState</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState'], [], [])">currentState</div>][<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::charIndex'], [], [])">charIndex</div>];
+			}
+
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>==-<div class="token cpp_number ">1</div>)
+			{
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateLength'], [], [])">terminateLength</div>&gt;<div class="token cpp_number ">0</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::terminateState'], [], [])"><div class="token cpp_field">terminateState</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateState'], [], [])">terminateState</div>;
+				}
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult::length'], [], [])"><div class="token cpp_field">length</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateLength'], [], [])">terminateLength</div>;
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+			}
+			<div class="token cpp_keyword ">else</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+			}
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)'], [], [])"><div class="token cpp_function">Match</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input"><div><div class="token cpp_argument">input</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start"><div><div class="token cpp_argument">start</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureResult'], [], [])"><div class="token cpp_type">PureResult</div></div>&amp; <div class="def" id="NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result"><div><div class="token cpp_argument">result</div></div></div>)
+		{
+			<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read"><div>read</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input'], [], [])"><div class="token cpp_argument">input</div></div>;
+			<div class="token cpp_keyword ">while</div>(*<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read'], [], [])">read</div>)
+			{
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol(['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)'], ['vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)'], [], [])"><div class="token cpp_function">MatchHead</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read'], [], [])">read</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start'], [], [])"><div class="token cpp_argument">start</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div>))
+				{
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+				}
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read'], [], [])">read</div>++;
+			}
+			<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::GetStartState@::vl::vint()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::GetStartState@::vl::vint()'], [], [])"><div class="token cpp_function">GetStartState</div></div></div>()
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::startState'], [], [])"><div class="token cpp_field">startState</div></div>;
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)'], [], [])"><div class="token cpp_function">Transit</div></div></div>(<div class="token cpp_keyword ">wchar_t</div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::input"><div><div class="token cpp_argument">input</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::state"><div><div class="token cpp_argument">state</div></div></div>)
+		{
+			<div class="token cpp_keyword ">if</div>(<div class="token cpp_number ">0</div>&lt;=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::charIndex"><div>charIndex</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charMap'], [], [])"><div class="token cpp_field">charMap</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::input'], [], [])"><div class="token cpp_argument">input</div></div>];
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::nextState"><div>nextState</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div>][<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::charIndex'], [], [])">charIndex</div>];
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::nextState'], [], [])">nextState</div>;
+			}
+			<div class="token cpp_keyword ">else</div>
+			{
+				<div class="token cpp_keyword ">return</div> -<div class="token cpp_number ">1</div>;
+			}
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)'], [], [])"><div class="token cpp_function">IsFinalState</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]::state"><div><div class="token cpp_argument">state</div></div></div>)
+		{
+			<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>&lt;=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div>];
+		}
+
+		<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)'], [], [])"><div class="token cpp_function">IsDeadState</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::state"><div><div class="token cpp_argument">state</div></div></div>)
+		{
+			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div>==-<div class="token cpp_number ">1</div>) <div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charSetCount'], [], [])"><div class="token cpp_field">charSetCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div>][<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::i'], [], [])">i</div>]!=-<div class="token cpp_number ">1</div>)
+				{
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+				}
+			}
+			<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()'], [], [])"><div class="token cpp_function">PrepareForRelatedFinalStateTable</div></div></div>()
+		{
+			<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>];
+				<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i'], [], [])">i</div>++)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i'], [], [])">i</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::finalState'], [], [])"><div class="token cpp_field">finalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i'], [], [])">i</div>]?<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i'], [], [])">i</div>:-<div class="token cpp_number ">1</div>;
+				}
+				<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">true</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::modifyCount"><div>modifyCount</div></div>=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::stateCount'], [], [])"><div class="token cpp_field">stateCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2'], [], [])">i</div>++)
+					{
+						<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2'], [], [])">i</div>]==-<div class="token cpp_number ">1</div>)
+						{
+							<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::state"><div>state</div></div>=-<div class="token cpp_number ">1</div>;
+							<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::j"><div>j</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::j'], [], [])">j</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::charSetCount'], [], [])"><div class="token cpp_field">charSetCount</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::j'], [], [])">j</div>++)
+							{
+								<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::nextState"><div>nextState</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::transition'], [], [])"><div class="token cpp_field">transition</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2'], [], [])">i</div>][<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::j'], [], [])">j</div>];
+								<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::nextState'], [], [])">nextState</div>!=-<div class="token cpp_number ">1</div>)
+								{
+									<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::state'], [], [])">state</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::nextState'], [], [])">nextState</div>];
+									<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::state'], [], [])">state</div>!=-<div class="token cpp_number ">1</div>)
+									{
+										<div class="token cpp_keyword ">break</div>;
+									}
+								}
+							}
+							<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::state'], [], [])">state</div>!=-<div class="token cpp_number ">1</div>)
+							{
+								<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2'], [], [])">i</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::state'], [], [])">state</div>;
+								<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::modifyCount'], [], [])">modifyCount</div>++;
+							}
+						}
+					}
+					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::modifyCount'], [], [])">modifyCount</div>==<div class="token cpp_number ">0</div>)
+					{
+						<div class="token cpp_keyword ">break</div>;
+					}
+				}
+			}
+		}
+
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>::<div class="def" id="FB$vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)'], [], [])"><div class="token cpp_function">GetRelatedFinalState</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[impl0]::state"><div><div class="token cpp_argument">state</div></div></div>)
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>?<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::relatedFinalState'], [], [])"><div class="token cpp_field">relatedFinalState</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[impl0]::state'], [], [])"><div class="token cpp_argument">state</div></div>]:-<div class="token cpp_number ">1</div>;
+		}
+	}
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl',
+            'NF[73]$vl',
+            'NF[74]$vl',
+            'NF[75]$vl',
+            'NF[76]$vl'
+        ]
+    },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::Obj@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Obj</span>()',
+        'impls': [
+            'FB$vl::Ptr::Obj@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator ->@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator -&gt;</span>()',
+        'impls': [
+            'FB$vl::Ptr::operator ->@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::IndexOf@::vl::vint([K] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::operator []@[T] &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedList::IndexOf@::vl::vint([K] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal': {
+        'displayNameInHtml': 'vl::regex_internal',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::regex_internal',
+            'NF[1]$vl::regex_internal',
+            'NF[2]$vl::regex_internal',
+            'NF[3]$vl::regex_internal',
+            'NF[4]$vl::regex_internal',
+            'NF[5]$vl::regex_internal',
+            'NF[6]$vl::regex_internal',
+            'NF[7]$vl::regex_internal',
+            'NF[8]$vl::regex_internal',
+            'NF[9]$vl::regex_internal',
+            'NF[10]$vl::regex_internal',
+            'NF[11]$vl::regex_internal',
+            'NF[12]$vl::regex_internal',
+            'NF[13]$vl::regex_internal',
+            'NF[14]$vl::regex_internal'
+        ]
+    },
+    'vl::regex_internal::Automaton': {
+        'displayNameInHtml': '<span class="cpp_type">Automaton</span>',
+        'impls': [
+            'NI$vl::regex_internal::Automaton'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Automaton::Ref': {
+        'displayNameInHtml': '<span class="cpp_type">Automaton</span>::<span class="cpp_type">Ref</span>',
+        'impls': [
+            'NI$vl::regex_internal::Automaton::Ref'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Automaton::startState': {
+        'displayNameInHtml': '<span class="cpp_type">Automaton</span>::<span class="cpp_field">startState</span>',
+        'impls': [
+            'NI$vl::regex_internal::Automaton::startState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Automaton::states': {
+        'displayNameInHtml': '<span class="cpp_type">Automaton</span>::<span class="cpp_field">states</span>',
+        'impls': [
+            'NI$vl::regex_internal::Automaton::states'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CharRange': {
+        'displayNameInHtml': '<span class="cpp_type">CharRange</span>',
+        'impls': [
+            'NI$vl::regex_internal::CharRange'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CharRange::List': {
+        'displayNameInHtml': '<span class="cpp_type">CharRange</span>::<span class="cpp_type">List</span>',
+        'impls': [
+            'NI$vl::regex_internal::CharRange::List'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CharRange::begin': {
+        'displayNameInHtml': '<span class="cpp_type">CharRange</span>::<span class="cpp_field">begin</span>',
+        'impls': [
+            'NI$vl::regex_internal::CharRange::begin'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::CharRange::end': {
+        'displayNameInHtml': '<span class="cpp_type">CharRange</span>::<span class="cpp_field">end</span>',
+        'impls': [
+            'NI$vl::regex_internal::CharRange::end'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor'
+        ],
+        'decls': [
+            'NF[0]$vl::regex_internal::PureInterpretor'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Automaton</span>::<span class="cpp_type">Ref</span>, <span class="cpp_type">CharRange</span>::<span class="cpp_type">List</span> &)',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa': {
+        'displayNameInHtml': 'dfa',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfaTransition': {
+        'displayNameInHtml': 'dfaTransition',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfaTransition'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i2': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i2'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i4': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i4'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j': {
+        'displayNameInHtml': 'j',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j2': {
+        'displayNameInHtml': 'j',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j2'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j3': {
+        'displayNameInHtml': 'j',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j3'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::range': {
+        'displayNameInHtml': 'range',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::range'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::state': {
+        'displayNameInHtml': 'state',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::state'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::subsets': {
+        'displayNameInHtml': 'subsets',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::subsets'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">GetRelatedFinalState</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[impl0]::state': {
+        'displayNameInHtml': 'state',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[impl0]::state'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::GetStartState@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">GetStartState</span>()',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::GetStartState@::vl::vint()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::GetStartState@::vl::vint()[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">IsDeadState</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::state': {
+        'displayNameInHtml': 'state',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::state'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">IsFinalState</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]::state': {
+        'displayNameInHtml': 'state',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]::state'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">Match</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">PureResult</span> &)',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input': {
+        'displayNameInHtml': 'input',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read': {
+        'displayNameInHtml': 'read',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result': {
+        'displayNameInHtml': 'result',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start': {
+        'displayNameInHtml': 'start',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">MatchHead</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">PureResult</span> &)',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::charIndex': {
+        'displayNameInHtml': 'charIndex',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::charIndex'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState': {
+        'displayNameInHtml': 'currentState',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input': {
+        'displayNameInHtml': 'input',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read': {
+        'displayNameInHtml': 'read',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result': {
+        'displayNameInHtml': 'result',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start': {
+        'displayNameInHtml': 'start',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateLength': {
+        'displayNameInHtml': 'terminateLength',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateLength'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateState': {
+        'displayNameInHtml': 'terminateState',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">PrepareForRelatedFinalStateTable</span>()',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::j': {
+        'displayNameInHtml': 'j',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::j'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::modifyCount': {
+        'displayNameInHtml': 'modifyCount',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::modifyCount'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::nextState': {
+        'displayNameInHtml': 'nextState',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::nextState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::state': {
+        'displayNameInHtml': 'state',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::state'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::SupportedCharCount': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_field">SupportedCharCount</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::SupportedCharCount'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">Transit</span>(<span class="cpp_keyword">wchar_t</span>, <span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::charIndex': {
+        'displayNameInHtml': 'charIndex',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::charIndex'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::input': {
+        'displayNameInHtml': 'input',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::input'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::nextState': {
+        'displayNameInHtml': 'nextState',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::nextState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::state': {
+        'displayNameInHtml': 'state',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::state'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::charMap': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_field">charMap</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::charMap'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::charSetCount': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_field">charSetCount</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::charSetCount'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::finalState': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_field">finalState</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::finalState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::relatedFinalState': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_field">relatedFinalState</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::relatedFinalState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::startState': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_field">startState</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::startState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::stateCount': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_field">stateCount</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::stateCount'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::transition': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_field">transition</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::transition'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureInterpretor::~PureInterpretor@()': {
+        'displayNameInHtml': '<span class="cpp_type">PureInterpretor</span>::<span class="cpp_function">~PureInterpretor</span>()',
+        'impls': [
+            'FB$vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::regex_internal::PureInterpretor::~PureInterpretor@()[decl0]'
+        ]
+    },
+    'vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureResult': {
+        'displayNameInHtml': '<span class="cpp_type">PureResult</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureResult'
+        ],
+        'decls': [
+            'NF[0]$vl::regex_internal::PureResult'
+        ]
+    },
+    'vl::regex_internal::PureResult::finalState': {
+        'displayNameInHtml': '<span class="cpp_type">PureResult</span>::<span class="cpp_field">finalState</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureResult::finalState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureResult::length': {
+        'displayNameInHtml': '<span class="cpp_type">PureResult</span>::<span class="cpp_field">length</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureResult::length'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureResult::start': {
+        'displayNameInHtml': '<span class="cpp_type">PureResult</span>::<span class="cpp_field">start</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureResult::start'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::PureResult::terminateState': {
+        'displayNameInHtml': '<span class="cpp_type">PureResult</span>::<span class="cpp_field">terminateState</span>',
+        'impls': [
+            'NI$vl::regex_internal::PureResult::terminateState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::State': {
+        'displayNameInHtml': '<span class="cpp_type">State</span>',
+        'impls': [
+            'NI$vl::regex_internal::State'
+        ],
+        'decls': [
+            'NF[0]$vl::regex_internal::State'
+        ]
+    },
+    'vl::regex_internal::State::finalState': {
+        'displayNameInHtml': '<span class="cpp_type">State</span>::<span class="cpp_field">finalState</span>',
+        'impls': [
+            'NI$vl::regex_internal::State::finalState'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::State::transitions': {
+        'displayNameInHtml': '<span class="cpp_type">State</span>::<span class="cpp_field">transitions</span>',
+        'impls': [
+            'NI$vl::regex_internal::State::transitions'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Transition': {
+        'displayNameInHtml': '<span class="cpp_type">Transition</span>',
+        'impls': [
+            'NI$vl::regex_internal::Transition'
+        ],
+        'decls': [
+            'NF[0]$vl::regex_internal::Transition'
+        ]
+    },
+    'vl::regex_internal::Transition::Type::Chars': {
+        'displayNameInHtml': '<span class="cpp_type">Transition</span>::<span class="cpp_type">Type</span>::<span class="cpp_enum">Chars</span>',
+        'impls': [
+            'NI$vl::regex_internal::Transition::Type::Chars'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Transition::range': {
+        'displayNameInHtml': '<span class="cpp_type">Transition</span>::<span class="cpp_field">range</span>',
+        'impls': [
+            'NI$vl::regex_internal::Transition::range'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Transition::target': {
+        'displayNameInHtml': '<span class="cpp_type">Transition</span>::<span class="cpp_field">target</span>',
+        'impls': [
+            'NI$vl::regex_internal::Transition::target'
+        ],
+        'decls': []
+    },
+    'vl::regex_internal::Transition::type': {
+        'displayNameInHtml': '<span class="cpp_type">Transition</span>::<span class="cpp_field">type</span>',
+        'impls': [
+            'NI$vl::regex_internal::Transition::type'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::Ptr::Obj@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::GetStartState@::vl::vint()[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::GetStartState@::vl::vint()[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]': null,
+    'FB$vl::regex_internal::PureInterpretor::~PureInterpretor@()[decl0]': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'FB$vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]': null,
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::regex_internal': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[0]$vl::regex_internal::PureInterpretor': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[0]$vl::regex_internal::PureResult': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[0]$vl::regex_internal::State': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[0]$vl::regex_internal::Transition': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::regex_internal': { 'htmlFileName': 'RegexParser.cpp', 'displayName': 'RegexParser.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::regex_internal': null,
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::regex_internal': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::regex_internal': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::regex_internal': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::regex_internal': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::regex_internal': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[35]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[37]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[38]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[39]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::regex_internal': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[40]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[42]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[43]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[44]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[45]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[46]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::regex_internal': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::regex_internal': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[62]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[63]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[64]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[65]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[66]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[67]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[68]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[69]$vl': { 'htmlFileName': 'Regex.cpp', 'displayName': 'Regex.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::regex_internal': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[70]$vl': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[71]$vl': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
+    'NF[72]$vl': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NF[73]$vl': { 'htmlFileName': 'RegexParser.cpp', 'displayName': 'RegexParser.cpp' },
+    'NF[74]$vl': null,
+    'NF[75]$vl': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[76]$vl': { 'htmlFileName': 'RegexWriter.cpp', 'displayName': 'RegexWriter.cpp' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::regex_internal': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::regex_internal': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::regex_internal': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::regex_internal::Automaton': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::Automaton::Ref': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::Automaton::startState': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::Automaton::states': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::CharRange': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NI$vl::regex_internal::CharRange::List': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NI$vl::regex_internal::CharRange::begin': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NI$vl::regex_internal::CharRange::end': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NI$vl::regex_internal::PureInterpretor': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfa': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::dfaTransition': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i2': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i3': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::i4': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::index': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j2': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::j3': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::range': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::state': null,
+    'NI$vl::regex_internal::PureInterpretor::$__ctor@(::vl::regex_internal::Automaton::Ref, ::vl::regex_internal::CharRange::List &)[impl0]::subsets': null,
+    'NI$vl::regex_internal::PureInterpretor::GetRelatedFinalState@::vl::vint(::vl::vint)[impl0]::state': null,
+    'NI$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::i': null,
+    'NI$vl::regex_internal::PureInterpretor::IsDeadState@bool(::vl::vint)[impl0]::state': null,
+    'NI$vl::regex_internal::PureInterpretor::IsFinalState@bool(::vl::vint)[impl0]::state': null,
+    'NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input': null,
+    'NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read': null,
+    'NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result': null,
+    'NI$vl::regex_internal::PureInterpretor::Match@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start': null,
+    'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::charIndex': null,
+    'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::currentState': null,
+    'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::input': null,
+    'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::read': null,
+    'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::result': null,
+    'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::start': null,
+    'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateLength': null,
+    'NI$vl::regex_internal::PureInterpretor::MatchHead@bool(wchar_t const *, wchar_t const *, ::vl::regex_internal::PureResult &)[impl0]::terminateState': null,
+    'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i': null,
+    'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::i2': null,
+    'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::j': null,
+    'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::modifyCount': null,
+    'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::nextState': null,
+    'NI$vl::regex_internal::PureInterpretor::PrepareForRelatedFinalStateTable@void()[impl0]::state': null,
+    'NI$vl::regex_internal::PureInterpretor::SupportedCharCount': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::charIndex': null,
+    'NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::input': null,
+    'NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::nextState': null,
+    'NI$vl::regex_internal::PureInterpretor::Transit@::vl::vint(wchar_t, ::vl::vint)[impl0]::state': null,
+    'NI$vl::regex_internal::PureInterpretor::charMap': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::charSetCount': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::finalState': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::relatedFinalState': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::startState': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::stateCount': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::transition': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureInterpretor::~PureInterpretor@()[impl0]::i': null,
+    'NI$vl::regex_internal::PureResult': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureResult::finalState': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureResult::length': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureResult::start': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::PureResult::terminateState': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NI$vl::regex_internal::State': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::State::finalState': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::State::transitions': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::Transition': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::Transition::Type::Chars': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::Transition::range': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::Transition::target': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::regex_internal::Transition::type': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

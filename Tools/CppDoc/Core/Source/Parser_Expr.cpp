@@ -320,6 +320,7 @@ Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCurs
 		try
 		{
 			auto type = ParseLongType(pa, cursor);
+			type = ParseTypeBeforeDeclarator(pa, type, cursor);
 			type = AppendArrayTypeForCtor(pa, type, cursor);
 
 			if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
@@ -853,6 +854,7 @@ Ptr<Expr> ParseNewExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppT
 	}
 
 	newExpr->type = ParseLongType(pa, cursor);
+	newExpr->type = ParseTypeBeforeDeclarator(pa, newExpr->type, cursor);
 	newExpr->type = AppendArrayTypeForCtor(pa, newExpr->type, cursor);
 
 	if (TestToken(cursor, CppTokens::LPARENTHESIS, false) || TestToken(cursor, CppTokens::LBRACE, false))
@@ -1170,45 +1172,32 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, const ParsingExprArguments
 }
 
 /***********************************************************************
-ParseIfExpr
+ParseAssignIfExpr
 ***********************************************************************/
 
-Ptr<Expr> ParseIfExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
+Ptr<Expr> ParseAssignIfExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
 {
 	auto expr = ParseBinaryExpr(pa, pea, cursor);
+
 	if (TestToken(cursor, CppTokens::QUESTIONMARK))
 	{
 		// a ? b : c
 		auto newExpr = MakePtr<IfExpr>();
 		newExpr->condition = expr;
-		newExpr->left = ParseIfExpr(pa, pea, cursor);
+		newExpr->left = ParseExpr(pa, pea_Full(), cursor);
 		RequireToken(cursor, CppTokens::COLON);
-		newExpr->right = ParseIfExpr(pa, pea, cursor);
+		newExpr->right = ParseAssignIfExpr(pa, pea, cursor);
 		return newExpr;
 	}
-	else
+	else if (TestToken(cursor, CppTokens::EQ, false))
 	{
-		return expr;
-	}
-}
-
-/***********************************************************************
-ParseAssignExpr
-***********************************************************************/
-
-Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, const ParsingExprArguments& pea, Ptr<CppTokenCursor>& cursor)
-{
-	auto expr = ParseIfExpr(pa, pea, cursor);
-
-	// a ASSIGN_OP b
-	if (TestToken(cursor, CppTokens::EQ, false))
-	{
+		// a = b
 		auto newExpr = MakePtr<BinaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 1);
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
-		newExpr->right = ParseAssignExpr(pa, pea, cursor);
+		newExpr->right = ParseAssignIfExpr(pa, pea, cursor);
 		return newExpr;
 	}
 	else if (
@@ -1221,24 +1210,26 @@ Ptr<Expr> ParseAssignExpr(const ParsingArguments& pa, const ParsingExprArguments
 		TestToken(cursor, CppTokens::OR, CppTokens::EQ, false) ||
 		TestToken(cursor, CppTokens::XOR, CppTokens::EQ, false))
 	{
+		// a X= b
 		auto newExpr = MakePtr<BinaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 2);
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
-		newExpr->right = ParseAssignExpr(pa, pea, cursor);
+		newExpr->right = ParseAssignIfExpr(pa, pea, cursor);
 		return newExpr;
 	}
 	else if (
 		TestToken(cursor, CppTokens::LT, CppTokens::LT, CppTokens::EQ, false) ||
 		TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
 	{
+		// a XX= b
 		auto newExpr = MakePtr<BinaryExpr>();
 		FillOperatorAndSkip(newExpr->opName, cursor, 3);
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
 		newExpr->left = expr;
-		newExpr->right = ParseAssignExpr(pa, pea, cursor);
+		newExpr->right = ParseAssignIfExpr(pa, pea, cursor);
 		return newExpr;
 	}
 	else
@@ -1260,13 +1251,13 @@ Ptr<Expr> ParseThrowExpr(const ParsingArguments& pa, const ParsingExprArguments&
 		auto newExpr = MakePtr<ThrowExpr>();
 		if (!TestToken(cursor, CppTokens::SEMICOLON, false))
 		{
-			newExpr->expr = ParseAssignExpr(pa, pea, cursor);
+			newExpr->expr = ParseAssignIfExpr(pa, pea, cursor);
 		}
 		return newExpr;
 	}
 	else
 	{
-		return ParseAssignExpr(pa, pea, cursor);
+		return ParseAssignIfExpr(pa, pea, cursor);
 	}
 }
 

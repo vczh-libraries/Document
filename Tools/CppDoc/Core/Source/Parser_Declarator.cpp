@@ -348,6 +348,11 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 	}
 }
 
+Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, Ptr<CppTokenCursor>& cursor)
+{
+	return ParseTypeBeforeDeclarator(pa, baselineType, { pda_Type(),false }, cursor);
+}
+
 /***********************************************************************
 ParseSingleDeclarator_Array
 ***********************************************************************/

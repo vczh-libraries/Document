@@ -120,6 +120,7 @@ extern bool											IsInTemplateHeader(const ParsingArguments& pa);
 extern Ptr<symbol_component::ClassMemberCache>		CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, Ptr<CppTokenCursor>& cursor);
 extern Ptr<symbol_component::ClassMemberCache>		CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor);
 
+extern Ptr<Type>									ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baselineType, Ptr<CppTokenCursor>& cursor);
 extern void											ParseMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<Type> type, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
 extern void											ParseNonMemberDeclarator(const ParsingArguments& pa, const ParsingDeclaratorArguments& pda, Ptr<CppTokenCursor>& cursor, List<Ptr<Declarator>>& declarators);
