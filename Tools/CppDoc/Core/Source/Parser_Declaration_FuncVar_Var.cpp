@@ -86,6 +86,7 @@ void ParseDeclaration_Variable(
 	{
 		// it is a variable declaration
 		auto decl = MakePtr<VariableDeclaration>();
+		decl->templateScope = specSymbol.Obj();
 		CopyFrom(decl->classSpecs, classSpecs);
 		FILL_VARIABLE;
 		decl->initializer = declarator->initializer;
@@ -101,7 +102,6 @@ void ParseDeclaration_Variable(
 				throw StopParsingException(cursor);
 			}
 
-			decl->templateScope = specSymbol.Obj();
 			createdSymbol = context->AddForwardDeclToSymbol_NFb(decl, symbol_component::SymbolKind::Variable);
 
 			if (!createdSymbol)

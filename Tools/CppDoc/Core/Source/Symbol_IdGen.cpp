@@ -349,23 +349,24 @@ void Symbol::GenerateUniqueId(Dictionary<WString, Symbol*>& ids, const WString& 
 					}
 				}
 
-				if (auto varDecl = forwardDecls[i].Cast<VariableDeclaration>())
+				if (auto varDecl = forwardDecls[i].Cast<ForwardVariableDeclaration>())
 				{
 					if (varDecl->templateScope)
 					{
 						// this could be a template class field defined out of the class
 						// but the one defined in the class is not a forward variable declaration
 						// so symbols in varDecl->classSpecs are not moved to the symbol of the variable
-						for (vint i = 0; i < varDecl->classSpecs.Count(); i++)
-						{
-							auto spec = varDecl->classSpecs[i];
-							for (vint j = 0; j < spec->arguments.Count(); j++)
-							{
-								auto argSymbol = spec->arguments[j].argumentSymbol;
-								argSymbol->GenerateUniqueId(ids, nextPrefix);
-							}
-						}
+						varDecl->templateScope->GenerateUniqueId(ids, nextPrefix + L"$::");
 					}
+				}
+			}
+
+			if (auto varDecl = GetImplDecl_NFb().Cast<VariableDeclaration>())
+			{
+				if (varDecl->templateScope)
+				{
+					// if an initializer creates scopes, it is under varDecl->templateScope
+					varDecl->templateScope->GenerateUniqueId(ids, nextPrefix + L"$::");
 				}
 			}
 		}
