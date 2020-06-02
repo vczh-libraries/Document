@@ -17,8 +17,14 @@ TEST_FILE
 		AssertExpr(L"0uL",			L"0uL",			L"0 $PR"					);
 		AssertExpr(L"0Ul",			L"0Ul",			L"0 $PR"					);
 		AssertExpr(L"0UL",			L"0UL",			L"0 $PR"					);
-		AssertExpr(L"0i64",			L"0i64",			L"0 $PR"				);
-		AssertExpr(L"0ui64",		L"0ui64",			L"0 $PR"				);
+		AssertExpr(L"0i8",			L"0i8",			L"0 $PR"					);
+		AssertExpr(L"0ui8",			L"0ui8",		L"0 $PR"					);
+		AssertExpr(L"0i16",			L"0i16",		L"0 $PR"					);
+		AssertExpr(L"0ui16",		L"0ui16",		L"0 $PR"					);
+		AssertExpr(L"0i32",			L"0i32",		L"0 $PR"					);
+		AssertExpr(L"0ui32",		L"0ui32",		L"0 $PR"					);
+		AssertExpr(L"0i64",			L"0i64",		L"0 $PR"					);
+		AssertExpr(L"0ui64",		L"0ui64",		L"0 $PR"					);
 
 		AssertExpr(L"1",			L"1",			L"__int32 $PR"				);
 		AssertExpr(L"1u",			L"1u",			L"unsigned __int32 $PR"		);
@@ -35,6 +41,12 @@ TEST_FILE
 		AssertExpr(L"1uLL",			L"1uLL",		L"unsigned __int64 $PR"		);
 		AssertExpr(L"1Ull",			L"1Ull",		L"unsigned __int64 $PR"		);
 		AssertExpr(L"1ULL",			L"1ULL",		L"unsigned __int64 $PR"		);
+		AssertExpr(L"1i8",			L"1i8",			L"__int8 $PR"				);
+		AssertExpr(L"1ui8",			L"1ui8",		L"unsigned __int8 $PR"		);
+		AssertExpr(L"1i16",			L"1i16",		L"__int16 $PR"				);
+		AssertExpr(L"1ui16",		L"1ui16",		L"unsigned __int16 $PR"		);
+		AssertExpr(L"1i32",			L"1i32",		L"__int32 $PR"				);
+		AssertExpr(L"1ui32",		L"1ui32",		L"unsigned __int32 $PR"		);
 		AssertExpr(L"1i64",			L"1i64",		L"__int64 $PR"				);
 		AssertExpr(L"1ui64",		L"1ui64",		L"unsigned __int64 $PR"		);
 
@@ -55,6 +67,12 @@ TEST_FILE
 		AssertExpr(L"0X1uLL",		L"0X1uLL",		L"unsigned __int64 $PR"		);
 		AssertExpr(L"0X1Ull",		L"0X1Ull",		L"unsigned __int64 $PR"		);
 		AssertExpr(L"0X1ULL",		L"0X1ULL",		L"unsigned __int64 $PR"		);
+		AssertExpr(L"0X1i8",		L"0X1i8",		L"__int8 $PR"				);
+		AssertExpr(L"0X1ui8",		L"0X1ui8",		L"unsigned __int8 $PR"		);
+		AssertExpr(L"0X1i16",		L"0X1i16",		L"__int16 $PR"				);
+		AssertExpr(L"0X1ui16",		L"0X1ui16",		L"unsigned __int16 $PR"		);
+		AssertExpr(L"0X1i32",		L"0X1i32",		L"__int32 $PR"				);
+		AssertExpr(L"0X1ui32",		L"0X1ui32",		L"unsigned __int32 $PR"		);
 		AssertExpr(L"0X1i64",		L"0X1i64",		L"__int64 $PR"				);
 		AssertExpr(L"0X1ui64",		L"0X1ui64",		L"unsigned __int64 $PR"		);
 
@@ -75,6 +93,12 @@ TEST_FILE
 		AssertExpr(L"0B1uLL",		L"0B1uLL",		L"unsigned __int64 $PR"		);
 		AssertExpr(L"0B1Ull",		L"0B1Ull",		L"unsigned __int64 $PR"		);
 		AssertExpr(L"0B1ULL",		L"0B1ULL",		L"unsigned __int64 $PR"		);
+		AssertExpr(L"0B1i8",		L"0B1i8",		L"__int8 $PR"				);
+		AssertExpr(L"0B1ui8",		L"0B1ui8",		L"unsigned __int8 $PR"		);
+		AssertExpr(L"0B1i16",		L"0B1i16",		L"__int16 $PR"				);
+		AssertExpr(L"0B1ui16",		L"0B1ui16",		L"unsigned __int16 $PR"		);
+		AssertExpr(L"0B1i32",		L"0B1i32",		L"__int32 $PR"				);
+		AssertExpr(L"0B1ui32",		L"0B1ui32",		L"unsigned __int32 $PR"		);
 		AssertExpr(L"0B1i64",		L"0B1i64",		L"__int64 $PR"				);
 		AssertExpr(L"0B1ui64",		L"0B1ui64",		L"unsigned __int64 $PR"		);
 

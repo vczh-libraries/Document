@@ -53,7 +53,31 @@ namespace symbol_totsys_impl
 					return;
 				}
 			NOT_ZERO:
-				if (token.length > 4 && wcsncmp(token.reading + token.length - 4, L"ui64", 4) == 0)
+				if (token.length > 3 && wcsncmp(token.reading + token.length - 3, L"ui8", 3) == 0)
+				{
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_1 }));
+				}
+				else if (token.length > 2 && wcsncmp(token.reading + token.length - 2, L"i8", 2) == 0)
+				{
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_1 }));
+				}
+				else if (token.length > 4 && wcsncmp(token.reading + token.length - 4, L"ui16", 4) == 0)
+				{
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_2 }));
+				}
+				else if (token.length > 3 && wcsncmp(token.reading + token.length - 3, L"i16", 3) == 0)
+				{
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_2 }));
+				}
+				else if (token.length > 4 && wcsncmp(token.reading + token.length - 4, L"ui32", 4) == 0)
+				{
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_4 }));
+				}
+				else if (token.length > 3 && wcsncmp(token.reading + token.length - 3, L"i32", 3) == 0)
+				{
+					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::SInt,TsysBytes::_4 }));
+				}
+				else if (token.length > 4 && wcsncmp(token.reading + token.length - 4, L"ui64", 4) == 0)
 				{
 					AddTempValue(result, pa.tsys->PrimitiveOf({ TsysPrimitiveType::UInt,TsysBytes::_8 }));
 				}
