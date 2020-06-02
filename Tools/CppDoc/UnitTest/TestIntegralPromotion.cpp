@@ -60,12 +60,7 @@ template<> struct TsysInfo<TYPE>\
 {\
 	static ITsys* GetTsys(const ParsingArguments& pa)\
 	{\
-		static ITsys* cachedType = nullptr;\
-		if (!cachedType)\
-		{\
-			cachedType = GetTsysFromCppType(pa, L#TYPE);\
-		}\
-		return cachedType;\
+		return GetTsysFromCppType(pa, L#TYPE);\
 	}\
 }\
 

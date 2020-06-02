@@ -623,6 +623,9 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 				{
 					expr->type = ParseFunctionType(newPa, MakePtr<PrimitiveType>(), cursor);
+
+					// remove cyclic referencing
+					expr->type->scopeSymbolToReuse = nullptr;
 				}
 				else
 				{
