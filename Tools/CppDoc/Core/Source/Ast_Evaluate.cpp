@@ -639,7 +639,7 @@ void EvaluateVariableDeclaration(const ParsingArguments& pa, VariableDeclaration
 			auto expr = decl->initializer->arguments[i].item;
 			if (auto uiExpr = expr.Cast<UniversalInitializerExpr>())
 			{
-				for (vint j = 0; j < uiExpr->arguments.Count(); i++)
+				for (vint j = 0; j < uiExpr->arguments.Count(); j++)
 				{
 					if (!uiExpr->arguments[j].item.Cast<LiteralExpr>())
 					{

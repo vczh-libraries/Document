@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WfAnalyzer_ValidateStructure.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;WfAnalyzer.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[184]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[46]$vl::workflow"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow'], [], [])">workflow</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[25]$vl::workflow::analyzer"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div></div>
+		{
+			<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>;
+			<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>;
+			<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>;
+
+<div class="token cpp_comment ">/***********************************************************************
+ValidateStructureContext
+***********************************************************************/</div>
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateStructureContext'], [], [])"><div class="token cpp_type">ValidateStructureContext</div></div>::<div class="def" id="FB$vl::workflow::analyzer::ValidateStructureContext::$__ctor@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateStructureContext::$__ctor@()'], [], [])"><div class="token cpp_function">ValidateStructureContext</div></div></div>()
+				:currentBindExpression(<div class="token cpp_number ">0</div>)
+				, currentObserveExpression(<div class="token cpp_number ">0</div>)
+				, currentLoopStatement(<div class="token cpp_number ">0</div>)
+				, currentCatchStatement(<div class="token cpp_number ">0</div>)
+			{
+			}
+
+<div class="token cpp_comment ">/***********************************************************************
+ValidateStructure
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)'], [], [])"><div class="token cpp_function">ValidateModuleStructure</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScopeManager'], [], [])"><div class="token cpp_type">WfLexicalScopeManager</div></div>* <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::manager"><div><div class="token cpp_argument">manager</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModule'], [], [])"><div class="token cpp_type">WfModule</div></div>&gt; <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::module"><div><div class="token cpp_argument">module</div></div></div>)
+			{
+<div class="expandable"><div class="disabled">				FOREACH(Ptr&lt;WfModuleUsingPath&gt;, path, module-&gt;paths)</div>
+<div class="expanded">				<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__4"><div>__scope_variable_flag__</div></div>=<div class="token cpp_keyword ">true</div>) <div class="token cpp_keyword ">for</div>(<div class="token cpp_keyword ">const</div> ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator'], [], [])"><div class="token cpp_type">ForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingPath'], [], [])"><div class="token cpp_type">WfModuleUsingPath</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__3"><div>__foreach_iterator__</div></div> = ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">CreateForEachIterator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::module'], [], [])"><div class="token cpp_argument">module</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModule::paths'], [], [])"><div class="token cpp_field">paths</div></div>);<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__4'], [], [])">__scope_variable_flag__</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__4'], [], [])">__scope_variable_flag__</div>=<div class="token cpp_keyword ">false</div>) <div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingPath'], [], [])"><div class="token cpp_type">WfModuleUsingPath</div></div>&gt; <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path"><div>path</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__3'], [], [])">__foreach_iterator__</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ForEachIterator::Next@bool([T] &)'], ['vl::collections::ForEachIterator::Next@bool([T] &)'], [], [])"><div class="token cpp_function">Next</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path'], [], [])">path</div>);)</div></div>
+				{
+<div class="expandable"><div class="disabled">					FOREACH_INDEXER(Ptr&lt;WfModuleUsingItem&gt;, item, index, path-&gt;items)</div>
+<div class="expanded">					<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__3"><div>__scope_variable_flag__</div></div>=<div class="token cpp_keyword ">true</div>) <div class="token cpp_keyword ">for</div>(<div class="token cpp_keyword ">const</div> ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator'], [], [])"><div class="token cpp_type">ForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingItem'], [], [])"><div class="token cpp_type">WfModuleUsingItem</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__2"><div>__foreach_iterator__</div></div> = ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">CreateForEachIterator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path'], [], [])">path</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingPath::items'], [], [])"><div class="token cpp_field">items</div></div>);<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__3'], [], [])">__scope_variable_flag__</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__3'], [], [])">__scope_variable_flag__</div>=<div class="token cpp_keyword ">false</div>) <div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__2"><div>__scope_variable_flag__</div></div>=<div class="token cpp_keyword ">true</div>) <div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::index"><div>index</div></div> = <div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__2'], [], [])">__scope_variable_flag__</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__2'], [], [])">__scope_variable_flag__</div>=<div class="token cpp_keyword ">false</div>) <div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingItem'], [], [])"><div class="token cpp_type">WfModuleUsingItem</div></div>&gt; <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::item"><div>item</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__2'], [], [])">__foreach_iterator__</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ForEachIterator::Next@bool([T] &)'], ['vl::collections::ForEachIterator::Next@bool([T] &)'], [], [])"><div class="token cpp_function">Next</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::item'], [], [])">item</div>);<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::index'], [], [])">index</div>++)</div></div>
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::counter"><div>counter</div></div> = <div class="token cpp_number ">0</div>;
+<div class="expandable"><div class="disabled">						FOREACH(Ptr&lt;WfModuleUsingFragment&gt;, fragment, item-&gt;fragments)</div>
+<div class="expanded">						<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__"><div>__scope_variable_flag__</div></div>=<div class="token cpp_keyword ">true</div>) <div class="token cpp_keyword ">for</div>(<div class="token cpp_keyword ">const</div> ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator'], [], [])"><div class="token cpp_type">ForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingFragment'], [], [])"><div class="token cpp_type">WfModuleUsingFragment</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__"><div>__foreach_iterator__</div></div> = ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">CreateForEachIterator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::item'], [], [])">item</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingItem::fragments'], [], [])"><div class="token cpp_field">fragments</div></div>);<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__'], [], [])">__scope_variable_flag__</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__'], [], [])">__scope_variable_flag__</div>=<div class="token cpp_keyword ">false</div>) <div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingFragment'], [], [])"><div class="token cpp_type">WfModuleUsingFragment</div></div>&gt; <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::fragment"><div>fragment</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__'], [], [])">__foreach_iterator__</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ForEachIterator::Next@bool([T] &)'], ['vl::collections::ForEachIterator::Next@bool([T] &)'], [], [])"><div class="token cpp_function">Next</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::fragment'], [], [])">fragment</div>);)</div></div>
+						{
+							<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::fragment'], [], [])">fragment</div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Cast@::vl::Ptr<[C]>()'], ['vl::Ptr::Cast@::vl::Ptr<[C]>()'], [], [])"><div class="token cpp_function">Cast</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingWildCardFragment'], [], [])"><div class="token cpp_type">WfModuleUsingWildCardFragment</div></div>&gt;())
+							{
+								<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::index'], [], [])">index</div> == <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path'], [], [])">path</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingPath::items'], [], [])"><div class="token cpp_field">items</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>() - <div class="token cpp_number ">1</div>)
+								{
+									<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::counter'], [], [])">counter</div>++;
+								}
+								<div class="token cpp_keyword ">else</div>
+								{
+									<div class="token cpp_keyword ">goto</div> USING_PATH_INCORRECT;
+								}
+							}
+						}
+
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::index'], [], [])">index</div> == <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path'], [], [])">path</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModuleUsingPath::items'], [], [])"><div class="token cpp_field">items</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>() - <div class="token cpp_number ">1</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::counter'], [], [])">counter</div> != <div class="token cpp_number ">1</div>)
+						{
+							<div class="token cpp_keyword ">goto</div> USING_PATH_INCORRECT;
+						}
+					}
+					<div class="token cpp_keyword ">continue</div>;
+				USING_PATH_INCORRECT:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::manager'], [], [])"><div class="token cpp_argument">manager</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScopeManager::errors'], [], [])"><div class="token cpp_field">errors</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfErrors'], [], [])"><div class="token cpp_type">WfErrors</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfErrors::WrongUsingPathWildCard@::vl::Ptr<::vl::parsing::ParsingError>(::vl::workflow::WfModuleUsingPath *)'], [], [])"><div class="token cpp_function">WrongUsingPathWildCard</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path'], [], [])">path</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>()));
+				}
+				<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::module'], [], [])"><div class="token cpp_argument">module</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModule::declarations'], [], [])"><div class="token cpp_field">declarations</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::i'], [], [])">i</div>++)
+				{
+					<div class="ref" onclick="jumpToSymbol(['vl::workflow::analyzer::ValidateDeclarationStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::workflow::WfClassDeclaration *, ::vl::workflow::WfExpression *)'], ['vl::workflow::analyzer::ValidateDeclarationStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::workflow::WfClassDeclaration *, ::vl::workflow::WfExpression *)'], [], [])"><div class="token cpp_function">ValidateDeclarationStructure</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::manager'], [], [])"><div class="token cpp_argument">manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::module'], [], [])"><div class="token cpp_argument">module</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfModule::declarations'], [], [])"><div class="token cpp_field">declarations</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::i'], [], [])">i</div>]);
+				}
+			}
+		}
+	}
+}
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl',
+            'NF[73]$vl',
+            'NF[74]$vl',
+            'NF[75]$vl',
+            'NF[76]$vl',
+            'NF[77]$vl',
+            'NF[78]$vl',
+            'NF[79]$vl',
+            'NF[80]$vl',
+            'NF[81]$vl',
+            'NF[82]$vl',
+            'NF[83]$vl',
+            'NF[84]$vl',
+            'NF[85]$vl',
+            'NF[86]$vl',
+            'NF[87]$vl',
+            'NF[88]$vl',
+            'NF[89]$vl',
+            'NF[90]$vl',
+            'NF[91]$vl',
+            'NF[92]$vl',
+            'NF[93]$vl',
+            'NF[94]$vl',
+            'NF[95]$vl',
+            'NF[96]$vl',
+            'NF[97]$vl',
+            'NF[98]$vl',
+            'NF[99]$vl',
+            'NF[100]$vl',
+            'NF[101]$vl',
+            'NF[102]$vl',
+            'NF[103]$vl',
+            'NF[104]$vl',
+            'NF[105]$vl',
+            'NF[106]$vl',
+            'NF[107]$vl',
+            'NF[108]$vl',
+            'NF[109]$vl',
+            'NF[110]$vl',
+            'NF[111]$vl',
+            'NF[112]$vl',
+            'NF[113]$vl',
+            'NF[114]$vl',
+            'NF[115]$vl',
+            'NF[116]$vl',
+            'NF[117]$vl',
+            'NF[118]$vl',
+            'NF[119]$vl',
+            'NF[120]$vl',
+            'NF[121]$vl',
+            'NF[122]$vl',
+            'NF[123]$vl',
+            'NF[124]$vl',
+            'NF[125]$vl',
+            'NF[126]$vl',
+            'NF[127]$vl',
+            'NF[128]$vl',
+            'NF[129]$vl',
+            'NF[130]$vl',
+            'NF[131]$vl',
+            'NF[132]$vl',
+            'NF[133]$vl',
+            'NF[134]$vl',
+            'NF[135]$vl',
+            'NF[136]$vl',
+            'NF[137]$vl',
+            'NF[138]$vl',
+            'NF[139]$vl',
+            'NF[140]$vl',
+            'NF[141]$vl',
+            'NF[142]$vl',
+            'NF[143]$vl',
+            'NF[144]$vl',
+            'NF[145]$vl',
+            'NF[146]$vl',
+            'NF[147]$vl',
+            'NF[148]$vl',
+            'NF[149]$vl',
+            'NF[150]$vl',
+            'NF[151]$vl',
+            'NF[152]$vl',
+            'NF[153]$vl',
+            'NF[154]$vl',
+            'NF[155]$vl',
+            'NF[156]$vl',
+            'NF[157]$vl',
+            'NF[158]$vl',
+            'NF[159]$vl',
+            'NF[160]$vl',
+            'NF[161]$vl',
+            'NF[162]$vl',
+            'NF[163]$vl',
+            'NF[164]$vl',
+            'NF[165]$vl',
+            'NF[166]$vl',
+            'NF[167]$vl',
+            'NF[168]$vl',
+            'NF[169]$vl',
+            'NF[170]$vl',
+            'NF[171]$vl',
+            'NF[172]$vl',
+            'NF[173]$vl',
+            'NF[174]$vl',
+            'NF[175]$vl',
+            'NF[176]$vl',
+            'NF[177]$vl',
+            'NF[178]$vl',
+            'NF[179]$vl',
+            'NF[180]$vl',
+            'NF[181]$vl',
+            'NF[182]$vl',
+            'NF[183]$vl',
+            'NF[184]$vl',
+            'NF[185]$vl',
+            'NF[186]$vl',
+            'NF[187]$vl',
+            'NF[188]$vl',
+            'NF[189]$vl',
+            'NF[190]$vl',
+            'NF[191]$vl',
+            'NF[192]$vl',
+            'NF[193]$vl',
+            'NF[194]$vl',
+            'NF[195]$vl',
+            'NF[196]$vl',
+            'NF[197]$vl',
+            'NF[198]$vl',
+            'NF[199]$vl',
+            'NF[200]$vl',
+            'NF[201]$vl',
+            'NF[202]$vl',
+            'NF[203]$vl',
+            'NF[204]$vl',
+            'NF[205]$vl',
+            'NF[206]$vl',
+            'NF[207]$vl',
+            'NF[208]$vl',
+            'NF[209]$vl',
+            'NF[210]$vl',
+            'NF[211]$vl',
+            'NF[212]$vl',
+            'NF[213]$vl',
+            'NF[214]$vl',
+            'NF[215]$vl',
+            'NF[216]$vl'
+        ]
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::Cast@::vl::Ptr<[C]>()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Cast</span>&lt;<span class="cpp_type">C</span>&gt;()',
+        'impls': [
+            'FB$vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::Obj@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Obj</span>()',
+        'impls': [
+            'FB$vl::Ptr::Obj@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator ->@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator -&gt;</span>()',
+        'impls': [
+            'FB$vl::Ptr::operator ->@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections',
+            'NF[19]$vl::collections'
+        ]
+    },
+    'vl::collections::ArrayBase::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_function">CreateForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;(<span class="cpp_type">IEnumerable</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ForEachIterator': {
+        'displayNameInHtml': '<span class="cpp_type">ForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::ForEachIterator'
+        ],
+        'decls': []
+    },
+    'vl::collections::ForEachIterator::Next@bool([T] &)': {
+        'displayNameInHtml': '<span class="cpp_type">ForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Next</span>(<span class="cpp_type">T</span> &)',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::ForEachIterator::Next@bool([T] &)[decl0]'
+        ]
+    },
+    'vl::collections::List::Add@::vl::vint([T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::operator []@[T] &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::parsing': {
+        'displayNameInHtml': 'vl::parsing',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing',
+            'NF[1]$vl::parsing',
+            'NF[2]$vl::parsing',
+            'NF[3]$vl::parsing',
+            'NF[4]$vl::parsing',
+            'NF[5]$vl::parsing',
+            'NF[6]$vl::parsing',
+            'NF[7]$vl::parsing',
+            'NF[8]$vl::parsing',
+            'NF[9]$vl::parsing',
+            'NF[10]$vl::parsing',
+            'NF[11]$vl::parsing',
+            'NF[12]$vl::parsing',
+            'NF[13]$vl::parsing',
+            'NF[14]$vl::parsing',
+            'NF[15]$vl::parsing',
+            'NF[16]$vl::parsing',
+            'NF[17]$vl::parsing',
+            'NF[18]$vl::parsing',
+            'NF[19]$vl::parsing',
+            'NF[20]$vl::parsing',
+            'NF[21]$vl::parsing',
+            'NF[22]$vl::parsing',
+            'NF[23]$vl::parsing',
+            'NF[24]$vl::parsing',
+            'NF[25]$vl::parsing',
+            'NF[26]$vl::parsing',
+            'NF[27]$vl::parsing',
+            'NF[28]$vl::parsing',
+            'NF[29]$vl::parsing',
+            'NF[30]$vl::parsing',
+            'NF[31]$vl::parsing',
+            'NF[32]$vl::parsing',
+            'NF[33]$vl::parsing',
+            'NF[34]$vl::parsing'
+        ]
+    },
+    'vl::reflection': {
+        'displayNameInHtml': 'vl::reflection',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection',
+            'NF[1]$vl::reflection',
+            'NF[2]$vl::reflection',
+            'NF[3]$vl::reflection',
+            'NF[4]$vl::reflection',
+            'NF[5]$vl::reflection',
+            'NF[6]$vl::reflection',
+            'NF[7]$vl::reflection',
+            'NF[8]$vl::reflection',
+            'NF[9]$vl::reflection',
+            'NF[10]$vl::reflection',
+            'NF[11]$vl::reflection',
+            'NF[12]$vl::reflection',
+            'NF[13]$vl::reflection',
+            'NF[14]$vl::reflection',
+            'NF[15]$vl::reflection',
+            'NF[16]$vl::reflection',
+            'NF[17]$vl::reflection',
+            'NF[18]$vl::reflection',
+            'NF[19]$vl::reflection',
+            'NF[20]$vl::reflection',
+            'NF[21]$vl::reflection',
+            'NF[22]$vl::reflection',
+            'NF[23]$vl::reflection',
+            'NF[24]$vl::reflection',
+            'NF[25]$vl::reflection',
+            'NF[26]$vl::reflection',
+            'NF[27]$vl::reflection',
+            'NF[28]$vl::reflection'
+        ]
+    },
+    'vl::reflection::description': {
+        'displayNameInHtml': 'vl::reflection::description',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection::description',
+            'NF[1]$vl::reflection::description',
+            'NF[2]$vl::reflection::description',
+            'NF[3]$vl::reflection::description',
+            'NF[4]$vl::reflection::description',
+            'NF[5]$vl::reflection::description',
+            'NF[6]$vl::reflection::description',
+            'NF[7]$vl::reflection::description',
+            'NF[8]$vl::reflection::description',
+            'NF[9]$vl::reflection::description',
+            'NF[10]$vl::reflection::description',
+            'NF[11]$vl::reflection::description',
+            'NF[12]$vl::reflection::description',
+            'NF[13]$vl::reflection::description',
+            'NF[14]$vl::reflection::description',
+            'NF[15]$vl::reflection::description',
+            'NF[16]$vl::reflection::description',
+            'NF[17]$vl::reflection::description',
+            'NF[18]$vl::reflection::description',
+            'NF[19]$vl::reflection::description',
+            'NF[20]$vl::reflection::description',
+            'NF[21]$vl::reflection::description',
+            'NF[22]$vl::reflection::description',
+            'NF[23]$vl::reflection::description',
+            'NF[24]$vl::reflection::description',
+            'NF[25]$vl::reflection::description',
+            'NF[26]$vl::reflection::description',
+            'NF[27]$vl::reflection::description'
+        ]
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    },
+    'vl::workflow': {
+        'displayNameInHtml': 'vl::workflow',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::workflow',
+            'NF[1]$vl::workflow',
+            'NF[2]$vl::workflow',
+            'NF[3]$vl::workflow',
+            'NF[4]$vl::workflow',
+            'NF[5]$vl::workflow',
+            'NF[6]$vl::workflow',
+            'NF[7]$vl::workflow',
+            'NF[8]$vl::workflow',
+            'NF[9]$vl::workflow',
+            'NF[10]$vl::workflow',
+            'NF[11]$vl::workflow',
+            'NF[12]$vl::workflow',
+            'NF[13]$vl::workflow',
+            'NF[14]$vl::workflow',
+            'NF[15]$vl::workflow',
+            'NF[16]$vl::workflow',
+            'NF[17]$vl::workflow',
+            'NF[18]$vl::workflow',
+            'NF[19]$vl::workflow',
+            'NF[20]$vl::workflow',
+            'NF[21]$vl::workflow',
+            'NF[22]$vl::workflow',
+            'NF[23]$vl::workflow',
+            'NF[24]$vl::workflow',
+            'NF[25]$vl::workflow',
+            'NF[26]$vl::workflow',
+            'NF[27]$vl::workflow',
+            'NF[28]$vl::workflow',
+            'NF[29]$vl::workflow',
+            'NF[30]$vl::workflow',
+            'NF[31]$vl::workflow',
+            'NF[32]$vl::workflow',
+            'NF[33]$vl::workflow',
+            'NF[34]$vl::workflow',
+            'NF[35]$vl::workflow',
+            'NF[36]$vl::workflow',
+            'NF[37]$vl::workflow',
+            'NF[38]$vl::workflow',
+            'NF[39]$vl::workflow',
+            'NF[40]$vl::workflow',
+            'NF[41]$vl::workflow',
+            'NF[42]$vl::workflow',
+            'NF[43]$vl::workflow',
+            'NF[44]$vl::workflow',
+            'NF[45]$vl::workflow',
+            'NF[46]$vl::workflow',
+            'NF[47]$vl::workflow',
+            'NF[48]$vl::workflow',
+            'NF[49]$vl::workflow',
+            'NF[50]$vl::workflow',
+            'NF[51]$vl::workflow',
+            'NF[52]$vl::workflow',
+            'NF[53]$vl::workflow',
+            'NF[54]$vl::workflow',
+            'NF[55]$vl::workflow',
+            'NF[56]$vl::workflow',
+            'NF[57]$vl::workflow',
+            'NF[58]$vl::workflow',
+            'NF[59]$vl::workflow',
+            'NF[60]$vl::workflow',
+            'NF[61]$vl::workflow',
+            'NF[62]$vl::workflow',
+            'NF[63]$vl::workflow',
+            'NF[64]$vl::workflow',
+            'NF[65]$vl::workflow',
+            'NF[66]$vl::workflow',
+            'NF[67]$vl::workflow',
+            'NF[68]$vl::workflow',
+            'NF[69]$vl::workflow',
+            'NF[70]$vl::workflow',
+            'NF[71]$vl::workflow',
+            'NF[72]$vl::workflow',
+            'NF[73]$vl::workflow',
+            'NF[74]$vl::workflow',
+            'NF[75]$vl::workflow',
+            'NF[76]$vl::workflow',
+            'NF[77]$vl::workflow'
+        ]
+    },
+    'vl::workflow::WfModule': {
+        'displayNameInHtml': '<span class="cpp_type">WfModule</span>',
+        'impls': [
+            'NI$vl::workflow::WfModule'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfModule'
+        ]
+    },
+    'vl::workflow::WfModule::declarations': {
+        'displayNameInHtml': '<span class="cpp_type">WfModule</span>::<span class="cpp_field">declarations</span>',
+        'impls': [
+            'NI$vl::workflow::WfModule::declarations'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfModule::paths': {
+        'displayNameInHtml': '<span class="cpp_type">WfModule</span>::<span class="cpp_field">paths</span>',
+        'impls': [
+            'NI$vl::workflow::WfModule::paths'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfModuleUsingFragment': {
+        'displayNameInHtml': '<span class="cpp_type">WfModuleUsingFragment</span>',
+        'impls': [
+            'NI$vl::workflow::WfModuleUsingFragment'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfModuleUsingFragment'
+        ]
+    },
+    'vl::workflow::WfModuleUsingItem': {
+        'displayNameInHtml': '<span class="cpp_type">WfModuleUsingItem</span>',
+        'impls': [
+            'NI$vl::workflow::WfModuleUsingItem'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfModuleUsingItem'
+        ]
+    },
+    'vl::workflow::WfModuleUsingItem::fragments': {
+        'displayNameInHtml': '<span class="cpp_type">WfModuleUsingItem</span>::<span class="cpp_field">fragments</span>',
+        'impls': [
+            'NI$vl::workflow::WfModuleUsingItem::fragments'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfModuleUsingPath': {
+        'displayNameInHtml': '<span class="cpp_type">WfModuleUsingPath</span>',
+        'impls': [
+            'NI$vl::workflow::WfModuleUsingPath'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfModuleUsingPath'
+        ]
+    },
+    'vl::workflow::WfModuleUsingPath::items': {
+        'displayNameInHtml': '<span class="cpp_type">WfModuleUsingPath</span>::<span class="cpp_field">items</span>',
+        'impls': [
+            'NI$vl::workflow::WfModuleUsingPath::items'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfModuleUsingWildCardFragment': {
+        'displayNameInHtml': '<span class="cpp_type">WfModuleUsingWildCardFragment</span>',
+        'impls': [
+            'NI$vl::workflow::WfModuleUsingWildCardFragment'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfModuleUsingWildCardFragment'
+        ]
+    },
+    'vl::workflow::analyzer': {
+        'displayNameInHtml': 'vl::workflow::analyzer',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::workflow::analyzer',
+            'NF[1]$vl::workflow::analyzer',
+            'NF[2]$vl::workflow::analyzer',
+            'NF[3]$vl::workflow::analyzer',
+            'NF[4]$vl::workflow::analyzer',
+            'NF[5]$vl::workflow::analyzer',
+            'NF[6]$vl::workflow::analyzer',
+            'NF[7]$vl::workflow::analyzer',
+            'NF[8]$vl::workflow::analyzer',
+            'NF[9]$vl::workflow::analyzer',
+            'NF[10]$vl::workflow::analyzer',
+            'NF[11]$vl::workflow::analyzer',
+            'NF[12]$vl::workflow::analyzer',
+            'NF[13]$vl::workflow::analyzer',
+            'NF[14]$vl::workflow::analyzer',
+            'NF[15]$vl::workflow::analyzer',
+            'NF[16]$vl::workflow::analyzer',
+            'NF[17]$vl::workflow::analyzer',
+            'NF[18]$vl::workflow::analyzer',
+            'NF[19]$vl::workflow::analyzer',
+            'NF[20]$vl::workflow::analyzer',
+            'NF[21]$vl::workflow::analyzer',
+            'NF[22]$vl::workflow::analyzer',
+            'NF[23]$vl::workflow::analyzer',
+            'NF[24]$vl::workflow::analyzer',
+            'NF[25]$vl::workflow::analyzer',
+            'NF[26]$vl::workflow::analyzer',
+            'NF[27]$vl::workflow::analyzer',
+            'NF[28]$vl::workflow::analyzer',
+            'NF[29]$vl::workflow::analyzer'
+        ]
+    },
+    'vl::workflow::analyzer::ValidateDeclarationStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::workflow::WfClassDeclaration *, ::vl::workflow::WfExpression *)': {
+        'displayNameInHtml': '<span class="cpp_function">ValidateDeclarationStructure</span>(<span class="cpp_type">WfLexicalScopeManager</span> *, <span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">WfDeclaration</span>&gt;, <span class="cpp_type">WfClassDeclaration</span> *, <span class="cpp_type">WfExpression</span> *)',
+        'impls': [
+            'FB$vl::workflow::analyzer::ValidateDeclarationStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::workflow::WfClassDeclaration *, ::vl::workflow::WfExpression *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::workflow::analyzer::ValidateDeclarationStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::workflow::WfClassDeclaration *, ::vl::workflow::WfExpression *)[decl0]'
+        ]
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)': {
+        'displayNameInHtml': '<span class="cpp_function">ValidateModuleStructure</span>(<span class="cpp_type">WfLexicalScopeManager</span> *, <span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">WfModule</span>&gt;)',
+        'impls': [
+            'FB$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[decl0]'
+        ]
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__': {
+        'displayNameInHtml': '__foreach_iterator__',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__2': {
+        'displayNameInHtml': '__foreach_iterator__',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__2'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__3': {
+        'displayNameInHtml': '__foreach_iterator__',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__3'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__': {
+        'displayNameInHtml': '__scope_variable_flag__',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__2': {
+        'displayNameInHtml': '__scope_variable_flag__',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__2'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__3': {
+        'displayNameInHtml': '__scope_variable_flag__',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__3'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__4': {
+        'displayNameInHtml': '__scope_variable_flag__',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__4'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::counter': {
+        'displayNameInHtml': 'counter',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::counter'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::fragment': {
+        'displayNameInHtml': 'fragment',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::fragment'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::item': {
+        'displayNameInHtml': 'item',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::item'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::manager': {
+        'displayNameInHtml': 'manager',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::manager'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::module': {
+        'displayNameInHtml': 'module',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::module'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path': {
+        'displayNameInHtml': 'path',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateStructureContext': {
+        'displayNameInHtml': '<span class="cpp_type">ValidateStructureContext</span>',
+        'impls': [
+            'NI$vl::workflow::analyzer::ValidateStructureContext'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::ValidateStructureContext::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">ValidateStructureContext</span>::<span class="cpp_function">$__ctor</span>()',
+        'impls': [
+            'FB$vl::workflow::analyzer::ValidateStructureContext::$__ctor@()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::workflow::analyzer::ValidateStructureContext::$__ctor@()[decl0]'
+        ]
+    },
+    'vl::workflow::analyzer::WfErrors': {
+        'displayNameInHtml': '<span class="cpp_type">WfErrors</span>',
+        'impls': [
+            'NI$vl::workflow::analyzer::WfErrors'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::WfErrors::WrongUsingPathWildCard@::vl::Ptr<::vl::parsing::ParsingError>(::vl::workflow::WfModuleUsingPath *)': {
+        'displayNameInHtml': '<span class="cpp_type">WfErrors</span>::<span class="cpp_function">WrongUsingPathWildCard</span>(<span class="cpp_type">WfModuleUsingPath</span> *)',
+        'impls': [
+            'FB$vl::workflow::analyzer::WfErrors::WrongUsingPathWildCard@::vl::Ptr<::vl::parsing::ParsingError>(::vl::workflow::WfModuleUsingPath *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::workflow::analyzer::WfErrors::WrongUsingPathWildCard@::vl::Ptr<::vl::parsing::ParsingError>(::vl::workflow::WfModuleUsingPath *)[decl0]'
+        ]
+    },
+    'vl::workflow::analyzer::WfLexicalScopeManager': {
+        'displayNameInHtml': '<span class="cpp_type">WfLexicalScopeManager</span>',
+        'impls': [
+            'NI$vl::workflow::analyzer::WfLexicalScopeManager'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::analyzer::WfLexicalScopeManager'
+        ]
+    },
+    'vl::workflow::analyzer::WfLexicalScopeManager::errors': {
+        'displayNameInHtml': '<span class="cpp_type">WfLexicalScopeManager</span>::<span class="cpp_field">errors</span>',
+        'impls': [
+            'NI$vl::workflow::analyzer::WfLexicalScopeManager::errors'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::Ptr::Obj@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'FB$vl::collections::ForEachIterator::Next@bool([T] &)[decl0]': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::workflow::analyzer::ValidateDeclarationStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::workflow::WfClassDeclaration *, ::vl::workflow::WfExpression *)[decl0]': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'FB$vl::workflow::analyzer::ValidateDeclarationStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::workflow::WfClassDeclaration *, ::vl::workflow::WfExpression *)[impl0]': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Declaration.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Declaration.cpp' },
+    'FB$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[decl0]': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'FB$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]': null,
+    'FB$vl::workflow::analyzer::ValidateStructureContext::$__ctor@()[decl0]': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'FB$vl::workflow::analyzer::ValidateStructureContext::$__ctor@()[impl0]': null,
+    'FB$vl::workflow::analyzer::WfErrors::WrongUsingPathWildCard@::vl::Ptr<::vl::parsing::ParsingError>(::vl::workflow::WfModuleUsingPath *)[decl0]': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'FB$vl::workflow::analyzer::WfErrors::WrongUsingPathWildCard@::vl::Ptr<::vl::parsing::ParsingError>(::vl::workflow::WfModuleUsingPath *)[impl0]': { 'htmlFileName': 'WfAnalyzer_Errors.cpp', 'displayName': 'WfAnalyzer_Errors.cpp' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::workflow': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[0]$vl::workflow::WfModule': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfModuleUsingFragment': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfModuleUsingItem': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfModuleUsingPath': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfModuleUsingWildCardFragment': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[0]$vl::workflow::analyzer::WfLexicalScopeManager': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[100]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[101]$vl': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[102]$vl': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[103]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[104]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[105]$vl': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[106]$vl': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[107]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[108]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[109]$vl': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[10]$vl::parsing': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[10]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[10]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[10]$vl::workflow': { 'htmlFileName': 'WfRuntimeDebugger.cpp', 'displayName': 'WfRuntimeDebugger.cpp' },
+    'NF[10]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ContextFreeDesugar.cpp', 'displayName': 'WfAnalyzer_ContextFreeDesugar.cpp' },
+    'NF[110]$vl': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'NF[111]$vl': { 'htmlFileName': 'ParsingAutomaton.cpp', 'displayName': 'ParsingAutomaton.cpp' },
+    'NF[112]$vl': { 'htmlFileName': 'ParsingAutomaton_Closure.cpp', 'displayName': 'ParsingAutomaton_Closure.cpp' },
+    'NF[113]$vl': { 'htmlFileName': 'ParsingAutomaton_EPDA.cpp', 'displayName': 'ParsingAutomaton_EPDA.cpp' },
+    'NF[114]$vl': { 'htmlFileName': 'ParsingAutomaton_GenerateTable.cpp', 'displayName': 'ParsingAutomaton_GenerateTable.cpp' },
+    'NF[115]$vl': { 'htmlFileName': 'ParsingAutomaton_JPDA.cpp', 'displayName': 'ParsingAutomaton_JPDA.cpp' },
+    'NF[116]$vl': { 'htmlFileName': 'ParsingAutomaton_MergeStates.cpp', 'displayName': 'ParsingAutomaton_MergeStates.cpp' },
+    'NF[117]$vl': { 'htmlFileName': 'ParsingAutomaton_NPDA.cpp', 'displayName': 'ParsingAutomaton_NPDA.cpp' },
+    'NF[118]$vl': { 'htmlFileName': 'ParsingDefinitions.cpp', 'displayName': 'ParsingDefinitions.cpp' },
+    'NF[119]$vl': { 'htmlFileName': 'ParsingDefinitions_CreateParserDefinition.cpp', 'displayName': 'ParsingDefinitions_CreateParserDefinition.cpp' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[11]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[11]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[11]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[11]$vl::workflow': { 'htmlFileName': 'WfRuntimeExecution.cpp', 'displayName': 'WfRuntimeExecution.cpp' },
+    'NF[11]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_Errors.cpp', 'displayName': 'WfAnalyzer_Errors.cpp' },
+    'NF[120]$vl': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[121]$vl': { 'htmlFileName': 'ParsingState.cpp', 'displayName': 'ParsingState.cpp' },
+    'NF[122]$vl': { 'htmlFileName': 'ParsingTable.cpp', 'displayName': 'ParsingTable.cpp' },
+    'NF[123]$vl': { 'htmlFileName': 'ParsingTree.cpp', 'displayName': 'ParsingTree.cpp' },
+    'NF[124]$vl': { 'htmlFileName': 'ParsingJson.cpp', 'displayName': 'ParsingJson.cpp' },
+    'NF[125]$vl': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[126]$vl': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[127]$vl': { 'htmlFileName': 'ParsingJson_Parser.cpp', 'displayName': 'ParsingJson_Parser.cpp' },
+    'NF[128]$vl': { 'htmlFileName': 'ParsingXml.cpp', 'displayName': 'ParsingXml.cpp' },
+    'NF[129]$vl': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[12]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[12]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[12]$vl::workflow': { 'htmlFileName': 'WfRuntimeInstruction.cpp', 'displayName': 'WfRuntimeInstruction.cpp' },
+    'NF[12]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ExpandBindExpression.cpp', 'displayName': 'WfAnalyzer_ExpandBindExpression.cpp' },
+    'NF[130]$vl': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[131]$vl': { 'htmlFileName': 'ParsingXml_Parser.cpp', 'displayName': 'ParsingXml_Parser.cpp' },
+    'NF[132]$vl': { 'htmlFileName': 'WfLibraryCppHelper.h', 'displayName': 'WfLibraryCppHelper.h' },
+    'NF[133]$vl': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[134]$vl': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[135]$vl': { 'htmlFileName': 'WfLibraryCppHelper.cpp', 'displayName': 'WfLibraryCppHelper.cpp' },
+    'NF[136]$vl': { 'htmlFileName': 'WfLibraryPredefined.cpp', 'displayName': 'WfLibraryPredefined.cpp' },
+    'NF[137]$vl': { 'htmlFileName': 'WfLibraryReflection.cpp', 'displayName': 'WfLibraryReflection.cpp' },
+    'NF[138]$vl': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[139]$vl': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[13]$vl::parsing': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[13]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[13]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[13]$vl::workflow': { 'htmlFileName': 'WfRuntimeTypeDescriptor.cpp', 'displayName': 'WfRuntimeTypeDescriptor.cpp' },
+    'NF[13]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ExpandMixinCastExpression.cpp', 'displayName': 'WfAnalyzer_ExpandMixinCastExpression.cpp' },
+    'NF[140]$vl': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NF[141]$vl': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[142]$vl': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[143]$vl': { 'htmlFileName': 'WfRuntime.h', 'displayName': 'WfRuntime.h' },
+    'NF[144]$vl': { 'htmlFileName': 'WfRuntime.cpp', 'displayName': 'WfRuntime.cpp' },
+    'NF[145]$vl': { 'htmlFileName': 'WfRuntimeAssembly.cpp', 'displayName': 'WfRuntimeAssembly.cpp' },
+    'NF[146]$vl': { 'htmlFileName': 'WfRuntimeConstructions.cpp', 'displayName': 'WfRuntimeConstructions.cpp' },
+    'NF[147]$vl': { 'htmlFileName': 'WfRuntimeDebugger.cpp', 'displayName': 'WfRuntimeDebugger.cpp' },
+    'NF[148]$vl': { 'htmlFileName': 'WfRuntimeExecution.cpp', 'displayName': 'WfRuntimeExecution.cpp' },
+    'NF[149]$vl': { 'htmlFileName': 'WfRuntimeInstruction.cpp', 'displayName': 'WfRuntimeInstruction.cpp' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[14]$vl::parsing': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[14]$vl::reflection': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[14]$vl::reflection::description': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[14]$vl::workflow': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[14]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ExpandNewCoroutineExpression.cpp', 'displayName': 'WfAnalyzer_ExpandNewCoroutineExpression.cpp' },
+    'NF[150]$vl': { 'htmlFileName': 'WfRuntimeTypeDescriptor.cpp', 'displayName': 'WfRuntimeTypeDescriptor.cpp' },
+    'NF[151]$vl': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[152]$vl': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[153]$vl': { 'htmlFileName': 'WfExpression_Copy.h', 'displayName': 'WfExpression_Copy.h' },
+    'NF[154]$vl': { 'htmlFileName': 'WfExpression_Empty.h', 'displayName': 'WfExpression_Empty.h' },
+    'NF[155]$vl': { 'htmlFileName': 'WfExpression_Parser.h', 'displayName': 'WfExpression_Parser.h' },
+    'NF[156]$vl': { 'htmlFileName': 'WfExpression_Traverse.h', 'displayName': 'WfExpression_Traverse.h' },
+    'NF[157]$vl': { 'htmlFileName': 'WfExpression.h', 'displayName': 'WfExpression.h' },
+    'NF[158]$vl': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[159]$vl': { 'htmlFileName': 'WfEmitter.h', 'displayName': 'WfEmitter.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl::parsing': { 'htmlFileName': 'ParsingAnalyzer.cpp', 'displayName': 'ParsingAnalyzer.cpp' },
+    'NF[15]$vl::reflection': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[15]$vl::reflection::description': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[15]$vl::workflow': { 'htmlFileName': 'WfExpression_Copy.h', 'displayName': 'WfExpression_Copy.h' },
+    'NF[15]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ExpandStateMachine.cpp', 'displayName': 'WfAnalyzer_ExpandStateMachine.cpp' },
+    'NF[160]$vl': { 'htmlFileName': 'WfCpp.h', 'displayName': 'WfCpp.h' },
+    'NF[161]$vl': { 'htmlFileName': 'CheckScopes_CycleDependency.cpp', 'displayName': 'CheckScopes_CycleDependency.cpp' },
+    'NF[162]$vl': { 'htmlFileName': 'WfAnalyzer.cpp', 'displayName': 'WfAnalyzer.cpp' },
+    'NF[163]$vl': { 'htmlFileName': 'WfAnalyzer_BuildGlobalNameFromModules.cpp', 'displayName': 'WfAnalyzer_BuildGlobalNameFromModules.cpp' },
+    'NF[164]$vl': { 'htmlFileName': 'WfAnalyzer_BuildGlobalNameFromTypeDescriptors.cpp', 'displayName': 'WfAnalyzer_BuildGlobalNameFromTypeDescriptors.cpp' },
+    'NF[165]$vl': { 'htmlFileName': 'WfAnalyzer_BuildScope.cpp', 'displayName': 'WfAnalyzer_BuildScope.cpp' },
+    'NF[166]$vl': { 'htmlFileName': 'WfAnalyzer_CheckScope_DuplicatedSymbol.cpp', 'displayName': 'WfAnalyzer_CheckScope_DuplicatedSymbol.cpp' },
+    'NF[167]$vl': { 'htmlFileName': 'WfAnalyzer_CheckScope_SymbolType.cpp', 'displayName': 'WfAnalyzer_CheckScope_SymbolType.cpp' },
+    'NF[168]$vl': { 'htmlFileName': 'WfAnalyzer_CompleteScope.cpp', 'displayName': 'WfAnalyzer_CompleteScope.cpp' },
+    'NF[169]$vl': { 'htmlFileName': 'WfAnalyzer_ContextFreeDesugar.cpp', 'displayName': 'WfAnalyzer_ContextFreeDesugar.cpp' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.cpp', 'displayName': 'ParsingAutomaton.cpp' },
+    'NF[16]$vl::reflection': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[16]$vl::reflection::description': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[16]$vl::workflow': { 'htmlFileName': 'WfExpression_Empty.h', 'displayName': 'WfExpression_Empty.h' },
+    'NF[16]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ExpandStatement.cpp', 'displayName': 'WfAnalyzer_ExpandStatement.cpp' },
+    'NF[170]$vl': { 'htmlFileName': 'WfAnalyzer_Errors.cpp', 'displayName': 'WfAnalyzer_Errors.cpp' },
+    'NF[171]$vl': { 'htmlFileName': 'WfAnalyzer_ExpandBindExpression.cpp', 'displayName': 'WfAnalyzer_ExpandBindExpression.cpp' },
+    'NF[172]$vl': { 'htmlFileName': 'WfAnalyzer_ExpandMixinCastExpression.cpp', 'displayName': 'WfAnalyzer_ExpandMixinCastExpression.cpp' },
+    'NF[173]$vl': { 'htmlFileName': 'WfAnalyzer_ExpandNewCoroutineExpression.cpp', 'displayName': 'WfAnalyzer_ExpandNewCoroutineExpression.cpp' },
+    'NF[174]$vl': { 'htmlFileName': 'WfAnalyzer_ExpandStateMachine.cpp', 'displayName': 'WfAnalyzer_ExpandStateMachine.cpp' },
+    'NF[175]$vl': { 'htmlFileName': 'WfAnalyzer_ExpandStatement.cpp', 'displayName': 'WfAnalyzer_ExpandStatement.cpp' },
+    'NF[176]$vl': { 'htmlFileName': 'WfAnalyzer_Misc.cpp', 'displayName': 'WfAnalyzer_Misc.cpp' },
+    'NF[177]$vl': { 'htmlFileName': 'WfAnalyzer_SearchOrderedName.cpp', 'displayName': 'WfAnalyzer_SearchOrderedName.cpp' },
+    'NF[178]$vl': { 'htmlFileName': 'WfAnalyzer_TypeInfo.cpp', 'displayName': 'WfAnalyzer_TypeInfo.cpp' },
+    'NF[179]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateScopeName.cpp', 'displayName': 'WfAnalyzer_ValidateScopeName.cpp' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[17]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_Closure.cpp', 'displayName': 'ParsingAutomaton_Closure.cpp' },
+    'NF[17]$vl::reflection': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[17]$vl::reflection::description': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[17]$vl::workflow': { 'htmlFileName': 'WfExpression_Parser.h', 'displayName': 'WfExpression_Parser.h' },
+    'NF[17]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_Misc.cpp', 'displayName': 'WfAnalyzer_Misc.cpp' },
+    'NF[180]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic.cpp' },
+    'NF[181]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Declaration.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Declaration.cpp' },
+    'NF[182]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Expression.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Expression.cpp' },
+    'NF[183]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Statement.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Statement.cpp' },
+    'NF[184]$vl': null,
+    'NF[185]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Declaration.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Declaration.cpp' },
+    'NF[186]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Expression.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Expression.cpp' },
+    'NF[187]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Statement.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Statement.cpp' },
+    'NF[188]$vl': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Type.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Type.cpp' },
+    'NF[189]$vl': { 'htmlFileName': 'WfCpp.cpp', 'displayName': 'WfCpp.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[18]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_EPDA.cpp', 'displayName': 'ParsingAutomaton_EPDA.cpp' },
+    'NF[18]$vl::reflection': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[18]$vl::reflection::description': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[18]$vl::workflow': { 'htmlFileName': 'WfExpression_Traverse.h', 'displayName': 'WfExpression_Traverse.h' },
+    'NF[18]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_SearchOrderedName.cpp', 'displayName': 'WfAnalyzer_SearchOrderedName.cpp' },
+    'NF[190]$vl': { 'htmlFileName': 'WfCpp_AssignClassDeclsToFiles.cpp', 'displayName': 'WfCpp_AssignClassDeclsToFiles.cpp' },
+    'NF[191]$vl': { 'htmlFileName': 'WfCpp_Class.cpp', 'displayName': 'WfCpp_Class.cpp' },
+    'NF[192]$vl': { 'htmlFileName': 'WfCpp_Collect.cpp', 'displayName': 'WfCpp_Collect.cpp' },
+    'NF[193]$vl': { 'htmlFileName': 'WfCpp_Expression.cpp', 'displayName': 'WfCpp_Expression.cpp' },
+    'NF[194]$vl': { 'htmlFileName': 'WfCpp_File.cpp', 'displayName': 'WfCpp_File.cpp' },
+    'NF[195]$vl': { 'htmlFileName': 'WfCpp_GenerateCppFiles.cpp', 'displayName': 'WfCpp_GenerateCppFiles.cpp' },
+    'NF[196]$vl': { 'htmlFileName': 'WfCpp_Statement.cpp', 'displayName': 'WfCpp_Statement.cpp' },
+    'NF[197]$vl': { 'htmlFileName': 'WfCpp_WriteClass.cpp', 'displayName': 'WfCpp_WriteClass.cpp' },
+    'NF[198]$vl': { 'htmlFileName': 'WfCpp_WriteEnum.cpp', 'displayName': 'WfCpp_WriteEnum.cpp' },
+    'NF[199]$vl': { 'htmlFileName': 'WfCpp_WriteFunctionHeader.cpp', 'displayName': 'WfCpp_WriteFunctionHeader.cpp' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[19]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[19]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_GenerateTable.cpp', 'displayName': 'ParsingAutomaton_GenerateTable.cpp' },
+    'NF[19]$vl::reflection': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[19]$vl::reflection::description': { 'htmlFileName': 'Parsing.cpp', 'displayName': 'Parsing.cpp' },
+    'NF[19]$vl::workflow': { 'htmlFileName': 'WfExpression.h', 'displayName': 'WfExpression.h' },
+    'NF[19]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_TypeInfo.cpp', 'displayName': 'WfAnalyzer_TypeInfo.cpp' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[1]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::workflow': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[1]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[200]$vl': { 'htmlFileName': 'WfCpp_WriteGlobal.cpp', 'displayName': 'WfCpp_WriteGlobal.cpp' },
+    'NF[201]$vl': { 'htmlFileName': 'WfCpp_WriteLambda.cpp', 'displayName': 'WfCpp_WriteLambda.cpp' },
+    'NF[202]$vl': { 'htmlFileName': 'WfCpp_WriteReflection.cpp', 'displayName': 'WfCpp_WriteReflection.cpp' },
+    'NF[203]$vl': { 'htmlFileName': 'WfCpp_WriteStruct.cpp', 'displayName': 'WfCpp_WriteStruct.cpp' },
+    'NF[204]$vl': { 'htmlFileName': 'WfEmitter.cpp', 'displayName': 'WfEmitter.cpp' },
+    'NF[205]$vl': { 'htmlFileName': 'WfEmitter_Assembly.cpp', 'displayName': 'WfEmitter_Assembly.cpp' },
+    'NF[206]$vl': { 'htmlFileName': 'WfEmitter_Declaration.cpp', 'displayName': 'WfEmitter_Declaration.cpp' },
+    'NF[207]$vl': { 'htmlFileName': 'WfEmitter_Expression.cpp', 'displayName': 'WfEmitter_Expression.cpp' },
+    'NF[208]$vl': { 'htmlFileName': 'WfEmitter_Metadata.cpp', 'displayName': 'WfEmitter_Metadata.cpp' },
+    'NF[209]$vl': { 'htmlFileName': 'WfEmitter_Statement.cpp', 'displayName': 'WfEmitter_Statement.cpp' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[20]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_JPDA.cpp', 'displayName': 'ParsingAutomaton_JPDA.cpp' },
+    'NF[20]$vl::reflection': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[20]$vl::reflection::description': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[20]$vl::workflow': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[20]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateScopeName.cpp', 'displayName': 'WfAnalyzer_ValidateScopeName.cpp' },
+    'NF[210]$vl': { 'htmlFileName': 'WfExpression.cpp', 'displayName': 'WfExpression.cpp' },
+    'NF[211]$vl': { 'htmlFileName': 'WfExpression_Ast.cpp', 'displayName': 'WfExpression_Ast.cpp' },
+    'NF[212]$vl': { 'htmlFileName': 'WfExpression_Ast.cpp', 'displayName': 'WfExpression_Ast.cpp' },
+    'NF[213]$vl': { 'htmlFileName': 'WfExpression_Copy.cpp', 'displayName': 'WfExpression_Copy.cpp' },
+    'NF[214]$vl': { 'htmlFileName': 'WfExpression_Empty.cpp', 'displayName': 'WfExpression_Empty.cpp' },
+    'NF[215]$vl': { 'htmlFileName': 'WfExpression_Parser.cpp', 'displayName': 'WfExpression_Parser.cpp' },
+    'NF[216]$vl': { 'htmlFileName': 'WfExpression_Traverse.cpp', 'displayName': 'WfExpression_Traverse.cpp' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[21]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_MergeStates.cpp', 'displayName': 'ParsingAutomaton_MergeStates.cpp' },
+    'NF[21]$vl::reflection': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[21]$vl::reflection::description': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[21]$vl::workflow': { 'htmlFileName': 'WfEmitter.h', 'displayName': 'WfEmitter.h' },
+    'NF[21]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic.cpp' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[22]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton_NPDA.cpp', 'displayName': 'ParsingAutomaton_NPDA.cpp' },
+    'NF[22]$vl::reflection': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[22]$vl::reflection::description': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[22]$vl::workflow': { 'htmlFileName': 'WfCpp.h', 'displayName': 'WfCpp.h' },
+    'NF[22]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Declaration.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Declaration.cpp' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[23]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions.cpp', 'displayName': 'ParsingDefinitions.cpp' },
+    'NF[23]$vl::reflection': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[23]$vl::reflection::description': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[23]$vl::workflow': { 'htmlFileName': 'CheckScopes_CycleDependency.cpp', 'displayName': 'CheckScopes_CycleDependency.cpp' },
+    'NF[23]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Expression.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Expression.cpp' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[24]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions_CreateParserDefinition.cpp', 'displayName': 'ParsingDefinitions_CreateParserDefinition.cpp' },
+    'NF[24]$vl::reflection': { 'htmlFileName': 'WfLibraryPredefined.cpp', 'displayName': 'WfLibraryPredefined.cpp' },
+    'NF[24]$vl::reflection::description': { 'htmlFileName': 'WfLibraryPredefined.cpp', 'displayName': 'WfLibraryPredefined.cpp' },
+    'NF[24]$vl::workflow': { 'htmlFileName': 'WfAnalyzer.cpp', 'displayName': 'WfAnalyzer.cpp' },
+    'NF[24]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Statement.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Statement.cpp' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[25]$vl::parsing': { 'htmlFileName': 'ParsingLogging.cpp', 'displayName': 'ParsingLogging.cpp' },
+    'NF[25]$vl::reflection': { 'htmlFileName': 'WfLibraryReflection.cpp', 'displayName': 'WfLibraryReflection.cpp' },
+    'NF[25]$vl::reflection::description': { 'htmlFileName': 'WfLibraryReflection.cpp', 'displayName': 'WfLibraryReflection.cpp' },
+    'NF[25]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_BuildGlobalNameFromModules.cpp', 'displayName': 'WfAnalyzer_BuildGlobalNameFromModules.cpp' },
+    'NF[25]$vl::workflow::analyzer': null,
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[26]$vl::parsing': { 'htmlFileName': 'ParsingState.cpp', 'displayName': 'ParsingState.cpp' },
+    'NF[26]$vl::reflection': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[26]$vl::reflection::description': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[26]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_BuildGlobalNameFromTypeDescriptors.cpp', 'displayName': 'WfAnalyzer_BuildGlobalNameFromTypeDescriptors.cpp' },
+    'NF[26]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Declaration.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Declaration.cpp' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[27]$vl::parsing': { 'htmlFileName': 'ParsingTable.cpp', 'displayName': 'ParsingTable.cpp' },
+    'NF[27]$vl::reflection': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[27]$vl::reflection::description': { 'htmlFileName': 'WfExpression_Ast.cpp', 'displayName': 'WfExpression_Ast.cpp' },
+    'NF[27]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_BuildScope.cpp', 'displayName': 'WfAnalyzer_BuildScope.cpp' },
+    'NF[27]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Expression.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Expression.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[28]$vl::parsing': { 'htmlFileName': 'ParsingTree.cpp', 'displayName': 'ParsingTree.cpp' },
+    'NF[28]$vl::reflection': { 'htmlFileName': 'WfExpression_Ast.cpp', 'displayName': 'WfExpression_Ast.cpp' },
+    'NF[28]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_CheckScope_DuplicatedSymbol.cpp', 'displayName': 'WfAnalyzer_CheckScope_DuplicatedSymbol.cpp' },
+    'NF[28]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Statement.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Statement.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[29]$vl::parsing': { 'htmlFileName': 'ParsingJson.cpp', 'displayName': 'ParsingJson.cpp' },
+    'NF[29]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_CheckScope_SymbolType.cpp', 'displayName': 'WfAnalyzer_CheckScope_SymbolType.cpp' },
+    'NF[29]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Type.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Type.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[2]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[2]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[2]$vl::workflow': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[2]$vl::workflow::analyzer': { 'htmlFileName': 'CheckScopes_CycleDependency.cpp', 'displayName': 'CheckScopes_CycleDependency.cpp' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[30]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.cpp', 'displayName': 'ParsingJson_Ast.cpp' },
+    'NF[30]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_CompleteScope.cpp', 'displayName': 'WfAnalyzer_CompleteScope.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[31]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.cpp', 'displayName': 'ParsingJson_Parser.cpp' },
+    'NF[31]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ContextFreeDesugar.cpp', 'displayName': 'WfAnalyzer_ContextFreeDesugar.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[32]$vl::parsing': { 'htmlFileName': 'ParsingXml.cpp', 'displayName': 'ParsingXml.cpp' },
+    'NF[32]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_Errors.cpp', 'displayName': 'WfAnalyzer_Errors.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[33]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.cpp', 'displayName': 'ParsingXml_Ast.cpp' },
+    'NF[33]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ExpandBindExpression.cpp', 'displayName': 'WfAnalyzer_ExpandBindExpression.cpp' },
+    'NF[34]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[34]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.cpp', 'displayName': 'ParsingXml_Parser.cpp' },
+    'NF[34]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ExpandMixinCastExpression.cpp', 'displayName': 'WfAnalyzer_ExpandMixinCastExpression.cpp' },
+    'NF[35]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[35]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ExpandNewCoroutineExpression.cpp', 'displayName': 'WfAnalyzer_ExpandNewCoroutineExpression.cpp' },
+    'NF[36]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[36]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ExpandStateMachine.cpp', 'displayName': 'WfAnalyzer_ExpandStateMachine.cpp' },
+    'NF[37]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[37]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ExpandStatement.cpp', 'displayName': 'WfAnalyzer_ExpandStatement.cpp' },
+    'NF[38]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[38]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_Misc.cpp', 'displayName': 'WfAnalyzer_Misc.cpp' },
+    'NF[39]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[39]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_SearchOrderedName.cpp', 'displayName': 'WfAnalyzer_SearchOrderedName.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::parsing': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[3]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::workflow': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NF[3]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer.cpp', 'displayName': 'WfAnalyzer.cpp' },
+    'NF[40]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[40]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_TypeInfo.cpp', 'displayName': 'WfAnalyzer_TypeInfo.cpp' },
+    'NF[41]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[41]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateScopeName.cpp', 'displayName': 'WfAnalyzer_ValidateScopeName.cpp' },
+    'NF[42]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[42]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic.cpp' },
+    'NF[43]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[43]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Declaration.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Declaration.cpp' },
+    'NF[44]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[44]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Expression.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Expression.cpp' },
+    'NF[45]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[45]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateSemantic_Statement.cpp', 'displayName': 'WfAnalyzer_ValidateSemantic_Statement.cpp' },
+    'NF[46]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[46]$vl::workflow': null,
+    'NF[47]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[47]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Declaration.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Declaration.cpp' },
+    'NF[48]$vl': { 'htmlFileName': 'FileSystem.cpp', 'displayName': 'FileSystem.cpp' },
+    'NF[48]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Expression.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Expression.cpp' },
+    'NF[49]$vl': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
+    'NF[49]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Statement.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Statement.cpp' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::parsing': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[4]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::workflow': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[4]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_BuildGlobalNameFromModules.cpp', 'displayName': 'WfAnalyzer_BuildGlobalNameFromModules.cpp' },
+    'NF[50]$vl': { 'htmlFileName': 'Locale.cpp', 'displayName': 'Locale.cpp' },
+    'NF[50]$vl::workflow': { 'htmlFileName': 'WfAnalyzer_ValidateStructure_Type.cpp', 'displayName': 'WfAnalyzer_ValidateStructure_Type.cpp' },
+    'NF[51]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[51]$vl::workflow': { 'htmlFileName': 'WfCpp.cpp', 'displayName': 'WfCpp.cpp' },
+    'NF[52]$vl': { 'htmlFileName': 'Threading.cpp', 'displayName': 'Threading.cpp' },
+    'NF[52]$vl::workflow': { 'htmlFileName': 'WfCpp_AssignClassDeclsToFiles.cpp', 'displayName': 'WfCpp_AssignClassDeclsToFiles.cpp' },
+    'NF[53]$vl': { 'htmlFileName': 'Accessor.cpp', 'displayName': 'Accessor.cpp' },
+    'NF[53]$vl::workflow': { 'htmlFileName': 'WfCpp_Class.cpp', 'displayName': 'WfCpp_Class.cpp' },
+    'NF[54]$vl': { 'htmlFileName': 'BroadcastStream.cpp', 'displayName': 'BroadcastStream.cpp' },
+    'NF[54]$vl::workflow': { 'htmlFileName': 'WfCpp_Collect.cpp', 'displayName': 'WfCpp_Collect.cpp' },
+    'NF[55]$vl': { 'htmlFileName': 'CacheStream.cpp', 'displayName': 'CacheStream.cpp' },
+    'NF[55]$vl::workflow': { 'htmlFileName': 'WfCpp_Expression.cpp', 'displayName': 'WfCpp_Expression.cpp' },
+    'NF[56]$vl': { 'htmlFileName': 'CharFormat.cpp', 'displayName': 'CharFormat.cpp' },
+    'NF[56]$vl::workflow': { 'htmlFileName': 'WfCpp_File.cpp', 'displayName': 'WfCpp_File.cpp' },
+    'NF[57]$vl': { 'htmlFileName': 'CompressionStream.cpp', 'displayName': 'CompressionStream.cpp' },
+    'NF[57]$vl::workflow': { 'htmlFileName': 'WfCpp_GenerateCppFiles.cpp', 'displayName': 'WfCpp_GenerateCppFiles.cpp' },
+    'NF[58]$vl': { 'htmlFileName': 'FileStream.cpp', 'displayName': 'FileStream.cpp' },
+    'NF[58]$vl::workflow': { 'htmlFileName': 'WfCpp_Statement.cpp', 'displayName': 'WfCpp_Statement.cpp' },
+    'NF[59]$vl': { 'htmlFileName': 'MemoryStream.cpp', 'displayName': 'MemoryStream.cpp' },
+    'NF[59]$vl::workflow': { 'htmlFileName': 'WfCpp_WriteClass.cpp', 'displayName': 'WfCpp_WriteClass.cpp' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[5]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::workflow': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[5]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_BuildGlobalNameFromTypeDescriptors.cpp', 'displayName': 'WfAnalyzer_BuildGlobalNameFromTypeDescriptors.cpp' },
+    'NF[60]$vl': { 'htmlFileName': 'MemoryWrapperStream.cpp', 'displayName': 'MemoryWrapperStream.cpp' },
+    'NF[60]$vl::workflow': { 'htmlFileName': 'WfCpp_WriteEnum.cpp', 'displayName': 'WfCpp_WriteEnum.cpp' },
+    'NF[61]$vl': { 'htmlFileName': 'RecorderStream.cpp', 'displayName': 'RecorderStream.cpp' },
+    'NF[61]$vl::workflow': { 'htmlFileName': 'WfCpp_WriteFunctionHeader.cpp', 'displayName': 'WfCpp_WriteFunctionHeader.cpp' },
+    'NF[62]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[62]$vl::workflow': { 'htmlFileName': 'WfCpp_WriteGlobal.cpp', 'displayName': 'WfCpp_WriteGlobal.cpp' },
+    'NF[63]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[63]$vl::workflow': { 'htmlFileName': 'WfCpp_WriteLambda.cpp', 'displayName': 'WfCpp_WriteLambda.cpp' },
+    'NF[64]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[64]$vl::workflow': { 'htmlFileName': 'WfCpp_WriteReflection.cpp', 'displayName': 'WfCpp_WriteReflection.cpp' },
+    'NF[65]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[65]$vl::workflow': { 'htmlFileName': 'WfCpp_WriteStruct.cpp', 'displayName': 'WfCpp_WriteStruct.cpp' },
+    'NF[66]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[66]$vl::workflow': { 'htmlFileName': 'WfEmitter.cpp', 'displayName': 'WfEmitter.cpp' },
+    'NF[67]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[67]$vl::workflow': { 'htmlFileName': 'WfEmitter_Assembly.cpp', 'displayName': 'WfEmitter_Assembly.cpp' },
+    'NF[68]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[68]$vl::workflow': { 'htmlFileName': 'WfEmitter_Declaration.cpp', 'displayName': 'WfEmitter_Declaration.cpp' },
+    'NF[69]$vl': { 'htmlFileName': 'Regex.cpp', 'displayName': 'Regex.cpp' },
+    'NF[69]$vl::workflow': { 'htmlFileName': 'WfEmitter_Expression.cpp', 'displayName': 'WfEmitter_Expression.cpp' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::parsing': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[6]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::workflow': { 'htmlFileName': 'WfRuntime.h', 'displayName': 'WfRuntime.h' },
+    'NF[6]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_BuildScope.cpp', 'displayName': 'WfAnalyzer_BuildScope.cpp' },
+    'NF[70]$vl': { 'htmlFileName': 'RegexAutomaton.cpp', 'displayName': 'RegexAutomaton.cpp' },
+    'NF[70]$vl::workflow': { 'htmlFileName': 'WfEmitter_Metadata.cpp', 'displayName': 'WfEmitter_Metadata.cpp' },
+    'NF[71]$vl': { 'htmlFileName': 'RegexData.cpp', 'displayName': 'RegexData.cpp' },
+    'NF[71]$vl::workflow': { 'htmlFileName': 'WfEmitter_Statement.cpp', 'displayName': 'WfEmitter_Statement.cpp' },
+    'NF[72]$vl': { 'htmlFileName': 'RegexExpression.cpp', 'displayName': 'RegexExpression.cpp' },
+    'NF[72]$vl::workflow': { 'htmlFileName': 'WfExpression.cpp', 'displayName': 'WfExpression.cpp' },
+    'NF[73]$vl': { 'htmlFileName': 'RegexParser.cpp', 'displayName': 'RegexParser.cpp' },
+    'NF[73]$vl::workflow': { 'htmlFileName': 'WfExpression_Ast.cpp', 'displayName': 'WfExpression_Ast.cpp' },
+    'NF[74]$vl': { 'htmlFileName': 'RegexPure.cpp', 'displayName': 'RegexPure.cpp' },
+    'NF[74]$vl::workflow': { 'htmlFileName': 'WfExpression_Copy.cpp', 'displayName': 'WfExpression_Copy.cpp' },
+    'NF[75]$vl': { 'htmlFileName': 'RegexRich.cpp', 'displayName': 'RegexRich.cpp' },
+    'NF[75]$vl::workflow': { 'htmlFileName': 'WfExpression_Empty.cpp', 'displayName': 'WfExpression_Empty.cpp' },
+    'NF[76]$vl': { 'htmlFileName': 'RegexWriter.cpp', 'displayName': 'RegexWriter.cpp' },
+    'NF[76]$vl::workflow': { 'htmlFileName': 'WfExpression_Parser.cpp', 'displayName': 'WfExpression_Parser.cpp' },
+    'NF[77]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[77]$vl::workflow': { 'htmlFileName': 'WfExpression_Traverse.cpp', 'displayName': 'WfExpression_Traverse.cpp' },
+    'NF[78]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[79]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::parsing': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[7]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[7]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[7]$vl::workflow': { 'htmlFileName': 'WfRuntime.cpp', 'displayName': 'WfRuntime.cpp' },
+    'NF[7]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_CheckScope_DuplicatedSymbol.cpp', 'displayName': 'WfAnalyzer_CheckScope_DuplicatedSymbol.cpp' },
+    'NF[80]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[81]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[82]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[83]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[84]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[85]$vl': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[86]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.cpp', 'displayName': 'GuiTypeDescriptorBuilder.cpp' },
+    'NF[87]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.cpp', 'displayName': 'GuiTypeDescriptorPredefined.cpp' },
+    'NF[88]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.cpp', 'displayName': 'GuiTypeDescriptorReflection.cpp' },
+    'NF[89]$vl': { 'htmlFileName': 'GuiTypeDescriptor_Log.cpp', 'displayName': 'GuiTypeDescriptor_Log.cpp' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[8]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::workflow': { 'htmlFileName': 'WfRuntimeAssembly.cpp', 'displayName': 'WfRuntimeAssembly.cpp' },
+    'NF[8]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_CheckScope_SymbolType.cpp', 'displayName': 'WfAnalyzer_CheckScope_SymbolType.cpp' },
+    'NF[90]$vl': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[91]$vl': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[92]$vl': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[93]$vl': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[94]$vl': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[95]$vl': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[96]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[97]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[98]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[99]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[9]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[9]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.cpp', 'displayName': 'GuiTypeDescriptor.cpp' },
+    'NF[9]$vl::workflow': { 'htmlFileName': 'WfRuntimeConstructions.cpp', 'displayName': 'WfRuntimeConstructions.cpp' },
+    'NF[9]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer_CompleteScope.cpp', 'displayName': 'WfAnalyzer_CompleteScope.cpp' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::collections::ForEachIterator': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::workflow::WfModule': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfModule::declarations': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfModule::paths': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfModuleUsingFragment': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfModuleUsingItem': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfModuleUsingItem::fragments': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfModuleUsingPath': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfModuleUsingPath::items': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfModuleUsingWildCardFragment': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__2': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__foreach_iterator__3': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__2': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__3': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::__scope_variable_flag__4': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::counter': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::fragment': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::i': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::index': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::item': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::manager': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::module': null,
+    'NI$vl::workflow::analyzer::ValidateModuleStructure@void(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::Ptr<::vl::workflow::WfModule>)[impl0]::path': null,
+    'NI$vl::workflow::analyzer::ValidateStructureContext': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NI$vl::workflow::analyzer::WfErrors': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NI$vl::workflow::analyzer::WfLexicalScopeManager': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NI$vl::workflow::analyzer::WfLexicalScopeManager::errors': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -62,7 +62,6 @@
 
 ### Making Demos
 
-- [ ] New Demo! (Workflow)
 - [ ] New Demo! (GacUI Core)
 - [ ] New Demo! (GacUI Compiler / Reflection)
 
