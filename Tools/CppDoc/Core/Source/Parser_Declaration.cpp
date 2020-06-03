@@ -340,6 +340,7 @@ void BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclara
 		auto declarator = declarators[i];
 
 		auto varDecl = MakePtr<VariableDeclaration>();
+		varDecl->templateScope = declarator->scopeSymbolToReuse.Obj();
 		varDecl->type = declarator->type;
 		varDecl->name = declarator->name;
 		varDecl->initializer = declarator->initializer;
