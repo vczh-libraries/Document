@@ -740,7 +740,7 @@ struct Color
 struct X
 {
 	int x;
-} x, *px;
+} x, *px = 0;
 )";
 		auto output = LR"(
 struct X
@@ -748,7 +748,7 @@ struct X
 	public x: int;
 };
 x: X;
-px: X *;
+px: X * = 0;
 )";
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
@@ -765,7 +765,7 @@ px: X *;
 struct
 {
 	int x:1;
-} x, *px;
+} x, *px = 0;
 )";
 		auto output = LR"(
 struct <anonymous>0
@@ -773,7 +773,7 @@ struct <anonymous>0
 	public x: int;
 };
 x: <anonymous>0;
-px: <anonymous>0 *;
+px: <anonymous>0 * = 0;
 )";
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
@@ -818,14 +818,14 @@ enum <anonymous>1 : int
 		auto input = LR"(
 enum class X
 {
-} x, *px;
+} x, *px = 0;
 )";
 		auto output = LR"(
 enum class X
 {
 };
 x: X;
-px: X *;
+px: X * = 0;
 )";
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);
@@ -839,14 +839,14 @@ px: X *;
 		auto input = LR"(
 enum
 {
-} x, *px;
+} x, *px = 0;
 )";
 		auto output = LR"(
 enum <anonymous>0
 {
 };
 x: <anonymous>0;
-px: <anonymous>0 *;
+px: <anonymous>0 * = 0;
 )";
 		COMPILE_PROGRAM(program, pa, input);
 		AssertProgram(program, output);

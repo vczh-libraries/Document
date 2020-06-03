@@ -77,7 +77,7 @@ void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa
 
 	List<Ptr<TemplateSpec>> classSpecs;
 	List<Ptr<Declarator>> declarators;
-	ParseNonMemberDeclarator(pa, pda_Typedefs(), type, cursor, declarators);
+	ParseNonMemberDeclarator(pa, pda_Decls(false, false), type, cursor, declarators);
 
 	for (vint i = 0; i < declarators.Count(); i++)
 	{
