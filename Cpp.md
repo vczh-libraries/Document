@@ -26,10 +26,11 @@
 
 ### Test Cases
 
+- [ ] `this` used in field initializer.
+
 ### Bugs
 
-- [ ] When `ParseIdExpr` is called outside of a function, non-static symbols will not be seen in `ResolveSymbolInContext` functions.
-- [ ] When `ParseIdExpr` is called inside of a function, `NAME::` will always ignore value symbols.
+- [ ] When `ParseIdExpr` is called for `NAME::`, it needs to tell `ResolveSymbolInContext` to always ignore value symbols.
 - [ ] Fix memory leaks.
 - [ ] No recursion in `void Visit(IfElseStat* self) override`, functions will test if `self->falseStat` is another `IfElseStat`, and loop until it is not.
 - [ ] **STL** Demo

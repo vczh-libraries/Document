@@ -1,5 +1,6 @@
 #include "Ast_Evaluate_ExpandPotentialVta.h"
 #include "Parser_Declarator.h"
+#include "EvaluateSymbol.h"
 
 using namespace symbol_type_resolving;
 
@@ -188,6 +189,22 @@ namespace symbol_totsys_impl
 				}
 			}
 		}
+
+		// "this" could also be used in field initializer
+		{
+			auto scope = pa.scopeSymbol;
+			while (scope)
+			{
+				if (auto classDecl = scope->GetAnyForwardDecl<ClassDeclaration>())
+				{
+					auto& tsys = symbol_type_resolving::EvaluateForwardClassSymbol(pa, classDecl.Obj(), nullptr, nullptr);
+					AddTempValue(result, tsys[0]->PtrOf());
+					return;
+				}
+				scope = scope->GetParentScope();
+			}
+		}
+
 		throw IllegalExprException();
 	}
 
