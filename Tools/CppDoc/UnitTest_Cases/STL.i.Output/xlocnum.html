@@ -137,9 +137,9 @@
 <div class="expandable"><div class="disabled">	const size_t _Count = _CSTD wcslen(_Ptr) + 1;</div>
 <div class="expanded">	<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$std::_Maklocwcs@wchar_t *(wchar_t const *)[impl0]::_Count"><div>_Count</div></div> = :: <div class="ref" onclick="jumpToSymbol(['wcslen@::size_t(wchar_t const *)'], ['wcslen@::size_t(wchar_t const *)'], [], [])"><div class="token cpp_function">wcslen</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Maklocwcs@wchar_t *(wchar_t const *)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>) + <div class="token cpp_number ">1</div>;</div></div>
 
-	<div class="token cpp_keyword ">wchar_t</div> *<div class="def" id="NI$std::_Maklocwcs@wchar_t *(wchar_t const *)[impl0]::_Ptrdest"><div>_Ptrdest</div></div> = (<div class="token cpp_keyword ">wchar_t</div> *)<div class="ref" onclick="jumpToSymbol(['_calloc_dbg@void *(::size_t, ::size_t, int, char const *, int)'], ['_calloc_dbg@void *(::size_t, ::size_t, int, char const *, int)'], [], [])"><div class="token cpp_function">_calloc_dbg</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Maklocwcs@wchar_t *(wchar_t const *)[impl0]::_Count'], [], [])">_Count</div>, <div class="token cpp_keyword ">sizeof</div> (<div class="token cpp_keyword ">wchar_t</div>),
-<div class="expandable"><div class="disabled">		_CRT_BLOCK, __FILE__, __LINE__);</div>
-<div class="expanded">		<div class="token cpp_number ">2</div>, <div class="token cpp_string ">&quot;c:\\program files (x86)\\microsoft visual studio\\2017\\professional\\vc\\tools\\msvc\\14.16.27023\\include\\xlocnum&quot;</div>, <div class="token cpp_number ">101</div>);</div></div>
+<div class="expandable"><div class="disabled">	wchar_t *_Ptrdest = (wchar_t *)_calloc_dbg(_Count, sizeof (wchar_t),
+		_CRT_BLOCK, __FILE__, __LINE__);</div>
+<div class="expanded">	<div class="token cpp_keyword ">wchar_t</div> *<div class="def" id="NI$std::_Maklocwcs@wchar_t *(wchar_t const *)[impl0]::_Ptrdest"><div>_Ptrdest</div></div> = (<div class="token cpp_keyword ">wchar_t</div> *)<div class="ref" onclick="jumpToSymbol(['calloc@void *(::size_t, ::size_t)'], ['calloc@void *(::size_t, ::size_t)'], [], [])"><div class="token cpp_function">calloc</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Maklocwcs@wchar_t *(wchar_t const *)[impl0]::_Count'], [], [])">_Count</div>, <div class="token cpp_keyword ">sizeof</div> (<div class="token cpp_keyword ">wchar_t</div>));</div></div>
 
 	<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['std::_Maklocwcs@wchar_t *(wchar_t const *)[impl0]::_Ptrdest'], [], [])">_Ptrdest</div>)
 		<div class="ref" onclick="jumpToSymbol(['std::_Xbad_alloc@void()'], ['std::_Xbad_alloc@void()'], [], [])"><div class="token cpp_function">_Xbad_alloc</div></div>();
@@ -2126,13 +2126,6 @@ referencedSymbols = {
             'FB$_Stoulx@unsigned long(char const *, char * *, int, int *)[decl0]'
         ]
     },
-    '_calloc_dbg@void *(::size_t, ::size_t, int, char const *, int)': {
-        'displayNameInHtml': '<span class="cpp_function">_calloc_dbg</span>(<span class="cpp_type">size_t</span>, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">int</span>)',
-        'impls': [],
-        'decls': [
-            'FB$_calloc_dbg@void *(::size_t, ::size_t, int, char const *, int)[decl0]'
-        ]
-    },
     '_errno@int *()': {
         'displayNameInHtml': '<span class="cpp_function">_errno</span>()',
         'impls': [],
@@ -2184,6 +2177,13 @@ referencedSymbols = {
             'FB$abs@long(long const)[impl0]'
         ],
         'decls': []
+    },
+    'calloc@void *(::size_t, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">calloc</span>(<span class="cpp_type">size_t</span>, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$calloc@void *(::size_t, ::size_t)[decl0]'
+        ]
     },
     'fabs@double([_Ty])': {
         'displayNameInHtml': '<span class="cpp_function">fabs</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type"></span>&gt;(<span class="cpp_type">_Ty</span>)',
@@ -6813,7 +6813,6 @@ symbolToFiles = {
     'FB$_Stolx@long(char const *, char * *, int, int *)[decl0]': null,
     'FB$_Stoullx@unsigned long long(char const *, char * *, int, int *)[decl0]': null,
     'FB$_Stoulx@unsigned long(char const *, char * *, int, int *)[decl0]': null,
-    'FB$_calloc_dbg@void *(::size_t, ::size_t, int, char const *, int)[decl0]': { 'htmlFileName': 'crtdbg.h', 'displayName': 'crtdbg.h' },
     'FB$_errno@int *()[decl0]': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
     'FB$_errno@int *()[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$_errno@int *()[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
@@ -6824,6 +6823,7 @@ symbolToFiles = {
     'FB$abs@long double(long double)[impl0]': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
     'FB$abs@long long(long long const)[impl0]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
     'FB$abs@long(long const)[impl0]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
+    'FB$calloc@void *(::size_t, ::size_t)[decl0]': { 'htmlFileName': 'corecrt_malloc.h', 'displayName': 'corecrt_malloc.h' },
     'FB$fabs@double([_Ty])[impl0]': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
     'FB$fabs@double(double)[decl0]': { 'htmlFileName': 'corecrt_math.h', 'displayName': 'corecrt_math.h' },
     'FB$fabs@double(double)[decl1]': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },

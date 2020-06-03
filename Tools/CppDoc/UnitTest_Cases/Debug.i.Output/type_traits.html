@@ -1705,7 +1705,7 @@
 	<div class="def" id="FB$std::move_if_noexcept@::std::conditional_t<*, [_Ty] const &, [_Ty] &&>([_Ty] &)[impl0]"><div><div class="token cpp_function">move_if_noexcept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::move_if_noexcept@::std::conditional_t<*, [_Ty] const &, [_Ty] &&>([_Ty] &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&amp; <div class="def" id="NI$std::move_if_noexcept@::std::conditional_t<*, [_Ty] const &, [_Ty] &&>([_Ty] &)[impl0]::_Arg"><div><div class="token cpp_argument">_Arg</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
 	{	<div class="token cpp_comment ">// forward _Arg as movable, sometimes</div>
 <div class="expandable"><div class="disabled">	return (_STD move(_Arg));</div>
-<div class="expanded">	<div class="token cpp_keyword ">return</div> (::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)'], ['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)', 'std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)', 'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])'], [], [])"><div class="token cpp_function">move</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::move_if_noexcept@::std::conditional_t<*, [_Ty] const &, [_Ty] &&>([_Ty] &)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>));</div></div>
+<div class="expanded">	<div class="token cpp_keyword ">return</div> (::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)'], ['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)', 'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])'], [], [])"><div class="token cpp_function">move</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::move_if_noexcept@::std::conditional_t<*, [_Ty] const &, [_Ty] &&>([_Ty] &)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>));</div></div>
 	}
 
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::reference_wrapper::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt;
@@ -12648,13 +12648,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)': {
-        'displayNameInHtml': '<span class="cpp_function">move</span>&lt;<span class="cpp_type">_InIt</span>, <span class="cpp_type">_DestTy</span>, <span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_type">_InIt</span>, <span class="cpp_type">_InIt</span>, <span class="cpp_type">_DestTy</span>( &)[<span class="cpp_keyword">(expr)</span>])',
-        'impls': [
-            'FB$std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)[impl0]'
-        ],
-        'decls': []
-    },
     'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])': {
         'displayNameInHtml': '<span class="cpp_function">move</span>&lt;<span class="cpp_type">_InIt</span>, <span class="cpp_type">_OutIt</span>&gt;(<span class="cpp_type">_InIt</span>, <span class="cpp_type">_InIt</span>, <span class="cpp_type">_OutIt</span>)',
         'impls': [
@@ -13425,7 +13418,6 @@ symbolToFiles = {
     'FB$std::invoke@decltype(*)([_Callable] &&, [_Types] &&...)[decl0]': null,
     'FB$std::invoke@decltype(*)([_Callable] &&, [_Types] &&...)[impl0]': null,
     'FB$std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)[impl0]': null,
-    'FB$std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)[impl0]': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'FB$std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])[impl0]': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'FB$std::ref@::std::reference_wrapper<[_Ty]>(::std::reference_wrapper<[_Ty]>)[impl0]': null,
     'FB$std::ref@::std::reference_wrapper<[_Ty]>([_Ty] &)[impl0]': null,

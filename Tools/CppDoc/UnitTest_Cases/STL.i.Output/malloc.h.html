@@ -146,8 +146,8 @@
 <div class="disabled">            __pragma(warning(suppress: 6255 6386))                                       \</div>
 <div class="disabled">            (_MallocaComputeSize(size) != 0                                              \</div>
 <div class="disabled">                ? _MarkAllocaS(malloc(_MallocaComputeSize(size)), _ALLOCA_S_HEAP_MARKER) \</div>
-<div class="disabled">                : NULL)
-    #endif</div>
+<div class="disabled">                : NULL)</div>
+<div class="disabled">    #endif</div>
 
 <div class="disabled">#else</div>
 
@@ -193,7 +193,7 @@
 <div class="expanded">            <div class="token cpp_keyword ">else</div> <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Marker'], [], [])">_Marker</div> != <div class="token cpp_number ">0xCCCC</div>)</div></div>
             {
 <div class="expandable"><div class="disabled">                _ASSERTE((&quot;Corrupted pointer passed to _freea&quot; &amp;&amp; 0));</div>
-<div class="expanded">                (<div class="token cpp_keyword ">void</div>)( (!!(((<div class="token cpp_string ">&quot;Corrupted pointer passed to _freea&quot;</div> &amp;&amp; <div class="token cpp_number ">0</div>)))) || (<div class="token cpp_number ">1</div> != <div class="ref" onclick="jumpToSymbol(['_CrtDbgReportW@int(int, wchar_t const *, int, wchar_t const *, wchar_t const * ...)'], ['_CrtDbgReportW@int(int, wchar_t const *, int, wchar_t const *, wchar_t const * ...)'], [], [])"><div class="token cpp_function">_CrtDbgReportW</div></div>(<div class="token cpp_number ">2</div>, <div class="token cpp_string ">L&quot;c:\\program files (x86)\\windows kits\\10\\include\\10.0.17763.0\\ucrt\\malloc.h&quot;</div>, <div class="token cpp_number ">162</div>, <div class="token cpp_number ">0</div>, <div class="token cpp_string ">L&quot;%ls&quot;</div>, <div class="token cpp_string ">L&quot;(\&quot;Corrupted pointer passed to _freea\&quot; &amp;&amp; 0)&quot;</div>)) || (__debugbreak(), <div class="token cpp_number ">0</div>) );</div></div>
+<div class="expanded">                ((<div class="token cpp_keyword ">void</div>)<div class="token cpp_number ">0</div>);</div></div>
             }
 <div class="disabled">            #endif</div>
         }
@@ -218,13 +218,6 @@
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    '_CrtDbgReportW@int(int, wchar_t const *, int, wchar_t const *, wchar_t const * ...)': {
-        'displayNameInHtml': '<span class="cpp_function">_CrtDbgReportW</span>(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, ...)',
-        'impls': [],
-        'decls': [
-            'FB$_CrtDbgReportW@int(int, wchar_t const *, int, wchar_t const *, wchar_t const * ...)[decl0]'
-        ]
-    },
     '_HEAPINFO': {
         'displayNameInHtml': '<span class="cpp_type">_HEAPINFO</span>',
         'impls': [
@@ -297,7 +290,6 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'FB$_CrtDbgReportW@int(int, wchar_t const *, int, wchar_t const *, wchar_t const * ...)[decl0]': { 'htmlFileName': 'crtdbg.h', 'displayName': 'crtdbg.h' },
     'FB$free@void(void *)[decl0]': { 'htmlFileName': 'corecrt_malloc.h', 'displayName': 'corecrt_malloc.h' },
     'NI$_HEAPINFO': null,
     'NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize': null,
