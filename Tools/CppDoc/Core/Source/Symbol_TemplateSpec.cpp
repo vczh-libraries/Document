@@ -38,7 +38,7 @@ namespace symbol_type_resolving
 
 	Ptr<TemplateSpec> GetTemplateSpecFromSymbol(Symbol* symbol)
 	{
-		if (symbol)
+		if (symbol && symbol->kind != symbol_component::SymbolKind::Namespace)
 		{
 			if (auto funcDecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
 			{
