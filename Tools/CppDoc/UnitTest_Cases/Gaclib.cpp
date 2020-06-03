@@ -13,5 +13,5 @@
 #include "../../../../GacUI/Release/IncludeOnly/GacUIWindows.cpp"
 #include "../../../../GacUI/Release/IncludeOnly/GacUIReflection.cpp"
 #include "../../../../GacUI/Release/IncludeOnly/GacUICompiler.cpp"
-//#include "../../../../GacUI/Release/IncludeOnly/DarkSkin.cpp"
-//#include "../../../../GacUI/Release/IncludeOnly/DarkSkinReflection.cpp"
+#include "../../../../GacUI/Release/IncludeOnly/DarkSkin.cpp"
+#include "../../../../GacUI/Release/IncludeOnly/DarkSkinReflection.cpp"

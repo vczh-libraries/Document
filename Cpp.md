@@ -66,10 +66,6 @@
   - [ ] Refactor the HTML generation part to becomes a library.
     - [ ] Extract `<div>` token rendering functions.
 
-### Making Demos
-
-- [ ] New Demo! (GacUI DarkSkin)
-
 ## Lexical Conventions
 
 Consumable UTF-32 code points:
