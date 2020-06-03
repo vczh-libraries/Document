@@ -9,7 +9,7 @@
 #include "../../../../Workflow/Release/IncludeOnly/VlppWorkflowLibrary.cpp"
 #include "../../../../Workflow/Release/IncludeOnly/VlppWorkflowRuntime.cpp"
 #include "../../../../Workflow/Release/IncludeOnly/VlppWorkflowCompiler.cpp"
-//#include "../../../../GacUI/Release/IncludeOnly/GacUI.cpp"
+#include "../../../../GacUI/Release/IncludeOnly/GacUI.cpp"
 //#include "../../../../GacUI/Release/IncludeOnly/GacUIWindows.cpp"
 //#include "../../../../GacUI/Release/IncludeOnly/GacUIReflection.cpp"
 //#include "../../../../GacUI/Release/IncludeOnly/GacUICompiler.cpp"

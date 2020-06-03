@@ -72,7 +72,21 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		{
 			while (SkipSpecifiers(cursor));
 			auto enumItem = MakePtr<EnumItemDeclaration>();
-			if (!ParseCppName(enumItem->name, cursor)) throw StopParsingException(cursor);
+			if (TestToken(cursor, CppTokens::ID, false) ||
+				TestToken(cursor, CppTokens::INT, false) ||
+				TestToken(cursor, CppTokens::HEX, false) ||
+				TestToken(cursor, CppTokens::BIN, false))
+			{
+				enumItem->name.name = WString(cursor->token.reading, cursor->token.length);
+				enumItem->name.tokenCount = 1;
+				enumItem->name.nameTokens[0] = cursor->token;
+				enumItem->name.type = CppNameType::Normal;
+				SkipToken(cursor);
+			}
+			else
+			{
+				throw StopParsingException(cursor);
+			}
 			decl->items.Add(enumItem);
 
 			auto enumItemSymbol = contextSymbol->AddImplDeclToSymbol_NFb(enumItem, symbol_component::SymbolKind::EnumItem);
