@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>d3d10_1shader.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//////////////////////////////////////////////////////////////////////////////</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Copyright (c) Microsoft Corporation.  All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  File:       D3D10_1Shader.h</div>
+<div class="token cpp_comment ">//  Content:    D3D10.1 Shader Types and APIs</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//////////////////////////////////////////////////////////////////////////////</div>
+
+<div class="disabled">#ifndef __D3D10_1SHADER_H__</div>
+<div class="disabled">#define __D3D10_1SHADER_H__</div>
+
+<div class="disabled">#include &quot;d3d10shader.h&quot;</div>
+
+<div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+
+
+<div class="token cpp_comment ">//----------------------------------------------------------------------------</div>
+<div class="token cpp_comment ">// Shader debugging structures</div>
+<div class="token cpp_comment ">//----------------------------------------------------------------------------</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_REGTYPE</div></div></div>
+{
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_INPUT"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_INPUT</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_OUTPUT"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_OUTPUT</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_CBUFFER"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_CBUFFER</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_TBUFFER"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_TBUFFER</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_TEMP"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_TEMP</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_TEMPARRAY"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_TEMPARRAY</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_TEXTURE"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_TEXTURE</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_SAMPLER"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_SAMPLER</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_IMMEDIATECBUFFER"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_IMMEDIATECBUFFER</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_LITERAL"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_LITERAL</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_UNUSED"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_UNUSED</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D11_SHADER_DEBUG_REG_INTERFACE_POINTERS"><div><div class="token cpp_enum">D3D11_SHADER_DEBUG_REG_INTERFACE_POINTERS</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D11_SHADER_DEBUG_REG_UAV"><div><div class="token cpp_enum">D3D11_SHADER_DEBUG_REG_UAV</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_REGTYPE::D3D10_SHADER_DEBUG_REG_FORCE_DWORD"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_REG_FORCE_DWORD</div></div></div> = <div class="token cpp_number ">0x7fffffff</div>,
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_REGTYPE"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_REGTYPE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_SCOPETYPE</div></div></div>
+{
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_GLOBAL"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_GLOBAL</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_BLOCK"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_BLOCK</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_FORLOOP"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_FORLOOP</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_STRUCT"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_STRUCT</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_FUNC_PARAMS"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_FUNC_PARAMS</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_STATEBLOCK"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_STATEBLOCK</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_NAMESPACE"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_NAMESPACE</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_ANNOTATION"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_ANNOTATION</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPETYPE::D3D10_SHADER_DEBUG_SCOPE_FORCE_DWORD"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_SCOPE_FORCE_DWORD</div></div></div> = <div class="token cpp_number ">0x7fffffff</div>,
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_SCOPETYPE"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_SCOPETYPE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_VARTYPE"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_VARTYPE</div></div></div>
+{
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_VARTYPE::D3D10_SHADER_DEBUG_VAR_VARIABLE"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_VAR_VARIABLE</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_VARTYPE::D3D10_SHADER_DEBUG_VAR_FUNCTION"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_VAR_FUNCTION</div></div></div>,
+    <div class="def" id="NI$_D3D10_SHADER_DEBUG_VARTYPE::D3D10_SHADER_DEBUG_VAR_FORCE_DWORD"><div><div class="token cpp_enum">D3D10_SHADER_DEBUG_VAR_FORCE_DWORD</div></div></div> = <div class="token cpp_number ">0x7fffffff</div>,
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_VARTYPE"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_VARTYPE</div></div></div>;
+
+<div class="token cpp_comment ">/////////////////////////////////////////////////////////////////////</div>
+<div class="token cpp_comment ">// These are the serialized structures that get written to the file</div>
+<div class="token cpp_comment ">/////////////////////////////////////////////////////////////////////</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_TOKEN_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_TOKEN_INFO</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_TOKEN_INFO::File"><div><div class="token cpp_field">File</div></div></div>;    <div class="token cpp_comment ">// offset into file list</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_TOKEN_INFO::Line"><div><div class="token cpp_field">Line</div></div></div>;    <div class="token cpp_comment ">// line #</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_TOKEN_INFO::Column"><div><div class="token cpp_field">Column</div></div></div>;  <div class="token cpp_comment ">// column #</div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_TOKEN_INFO::TokenLength"><div><div class="token cpp_field">TokenLength</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_TOKEN_INFO::TokenId"><div><div class="token cpp_field">TokenId</div></div></div>; <div class="token cpp_comment ">// offset to LPCSTR of length TokenLength in string datastore</div>
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_TOKEN_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_TOKEN_INFO</div></div></div>;
+
+<div class="token cpp_comment ">// Variable list</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_VAR_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_VAR_INFO</div></div></div>
+{
+    <div class="token cpp_comment ">// Index into token list for declaring identifier</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_VAR_INFO::TokenId"><div><div class="token cpp_field">TokenId</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_VARIABLE_TYPE'], [], [])"><div class="token cpp_type">D3D10_SHADER_VARIABLE_TYPE</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_VAR_INFO::Type"><div><div class="token cpp_field">Type</div></div></div>;
+    <div class="token cpp_comment ">// register and component for this variable, only valid/necessary for arrays</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_VAR_INFO::Register"><div><div class="token cpp_field">Register</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_VAR_INFO::Component"><div><div class="token cpp_field">Component</div></div></div>;
+    <div class="token cpp_comment ">// gives the original variable that declared this variable</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_VAR_INFO::ScopeVar"><div><div class="token cpp_field">ScopeVar</div></div></div>;
+    <div class="token cpp_comment ">// this variable&apos;s offset in its ScopeVar</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_VAR_INFO::ScopeVarOffset"><div><div class="token cpp_field">ScopeVarOffset</div></div></div>;
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_VAR_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_VAR_INFO</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INPUT_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_INPUT_INFO</div></div></div>
+{
+    <div class="token cpp_comment ">// index into array of variables of variable to initialize</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INPUT_INFO::Var"><div><div class="token cpp_field">Var</div></div></div>;
+    <div class="token cpp_comment ">// input, cbuffer, tbuffer</div>
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_DEBUG_REGTYPE'], [], [])"><div class="token cpp_type">D3D10_SHADER_DEBUG_REGTYPE</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INPUT_INFO::InitialRegisterSet"><div><div class="token cpp_field">InitialRegisterSet</div></div></div>;
+    <div class="token cpp_comment ">// set to cbuffer or tbuffer slot, geometry shader input primitive #,</div>
+    <div class="token cpp_comment ">// identifying register for indexable temp, or -1</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INPUT_INFO::InitialBank"><div><div class="token cpp_field">InitialBank</div></div></div>;
+    <div class="token cpp_comment ">// -1 if temp, otherwise gives register in register set</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INPUT_INFO::InitialRegister"><div><div class="token cpp_field">InitialRegister</div></div></div>;
+    <div class="token cpp_comment ">// -1 if temp, otherwise gives component</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INPUT_INFO::InitialComponent"><div><div class="token cpp_field">InitialComponent</div></div></div>;
+    <div class="token cpp_comment ">// initial value if literal</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INPUT_INFO::InitialValue"><div><div class="token cpp_field">InitialValue</div></div></div>;
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_INPUT_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_INPUT_INFO</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_SCOPEVAR_INFO</div></div></div>
+{
+    <div class="token cpp_comment ">// Index into variable token</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::TokenId"><div><div class="token cpp_field">TokenId</div></div></div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_DEBUG_VARTYPE'], [], [])"><div class="token cpp_type">D3D10_SHADER_DEBUG_VARTYPE</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::VarType"><div><div class="token cpp_field">VarType</div></div></div>; <div class="token cpp_comment ">// variable or function (different namespaces)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_VARIABLE_CLASS'], [], [])"><div class="token cpp_type">D3D10_SHADER_VARIABLE_CLASS</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::Class"><div><div class="token cpp_field">Class</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::Rows"><div><div class="token cpp_field">Rows</div></div></div>;          <div class="token cpp_comment ">// number of rows (matrices)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::Columns"><div><div class="token cpp_field">Columns</div></div></div>;       <div class="token cpp_comment ">// number of columns (vectors and matrices)</div>
+
+    <div class="token cpp_comment ">// In an array of structures, one struct member scope is provided, and</div>
+    <div class="token cpp_comment ">// you&apos;ll have to add the array stride times the index to the variable</div>
+    <div class="token cpp_comment ">// index you find, then find that variable in this structure&apos;s list of</div>
+    <div class="token cpp_comment ">// variables.</div>
+
+    <div class="token cpp_comment ">// gives a scope to look up struct members. -1 if not a struct</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::StructMemberScope"><div><div class="token cpp_field">StructMemberScope</div></div></div>;
+
+    <div class="token cpp_comment ">// number of array indices</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::uArrayIndices"><div><div class="token cpp_field">uArrayIndices</div></div></div>;    <div class="token cpp_comment ">// a[3][2][1] has 3 indices</div>
+    <div class="token cpp_comment ">// maximum array index for each index</div>
+    <div class="token cpp_comment ">// offset to UINT[uArrayIndices] in UINT datastore</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::ArrayElements"><div><div class="token cpp_field">ArrayElements</div></div></div>; <div class="token cpp_comment ">// a[3][2][1] has {3, 2, 1}</div>
+    <div class="token cpp_comment ">// how many variables each array index moves</div>
+    <div class="token cpp_comment ">// offset to UINT[uArrayIndices] in UINT datastore</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::ArrayStrides"><div><div class="token cpp_field">ArrayStrides</div></div></div>;  <div class="token cpp_comment ">// a[3][2][1] has {2, 1, 1}</div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::uVariables"><div><div class="token cpp_field">uVariables</div></div></div>;
+    <div class="token cpp_comment ">// index of the first variable, later variables are offsets from this one</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPEVAR_INFO::uFirstVariable"><div><div class="token cpp_field">uFirstVariable</div></div></div>;
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_SCOPEVAR_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_SCOPEVAR_INFO</div></div></div>;
+
+<div class="token cpp_comment ">// scope data, this maps variable names to debug variables (useful for the watch window)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPE_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_SCOPE_INFO</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_DEBUG_SCOPETYPE'], [], [])"><div class="token cpp_type">D3D10_SHADER_DEBUG_SCOPETYPE</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPE_INFO::ScopeType"><div><div class="token cpp_field">ScopeType</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPE_INFO::Name"><div><div class="token cpp_field">Name</div></div></div>;         <div class="token cpp_comment ">// offset to name of scope in strings list</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPE_INFO::uNameLen"><div><div class="token cpp_field">uNameLen</div></div></div>;     <div class="token cpp_comment ">// length of name string</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPE_INFO::uVariables"><div><div class="token cpp_field">uVariables</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_SCOPE_INFO::VariableData"><div><div class="token cpp_field">VariableData</div></div></div>; <div class="token cpp_comment ">// Offset to UINT[uVariables] indexing the Scope Variable list</div>
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_SCOPE_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_SCOPE_INFO</div></div></div>;
+
+<div class="token cpp_comment ">// instruction outputs</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_OUTPUTVAR</div></div></div>
+{
+    <div class="token cpp_comment ">// index variable being written to, if -1 it&apos;s not going to a variable</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::Var"><div><div class="token cpp_field">Var</div></div></div>;
+    <div class="token cpp_comment ">// range data that the compiler expects to be true</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>  <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::uValueMin"><div><div class="token cpp_field">uValueMin</div></div></div>, <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::uValueMax"><div><div class="token cpp_field">uValueMax</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div>   <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::iValueMin"><div><div class="token cpp_field">iValueMin</div></div></div>, <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::iValueMax"><div><div class="token cpp_field">iValueMax</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['FLOAT'], [], [])"><div class="token cpp_type">FLOAT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::fValueMin"><div><div class="token cpp_field">fValueMin</div></div></div>, <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::fValueMax"><div><div class="token cpp_field">fValueMax</div></div></div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>  <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::bNaNPossible"><div><div class="token cpp_field">bNaNPossible</div></div></div>, <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTVAR::bInfPossible"><div><div class="token cpp_field">bInfPossible</div></div></div>;
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_OUTPUTVAR"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_OUTPUTVAR</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTREG_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_OUTPUTREG_INFO</div></div></div>
+{
+    <div class="token cpp_comment ">// Only temp, indexable temp, and output are valid here</div>
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_DEBUG_REGTYPE'], [], [])"><div class="token cpp_type">D3D10_SHADER_DEBUG_REGTYPE</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTREG_INFO::OutputRegisterSet"><div><div class="token cpp_field">OutputRegisterSet</div></div></div>;
+    <div class="token cpp_comment ">// -1 means no output</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTREG_INFO::OutputReg"><div><div class="token cpp_field">OutputReg</div></div></div>;
+    <div class="token cpp_comment ">// if a temp array, identifier for which one</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTREG_INFO::TempArrayReg"><div><div class="token cpp_field">TempArrayReg</div></div></div>;
+    <div class="token cpp_comment ">// -1 means masked out</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTREG_INFO::OutputComponents"><div><div class="token cpp_field">OutputComponents</div></div></div>[<div class="token cpp_number ">4</div>];
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_DEBUG_OUTPUTVAR'], [], [])"><div class="token cpp_type">D3D10_SHADER_DEBUG_OUTPUTVAR</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTREG_INFO::OutputVars"><div><div class="token cpp_field">OutputVars</div></div></div>[<div class="token cpp_number ">4</div>];
+    <div class="token cpp_comment ">// when indexing the output, get the value of this register, then add</div>
+    <div class="token cpp_comment ">// that to uOutputReg. If uIndexReg is -1, then there is no index.</div>
+    <div class="token cpp_comment ">// find the variable whose register is the sum (by looking in the ScopeVar)</div>
+    <div class="token cpp_comment ">// and component matches, then set it. This should only happen for indexable</div>
+    <div class="token cpp_comment ">// temps and outputs.</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTREG_INFO::IndexReg"><div><div class="token cpp_field">IndexReg</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_OUTPUTREG_INFO::IndexComp"><div><div class="token cpp_field">IndexComp</div></div></div>;
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_OUTPUTREG_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_OUTPUTREG_INFO</div></div></div>;
+
+<div class="token cpp_comment ">// per instruction data</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_INST_INFO</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::Id"><div><div class="token cpp_field">Id</div></div></div>; <div class="token cpp_comment ">// Which instruction this is in the bytecode</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::Opcode"><div><div class="token cpp_field">Opcode</div></div></div>; <div class="token cpp_comment ">// instruction type</div>
+
+    <div class="token cpp_comment ">// 0, 1, or 2</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::uOutputs"><div><div class="token cpp_field">uOutputs</div></div></div>;
+
+    <div class="token cpp_comment ">// up to two outputs per instruction</div>
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_DEBUG_OUTPUTREG_INFO'], [], [])"><div class="token cpp_type">D3D10_SHADER_DEBUG_OUTPUTREG_INFO</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::pOutputs"><div><div class="token cpp_field">pOutputs</div></div></div>[<div class="token cpp_number ">2</div>];
+    
+    <div class="token cpp_comment ">// index into the list of tokens for this instruction&apos;s token</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::TokenId"><div><div class="token cpp_field">TokenId</div></div></div>;
+
+    <div class="token cpp_comment ">// how many function calls deep this instruction is</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::NestingLevel"><div><div class="token cpp_field">NestingLevel</div></div></div>;
+
+    <div class="token cpp_comment ">// list of scopes from outer-most to inner-most</div>
+    <div class="token cpp_comment ">// Number of scopes</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::Scopes"><div><div class="token cpp_field">Scopes</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::ScopeInfo"><div><div class="token cpp_field">ScopeInfo</div></div></div>; <div class="token cpp_comment ">// Offset to UINT[uScopes] specifying indices of the ScopeInfo Array</div>
+
+    <div class="token cpp_comment ">// list of variables accessed by this instruction</div>
+    <div class="token cpp_comment ">// Number of variables</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::AccessedVars"><div><div class="token cpp_field">AccessedVars</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INST_INFO::AccessedVarsInfo"><div><div class="token cpp_field">AccessedVarsInfo</div></div></div>; <div class="token cpp_comment ">// Offset to UINT[AccessedVars] specifying indices of the ScopeVariableInfo Array</div>
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_INST_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_INST_INFO</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_FILE_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_FILE_INFO</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_FILE_INFO::FileName"><div><div class="token cpp_field">FileName</div></div></div>;    <div class="token cpp_comment ">// Offset to LPCSTR for file name</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_FILE_INFO::FileNameLen"><div><div class="token cpp_field">FileNameLen</div></div></div>; <div class="token cpp_comment ">// Length of file name</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_FILE_INFO::FileData"><div><div class="token cpp_field">FileData</div></div></div>;    <div class="token cpp_comment ">// Offset to LPCSTR of length FileLen</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_FILE_INFO::FileLen"><div><div class="token cpp_field">FileLen</div></div></div>;     <div class="token cpp_comment ">// Length of file</div>
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_FILE_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_FILE_INFO</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO"><div><div class="token cpp_type">_D3D10_SHADER_DEBUG_INFO</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::Size"><div><div class="token cpp_field">Size</div></div></div>;                             <div class="token cpp_comment ">// sizeof(D3D10_SHADER_DEBUG_INFO)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::Creator"><div><div class="token cpp_field">Creator</div></div></div>;                          <div class="token cpp_comment ">// Offset to LPCSTR for compiler version</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::EntrypointName"><div><div class="token cpp_field">EntrypointName</div></div></div>;                   <div class="token cpp_comment ">// Offset to LPCSTR for Entry point name</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::ShaderTarget"><div><div class="token cpp_field">ShaderTarget</div></div></div>;                     <div class="token cpp_comment ">// Offset to LPCSTR for shader target</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::CompileFlags"><div><div class="token cpp_field">CompileFlags</div></div></div>;                     <div class="token cpp_comment ">// flags used to compile</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::Files"><div><div class="token cpp_field">Files</div></div></div>;                            <div class="token cpp_comment ">// number of included files</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::FileInfo"><div><div class="token cpp_field">FileInfo</div></div></div>;                         <div class="token cpp_comment ">// Offset to D3D10_SHADER_DEBUG_FILE_INFO[Files]</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::Instructions"><div><div class="token cpp_field">Instructions</div></div></div>;                     <div class="token cpp_comment ">// number of instructions</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::InstructionInfo"><div><div class="token cpp_field">InstructionInfo</div></div></div>;                  <div class="token cpp_comment ">// Offset to D3D10_SHADER_DEBUG_INST_INFO[Instructions]</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::Variables"><div><div class="token cpp_field">Variables</div></div></div>;                        <div class="token cpp_comment ">// number of variables</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::VariableInfo"><div><div class="token cpp_field">VariableInfo</div></div></div>;                     <div class="token cpp_comment ">// Offset to D3D10_SHADER_DEBUG_VAR_INFO[Variables]</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::InputVariables"><div><div class="token cpp_field">InputVariables</div></div></div>;                   <div class="token cpp_comment ">// number of variables to initialize before running</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::InputVariableInfo"><div><div class="token cpp_field">InputVariableInfo</div></div></div>;                <div class="token cpp_comment ">// Offset to D3D10_SHADER_DEBUG_INPUT_INFO[InputVariables]</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::Tokens"><div><div class="token cpp_field">Tokens</div></div></div>;                           <div class="token cpp_comment ">// number of tokens to initialize</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::TokenInfo"><div><div class="token cpp_field">TokenInfo</div></div></div>;                        <div class="token cpp_comment ">// Offset to D3D10_SHADER_DEBUG_TOKEN_INFO[Tokens]</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::Scopes"><div><div class="token cpp_field">Scopes</div></div></div>;                           <div class="token cpp_comment ">// number of scopes</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::ScopeInfo"><div><div class="token cpp_field">ScopeInfo</div></div></div>;                        <div class="token cpp_comment ">// Offset to D3D10_SHADER_DEBUG_SCOPE_INFO[Scopes]</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::ScopeVariables"><div><div class="token cpp_field">ScopeVariables</div></div></div>;                   <div class="token cpp_comment ">// number of variables declared</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::ScopeVariableInfo"><div><div class="token cpp_field">ScopeVariableInfo</div></div></div>;                <div class="token cpp_comment ">// Offset to D3D10_SHADER_DEBUG_SCOPEVAR_INFO[Scopes]</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::UintOffset"><div><div class="token cpp_field">UintOffset</div></div></div>;                       <div class="token cpp_comment ">// Offset to the UINT datastore, all UINT offsets are from this offset</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_D3D10_SHADER_DEBUG_INFO::StringOffset"><div><div class="token cpp_field">StringOffset</div></div></div>;                     <div class="token cpp_comment ">// Offset to the string datastore, all string offsets are from this offset</div>
+} <div class="def" id="NI$D3D10_SHADER_DEBUG_INFO"><div><div class="token cpp_type">D3D10_SHADER_DEBUG_INFO</div></div></div>;
+
+<div class="token cpp_comment ">//----------------------------------------------------------------------------</div>
+<div class="token cpp_comment ">// ID3D10ShaderReflection1:</div>
+<div class="token cpp_comment ">//----------------------------------------------------------------------------</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Interface definitions</div>
+<div class="token cpp_comment ">//</div>
+
+
+<div class="expandable"><div class="disabled">typedef interface ID3D10ShaderReflection1 ID3D10ShaderReflection1;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> ID3D10ShaderReflection1 <div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderReflection1'], [], [])"><div class="token cpp_type">ID3D10ShaderReflection1</div></div>;</div></div>
+<div class="expandable"><div class="disabled">typedef interface ID3D10ShaderReflection1 *LPD3D10SHADERREFLECTION1;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderReflection1'], [], [])"><div class="token cpp_type">ID3D10ShaderReflection1</div></div> *<div class="def" id="NI$LPD3D10SHADERREFLECTION1"><div><div class="token cpp_type">LPD3D10SHADERREFLECTION1</div></div></div>;</div></div>
+
+<div class="token cpp_comment ">// {C3457783-A846-47CE-9520-CEA6F66E7447}</div>
+<div class="expandable"><div class="disabled">DEFINE_GUID(IID_ID3D10ShaderReflection1, 
+0xc3457783, 0xa846, 0x47ce, 0x95, 0x20, 0xce, 0xa6, 0xf6, 0x6e, 0x74, 0x47);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>  <div class="def" id="NI$IID_ID3D10ShaderReflection1"><div>IID_ID3D10ShaderReflection1</div></div>;</div></div>
+
+<div class="disabled">#undef INTERFACE</div>
+<div class="disabled">#define INTERFACE ID3D10ShaderReflection1</div>
+
+<div class="expandable"><div class="disabled">DECLARE_INTERFACE_(ID3D10ShaderReflection1, IUnknown)</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="token cpp_keyword ">__declspec</div>(novtable) <div class="def" id="NI$ID3D10ShaderReflection1"><div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderReflection1'], [], [])"><div class="token cpp_type">ID3D10ShaderReflection1</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['IUnknown'], [], [])"><div class="token cpp_type">IUnknown</div></div></div></div>
+{
+<div class="expandable"><div class="disabled">    STDMETHOD(QueryInterface)(THIS_ REFIID iid, LPVOID *ppv) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::QueryInterface@::HRESULT(::IID const &, ::LPVOID *)[decl0]"><div><div class="token cpp_function">QueryInterface</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$ID3D10ShaderReflection1::QueryInterface@::HRESULT(::IID const &, ::LPVOID *)[decl0]::iid"><div>iid</div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> *<div class="def" id="NI$ID3D10ShaderReflection1::QueryInterface@::HRESULT(::IID const &, ::LPVOID *)[decl0]::ppv"><div>ppv</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD_(ULONG, AddRef)(THIS) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::AddRef@::ULONG()[decl0]"><div><div class="token cpp_function">AddRef</div></div></div>(<div class="token cpp_keyword ">void</div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD_(ULONG, Release)(THIS) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::Release@::ULONG()[decl0]"><div><div class="token cpp_function">Release</div></div></div>(<div class="token cpp_keyword ">void</div>) = <div class="token cpp_number ">0</div>;</div></div>
+
+<div class="expandable"><div class="disabled">    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_SHADER_DESC *pDesc) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetDesc@::HRESULT(::D3D10_SHADER_DESC *)[decl0]"><div><div class="token cpp_function">GetDesc</div></div></div>(   <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_DESC'], [], [])"><div class="token cpp_type">D3D10_SHADER_DESC</div></div> *<div class="def" id="NI$ID3D10ShaderReflection1::GetDesc@::HRESULT(::D3D10_SHADER_DESC *)[decl0]::pDesc"><div>pDesc</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+    
+<div class="expandable"><div class="disabled">    STDMETHOD_(ID3D10ShaderReflectionConstantBuffer*, GetConstantBufferByIndex)(THIS_ UINT Index) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderReflectionConstantBuffer'], [], [])"><div class="token cpp_type">ID3D10ShaderReflectionConstantBuffer</div></div>* <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetConstantBufferByIndex@::ID3D10ShaderReflectionConstantBuffer *(::UINT)[decl0]"><div><div class="token cpp_function">GetConstantBufferByIndex</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$ID3D10ShaderReflection1::GetConstantBufferByIndex@::ID3D10ShaderReflectionConstantBuffer *(::UINT)[decl0]::Index"><div>Index</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD_(ID3D10ShaderReflectionConstantBuffer*, GetConstantBufferByName)(THIS_ LPCSTR Name) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderReflectionConstantBuffer'], [], [])"><div class="token cpp_type">ID3D10ShaderReflectionConstantBuffer</div></div>* <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetConstantBufferByName@::ID3D10ShaderReflectionConstantBuffer *(::LPCSTR)[decl0]"><div><div class="token cpp_function">GetConstantBufferByName</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$ID3D10ShaderReflection1::GetConstantBufferByName@::ID3D10ShaderReflectionConstantBuffer *(::LPCSTR)[decl0]::Name"><div>Name</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+    
+<div class="expandable"><div class="disabled">    STDMETHOD(GetResourceBindingDesc)(THIS_ UINT ResourceIndex, _Out_ D3D10_SHADER_INPUT_BIND_DESC *pDesc) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetResourceBindingDesc@::HRESULT(::UINT, ::D3D10_SHADER_INPUT_BIND_DESC *)[decl0]"><div><div class="token cpp_function">GetResourceBindingDesc</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$ID3D10ShaderReflection1::GetResourceBindingDesc@::HRESULT(::UINT, ::D3D10_SHADER_INPUT_BIND_DESC *)[decl0]::ResourceIndex"><div>ResourceIndex</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_INPUT_BIND_DESC'], [], [])"><div class="token cpp_type">D3D10_SHADER_INPUT_BIND_DESC</div></div> *<div class="def" id="NI$ID3D10ShaderReflection1::GetResourceBindingDesc@::HRESULT(::UINT, ::D3D10_SHADER_INPUT_BIND_DESC *)[decl0]::pDesc"><div>pDesc</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+    
+<div class="expandable"><div class="disabled">    STDMETHOD(GetInputParameterDesc)(THIS_ UINT ParameterIndex, _Out_ D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetInputParameterDesc@::HRESULT(::UINT, ::D3D10_SIGNATURE_PARAMETER_DESC *)[decl0]"><div><div class="token cpp_function">GetInputParameterDesc</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$ID3D10ShaderReflection1::GetInputParameterDesc@::HRESULT(::UINT, ::D3D10_SIGNATURE_PARAMETER_DESC *)[decl0]::ParameterIndex"><div>ParameterIndex</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['D3D10_SIGNATURE_PARAMETER_DESC'], [], [])"><div class="token cpp_type">D3D10_SIGNATURE_PARAMETER_DESC</div></div> *<div class="def" id="NI$ID3D10ShaderReflection1::GetInputParameterDesc@::HRESULT(::UINT, ::D3D10_SIGNATURE_PARAMETER_DESC *)[decl0]::pDesc"><div>pDesc</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD(GetOutputParameterDesc)(THIS_ UINT ParameterIndex, _Out_ D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetOutputParameterDesc@::HRESULT(::UINT, ::D3D10_SIGNATURE_PARAMETER_DESC *)[decl0]"><div><div class="token cpp_function">GetOutputParameterDesc</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$ID3D10ShaderReflection1::GetOutputParameterDesc@::HRESULT(::UINT, ::D3D10_SIGNATURE_PARAMETER_DESC *)[decl0]::ParameterIndex"><div>ParameterIndex</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['D3D10_SIGNATURE_PARAMETER_DESC'], [], [])"><div class="token cpp_type">D3D10_SIGNATURE_PARAMETER_DESC</div></div> *<div class="def" id="NI$ID3D10ShaderReflection1::GetOutputParameterDesc@::HRESULT(::UINT, ::D3D10_SIGNATURE_PARAMETER_DESC *)[decl0]::pDesc"><div>pDesc</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+
+<div class="expandable"><div class="disabled">    STDMETHOD_(ID3D10ShaderReflectionVariable*, GetVariableByName)(THIS_ LPCSTR Name) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderReflectionVariable'], [], [])"><div class="token cpp_type">ID3D10ShaderReflectionVariable</div></div>* <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetVariableByName@::ID3D10ShaderReflectionVariable *(::LPCSTR)[decl0]"><div><div class="token cpp_function">GetVariableByName</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$ID3D10ShaderReflection1::GetVariableByName@::ID3D10ShaderReflectionVariable *(::LPCSTR)[decl0]::Name"><div>Name</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+
+<div class="expandable"><div class="disabled">    STDMETHOD(GetResourceBindingDescByName)(THIS_ LPCSTR Name, _Out_ D3D10_SHADER_INPUT_BIND_DESC *pDesc) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetResourceBindingDescByName@::HRESULT(::LPCSTR, ::D3D10_SHADER_INPUT_BIND_DESC *)[decl0]"><div><div class="token cpp_function">GetResourceBindingDescByName</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$ID3D10ShaderReflection1::GetResourceBindingDescByName@::HRESULT(::LPCSTR, ::D3D10_SHADER_INPUT_BIND_DESC *)[decl0]::Name"><div>Name</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_INPUT_BIND_DESC'], [], [])"><div class="token cpp_type">D3D10_SHADER_INPUT_BIND_DESC</div></div> *<div class="def" id="NI$ID3D10ShaderReflection1::GetResourceBindingDescByName@::HRESULT(::LPCSTR, ::D3D10_SHADER_INPUT_BIND_DESC *)[decl0]::pDesc"><div>pDesc</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+
+<div class="expandable"><div class="disabled">    STDMETHOD(GetMovInstructionCount)(THIS_ _Out_ UINT* pCount) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetMovInstructionCount@::HRESULT(::UINT *)[decl0]"><div><div class="token cpp_function">GetMovInstructionCount</div></div></div>(   <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>* <div class="def" id="NI$ID3D10ShaderReflection1::GetMovInstructionCount@::HRESULT(::UINT *)[decl0]::pCount"><div>pCount</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD(GetMovcInstructionCount)(THIS_ _Out_ UINT* pCount) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetMovcInstructionCount@::HRESULT(::UINT *)[decl0]"><div><div class="token cpp_function">GetMovcInstructionCount</div></div></div>(   <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>* <div class="def" id="NI$ID3D10ShaderReflection1::GetMovcInstructionCount@::HRESULT(::UINT *)[decl0]::pCount"><div>pCount</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD(GetConversionInstructionCount)(THIS_ _Out_ UINT* pCount) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetConversionInstructionCount@::HRESULT(::UINT *)[decl0]"><div><div class="token cpp_function">GetConversionInstructionCount</div></div></div>(   <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>* <div class="def" id="NI$ID3D10ShaderReflection1::GetConversionInstructionCount@::HRESULT(::UINT *)[decl0]::pCount"><div>pCount</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD(GetBitwiseInstructionCount)(THIS_ _Out_ UINT* pCount) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetBitwiseInstructionCount@::HRESULT(::UINT *)[decl0]"><div><div class="token cpp_function">GetBitwiseInstructionCount</div></div></div>(   <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>* <div class="def" id="NI$ID3D10ShaderReflection1::GetBitwiseInstructionCount@::HRESULT(::UINT *)[decl0]::pCount"><div>pCount</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+    
+<div class="expandable"><div class="disabled">    STDMETHOD(GetGSInputPrimitive)(THIS_ _Out_ D3D10_PRIMITIVE* pPrim) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::GetGSInputPrimitive@::HRESULT(::D3D10_PRIMITIVE *)[decl0]"><div><div class="token cpp_function">GetGSInputPrimitive</div></div></div>(   <div class="ref" onclick="jumpToSymbol([], ['D3D10_PRIMITIVE'], [], [])"><div class="token cpp_type">D3D10_PRIMITIVE</div></div>* <div class="def" id="NI$ID3D10ShaderReflection1::GetGSInputPrimitive@::HRESULT(::D3D10_PRIMITIVE *)[decl0]::pPrim"><div>pPrim</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD(IsLevel9Shader)(THIS_ _Out_ BOOL* pbLevel9Shader) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::IsLevel9Shader@::HRESULT(::BOOL *)[decl0]"><div><div class="token cpp_function">IsLevel9Shader</div></div></div>(   <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>* <div class="def" id="NI$ID3D10ShaderReflection1::IsLevel9Shader@::HRESULT(::BOOL *)[decl0]::pbLevel9Shader"><div>pbLevel9Shader</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+<div class="expandable"><div class="disabled">    STDMETHOD(IsSampleFrequencyShader)(THIS_ _Out_ BOOL* pbSampleFrequency) PURE;</div>
+<div class="expanded">    <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">__declspec</div>(nothrow) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderReflection1::IsSampleFrequencyShader@::HRESULT(::BOOL *)[decl0]"><div><div class="token cpp_function">IsSampleFrequencyShader</div></div></div>(   <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>* <div class="def" id="NI$ID3D10ShaderReflection1::IsSampleFrequencyShader@::HRESULT(::BOOL *)[decl0]::pbSampleFrequency"><div>pbSampleFrequency</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+};
+
+<div class="token cpp_comment ">//////////////////////////////////////////////////////////////////////////////</div>
+<div class="token cpp_comment ">// APIs //////////////////////////////////////////////////////////////////////</div>
+<div class="token cpp_comment ">//////////////////////////////////////////////////////////////////////////////</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif //__cplusplus</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif //__cplusplus</div>
+    
+<div class="disabled">#endif //__D3D10_1SHADER_H__</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'D3D10_PRIMITIVE': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_PRIMITIVE</span>',
+        'impls': [
+            'NI$D3D10_PRIMITIVE'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_DEBUG_OUTPUTREG_INFO': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_DEBUG_OUTPUTREG_INFO</span>',
+        'impls': [
+            'NI$D3D10_SHADER_DEBUG_OUTPUTREG_INFO'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_DEBUG_OUTPUTVAR': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_DEBUG_OUTPUTVAR</span>',
+        'impls': [
+            'NI$D3D10_SHADER_DEBUG_OUTPUTVAR'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_DEBUG_REGTYPE': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_DEBUG_REGTYPE</span>',
+        'impls': [
+            'NI$D3D10_SHADER_DEBUG_REGTYPE'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_DEBUG_SCOPETYPE': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_DEBUG_SCOPETYPE</span>',
+        'impls': [
+            'NI$D3D10_SHADER_DEBUG_SCOPETYPE'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_DEBUG_VARTYPE': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_DEBUG_VARTYPE</span>',
+        'impls': [
+            'NI$D3D10_SHADER_DEBUG_VARTYPE'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_DESC': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_DESC</span>',
+        'impls': [
+            'NI$D3D10_SHADER_DESC'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_INPUT_BIND_DESC': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_INPUT_BIND_DESC</span>',
+        'impls': [
+            'NI$D3D10_SHADER_INPUT_BIND_DESC'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_VARIABLE_CLASS': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_VARIABLE_CLASS</span>',
+        'impls': [
+            'NI$D3D10_SHADER_VARIABLE_CLASS'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_VARIABLE_TYPE': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_VARIABLE_TYPE</span>',
+        'impls': [
+            'NI$D3D10_SHADER_VARIABLE_TYPE'
+        ],
+        'decls': []
+    },
+    'D3D10_SIGNATURE_PARAMETER_DESC': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SIGNATURE_PARAMETER_DESC</span>',
+        'impls': [
+            'NI$D3D10_SIGNATURE_PARAMETER_DESC'
+        ],
+        'decls': []
+    },
+    'FLOAT': {
+        'displayNameInHtml': '<span class="cpp_type">FLOAT</span>',
+        'impls': [
+            'NI$FLOAT'
+        ],
+        'decls': []
+    },
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'ID3D10ShaderReflection1': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10ShaderReflection1</span>',
+        'impls': [
+            'NI$ID3D10ShaderReflection1'
+        ],
+        'decls': [
+            'NF[0]$ID3D10ShaderReflection1'
+        ]
+    },
+    'ID3D10ShaderReflectionConstantBuffer': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10ShaderReflectionConstantBuffer</span>',
+        'impls': [
+            'NI$ID3D10ShaderReflectionConstantBuffer'
+        ],
+        'decls': [
+            'NF[0]$ID3D10ShaderReflectionConstantBuffer',
+            'NF[1]$ID3D10ShaderReflectionConstantBuffer'
+        ]
+    },
+    'ID3D10ShaderReflectionVariable': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10ShaderReflectionVariable</span>',
+        'impls': [
+            'NI$ID3D10ShaderReflectionVariable'
+        ],
+        'decls': [
+            'NF[0]$ID3D10ShaderReflectionVariable',
+            'NF[1]$ID3D10ShaderReflectionVariable'
+        ]
+    },
+    'IID': {
+        'displayNameInHtml': '<span class="cpp_type">IID</span>',
+        'impls': [
+            'NI$IID'
+        ],
+        'decls': []
+    },
+    'INT': {
+        'displayNameInHtml': '<span class="cpp_type">INT</span>',
+        'impls': [
+            'NI$INT'
+        ],
+        'decls': []
+    },
+    'IUnknown': {
+        'displayNameInHtml': '<span class="cpp_type">IUnknown</span>',
+        'impls': [
+            'NI$IUnknown'
+        ],
+        'decls': [
+            'NF[0]$IUnknown'
+        ]
+    },
+    'LPCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCSTR</span>',
+        'impls': [
+            'NI$LPCSTR'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NF[1]$ID3D10ShaderReflectionConstantBuffer': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NF[1]$ID3D10ShaderReflectionVariable': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$D3D10_PRIMITIVE': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_SHADER_DEBUG_OUTPUTREG_INFO': null,
+    'NI$D3D10_SHADER_DEBUG_OUTPUTVAR': null,
+    'NI$D3D10_SHADER_DEBUG_REGTYPE': null,
+    'NI$D3D10_SHADER_DEBUG_SCOPETYPE': null,
+    'NI$D3D10_SHADER_DEBUG_VARTYPE': null,
+    'NI$D3D10_SHADER_DESC': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NI$D3D10_SHADER_INPUT_BIND_DESC': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NI$D3D10_SHADER_VARIABLE_CLASS': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NI$D3D10_SHADER_VARIABLE_TYPE': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NI$D3D10_SIGNATURE_PARAMETER_DESC': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NI$FLOAT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$GUID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$ID3D10ShaderReflection1': null,
+    'NI$ID3D10ShaderReflectionConstantBuffer': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NI$ID3D10ShaderReflectionVariable': { 'htmlFileName': 'd3d10shader.h', 'displayName': 'd3d10shader.h' },
+    'NI$IID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$INT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$IUnknown': { 'htmlFileName': 'Unknwnbase.h', 'displayName': 'Unknwnbase.h' },
+    'NI$LPCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

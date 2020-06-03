@@ -517,6 +517,7 @@ ParseCallingConvention
 
 bool ParseCallingConvention(TsysCallingConvention& callingConvention, Ptr<CppTokenCursor>& cursor)
 {
+	while (SkipSpecifiers(cursor));
 #define CALLING_CONVENTION_KEYWORD(TOKEN, NAME)\
 	if (TestToken(cursor, CppTokens::TOKEN))\
 	{\

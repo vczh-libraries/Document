@@ -21454,7 +21454,7 @@ functions.
 <div class="expandable"><div class="disabled">    RtlZeroMemory(Config, sizeof(CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG));</div>
 <div class="expanded">    <div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>((<div class="ref" onclick="jumpToSymbol([], ['CUSTOM_SYSTEM_EVENT_TRIGGER_INIT@void(::PCUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG, ::PCWSTR)[impl0]::Config'], [], [])"><div class="token cpp_argument">Config</div></div>),<div class="token cpp_number ">0</div>,(<div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG'], [], [])"><div class="token cpp_type">CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG</div></div>)));</div></div>
 
-    <div class="ref" onclick="jumpToSymbol([], ['CUSTOM_SYSTEM_EVENT_TRIGGER_INIT@void(::PCUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG, ::PCWSTR)[impl0]::Config'], [], [])"><div class="token cpp_argument">Config</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG::Size'], [], [])"><div class="token cpp_field">Size</div></div> = <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG'], [], [])"><div class="token cpp_type">CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG</div></div>);
+    <div class="ref" onclick="jumpToSymbol([], ['CUSTOM_SYSTEM_EVENT_TRIGGER_INIT@void(::PCUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG, ::PCWSTR)[impl0]::Config'], [], [])"><div class="token cpp_argument">Config</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG::Size', 'vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div> = <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG'], [], [])"><div class="token cpp_type">CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG</div></div>);
     <div class="ref" onclick="jumpToSymbol([], ['CUSTOM_SYSTEM_EVENT_TRIGGER_INIT@void(::PCUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG, ::PCWSTR)[impl0]::Config'], [], [])"><div class="token cpp_argument">Config</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_CUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG::TriggerId'], [], [])"><div class="token cpp_field">TriggerId</div></div> = <div class="ref" onclick="jumpToSymbol([], ['CUSTOM_SYSTEM_EVENT_TRIGGER_INIT@void(::PCUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG, ::PCWSTR)[impl0]::TriggerId'], [], [])"><div class="token cpp_argument">TriggerId</div></div>;
 }
 <div class="disabled">#endif // !defined(MIDL_PASS)</div>
@@ -23278,7 +23278,7 @@ functions.
 <div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN7)</div>
 
     <div class="ref" onclick="jumpToSymbol([], ['TpInitializeCallbackEnviron@void(::PTP_CALLBACK_ENVIRON)[impl0]::CallbackEnviron'], [], [])"><div class="token cpp_argument">CallbackEnviron</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_TP_CALLBACK_ENVIRON_V3::CallbackPriority'], [], [])"><div class="token cpp_field">CallbackPriority</div></div> = <div class="ref" onclick="jumpToSymbol([], ['_TP_CALLBACK_PRIORITY::TP_CALLBACK_PRIORITY_NORMAL'], [], [])"><div class="token cpp_enum">TP_CALLBACK_PRIORITY_NORMAL</div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['TpInitializeCallbackEnviron@void(::PTP_CALLBACK_ENVIRON)[impl0]::CallbackEnviron'], [], [])"><div class="token cpp_argument">CallbackEnviron</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_TP_CALLBACK_ENVIRON_V3::Size'], [], [])"><div class="token cpp_field">Size</div></div> = <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['TP_CALLBACK_ENVIRON'], [], [])"><div class="token cpp_type">TP_CALLBACK_ENVIRON</div></div>);
+    <div class="ref" onclick="jumpToSymbol([], ['TpInitializeCallbackEnviron@void(::PTP_CALLBACK_ENVIRON)[impl0]::CallbackEnviron'], [], [])"><div class="token cpp_argument">CallbackEnviron</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_TP_CALLBACK_ENVIRON_V3::Size', 'vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div> = <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['TP_CALLBACK_ENVIRON'], [], [])"><div class="token cpp_type">TP_CALLBACK_ENVIRON</div></div>);
 
 <div class="disabled">#endif</div>
 
@@ -27834,6 +27834,13 @@ referencedSymbols = {
             'NI$size_t'
         ],
         'decls': []
+    },
+    'vl::presentation::Size': {
+        'displayNameInHtml': '<span class="cpp_type">Size</span>',
+        'impls': [
+            'NI$vl::presentation::Size'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
@@ -28457,6 +28464,7 @@ symbolToFiles = {
     'NI$operator ~@::JOB_OBJECT_IO_RATE_CONTROL_FLAGS(::JOB_OBJECT_IO_RATE_CONTROL_FLAGS)[impl0]::a': null,
     'NI$operator ~@::JOB_OBJECT_NET_RATE_CONTROL_FLAGS(::JOB_OBJECT_NET_RATE_CONTROL_FLAGS)[impl0]::a': null,
     'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$vl::presentation::Size': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'TA$RtlpNumberOf@char [*] *([T] [*] &)[decl0]::N': null,
     'TA$RtlpNumberOf@char [*] *([T] [*] &)[decl0]::T': null,
     'TA$_ENUM_FLAG_SIZED_INTEGER::T': null

@@ -4588,8 +4588,8 @@ Revision History:
 <div class="expandable"><div class="disabled">    RtlZeroMemory(Input, InputLength);</div>
 <div class="expanded">    <div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>((<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Input'], [], [])"><div class="token cpp_argument">Input</div></div>),<div class="token cpp_number ">0</div>,(<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::InputLength'], [], [])"><div class="token cpp_argument">InputLength</div></div>));</div></div>
 
-    <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Input'], [], [])"><div class="token cpp_argument">Input</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES::Size'], [], [])"><div class="token cpp_field">Size</div></div>   = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Bytes'], [], [])">Bytes</div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Input'], [], [])"><div class="token cpp_argument">Input</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES::Action'], [], [])"><div class="token cpp_field">Action</div></div> = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::Action'], [], [])"><div class="token cpp_field">Action</div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Input'], [], [])"><div class="token cpp_argument">Input</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES::Size', 'vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div>   = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Bytes'], [], [])">Bytes</div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Input'], [], [])"><div class="token cpp_argument">Input</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES::Action', 'vl::parsing::analyzing::Action'], [], [])"><div class="token cpp_type">Action</div></div> = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::Action', 'vl::parsing::analyzing::Action'], [], [])"><div class="token cpp_type">Action</div></div>;
     <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Input'], [], [])"><div class="token cpp_argument">Input</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES::Flags'], [], [])"><div class="token cpp_field">Flags</div></div>  = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::Flags'], [], [])"><div class="token cpp_argument">Flags</div></div>;
 
     <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeInput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD, ::DWORD, ::PVOID, ::DWORD)[impl0]::ParameterBlockLength'], [], [])"><div class="token cpp_argument">ParameterBlockLength</div></div> == <div class="token cpp_number ">0</div>) {
@@ -4706,7 +4706,7 @@ Cleanup:
 <div class="expandable"><div class="disabled">    BOOLEAN Valid = FALSE;</div>
 <div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['BOOLEAN'], [], [])"><div class="token cpp_type">BOOLEAN</div></div> <div class="def" id="NI$DeviceDsmValidateInput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD)[impl0]::Valid"><div>Valid</div></div> = <div class="token cpp_number ">0</div>;</div></div>
 
-    <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmValidateInput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::Action'], [], [])"><div class="token cpp_field">Action</div></div> != <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmValidateInput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD)[impl0]::Input'], [], [])"><div class="token cpp_argument">Input</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES::Action'], [], [])"><div class="token cpp_field">Action</div></div>) {
+    <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmValidateInput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::Action', 'vl::parsing::analyzing::Action'], [], [])"><div class="token cpp_type">Action</div></div> != <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmValidateInput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_INPUT, ::DWORD)[impl0]::Input'], [], [])"><div class="token cpp_argument">Input</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES::Action', 'vl::parsing::analyzing::Action'], [], [])"><div class="token cpp_type">Action</div></div>) {
         <div class="token cpp_keyword ">goto</div> Cleanup;
     }
 
@@ -4871,8 +4871,8 @@ Cleanup:
 <div class="expandable"><div class="disabled">    RtlZeroMemory(Output, OutputLength);</div>
 <div class="expanded">    <div class="ref" onclick="jumpToSymbol(['memset@void *(void *, int, ::size_t)'], ['memset@void *(void *, int, ::size_t)'], [], [])"><div class="token cpp_function">memset</div></div>((<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Output'], [], [])"><div class="token cpp_argument">Output</div></div>),<div class="token cpp_number ">0</div>,(<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::OutputLength'], [], [])"><div class="token cpp_argument">OutputLength</div></div>));</div></div>
 
-    <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Output'], [], [])"><div class="token cpp_argument">Output</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::Size'], [], [])"><div class="token cpp_field">Size</div></div>   = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Bytes'], [], [])">Bytes</div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Output'], [], [])"><div class="token cpp_argument">Output</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::Action'], [], [])"><div class="token cpp_field">Action</div></div> = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::Action'], [], [])"><div class="token cpp_field">Action</div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Output'], [], [])"><div class="token cpp_argument">Output</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::Size', 'vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div>   = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Bytes'], [], [])">Bytes</div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Output'], [], [])"><div class="token cpp_argument">Output</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::Action', 'vl::parsing::analyzing::Action'], [], [])"><div class="token cpp_type">Action</div></div> = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::Action', 'vl::parsing::analyzing::Action'], [], [])"><div class="token cpp_type">Action</div></div>;
     <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Output'], [], [])"><div class="token cpp_argument">Output</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::Flags'], [], [])"><div class="token cpp_field">Flags</div></div>  = <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Flags'], [], [])"><div class="token cpp_argument">Flags</div></div>;
 
     <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmInitializeOutput@void(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::OutputBlockLength'], [], [])"><div class="token cpp_field">OutputBlockLength</div></div> != <div class="token cpp_number ">0</div>) {
@@ -4905,7 +4905,7 @@ Cleanup:
 <div class="expandable"><div class="disabled">    BOOLEAN Valid = FALSE;</div>
 <div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['BOOLEAN'], [], [])"><div class="token cpp_type">BOOLEAN</div></div> <div class="def" id="NI$DeviceDsmValidateOutput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD)[impl0]::Valid"><div>Valid</div></div> = <div class="token cpp_number ">0</div>;</div></div>
 
-    <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmValidateOutput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::Action'], [], [])"><div class="token cpp_field">Action</div></div> != <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmValidateOutput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD)[impl0]::Output'], [], [])"><div class="token cpp_argument">Output</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::Action'], [], [])"><div class="token cpp_field">Action</div></div>) {
+    <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['DeviceDsmValidateOutput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD)[impl0]::Definition'], [], [])"><div class="token cpp_argument">Definition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_DSM_DEFINITION::Action', 'vl::parsing::analyzing::Action'], [], [])"><div class="token cpp_type">Action</div></div> != <div class="ref" onclick="jumpToSymbol([], ['DeviceDsmValidateOutput@::BOOLEAN(::PDEVICE_DSM_DEFINITION, ::PDEVICE_DSM_OUTPUT, ::DWORD)[impl0]::Output'], [], [])"><div class="token cpp_argument">Output</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::Action', 'vl::parsing::analyzing::Action'], [], [])"><div class="token cpp_type">Action</div></div>) {
         <div class="token cpp_keyword ">goto</div> Cleanup;
     }
 
@@ -17679,6 +17679,22 @@ referencedSymbols = {
         'decls': [
             'FB$memset@void *(void *, int, ::size_t)[decl0]'
         ]
+    },
+    'vl::parsing::analyzing::Action': {
+        'displayNameInHtml': '<span class="cpp_type">Action</span>',
+        'impls': [
+            'NI$vl::parsing::analyzing::Action'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::analyzing::Action'
+        ]
+    },
+    'vl::presentation::Size': {
+        'displayNameInHtml': '<span class="cpp_type">Size</span>',
+        'impls': [
+            'NI$vl::presentation::Size'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
@@ -17688,6 +17704,7 @@ symbolToFiles = {
     'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'FB$memset@void *(void *, int, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
     'NF[0]$_IO_IRP_EXT_TRACK_OFFSET_HEADER': null,
+    'NF[0]$vl::parsing::analyzing::Action': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
     'NI$ACCESS_MASK': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
     'NI$BIN_COUNT': null,
     'NI$BIN_RANGE': null,
@@ -17929,7 +17946,9 @@ symbolToFiles = {
     'NI$_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::OutputBlockLength': null,
     'NI$_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::OutputBlockOffset': null,
     'NI$_DEVICE_MANAGE_DATA_SET_ATTRIBUTES_OUTPUT::Size': null,
-    'NI$_IO_IRP_EXT_TRACK_OFFSET_HEADER': null
+    'NI$_IO_IRP_EXT_TRACK_OFFSET_HEADER': null,
+    'NI$vl::parsing::analyzing::Action': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NI$vl::presentation::Size': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' }
 };
 turnOnSymbol();
 </script>

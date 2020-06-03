@@ -3378,7 +3378,9 @@ referencedSymbols = {
     },
     'IConnectionPoint': {
         'displayNameInHtml': '<span class="cpp_type">IConnectionPoint</span>',
-        'impls': [],
+        'impls': [
+            'NI$IConnectionPoint'
+        ],
         'decls': [
             'NF[0]$IConnectionPoint'
         ]
@@ -3403,7 +3405,9 @@ referencedSymbols = {
             'NI$IStream'
         ],
         'decls': [
-            'NF[0]$IStream'
+            'NF[0]$IStream',
+            'NF[1]$IStream',
+            'NF[2]$IStream'
         ]
     },
     'IUnknown': {
@@ -3895,6 +3899,8 @@ referencedSymbols = {
 symbolToFiles = {
     'FB$StrDupA@::PSTR(::PCSTR)[decl0]': null,
     'FB$StrDupW@::PWSTR(::PCWSTR)[decl0]': null,
+    'NF[1]$IStream': { 'htmlFileName': 'CommCtrl.h', 'displayName': 'CommCtrl.h' },
+    'NF[2]$IStream': { 'htmlFileName': 'dpa_dsa.h', 'displayName': 'dpa_dsa.h' },
     'NI$ASSOCDATA': null,
     'NI$ASSOCENUM': null,
     'NI$ASSOCF': null,
@@ -3920,6 +3926,7 @@ symbolToFiles = {
     'NI$HUSKEY': null,
     'NI$HWND': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
     'NI$IBindCtx': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$IConnectionPoint': { 'htmlFileName': 'OCIdl.h', 'displayName': 'OCIdl.h' },
     'NI$IID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
     'NI$IQueryAssociations': null,
     'NI$IStream': { 'htmlFileName': 'ObjIdlbase.h', 'displayName': 'ObjIdlbase.h' },

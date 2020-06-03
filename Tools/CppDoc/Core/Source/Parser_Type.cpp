@@ -71,47 +71,68 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 	{
 		if (auto resolving = ResolveSymbolInContext(pa, type->name, type->cStyleTypeReference).types)
 		{
-			type->resolving = resolving;
-			if (pa.recorder)
-			{
-				pa.recorder->Index(type->name, type->resolving->items);
-			}
-
 			if (type->cStyleTypeReference)
 			{
-				for (vint i = 0; i < type->resolving->items.Count(); i++)
+				Array<bool> matched(resolving->items.Count());
+				vint matchedCount = 0;
+
+				for (vint i = 0; i < resolving->items.Count(); i++)
 				{
-					auto symbol = type->resolving->items[i].symbol;
+					matched[i] = true;
+					auto symbol = resolving->items[i].symbol;
 					switch (idKind)
 					{
 					case CppTokens::DECL_ENUM:
 						if (symbol->kind != symbol_component::SymbolKind::Enum)
 						{
-							throw StopParsingException(cursor);
+							matched[i] = false;
 						}
 						break;
 					case CppTokens::DECL_CLASS:
 						if (symbol->kind != symbol_component::SymbolKind::Class)
 						{
-							throw StopParsingException(cursor);
+							matched[i] = false;
 						}
 						break;
 					case CppTokens::DECL_STRUCT:
 						if (symbol->kind != symbol_component::SymbolKind::Struct)
 						{
-							throw StopParsingException(cursor);
+							matched[i] = false;
 						}
 						break;
 					case CppTokens::DECL_UNION:
 						if (symbol->kind != symbol_component::SymbolKind::Union)
 						{
-							throw StopParsingException(cursor);
+							matched[i] = false;
 						}
 						break;
+					}
+
+					if (matched[i])
+					{
+						matchedCount++;
+					}
+				}
+
+				if (matchedCount == 0)
+				{
+					throw StopParsingException(cursor);
+				}
+
+				for (vint i = resolving->items.Count() - 1; i >= 0; i--)
+				{
+					if (!matched[i])
+					{
+						resolving->items.RemoveAt(i);
 					}
 				}
 			}
 
+			type->resolving = resolving;
+			if (pa.recorder)
+			{
+				pa.recorder->Index(type->name, type->resolving->items);
+			}
 			return type;
 		}
 
