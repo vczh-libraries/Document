@@ -208,7 +208,20 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 			// parse identifier
 			if (!ParseCppName(cppName, cursor))
 			{
-				throw StopParsingException(cursor);
+				if (TestToken(cursor, CppTokens::INT, false) ||
+					TestToken(cursor, CppTokens::HEX, false) ||
+					TestToken(cursor, CppTokens::BIN, false))
+				{
+					cppName.name = WString(cursor->token.reading, cursor->token.length);
+					cppName.tokenCount = 1;
+					cppName.nameTokens[0] = cursor->token;
+					cppName.type = CppNameType::Normal;
+					SkipToken(cursor);
+				}
+				else
+				{
+					throw StopParsingException(cursor);
+				}
 			}
 
 			// check if we know what it is
