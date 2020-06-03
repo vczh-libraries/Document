@@ -13,20 +13,23 @@ void ParseDeclaration_UsingNamespace(const ParsingArguments& pa, Ptr<CppTokenCur
 	if (auto catIdChildType = decl->ns.Cast<Category_Id_Child_Type>())
 	{
 		if (!catIdChildType->resolving) throw StopParsingException(cursor);
-		if (catIdChildType->resolving->items.Count() != 1) throw StopParsingException(cursor);
-		auto symbol = catIdChildType->resolving->items[0].symbol;
 
-		switch (symbol->kind)
+		bool added = false;
+		for (vint i = 0; i < catIdChildType->resolving->items.Count(); i++)
 		{
-		case symbol_component::SymbolKind::Namespace:
+			auto symbol = catIdChildType->resolving->items[0].symbol;
+			if (symbol->kind == symbol_component::SymbolKind::Namespace)
 			{
+				added = true;
 				if (pa.scopeSymbol && !(pa.scopeSymbol->usingNss.Contains(symbol)))
 				{
 					pa.scopeSymbol->usingNss.Add(symbol);
 				}
 			}
-			break;
-		default:
+		}
+
+		if (!added)
+		{
 			throw StopParsingException(cursor);
 		}
 	}

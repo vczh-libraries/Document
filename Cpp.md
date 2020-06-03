@@ -68,7 +68,6 @@
 
 ### Making Demos
 
-- [ ] New Demo! (GacUI Compiler)
 - [ ] New Demo! (GacUI DarkSkin)
 
 ## Lexical Conventions
