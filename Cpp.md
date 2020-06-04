@@ -58,6 +58,7 @@
     - [ ] Generate `ClassMemberCache` for generated special members.
     - [ ] Generate special members for declarations with `specializationSpec`.
 - [ ] Render
+  - [ ] Expandable symbol index page
   - [ ] Add link to `#include "File"` and `#include <File>`.
   - [ ] Attach document content to declarations.
   - [ ] Enable markdown inside xml elements in comment.
