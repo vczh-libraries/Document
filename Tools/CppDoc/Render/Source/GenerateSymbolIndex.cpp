@@ -1,25 +1,64 @@
 #include "Render.h"
 
 /***********************************************************************
-GenerateSymbolIndexForFileGroup
+SymbolGroup
 ***********************************************************************/
 
-void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, const WString& fileGroupPrefix, vint indentation, Symbol* context, bool printBraceBeforeFirstChild, bool& printedChild)
+enum class SymbolGroupKind
+{
+	Root,
+	Group,
+	Text,
+	Symbol,
+};
+
+struct SymbolGroup
+{
+	SymbolGroupKind					kind = SymbolGroupKind::Symbol;
+	WString							name;
+	Symbol*							symbol = nullptr;
+	bool							braces = false;
+	List<Ptr<SymbolGroup>>			children;
+};
+
+/***********************************************************************
+GenerateSymbolGroupForFileGroup
+***********************************************************************/
+
+bool IsDeclInFileGroup(Ptr<GlobalLinesRecord> global, Ptr<Declaration> decl, const WString& fileGroupPrefix)
+{
+	vint index = global->declToFiles.Keys().IndexOf({ decl,nullptr });
+	if (index != -1)
+	{
+		if (INVLOC.StartsWith(global->declToFiles.Values()[index].GetFullPath(), fileGroupPrefix, Locale::Normalization::IgnoreCase))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, const WString& fileGroupPrefix, Symbol* context)
 {
 	if (context->kind != symbol_component::SymbolKind::Root)
 	{
-		bool definedInThisFileGroup = false;
-		List<Ptr<Declaration>> decls;
 		switch (context->GetCategory())
 		{
 		case symbol_component::SymbolCategory::Normal:
 			if (auto decl = context->GetImplDecl_NFb())
 			{
-				decls.Add(decl);
+				if (!decl->implicitlyGeneratedMember)
+				{
+					if (IsDeclInFileGroup(global, decl, fileGroupPrefix)) goto GENERATE_SYMBOL_GROUP;
+				}
 			}
 			for (vint i = 0; i < context->GetForwardDecls_N().Count(); i++)
 			{
-				decls.Add(context->GetForwardDecls_N()[i]);
+				auto decl = context->GetForwardDecls_N()[i];
+				if (!decl->implicitlyGeneratedMember)
+				{
+					if (IsDeclInFileGroup(global, decl, fileGroupPrefix)) goto GENERATE_SYMBOL_GROUP;
+				}
 			}
 			break;
 		case symbol_component::SymbolCategory::Function:
@@ -27,161 +66,42 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 			{
 				if (auto decl = context->GetImplSymbols_F()[i]->GetImplDecl_NFb())
 				{
-					decls.Add(decl);
+					if (!decl->implicitlyGeneratedMember)
+					{
+						if (IsDeclInFileGroup(global, decl, fileGroupPrefix)) goto GENERATE_SYMBOL_GROUP;
+					}
 				}
 			}
 			for (vint i = 0; i < context->GetForwardSymbols_F().Count(); i++)
 			{
 				if (auto decl = context->GetForwardSymbols_F()[i]->GetForwardDecl_Fb())
 				{
-					decls.Add(decl);
+					if (!decl->implicitlyGeneratedMember)
+					{
+						if (IsDeclInFileGroup(global, decl, fileGroupPrefix)) goto GENERATE_SYMBOL_GROUP;
+					}
 				}
 			}
 			break;
 		case symbol_component::SymbolCategory::FunctionBody:
 			throw UnexpectedSymbolCategoryException();
 		}
-
-		for (vint i = 0; i < decls.Count(); i++)
-		{
-			vint index = global->declToFiles.Keys().IndexOf({ decls[i],nullptr });
-			if (index != -1)
-			{
-				if (INVLOC.StartsWith(global->declToFiles.Values()[index].GetFullPath(), fileGroupPrefix, Locale::Normalization::IgnoreCase))
-				{
-					definedInThisFileGroup = true;
-					break;
-				}
-			}
-		}
-
-		if (!definedInThisFileGroup)
-		{
-			return;
-		}
+		return nullptr;
 	}
+GENERATE_SYMBOL_GROUP:
 
-	bool isRoot = false;
-	bool searchForChild = false;
-	const wchar_t* keyword = nullptr;
+	auto symbolGroup = MakePtr<SymbolGroup>();
+	symbolGroup->symbol = context;
 	switch (context->kind)
 	{
-	case symbol_component::SymbolKind::Enum:
-		if (context->GetAnyForwardDecl<ForwardEnumDeclaration>()->name.tokenCount > 0)
-		{
-			searchForChild = true;
-			if (context->GetAnyForwardDecl<ForwardEnumDeclaration>()->enumClass)
-			{
-				keyword = L"enum class";
-			}
-			else
-			{
-				keyword = L"enum";
-			}
-		}
-		break;
-	case symbol_component::SymbolKind::Class:
-		if (context->GetAnyForwardDecl<ForwardClassDeclaration>()->name.tokenCount > 0)
-		{
-			searchForChild = true;
-			keyword = L"class";
-		}
-		break;
-	case symbol_component::SymbolKind::Struct:
-		if (context->GetAnyForwardDecl<ForwardClassDeclaration>()->name.tokenCount > 0)
-		{
-			searchForChild = true;
-			keyword = L"struct";
-		}
-		break;
-	case symbol_component::SymbolKind::Union:
-		if (context->GetAnyForwardDecl<ForwardClassDeclaration>()->name.tokenCount > 0)
-		{
-			searchForChild = true;
-			keyword = L"union";
-		}
-		break;
-	case symbol_component::SymbolKind::TypeAlias:
-		keyword = L"typedef";
-		break;
-	case symbol_component::SymbolKind::FunctionSymbol:
-		if (!context->GetAnyForwardDecl<ForwardFunctionDeclaration>()->implicitlyGeneratedMember)
-		{
-			keyword = L"function";
-		}
-		break;
-	case symbol_component::SymbolKind::Variable:
-		keyword = L"variable";
-		break;
+	case CLASS_SYMBOL_KIND:
 	case symbol_component::SymbolKind::Namespace:
-		searchForChild = true;
-		keyword = L"namespace";
-		break;
-	case symbol_component::SymbolKind::Root:
-		searchForChild = true;
-		isRoot = true;
+		symbolGroup->braces = true;
 		break;
 	}
 
-	if (keyword)
+	if (context->kind == symbol_component::SymbolKind::Root || symbolGroup->braces)
 	{
-		if (printBraceBeforeFirstChild)
-		{
-			if (!printedChild)
-			{
-				printedChild = true;
-				for (vint i = 0; i < indentation - 1; i++)
-				{
-					writer.WriteString(L"    ");
-				}
-				writer.WriteLine(L"{");
-			}
-		}
-
-		for (vint i = 0; i < indentation; i++)
-		{
-			writer.WriteString(L"    ");
-		}
-		writer.WriteString(L"<div class=\"cpp_keyword\">");
-		writer.WriteString(keyword);
-		writer.WriteString(L"</div>");
-		writer.WriteChar(L' ');
-		writer.WriteString(GetUnscopedSymbolDisplayNameInHtml(context, true));
-		if (auto funcDecl = context->GetAnyForwardDecl<ForwardFunctionDeclaration>())
-		{
-			if (auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>())
-			{
-				writer.WriteString(AppendFunctionParametersInHtml(funcType.Obj()));
-			}
-		}
-
-		auto writeTag = [&](const WString& declId, const WString& tag, DeclOrArg declOrArg)
-		{
-			vint index = global->declToFiles.Keys().IndexOf(declOrArg);
-			if (index != -1)
-			{
-				auto filePath = global->declToFiles.Values()[index];
-				auto htmlFileName = global->fileLines[filePath]->htmlFileName;
-				writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
-				WriteHtmlAttribute(htmlFileName, writer);
-				writer.WriteString(L".html#");
-				WriteHtmlAttribute(declId, writer);
-				writer.WriteString(L"\">");
-				WriteHtmlTextSingleLine(tag, writer);
-				writer.WriteString(L"</a>");
-			}
-		};
-
-		EnumerateDecls(context, [&](DeclOrArg declOrArg, bool isImpl, vint index)
-		{
-			writeTag(GetDeclId(declOrArg), (isImpl ? L"impl" : L"decl"), declOrArg);
-		});
-		writer.WriteLine(L"");
-	}
-
-	if (searchForChild)
-	{
-		bool printedChildNextLevel = false;
 		for (vint i = 0; i < context->GetChildren_NFb().Count(); i++)
 		{
 			auto& children = context->GetChildren_NFb().GetByIndex(i);
@@ -190,11 +110,152 @@ void GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, StreamWriter
 				auto& childSymbol = children[j];
 				if (!childSymbol.childExpr && !childSymbol.childType)
 				{
-					GenerateSymbolIndexForFileGroup(global, writer, fileGroupPrefix, indentation + 1, childSymbol.childSymbol.Obj(), !isRoot, printedChildNextLevel);
+					if (auto childGroup = GenerateSymbolIndexForFileGroup(global, fileGroupPrefix, childSymbol.childSymbol.Obj()))
+					{
+						symbolGroup->children.Add(childGroup);
+					}
 				}
 			}
 		}
-		if (printedChildNextLevel)
+	}
+
+	if (context->kind == symbol_component::SymbolKind::Root || context->kind == symbol_component::SymbolKind::Namespace)
+	{
+		if (symbolGroup->children.Count() == 0)
+		{
+			return nullptr;
+		}
+	}
+	return symbolGroup;
+}
+
+/***********************************************************************
+RenderSymbolGroup
+***********************************************************************/
+
+void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<SymbolGroup> symbolGroup, vint indentation)
+{
+	for (vint i = 0; i < indentation; i++)
+	{
+		writer.WriteString(L"    ");
+	}
+
+	switch (symbolGroup->kind)
+	{
+	case SymbolGroupKind::Group:
+		writer.WriteString(L"<span class=\"fileGroupLabel\">");
+		WriteHtmlTextSingleLine(symbolGroup->name, writer);
+		writer.WriteLine(L"</span>");
+		break;
+	case SymbolGroupKind::Text:
+		WriteHtmlTextSingleLine(symbolGroup->name, writer);
+		break;
+	case SymbolGroupKind::Symbol:
+		{
+			const wchar_t* keyword = nullptr;
+			switch (symbolGroup->symbol->kind)
+			{
+			case symbol_component::SymbolKind::Enum:
+				{
+					auto decl = symbolGroup->symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
+					if (decl->enumClass)
+					{
+						keyword = L"enum class";
+					}
+					else
+					{
+						keyword = L"enum";
+					}
+				}
+				break;
+			case symbol_component::SymbolKind::Class:
+				keyword = L"class";
+				break;
+			case symbol_component::SymbolKind::Struct:
+				keyword = L"struct";
+				break;
+			case symbol_component::SymbolKind::Union:
+				keyword = L"union";
+				break;
+			case symbol_component::SymbolKind::TypeAlias:
+				keyword = L"typedef";
+				break;
+			case symbol_component::SymbolKind::FunctionSymbol:
+				keyword = L"function";
+				break;
+			case symbol_component::SymbolKind::Variable:
+				keyword = L"variable";
+				break;
+			case symbol_component::SymbolKind::ValueAlias:
+				keyword = L"constexpr";
+				break;
+			case symbol_component::SymbolKind::Namespace:
+				keyword = L"namespace";
+				break;
+			default:
+				throw UnexpectedSymbolCategoryException();
+			}
+
+			writer.WriteString(L"<div class=\"cpp_keyword\">");
+			writer.WriteString(keyword);
+			writer.WriteString(L"</div>");
+			writer.WriteChar(L' ');
+			writer.WriteString(GetUnscopedSymbolDisplayNameInHtml(symbolGroup->symbol, true));
+			if (auto funcDecl = symbolGroup->symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+			{
+				if (auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>())
+				{
+					writer.WriteString(AppendFunctionParametersInHtml(funcType.Obj()));
+				}
+			}
+
+			if (symbolGroup->symbol->kind != symbol_component::SymbolKind::Namespace)
+			{
+				auto writeTag = [&](const WString& declId, const WString& tag, DeclOrArg declOrArg)
+				{
+					vint index = global->declToFiles.Keys().IndexOf(declOrArg);
+					if (index != -1)
+					{
+						auto filePath = global->declToFiles.Values()[index];
+						auto htmlFileName = global->fileLines[filePath]->htmlFileName;
+						writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
+						WriteHtmlAttribute(htmlFileName, writer);
+						writer.WriteString(L".html#");
+						WriteHtmlAttribute(declId, writer);
+						writer.WriteString(L"\">");
+						WriteHtmlTextSingleLine(tag, writer);
+						writer.WriteString(L"</a>");
+					}
+				};
+
+				EnumerateDecls(symbolGroup->symbol, [&](DeclOrArg declOrArg, bool isImpl, vint index)
+				{
+					writeTag(GetDeclId(declOrArg), (isImpl ? L"impl" : L"decl"), declOrArg);
+				});
+			}
+			writer.WriteLine(L"");
+		}
+		break;
+	}
+
+	if (symbolGroup->children.Count() > 0)
+	{
+		if (symbolGroup->braces)
+		{
+			for (vint i = 0; i < indentation; i++)
+			{
+				writer.WriteString(L"    ");
+			}
+			writer.WriteLine(L"{");
+		}
+
+		for (vint i = 0; i < symbolGroup->children.Count(); i++)
+		{
+			auto childGroup = symbolGroup->children[i];
+			RenderSymbolGroup(global, writer, childGroup, indentation + 1);
+		}
+
+		if (symbolGroup->braces)
 		{
 			for (vint i = 0; i < indentation; i++)
 			{
@@ -211,6 +272,21 @@ GenerateSymbolIndex
 
 void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FileGroupConfig& fileGroups)
 {
+	auto rootGroup = MakePtr<SymbolGroup>();
+	{
+		rootGroup->kind = SymbolGroupKind::Root;
+		for (vint i = 0; i < fileGroups.Count(); i++)
+		{
+			auto prefix = fileGroups[i].f0;
+			if (auto fileGroup = GenerateSymbolIndexForFileGroup(global, prefix, result.pa.root.Obj()))
+			{
+				fileGroup->kind = SymbolGroupKind::Group;
+				fileGroup->name = fileGroups[i].f1;
+				rootGroup->children.Add(fileGroup);
+			}
+		}
+	}
+
 	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
 	Utf8Encoder encoder;
 	EncoderStream encoderStream(fileStream, encoder);
@@ -229,16 +305,9 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 	writer.WriteLine(L"<br>");
 	writer.WriteLine(L"<br>");
 	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
-	for (vint i = 0; i < fileGroups.Count(); i++)
-	{
-		auto prefix = fileGroups[i].f0;
-		writer.WriteString(L"<span class=\"fileGroupLabel\">");
-		WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
-		writer.WriteLine(L"</span>");
 
-		bool printedChild = false;
-		GenerateSymbolIndexForFileGroup(global, writer, prefix, 0, result.pa.root.Obj(), false, printedChild);
-	}
+	RenderSymbolGroup(global, writer, rootGroup, -1);
+
 	writer.WriteLine(L"</div></div>");
 	writer.WriteLine(L"</body>");
 	writer.WriteLine(L"</html>");
