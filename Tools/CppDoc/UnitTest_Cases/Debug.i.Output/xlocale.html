@@ -1015,7 +1015,7 @@
 <div class="expandable"><div class="disabled">	virtual bool __CLR_OR_THIS_CALL do_always_noconv() const noexcept</div>
 <div class="expanded">	<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>  <div class="def" id="FB$std::codecvt::do_always_noconv@bool()[impl0]"><div><div class="token cpp_function">do_always_noconv</div></div></div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div></div></div>
 		{	<div class="token cpp_comment ">// return true if conversions never change input (from codecvt)</div>
-		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])">is_same_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Byte'], [], [])"><div class="token cpp_type">_Byte</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;);
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])"><div class="token cpp_enum">is_same_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Byte'], [], [])"><div class="token cpp_type">_Byte</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;);
 		}
 
 <div class="expandable"><div class="disabled">	virtual result __CLR_OR_THIS_CALL do_in(_Statype&amp;,</div>
@@ -1025,7 +1025,7 @@
 		{	<div class="token cpp_comment ">// convert bytes [_First1, _Last1) to [_First2, _Last)</div>
 		<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::do_in@::std::codecvt_base::result([_Statype] &, [_Byte] const *, [_Byte] const *, [_Byte] const * &, [_Elem] *, [_Elem] *, [_Elem] * &)[impl0]::_Mid1'], [], [])"><div class="token cpp_argument">_Mid1</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::do_in@::std::codecvt_base::result([_Statype] &, [_Byte] const *, [_Byte] const *, [_Byte] const * &, [_Elem] *, [_Elem] *, [_Elem] * &)[impl0]::_First1'], [], [])"><div class="token cpp_argument">_First1</div></div>;
 		<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::do_in@::std::codecvt_base::result([_Statype] &, [_Byte] const *, [_Byte] const *, [_Byte] const * &, [_Elem] *, [_Elem] *, [_Elem] * &)[impl0]::_Mid2'], [], [])"><div class="token cpp_argument">_Mid2</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::do_in@::std::codecvt_base::result([_Statype] &, [_Byte] const *, [_Byte] const *, [_Byte] const * &, [_Elem] *, [_Elem] *, [_Elem] * &)[impl0]::_First2'], [], [])"><div class="token cpp_argument">_First2</div></div>;
-		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])">is_same_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Byte'], [], [])"><div class="token cpp_type">_Byte</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;)
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])"><div class="token cpp_enum">is_same_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Byte'], [], [])"><div class="token cpp_type">_Byte</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;)
 			{
 			<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::codecvt_base::<anonymous>19::noconv'], [], [])"><div class="token cpp_enum">noconv</div></div>);	<div class="token cpp_comment ">// convert nothing</div>
 			}
@@ -1046,7 +1046,7 @@
 		{	<div class="token cpp_comment ">// convert [_First1, _Last1) to bytes [_First2, _Last)</div>
 		<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::do_out@::std::codecvt_base::result([_Statype] &, [_Elem] const *, [_Elem] const *, [_Elem] const * &, [_Byte] *, [_Byte] *, [_Byte] * &)[impl0]::_Mid1'], [], [])"><div class="token cpp_argument">_Mid1</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::do_out@::std::codecvt_base::result([_Statype] &, [_Elem] const *, [_Elem] const *, [_Elem] const * &, [_Byte] *, [_Byte] *, [_Byte] * &)[impl0]::_First1'], [], [])"><div class="token cpp_argument">_First1</div></div>;
 		<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::do_out@::std::codecvt_base::result([_Statype] &, [_Elem] const *, [_Elem] const *, [_Elem] const * &, [_Byte] *, [_Byte] *, [_Byte] * &)[impl0]::_Mid2'], [], [])"><div class="token cpp_argument">_Mid2</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::do_out@::std::codecvt_base::result([_Statype] &, [_Elem] const *, [_Elem] const *, [_Elem] const * &, [_Byte] *, [_Byte] *, [_Byte] * &)[impl0]::_First2'], [], [])"><div class="token cpp_argument">_First2</div></div>;
-		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])">is_same_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Byte'], [], [])"><div class="token cpp_type">_Byte</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;)
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])"><div class="token cpp_enum">is_same_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Byte'], [], [])"><div class="token cpp_type">_Byte</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::codecvt::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;)
 			{
 			<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::codecvt_base::<anonymous>19::noconv'], [], [])"><div class="token cpp_enum">noconv</div></div>);	<div class="token cpp_comment ">// convert nothing</div>
 			}
@@ -9929,7 +9929,7 @@ referencedSymbols = {
         'decls': []
     },
     'std::is_same_v': {
-        'displayNameInHtml': 'is_same_v&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Uty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_same_v</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Uty</span>&gt;',
         'impls': [
             'NI$std::is_same_v'
         ],

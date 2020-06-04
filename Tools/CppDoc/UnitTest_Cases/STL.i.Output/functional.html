@@ -1098,8 +1098,8 @@
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Test_callable@bool([_Ty] const &)[impl0]::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt; <div class="token cpp_keyword ">inline</div>
 	<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$std::_Test_callable@bool([_Ty] const &)[impl0]"><div><div class="token cpp_function">_Test_callable</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&amp; <div class="def" id="NI$std::_Test_callable@bool([_Ty] const &)[impl0]::_Arg"><div><div class="token cpp_argument">_Arg</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
 	{	<div class="token cpp_comment ">// determine whether std::function must store _Arg</div>
-	<div class="ref" onclick="jumpToSymbol([], ['std::bool_constant'], [], [])"><div class="token cpp_type">bool_constant</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_member_pointer_v'], [], [])">is_member_pointer_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt; || (<div class="ref" onclick="jumpToSymbol([], ['std::is_pointer_v'], [], [])">is_pointer_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;
-		&amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['std::is_function_v'], [], [])">is_function_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::remove_pointer_t'], [], [])"><div class="token cpp_type">remove_pointer_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;&gt;)&gt; <div class="def" id="NI$std::_Test_callable@bool([_Ty] const &)[impl0]::_Testable"><div>_Testable</div></div>;
+	<div class="ref" onclick="jumpToSymbol([], ['std::bool_constant'], [], [])"><div class="token cpp_type">bool_constant</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_member_pointer_v'], [], [])"><div class="token cpp_enum">is_member_pointer_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt; || (<div class="ref" onclick="jumpToSymbol([], ['std::is_pointer_v'], [], [])"><div class="token cpp_enum">is_pointer_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;
+		&amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['std::is_function_v'], [], [])"><div class="token cpp_enum">is_function_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::remove_pointer_t'], [], [])"><div class="token cpp_type">remove_pointer_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;&gt;)&gt; <div class="def" id="NI$std::_Test_callable@bool([_Ty] const &)[impl0]::_Testable"><div>_Testable</div></div>;
 	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool(::std::function<[_Fty]> const &)', 'std::_Test_callable@bool([_Ty] const &)', 'std::_Test_callable@bool([_Ty] const &, ::std::false_type)', 'std::_Test_callable@bool([_Ty] const &, ::std::true_type)'], [], [])"><div class="token cpp_function">_Test_callable</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Test_callable@bool([_Ty] const &)[impl0]::_Testable'], [], [])">_Testable</div>));
 	}
 
@@ -1286,7 +1286,7 @@
 	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::is_nothrow_move_constructible'], [], [])"><div class="token cpp_type">is_nothrow_move_constructible</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Func_impl_no_alloc::_Callable'], [], [])"><div class="token cpp_type">_Callable</div></div>&gt; <div class="def" id="NI$std::_Func_impl_no_alloc::_Nothrow_move"><div><div class="token cpp_type">_Nothrow_move</div></div></div>;
 
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Func_impl_no_alloc::$__ctor@([_Other] &&)[impl0]::_Other"><div><div class="token cpp_type">_Other</div></div></div>,
-		<div class="token cpp_keyword ">class</div> = <div class="ref" onclick="jumpToSymbol([], ['std::enable_if_t'], [], [])"><div class="token cpp_type">enable_if_t</div></div>&lt;!<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])">is_same_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Func_impl_no_alloc'], [], [])"><div class="token cpp_type">_Func_impl_no_alloc</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::decay_t'], [], [])"><div class="token cpp_type">decay_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Func_impl_no_alloc::$__ctor@([_Other] &&)[impl0]::_Other'], [], [])"><div class="token cpp_type">_Other</div></div>&gt;&gt;&gt;&gt;
+		<div class="token cpp_keyword ">class</div> = <div class="ref" onclick="jumpToSymbol([], ['std::enable_if_t'], [], [])"><div class="token cpp_type">enable_if_t</div></div>&lt;!<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])"><div class="token cpp_enum">is_same_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Func_impl_no_alloc'], [], [])"><div class="token cpp_type">_Func_impl_no_alloc</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::decay_t'], [], [])"><div class="token cpp_type">decay_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Func_impl_no_alloc::$__ctor@([_Other] &&)[impl0]::_Other'], [], [])"><div class="token cpp_type">_Other</div></div>&gt;&gt;&gt;&gt;
 		<div class="token cpp_keyword ">explicit</div> <div class="def" id="FB$std::_Func_impl_no_alloc::$__ctor@([_Other] &&)[impl0]"><div><div class="token cpp_function">_Func_impl_no_alloc</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Func_impl_no_alloc::$__ctor@([_Other] &&)[impl0]::_Other'], [], [])"><div class="token cpp_type">_Other</div></div>&amp;&amp; <div class="def" id="NI$std::_Func_impl_no_alloc::$__ctor@([_Other] &&)[impl0]::_Val"><div><div class="token cpp_argument">_Val</div></div></div>)
 <div class="expandable"><div class="disabled">		: _Callee(_STD forward&lt;_Other&gt;(_Val))</div>
 <div class="expanded">		: _Callee(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], ['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], [], [])"><div class="token cpp_function">forward</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Func_impl_no_alloc::$__ctor@([_Other] &&)[impl0]::_Other'], [], [])"><div class="token cpp_type">_Other</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::_Func_impl_no_alloc::$__ctor@([_Other] &&)[impl0]::_Val'], [], [])"><div class="token cpp_argument">_Val</div></div>))</div></div>
@@ -1373,7 +1373,7 @@
 <div class="token cpp_keyword ">protected</div>:
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Func_class::_Enable_if_callable_t::_Fx"><div><div class="token cpp_type">_Fx</div></div></div>,
 		<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Func_class::_Enable_if_callable_t::_Function"><div><div class="token cpp_type">_Function</div></div></div>&gt;
-		<div class="token cpp_keyword ">using</div> <div class="def" id="NI$std::_Func_class::_Enable_if_callable_t"><div><div class="token cpp_type">_Enable_if_callable_t</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::enable_if_t'], [], [])"><div class="token cpp_type">enable_if_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::conjunction_v'], [], [])">conjunction_v</div>&lt;
+		<div class="token cpp_keyword ">using</div> <div class="def" id="NI$std::_Func_class::_Enable_if_callable_t"><div><div class="token cpp_type">_Enable_if_callable_t</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::enable_if_t'], [], [])"><div class="token cpp_type">enable_if_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::conjunction_v'], [], [])"><div class="token cpp_enum">conjunction_v</div></div>&lt;
 			<div class="ref" onclick="jumpToSymbol([], ['std::negation'], [], [])"><div class="token cpp_type">negation</div></div>&lt;<div class="ref" onclick="jumpToSymbol(['std::is_same', 'std::is_same@<[_Ty1], [_Ty1]>'], ['std::is_same'], [], [])"><div class="token cpp_type">is_same</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::decay_t'], [], [])"><div class="token cpp_type">decay_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Func_class::_Enable_if_callable_t::_Fx'], [], [])"><div class="token cpp_type">_Fx</div></div>&gt;, <div class="ref" onclick="jumpToSymbol([], ['std::_Func_class::_Enable_if_callable_t::_Function'], [], [])"><div class="token cpp_type">_Function</div></div>&gt;&gt;,
 			<div class="ref" onclick="jumpToSymbol([], ['std::_Is_invocable_r'], [], [])"><div class="token cpp_type">_Is_invocable_r</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Func_class::_Ret'], [], [])"><div class="token cpp_type">_Ret</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Func_class::_Enable_if_callable_t::_Fx'], [], [])"><div class="token cpp_type">_Fx</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Func_class::_Types'], [], [])"><div class="token cpp_type">_Types</div></div>...&gt;&gt;&gt;;
 
@@ -1853,7 +1853,7 @@
 
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::is_placeholder_v::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt;
 <div class="expandable"><div class="disabled">	_INLINE_VAR constexpr int is_placeholder_v = is_placeholder&lt;_Ty&gt;::value;</div>
-<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$std::is_placeholder_v"><div>is_placeholder_v</div></div> = <div class="ref" onclick="jumpToSymbol(['std::is_placeholder', 'std::is_placeholder@<::std::_Ph<*>>', 'std::is_placeholder@<[_Tx] const volatile>', 'std::is_placeholder@<[_Tx] const>', 'std::is_placeholder@<[_Tx] volatile>'], ['std::is_placeholder'], [], [])"><div class="token cpp_type">is_placeholder</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_placeholder_v::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::integral_constant::value'], [], [])"><div class="token cpp_field">value</div></div>;</div></div>
+<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$std::is_placeholder_v"><div><div class="token cpp_enum">is_placeholder_v</div></div></div> = <div class="ref" onclick="jumpToSymbol(['std::is_placeholder', 'std::is_placeholder@<::std::_Ph<*>>', 'std::is_placeholder@<[_Tx] const volatile>', 'std::is_placeholder@<[_Tx] const>', 'std::is_placeholder@<[_Tx] volatile>'], ['std::is_placeholder'], [], [])"><div class="token cpp_type">is_placeholder</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_placeholder_v::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::integral_constant::value'], [], [])"><div class="token cpp_field">value</div></div>;</div></div>
 
 	<div class="token cpp_comment ">// CLASS TEMPLATE _Binder FORWARD DECLARATION</div>
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Binder::_Ret"><div><div class="token cpp_type">_Ret</div></div></div>,
@@ -1896,13 +1896,13 @@
 
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::is_bind_expression_v::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt;
 <div class="expandable"><div class="disabled">	_INLINE_VAR constexpr bool is_bind_expression_v = is_bind_expression&lt;_Ty&gt;::value;</div>
-<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$std::is_bind_expression_v"><div>is_bind_expression_v</div></div> = <div class="ref" onclick="jumpToSymbol(['std::is_bind_expression', 'std::is_bind_expression@<::std::_Binder<[_Ret], [_Fx], [_Types]...>>', 'std::is_bind_expression@<[_Tx] const volatile>', 'std::is_bind_expression@<[_Tx] const>', 'std::is_bind_expression@<[_Tx] volatile>'], ['std::is_bind_expression'], [], [])"><div class="token cpp_type">is_bind_expression</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_bind_expression_v::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::integral_constant::value'], [], [])"><div class="token cpp_field">value</div></div>;</div></div>
+<div class="expanded">	 <div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$std::is_bind_expression_v"><div><div class="token cpp_enum">is_bind_expression_v</div></div></div> = <div class="ref" onclick="jumpToSymbol(['std::is_bind_expression', 'std::is_bind_expression@<::std::_Binder<[_Ret], [_Fx], [_Types]...>>', 'std::is_bind_expression@<[_Tx] const volatile>', 'std::is_bind_expression@<[_Tx] const>', 'std::is_bind_expression@<[_Tx] volatile>'], ['std::is_bind_expression'], [], [])"><div class="token cpp_type">is_bind_expression</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_bind_expression_v::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::integral_constant::value'], [], [])"><div class="token cpp_field">value</div></div>;</div></div>
 
 	<div class="token cpp_comment ">// FUNCTION TEMPLATE _Fix_arg</div>
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Select_fixer::_Cv_TiD"><div><div class="token cpp_type">_Cv_TiD</div></div></div>,
-	<div class="token cpp_keyword ">bool</div> = <div class="ref" onclick="jumpToSymbol([], ['std::_Is_specialization_v'], [], [])">_Is_specialization_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::remove_cv_t'], [], [])"><div class="token cpp_type">remove_cv_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer::_Cv_TiD'], [], [])"><div class="token cpp_type">_Cv_TiD</div></div>&gt;, <div class="ref" onclick="jumpToSymbol([], ['std::reference_wrapper'], [], [])"><div class="token cpp_type">reference_wrapper</div></div>&gt;,
-	<div class="token cpp_keyword ">bool</div> = <div class="ref" onclick="jumpToSymbol([], ['std::is_bind_expression_v'], [], [])">is_bind_expression_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer::_Cv_TiD'], [], [])"><div class="token cpp_type">_Cv_TiD</div></div>&gt;,
-	<div class="token cpp_keyword ">int</div> = <div class="ref" onclick="jumpToSymbol([], ['std::is_placeholder_v'], [], [])">is_placeholder_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer::_Cv_TiD'], [], [])"><div class="token cpp_type">_Cv_TiD</div></div>&gt;&gt;
+	<div class="token cpp_keyword ">bool</div> = <div class="ref" onclick="jumpToSymbol([], ['std::_Is_specialization_v'], [], [])"><div class="token cpp_enum">_Is_specialization_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::remove_cv_t'], [], [])"><div class="token cpp_type">remove_cv_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer::_Cv_TiD'], [], [])"><div class="token cpp_type">_Cv_TiD</div></div>&gt;, <div class="ref" onclick="jumpToSymbol([], ['std::reference_wrapper'], [], [])"><div class="token cpp_type">reference_wrapper</div></div>&gt;,
+	<div class="token cpp_keyword ">bool</div> = <div class="ref" onclick="jumpToSymbol([], ['std::is_bind_expression_v'], [], [])"><div class="token cpp_enum">is_bind_expression_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer::_Cv_TiD'], [], [])"><div class="token cpp_type">_Cv_TiD</div></div>&gt;,
+	<div class="token cpp_keyword ">int</div> = <div class="ref" onclick="jumpToSymbol([], ['std::is_placeholder_v'], [], [])"><div class="token cpp_enum">is_placeholder_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer::_Cv_TiD'], [], [])"><div class="token cpp_type">_Cv_TiD</div></div>&gt;&gt;
 	<div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$std::_Select_fixer"><div class="ref" onclick="jumpToSymbol([], [], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>', 'std::_Select_fixer@<[_Cv_TiD], *, *, *>2', 'std::_Select_fixer@<[_Cv_TiD], *, *, *>3', 'std::_Select_fixer@<[_Cv_TiD], *, *, *>4'], [])"><div class="token cpp_type">_Select_fixer</div></div></div>;
 
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Select_fixer@<[_Cv_TiD], *, *, *>::_Cv_TiD"><div><div class="token cpp_type">_Cv_TiD</div></div></div>&gt;
@@ -1938,11 +1938,11 @@
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">auto</div> <div class="def" id="FB$std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]"><div><div class="token cpp_function">_Fix</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Cv_TiD'], [], [])"><div class="token cpp_type">_Cv_TiD</div></div>&amp; <div class="def" id="NI$std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Tid"><div><div class="token cpp_argument">_Tid</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Untuple'], [], [])"><div class="token cpp_type">_Untuple</div></div>&amp;&amp; <div class="def" id="NI$std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Ut"><div><div class="token cpp_argument">_Ut</div></div></div>)
 <div class="expandable"><div class="disabled">		-&gt; decltype(_Apply(_Tid, _STD move(_Ut),</div>
 <div class="expanded">		-&gt; <div class="token cpp_keyword ">decltype</div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Apply@decltype(*)([_Cv_TiD] &, [_Untuple] &&, ::std::index_sequence<*...>)'], [], [])"><div class="token cpp_function">_Apply</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Tid'], [], [])"><div class="token cpp_argument">_Tid</div></div>, ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)'], ['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)', 'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])'], [], [])"><div class="token cpp_function">move</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Ut'], [], [])"><div class="token cpp_argument">_Ut</div></div>),</div></div>
-			<div class="ref" onclick="jumpToSymbol([], ['std::make_index_sequence'], [], [])"><div class="token cpp_type">make_index_sequence</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::tuple_size_v'], [], [])">tuple_size_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Untuple'], [], [])"><div class="token cpp_type">_Untuple</div></div>&gt;&gt;()))
+			<div class="ref" onclick="jumpToSymbol([], ['std::make_index_sequence'], [], [])"><div class="token cpp_type">make_index_sequence</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::tuple_size_v'], [], [])"><div class="token cpp_enum">tuple_size_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Untuple'], [], [])"><div class="token cpp_type">_Untuple</div></div>&gt;&gt;()))
 		{	<div class="token cpp_comment ">// call a nested bind expression</div>
 <div class="expandable"><div class="disabled">		return (_Apply(_Tid, _STD move(_Ut),</div>
 <div class="expanded">		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Apply@decltype(*)([_Cv_TiD] &, [_Untuple] &&, ::std::index_sequence<*...>)'], [], [])"><div class="token cpp_function">_Apply</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Tid'], [], [])"><div class="token cpp_argument">_Tid</div></div>, ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)'], ['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)', 'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])'], [], [])"><div class="token cpp_function">move</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Ut'], [], [])"><div class="token cpp_argument">_Ut</div></div>),</div></div>
-			<div class="ref" onclick="jumpToSymbol([], ['std::make_index_sequence'], [], [])"><div class="token cpp_type">make_index_sequence</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::tuple_size_v'], [], [])">tuple_size_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Untuple'], [], [])"><div class="token cpp_type">_Untuple</div></div>&gt;&gt;()));
+			<div class="ref" onclick="jumpToSymbol([], ['std::make_index_sequence'], [], [])"><div class="token cpp_type">make_index_sequence</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::tuple_size_v'], [], [])"><div class="token cpp_enum">tuple_size_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Select_fixer@<[_Cv_TiD], *, *, *>2::_Fix@decltype(*)([_Cv_TiD] &, [_Untuple] &&)[impl0]::_Untuple'], [], [])"><div class="token cpp_type">_Untuple</div></div>&gt;&gt;()));
 		}
 	};
 
@@ -2017,7 +2017,7 @@
 
 	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['std::_Weak_types'], [], [])"><div class="token cpp_type">_Weak_types</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Binder_result_type::_Decayed'], [], [])"><div class="token cpp_type">_Decayed</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['std::_Weak_types::type'], [], [])"><div class="token cpp_type">type</div></div> <div class="def" id="NI$std::_Binder_result_type::_All_weak_types"><div><div class="token cpp_type">_All_weak_types</div></div></div>;
 
-	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::conditional_t'], [], [])"><div class="token cpp_type">conditional_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])">is_same_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Binder_result_type::_Ret'], [], [])"><div class="token cpp_type">_Ret</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Unforced'], [], [])"><div class="token cpp_type">_Unforced</div></div>&gt;,
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::conditional_t'], [], [])"><div class="token cpp_type">conditional_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_same_v'], [], [])"><div class="token cpp_enum">is_same_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Binder_result_type::_Ret'], [], [])"><div class="token cpp_type">_Ret</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Unforced'], [], [])"><div class="token cpp_type">_Unforced</div></div>&gt;,
 		<div class="ref" onclick="jumpToSymbol(['std::_Weak_result_type@<[_Ty], ::std::void_t<result_type>>'], ['std::_Weak_result_type'], [], [])"><div class="token cpp_type">_Weak_result_type</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Binder_result_type::_All_weak_types'], [], [])"><div class="token cpp_type">_All_weak_types</div></div>&gt;,
 		<div class="ref" onclick="jumpToSymbol([], ['std::_Forced_result_type'], [], [])"><div class="token cpp_type">_Forced_result_type</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Binder_result_type::_Ret'], [], [])"><div class="token cpp_type">_Ret</div></div>&gt;&gt; <div class="def" id="NI$std::_Binder_result_type::type"><div><div class="token cpp_type">type</div></div></div>;
 	};
@@ -4643,7 +4643,7 @@ referencedSymbols = {
         'decls': []
     },
     'std::_Is_specialization_v': {
-        'displayNameInHtml': '_Is_specialization_v&lt;<span class="cpp_type">_Type</span>, <span class="cpp_type">_Template</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">_Is_specialization_v</span>&lt;<span class="cpp_type">_Type</span>, <span class="cpp_type">_Template</span>&gt;',
         'impls': [
             'NI$std::_Is_specialization_v'
         ],
@@ -5723,7 +5723,7 @@ referencedSymbols = {
         'decls': []
     },
     'std::conjunction_v': {
-        'displayNameInHtml': 'conjunction_v&lt;<span class="cpp_type">_Traits</span> ...&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">conjunction_v</span>&lt;<span class="cpp_type">_Traits</span> ...&gt;',
         'impls': [
             'NI$std::conjunction_v'
         ],
@@ -6560,7 +6560,7 @@ referencedSymbols = {
         'decls': []
     },
     'std::is_bind_expression_v': {
-        'displayNameInHtml': 'is_bind_expression_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_bind_expression_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::is_bind_expression_v'
         ],
@@ -6574,14 +6574,14 @@ referencedSymbols = {
         'decls': []
     },
     'std::is_function_v': {
-        'displayNameInHtml': 'is_function_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_function_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::is_function_v'
         ],
         'decls': []
     },
     'std::is_member_pointer_v': {
-        'displayNameInHtml': 'is_member_pointer_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_member_pointer_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::is_member_pointer_v'
         ],
@@ -6658,7 +6658,7 @@ referencedSymbols = {
         'decls': []
     },
     'std::is_placeholder_v': {
-        'displayNameInHtml': 'is_placeholder_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_placeholder_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::is_placeholder_v'
         ],
@@ -6672,7 +6672,7 @@ referencedSymbols = {
         'decls': []
     },
     'std::is_pointer_v': {
-        'displayNameInHtml': 'is_pointer_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_pointer_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::is_pointer_v'
         ],
@@ -6693,7 +6693,7 @@ referencedSymbols = {
         'decls': []
     },
     'std::is_same_v': {
-        'displayNameInHtml': 'is_same_v&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Uty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_same_v</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Uty</span>&gt;',
         'impls': [
             'NI$std::is_same_v'
         ],
@@ -8106,7 +8106,7 @@ referencedSymbols = {
         'decls': []
     },
     'std::tuple_size_v': {
-        'displayNameInHtml': 'tuple_size_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">tuple_size_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::tuple_size_v'
         ],

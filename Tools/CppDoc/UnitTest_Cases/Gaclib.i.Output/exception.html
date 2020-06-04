@@ -484,9 +484,9 @@
 	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::decay_t'], [], [])"><div class="token cpp_type">decay_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt; <div class="def" id="NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty"><div><div class="token cpp_type">_Uty</div></div></div>;
 
 	<div class="ref" onclick="jumpToSymbol([], ['std::bool_constant'], [], [])"><div class="token cpp_type">bool_constant</div></div>&lt;
-		<div class="ref" onclick="jumpToSymbol([], ['std::is_class_v'], [], [])">is_class_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;
-		&amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['std::is_base_of_v'], [], [])">is_base_of_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;
-		&amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['std::is_final_v'], [], [])">is_final_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;&gt; <div class="def" id="NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Tag"><div>_Tag</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['std::is_class_v'], [], [])"><div class="token cpp_enum">is_class_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;
+		&amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['std::is_base_of_v'], [], [])"><div class="token cpp_enum">is_base_of_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;
+		&amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['std::is_final_v'], [], [])"><div class="token cpp_enum">is_final_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;&gt; <div class="def" id="NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Tag"><div>_Tag</div></div>;
 
 <div class="expandable"><div class="disabled">	_Throw_with_nested(_STD forward&lt;_Ty&gt;(_Arg), _Tag);</div>
 <div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)', 'std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)'], [], [])"><div class="token cpp_function">_Throw_with_nested</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], ['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], [], [])"><div class="token cpp_function">forward</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>), <div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Tag'], [], [])">_Tag</div>);</div></div>
@@ -511,8 +511,8 @@
 <div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt; <div class="token cpp_keyword ">inline</div>
 	<div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::rethrow_if_nested@void([_Ty] const &)[impl0]"><div><div class="token cpp_function">rethrow_if_nested</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&amp; <div class="def" id="NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Arg"><div><div class="token cpp_argument">_Arg</div></div></div>)
 	{	<div class="token cpp_comment ">// detect nested_exception inheritance</div>
-	<div class="ref" onclick="jumpToSymbol([], ['std::bool_constant'], [], [])"><div class="token cpp_type">bool_constant</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_polymorphic_v'], [], [])">is_polymorphic_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt; &amp;&amp; (!<div class="ref" onclick="jumpToSymbol([], ['std::is_base_of_v'], [], [])">is_base_of_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;
-		|| <div class="ref" onclick="jumpToSymbol([], ['std::is_convertible_v'], [], [])">is_convertible_v</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div> *, <div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div> *&gt;)&gt; <div class="def" id="NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Tag"><div>_Tag</div></div>;
+	<div class="ref" onclick="jumpToSymbol([], ['std::bool_constant'], [], [])"><div class="token cpp_type">bool_constant</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_polymorphic_v'], [], [])"><div class="token cpp_enum">is_polymorphic_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt; &amp;&amp; (!<div class="ref" onclick="jumpToSymbol([], ['std::is_base_of_v'], [], [])"><div class="token cpp_enum">is_base_of_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;
+		|| <div class="ref" onclick="jumpToSymbol([], ['std::is_convertible_v'], [], [])"><div class="token cpp_enum">is_convertible_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div> *, <div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div> *&gt;)&gt; <div class="def" id="NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Tag"><div>_Tag</div></div>;
 
 <div class="expandable"><div class="disabled">	_Rethrow_if_nested(_STD addressof(_Arg), _Tag);</div>
 <div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)', 'std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)'], [], [])"><div class="token cpp_function">_Rethrow_if_nested</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::addressof@[_Ty] *([_Ty] &)'], ['std::addressof@[_Ty] *([_Ty] &)', 'std::addressof@[_Ty] const *([_Ty] const &&)'], [], [])"><div class="token cpp_function">addressof</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>), <div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Tag'], [], [])">_Tag</div>);</div></div>
@@ -935,35 +935,35 @@ referencedSymbols = {
         'decls': []
     },
     'std::is_base_of_v': {
-        'displayNameInHtml': 'is_base_of_v&lt;<span class="cpp_type">_Base</span>, <span class="cpp_type">_Derived</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_base_of_v</span>&lt;<span class="cpp_type">_Base</span>, <span class="cpp_type">_Derived</span>&gt;',
         'impls': [
             'NI$std::is_base_of_v'
         ],
         'decls': []
     },
     'std::is_class_v': {
-        'displayNameInHtml': 'is_class_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_class_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::is_class_v'
         ],
         'decls': []
     },
     'std::is_convertible_v': {
-        'displayNameInHtml': 'is_convertible_v&lt;<span class="cpp_type">_From</span>, <span class="cpp_type">_To</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_convertible_v</span>&lt;<span class="cpp_type">_From</span>, <span class="cpp_type">_To</span>&gt;',
         'impls': [
             'NI$std::is_convertible_v'
         ],
         'decls': []
     },
     'std::is_final_v': {
-        'displayNameInHtml': 'is_final_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_final_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::is_final_v'
         ],
         'decls': []
     },
     'std::is_polymorphic_v': {
-        'displayNameInHtml': 'is_polymorphic_v&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_enum">is_polymorphic_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
         'impls': [
             'NI$std::is_polymorphic_v'
         ],

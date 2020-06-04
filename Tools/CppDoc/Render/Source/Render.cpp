@@ -121,6 +121,7 @@ const wchar_t* GetSymbolDivClass(Symbol* symbol)
 	case symbol_component::SymbolKind::GenericTypeArgument:
 		return L"cpp_type";
 	case symbol_component::SymbolKind::EnumItem:
+	case symbol_component::SymbolKind::ValueAlias:
 	case symbol_component::SymbolKind::GenericValueArgument:
 		return L"cpp_enum";
 	case symbol_component::SymbolKind::Variable:
