@@ -1,6 +1,16 @@
 #include "TypePrinter.h"
 #include "LastArg.h"
 
+namespace type_printer
+{
+	template<>
+	struct TypePrinter<wchar_t> : PrimitiveTypePrinter<TypePrinter<wchar_t>>
+	{
+		static const char* const Name;
+	};
+	const char* const TypePrinter<wchar_t>::Name = "wchar_t";
+}
+
 using namespace type_printer;
 using namespace last_arg;
 
@@ -9,6 +19,7 @@ int main()
 	{
 		// print types
 		PRINT_TYPE(char);
+		PRINT_TYPE(wchar_t);
 
 		PRINT_TYPE(int);
 		PRINT_TYPE(int const);
@@ -30,7 +41,7 @@ int main()
 		PRINT_TYPE(const char(*const)[4][5]);
 
 		PRINT_TYPE(int());
-		PRINT_TYPE(int(*)(bool, char));
+		PRINT_TYPE(int(*)(char, wchar_t));
 
 		PRINT_TYPE(int(&(*)(const bool(*)(), volatile const char(&)[1]))[10]);
 	}

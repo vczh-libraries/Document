@@ -14,6 +14,16 @@
 <div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;TypePrinter.h&quot;
 #include &quot;LastArg.h&quot;</div>
 
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[1]$type_printer"><div class="ref" onclick="jumpToSymbol([], ['type_printer'], [], [])">type_printer</div></div>
+{
+	<div class="token cpp_keyword ">template</div>&lt;&gt;
+	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$type_printer::TypePrinter@<wchar_t>"><div class="ref" onclick="jumpToSymbol([], [], [], ['type_printer::TypePrinter'])"><div class="token cpp_type">TypePrinter</div></div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>&gt; : <div class="ref" onclick="jumpToSymbol([], ['type_printer::PrimitiveTypePrinter'], [], [])"><div class="token cpp_type">PrimitiveTypePrinter</div></div>&lt;<div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<wchar_t>'], ['type_printer::TypePrinter@<wchar_t>'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>&gt;&gt;
+	{
+		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NF[0]$type_printer::TypePrinter@<wchar_t>::Name"><div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<wchar_t>::Name'], [], [])"><div class="token cpp_field">Name</div></div></div>;
+	};
+	<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<wchar_t>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>&gt;::<div class="def" id="NI$type_printer::TypePrinter@<wchar_t>::Name"><div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<wchar_t>::Name'], [], [])"><div class="token cpp_field">Name</div></div></div> = <div class="token cpp_string ">&quot;wchar_t&quot;</div>;
+}
+
 <div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['type_printer'], [], [])">type_printer</div>;
 <div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['last_arg'], [], [])">last_arg</div>;
 
@@ -23,6 +33,8 @@
 		<div class="token cpp_comment ">// print types</div>
 <div class="expandable"><div class="disabled">		PRINT_TYPE(char);</div>
 <div class="expanded">		<div class="token cpp_keyword ">do</div>{ <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<char>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::PrimitiveTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], ['type_printer::PrimitiveTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPrefix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<char>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::PrimitiveTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], ['type_printer::PrimitiveTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPostfix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'], [], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;\n&quot;</div>); }<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">false</div>);</div></div>
+<div class="expandable"><div class="disabled">		PRINT_TYPE(wchar_t);</div>
+<div class="expanded">		<div class="token cpp_keyword ">do</div>{ <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<wchar_t>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::PrimitiveTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], ['type_printer::PrimitiveTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPrefix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<wchar_t>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::PrimitiveTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], ['type_printer::PrimitiveTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPostfix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'], [], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;\n&quot;</div>); }<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">false</div>);</div></div>
 
 <div class="expandable"><div class="disabled">		PRINT_TYPE(int);</div>
 <div class="expanded">		<div class="token cpp_keyword ">do</div>{ <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<int>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::PrimitiveTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], ['type_printer::PrimitiveTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPrefix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<int>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::PrimitiveTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], ['type_printer::PrimitiveTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPostfix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'], [], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;\n&quot;</div>); }<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">false</div>);</div></div>
@@ -61,8 +73,8 @@
 
 <div class="expandable"><div class="disabled">		PRINT_TYPE(int());</div>
 <div class="expanded">		<div class="token cpp_keyword ">do</div>{ <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T]([Ps]...)>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>()&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T]([Ps]...)>::PrintPrefix@void(::type_printer::TypeSource)'], ['type_printer::TypePrinter@<[T]([Ps]...)>::PrintPrefix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPrefix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T]([Ps]...)>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>()&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T]([Ps]...)>::PrintPostfix@void(::type_printer::TypeSource)'], ['type_printer::TypePrinter@<[T]([Ps]...)>::PrintPostfix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPostfix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'], [], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;\n&quot;</div>); }<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">false</div>);</div></div>
-<div class="expandable"><div class="disabled">		PRINT_TYPE(int(*)(bool, char));</div>
-<div class="expanded">		<div class="token cpp_keyword ">do</div>{ <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T] *>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>(*)(<div class="token cpp_keyword ">bool</div>, <div class="token cpp_keyword ">char</div>)&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::ReferenceTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], ['type_printer::ReferenceTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPrefix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T] *>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>(*)(<div class="token cpp_keyword ">bool</div>, <div class="token cpp_keyword ">char</div>)&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::ReferenceTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], ['type_printer::ReferenceTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPostfix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'], [], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;\n&quot;</div>); }<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">false</div>);</div></div>
+<div class="expandable"><div class="disabled">		PRINT_TYPE(int(*)(char, wchar_t));</div>
+<div class="expanded">		<div class="token cpp_keyword ">do</div>{ <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T] *>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>(*)(<div class="token cpp_keyword ">char</div>, <div class="token cpp_keyword ">wchar_t</div>)&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::ReferenceTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], ['type_printer::ReferenceTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPrefix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T] *>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>(*)(<div class="token cpp_keyword ">char</div>, <div class="token cpp_keyword ">wchar_t</div>)&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::ReferenceTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], ['type_printer::ReferenceTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPostfix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'], [], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;\n&quot;</div>); }<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">false</div>);</div></div>
 
 <div class="expandable"><div class="disabled">		PRINT_TYPE(int(&amp;(*)(const bool(*)(), volatile const char(&amp;)[1]))[10]);</div>
 <div class="expanded">		<div class="token cpp_keyword ">do</div>{ <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T] *>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>(&amp;(*)(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">bool</div>(*)(), <div class="token cpp_keyword ">volatile</div> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>(&amp;)[<div class="token cpp_number ">1</div>]))[<div class="token cpp_number ">10</div>]&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::ReferenceTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], ['type_printer::ReferenceTypePrinter::PrintPrefix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPrefix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['type_printer::TypePrinter@<[T] *>'], ['type_printer::TypePrinter'], [], [])"><div class="token cpp_type">TypePrinter</div></div>&lt;<div class="token cpp_keyword ">int</div>(&amp;(*)(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">bool</div>(*)(), <div class="token cpp_keyword ">volatile</div> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>(&amp;)[<div class="token cpp_number ">1</div>]))[<div class="token cpp_number ">10</div>]&gt;::<div class="ref" onclick="jumpToSymbol(['type_printer::ReferenceTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], ['type_printer::ReferenceTypePrinter::PrintPostfix@void(::type_printer::TypeSource)'], [], [])"><div class="token cpp_function">PrintPostfix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource'], [], [])"><div class="token cpp_type">TypeSource</div></div>::<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypeSource::TopLevel'], [], [])"><div class="token cpp_enum">TopLevel</div></div>); <div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'], [], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;\n&quot;</div>); }<div class="token cpp_keyword ">while</div>(<div class="token cpp_keyword ">false</div>);</div></div>
@@ -208,7 +220,8 @@ referencedSymbols = {
         'displayNameInHtml': 'type_printer',
         'impls': [],
         'decls': [
-            'NF[0]$type_printer'
+            'NF[0]$type_printer',
+            'NF[1]$type_printer'
         ]
     },
     'type_printer::ArrayTypePrinter::PrintPostfix@void(::type_printer::TypeSource)': {
@@ -222,6 +235,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">ArrayTypePrinter</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">PrintPrefix</span>(<span class="cpp_type">TypeSource</span>)',
         'impls': [
             'FB$type_printer::ArrayTypePrinter::PrintPrefix@void(::type_printer::TypeSource)[impl0]'
+        ],
+        'decls': []
+    },
+    'type_printer::PrimitiveTypePrinter': {
+        'displayNameInHtml': '<span class="cpp_type">PrimitiveTypePrinter</span>&lt;<span class="cpp_type">TThis</span>&gt;',
+        'impls': [
+            'NI$type_printer::PrimitiveTypePrinter'
         ],
         'decls': []
     },
@@ -379,6 +399,22 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'type_printer::TypePrinter@<wchar_t>': {
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_keyword">wchar_t</span>&gt;',
+        'impls': [
+            'NI$type_printer::TypePrinter@<wchar_t>'
+        ],
+        'decls': []
+    },
+    'type_printer::TypePrinter@<wchar_t>::Name': {
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_keyword">wchar_t</span>&gt;::<span class="cpp_field">Name</span>',
+        'impls': [
+            'NI$type_printer::TypePrinter@<wchar_t>::Name'
+        ],
+        'decls': [
+            'NF[0]$type_printer::TypePrinter@<wchar_t>::Name'
+        ]
+    },
     'type_printer::TypeSource': {
         'displayNameInHtml': '<span class="cpp_type">TypeSource</span>',
         'impls': [
@@ -414,6 +450,8 @@ symbolToFiles = {
     'NF[0]$last_arg': { 'htmlFileName': 'LastArg.h', 'displayName': 'LastArg.h' },
     'NF[0]$type_printer': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
     'NF[0]$type_printer::TypePrinter': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
+    'NF[0]$type_printer::TypePrinter@<wchar_t>::Name': null,
+    'NF[1]$type_printer': null,
     'NI$last_arg::BoolType::tag': { 'htmlFileName': 'LastArg.h', 'displayName': 'LastArg.h' },
     'NI$last_arg::IntType::tag': { 'htmlFileName': 'LastArg.h', 'displayName': 'LastArg.h' },
     'NI$last_arg::VoidType::tag': { 'htmlFileName': 'LastArg.h', 'displayName': 'LastArg.h' },
@@ -421,6 +459,7 @@ symbolToFiles = {
     'NI$main@int()[impl0]::Cat::tag': null,
     'NI$main@int()[impl0]::Dog': null,
     'NI$main@int()[impl0]::Dog::tag': null,
+    'NI$type_printer::PrimitiveTypePrinter': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
     'NI$type_printer::TypePrinter@<[T] &&>': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
     'NI$type_printer::TypePrinter@<[T] &>': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
     'NI$type_printer::TypePrinter@<[T] *>': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
@@ -434,6 +473,8 @@ symbolToFiles = {
     'NI$type_printer::TypePrinter@<[T]([Ps]...)>': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
     'NI$type_printer::TypePrinter@<char>': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
     'NI$type_printer::TypePrinter@<int>': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
+    'NI$type_printer::TypePrinter@<wchar_t>': null,
+    'NI$type_printer::TypePrinter@<wchar_t>::Name': null,
     'NI$type_printer::TypeSource': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' },
     'NI$type_printer::TypeSource::TopLevel': { 'htmlFileName': 'TypePrinter.h', 'displayName': 'TypePrinter.h' }
 };
