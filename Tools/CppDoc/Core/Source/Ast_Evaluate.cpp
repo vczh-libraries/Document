@@ -264,27 +264,46 @@ public:
 
 	void Visit(IfElseStat* self) override
 	{
-		auto spa = pa.WithScope(self->symbol);
-		if (!resolvingFunctionType)
+		auto spa = pa;
+		auto stat = self;
+
+		// avoid recursion for chained if-elseif-else statements
+		while (stat)
 		{
-			for (vint i = 0; i < self->varDecls.Count(); i++)
+			spa = spa.WithScope(stat->symbol);
+			if (!resolvingFunctionType)
 			{
-				EvaluateVariableDeclaration(spa, self->varDecls[i].Obj());
+				for (vint i = 0; i < stat->varDecls.Count(); i++)
+				{
+					EvaluateVariableDeclaration(spa, stat->varDecls[i].Obj());
+				}
+				if (stat->varExpr)
+				{
+					EvaluateVariableDeclaration(spa, stat->varExpr.Obj());
+				}
+				if (stat->expr)
+				{
+					ExprTsysList types;
+					ExprToTsysNoVta(spa, stat->expr, types);
+				}
 			}
-			if (self->varExpr)
+			Evaluate(spa, stat->trueStat);
+			if (stat->falseStat)
 			{
-				EvaluateVariableDeclaration(spa, self->varExpr.Obj());
+				if (auto ifElseStat = stat->falseStat.Cast<IfElseStat>())
+				{
+					stat = ifElseStat.Obj();
+				}
+				else
+				{
+					Evaluate(spa, stat->falseStat);
+					stat = nullptr;
+				}
 			}
-			if (self->expr)
+			else
 			{
-				ExprTsysList types;
-				ExprToTsysNoVta(spa, self->expr, types);
+				stat = nullptr;
 			}
-		}
-		Evaluate(spa, self->trueStat);
-		if (self->falseStat)
-		{
-			Evaluate(spa, self->falseStat);
 		}
 	}
 
