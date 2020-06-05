@@ -262,6 +262,27 @@ public:
 		Evaluate(spa, self->stat);
 	}
 
+	void VisitIfElseStat(const ParsingArguments& spa, IfElseStat* stat)
+	{
+		if (!resolvingFunctionType)
+		{
+			for (vint i = 0; i < stat->varDecls.Count(); i++)
+			{
+				EvaluateVariableDeclaration(spa, stat->varDecls[i].Obj());
+			}
+			if (stat->varExpr)
+			{
+				EvaluateVariableDeclaration(spa, stat->varExpr.Obj());
+			}
+			if (stat->expr)
+			{
+				ExprTsysList types;
+				ExprToTsysNoVta(spa, stat->expr, types);
+			}
+		}
+		Evaluate(spa, stat->trueStat);
+	}
+
 	void Visit(IfElseStat* self) override
 	{
 		auto spa = pa;
@@ -271,23 +292,7 @@ public:
 		while (stat)
 		{
 			spa = spa.WithScope(stat->symbol);
-			if (!resolvingFunctionType)
-			{
-				for (vint i = 0; i < stat->varDecls.Count(); i++)
-				{
-					EvaluateVariableDeclaration(spa, stat->varDecls[i].Obj());
-				}
-				if (stat->varExpr)
-				{
-					EvaluateVariableDeclaration(spa, stat->varExpr.Obj());
-				}
-				if (stat->expr)
-				{
-					ExprTsysList types;
-					ExprToTsysNoVta(spa, stat->expr, types);
-				}
-			}
-			Evaluate(spa, stat->trueStat);
+			VisitIfElseStat(spa, stat);
 			if (stat->falseStat)
 			{
 				if (auto ifElseStat = stat->falseStat.Cast<IfElseStat>())

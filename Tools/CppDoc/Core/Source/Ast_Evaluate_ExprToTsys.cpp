@@ -344,7 +344,7 @@ public:
 	// FuncAccessExpr
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	void Visit(FuncAccessExpr* self)override
+	void VisitFuncAccessExpr(FuncAccessExpr* self, const ExprTsysList& funcExprTypes, bool funcVta)
 	{
 		Array<ExprTsysList> argTypesList(self->arguments.Count());
 		Array<bool> isVtas(self->arguments.Count());
@@ -357,11 +357,6 @@ public:
 		vint argUnboundedVtaCount = -1;
 		isVta = CheckVta(self->arguments, argTypesList, isVtas, 0, argHasBoundedVta, argUnboundedVtaCount);
 
-		ExprTsysList funcExprTypes;
-		bool funcVta = false;
-		vint funcVtaCount = -1;
-		ExprToTsysInternal(pa, self->expr, funcExprTypes, funcVta);
-
 		if (funcVta)
 		{
 			if (argHasBoundedVta)
@@ -370,6 +365,7 @@ public:
 			}
 			isVta = true;
 
+			vint funcVtaCount = -1;
 			for (vint i = 0; i < funcExprTypes.Count(); i++)
 			{
 				auto funcTsys = funcExprTypes[i].tsys;
@@ -487,6 +483,37 @@ public:
 			if (oritems.Count() > 0)
 			{
 				pa.recorder->IndexOverloadingResolution(self->opName, oritems);
+			}
+		}
+	}
+
+	void Visit(FuncAccessExpr* self)override
+	{
+		// avoid recursion for chained function calls
+		List<FuncAccessExpr*> exprs;
+		{
+			auto current = self;
+			while (current)
+			{
+				exprs.Add(current);
+				current = current->expr.Cast<FuncAccessExpr>().Obj();
+			}
+		}
+
+		ExprTsysList funcExprTypes;
+		bool funcVta = false;
+		ExprToTsysInternal(pa, exprs[exprs.Count() - 1]->expr, funcExprTypes, funcVta);
+
+		for (vint i = exprs.Count() - 1; i >= 0; i--)
+		{
+			VisitFuncAccessExpr(exprs[i], funcExprTypes, funcVta);
+			if (i > 0)
+			{
+				CopyFrom(funcExprTypes, result);
+				funcVta = isVta;
+
+				result.Clear();
+				isVta = false;
 			}
 		}
 	}

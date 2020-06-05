@@ -33,7 +33,6 @@
 - [ ] When `ParseIdExpr` is called for `NAME::`, it needs to tell `ResolveSymbolInContext` to always ignore value symbols.
 - [ ] Create symbol for `friend class X;`.
 - [ ] Fix memory leaks.
-- [ ] No recursion in `void Visit(IfElseStat* self) override`, functions will test if `self->falseStat` is another `IfElseStat`, and loop until it is not.
 - [ ] **STL** Demo
   - [ ] Remove special handling for `common_type_t<...>`
 - [ ] **TypePrinter** Demo
