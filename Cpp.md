@@ -60,9 +60,9 @@
 - [ ] Render
   - [ ] Expandable symbol index page
     - [x] Expandable
-    - [ ] Group all partial specializations together.
-      - [ ] If the primary symbol exists in the current file group, place inside the primary symbol as a text group `Partial Specializations`.
-      - [ ] If not, still place the header, appending `(Partial Specializations)`.
+    - [x] Group all partial specializations together.
+      - [x] If the primary symbol exists in the current file group, place inside the primary symbol as a text group `Partial Specializations`.
+      - [x] If not, still place the header, appending `(Partial Specializations)`.
     - [ ] Dynamic loading instead of downloading everything.
   - [ ] Add link to `#include "File"` and `#include <File>`.
   - [ ] Attach document content to declarations.

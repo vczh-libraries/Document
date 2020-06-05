@@ -10,6 +10,7 @@ enum class SymbolGroupKind
 	Group,
 	Text,
 	Symbol,
+	SymbolAndText,
 };
 
 struct SymbolGroup
@@ -115,8 +116,13 @@ bool IsSymbolInFileGroup(Ptr<GlobalLinesRecord> global, Symbol* context, const W
 	return false;
 }
 
-Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, const WString& fileGroupPrefix, Symbol* context)
+Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, const WString& fileGroupPrefix, Symbol* context, SymbolGroup* parentGroup, Dictionary<Symbol*, Ptr<SymbolGroup>>& psContainers)
 {
+	if (psContainers.Keys().Contains(context))
+	{
+		return nullptr;
+	}
+
 	bool generateChildSymbols = false;
 	if (context->kind == symbol_component::SymbolKind::Root)
 	{
@@ -147,7 +153,7 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, 
 				auto& childSymbol = children[j];
 				if (!childSymbol.childExpr && !childSymbol.childType)
 				{
-					if (auto childGroup = GenerateSymbolIndexForFileGroup(global, fileGroupPrefix, childSymbol.childSymbol.Obj()))
+					if (auto childGroup = GenerateSymbolIndexForFileGroup(global, fileGroupPrefix, childSymbol.childSymbol.Obj(), symbolGroup.Obj(), psContainers))
 					{
 						symbolGroup->children.Add(childGroup);
 					}
@@ -163,6 +169,50 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, 
 			return nullptr;
 		}
 	}
+
+	if (auto primary = context->GetPSPrimary_NF())
+	{
+		if (primary == context)
+		{
+			auto psGroup = MakePtr<SymbolGroup>();
+			psGroup->kind = SymbolGroupKind::Text;
+			psGroup->name = L"Partial Specializations";
+
+			symbolGroup->children.Insert(0, psGroup);
+			psContainers.Add(context, psGroup);
+		}
+		else
+		{
+			if (!psContainers.Keys().Contains(primary))
+			{
+				bool unused = false;
+				if (IsSymbolInFileGroup(global, primary, fileGroupPrefix, unused))
+				{
+					if (auto primaryGroup = GenerateSymbolIndexForFileGroup(global, fileGroupPrefix, primary, parentGroup, psContainers))
+					{
+						parentGroup->children.Add(primaryGroup);
+					}
+					else
+					{
+						throw UnexpectedSymbolCategoryException();
+					}
+				}
+				else
+				{
+					auto psGroup = MakePtr<SymbolGroup>();
+					psGroup->kind = SymbolGroupKind::SymbolAndText;
+					psGroup->name = L"(Partial Specializations)";
+					psGroup->symbol = primary;
+					psContainers.Add(context, psGroup);
+				}
+			}
+
+			auto container = psContainers[primary];
+			container->children.Add(symbolGroup);
+			return nullptr;
+		}
+	}
+
 	return symbolGroup;
 }
 
@@ -193,6 +243,7 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 			writer.WriteString(L"</span>");
 			break;
 		case SymbolGroupKind::Symbol:
+		case SymbolGroupKind::SymbolAndText:
 			{
 				const wchar_t* keyword = nullptr;
 				switch (symbolGroup->symbol->kind)
@@ -276,6 +327,12 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 						writeTag(GetDeclId(declOrArg), (isImpl ? L"impl" : L"decl"), declOrArg);
 					});
 				}
+
+				if (symbolGroup->kind == SymbolGroupKind::SymbolAndText)
+				{
+					writer.WriteString(L" ");
+					writer.WriteString(symbolGroup->name);
+				}
 				writer.WriteString(L"</div>");
 			}
 			break;
@@ -336,7 +393,8 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 		for (vint i = 0; i < fileGroups.Count(); i++)
 		{
 			auto prefix = fileGroups[i].f0;
-			if (auto fileGroup = GenerateSymbolIndexForFileGroup(global, prefix, result.pa.root.Obj()))
+			Dictionary<Symbol*, Ptr<SymbolGroup>> psContainers;
+			if (auto fileGroup = GenerateSymbolIndexForFileGroup(global, prefix, result.pa.root.Obj(), nullptr, psContainers))
 			{
 				fileGroup->kind = SymbolGroupKind::Group;
 				fileGroup->name = fileGroups[i].f1;
