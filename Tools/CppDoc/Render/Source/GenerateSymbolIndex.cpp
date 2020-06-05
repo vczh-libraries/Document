@@ -135,12 +135,13 @@ RenderSymbolGroup
 
 void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<SymbolGroup> symbolGroup)
 {
+	writer.WriteString(L"<div>");
 	if (symbolGroup->kind != SymbolGroupKind::Root)
 	{
-		writer.WriteString(L"<div><div class=\"symbol_header\">");
+		writer.WriteString(L"<div class=\"symbol_header\">");
 		if (symbolGroup->children.Count() > 0)
 		{
-			writer.WriteString(L"<a class=\"symbol_expanding\">-</a>");
+			writer.WriteString(L"<a class=\"symbol_expanding\" onclick=\"toggleSymbolDropdown(this)\">+</a>");
 		}
 		switch (symbolGroup->kind)
 		{
@@ -242,12 +243,19 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 			}
 			break;
 		}
-		writer.WriteLine(L"</div>&nbsp;</div>");
+		writer.WriteLine(L"</div>&nbsp;");
 	}
 
 	if (symbolGroup->children.Count() > 0)
 	{
-		writer.WriteString(L"<div class=\"symbol_dropdown_container\">");
+		if (symbolGroup->kind == SymbolGroupKind::Root)
+		{
+			writer.WriteString(L"<div class=\"symbol_dropdown_container expanded\">");
+		}
+		else
+		{
+			writer.WriteString(L"<div class=\"symbol_dropdown_container\">");
+		}
 		if (symbolGroup->braces)
 		{
 			writer.WriteString(L"{");
@@ -274,8 +282,9 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 		{
 			writer.WriteString(L"}");
 		}
-		writer.WriteLine(L"</div>");
+		writer.WriteString(L"</div>");
 	}
+	writer.WriteLine(L"</div>");
 }
 
 /***********************************************************************
@@ -310,17 +319,18 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 	writer.WriteLine(L"    <title>Symbol Index</title>");
 	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
 	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
 	writer.WriteLine(L"</head>");
 	writer.WriteLine(L"<body>");
 	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
 	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
 	writer.WriteLine(L"<br>");
 	writer.WriteLine(L"<br>");
-	writer.WriteString(L"<div class=\"cpp_default\">");
+	writer.WriteString(L"<div class=\"cpp_default\"><div class=\"symbol_root\">");
 
 	RenderSymbolGroup(global, writer, rootGroup);
 
-	writer.WriteLine(L"</div>");
+	writer.WriteLine(L"</div></div>");
 	writer.WriteLine(L"</body>");
 	writer.WriteLine(L"</html>");
 }

@@ -84,11 +84,11 @@ function promptTooltipDropdownData(dropdownData, underElement) {
     <table>
     ${
         dropdownData.map(function (idGroup) {
-        return `
+            return `
             <tr><td colspan="2" class="dropdownData idGroup">${idGroup.name}</td></tr>
             ${
                 idGroup.omitted === null ? '' : `<tr><td colspan="2" class="dropdownData omitted">${idGroup.omitted}</td></tr>`
-            }
+                }
             ${
                 idGroup.symbols.map(function (symbol) {
                     return `
@@ -106,13 +106,13 @@ function promptTooltipDropdownData(dropdownData, underElement) {
                             </tr>
                             `;
                         }).join('')
-                    }
+                        }
                     `;
                 }).join('')
-            }
+                }
             `;
         }).join('')
-    }
+        }
     </table>
     </div>`;
     const tooltipContent = new DOMParser().parseFromString(htmlCode, 'text/html').getElementsByClassName('tooltipContent')[0];
@@ -236,4 +236,17 @@ function jumpToSymbol(overloadResolutions, resolved, ps, primary) {
     }
 
     promptTooltipDropdownData(dropdownData, event.target);
+}
+
+function toggleSymbolDropdown(symbolExpanding) {
+    let symbolElement = symbolExpanding.parentElement.parentElement;
+    let containerElement = symbolElement.getElementsByClassName('symbol_dropdown_container')[0];
+
+    if (symbolExpanding.textContent == '-') {
+        symbolExpanding.textContent = '+';
+        containerElement.classList.remove('expanded');
+    } else {
+        symbolExpanding.textContent = '-';
+        containerElement.classList.add('expanded');
+    }
 }

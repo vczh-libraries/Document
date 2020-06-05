@@ -255,8 +255,13 @@ a.symbolIndex {
 
 /* symbol index page */
 
+div.symbol_root {
+    margin: 1em;
+}
+
 div.symbol_header {
     position: absolute;
+    white-space: pre;
 }
 
 a.symbol_expanding {
@@ -271,7 +276,12 @@ a.symbol_expanding {
     }
 
 div.symbol_dropdown_container {
+    display: none;
 }
+
+    div.symbol_dropdown_container.expanded {
+        display: block;
+    }
 
 div.symbol_dropdown {
     margin-left: 3em;
