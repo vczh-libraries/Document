@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>typeinfo</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// typeinfo standard header</div>
+
+<div class="token cpp_comment ">/***
+*typeinfo - Defines the type_info structure and exceptions used for RTTI
+*
+*	Copyright (c) Microsoft Corporation. All rights reserved.
+*	Modified January 1996 by P.J. Plauger
+*
+*Purpose:
+*       Defines the type_info structure and exceptions used for
+*       Runtime Type Identification.
+*
+*       [Public]
+*
+****/</div>
+
+#pragma once
+
+<div class="disabled">#ifndef _TYPEINFO_</div>
+<div class="disabled">#define _TYPEINFO_</div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+<div class="disabled">#include &lt;exception&gt;</div>
+
+<div class="expandable"><div class="disabled">#pragma pack(push,_CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
+<div class="expandable"><div class="disabled">#pragma warning(push,_STL_WARNING_LEVEL)</div>
+<div class="expanded">#pragma warning(push,<div class="token cpp_number ">3</div>)</div></div>
+<div class="expandable"><div class="disabled">#pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4455</div> <div class="token cpp_number ">4494</div>  <div class="token cpp_number ">4619</div> <div class="token cpp_number ">4643</div> <div class="token cpp_number ">4702</div> <div class="token cpp_number ">4984</div> <div class="token cpp_number ">4988</div> )</div></div>
+<div class="disabled">_STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled">#pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled">#undef new</div>
+
+<div class="expandable"><div class="disabled">#pragma warning(disable: 4275)	// non dll-interface class &apos;X&apos; used as base for dll-interface class &apos;Y&apos;</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4275</div>)	</div></div>
+
+<div class="disabled">#include &lt;vcruntime_typeinfo.h&gt;</div>
+
+<div class="expandable"><div class="disabled"> _STD_BEGIN</div>
+<div class="expanded"> <div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[37]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+
+<div class="token cpp_comment ">// size in pointers of std::function and std::any (roughly 3 pointers larger than std::string when building debug)</div>
+<div class="token cpp_keyword ">constexpr</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$std::_Small_object_num_ptrs"><div>_Small_object_num_ptrs</div></div> = <div class="token cpp_number ">6</div> + <div class="token cpp_number ">16</div> / <div class="token cpp_keyword ">sizeof</div> (<div class="token cpp_keyword ">void</div> *);
+
+<div class="disabled"> #if !(_HAS_EXCEPTIONS)</div>
+
+<div class="disabled">		// CLASS bad_cast</div>
+<div class="disabled">class _CRTIMP2_IMPORT bad_cast</div>
+<div class="disabled">	: public exception</div>
+<div class="disabled">	{	// base of all bad cast exceptions</div>
+<div class="disabled">public:</div>
+<div class="disabled">	bad_cast(const char *_Message = &quot;bad cast&quot;) noexcept</div>
+<div class="disabled">		: exception(_Message)</div>
+<div class="disabled">		{	// construct from message string</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	virtual ~bad_cast() noexcept</div>
+<div class="disabled">		{	// destroy the object</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">protected:</div>
+<div class="disabled">	virtual void _Doraise() const</div>
+<div class="disabled">		{	// perform class-specific exception handling</div>
+<div class="disabled">		_RAISE(*this);</div>
+<div class="disabled">		}</div>
+<div class="disabled">	};</div>
+
+<div class="disabled">		// CLASS bad_typeid</div>
+<div class="disabled">class _CRTIMP2_IMPORT bad_typeid</div>
+<div class="disabled">	: public exception</div>
+<div class="disabled">	{	// base of all bad typeid exceptions</div>
+<div class="disabled">public:</div>
+<div class="disabled">	bad_typeid(const char *_Message = &quot;bad typeid&quot;) noexcept</div>
+<div class="disabled">		: exception(_Message)</div>
+<div class="disabled">		{	// construct from message string</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	virtual ~bad_typeid() noexcept</div>
+<div class="disabled">		{	// destroy the object</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">protected:</div>
+<div class="disabled">	virtual void _Doraise() const</div>
+<div class="disabled">		{	// perform class-specific exception handling</div>
+<div class="disabled">		_RAISE(*this);</div>
+<div class="disabled">		}</div>
+<div class="disabled">	};</div>
+
+<div class="disabled">class _CRTIMP2_IMPORT __non_rtti_object</div>
+<div class="disabled">	: public bad_typeid</div>
+<div class="disabled">	{	// report a non RTTI object</div>
+<div class="disabled">public:</div>
+<div class="disabled">	__non_rtti_object(const char *_Message)</div>
+<div class="disabled">		: bad_typeid(_Message)</div>
+<div class="disabled">		{	// construct from message string</div>
+<div class="disabled">		}</div>
+<div class="disabled">	};
+ #endif /* _HAS_EXCEPTIONS */</div>
+
+<div class="expandable"><div class="disabled"> _STD_END</div>
+<div class="expanded"> }</div></div>
+
+<div class="disabled">#pragma pop_macro(&quot;new&quot;)</div>
+<div class="disabled">_STL_RESTORE_CLANG_WARNINGS</div>
+#pragma pack(pop)
+#pragma warning(pop)
+<div class="disabled">#endif /* RC_INVOKED */
+#endif // _TYPEINFO_</div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) Microsoft Corporation.  ALL RIGHTS RESERVED.
+ * Modified January 1996 by P.J. Plauger
+ * Modified November 1998 by P.J. Plauger
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std',
+            'NF[1]$std',
+            'NF[2]$std',
+            'NF[3]$std',
+            'NF[4]$std',
+            'NF[5]$std',
+            'NF[6]$std',
+            'NF[7]$std',
+            'NF[8]$std',
+            'NF[9]$std',
+            'NF[10]$std',
+            'NF[11]$std',
+            'NF[12]$std',
+            'NF[13]$std',
+            'NF[14]$std',
+            'NF[15]$std',
+            'NF[16]$std',
+            'NF[17]$std',
+            'NF[18]$std',
+            'NF[19]$std',
+            'NF[20]$std',
+            'NF[21]$std',
+            'NF[22]$std',
+            'NF[23]$std',
+            'NF[24]$std',
+            'NF[25]$std',
+            'NF[26]$std',
+            'NF[27]$std',
+            'NF[28]$std',
+            'NF[29]$std',
+            'NF[30]$std',
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std',
+            'NF[37]$std',
+            'NF[38]$std',
+            'NF[39]$std',
+            'NF[40]$std',
+            'NF[41]$std',
+            'NF[42]$std',
+            'NF[43]$std',
+            'NF[44]$std',
+            'NF[45]$std',
+            'NF[46]$std',
+            'NF[47]$std',
+            'NF[48]$std',
+            'NF[49]$std',
+            'NF[50]$std',
+            'NF[51]$std',
+            'NF[52]$std',
+            'NF[53]$std',
+            'NF[54]$std',
+            'NF[55]$std',
+            'NF[56]$std',
+            'NF[57]$std',
+            'NF[58]$std',
+            'NF[59]$std',
+            'NF[60]$std',
+            'NF[61]$std'
+        ]
+    }
+};
+symbolToFiles = {
+    'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
+    'NF[10]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[11]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
+    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
+    'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
+    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[28]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[29]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
+    'NF[2]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NF[30]$std': { 'htmlFileName': 'vector', 'displayName': 'vector' },
+    'NF[31]$std': { 'htmlFileName': 'xtree', 'displayName': 'xtree' },
+    'NF[32]$std': { 'htmlFileName': 'set', 'displayName': 'set' },
+    'NF[33]$std': { 'htmlFileName': 'tuple', 'displayName': 'tuple' },
+    'NF[34]$std': { 'htmlFileName': 'map', 'displayName': 'map' },
+    'NF[35]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[36]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[37]$std': null,
+    'NF[38]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[39]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[3]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[40]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[41]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NF[42]$std': { 'htmlFileName': 'xcall_once.h', 'displayName': 'xcall_once.h' },
+    'NF[43]$std': { 'htmlFileName': 'xerrc.h', 'displayName': 'xerrc.h' },
+    'NF[44]$std': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'NF[45]$std': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[46]$std': { 'htmlFileName': 'streambuf', 'displayName': 'streambuf' },
+    'NF[47]$std': { 'htmlFileName': 'xlocnum', 'displayName': 'xlocnum' },
+    'NF[48]$std': { 'htmlFileName': 'ios', 'displayName': 'ios' },
+    'NF[49]$std': { 'htmlFileName': 'ostream', 'displayName': 'ostream' },
+    'NF[4]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[50]$std': { 'htmlFileName': 'istream', 'displayName': 'istream' },
+    'NF[51]$std': { 'htmlFileName': 'xstring_insert.h', 'displayName': 'xstring_insert.h' },
+    'NF[52]$std': { 'htmlFileName': 'string', 'displayName': 'string' },
+    'NF[53]$std': { 'htmlFileName': 'xlocbuf', 'displayName': 'xlocbuf' },
+    'NF[54]$std': { 'htmlFileName': 'xlocmes', 'displayName': 'xlocmes' },
+    'NF[55]$std': { 'htmlFileName': 'xlocmon', 'displayName': 'xlocmon' },
+    'NF[56]$std': { 'htmlFileName': 'ctime', 'displayName': 'ctime' },
+    'NF[57]$std': { 'htmlFileName': 'xloctime', 'displayName': 'xloctime' },
+    'NF[58]$std': { 'htmlFileName': 'locale', 'displayName': 'locale' },
+    'NF[59]$std': { 'htmlFileName': 'codecvt', 'displayName': 'codecvt' },
+    'NF[5]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[60]$std': { 'htmlFileName': 'functional', 'displayName': 'functional' },
+    'NF[61]$std': { 'htmlFileName': 'iostream', 'displayName': 'iostream' },
+    'NF[6]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[7]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[8]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[9]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

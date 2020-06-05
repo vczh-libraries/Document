@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>servprov.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default">
+
+<div class="token cpp_comment ">/* this ALWAYS GENERATED file contains the definitions for the interfaces */</div>
+
+
+ <div class="token cpp_comment ">/* File created by MIDL compiler version 8.01.0622 */</div>
+<div class="token cpp_comment ">/* @@MIDL_FILE_HEADING(  ) */</div>
+
+
+
+<div class="token cpp_comment ">/* verify that the &lt;rpcndr.h&gt; version is high enough to compile this file*/</div>
+<div class="disabled">#ifndef __REQUIRED_RPCNDR_H_VERSION__</div>
+<div class="disabled">#define __REQUIRED_RPCNDR_H_VERSION__ 500</div>
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">/* verify that the &lt;rpcsal.h&gt; version is high enough to compile this file*/</div>
+<div class="disabled">#ifndef __REQUIRED_RPCSAL_H_VERSION__</div>
+<div class="disabled">#define __REQUIRED_RPCSAL_H_VERSION__ 100</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#include &quot;rpc.h&quot;</div>
+<div class="disabled">#include &quot;rpcndr.h&quot;</div>
+
+<div class="disabled">#ifndef __RPCNDR_H_VERSION__</div>
+<div class="disabled">#error this stub requires an updated version of &lt;rpcndr.h&gt;</div>
+<div class="disabled">#endif /* __RPCNDR_H_VERSION__ */</div>
+
+<div class="disabled">#ifndef COM_NO_WINDOWS_H</div>
+<div class="disabled">#include &quot;windows.h&quot;</div>
+<div class="disabled">#include &quot;ole2.h&quot;
+#endif /*COM_NO_WINDOWS_H*/</div>
+
+<div class="disabled">#ifndef __servprov_h__</div>
+<div class="disabled">#define __servprov_h__</div>
+
+<div class="disabled">#if defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1020)</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">/* Forward Declarations */</div> 
+
+<div class="disabled">#ifndef __IServiceProvider_FWD_DEFINED__</div>
+<div class="disabled">#define __IServiceProvider_FWD_DEFINED__</div>
+<div class="expandable"><div class="disabled">typedef interface IServiceProvider IServiceProvider;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> IServiceProvider <div class="ref" onclick="jumpToSymbol([], ['IServiceProvider'], [], [])"><div class="token cpp_type">IServiceProvider</div></div>;</div></div>
+
+<div class="disabled">#endif 	/* __IServiceProvider_FWD_DEFINED__ */</div>
+
+
+<div class="token cpp_comment ">/* header files for imported files */</div>
+<div class="disabled">#include &quot;objidl.h&quot;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div>{
+<div class="disabled">#endif </div>
+
+
+<div class="token cpp_comment ">/* interface __MIDL_itf_servprov_0000_0000 */</div>
+<div class="token cpp_comment ">/* [local] */</div> 
+
+<div class="token cpp_comment ">//=--------------------------------------------------------------------------=</div>
+<div class="token cpp_comment ">// ServProv.h</div>
+<div class="token cpp_comment ">//=--------------------------------------------------------------------------=</div>
+<div class="token cpp_comment ">// (C) Copyright Microsoft Corporation.  All Rights Reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF</div>
+<div class="token cpp_comment ">// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO</div>
+<div class="token cpp_comment ">// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A</div>
+<div class="token cpp_comment ">// PARTICULAR PURPOSE.</div>
+<div class="token cpp_comment ">//=--------------------------------------------------------------------------=</div>
+
+#pragma comment(lib,<div class="token cpp_string ">&quot;uuid.lib&quot;</div>)
+
+<div class="token cpp_comment ">//---------------------------------------------------------------------------=</div>
+<div class="token cpp_comment ">// IServiceProvider Interfaces.</div>
+
+<div class="disabled">#include &lt;winapifamily.h&gt;</div>
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_servprov_0000_0000_v0_0_c_ifspec"><div>__MIDL_itf_servprov_0000_0000_v0_0_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_servprov_0000_0000_v0_0_s_ifspec"><div>__MIDL_itf_servprov_0000_0000_v0_0_s_ifspec</div></div>;
+
+<div class="disabled">#ifndef __IServiceProvider_INTERFACE_DEFINED__</div>
+<div class="disabled">#define __IServiceProvider_INTERFACE_DEFINED__</div>
+
+<div class="token cpp_comment ">/* interface IServiceProvider */</div>
+<div class="token cpp_comment ">/* [unique][uuid][object] */</div> 
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer IServiceProvider *LPSERVICEPROVIDER;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['IServiceProvider'], [], [])"><div class="token cpp_type">IServiceProvider</div></div> *<div class="def" id="NI$LPSERVICEPROVIDER"><div><div class="token cpp_type">LPSERVICEPROVIDER</div></div></div>;</div></div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 1100) &amp;&amp; defined(__cplusplus) &amp;&amp; !defined(CINTERFACE)</div>
+<div class="expandable"><div class="disabled">    EXTERN_C const IID IID_IServiceProvider;</div>
+<div class="expanded">    <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NI$IID_IServiceProvider"><div>IID_IServiceProvider</div></div>;</div></div>
+    <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div>
+    {
+<div class="expandable"><div class="disabled">        MIDL_INTERFACE(&quot;6d5140c1-7436-11ce-8034-00aa006009fa&quot;)</div>
+<div class="expanded">        <div class="token cpp_keyword ">struct</div> <div class="token cpp_keyword ">__declspec</div>(uuid(<div class="token cpp_string ">&quot;6d5140c1-7436-11ce-8034-00aa006009fa&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(novtable)</div></div>
+        <div class="def" id="NI$IServiceProvider"><div class="ref" onclick="jumpToSymbol([], ['IServiceProvider'], [], [])"><div class="token cpp_type">IServiceProvider</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['IUnknown'], [], [])"><div class="token cpp_type">IUnknown</div></div>
+        {
+        <div class="token cpp_keyword ">public</div>:
+<div class="expandable"><div class="disabled">            virtual /* [local] */ HRESULT STDMETHODCALLTYPE QueryService( </div>
+<div class="expanded">            <div class="token cpp_keyword ">virtual</div> <div class="token cpp_comment ">/* [local] */</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)[decl0]"><div><div class="token cpp_function">QueryService</div></div></div>( </div></div>
+<div class="expandable"><div class="disabled">                /* [in] */ _In_ REFGUID guidService,</div>
+<div class="expanded">                <div class="token cpp_comment ">/* [in] */</div>   <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)[decl0]::guidService"><div>guidService</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                /* [in] */ _In_ REFIID riid,</div>
+<div class="expanded">                <div class="token cpp_comment ">/* [in] */</div>   <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                /* [out] */ _Outptr_ void __RPC_FAR *__RPC_FAR *ppvObject) = 0;</div>
+<div class="expanded">                <div class="token cpp_comment ">/* [out] */</div>  <div class="token cpp_keyword ">void</div>  * *<div class="def" id="NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)[decl0]::ppvObject"><div>ppvObject</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+            
+            <div class="token cpp_keyword ">template</div> &lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::Q"><div><div class="token cpp_type">Q</div></div></div>&gt;
+<div class="expandable"><div class="disabled">            HRESULT STDMETHODCALLTYPE QueryService(_In_ REFGUID guidService, _Outptr_ Q** pp)</div>
+<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]"><div><div class="token cpp_function">QueryService</div></div></div>(  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::guidService"><div><div class="token cpp_argument">guidService</div></div></div>,  <div class="ref" onclick="jumpToSymbol([], ['IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::Q'], [], [])"><div class="token cpp_type">Q</div></div>** <div class="def" id="NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::pp"><div><div class="token cpp_argument">pp</div></div></div>)</div></div>
+            {
+                <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)'], ['IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)', 'IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)'], [], [])"><div class="token cpp_function">QueryService</div></div>(<div class="ref" onclick="jumpToSymbol([], ['IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::guidService'], [], [])"><div class="token cpp_argument">guidService</div></div>, __uuidof(<div class="ref" onclick="jumpToSymbol([], ['IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::Q'], [], [])"><div class="token cpp_type">Q</div></div>), (<div class="token cpp_keyword ">void</div> **)<div class="ref" onclick="jumpToSymbol([], ['IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::pp'], [], [])"><div class="token cpp_argument">pp</div></div>);
+            }
+        };
+    }
+
+<div class="expandable"><div class="disabled">    /* [call_as] */ HRESULT STDMETHODCALLTYPE IServiceProvider_RemoteQueryService_Proxy( </div>
+<div class="expanded">    <div class="token cpp_comment ">/* [call_as] */</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$IServiceProvider_RemoteQueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]"><div><div class="token cpp_function">IServiceProvider_RemoteQueryService_Proxy</div></div></div>( </div></div>
+<div class="expandable"><div class="disabled">        _In_ IServiceProvider __RPC_FAR * This,</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['IServiceProvider'], [], [])"><div class="token cpp_type">IServiceProvider</div></div>  * <div class="def" id="NI$IServiceProvider_RemoteQueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]::This"><div>This</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        /* [in] */ _In_ REFGUID guidService,</div>
+<div class="expanded">        <div class="token cpp_comment ">/* [in] */</div>   <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$IServiceProvider_RemoteQueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]::guidService"><div>guidService</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        /* [in] */ _In_ REFIID riid,</div>
+<div class="expanded">        <div class="token cpp_comment ">/* [in] */</div>   <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$IServiceProvider_RemoteQueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        /* [iid_is][out] */ _Outptr_ IUnknown __RPC_FAR *__RPC_FAR *ppvObject);</div>
+<div class="expanded">        <div class="token cpp_comment ">/* [iid_is][out] */</div>  <div class="ref" onclick="jumpToSymbol([], ['IUnknown'], [], [])"><div class="token cpp_type">IUnknown</div></div>  * *<div class="def" id="NI$IServiceProvider_RemoteQueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]::ppvObject"><div>ppvObject</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">    void __RPC_STUB IServiceProvider_RemoteQueryService_Stub(</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$IServiceProvider_RemoteQueryService_Stub@void(::IRpcStubBuffer *, ::IRpcChannelBuffer *, ::PRPC_MESSAGE, ::DWORD *)[decl0]"><div><div class="token cpp_function">IServiceProvider_RemoteQueryService_Stub</div></div></div>(</div></div>
+        <div class="ref" onclick="jumpToSymbol([], ['IRpcStubBuffer'], [], [])"><div class="token cpp_type">IRpcStubBuffer</div></div> *<div class="def" id="NI$IServiceProvider_RemoteQueryService_Stub@void(::IRpcStubBuffer *, ::IRpcChannelBuffer *, ::PRPC_MESSAGE, ::DWORD *)[decl0]::This"><div>This</div></div>,
+        <div class="ref" onclick="jumpToSymbol([], ['IRpcChannelBuffer'], [], [])"><div class="token cpp_type">IRpcChannelBuffer</div></div> *<div class="def" id="NI$IServiceProvider_RemoteQueryService_Stub@void(::IRpcStubBuffer *, ::IRpcChannelBuffer *, ::PRPC_MESSAGE, ::DWORD *)[decl0]::_pRpcChannelBuffer"><div>_pRpcChannelBuffer</div></div>,
+        <div class="ref" onclick="jumpToSymbol([], ['PRPC_MESSAGE'], [], [])"><div class="token cpp_type">PRPC_MESSAGE</div></div> <div class="def" id="NI$IServiceProvider_RemoteQueryService_Stub@void(::IRpcStubBuffer *, ::IRpcChannelBuffer *, ::PRPC_MESSAGE, ::DWORD *)[decl0]::_pRpcMessage"><div>_pRpcMessage</div></div>,
+        <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> *<div class="def" id="NI$IServiceProvider_RemoteQueryService_Stub@void(::IRpcStubBuffer *, ::IRpcChannelBuffer *, ::PRPC_MESSAGE, ::DWORD *)[decl0]::_pdwStubPhase"><div>_pdwStubPhase</div></div>);
+
+<div class="disabled">#else // VC6 Hack</div>
+
+<div class="disabled">EXTERN_C const IID IID_IServiceProvider;</div>
+
+<div class="disabled">#if defined(__cplusplus) &amp;&amp; !defined(CINTERFACE)</div>
+<div class="disabled">    </div>
+<div class="disabled">    MIDL_INTERFACE(&quot;6d5140c1-7436-11ce-8034-00aa006009fa&quot;)</div>
+<div class="disabled">    IServiceProvider : public IUnknown</div>
+<div class="disabled">    {</div>
+<div class="disabled">    public:</div>
+<div class="disabled">        virtual /* [local] */ HRESULT STDMETHODCALLTYPE QueryService( </div>
+<div class="disabled">            /* [annotation][in] */ </div>
+<div class="disabled">            _In_  REFGUID guidService,</div>
+<div class="disabled">            /* [annotation][in] */ </div>
+<div class="disabled">            _In_  REFIID riid,</div>
+<div class="disabled">            /* [annotation][out] */ </div>
+<div class="disabled">            _Outptr_  void **ppvObject) = 0;</div>
+<div class="disabled">        </div>
+<div class="disabled">    };</div>
+<div class="disabled">    </div>
+<div class="disabled">    </div>
+<div class="disabled">#else 	/* C style interface */</div>
+
+<div class="disabled">    typedef struct IServiceProviderVtbl</div>
+<div class="disabled">    {</div>
+<div class="disabled">        BEGIN_INTERFACE</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( </div>
+<div class="disabled">            __RPC__in IServiceProvider * This,</div>
+<div class="disabled">            /* [in] */ __RPC__in REFIID riid,</div>
+<div class="disabled">            /* [annotation][iid_is][out] */ </div>
+<div class="disabled">            _COM_Outptr_  void **ppvObject);</div>
+<div class="disabled">        </div>
+<div class="disabled">        ULONG ( STDMETHODCALLTYPE *AddRef )( </div>
+<div class="disabled">            __RPC__in IServiceProvider * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        ULONG ( STDMETHODCALLTYPE *Release )( </div>
+<div class="disabled">            __RPC__in IServiceProvider * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        /* [local] */ HRESULT ( STDMETHODCALLTYPE *QueryService )( </div>
+<div class="disabled">            IServiceProvider * This,</div>
+<div class="disabled">            /* [annotation][in] */ </div>
+<div class="disabled">            _In_  REFGUID guidService,</div>
+<div class="disabled">            /* [annotation][in] */ </div>
+<div class="disabled">            _In_  REFIID riid,</div>
+<div class="disabled">            /* [annotation][out] */ </div>
+<div class="disabled">            _Outptr_  void **ppvObject);</div>
+<div class="disabled">        </div>
+<div class="disabled">        END_INTERFACE</div>
+<div class="disabled">    } IServiceProviderVtbl;</div>
+
+<div class="disabled">    interface IServiceProvider</div>
+<div class="disabled">    {</div>
+<div class="disabled">        CONST_VTBL struct IServiceProviderVtbl *lpVtbl;</div>
+<div class="disabled">    };</div>
+
+<div class="disabled">    </div>
+
+<div class="disabled">#ifdef COBJMACROS</div>
+
+
+<div class="disabled">#define IServiceProvider_QueryInterface(This,riid,ppvObject)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; QueryInterface(This,riid,ppvObject) ) </div>
+
+<div class="disabled">#define IServiceProvider_AddRef(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; AddRef(This) ) </div>
+
+<div class="disabled">#define IServiceProvider_Release(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; Release(This) ) </div>
+
+
+<div class="disabled">#define IServiceProvider_QueryService(This,guidService,riid,ppvObject)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; QueryService(This,guidService,riid,ppvObject) ) </div>
+
+<div class="disabled">#endif /* COBJMACROS */</div>
+
+
+<div class="disabled">#endif 	/* C style interface */</div>
+
+
+
+<div class="disabled">/* [call_as] */ HRESULT STDMETHODCALLTYPE IServiceProvider_RemoteQueryService_Proxy( </div>
+<div class="disabled">    __RPC__in IServiceProvider * This,</div>
+<div class="disabled">    /* [in] */ __RPC__in REFGUID guidService,</div>
+<div class="disabled">    /* [in] */ __RPC__in REFIID riid,</div>
+<div class="disabled">    /* [iid_is][out] */ __RPC__deref_out_opt IUnknown **ppvObject);</div>
+
+
+<div class="disabled">void __RPC_STUB IServiceProvider_RemoteQueryService_Stub(</div>
+<div class="disabled">    IRpcStubBuffer *This,</div>
+<div class="disabled">    IRpcChannelBuffer *_pRpcChannelBuffer,</div>
+<div class="disabled">    PRPC_MESSAGE _pRpcMessage,</div>
+<div class="disabled">    DWORD *_pdwStubPhase);</div>
+
+
+
+<div class="disabled">#endif 	/* __IServiceProvider_INTERFACE_DEFINED__ */</div>
+
+
+<div class="token cpp_comment ">/* interface __MIDL_itf_servprov_0000_0001 */</div>
+<div class="token cpp_comment ">/* [local] */</div> 
+
+<div class="disabled">#endif // VC6 Hack
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_servprov_0000_0001_v0_0_c_ifspec"><div>__MIDL_itf_servprov_0000_0001_v0_0_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_servprov_0000_0001_v0_0_s_ifspec"><div>__MIDL_itf_servprov_0000_0001_v0_0_s_ifspec</div></div>;
+
+<div class="token cpp_comment ">/* Additional Prototypes for ALL interfaces */</div>
+
+<div class="expandable"><div class="disabled">/* [local] */ HRESULT STDMETHODCALLTYPE IServiceProvider_QueryService_Proxy( </div>
+<div class="expanded"><div class="token cpp_comment ">/* [local] */</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$IServiceProvider_QueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, void * *)[decl0]"><div><div class="token cpp_function">IServiceProvider_QueryService_Proxy</div></div></div>( </div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['IServiceProvider'], [], [])"><div class="token cpp_type">IServiceProvider</div></div> * <div class="def" id="NI$IServiceProvider_QueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, void * *)[decl0]::This"><div>This</div></div>,
+    <div class="token cpp_comment ">/* [annotation][in] */</div> 
+<div class="expandable"><div class="disabled">    _In_  REFGUID guidService,</div>
+<div class="expanded">       <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$IServiceProvider_QueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, void * *)[decl0]::guidService"><div>guidService</div></div>,</div></div>
+    <div class="token cpp_comment ">/* [annotation][in] */</div> 
+<div class="expandable"><div class="disabled">    _In_  REFIID riid,</div>
+<div class="expanded">       <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$IServiceProvider_QueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, void * *)[decl0]::riid"><div>riid</div></div>,</div></div>
+    <div class="token cpp_comment ">/* [annotation][out] */</div> 
+<div class="expandable"><div class="disabled">    _Outptr_  void **ppvObject);</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> **<div class="def" id="NI$IServiceProvider_QueryService_Proxy@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, void * *)[decl0]::ppvObject"><div>ppvObject</div></div>);</div></div>
+
+
+<div class="expandable"><div class="disabled">/* [call_as] */ HRESULT STDMETHODCALLTYPE IServiceProvider_QueryService_Stub( </div>
+<div class="expanded"><div class="token cpp_comment ">/* [call_as] */</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$IServiceProvider_QueryService_Stub@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]"><div><div class="token cpp_function">IServiceProvider_QueryService_Stub</div></div></div>( </div></div>
+<div class="expandable"><div class="disabled">    __RPC__in IServiceProvider * This,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IServiceProvider'], [], [])"><div class="token cpp_type">IServiceProvider</div></div> * <div class="def" id="NI$IServiceProvider_QueryService_Stub@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]::This"><div>This</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    /* [in] */ __RPC__in REFGUID guidService,</div>
+<div class="expanded">    <div class="token cpp_comment ">/* [in] */</div>   <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$IServiceProvider_QueryService_Stub@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]::guidService"><div>guidService</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    /* [in] */ __RPC__in REFIID riid,</div>
+<div class="expanded">    <div class="token cpp_comment ">/* [in] */</div>   <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$IServiceProvider_QueryService_Stub@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    /* [iid_is][out] */ __RPC__deref_out_opt IUnknown **ppvObject);</div>
+<div class="expanded">    <div class="token cpp_comment ">/* [iid_is][out] */</div>   <div class="ref" onclick="jumpToSymbol([], ['IUnknown'], [], [])"><div class="token cpp_type">IUnknown</div></div> **<div class="def" id="NI$IServiceProvider_QueryService_Stub@::HRESULT(::IServiceProvider *, ::GUID const &, ::IID const &, ::IUnknown * *)[decl0]::ppvObject"><div>ppvObject</div></div>);</div></div>
+
+
+
+<div class="token cpp_comment ">/* end of Additional Prototypes */</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif</div>
+
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'IID': {
+        'displayNameInHtml': '<span class="cpp_type">IID</span>',
+        'impls': [
+            'NI$IID'
+        ],
+        'decls': []
+    },
+    'IRpcChannelBuffer': {
+        'displayNameInHtml': '<span class="cpp_type">IRpcChannelBuffer</span>',
+        'impls': [
+            'NI$IRpcChannelBuffer'
+        ],
+        'decls': [
+            'NF[0]$IRpcChannelBuffer'
+        ]
+    },
+    'IRpcStubBuffer': {
+        'displayNameInHtml': '<span class="cpp_type">IRpcStubBuffer</span>',
+        'impls': [
+            'NI$IRpcStubBuffer'
+        ],
+        'decls': [
+            'NF[0]$IRpcStubBuffer',
+            'NF[1]$IRpcStubBuffer'
+        ]
+    },
+    'IServiceProvider': {
+        'displayNameInHtml': '<span class="cpp_type">IServiceProvider</span>',
+        'impls': [
+            'NI$IServiceProvider'
+        ],
+        'decls': [
+            'NF[0]$IServiceProvider'
+        ]
+    },
+    'IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)': {
+        'displayNameInHtml': '<span class="cpp_type">IServiceProvider</span>::<span class="cpp_function">QueryService</span>(<span class="cpp_type">GUID</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">IID</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">void</span> * *)',
+        'impls': [],
+        'decls': [
+            'FB$IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)[decl0]'
+        ]
+    },
+    'IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)': {
+        'displayNameInHtml': '<span class="cpp_type">IServiceProvider</span>::<span class="cpp_function">QueryService</span>&lt;<span class="cpp_type">Q</span>&gt;(<span class="cpp_type">GUID</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">Q</span> * *)',
+        'impls': [
+            'FB$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]'
+        ],
+        'decls': []
+    },
+    'IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::Q': {
+        'displayNameInHtml': '<span class="cpp_type">Q</span>',
+        'impls': [
+            'TA$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::Q'
+        ],
+        'decls': []
+    },
+    'IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::guidService': {
+        'displayNameInHtml': 'guidService',
+        'impls': [
+            'NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::guidService'
+        ],
+        'decls': []
+    },
+    'IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::pp': {
+        'displayNameInHtml': 'pp',
+        'impls': [
+            'NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::pp'
+        ],
+        'decls': []
+    },
+    'IUnknown': {
+        'displayNameInHtml': '<span class="cpp_type">IUnknown</span>',
+        'impls': [
+            'NI$IUnknown'
+        ],
+        'decls': [
+            'NF[0]$IUnknown'
+        ]
+    },
+    'PRPC_MESSAGE': {
+        'displayNameInHtml': '<span class="cpp_type">PRPC_MESSAGE</span>',
+        'impls': [
+            'NI$PRPC_MESSAGE'
+        ],
+        'decls': []
+    },
+    'RPC_IF_HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_IF_HANDLE</span>',
+        'impls': [
+            'NI$RPC_IF_HANDLE'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$IServiceProvider::QueryService@::HRESULT(::GUID const &, ::IID const &, void * *)[decl0]': null,
+    'FB$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]': null,
+    'NF[0]$IRpcStubBuffer': { 'htmlFileName': 'rpcndr.h', 'displayName': 'rpcndr.h' },
+    'NF[1]$IRpcStubBuffer': { 'htmlFileName': 'rpcndr.h', 'displayName': 'rpcndr.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$GUID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$IID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$IRpcChannelBuffer': { 'htmlFileName': 'ObjIdlbase.h', 'displayName': 'ObjIdlbase.h' },
+    'NI$IRpcStubBuffer': { 'htmlFileName': 'ObjIdlbase.h', 'displayName': 'ObjIdlbase.h' },
+    'NI$IServiceProvider': null,
+    'NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::guidService': null,
+    'NI$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::pp': null,
+    'NI$IUnknown': { 'htmlFileName': 'Unknwnbase.h', 'displayName': 'Unknwnbase.h' },
+    'NI$PRPC_MESSAGE': { 'htmlFileName': 'rpcdcep.h', 'displayName': 'rpcdcep.h' },
+    'NI$RPC_IF_HANDLE': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' },
+    'TA$IServiceProvider::QueryService@::HRESULT(::GUID const &, [Q] * *)[impl0]::Q': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

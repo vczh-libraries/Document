@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>joystickapi.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* joystickapi.h -- ApiSet Contract for api-ms-win-mm-joystick-l1-1-0            *  
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _JOYSTICKAPI_H_</div>
+<div class="disabled">#define _JOYSTICKAPI_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+
+
+<div class="disabled">#include &lt;mmsyscom.h&gt; // mm common definitions</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+
+<div class="disabled">#ifndef MMNOJOY                                                </div>
+<div class="token cpp_comment ">/****************************************************************************
+
+                            Joystick support
+
+****************************************************************************/</div>
+
+<div class="token cpp_comment ">/* joystick error return values */</div>
+<div class="disabled">#define JOYERR_NOERROR        (0)                  /* no error */</div>
+<div class="disabled">#define JOYERR_PARMS          (JOYERR_BASE+5)      /* bad parameters */</div>
+<div class="disabled">#define JOYERR_NOCANDO        (JOYERR_BASE+6)      /* request not completed */</div>
+<div class="disabled">#define JOYERR_UNPLUGGED      (JOYERR_BASE+7)      /* joystick is unplugged */</div>
+
+<div class="token cpp_comment ">/* constants used with JOYINFO and JOYINFOEX structures and MM_JOY* messages */</div>
+<div class="disabled">#define JOY_BUTTON1         0x0001</div>
+<div class="disabled">#define JOY_BUTTON2         0x0002</div>
+<div class="disabled">#define JOY_BUTTON3         0x0004</div>
+<div class="disabled">#define JOY_BUTTON4         0x0008</div>
+<div class="disabled">#define JOY_BUTTON1CHG      0x0100</div>
+<div class="disabled">#define JOY_BUTTON2CHG      0x0200</div>
+<div class="disabled">#define JOY_BUTTON3CHG      0x0400</div>
+<div class="disabled">#define JOY_BUTTON4CHG      0x0800</div>
+
+<div class="token cpp_comment ">/* constants used with JOYINFOEX */</div>
+<div class="disabled">#define JOY_BUTTON5         0x00000010l</div>
+<div class="disabled">#define JOY_BUTTON6         0x00000020l</div>
+<div class="disabled">#define JOY_BUTTON7         0x00000040l</div>
+<div class="disabled">#define JOY_BUTTON8         0x00000080l</div>
+<div class="disabled">#define JOY_BUTTON9         0x00000100l</div>
+<div class="disabled">#define JOY_BUTTON10        0x00000200l</div>
+<div class="disabled">#define JOY_BUTTON11        0x00000400l</div>
+<div class="disabled">#define JOY_BUTTON12        0x00000800l</div>
+<div class="disabled">#define JOY_BUTTON13        0x00001000l</div>
+<div class="disabled">#define JOY_BUTTON14        0x00002000l</div>
+<div class="disabled">#define JOY_BUTTON15        0x00004000l</div>
+<div class="disabled">#define JOY_BUTTON16        0x00008000l</div>
+<div class="disabled">#define JOY_BUTTON17        0x00010000l</div>
+<div class="disabled">#define JOY_BUTTON18        0x00020000l</div>
+<div class="disabled">#define JOY_BUTTON19        0x00040000l</div>
+<div class="disabled">#define JOY_BUTTON20        0x00080000l</div>
+<div class="disabled">#define JOY_BUTTON21        0x00100000l</div>
+<div class="disabled">#define JOY_BUTTON22        0x00200000l</div>
+<div class="disabled">#define JOY_BUTTON23        0x00400000l</div>
+<div class="disabled">#define JOY_BUTTON24        0x00800000l</div>
+<div class="disabled">#define JOY_BUTTON25        0x01000000l</div>
+<div class="disabled">#define JOY_BUTTON26        0x02000000l</div>
+<div class="disabled">#define JOY_BUTTON27        0x04000000l</div>
+<div class="disabled">#define JOY_BUTTON28        0x08000000l</div>
+<div class="disabled">#define JOY_BUTTON29        0x10000000l</div>
+<div class="disabled">#define JOY_BUTTON30        0x20000000l</div>
+<div class="disabled">#define JOY_BUTTON31        0x40000000l</div>
+<div class="disabled">#define JOY_BUTTON32        0x80000000l</div>
+
+<div class="token cpp_comment ">/* constants used with JOYINFOEX structure */</div>
+<div class="disabled">#define JOY_POVCENTERED         (WORD) -1</div>
+<div class="disabled">#define JOY_POVFORWARD          0</div>
+<div class="disabled">#define JOY_POVRIGHT            9000</div>
+<div class="disabled">#define JOY_POVBACKWARD         18000</div>
+<div class="disabled">#define JOY_POVLEFT             27000</div>
+
+<div class="disabled">#define JOY_RETURNX             0x00000001l</div>
+<div class="disabled">#define JOY_RETURNY             0x00000002l</div>
+<div class="disabled">#define JOY_RETURNZ             0x00000004l</div>
+<div class="disabled">#define JOY_RETURNR             0x00000008l</div>
+<div class="disabled">#define JOY_RETURNU             0x00000010l     /* axis 5 */</div>
+<div class="disabled">#define JOY_RETURNV             0x00000020l     /* axis 6 */</div>
+<div class="disabled">#define JOY_RETURNPOV           0x00000040l</div>
+<div class="disabled">#define JOY_RETURNBUTTONS       0x00000080l</div>
+<div class="disabled">#define JOY_RETURNRAWDATA       0x00000100l</div>
+<div class="disabled">#define JOY_RETURNPOVCTS        0x00000200l</div>
+<div class="disabled">#define JOY_RETURNCENTERED      0x00000400l</div>
+<div class="disabled">#define JOY_USEDEADZONE         0x00000800l</div>
+<div class="disabled">#define JOY_RETURNALL           (JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ | \</div>
+<div class="disabled">                                 JOY_RETURNR | JOY_RETURNU | JOY_RETURNV | \</div>
+<div class="disabled">                                 JOY_RETURNPOV | JOY_RETURNBUTTONS)</div>
+<div class="disabled">#define JOY_CAL_READALWAYS      0x00010000l</div>
+<div class="disabled">#define JOY_CAL_READXYONLY      0x00020000l</div>
+<div class="disabled">#define JOY_CAL_READ3           0x00040000l</div>
+<div class="disabled">#define JOY_CAL_READ4           0x00080000l</div>
+<div class="disabled">#define JOY_CAL_READXONLY       0x00100000l</div>
+<div class="disabled">#define JOY_CAL_READYONLY       0x00200000l</div>
+<div class="disabled">#define JOY_CAL_READ5           0x00400000l</div>
+<div class="disabled">#define JOY_CAL_READ6           0x00800000l</div>
+<div class="disabled">#define JOY_CAL_READZONLY       0x01000000l</div>
+<div class="disabled">#define JOY_CAL_READRONLY       0x02000000l</div>
+<div class="disabled">#define JOY_CAL_READUONLY       0x04000000l</div>
+<div class="disabled">#define JOY_CAL_READVONLY       0x08000000l</div>
+
+<div class="token cpp_comment ">/* joystick ID constants */</div>
+<div class="disabled">#define JOYSTICKID1         0</div>
+<div class="disabled">#define JOYSTICKID2         1</div>
+
+<div class="token cpp_comment ">/* joystick driver capabilites */</div>
+<div class="disabled">#define JOYCAPS_HASZ            0x0001</div>
+<div class="disabled">#define JOYCAPS_HASR            0x0002</div>
+<div class="disabled">#define JOYCAPS_HASU            0x0004</div>
+<div class="disabled">#define JOYCAPS_HASV            0x0008</div>
+<div class="disabled">#define JOYCAPS_HASPOV          0x0010</div>
+<div class="disabled">#define JOYCAPS_POV4DIR         0x0020</div>
+<div class="disabled">#define JOYCAPS_POVCTS          0x0040</div>
+
+
+
+<div class="token cpp_comment ">/* joystick device capabilities data structure */</div>
+<div class="disabled">#ifdef _WIN32</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagJOYCAPSA"><div><div class="token cpp_type">tagJOYCAPSA</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$tagJOYCAPSA::wMid"><div><div class="token cpp_field">wMid</div></div></div>;                <div class="token cpp_comment ">/* manufacturer ID */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$tagJOYCAPSA::wPid"><div><div class="token cpp_field">wPid</div></div></div>;                <div class="token cpp_comment ">/* product ID */</div>
+<div class="expandable"><div class="disabled">    CHAR    szPname[MAXPNAMELEN];/* product name (NULL terminated string) */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>    <div class="def" id="NI$tagJOYCAPSA::szPname"><div><div class="token cpp_field">szPname</div></div></div>[<div class="token cpp_number ">32</div>];<div class="token cpp_comment ">/* product name (NULL terminated string) */</div></div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wXmin"><div><div class="token cpp_field">wXmin</div></div></div>;               <div class="token cpp_comment ">/* minimum x position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wXmax"><div><div class="token cpp_field">wXmax</div></div></div>;               <div class="token cpp_comment ">/* maximum x position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wYmin"><div><div class="token cpp_field">wYmin</div></div></div>;               <div class="token cpp_comment ">/* minimum y position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wYmax"><div><div class="token cpp_field">wYmax</div></div></div>;               <div class="token cpp_comment ">/* maximum y position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wZmin"><div><div class="token cpp_field">wZmin</div></div></div>;               <div class="token cpp_comment ">/* minimum z position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wZmax"><div><div class="token cpp_field">wZmax</div></div></div>;               <div class="token cpp_comment ">/* maximum z position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wNumButtons"><div><div class="token cpp_field">wNumButtons</div></div></div>;         <div class="token cpp_comment ">/* number of buttons */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wPeriodMin"><div><div class="token cpp_field">wPeriodMin</div></div></div>;          <div class="token cpp_comment ">/* minimum message period when captured */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wPeriodMax"><div><div class="token cpp_field">wPeriodMax</div></div></div>;          <div class="token cpp_comment ">/* maximum message period when captured */</div>
+<div class="disabled">#if (WINVER &gt;= 0x0400)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wRmin"><div><div class="token cpp_field">wRmin</div></div></div>;               <div class="token cpp_comment ">/* minimum r position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wRmax"><div><div class="token cpp_field">wRmax</div></div></div>;               <div class="token cpp_comment ">/* maximum r position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wUmin"><div><div class="token cpp_field">wUmin</div></div></div>;               <div class="token cpp_comment ">/* minimum u (5th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wUmax"><div><div class="token cpp_field">wUmax</div></div></div>;               <div class="token cpp_comment ">/* maximum u (5th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wVmin"><div><div class="token cpp_field">wVmin</div></div></div>;               <div class="token cpp_comment ">/* minimum v (6th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wVmax"><div><div class="token cpp_field">wVmax</div></div></div>;               <div class="token cpp_comment ">/* maximum v (6th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wCaps"><div><div class="token cpp_field">wCaps</div></div></div>;               <div class="token cpp_comment ">/* joystick capabilites */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wMaxAxes"><div><div class="token cpp_field">wMaxAxes</div></div></div>;            <div class="token cpp_comment ">/* maximum number of axes supported */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wNumAxes"><div><div class="token cpp_field">wNumAxes</div></div></div>;            <div class="token cpp_comment ">/* number of axes in use */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSA::wMaxButtons"><div><div class="token cpp_field">wMaxButtons</div></div></div>;         <div class="token cpp_comment ">/* maximum number of buttons supported */</div>
+<div class="expandable"><div class="disabled">    CHAR    szRegKey[MAXPNAMELEN];/* registry key */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>    <div class="def" id="NI$tagJOYCAPSA::szRegKey"><div><div class="token cpp_field">szRegKey</div></div></div>[<div class="token cpp_number ">32</div>];<div class="token cpp_comment ">/* registry key */</div></div></div>
+<div class="expandable"><div class="disabled">    CHAR    szOEMVxD[MAX_JOYSTICKOEMVXDNAME]; /* OEM VxD in use */
+#endif</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>    <div class="def" id="NI$tagJOYCAPSA::szOEMVxD"><div><div class="token cpp_field">szOEMVxD</div></div></div>[<div class="token cpp_number ">260</div>]; <div class="token cpp_comment ">/* OEM VxD in use */</div></div></div>
+} <div class="def" id="NI$JOYCAPSA"><div><div class="token cpp_type">JOYCAPSA</div></div></div>, *<div class="def" id="NI$PJOYCAPSA"><div><div class="token cpp_type">PJOYCAPSA</div></div></div>, *<div class="def" id="NI$NPJOYCAPSA"><div><div class="token cpp_type">NPJOYCAPSA</div></div></div>, *<div class="def" id="NI$LPJOYCAPSA"><div><div class="token cpp_type">LPJOYCAPSA</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagJOYCAPSW"><div><div class="token cpp_type">tagJOYCAPSW</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$tagJOYCAPSW::wMid"><div><div class="token cpp_field">wMid</div></div></div>;                <div class="token cpp_comment ">/* manufacturer ID */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$tagJOYCAPSW::wPid"><div><div class="token cpp_field">wPid</div></div></div>;                <div class="token cpp_comment ">/* product ID */</div>
+<div class="expandable"><div class="disabled">    WCHAR   szPname[MAXPNAMELEN];/* product name (NULL terminated string) */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>   <div class="def" id="NI$tagJOYCAPSW::szPname"><div><div class="token cpp_field">szPname</div></div></div>[<div class="token cpp_number ">32</div>];<div class="token cpp_comment ">/* product name (NULL terminated string) */</div></div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wXmin"><div><div class="token cpp_field">wXmin</div></div></div>;               <div class="token cpp_comment ">/* minimum x position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wXmax"><div><div class="token cpp_field">wXmax</div></div></div>;               <div class="token cpp_comment ">/* maximum x position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wYmin"><div><div class="token cpp_field">wYmin</div></div></div>;               <div class="token cpp_comment ">/* minimum y position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wYmax"><div><div class="token cpp_field">wYmax</div></div></div>;               <div class="token cpp_comment ">/* maximum y position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wZmin"><div><div class="token cpp_field">wZmin</div></div></div>;               <div class="token cpp_comment ">/* minimum z position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wZmax"><div><div class="token cpp_field">wZmax</div></div></div>;               <div class="token cpp_comment ">/* maximum z position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wNumButtons"><div><div class="token cpp_field">wNumButtons</div></div></div>;         <div class="token cpp_comment ">/* number of buttons */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wPeriodMin"><div><div class="token cpp_field">wPeriodMin</div></div></div>;          <div class="token cpp_comment ">/* minimum message period when captured */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wPeriodMax"><div><div class="token cpp_field">wPeriodMax</div></div></div>;          <div class="token cpp_comment ">/* maximum message period when captured */</div>
+<div class="disabled">#if (WINVER &gt;= 0x0400)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wRmin"><div><div class="token cpp_field">wRmin</div></div></div>;               <div class="token cpp_comment ">/* minimum r position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wRmax"><div><div class="token cpp_field">wRmax</div></div></div>;               <div class="token cpp_comment ">/* maximum r position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wUmin"><div><div class="token cpp_field">wUmin</div></div></div>;               <div class="token cpp_comment ">/* minimum u (5th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wUmax"><div><div class="token cpp_field">wUmax</div></div></div>;               <div class="token cpp_comment ">/* maximum u (5th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wVmin"><div><div class="token cpp_field">wVmin</div></div></div>;               <div class="token cpp_comment ">/* minimum v (6th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wVmax"><div><div class="token cpp_field">wVmax</div></div></div>;               <div class="token cpp_comment ">/* maximum v (6th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wCaps"><div><div class="token cpp_field">wCaps</div></div></div>;               <div class="token cpp_comment ">/* joystick capabilites */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wMaxAxes"><div><div class="token cpp_field">wMaxAxes</div></div></div>;            <div class="token cpp_comment ">/* maximum number of axes supported */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wNumAxes"><div><div class="token cpp_field">wNumAxes</div></div></div>;            <div class="token cpp_comment ">/* number of axes in use */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPSW::wMaxButtons"><div><div class="token cpp_field">wMaxButtons</div></div></div>;         <div class="token cpp_comment ">/* maximum number of buttons supported */</div>
+<div class="expandable"><div class="disabled">    WCHAR   szRegKey[MAXPNAMELEN];/* registry key */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>   <div class="def" id="NI$tagJOYCAPSW::szRegKey"><div><div class="token cpp_field">szRegKey</div></div></div>[<div class="token cpp_number ">32</div>];<div class="token cpp_comment ">/* registry key */</div></div></div>
+<div class="expandable"><div class="disabled">    WCHAR   szOEMVxD[MAX_JOYSTICKOEMVXDNAME]; /* OEM VxD in use */
+#endif</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>   <div class="def" id="NI$tagJOYCAPSW::szOEMVxD"><div><div class="token cpp_field">szOEMVxD</div></div></div>[<div class="token cpp_number ">260</div>]; <div class="token cpp_comment ">/* OEM VxD in use */</div></div></div>
+} <div class="def" id="NI$JOYCAPSW"><div><div class="token cpp_type">JOYCAPSW</div></div></div>, *<div class="def" id="NI$PJOYCAPSW"><div><div class="token cpp_type">PJOYCAPSW</div></div></div>, *<div class="def" id="NI$NPJOYCAPSW"><div><div class="token cpp_type">NPJOYCAPSW</div></div></div>, *<div class="def" id="NI$LPJOYCAPSW"><div><div class="token cpp_type">LPJOYCAPSW</div></div></div>;
+<div class="disabled">#ifdef UNICODE</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['JOYCAPSW'], [], [])"><div class="token cpp_type">JOYCAPSW</div></div> <div class="def" id="NI$JOYCAPS"><div><div class="token cpp_type">JOYCAPS</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['PJOYCAPSW'], [], [])"><div class="token cpp_type">PJOYCAPSW</div></div> <div class="def" id="NI$PJOYCAPS"><div><div class="token cpp_type">PJOYCAPS</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['NPJOYCAPSW'], [], [])"><div class="token cpp_type">NPJOYCAPSW</div></div> <div class="def" id="NI$NPJOYCAPS"><div><div class="token cpp_type">NPJOYCAPS</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPJOYCAPSW'], [], [])"><div class="token cpp_type">LPJOYCAPSW</div></div> <div class="def" id="NI$LPJOYCAPS"><div><div class="token cpp_type">LPJOYCAPS</div></div></div>;
+<div class="disabled">#else</div>
+<div class="disabled">typedef JOYCAPSA JOYCAPS;</div>
+<div class="disabled">typedef PJOYCAPSA PJOYCAPS;</div>
+<div class="disabled">typedef NPJOYCAPSA NPJOYCAPS;</div>
+<div class="disabled">typedef LPJOYCAPSA LPJOYCAPS;
+#endif // UNICODE</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagJOYCAPS2A"><div><div class="token cpp_type">tagJOYCAPS2A</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wMid"><div><div class="token cpp_field">wMid</div></div></div>;                <div class="token cpp_comment ">/* manufacturer ID */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wPid"><div><div class="token cpp_field">wPid</div></div></div>;                <div class="token cpp_comment ">/* product ID */</div>
+<div class="expandable"><div class="disabled">    CHAR    szPname[MAXPNAMELEN];/* product name (NULL terminated string) */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>    <div class="def" id="NI$tagJOYCAPS2A::szPname"><div><div class="token cpp_field">szPname</div></div></div>[<div class="token cpp_number ">32</div>];<div class="token cpp_comment ">/* product name (NULL terminated string) */</div></div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wXmin"><div><div class="token cpp_field">wXmin</div></div></div>;               <div class="token cpp_comment ">/* minimum x position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wXmax"><div><div class="token cpp_field">wXmax</div></div></div>;               <div class="token cpp_comment ">/* maximum x position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wYmin"><div><div class="token cpp_field">wYmin</div></div></div>;               <div class="token cpp_comment ">/* minimum y position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wYmax"><div><div class="token cpp_field">wYmax</div></div></div>;               <div class="token cpp_comment ">/* maximum y position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wZmin"><div><div class="token cpp_field">wZmin</div></div></div>;               <div class="token cpp_comment ">/* minimum z position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wZmax"><div><div class="token cpp_field">wZmax</div></div></div>;               <div class="token cpp_comment ">/* maximum z position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wNumButtons"><div><div class="token cpp_field">wNumButtons</div></div></div>;         <div class="token cpp_comment ">/* number of buttons */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wPeriodMin"><div><div class="token cpp_field">wPeriodMin</div></div></div>;          <div class="token cpp_comment ">/* minimum message period when captured */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wPeriodMax"><div><div class="token cpp_field">wPeriodMax</div></div></div>;          <div class="token cpp_comment ">/* maximum message period when captured */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wRmin"><div><div class="token cpp_field">wRmin</div></div></div>;               <div class="token cpp_comment ">/* minimum r position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wRmax"><div><div class="token cpp_field">wRmax</div></div></div>;               <div class="token cpp_comment ">/* maximum r position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wUmin"><div><div class="token cpp_field">wUmin</div></div></div>;               <div class="token cpp_comment ">/* minimum u (5th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wUmax"><div><div class="token cpp_field">wUmax</div></div></div>;               <div class="token cpp_comment ">/* maximum u (5th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wVmin"><div><div class="token cpp_field">wVmin</div></div></div>;               <div class="token cpp_comment ">/* minimum v (6th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wVmax"><div><div class="token cpp_field">wVmax</div></div></div>;               <div class="token cpp_comment ">/* maximum v (6th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wCaps"><div><div class="token cpp_field">wCaps</div></div></div>;               <div class="token cpp_comment ">/* joystick capabilites */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wMaxAxes"><div><div class="token cpp_field">wMaxAxes</div></div></div>;            <div class="token cpp_comment ">/* maximum number of axes supported */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wNumAxes"><div><div class="token cpp_field">wNumAxes</div></div></div>;            <div class="token cpp_comment ">/* number of axes in use */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2A::wMaxButtons"><div><div class="token cpp_field">wMaxButtons</div></div></div>;         <div class="token cpp_comment ">/* maximum number of buttons supported */</div>
+<div class="expandable"><div class="disabled">    CHAR    szRegKey[MAXPNAMELEN];/* registry key */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>    <div class="def" id="NI$tagJOYCAPS2A::szRegKey"><div><div class="token cpp_field">szRegKey</div></div></div>[<div class="token cpp_number ">32</div>];<div class="token cpp_comment ">/* registry key */</div></div></div>
+<div class="expandable"><div class="disabled">    CHAR    szOEMVxD[MAX_JOYSTICKOEMVXDNAME]; /* OEM VxD in use */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>    <div class="def" id="NI$tagJOYCAPS2A::szOEMVxD"><div><div class="token cpp_field">szOEMVxD</div></div></div>[<div class="token cpp_number ">260</div>]; <div class="token cpp_comment ">/* OEM VxD in use */</div></div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>    <div class="def" id="NI$tagJOYCAPS2A::ManufacturerGuid"><div><div class="token cpp_field">ManufacturerGuid</div></div></div>;    <div class="token cpp_comment ">/* for extensible MID mapping */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>    <div class="def" id="NI$tagJOYCAPS2A::ProductGuid"><div><div class="token cpp_field">ProductGuid</div></div></div>;         <div class="token cpp_comment ">/* for extensible PID mapping */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>    <div class="def" id="NI$tagJOYCAPS2A::NameGuid"><div><div class="token cpp_field">NameGuid</div></div></div>;            <div class="token cpp_comment ">/* for name lookup in registry */</div>
+} <div class="def" id="NI$JOYCAPS2A"><div><div class="token cpp_type">JOYCAPS2A</div></div></div>, *<div class="def" id="NI$PJOYCAPS2A"><div><div class="token cpp_type">PJOYCAPS2A</div></div></div>, *<div class="def" id="NI$NPJOYCAPS2A"><div><div class="token cpp_type">NPJOYCAPS2A</div></div></div>, *<div class="def" id="NI$LPJOYCAPS2A"><div><div class="token cpp_type">LPJOYCAPS2A</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagJOYCAPS2W"><div><div class="token cpp_type">tagJOYCAPS2W</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wMid"><div><div class="token cpp_field">wMid</div></div></div>;                <div class="token cpp_comment ">/* manufacturer ID */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wPid"><div><div class="token cpp_field">wPid</div></div></div>;                <div class="token cpp_comment ">/* product ID */</div>
+<div class="expandable"><div class="disabled">    WCHAR   szPname[MAXPNAMELEN];/* product name (NULL terminated string) */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>   <div class="def" id="NI$tagJOYCAPS2W::szPname"><div><div class="token cpp_field">szPname</div></div></div>[<div class="token cpp_number ">32</div>];<div class="token cpp_comment ">/* product name (NULL terminated string) */</div></div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wXmin"><div><div class="token cpp_field">wXmin</div></div></div>;               <div class="token cpp_comment ">/* minimum x position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wXmax"><div><div class="token cpp_field">wXmax</div></div></div>;               <div class="token cpp_comment ">/* maximum x position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wYmin"><div><div class="token cpp_field">wYmin</div></div></div>;               <div class="token cpp_comment ">/* minimum y position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wYmax"><div><div class="token cpp_field">wYmax</div></div></div>;               <div class="token cpp_comment ">/* maximum y position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wZmin"><div><div class="token cpp_field">wZmin</div></div></div>;               <div class="token cpp_comment ">/* minimum z position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wZmax"><div><div class="token cpp_field">wZmax</div></div></div>;               <div class="token cpp_comment ">/* maximum z position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wNumButtons"><div><div class="token cpp_field">wNumButtons</div></div></div>;         <div class="token cpp_comment ">/* number of buttons */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wPeriodMin"><div><div class="token cpp_field">wPeriodMin</div></div></div>;          <div class="token cpp_comment ">/* minimum message period when captured */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wPeriodMax"><div><div class="token cpp_field">wPeriodMax</div></div></div>;          <div class="token cpp_comment ">/* maximum message period when captured */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wRmin"><div><div class="token cpp_field">wRmin</div></div></div>;               <div class="token cpp_comment ">/* minimum r position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wRmax"><div><div class="token cpp_field">wRmax</div></div></div>;               <div class="token cpp_comment ">/* maximum r position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wUmin"><div><div class="token cpp_field">wUmin</div></div></div>;               <div class="token cpp_comment ">/* minimum u (5th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wUmax"><div><div class="token cpp_field">wUmax</div></div></div>;               <div class="token cpp_comment ">/* maximum u (5th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wVmin"><div><div class="token cpp_field">wVmin</div></div></div>;               <div class="token cpp_comment ">/* minimum v (6th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wVmax"><div><div class="token cpp_field">wVmax</div></div></div>;               <div class="token cpp_comment ">/* maximum v (6th axis) position value */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wCaps"><div><div class="token cpp_field">wCaps</div></div></div>;               <div class="token cpp_comment ">/* joystick capabilites */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wMaxAxes"><div><div class="token cpp_field">wMaxAxes</div></div></div>;            <div class="token cpp_comment ">/* maximum number of axes supported */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wNumAxes"><div><div class="token cpp_field">wNumAxes</div></div></div>;            <div class="token cpp_comment ">/* number of axes in use */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>    <div class="def" id="NI$tagJOYCAPS2W::wMaxButtons"><div><div class="token cpp_field">wMaxButtons</div></div></div>;         <div class="token cpp_comment ">/* maximum number of buttons supported */</div>
+<div class="expandable"><div class="disabled">    WCHAR   szRegKey[MAXPNAMELEN];/* registry key */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>   <div class="def" id="NI$tagJOYCAPS2W::szRegKey"><div><div class="token cpp_field">szRegKey</div></div></div>[<div class="token cpp_number ">32</div>];<div class="token cpp_comment ">/* registry key */</div></div></div>
+<div class="expandable"><div class="disabled">    WCHAR   szOEMVxD[MAX_JOYSTICKOEMVXDNAME]; /* OEM VxD in use */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>   <div class="def" id="NI$tagJOYCAPS2W::szOEMVxD"><div><div class="token cpp_field">szOEMVxD</div></div></div>[<div class="token cpp_number ">260</div>]; <div class="token cpp_comment ">/* OEM VxD in use */</div></div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>    <div class="def" id="NI$tagJOYCAPS2W::ManufacturerGuid"><div><div class="token cpp_field">ManufacturerGuid</div></div></div>;    <div class="token cpp_comment ">/* for extensible MID mapping */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>    <div class="def" id="NI$tagJOYCAPS2W::ProductGuid"><div><div class="token cpp_field">ProductGuid</div></div></div>;         <div class="token cpp_comment ">/* for extensible PID mapping */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>    <div class="def" id="NI$tagJOYCAPS2W::NameGuid"><div><div class="token cpp_field">NameGuid</div></div></div>;            <div class="token cpp_comment ">/* for name lookup in registry */</div>
+} <div class="def" id="NI$JOYCAPS2W"><div><div class="token cpp_type">JOYCAPS2W</div></div></div>, *<div class="def" id="NI$PJOYCAPS2W"><div><div class="token cpp_type">PJOYCAPS2W</div></div></div>, *<div class="def" id="NI$NPJOYCAPS2W"><div><div class="token cpp_type">NPJOYCAPS2W</div></div></div>, *<div class="def" id="NI$LPJOYCAPS2W"><div><div class="token cpp_type">LPJOYCAPS2W</div></div></div>;
+<div class="disabled">#ifdef UNICODE</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['JOYCAPS2W'], [], [])"><div class="token cpp_type">JOYCAPS2W</div></div> <div class="def" id="NI$JOYCAPS2"><div><div class="token cpp_type">JOYCAPS2</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['PJOYCAPS2W'], [], [])"><div class="token cpp_type">PJOYCAPS2W</div></div> <div class="def" id="NI$PJOYCAPS2"><div><div class="token cpp_type">PJOYCAPS2</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['NPJOYCAPS2W'], [], [])"><div class="token cpp_type">NPJOYCAPS2W</div></div> <div class="def" id="NI$NPJOYCAPS2"><div><div class="token cpp_type">NPJOYCAPS2</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPJOYCAPS2W'], [], [])"><div class="token cpp_type">LPJOYCAPS2W</div></div> <div class="def" id="NI$LPJOYCAPS2"><div><div class="token cpp_type">LPJOYCAPS2</div></div></div>;
+<div class="disabled">#else</div>
+<div class="disabled">typedef JOYCAPS2A JOYCAPS2;</div>
+<div class="disabled">typedef PJOYCAPS2A PJOYCAPS2;</div>
+<div class="disabled">typedef NPJOYCAPS2A NPJOYCAPS2;</div>
+<div class="disabled">typedef LPJOYCAPS2A LPJOYCAPS2;
+#endif // UNICODE</div>
+
+<div class="disabled">#else</div>
+<div class="disabled">typedef struct joycaps_tag {</div>
+<div class="disabled">    WORD wMid;                  /* manufacturer ID */</div>
+<div class="disabled">    WORD wPid;                  /* product ID */</div>
+<div class="disabled">    char szPname[MAXPNAMELEN];  /* product name (NULL terminated string) */</div>
+<div class="disabled">    UINT wXmin;                 /* minimum x position value */</div>
+<div class="disabled">    UINT wXmax;                 /* maximum x position value */</div>
+<div class="disabled">    UINT wYmin;                 /* minimum y position value */</div>
+<div class="disabled">    UINT wYmax;                 /* maximum y position value */</div>
+<div class="disabled">    UINT wZmin;                 /* minimum z position value */</div>
+<div class="disabled">    UINT wZmax;                 /* maximum z position value */</div>
+<div class="disabled">    UINT wNumButtons;           /* number of buttons */</div>
+<div class="disabled">    UINT wPeriodMin;            /* minimum message period when captured */</div>
+<div class="disabled">    UINT wPeriodMax;            /* maximum message period when captured */</div>
+<div class="disabled">#if (WINVER &gt;= 0x0400)</div>
+<div class="disabled">    UINT wRmin;                 /* minimum r position value */</div>
+<div class="disabled">    UINT wRmax;                 /* maximum r position value */</div>
+<div class="disabled">    UINT wUmin;                 /* minimum u (5th axis) position value */</div>
+<div class="disabled">    UINT wUmax;                 /* maximum u (5th axis) position value */</div>
+<div class="disabled">    UINT wVmin;                 /* minimum v (6th axis) position value */</div>
+<div class="disabled">    UINT wVmax;                 /* maximum v (6th axis) position value */</div>
+<div class="disabled">    UINT wCaps;                 /* joystick capabilites */</div>
+<div class="disabled">    UINT wMaxAxes;              /* maximum number of axes supported */</div>
+<div class="disabled">    UINT wNumAxes;              /* number of axes in use */</div>
+<div class="disabled">    UINT wMaxButtons;           /* maximum number of buttons supported */</div>
+<div class="disabled">    char szRegKey[MAXPNAMELEN]; /* registry key */</div>
+<div class="disabled">    char szOEMVxD[MAX_JOYSTICKOEMVXDNAME]; /* OEM VxD in use */</div>
+<div class="disabled">#endif</div>
+<div class="disabled">} JOYCAPS, *PJOYCAPS, NEAR *NPJOYCAPS, FAR *LPJOYCAPS;
+#endif</div>
+
+
+<div class="token cpp_comment ">/* joystick information data structure */</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$joyinfo_tag"><div><div class="token cpp_type">joyinfo_tag</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyinfo_tag::wXpos"><div><div class="token cpp_field">wXpos</div></div></div>;                 <div class="token cpp_comment ">/* x position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyinfo_tag::wYpos"><div><div class="token cpp_field">wYpos</div></div></div>;                 <div class="token cpp_comment ">/* y position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyinfo_tag::wZpos"><div><div class="token cpp_field">wZpos</div></div></div>;                 <div class="token cpp_comment ">/* z position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyinfo_tag::wButtons"><div><div class="token cpp_field">wButtons</div></div></div>;              <div class="token cpp_comment ">/* button states */</div>
+<div class="expandable"><div class="disabled">} JOYINFO, *PJOYINFO, NEAR *NPJOYINFO, FAR *LPJOYINFO;</div>
+<div class="expanded">} <div class="def" id="NI$JOYINFO"><div><div class="token cpp_type">JOYINFO</div></div></div>, *<div class="def" id="NI$PJOYINFO"><div><div class="token cpp_type">PJOYINFO</div></div></div>,  *<div class="def" id="NI$NPJOYINFO"><div><div class="token cpp_type">NPJOYINFO</div></div></div>,  *<div class="def" id="NI$LPJOYINFO"><div><div class="token cpp_type">LPJOYINFO</div></div></div>;</div></div>
+
+<div class="disabled">#if (WINVER &gt;= 0x0400)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$joyinfoex_tag"><div><div class="token cpp_type">joyinfoex_tag</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>;                <div class="token cpp_comment ">/* size of structure */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>;               <div class="token cpp_comment ">/* flags to indicate what to return */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwXpos"><div><div class="token cpp_field">dwXpos</div></div></div>;                <div class="token cpp_comment ">/* x position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwYpos"><div><div class="token cpp_field">dwYpos</div></div></div>;                <div class="token cpp_comment ">/* y position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwZpos"><div><div class="token cpp_field">dwZpos</div></div></div>;                <div class="token cpp_comment ">/* z position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwRpos"><div><div class="token cpp_field">dwRpos</div></div></div>;                <div class="token cpp_comment ">/* rudder/4th axis position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwUpos"><div><div class="token cpp_field">dwUpos</div></div></div>;                <div class="token cpp_comment ">/* 5th axis position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwVpos"><div><div class="token cpp_field">dwVpos</div></div></div>;                <div class="token cpp_comment ">/* 6th axis position */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwButtons"><div><div class="token cpp_field">dwButtons</div></div></div>;             <div class="token cpp_comment ">/* button states */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwButtonNumber"><div><div class="token cpp_field">dwButtonNumber</div></div></div>;        <div class="token cpp_comment ">/* current button number pressed */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwPOV"><div><div class="token cpp_field">dwPOV</div></div></div>;                 <div class="token cpp_comment ">/* point of view state */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwReserved1"><div><div class="token cpp_field">dwReserved1</div></div></div>;           <div class="token cpp_comment ">/* reserved for communication between winmm &amp; driver */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyinfoex_tag::dwReserved2"><div><div class="token cpp_field">dwReserved2</div></div></div>;           <div class="token cpp_comment ">/* reserved for future expansion */</div>
+<div class="expandable"><div class="disabled">} JOYINFOEX, *PJOYINFOEX, NEAR *NPJOYINFOEX, FAR *LPJOYINFOEX;
+#endif</div>
+<div class="expanded">} <div class="def" id="NI$JOYINFOEX"><div><div class="token cpp_type">JOYINFOEX</div></div></div>, *<div class="def" id="NI$PJOYINFOEX"><div><div class="token cpp_type">PJOYINFOEX</div></div></div>,  *<div class="def" id="NI$NPJOYINFOEX"><div><div class="token cpp_type">NPJOYINFOEX</div></div></div>,  *<div class="def" id="NI$LPJOYINFOEX"><div><div class="token cpp_type">LPJOYINFOEX</div></div></div>;</div></div>
+
+<div class="token cpp_comment ">/* joystick function prototypes */</div>
+
+<div class="disabled">#if (WINVER &gt;= 0x0400)</div>
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joyGetPosEx@::MMRESULT(::UINT, ::LPJOYINFOEX)[decl0]"><div><div class="token cpp_function">joyGetPosEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT uJoyID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyGetPosEx@::MMRESULT(::UINT, ::LPJOYINFOEX)[decl0]::uJoyID"><div>uJoyID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPJOYINFOEX pji</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPJOYINFOEX'], [], [])"><div class="token cpp_type">LPJOYINFOEX</div></div> <div class="def" id="NI$joyGetPosEx@::MMRESULT(::UINT, ::LPJOYINFOEX)[decl0]::pji"><div>pji</div></div></div></div>
+    );
+
+<div class="disabled">#endif /* WINVER &gt;= 0x0400 */</div>
+
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joyGetNumDevs@::UINT()[decl0]"><div><div class="token cpp_function">joyGetNumDevs</div></div></div>(
+    <div class="token cpp_keyword ">void</div>
+    );
+
+<div class="disabled">#ifdef _WIN32</div>
+
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joyGetDevCapsA@::MMRESULT(::UINT_PTR, ::LPJOYCAPSA, ::UINT)[decl0]"><div><div class="token cpp_function">joyGetDevCapsA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT_PTR uJoyID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT_PTR'], [], [])"><div class="token cpp_type">UINT_PTR</div></div> <div class="def" id="NI$joyGetDevCapsA@::MMRESULT(::UINT_PTR, ::LPJOYCAPSA, ::UINT)[decl0]::uJoyID"><div>uJoyID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_(cbjc) LPJOYCAPSA pjc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPJOYCAPSA'], [], [])"><div class="token cpp_type">LPJOYCAPSA</div></div> <div class="def" id="NI$joyGetDevCapsA@::MMRESULT(::UINT_PTR, ::LPJOYCAPSA, ::UINT)[decl0]::pjc"><div>pjc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT cbjc</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyGetDevCapsA@::MMRESULT(::UINT_PTR, ::LPJOYCAPSA, ::UINT)[decl0]::cbjc"><div>cbjc</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joyGetDevCapsW@::MMRESULT(::UINT_PTR, ::LPJOYCAPSW, ::UINT)[decl0]"><div><div class="token cpp_function">joyGetDevCapsW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT_PTR uJoyID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT_PTR'], [], [])"><div class="token cpp_type">UINT_PTR</div></div> <div class="def" id="NI$joyGetDevCapsW@::MMRESULT(::UINT_PTR, ::LPJOYCAPSW, ::UINT)[decl0]::uJoyID"><div>uJoyID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_(cbjc) LPJOYCAPSW pjc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPJOYCAPSW'], [], [])"><div class="token cpp_type">LPJOYCAPSW</div></div> <div class="def" id="NI$joyGetDevCapsW@::MMRESULT(::UINT_PTR, ::LPJOYCAPSW, ::UINT)[decl0]::pjc"><div>pjc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT cbjc</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyGetDevCapsW@::MMRESULT(::UINT_PTR, ::LPJOYCAPSW, ::UINT)[decl0]::cbjc"><div>cbjc</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define joyGetDevCaps  joyGetDevCapsW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define joyGetDevCaps  joyGetDevCapsA
+#endif // !UNICODE</div>
+
+<div class="disabled">#else</div>
+<div class="disabled">MMRESULT WINAPI joyGetDevCaps(UINT uJoyID, LPJOYCAPS pjc, UINT cbjc);
+#endif</div>
+
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joyGetPos@::MMRESULT(::UINT, ::LPJOYINFO)[decl0]"><div><div class="token cpp_function">joyGetPos</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT uJoyID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyGetPos@::MMRESULT(::UINT, ::LPJOYINFO)[decl0]::uJoyID"><div>uJoyID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPJOYINFO pji</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPJOYINFO'], [], [])"><div class="token cpp_type">LPJOYINFO</div></div> <div class="def" id="NI$joyGetPos@::MMRESULT(::UINT, ::LPJOYINFO)[decl0]::pji"><div>pji</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joyGetThreshold@::MMRESULT(::UINT, ::LPUINT)[decl0]"><div><div class="token cpp_function">joyGetThreshold</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT uJoyID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyGetThreshold@::MMRESULT(::UINT, ::LPUINT)[decl0]::uJoyID"><div>uJoyID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPUINT puThreshold</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPUINT'], [], [])"><div class="token cpp_type">LPUINT</div></div> <div class="def" id="NI$joyGetThreshold@::MMRESULT(::UINT, ::LPUINT)[decl0]::puThreshold"><div>puThreshold</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joyReleaseCapture@::MMRESULT(::UINT)[decl0]"><div><div class="token cpp_function">joyReleaseCapture</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT uJoyID</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joyReleaseCapture@::MMRESULT(::UINT)[decl0]::uJoyID"><div>uJoyID</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joySetCapture@::MMRESULT(::HWND, ::UINT, ::UINT, ::BOOL)[decl0]"><div><div class="token cpp_function">joySetCapture</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HWND hwnd,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$joySetCapture@::MMRESULT(::HWND, ::UINT, ::UINT, ::BOOL)[decl0]::hwnd"><div>hwnd</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uJoyID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joySetCapture@::MMRESULT(::HWND, ::UINT, ::UINT, ::BOOL)[decl0]::uJoyID"><div>uJoyID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uPeriod,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joySetCapture@::MMRESULT(::HWND, ::UINT, ::UINT, ::BOOL)[decl0]::uPeriod"><div>uPeriod</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ BOOL fChanged</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$joySetCapture@::MMRESULT(::HWND, ::UINT, ::UINT, ::BOOL)[decl0]::fChanged"><div>fChanged</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joySetThreshold@::MMRESULT(::UINT, ::UINT)[decl0]"><div><div class="token cpp_function">joySetThreshold</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT uJoyID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joySetThreshold@::MMRESULT(::UINT, ::UINT)[decl0]::uJoyID"><div>uJoyID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uThreshold</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$joySetThreshold@::MMRESULT(::UINT, ::UINT)[decl0]::uThreshold"><div>uThreshold</div></div></div></div>
+    );
+
+
+<div class="disabled">#if (WINVER &gt;= 0x0400)</div>
+<div class="expandable"><div class="disabled">WINMMAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['MMRESULT'], [], [])"><div class="token cpp_type">MMRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$joyConfigChanged@::MMRESULT(::DWORD)[decl0]"><div><div class="token cpp_function">joyConfigChanged</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$joyConfigChanged@::MMRESULT(::DWORD)[decl0]::dwFlags"><div>dwFlags</div></div></div></div>
+    );
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif  /* ifndef MMNOJOY */</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _JOYSTICKAPI_H_</div>
+
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'CHAR': {
+        'displayNameInHtml': '<span class="cpp_type">CHAR</span>',
+        'impls': [
+            'NI$CHAR'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'HWND': {
+        'displayNameInHtml': '<span class="cpp_type">HWND</span>',
+        'impls': [
+            'NI$HWND'
+        ],
+        'decls': []
+    },
+    'JOYCAPS2W': {
+        'displayNameInHtml': '<span class="cpp_type">JOYCAPS2W</span>',
+        'impls': [
+            'NI$JOYCAPS2W'
+        ],
+        'decls': []
+    },
+    'JOYCAPSW': {
+        'displayNameInHtml': '<span class="cpp_type">JOYCAPSW</span>',
+        'impls': [
+            'NI$JOYCAPSW'
+        ],
+        'decls': []
+    },
+    'LPJOYCAPS2W': {
+        'displayNameInHtml': '<span class="cpp_type">LPJOYCAPS2W</span>',
+        'impls': [
+            'NI$LPJOYCAPS2W'
+        ],
+        'decls': []
+    },
+    'LPJOYCAPSA': {
+        'displayNameInHtml': '<span class="cpp_type">LPJOYCAPSA</span>',
+        'impls': [
+            'NI$LPJOYCAPSA'
+        ],
+        'decls': []
+    },
+    'LPJOYCAPSW': {
+        'displayNameInHtml': '<span class="cpp_type">LPJOYCAPSW</span>',
+        'impls': [
+            'NI$LPJOYCAPSW'
+        ],
+        'decls': []
+    },
+    'LPJOYINFO': {
+        'displayNameInHtml': '<span class="cpp_type">LPJOYINFO</span>',
+        'impls': [
+            'NI$LPJOYINFO'
+        ],
+        'decls': []
+    },
+    'LPJOYINFOEX': {
+        'displayNameInHtml': '<span class="cpp_type">LPJOYINFOEX</span>',
+        'impls': [
+            'NI$LPJOYINFOEX'
+        ],
+        'decls': []
+    },
+    'LPUINT': {
+        'displayNameInHtml': '<span class="cpp_type">LPUINT</span>',
+        'impls': [
+            'NI$LPUINT'
+        ],
+        'decls': []
+    },
+    'MMRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">MMRESULT</span>',
+        'impls': [
+            'NI$MMRESULT'
+        ],
+        'decls': []
+    },
+    'NPJOYCAPS2W': {
+        'displayNameInHtml': '<span class="cpp_type">NPJOYCAPS2W</span>',
+        'impls': [
+            'NI$NPJOYCAPS2W'
+        ],
+        'decls': []
+    },
+    'NPJOYCAPSW': {
+        'displayNameInHtml': '<span class="cpp_type">NPJOYCAPSW</span>',
+        'impls': [
+            'NI$NPJOYCAPSW'
+        ],
+        'decls': []
+    },
+    'PJOYCAPS2W': {
+        'displayNameInHtml': '<span class="cpp_type">PJOYCAPS2W</span>',
+        'impls': [
+            'NI$PJOYCAPS2W'
+        ],
+        'decls': []
+    },
+    'PJOYCAPSW': {
+        'displayNameInHtml': '<span class="cpp_type">PJOYCAPSW</span>',
+        'impls': [
+            'NI$PJOYCAPSW'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'UINT_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">UINT_PTR</span>',
+        'impls': [
+            'NI$UINT_PTR'
+        ],
+        'decls': []
+    },
+    'WCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">WCHAR</span>',
+        'impls': [
+            'NI$WCHAR'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$CHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$GUID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$HWND': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$JOYCAPS2W': null,
+    'NI$JOYCAPSW': null,
+    'NI$LPJOYCAPS2W': null,
+    'NI$LPJOYCAPSA': null,
+    'NI$LPJOYCAPSW': null,
+    'NI$LPJOYINFO': null,
+    'NI$LPJOYINFOEX': null,
+    'NI$LPUINT': { 'htmlFileName': 'mmsyscom.h', 'displayName': 'mmsyscom.h' },
+    'NI$MMRESULT': { 'htmlFileName': 'mmsyscom.h', 'displayName': 'mmsyscom.h' },
+    'NI$NPJOYCAPS2W': null,
+    'NI$NPJOYCAPSW': null,
+    'NI$PJOYCAPS2W': null,
+    'NI$PJOYCAPSW': null,
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$UINT_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$WCHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>setjmp.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// setjmp.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The C Standard Library &lt;setjmp.h&gt; header.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="disabled">#define _INC_SETJMP</div>
+
+<div class="disabled">#include &lt;vcruntime.h&gt;</div>
+
+<div class="disabled">#ifdef _M_CEE</div>
+<div class="disabled">    // The reason why simple setjmp won&apos;t work here is that there may</div>
+<div class="disabled">    // be case when CLR stubs are on the stack e.g. function call just</div>
+<div class="disabled">    // after jitting, and not unwinding CLR will result in bad state of</div>
+<div class="disabled">    // CLR which then can AV or do something very bad.</div>
+<div class="disabled">    #include &lt;setjmpex.h&gt;</div>
+<div class="disabled">#endif</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="token cpp_comment ">// Definitions specific to particular setjmp implementations.</div>
+<div class="disabled">#if defined _M_IX86</div>
+
+<div class="disabled">    #define _JBLEN  16</div>
+<div class="disabled">    #define _JBTYPE int</div>
+
+    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__JUMP_BUFFER"><div><div class="token cpp_type">__JUMP_BUFFER</div></div></div>
+    {
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::Ebp"><div><div class="token cpp_field">Ebp</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::Ebx"><div><div class="token cpp_field">Ebx</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::Edi"><div><div class="token cpp_field">Edi</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::Esi"><div><div class="token cpp_field">Esi</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::Esp"><div><div class="token cpp_field">Esp</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::Eip"><div><div class="token cpp_field">Eip</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::Registration"><div><div class="token cpp_field">Registration</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::TryLevel"><div><div class="token cpp_field">TryLevel</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::Cookie"><div><div class="token cpp_field">Cookie</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::UnwindFunc"><div><div class="token cpp_field">UnwindFunc</div></div></div>;
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$__JUMP_BUFFER::UnwindData"><div><div class="token cpp_field">UnwindData</div></div></div>[<div class="token cpp_number ">6</div>];
+    } <div class="def" id="NI$_JUMP_BUFFER"><div><div class="token cpp_type">_JUMP_BUFFER</div></div></div>;
+
+<div class="disabled">#elif defined _M_X64</div>
+
+<div class="disabled">    typedef struct _VCRT_ALIGN(16) _SETJMP_FLOAT128</div>
+<div class="disabled">    {</div>
+<div class="disabled">        unsigned __int64 Part[2];</div>
+<div class="disabled">    } SETJMP_FLOAT128;</div>
+
+<div class="disabled">    #define _JBLEN  16</div>
+<div class="disabled">    typedef SETJMP_FLOAT128 _JBTYPE;</div>
+
+<div class="disabled">    typedef struct _JUMP_BUFFER</div>
+<div class="disabled">    {</div>
+<div class="disabled">        unsigned __int64 Frame;</div>
+<div class="disabled">        unsigned __int64 Rbx;</div>
+<div class="disabled">        unsigned __int64 Rsp;</div>
+<div class="disabled">        unsigned __int64 Rbp;</div>
+<div class="disabled">        unsigned __int64 Rsi;</div>
+<div class="disabled">        unsigned __int64 Rdi;</div>
+<div class="disabled">        unsigned __int64 R12;</div>
+<div class="disabled">        unsigned __int64 R13;</div>
+<div class="disabled">        unsigned __int64 R14;</div>
+<div class="disabled">        unsigned __int64 R15;</div>
+<div class="disabled">        unsigned __int64 Rip;</div>
+<div class="disabled">        unsigned long MxCsr;</div>
+<div class="disabled">        unsigned short FpCsr;</div>
+<div class="disabled">        unsigned short Spare;</div>
+
+<div class="disabled">        SETJMP_FLOAT128 Xmm6;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm7;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm8;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm9;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm10;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm11;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm12;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm13;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm14;</div>
+<div class="disabled">        SETJMP_FLOAT128 Xmm15;</div>
+<div class="disabled">    } _JUMP_BUFFER;</div>
+
+<div class="disabled">#elif defined _M_ARM</div>
+
+<div class="disabled">    #define _JBLEN  28</div>
+<div class="disabled">    #define _JBTYPE int</div>
+
+<div class="disabled">    typedef struct _JUMP_BUFFER</div>
+<div class="disabled">    {</div>
+<div class="disabled">        unsigned long Frame;</div>
+
+<div class="disabled">        unsigned long R4;</div>
+<div class="disabled">        unsigned long R5;</div>
+<div class="disabled">        unsigned long R6;</div>
+<div class="disabled">        unsigned long R7;</div>
+<div class="disabled">        unsigned long R8;</div>
+<div class="disabled">        unsigned long R9;</div>
+<div class="disabled">        unsigned long R10;</div>
+<div class="disabled">        unsigned long R11;</div>
+
+<div class="disabled">        unsigned long Sp;</div>
+<div class="disabled">        unsigned long Pc;</div>
+<div class="disabled">        unsigned long Fpscr;</div>
+<div class="disabled">        unsigned long long D[8]; // D8-D15 VFP/NEON regs</div>
+<div class="disabled">    } _JUMP_BUFFER;</div>
+
+<div class="disabled">#elif defined _M_ARM64</div>
+
+<div class="disabled">    #define _JBLEN  24</div>
+<div class="disabled">    #define _JBTYPE unsigned __int64</div>
+
+<div class="disabled">    typedef struct _JUMP_BUFFER {</div>
+<div class="disabled">        unsigned __int64 Frame;</div>
+<div class="disabled">        unsigned __int64 Reserved;</div>
+<div class="disabled">        unsigned __int64 X19;   // x19 -- x28: callee saved registers</div>
+<div class="disabled">        unsigned __int64 X20;</div>
+<div class="disabled">        unsigned __int64 X21;</div>
+<div class="disabled">        unsigned __int64 X22;</div>
+<div class="disabled">        unsigned __int64 X23;</div>
+<div class="disabled">        unsigned __int64 X24;</div>
+<div class="disabled">        unsigned __int64 X25;</div>
+<div class="disabled">        unsigned __int64 X26;</div>
+<div class="disabled">        unsigned __int64 X27;</div>
+<div class="disabled">        unsigned __int64 X28;</div>
+<div class="disabled">        unsigned __int64 Fp;    // x29 frame pointer</div>
+<div class="disabled">        unsigned __int64 Lr;    // x30 link register</div>
+<div class="disabled">        unsigned __int64 Sp;    // x31 stack pointer</div>
+<div class="disabled">        unsigned __int32 Fpcr;  // fp control register</div>
+<div class="disabled">        unsigned __int32 Fpsr;  // fp status register</div>
+
+<div class="disabled">        double D[8]; // D8-D15 FP regs</div>
+<div class="disabled">    } _JUMP_BUFFER;</div>
+
+
+
+<div class="disabled">#endif</div>
+
+
+
+<div class="token cpp_comment ">// Define the buffer type for holding the state information</div>
+<div class="disabled">#ifndef _JMP_BUF_DEFINED</div>
+<div class="disabled">    #define _JMP_BUF_DEFINED</div>
+<div class="expandable"><div class="disabled">    typedef _JBTYPE jmp_buf[_JBLEN];
+#endif</div>
+<div class="expanded">    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$jmp_buf"><div><div class="token cpp_type">jmp_buf</div></div></div>[<div class="token cpp_number ">16</div>];</div></div>
+
+
+
+<div class="disabled">#ifndef _INC_SETJMPEX</div>
+<div class="disabled">    #define setjmp _setjmp
+#endif</div>
+
+
+
+<div class="token cpp_comment ">// Function prototypes</div>
+<div class="expandable"><div class="disabled">int __cdecl setjmp(</div>
+<div class="expanded"><div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_setjmp@int(::jmp_buf)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_setjmp@int(::jmp_buf)'], [], [])"><div class="token cpp_function">_setjmp</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_ jmp_buf _Buf</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['jmp_buf'], [], [])"><div class="token cpp_type">jmp_buf</div></div> <div class="def" id="NI$_setjmp@int(::jmp_buf)[decl0]::_Buf"><div>_Buf</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef __cplusplus</div>
+    <div class="token cpp_keyword ">__declspec</div>(noreturn) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$longjmp@void(::jmp_buf, int)[decl0]"><div><div class="token cpp_function">longjmp</div></div></div>(
+<div class="expandable"><div class="disabled">        _In_ jmp_buf _Buf,</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['jmp_buf'], [], [])"><div class="token cpp_type">jmp_buf</div></div> <div class="def" id="NI$longjmp@void(::jmp_buf, int)[decl0]::_Buf"><div>_Buf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_ int     _Value</div>
+<div class="expanded">          <div class="token cpp_keyword ">int</div>     <div class="def" id="NI$longjmp@void(::jmp_buf, int)[decl0]::_Value"><div>_Value</div></div></div></div>
+        ) <div class="token cpp_keyword ">noexcept</div>(<div class="token cpp_keyword ">false</div>);
+<div class="disabled">#else</div>
+<div class="disabled">    __declspec(noreturn) void __cdecl longjmp(</div>
+<div class="disabled">        _In_ jmp_buf _Buf,</div>
+<div class="disabled">        _In_ int     _Value</div>
+<div class="disabled">        );
+#endif</div>
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_setjmp@int(::jmp_buf)': {
+        'displayNameInHtml': '<span class="cpp_function">_setjmp</span>(<span class="cpp_type">jmp_buf</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_setjmp@int(::jmp_buf)[decl0]',
+            'FB$_setjmp@int(::jmp_buf)[decl1]'
+        ]
+    },
+    'jmp_buf': {
+        'displayNameInHtml': '<span class="cpp_type">jmp_buf</span>',
+        'impls': [
+            'NI$jmp_buf'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$_setjmp@int(::jmp_buf)[decl0]': null,
+    'FB$_setjmp@int(::jmp_buf)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'NI$jmp_buf': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

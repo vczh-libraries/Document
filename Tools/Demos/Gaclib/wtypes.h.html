@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>wtypes.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default">
+
+<div class="token cpp_comment ">/* this ALWAYS GENERATED file contains the definitions for the interfaces */</div>
+
+
+ <div class="token cpp_comment ">/* File created by MIDL compiler version 8.01.0622 */</div>
+<div class="token cpp_comment ">/* @@MIDL_FILE_HEADING(  ) */</div>
+
+
+
+<div class="token cpp_comment ">/* verify that the &lt;rpcndr.h&gt; version is high enough to compile this file*/</div>
+<div class="disabled">#ifndef __REQUIRED_RPCNDR_H_VERSION__</div>
+<div class="disabled">#define __REQUIRED_RPCNDR_H_VERSION__ 500
+#endif</div>
+
+<div class="token cpp_comment ">/* verify that the &lt;rpcsal.h&gt; version is high enough to compile this file*/</div>
+<div class="disabled">#ifndef __REQUIRED_RPCSAL_H_VERSION__</div>
+<div class="disabled">#define __REQUIRED_RPCSAL_H_VERSION__ 100
+#endif</div>
+
+<div class="disabled">#include &quot;rpc.h&quot;
+#include &quot;rpcndr.h&quot;</div>
+
+<div class="disabled">#ifndef __RPCNDR_H_VERSION__</div>
+<div class="disabled">#error this stub requires an updated version of &lt;rpcndr.h&gt;</div>
+<div class="disabled">#endif /* __RPCNDR_H_VERSION__ */</div>
+
+
+<div class="disabled">#ifndef __wtypes_h__</div>
+<div class="disabled">#define __wtypes_h__</div>
+
+<div class="disabled">#if defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1020)</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">/* Forward Declarations */</div> 
+
+<div class="token cpp_comment ">/* header files for imported files */</div>
+<div class="disabled">#include &quot;wtypesbase.h&quot;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div>{
+<div class="disabled">#endif </div>
+
+
+<div class="token cpp_comment ">/* interface __MIDL_itf_wtypes_0000_0000 */</div>
+<div class="token cpp_comment ">/* [local] */</div> 
+
+<div class="token cpp_comment ">//+-------------------------------------------------------------------------</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Microsoft Windows</div>
+<div class="token cpp_comment ">//  Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//--------------------------------------------------------------------------</div>
+<div class="disabled">#if ( _MSC_VER &gt;= 1020 )</div>
+#pragma once
+<div class="disabled">#endif</div>
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) /* padding added after data member */
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_wtypes_0000_0000_v0_0_c_ifspec"><div>__MIDL_itf_wtypes_0000_0000_v0_0_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_wtypes_0000_0000_v0_0_s_ifspec"><div>__MIDL_itf_wtypes_0000_0000_v0_0_s_ifspec</div></div>;
+
+<div class="disabled">#ifndef __IWinTypes_INTERFACE_DEFINED__</div>
+<div class="disabled">#define __IWinTypes_INTERFACE_DEFINED__</div>
+
+<div class="token cpp_comment ">/* interface IWinTypes */</div>
+<div class="token cpp_comment ">/* [unique][version][uuid] */</div> 
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagRemHGLOBAL"><div><div class="token cpp_type">tagRemHGLOBAL</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$tagRemHGLOBAL::fNullHGlobal"><div><div class="token cpp_field">fNullHGlobal</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagRemHGLOBAL::cbData"><div><div class="token cpp_field">cbData</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['byte'], [], [])"><div class="token cpp_type">byte</div></div> <div class="def" id="NI$tagRemHGLOBAL::data"><div><div class="token cpp_field">data</div></div></div>[ <div class="token cpp_number ">1</div> ];
+    } 	<div class="def" id="NI$RemHGLOBAL"><div><div class="token cpp_type">RemHGLOBAL</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagRemHMETAFILEPICT"><div><div class="token cpp_type">tagRemHMETAFILEPICT</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$tagRemHMETAFILEPICT::mm"><div><div class="token cpp_field">mm</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$tagRemHMETAFILEPICT::xExt"><div><div class="token cpp_field">xExt</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$tagRemHMETAFILEPICT::yExt"><div><div class="token cpp_field">yExt</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagRemHMETAFILEPICT::cbData"><div><div class="token cpp_field">cbData</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['byte'], [], [])"><div class="token cpp_type">byte</div></div> <div class="def" id="NI$tagRemHMETAFILEPICT::data"><div><div class="token cpp_field">data</div></div></div>[ <div class="token cpp_number ">1</div> ];
+    } 	<div class="def" id="NI$RemHMETAFILEPICT"><div><div class="token cpp_type">RemHMETAFILEPICT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagRemHENHMETAFILE"><div><div class="token cpp_type">tagRemHENHMETAFILE</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagRemHENHMETAFILE::cbData"><div><div class="token cpp_field">cbData</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['byte'], [], [])"><div class="token cpp_type">byte</div></div> <div class="def" id="NI$tagRemHENHMETAFILE::data"><div><div class="token cpp_field">data</div></div></div>[ <div class="token cpp_number ">1</div> ];
+    } 	<div class="def" id="NI$RemHENHMETAFILE"><div><div class="token cpp_type">RemHENHMETAFILE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagRemHBITMAP"><div><div class="token cpp_type">tagRemHBITMAP</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagRemHBITMAP::cbData"><div><div class="token cpp_field">cbData</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['byte'], [], [])"><div class="token cpp_type">byte</div></div> <div class="def" id="NI$tagRemHBITMAP::data"><div><div class="token cpp_field">data</div></div></div>[ <div class="token cpp_number ">1</div> ];
+    } 	<div class="def" id="NI$RemHBITMAP"><div><div class="token cpp_type">RemHBITMAP</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagRemHPALETTE"><div><div class="token cpp_type">tagRemHPALETTE</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagRemHPALETTE::cbData"><div><div class="token cpp_field">cbData</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['byte'], [], [])"><div class="token cpp_type">byte</div></div> <div class="def" id="NI$tagRemHPALETTE::data"><div><div class="token cpp_field">data</div></div></div>[ <div class="token cpp_number ">1</div> ];
+    } 	<div class="def" id="NI$RemHPALETTE"><div><div class="token cpp_type">RemHPALETTE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagRemBRUSH"><div><div class="token cpp_type">tagRemBRUSH</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagRemBRUSH::cbData"><div><div class="token cpp_field">cbData</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['byte'], [], [])"><div class="token cpp_type">byte</div></div> <div class="def" id="NI$tagRemBRUSH::data"><div><div class="token cpp_field">data</div></div></div>[ <div class="token cpp_number ">1</div> ];
+    } 	<div class="def" id="NI$RemHBRUSH"><div><div class="token cpp_type">RemHBRUSH</div></div></div>;
+
+<div class="disabled">#if !defined(_WIN32) &amp;&amp; !defined(_MPPC_)</div>
+<div class="disabled">// The following code is for Win16 only</div>
+<div class="disabled">#ifndef WINAPI          // If not included with 3.1 headers...</div>
+<div class="disabled">#define FAR             _far</div>
+<div class="disabled">#define PASCAL          _pascal</div>
+<div class="disabled">#define CDECL           _cdecl</div>
+<div class="disabled">#define VOID            void</div>
+<div class="disabled">#define WINAPI      FAR PASCAL</div>
+<div class="disabled">#define CALLBACK    FAR PASCAL</div>
+<div class="disabled">#ifndef FALSE</div>
+<div class="disabled">#define FALSE 0</div>
+<div class="disabled">#define TRUE 1</div>
+<div class="disabled">#endif // !FALSE</div>
+<div class="disabled">#ifndef _BYTE_DEFINED</div>
+<div class="disabled">#define _BYTE_DEFINED</div>
+<div class="disabled">typedef byte BYTE;</div>
+<div class="disabled">#endif // !_BYTE_DEFINED</div>
+<div class="disabled">#ifndef _WORD_DEFINED</div>
+<div class="disabled">#define _WORD_DEFINED</div>
+<div class="disabled">typedef unsigned short WORD;</div>
+<div class="disabled">#endif // !_WORD_DEFINED</div>
+<div class="disabled">typedef unsigned int UINT;</div>
+<div class="disabled">typedef int  INT;</div>
+<div class="disabled">typedef long BOOL;</div>
+<div class="disabled">#ifndef _LONG_DEFINED</div>
+<div class="disabled">#define _LONG_DEFINED</div>
+<div class="disabled">typedef long LONG;</div>
+<div class="disabled">#endif // !_LONG_DEFINED</div>
+<div class="disabled">#ifndef _WPARAM_DEFINED</div>
+<div class="disabled">#define _WPARAM_DEFINED</div>
+<div class="disabled">typedef UINT_PTR WPARAM;</div>
+
+<div class="disabled">#endif // _WPARAM_DEFINED</div>
+<div class="disabled">#ifndef _DWORD_DEFINED</div>
+<div class="disabled">#define _DWORD_DEFINED</div>
+<div class="disabled">typedef unsigned long DWORD;</div>
+<div class="disabled">#endif // !_DWORD_DEFINED</div>
+<div class="disabled">#ifndef _LPARAM_DEFINED</div>
+<div class="disabled">#define _LPARAM_DEFINED</div>
+<div class="disabled">typedef LONG_PTR LPARAM;</div>
+
+<div class="disabled">#endif // !_LPARAM_DEFINED</div>
+<div class="disabled">#ifndef _LRESULT_DEFINED</div>
+<div class="disabled">#define _LRESULT_DEFINED</div>
+<div class="disabled">typedef LONG_PTR LRESULT;</div>
+
+<div class="disabled">#endif // !_LRESULT_DEFINED</div>
+<div class="disabled">typedef void * HANDLE;</div>
+<div class="disabled">typedef void *HMODULE;</div>
+
+<div class="disabled">typedef void *HINSTANCE;</div>
+
+<div class="disabled">typedef void *HTASK;</div>
+
+<div class="disabled">typedef void *HKEY;</div>
+
+<div class="disabled">typedef void *HDESK;</div>
+
+<div class="disabled">typedef void *HMF;</div>
+
+<div class="disabled">typedef void *HEMF;</div>
+
+<div class="disabled">typedef void *HPEN;</div>
+
+<div class="disabled">typedef void *HRSRC;</div>
+
+<div class="disabled">typedef void *HSTR;</div>
+
+<div class="disabled">typedef void *HWINSTA;</div>
+
+<div class="disabled">typedef void *HKL;</div>
+
+<div class="disabled">typedef void *HGDIOBJ;</div>
+
+<div class="disabled">typedef HANDLE HDWP;</div>
+
+<div class="disabled">#ifndef _HFILE_DEFINED</div>
+<div class="disabled">#define _HFILE_DEFINED</div>
+<div class="disabled">typedef INT HFILE;</div>
+
+<div class="disabled">#endif // !_HFILE_DEFINED</div>
+<div class="disabled">#ifndef _LPWORD_DEFINED</div>
+<div class="disabled">#define _LPWORD_DEFINED</div>
+<div class="disabled">typedef WORD *LPWORD;</div>
+<div class="disabled">#endif // !_LPWORD_DEFINED</div>
+<div class="disabled">#ifndef _LPDWORD_DEFINED</div>
+<div class="disabled">#define _LPDWORD_DEFINED</div>
+<div class="disabled">typedef DWORD *LPDWORD;</div>
+<div class="disabled">#endif // !_LPDWORD_DEFINED</div>
+<div class="disabled">typedef char CHAR;</div>
+<div class="disabled">typedef CHAR *LPSTR;</div>
+<div class="disabled">typedef const CHAR *LPCSTR;</div>
+<div class="disabled">#ifndef _WCHAR_DEFINED</div>
+<div class="disabled">#define _WCHAR_DEFINED</div>
+<div class="disabled">typedef wchar_t WCHAR;</div>
+<div class="disabled">typedef WCHAR   TCHAR;</div>
+<div class="disabled">#endif // !_WCHAR_DEFINED</div>
+<div class="disabled">typedef WCHAR *LPWSTR;</div>
+<div class="disabled">typedef TCHAR *LPTSTR;</div>
+<div class="disabled">typedef const WCHAR *LPCWSTR;</div>
+<div class="disabled">typedef const TCHAR *LPCTSTR;</div>
+<div class="disabled">#ifndef _COLORREF_DEFINED</div>
+<div class="disabled">#define _COLORREF_DEFINED</div>
+<div class="disabled">typedef DWORD COLORREF;</div>
+
+<div class="disabled">#endif // !_COLORREF_DEFINED</div>
+<div class="disabled">#ifndef _LPCOLORREF_DEFINED</div>
+<div class="disabled">#define _LPCOLORREF_DEFINED</div>
+<div class="disabled">typedef DWORD *LPCOLORREF;</div>
+
+<div class="disabled">#endif // !_LPCOLORREF_DEFINED</div>
+<div class="disabled">typedef HANDLE *LPHANDLE;</div>
+<div class="disabled">typedef struct _RECTL</div>
+<div class="disabled">    {</div>
+<div class="disabled">    LONG left;</div>
+<div class="disabled">    LONG top;</div>
+<div class="disabled">    LONG right;</div>
+<div class="disabled">    LONG bottom;</div>
+<div class="disabled">    } 	RECTL;</div>
+
+<div class="disabled">typedef struct _RECTL *PRECTL;</div>
+
+<div class="disabled">typedef struct _RECTL *LPRECTL;</div>
+
+<div class="disabled">typedef struct tagPOINT</div>
+<div class="disabled">    {</div>
+<div class="disabled">    LONG x;</div>
+<div class="disabled">    LONG y;</div>
+<div class="disabled">    } 	POINT;</div>
+
+<div class="disabled">typedef struct tagPOINT *PPOINT;</div>
+
+<div class="disabled">typedef struct tagPOINT *LPPOINT;</div>
+
+<div class="disabled">typedef struct _POINTL</div>
+<div class="disabled">    {</div>
+<div class="disabled">    LONG x;</div>
+<div class="disabled">    LONG y;</div>
+<div class="disabled">    } 	POINTL;</div>
+
+<div class="disabled">typedef struct _POINTL *PPOINTL;</div>
+
+<div class="disabled">#ifndef WIN16</div>
+<div class="disabled">typedef struct tagSIZE</div>
+<div class="disabled">    {</div>
+<div class="disabled">    LONG cx;</div>
+<div class="disabled">    LONG cy;</div>
+<div class="disabled">    } 	SIZE;</div>
+
+<div class="disabled">typedef struct tagSIZE *PSIZE;</div>
+
+<div class="disabled">typedef struct tagSIZE *LPSIZE;</div>
+
+<div class="disabled">#else // WIN16</div>
+<div class="disabled">typedef struct tagSIZE</div>
+<div class="disabled">{</div>
+<div class="disabled">    INT cx;</div>
+<div class="disabled">    INT cy;</div>
+<div class="disabled">} SIZE, *PSIZE, *LPSIZE;</div>
+<div class="disabled">#endif // WIN16</div>
+<div class="disabled">typedef struct tagSIZEL</div>
+<div class="disabled">    {</div>
+<div class="disabled">    LONG cx;</div>
+<div class="disabled">    LONG cy;</div>
+<div class="disabled">    } 	SIZEL;</div>
+
+<div class="disabled">typedef struct tagSIZEL *PSIZEL;</div>
+
+<div class="disabled">typedef struct tagSIZEL *LPSIZEL;</div>
+
+<div class="disabled">#endif  //WINAPI
+#endif  //!WIN32 &amp;&amp; !MPPC</div>
+<div class="disabled">#ifndef _PALETTEENTRY_DEFINED</div>
+<div class="disabled">#define _PALETTEENTRY_DEFINED</div>
+<div class="disabled">typedef struct tagPALETTEENTRY</div>
+<div class="disabled">    {</div>
+<div class="disabled">    BYTE peRed;</div>
+<div class="disabled">    BYTE peGreen;</div>
+<div class="disabled">    BYTE peBlue;</div>
+<div class="disabled">    BYTE peFlags;</div>
+<div class="disabled">    } 	PALETTEENTRY;</div>
+
+<div class="disabled">typedef struct tagPALETTEENTRY *PPALETTEENTRY;</div>
+
+<div class="disabled">typedef struct tagPALETTEENTRY *LPPALETTEENTRY;</div>
+
+<div class="disabled">#endif // !_PALETTEENTRY_DEFINED</div>
+<div class="disabled">#ifndef _LOGPALETTE_DEFINED</div>
+<div class="disabled">#define _LOGPALETTE_DEFINED</div>
+<div class="disabled">typedef struct tagLOGPALETTE</div>
+<div class="disabled">    {</div>
+<div class="disabled">    WORD palVersion;</div>
+<div class="disabled">    WORD palNumEntries;</div>
+<div class="disabled">    /* [size_is] */ PALETTEENTRY palPalEntry[ 1 ];</div>
+<div class="disabled">    } 	LOGPALETTE;</div>
+
+<div class="disabled">typedef struct tagLOGPALETTE *PLOGPALETTE;</div>
+
+<div class="disabled">typedef struct tagLOGPALETTE *LPLOGPALETTE;</div>
+
+<div class="disabled">#endif // !_LOGPALETTE_DEFINED</div>
+<div class="disabled">#ifndef _WINDEF_</div>
+<div class="disabled">typedef const RECTL *LPCRECTL;</div>
+
+<div class="disabled">typedef struct tagRECT</div>
+<div class="disabled">    {</div>
+<div class="disabled">    LONG left;</div>
+<div class="disabled">    LONG top;</div>
+<div class="disabled">    LONG right;</div>
+<div class="disabled">    LONG bottom;</div>
+<div class="disabled">    } 	RECT;</div>
+
+<div class="disabled">typedef struct tagRECT *PRECT;</div>
+
+<div class="disabled">typedef struct tagRECT *LPRECT;</div>
+
+<div class="disabled">typedef const RECT *LPCRECT;</div>
+
+<div class="disabled">#endif  //_WINDEF_</div>
+<div class="disabled">#if 0</div>
+<div class="disabled">typedef FMTID *REFFMTID;</div>
+
+<div class="disabled">#endif // 0</div>
+<div class="disabled">#ifndef _ROTFLAGS_DEFINED</div>
+<div class="disabled">#define _ROTFLAGS_DEFINED</div>
+<div class="disabled">#define ROTFLAGS_REGISTRATIONKEEPSALIVE 0x1</div>
+<div class="disabled">#define ROTFLAGS_ALLOWANYCLIENT 0x2
+#endif // !_ROTFLAGS_DEFINED</div>
+<div class="disabled">#ifndef _ROT_COMPARE_MAX_DEFINED</div>
+<div class="disabled">#define _ROT_COMPARE_MAX_DEFINED</div>
+<div class="disabled">#define ROT_COMPARE_MAX 2048
+#endif // !_ROT_COMPARE_MAX_DEFINED</div>
+<div class="token cpp_keyword ">typedef</div> 
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$tagDVASPECT"><div><div class="token cpp_type">tagDVASPECT</div></div></div>
+    {
+        <div class="def" id="NI$tagDVASPECT::DVASPECT_CONTENT"><div><div class="token cpp_enum">DVASPECT_CONTENT</div></div></div>	= <div class="token cpp_number ">1</div>,
+        <div class="def" id="NI$tagDVASPECT::DVASPECT_THUMBNAIL"><div><div class="token cpp_enum">DVASPECT_THUMBNAIL</div></div></div>	= <div class="token cpp_number ">2</div>,
+        <div class="def" id="NI$tagDVASPECT::DVASPECT_ICON"><div><div class="token cpp_enum">DVASPECT_ICON</div></div></div>	= <div class="token cpp_number ">4</div>,
+        <div class="def" id="NI$tagDVASPECT::DVASPECT_DOCPRINT"><div><div class="token cpp_enum">DVASPECT_DOCPRINT</div></div></div>	= <div class="token cpp_number ">8</div>
+    } 	<div class="def" id="NI$DVASPECT"><div><div class="token cpp_type">DVASPECT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> 
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$tagSTGC"><div><div class="token cpp_type">tagSTGC</div></div></div>
+    {
+        <div class="def" id="NI$tagSTGC::STGC_DEFAULT"><div><div class="token cpp_enum">STGC_DEFAULT</div></div></div>	= <div class="token cpp_number ">0</div>,
+        <div class="def" id="NI$tagSTGC::STGC_OVERWRITE"><div><div class="token cpp_enum">STGC_OVERWRITE</div></div></div>	= <div class="token cpp_number ">1</div>,
+        <div class="def" id="NI$tagSTGC::STGC_ONLYIFCURRENT"><div><div class="token cpp_enum">STGC_ONLYIFCURRENT</div></div></div>	= <div class="token cpp_number ">2</div>,
+        <div class="def" id="NI$tagSTGC::STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE"><div><div class="token cpp_enum">STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE</div></div></div>	= <div class="token cpp_number ">4</div>,
+        <div class="def" id="NI$tagSTGC::STGC_CONSOLIDATE"><div><div class="token cpp_enum">STGC_CONSOLIDATE</div></div></div>	= <div class="token cpp_number ">8</div>
+    } 	<div class="def" id="NI$STGC"><div><div class="token cpp_type">STGC</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> 
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$tagSTGMOVE"><div><div class="token cpp_type">tagSTGMOVE</div></div></div>
+    {
+        <div class="def" id="NI$tagSTGMOVE::STGMOVE_MOVE"><div><div class="token cpp_enum">STGMOVE_MOVE</div></div></div>	= <div class="token cpp_number ">0</div>,
+        <div class="def" id="NI$tagSTGMOVE::STGMOVE_COPY"><div><div class="token cpp_enum">STGMOVE_COPY</div></div></div>	= <div class="token cpp_number ">1</div>,
+        <div class="def" id="NI$tagSTGMOVE::STGMOVE_SHALLOWCOPY"><div><div class="token cpp_enum">STGMOVE_SHALLOWCOPY</div></div></div>	= <div class="token cpp_number ">2</div>
+    } 	<div class="def" id="NI$STGMOVE"><div><div class="token cpp_type">STGMOVE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> 
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$tagSTATFLAG"><div><div class="token cpp_type">tagSTATFLAG</div></div></div>
+    {
+        <div class="def" id="NI$tagSTATFLAG::STATFLAG_DEFAULT"><div><div class="token cpp_enum">STATFLAG_DEFAULT</div></div></div>	= <div class="token cpp_number ">0</div>,
+        <div class="def" id="NI$tagSTATFLAG::STATFLAG_NONAME"><div><div class="token cpp_enum">STATFLAG_NONAME</div></div></div>	= <div class="token cpp_number ">1</div>,
+        <div class="def" id="NI$tagSTATFLAG::STATFLAG_NOOPEN"><div><div class="token cpp_enum">STATFLAG_NOOPEN</div></div></div>	= <div class="token cpp_number ">2</div>
+    } 	<div class="def" id="NI$STATFLAG"><div><div class="token cpp_type">STATFLAG</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [context_handle] */</div> <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$HCONTEXT"><div><div class="token cpp_type">HCONTEXT</div></div></div>;
+
+<div class="disabled">#ifndef _LCID_DEFINED</div>
+<div class="disabled">#define _LCID_DEFINED</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="ref" onclick="jumpToSymbol([], ['LCID'], [], [])"><div class="token cpp_type">LCID</div></div>;
+
+<div class="disabled">#endif // !_LCID_DEFINED</div>
+<div class="disabled">#ifndef _LANGID_DEFINED</div>
+<div class="disabled">#define _LANGID_DEFINED</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="ref" onclick="jumpToSymbol([], ['LANGID'], [], [])"><div class="token cpp_type">LANGID</div></div>;
+
+<div class="disabled">#endif // !_LANGID_DEFINED</div>
+<div class="disabled">#define	WDT_INPROC_CALL	( 0x48746457 )</div>
+
+<div class="disabled">#define	WDT_REMOTE_CALL	( 0x52746457 )</div>
+
+<div class="disabled">#define	WDT_INPROC64_CALL	( 0x50746457 )</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_userCLIPFORMAT"><div><div class="token cpp_type">_userCLIPFORMAT</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userCLIPFORMAT::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_userCLIPFORMAT::__MIDL_IWinTypes_0001"><div><div class="token cpp_type">__MIDL_IWinTypes_0001</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_userCLIPFORMAT::__MIDL_IWinTypes_0001::dwValue"><div><div class="token cpp_field">dwValue</div></div></div>;
+        <div class="token cpp_comment ">/* [case()][string] */</div> <div class="token cpp_keyword ">wchar_t</div> *<div class="def" id="NI$_userCLIPFORMAT::__MIDL_IWinTypes_0001::pwszName"><div><div class="token cpp_field">pwszName</div></div></div>;
+        } 	<div class="def" id="NI$_userCLIPFORMAT::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$userCLIPFORMAT"><div><div class="token cpp_type">userCLIPFORMAT</div></div></div>;
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer userCLIPFORMAT *wireCLIPFORMAT;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['userCLIPFORMAT'], [], [])"><div class="token cpp_type">userCLIPFORMAT</div></div> *<div class="def" id="NI$wireCLIPFORMAT"><div><div class="token cpp_type">wireCLIPFORMAT</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [wire_marshal] */</div> <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$CLIPFORMAT"><div><div class="token cpp_type">CLIPFORMAT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_GDI_NONREMOTE"><div><div class="token cpp_type">_GDI_NONREMOTE</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_GDI_NONREMOTE::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_GDI_NONREMOTE::__MIDL_IWinTypes_0002"><div><div class="token cpp_type">__MIDL_IWinTypes_0002</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_GDI_NONREMOTE::__MIDL_IWinTypes_0002::hInproc"><div><div class="token cpp_field">hInproc</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD_BLOB'], [], [])"><div class="token cpp_type">DWORD_BLOB</div></div> *<div class="def" id="NI$_GDI_NONREMOTE::__MIDL_IWinTypes_0002::hRemote"><div><div class="token cpp_field">hRemote</div></div></div>;
+        } 	<div class="def" id="NI$_GDI_NONREMOTE::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$GDI_NONREMOTE"><div><div class="token cpp_type">GDI_NONREMOTE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_userHGLOBAL"><div><div class="token cpp_type">_userHGLOBAL</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHGLOBAL::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_userHGLOBAL::__MIDL_IWinTypes_0003"><div><div class="token cpp_type">__MIDL_IWinTypes_0003</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHGLOBAL::__MIDL_IWinTypes_0003::hInproc"><div><div class="token cpp_field">hInproc</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['FLAGGED_BYTE_BLOB'], [], [])"><div class="token cpp_type">FLAGGED_BYTE_BLOB</div></div> *<div class="def" id="NI$_userHGLOBAL::__MIDL_IWinTypes_0003::hRemote"><div><div class="token cpp_field">hRemote</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="token cpp_keyword ">__int64</div> <div class="def" id="NI$_userHGLOBAL::__MIDL_IWinTypes_0003::hInproc64"><div><div class="token cpp_field">hInproc64</div></div></div>;
+        } 	<div class="def" id="NI$_userHGLOBAL::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$userHGLOBAL"><div><div class="token cpp_type">userHGLOBAL</div></div></div>;
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer userHGLOBAL *wireHGLOBAL;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['userHGLOBAL'], [], [])"><div class="token cpp_type">userHGLOBAL</div></div> *<div class="def" id="NI$wireHGLOBAL"><div><div class="token cpp_type">wireHGLOBAL</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_userHMETAFILE"><div><div class="token cpp_type">_userHMETAFILE</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHMETAFILE::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_userHMETAFILE::__MIDL_IWinTypes_0004"><div><div class="token cpp_type">__MIDL_IWinTypes_0004</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHMETAFILE::__MIDL_IWinTypes_0004::hInproc"><div><div class="token cpp_field">hInproc</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['BYTE_BLOB'], [], [])"><div class="token cpp_type">BYTE_BLOB</div></div> *<div class="def" id="NI$_userHMETAFILE::__MIDL_IWinTypes_0004::hRemote"><div><div class="token cpp_field">hRemote</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="token cpp_keyword ">__int64</div> <div class="def" id="NI$_userHMETAFILE::__MIDL_IWinTypes_0004::hInproc64"><div><div class="token cpp_field">hInproc64</div></div></div>;
+        } 	<div class="def" id="NI$_userHMETAFILE::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$userHMETAFILE"><div><div class="token cpp_type">userHMETAFILE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_remoteMETAFILEPICT"><div><div class="token cpp_type">_remoteMETAFILEPICT</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_remoteMETAFILEPICT::mm"><div><div class="token cpp_field">mm</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_remoteMETAFILEPICT::xExt"><div><div class="token cpp_field">xExt</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_remoteMETAFILEPICT::yExt"><div><div class="token cpp_field">yExt</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['userHMETAFILE'], [], [])"><div class="token cpp_type">userHMETAFILE</div></div> *<div class="def" id="NI$_remoteMETAFILEPICT::hMF"><div><div class="token cpp_field">hMF</div></div></div>;
+    } 	<div class="def" id="NI$remoteMETAFILEPICT"><div><div class="token cpp_type">remoteMETAFILEPICT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_userHMETAFILEPICT"><div><div class="token cpp_type">_userHMETAFILEPICT</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHMETAFILEPICT::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_userHMETAFILEPICT::__MIDL_IWinTypes_0005"><div><div class="token cpp_type">__MIDL_IWinTypes_0005</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHMETAFILEPICT::__MIDL_IWinTypes_0005::hInproc"><div><div class="token cpp_field">hInproc</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['remoteMETAFILEPICT'], [], [])"><div class="token cpp_type">remoteMETAFILEPICT</div></div> *<div class="def" id="NI$_userHMETAFILEPICT::__MIDL_IWinTypes_0005::hRemote"><div><div class="token cpp_field">hRemote</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="token cpp_keyword ">__int64</div> <div class="def" id="NI$_userHMETAFILEPICT::__MIDL_IWinTypes_0005::hInproc64"><div><div class="token cpp_field">hInproc64</div></div></div>;
+        } 	<div class="def" id="NI$_userHMETAFILEPICT::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$userHMETAFILEPICT"><div><div class="token cpp_type">userHMETAFILEPICT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_userHENHMETAFILE"><div><div class="token cpp_type">_userHENHMETAFILE</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHENHMETAFILE::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_userHENHMETAFILE::__MIDL_IWinTypes_0006"><div><div class="token cpp_type">__MIDL_IWinTypes_0006</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHENHMETAFILE::__MIDL_IWinTypes_0006::hInproc"><div><div class="token cpp_field">hInproc</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['BYTE_BLOB'], [], [])"><div class="token cpp_type">BYTE_BLOB</div></div> *<div class="def" id="NI$_userHENHMETAFILE::__MIDL_IWinTypes_0006::hRemote"><div><div class="token cpp_field">hRemote</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="token cpp_keyword ">__int64</div> <div class="def" id="NI$_userHENHMETAFILE::__MIDL_IWinTypes_0006::hInproc64"><div><div class="token cpp_field">hInproc64</div></div></div>;
+        } 	<div class="def" id="NI$_userHENHMETAFILE::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$userHENHMETAFILE"><div><div class="token cpp_type">userHENHMETAFILE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_userBITMAP"><div><div class="token cpp_type">_userBITMAP</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userBITMAP::bmType"><div><div class="token cpp_field">bmType</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userBITMAP::bmWidth"><div><div class="token cpp_field">bmWidth</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userBITMAP::bmHeight"><div><div class="token cpp_field">bmHeight</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userBITMAP::bmWidthBytes"><div><div class="token cpp_field">bmWidthBytes</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_userBITMAP::bmPlanes"><div><div class="token cpp_field">bmPlanes</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_userBITMAP::bmBitsPixel"><div><div class="token cpp_field">bmBitsPixel</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_userBITMAP::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['byte'], [], [])"><div class="token cpp_type">byte</div></div> <div class="def" id="NI$_userBITMAP::pBuffer"><div><div class="token cpp_field">pBuffer</div></div></div>[ <div class="token cpp_number ">1</div> ];
+    } 	<div class="def" id="NI$userBITMAP"><div><div class="token cpp_type">userBITMAP</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_userHBITMAP"><div><div class="token cpp_type">_userHBITMAP</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHBITMAP::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_userHBITMAP::__MIDL_IWinTypes_0007"><div><div class="token cpp_type">__MIDL_IWinTypes_0007</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHBITMAP::__MIDL_IWinTypes_0007::hInproc"><div><div class="token cpp_field">hInproc</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['userBITMAP'], [], [])"><div class="token cpp_type">userBITMAP</div></div> *<div class="def" id="NI$_userHBITMAP::__MIDL_IWinTypes_0007::hRemote"><div><div class="token cpp_field">hRemote</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="token cpp_keyword ">__int64</div> <div class="def" id="NI$_userHBITMAP::__MIDL_IWinTypes_0007::hInproc64"><div><div class="token cpp_field">hInproc64</div></div></div>;
+        } 	<div class="def" id="NI$_userHBITMAP::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$userHBITMAP"><div><div class="token cpp_type">userHBITMAP</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_userHPALETTE"><div><div class="token cpp_type">_userHPALETTE</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHPALETTE::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_userHPALETTE::__MIDL_IWinTypes_0008"><div><div class="token cpp_type">__MIDL_IWinTypes_0008</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_userHPALETTE::__MIDL_IWinTypes_0008::hInproc"><div><div class="token cpp_field">hInproc</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LOGPALETTE'], [], [])"><div class="token cpp_type">LOGPALETTE</div></div> *<div class="def" id="NI$_userHPALETTE::__MIDL_IWinTypes_0008::hRemote"><div><div class="token cpp_field">hRemote</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="token cpp_keyword ">__int64</div> <div class="def" id="NI$_userHPALETTE::__MIDL_IWinTypes_0008::hInproc64"><div><div class="token cpp_field">hInproc64</div></div></div>;
+        } 	<div class="def" id="NI$_userHPALETTE::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$userHPALETTE"><div><div class="token cpp_type">userHPALETTE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RemotableHandle"><div><div class="token cpp_type">_RemotableHandle</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_RemotableHandle::fContext"><div><div class="token cpp_field">fContext</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$_RemotableHandle::__MIDL_IWinTypes_0009"><div><div class="token cpp_type">__MIDL_IWinTypes_0009</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_RemotableHandle::__MIDL_IWinTypes_0009::hInproc"><div><div class="token cpp_field">hInproc</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_RemotableHandle::__MIDL_IWinTypes_0009::hRemote"><div><div class="token cpp_field">hRemote</div></div></div>;
+        } 	<div class="def" id="NI$_RemotableHandle::u"><div><div class="token cpp_field">u</div></div></div>;
+    } 	<div class="def" id="NI$RemotableHandle"><div><div class="token cpp_type">RemotableHandle</div></div></div>;
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHWND;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHWND"><div><div class="token cpp_type">wireHWND</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHMENU;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHMENU"><div><div class="token cpp_type">wireHMENU</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHACCEL;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHACCEL"><div><div class="token cpp_type">wireHACCEL</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHBRUSH;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHBRUSH"><div><div class="token cpp_type">wireHBRUSH</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHFONT;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHFONT"><div><div class="token cpp_type">wireHFONT</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHDC;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHDC"><div><div class="token cpp_type">wireHDC</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHICON;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHICON"><div><div class="token cpp_type">wireHICON</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHRGN;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHRGN"><div><div class="token cpp_type">wireHRGN</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer RemotableHandle *wireHMONITOR;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['RemotableHandle'], [], [])"><div class="token cpp_type">RemotableHandle</div></div> *<div class="def" id="NI$wireHMONITOR"><div><div class="token cpp_type">wireHMONITOR</div></div></div>;</div></div>
+
+<div class="disabled">#if 0</div>
+<div class="disabled">typedef /* [wire_marshal] */ void *HWND;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HMENU;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HACCEL;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HBRUSH;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HFONT;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HDC;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HICON;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HRGN;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HMONITOR;</div>
+
+<div class="disabled">#ifndef _HCURSOR_DEFINED</div>
+<div class="disabled">#define _HCURSOR_DEFINED</div>
+<div class="disabled">typedef HICON HCURSOR;</div>
+
+<div class="disabled">#endif // !_HCURSOR_DEFINED
+#endif //0</div>
+<div class="disabled">#ifndef _TEXTMETRIC_DEFINED</div>
+<div class="disabled">#define _TEXTMETRIC_DEFINED</div>
+<div class="disabled">typedef struct tagTEXTMETRICW</div>
+<div class="disabled">    {</div>
+<div class="disabled">    LONG tmHeight;</div>
+<div class="disabled">    LONG tmAscent;</div>
+<div class="disabled">    LONG tmDescent;</div>
+<div class="disabled">    LONG tmInternalLeading;</div>
+<div class="disabled">    LONG tmExternalLeading;</div>
+<div class="disabled">    LONG tmAveCharWidth;</div>
+<div class="disabled">    LONG tmMaxCharWidth;</div>
+<div class="disabled">    LONG tmWeight;</div>
+<div class="disabled">    LONG tmOverhang;</div>
+<div class="disabled">    LONG tmDigitizedAspectX;</div>
+<div class="disabled">    LONG tmDigitizedAspectY;</div>
+<div class="disabled">    WCHAR tmFirstChar;</div>
+<div class="disabled">    WCHAR tmLastChar;</div>
+<div class="disabled">    WCHAR tmDefaultChar;</div>
+<div class="disabled">    WCHAR tmBreakChar;</div>
+<div class="disabled">    BYTE tmItalic;</div>
+<div class="disabled">    BYTE tmUnderlined;</div>
+<div class="disabled">    BYTE tmStruckOut;</div>
+<div class="disabled">    BYTE tmPitchAndFamily;</div>
+<div class="disabled">    BYTE tmCharSet;</div>
+<div class="disabled">    } 	TEXTMETRICW;</div>
+
+<div class="disabled">typedef struct tagTEXTMETRICW *PTEXTMETRICW;</div>
+
+<div class="disabled">typedef struct tagTEXTMETRICW *LPTEXTMETRICW;</div>
+
+<div class="disabled">#endif // !_TEXTMETRIC_DEFINED</div>
+<div class="disabled">#ifndef _WIN32           // The following code is for Win16 only</div>
+<div class="disabled">#ifndef WINAPI          // If not included with 3.1 headers...</div>
+<div class="disabled">typedef struct tagMSG</div>
+<div class="disabled">    {</div>
+<div class="disabled">    HWND hwnd;</div>
+<div class="disabled">    UINT message;</div>
+<div class="disabled">    WPARAM wParam;</div>
+<div class="disabled">    LPARAM lParam;</div>
+<div class="disabled">    DWORD time;</div>
+<div class="disabled">    POINT pt;</div>
+<div class="disabled">    } 	MSG;</div>
+
+<div class="disabled">typedef struct tagMSG *PMSG;</div>
+
+<div class="disabled">typedef struct tagMSG *NPMSG;</div>
+
+<div class="disabled">typedef struct tagMSG *LPMSG;</div>
+
+<div class="disabled">#endif // _WIN32</div>
+<div class="disabled">#endif // WINAPI</div>
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer userHBITMAP *wireHBITMAP;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['userHBITMAP'], [], [])"><div class="token cpp_type">userHBITMAP</div></div> *<div class="def" id="NI$wireHBITMAP"><div><div class="token cpp_type">wireHBITMAP</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer userHPALETTE *wireHPALETTE;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['userHPALETTE'], [], [])"><div class="token cpp_type">userHPALETTE</div></div> *<div class="def" id="NI$wireHPALETTE"><div><div class="token cpp_type">wireHPALETTE</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer userHENHMETAFILE *wireHENHMETAFILE;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['userHENHMETAFILE'], [], [])"><div class="token cpp_type">userHENHMETAFILE</div></div> *<div class="def" id="NI$wireHENHMETAFILE"><div><div class="token cpp_type">wireHENHMETAFILE</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer userHMETAFILE *wireHMETAFILE;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['userHMETAFILE'], [], [])"><div class="token cpp_type">userHMETAFILE</div></div> *<div class="def" id="NI$wireHMETAFILE"><div><div class="token cpp_type">wireHMETAFILE</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer userHMETAFILEPICT *wireHMETAFILEPICT;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['userHMETAFILEPICT'], [], [])"><div class="token cpp_type">userHMETAFILEPICT</div></div> *<div class="def" id="NI$wireHMETAFILEPICT"><div><div class="token cpp_type">wireHMETAFILEPICT</div></div></div>;</div></div>
+
+<div class="disabled">#if 0</div>
+<div class="disabled">typedef /* [wire_marshal] */ void *HGLOBAL;</div>
+
+<div class="disabled">typedef HGLOBAL HLOCAL;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HBITMAP;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HPALETTE;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HENHMETAFILE;</div>
+
+<div class="disabled">typedef /* [wire_marshal] */ void *HMETAFILE;</div>
+
+<div class="disabled">#endif //0</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [wire_marshal] */</div> <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$HMETAFILEPICT"><div><div class="token cpp_type">HMETAFILEPICT</div></div></div>;
+
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$IWinTypes_v0_1_c_ifspec"><div>IWinTypes_v0_1_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$IWinTypes_v0_1_s_ifspec"><div>IWinTypes_v0_1_s_ifspec</div></div>;
+<div class="disabled">#endif /* __IWinTypes_INTERFACE_DEFINED__ */</div>
+
+<div class="token cpp_comment ">/* interface __MIDL_itf_wtypes_0000_0001 */</div>
+<div class="token cpp_comment ">/* [local] */</div> 
+
+<div class="disabled">#if ( _MSC_VER &gt;= 800 )</div>
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="disabled">#endif</div>
+#pragma warning(disable:<div class="token cpp_number ">4201</div>)
+<div class="disabled">#endif</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">double</div> <div class="def" id="NI$DATE"><div><div class="token cpp_type">DATE</div></div></div>;
+
+<div class="disabled">#ifndef _tagCY_DEFINED</div>
+<div class="disabled">#define _tagCY_DEFINED</div>
+<div class="disabled">#define _CY_DEFINED</div>
+<div class="disabled">#if 0</div>
+<div class="disabled">/* the following isn&apos;t the real definition of CY, but it is */</div>
+<div class="disabled">/* what RPC knows how to remote */</div>
+<div class="disabled">typedef struct tagCY</div>
+<div class="disabled">    {</div>
+<div class="disabled">    LONGLONG int64;</div>
+<div class="disabled">    } 	CY;</div>
+
+<div class="disabled">#else /* 0 */</div>
+<div class="token cpp_comment ">/* real definition that makes the C++ compiler happy */</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$tagCY"><div><div class="token cpp_type">tagCY</div></div></div> {
+    <div class="token cpp_keyword ">struct</div> {
+        <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagCY::Lo"><div><div class="token cpp_field">Lo</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>      <div class="def" id="NI$tagCY::Hi"><div><div class="token cpp_field">Hi</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYSTRUCTNAME;</div>
+<div class="expanded">    } ;</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['LONGLONG'], [], [])"><div class="token cpp_type">LONGLONG</div></div> <div class="def" id="NI$tagCY::int64"><div><div class="token cpp_field">int64</div></div></div>;
+} <div class="def" id="NI$CY"><div><div class="token cpp_type">CY</div></div></div>;
+<div class="disabled">#endif /* 0 */
+#endif /* _tagCY_DEFINED */</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['CY'], [], [])"><div class="token cpp_type">CY</div></div> *<div class="def" id="NI$LPCY"><div><div class="token cpp_type">LPCY</div></div></div>;
+
+<div class="disabled">#if 0 /* _tagDEC_DEFINED */</div>
+<div class="disabled">/* The following isn&apos;t the real definition of Decimal type, */</div>
+<div class="disabled">/* but it is what RPC knows how to remote */</div>
+<div class="disabled">typedef struct tagDEC</div>
+<div class="disabled">    {</div>
+<div class="disabled">    USHORT wReserved;</div>
+<div class="disabled">    BYTE scale;</div>
+<div class="disabled">    BYTE sign;</div>
+<div class="disabled">    ULONG Hi32;</div>
+<div class="disabled">    ULONGLONG Lo64;</div>
+<div class="disabled">    } 	DECIMAL;</div>
+
+<div class="disabled">#else /* _tagDEC_DEFINED */</div>
+<div class="token cpp_comment ">/* real definition that makes the C++ compiler happy */</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagDEC"><div><div class="token cpp_type">tagDEC</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="def" id="NI$tagDEC::wReserved"><div><div class="token cpp_field">wReserved</div></div></div>;
+    <div class="token cpp_keyword ">union</div> {
+        <div class="token cpp_keyword ">struct</div> {
+            <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> <div class="def" id="NI$tagDEC::scale"><div><div class="token cpp_field">scale</div></div></div>;
+            <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> <div class="def" id="NI$tagDEC::sign"><div><div class="token cpp_field">sign</div></div></div>;
+<div class="expandable"><div class="disabled">        } DUMMYSTRUCTNAME;</div>
+<div class="expanded">        } ;</div></div>
+        <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="def" id="NI$tagDEC::signscale"><div><div class="token cpp_field">signscale</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME;</div>
+<div class="expanded">    } ;</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagDEC::Hi32"><div><div class="token cpp_field">Hi32</div></div></div>;
+    <div class="token cpp_keyword ">union</div> {
+        <div class="token cpp_keyword ">struct</div> {
+            <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagDEC::Lo32"><div><div class="token cpp_field">Lo32</div></div></div>;
+            <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagDEC::Mid32"><div><div class="token cpp_field">Mid32</div></div></div>;
+<div class="expandable"><div class="disabled">        } DUMMYSTRUCTNAME2;</div>
+<div class="expanded">        } ;</div></div>
+        <div class="ref" onclick="jumpToSymbol([], ['ULONGLONG'], [], [])"><div class="token cpp_type">ULONGLONG</div></div> <div class="def" id="NI$tagDEC::Lo64"><div><div class="token cpp_field">Lo64</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME2;</div>
+<div class="expanded">    } ;</div></div>
+} <div class="def" id="NI$DECIMAL"><div><div class="token cpp_type">DECIMAL</div></div></div>;
+<div class="disabled">#define DECIMAL_NEG ((BYTE)0x80)</div>
+<div class="disabled">#define DECIMAL_SETZERO(dec) \</div>
+<div class="disabled">        {(dec).Lo64 = 0; (dec).Hi32 = 0; (dec).signscale = 0;}
+#endif /* _tagDEC_DEFINED */</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DECIMAL'], [], [])"><div class="token cpp_type">DECIMAL</div></div> *<div class="def" id="NI$LPDECIMAL"><div><div class="token cpp_type">LPDECIMAL</div></div></div>;
+
+<div class="disabled">#if ( _MSC_VER &gt;= 800 )</div>
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#else</div>
+<div class="disabled">#pragma warning(default:4201)
+#endif
+#endif</div>
+<div class="expandable"><div class="disabled">typedef /* [unique] */  __RPC_unique_pointer FLAGGED_WORD_BLOB *wireBSTR;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [unique] */</div>    <div class="ref" onclick="jumpToSymbol([], ['FLAGGED_WORD_BLOB'], [], [])"><div class="token cpp_type">FLAGGED_WORD_BLOB</div></div> *<div class="def" id="NI$wireBSTR"><div><div class="token cpp_type">wireBSTR</div></div></div>;</div></div>
+
+<div class="disabled">#ifndef _PREFAST_</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [wire_marshal] */</div> <div class="ref" onclick="jumpToSymbol([], ['OLECHAR'], [], [])"><div class="token cpp_type">OLECHAR</div></div> *<div class="def" id="NI$BSTR"><div><div class="token cpp_type">BSTR</div></div></div>;
+
+<div class="disabled">#else // _PREFAST_</div>
+<div class="disabled">typedef _Null_terminated_ OLECHAR *BSTR;
+#endif</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BSTR'], [], [])"><div class="token cpp_type">BSTR</div></div> *<div class="def" id="NI$LPBSTR"><div><div class="token cpp_type">LPBSTR</div></div></div>;
+
+<div class="token cpp_comment ">/* 0 == FALSE, -1 == TRUE */</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$VARIANT_BOOL"><div><div class="token cpp_type">VARIANT_BOOL</div></div></div>;
+
+<div class="disabled">#if !__STDC__ &amp;&amp; (_MSC_VER &lt;= 1000)</div>
+<div class="disabled">/* For backward compatibility */</div>
+<div class="disabled">typedef VARIANT_BOOL _VARIANT_BOOL;</div>
+
+<div class="disabled">#else</div>
+<div class="token cpp_comment ">/* ANSI C/C++ reserve bool as keyword */</div>
+<div class="disabled">#define _VARIANT_BOOL    /##/
+#endif</div>
+<div class="token cpp_comment ">/* The BSTRBLOB structure is used by some implementations */</div>
+<div class="token cpp_comment ">/* of the IPropertyStorage interface when marshaling BSTRs */</div>
+<div class="token cpp_comment ">/* on systems which don&apos;t support BSTR marshaling. */</div>
+<div class="disabled">#ifndef _tagBSTRBLOB_DEFINED</div>
+<div class="disabled">#define _tagBSTRBLOB_DEFINED</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagBSTRBLOB"><div><div class="token cpp_type">tagBSTRBLOB</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagBSTRBLOB::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> *<div class="def" id="NI$tagBSTRBLOB::pData"><div><div class="token cpp_field">pData</div></div></div>;
+    } 	<div class="def" id="NI$BSTRBLOB"><div><div class="token cpp_type">BSTRBLOB</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['tagBSTRBLOB'], [], [])"><div class="token cpp_type">tagBSTRBLOB</div></div> *<div class="def" id="NI$LPBSTRBLOB"><div><div class="token cpp_type">LPBSTRBLOB</div></div></div>;
+
+<div class="disabled">#endif</div>
+<div class="disabled">#define VARIANT_TRUE ((VARIANT_BOOL)-1)</div>
+<div class="disabled">#define VARIANT_FALSE ((VARIANT_BOOL)0)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagCLIPDATA"><div><div class="token cpp_type">tagCLIPDATA</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagCLIPDATA::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$tagCLIPDATA::ulClipFmt"><div><div class="token cpp_field">ulClipFmt</div></div></div>;
+    <div class="token cpp_comment ">/* [size_is] */</div> <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> *<div class="def" id="NI$tagCLIPDATA::pClipData"><div><div class="token cpp_field">pClipData</div></div></div>;
+    } 	<div class="def" id="NI$CLIPDATA"><div><div class="token cpp_type">CLIPDATA</div></div></div>;
+
+<div class="token cpp_comment ">// Macro to calculate the size of the above pClipData</div>
+<div class="disabled">#define CBPCLIPDATA(clipdata)    ( (clipdata).cbSize - sizeof((clipdata).ulClipFmt) )</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$VARTYPE"><div><div class="token cpp_type">VARTYPE</div></div></div>;
+
+<div class="token cpp_comment ">/*
+ * VARENUM usage key,
+ *
+ * * [V] - may appear in a VARIANT
+ * * [T] - may appear in a TYPEDESC
+ * * [P] - may appear in an OLE property set
+ * * [S] - may appear in a Safe Array
+ *
+ *
+ *  VT_EMPTY            [V]   [P]     nothing
+ *  VT_NULL             [V]   [P]     SQL style Null
+ *  VT_I2               [V][T][P][S]  2 byte signed int
+ *  VT_I4               [V][T][P][S]  4 byte signed int
+ *  VT_R4               [V][T][P][S]  4 byte real
+ *  VT_R8               [V][T][P][S]  8 byte real
+ *  VT_CY               [V][T][P][S]  currency
+ *  VT_DATE             [V][T][P][S]  date
+ *  VT_BSTR             [V][T][P][S]  OLE Automation string
+ *  VT_DISPATCH         [V][T]   [S]  IDispatch *
+ *  VT_ERROR            [V][T][P][S]  SCODE
+ *  VT_BOOL             [V][T][P][S]  True=-1, False=0
+ *  VT_VARIANT          [V][T][P][S]  VARIANT *
+ *  VT_UNKNOWN          [V][T]   [S]  IUnknown *
+ *  VT_DECIMAL          [V][T]   [S]  16 byte fixed point
+ *  VT_RECORD           [V]   [P][S]  user defined type
+ *  VT_I1               [V][T][P][s]  signed char
+ *  VT_UI1              [V][T][P][S]  unsigned char
+ *  VT_UI2              [V][T][P][S]  unsigned short
+ *  VT_UI4              [V][T][P][S]  ULONG
+ *  VT_I8                  [T][P]     signed 64-bit int
+ *  VT_UI8                 [T][P]     unsigned 64-bit int
+ *  VT_INT              [V][T][P][S]  signed machine int
+ *  VT_UINT             [V][T]   [S]  unsigned machine int
+ *  VT_INT_PTR             [T]        signed machine register size width
+ *  VT_UINT_PTR            [T]        unsigned machine register size width
+ *  VT_VOID                [T]        C style void
+ *  VT_HRESULT             [T]        Standard return type
+ *  VT_PTR                 [T]        pointer type
+ *  VT_SAFEARRAY           [T]        (use VT_ARRAY in VARIANT)
+ *  VT_CARRAY              [T]        C style array
+ *  VT_USERDEFINED         [T]        user defined type
+ *  VT_LPSTR               [T][P]     null terminated string
+ *  VT_LPWSTR              [T][P]     wide null terminated string
+ *  VT_FILETIME               [P]     FILETIME
+ *  VT_BLOB                   [P]     Length prefixed bytes
+ *  VT_STREAM                 [P]     Name of the stream follows
+ *  VT_STORAGE                [P]     Name of the storage follows
+ *  VT_STREAMED_OBJECT        [P]     Stream contains an object
+ *  VT_STORED_OBJECT          [P]     Storage contains an object
+ *  VT_VERSIONED_STREAM       [P]     Stream with a GUID version
+ *  VT_BLOB_OBJECT            [P]     Blob contains an object 
+ *  VT_CF                     [P]     Clipboard format
+ *  VT_CLSID                  [P]     A Class ID
+ *  VT_VECTOR                 [P]     simple counted array
+ *  VT_ARRAY            [V]           SAFEARRAY*
+ *  VT_BYREF            [V]           void* for local use
+ *  VT_BSTR_BLOB                      Reserved for system use
+ */</div>
+
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$VARENUM"><div><div class="token cpp_type">VARENUM</div></div></div>
+    {
+        <div class="def" id="NI$VARENUM::VT_EMPTY"><div><div class="token cpp_enum">VT_EMPTY</div></div></div>	= <div class="token cpp_number ">0</div>,
+        <div class="def" id="NI$VARENUM::VT_NULL"><div><div class="token cpp_enum">VT_NULL</div></div></div>	= <div class="token cpp_number ">1</div>,
+        <div class="def" id="NI$VARENUM::VT_I2"><div><div class="token cpp_enum">VT_I2</div></div></div>	= <div class="token cpp_number ">2</div>,
+        <div class="def" id="NI$VARENUM::VT_I4"><div><div class="token cpp_enum">VT_I4</div></div></div>	= <div class="token cpp_number ">3</div>,
+        <div class="def" id="NI$VARENUM::VT_R4"><div><div class="token cpp_enum">VT_R4</div></div></div>	= <div class="token cpp_number ">4</div>,
+        <div class="def" id="NI$VARENUM::VT_R8"><div><div class="token cpp_enum">VT_R8</div></div></div>	= <div class="token cpp_number ">5</div>,
+        <div class="def" id="NI$VARENUM::VT_CY"><div><div class="token cpp_enum">VT_CY</div></div></div>	= <div class="token cpp_number ">6</div>,
+        <div class="def" id="NI$VARENUM::VT_DATE"><div><div class="token cpp_enum">VT_DATE</div></div></div>	= <div class="token cpp_number ">7</div>,
+        <div class="def" id="NI$VARENUM::VT_BSTR"><div><div class="token cpp_enum">VT_BSTR</div></div></div>	= <div class="token cpp_number ">8</div>,
+        <div class="def" id="NI$VARENUM::VT_DISPATCH"><div><div class="token cpp_enum">VT_DISPATCH</div></div></div>	= <div class="token cpp_number ">9</div>,
+        <div class="def" id="NI$VARENUM::VT_ERROR"><div><div class="token cpp_enum">VT_ERROR</div></div></div>	= <div class="token cpp_number ">10</div>,
+        <div class="def" id="NI$VARENUM::VT_BOOL"><div><div class="token cpp_enum">VT_BOOL</div></div></div>	= <div class="token cpp_number ">11</div>,
+        <div class="def" id="NI$VARENUM::VT_VARIANT"><div><div class="token cpp_enum">VT_VARIANT</div></div></div>	= <div class="token cpp_number ">12</div>,
+        <div class="def" id="NI$VARENUM::VT_UNKNOWN"><div><div class="token cpp_enum">VT_UNKNOWN</div></div></div>	= <div class="token cpp_number ">13</div>,
+        <div class="def" id="NI$VARENUM::VT_DECIMAL"><div><div class="token cpp_enum">VT_DECIMAL</div></div></div>	= <div class="token cpp_number ">14</div>,
+        <div class="def" id="NI$VARENUM::VT_I1"><div><div class="token cpp_enum">VT_I1</div></div></div>	= <div class="token cpp_number ">16</div>,
+        <div class="def" id="NI$VARENUM::VT_UI1"><div><div class="token cpp_enum">VT_UI1</div></div></div>	= <div class="token cpp_number ">17</div>,
+        <div class="def" id="NI$VARENUM::VT_UI2"><div><div class="token cpp_enum">VT_UI2</div></div></div>	= <div class="token cpp_number ">18</div>,
+        <div class="def" id="NI$VARENUM::VT_UI4"><div><div class="token cpp_enum">VT_UI4</div></div></div>	= <div class="token cpp_number ">19</div>,
+        <div class="def" id="NI$VARENUM::VT_I8"><div><div class="token cpp_enum">VT_I8</div></div></div>	= <div class="token cpp_number ">20</div>,
+        <div class="def" id="NI$VARENUM::VT_UI8"><div><div class="token cpp_enum">VT_UI8</div></div></div>	= <div class="token cpp_number ">21</div>,
+        <div class="def" id="NI$VARENUM::VT_INT"><div><div class="token cpp_enum">VT_INT</div></div></div>	= <div class="token cpp_number ">22</div>,
+        <div class="def" id="NI$VARENUM::VT_UINT"><div><div class="token cpp_enum">VT_UINT</div></div></div>	= <div class="token cpp_number ">23</div>,
+        <div class="def" id="NI$VARENUM::VT_VOID"><div><div class="token cpp_enum">VT_VOID</div></div></div>	= <div class="token cpp_number ">24</div>,
+        <div class="def" id="NI$VARENUM::VT_HRESULT"><div><div class="token cpp_enum">VT_HRESULT</div></div></div>	= <div class="token cpp_number ">25</div>,
+        <div class="def" id="NI$VARENUM::VT_PTR"><div><div class="token cpp_enum">VT_PTR</div></div></div>	= <div class="token cpp_number ">26</div>,
+        <div class="def" id="NI$VARENUM::VT_SAFEARRAY"><div><div class="token cpp_enum">VT_SAFEARRAY</div></div></div>	= <div class="token cpp_number ">27</div>,
+        <div class="def" id="NI$VARENUM::VT_CARRAY"><div><div class="token cpp_enum">VT_CARRAY</div></div></div>	= <div class="token cpp_number ">28</div>,
+        <div class="def" id="NI$VARENUM::VT_USERDEFINED"><div><div class="token cpp_enum">VT_USERDEFINED</div></div></div>	= <div class="token cpp_number ">29</div>,
+        <div class="def" id="NI$VARENUM::VT_LPSTR"><div><div class="token cpp_enum">VT_LPSTR</div></div></div>	= <div class="token cpp_number ">30</div>,
+        <div class="def" id="NI$VARENUM::VT_LPWSTR"><div><div class="token cpp_enum">VT_LPWSTR</div></div></div>	= <div class="token cpp_number ">31</div>,
+        <div class="def" id="NI$VARENUM::VT_RECORD"><div><div class="token cpp_enum">VT_RECORD</div></div></div>	= <div class="token cpp_number ">36</div>,
+        <div class="def" id="NI$VARENUM::VT_INT_PTR"><div><div class="token cpp_enum">VT_INT_PTR</div></div></div>	= <div class="token cpp_number ">37</div>,
+        <div class="def" id="NI$VARENUM::VT_UINT_PTR"><div><div class="token cpp_enum">VT_UINT_PTR</div></div></div>	= <div class="token cpp_number ">38</div>,
+        <div class="def" id="NI$VARENUM::VT_FILETIME"><div><div class="token cpp_enum">VT_FILETIME</div></div></div>	= <div class="token cpp_number ">64</div>,
+        <div class="def" id="NI$VARENUM::VT_BLOB"><div><div class="token cpp_enum">VT_BLOB</div></div></div>	= <div class="token cpp_number ">65</div>,
+        <div class="def" id="NI$VARENUM::VT_STREAM"><div><div class="token cpp_enum">VT_STREAM</div></div></div>	= <div class="token cpp_number ">66</div>,
+        <div class="def" id="NI$VARENUM::VT_STORAGE"><div><div class="token cpp_enum">VT_STORAGE</div></div></div>	= <div class="token cpp_number ">67</div>,
+        <div class="def" id="NI$VARENUM::VT_STREAMED_OBJECT"><div><div class="token cpp_enum">VT_STREAMED_OBJECT</div></div></div>	= <div class="token cpp_number ">68</div>,
+        <div class="def" id="NI$VARENUM::VT_STORED_OBJECT"><div><div class="token cpp_enum">VT_STORED_OBJECT</div></div></div>	= <div class="token cpp_number ">69</div>,
+        <div class="def" id="NI$VARENUM::VT_BLOB_OBJECT"><div><div class="token cpp_enum">VT_BLOB_OBJECT</div></div></div>	= <div class="token cpp_number ">70</div>,
+        <div class="def" id="NI$VARENUM::VT_CF"><div><div class="token cpp_enum">VT_CF</div></div></div>	= <div class="token cpp_number ">71</div>,
+        <div class="def" id="NI$VARENUM::VT_CLSID"><div><div class="token cpp_enum">VT_CLSID</div></div></div>	= <div class="token cpp_number ">72</div>,
+        <div class="def" id="NI$VARENUM::VT_VERSIONED_STREAM"><div><div class="token cpp_enum">VT_VERSIONED_STREAM</div></div></div>	= <div class="token cpp_number ">73</div>,
+        <div class="def" id="NI$VARENUM::VT_BSTR_BLOB"><div><div class="token cpp_enum">VT_BSTR_BLOB</div></div></div>	= <div class="token cpp_number ">0xfff</div>,
+        <div class="def" id="NI$VARENUM::VT_VECTOR"><div><div class="token cpp_enum">VT_VECTOR</div></div></div>	= <div class="token cpp_number ">0x1000</div>,
+        <div class="def" id="NI$VARENUM::VT_ARRAY"><div><div class="token cpp_enum">VT_ARRAY</div></div></div>	= <div class="token cpp_number ">0x2000</div>,
+        <div class="def" id="NI$VARENUM::VT_BYREF"><div><div class="token cpp_enum">VT_BYREF</div></div></div>	= <div class="token cpp_number ">0x4000</div>,
+        <div class="def" id="NI$VARENUM::VT_RESERVED"><div><div class="token cpp_enum">VT_RESERVED</div></div></div>	= <div class="token cpp_number ">0x8000</div>,
+        <div class="def" id="NI$VARENUM::VT_ILLEGAL"><div><div class="token cpp_enum">VT_ILLEGAL</div></div></div>	= <div class="token cpp_number ">0xffff</div>,
+        <div class="def" id="NI$VARENUM::VT_ILLEGALMASKED"><div><div class="token cpp_enum">VT_ILLEGALMASKED</div></div></div>	= <div class="token cpp_number ">0xfff</div>,
+        <div class="def" id="NI$VARENUM::VT_TYPEMASK"><div><div class="token cpp_enum">VT_TYPEMASK</div></div></div>	= <div class="token cpp_number ">0xfff</div>
+    } ;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$PROPID"><div><div class="token cpp_type">PROPID</div></div></div>;
+
+<div class="disabled">#ifndef PROPERTYKEY_DEFINED</div>
+<div class="disabled">#define PROPERTYKEY_DEFINED</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_tagpropertykey"><div><div class="token cpp_type">_tagpropertykey</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$_tagpropertykey::fmtid"><div><div class="token cpp_field">fmtid</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_tagpropertykey::pid"><div><div class="token cpp_field">pid</div></div></div>;
+    } 	<div class="def" id="NI$PROPERTYKEY"><div><div class="token cpp_type">PROPERTYKEY</div></div></div>;
+
+<div class="disabled">#endif</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagCSPLATFORM"><div><div class="token cpp_type">tagCSPLATFORM</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagCSPLATFORM::dwPlatformId"><div><div class="token cpp_field">dwPlatformId</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagCSPLATFORM::dwVersionHi"><div><div class="token cpp_field">dwVersionHi</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagCSPLATFORM::dwVersionLo"><div><div class="token cpp_field">dwVersionLo</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagCSPLATFORM::dwProcessorArch"><div><div class="token cpp_field">dwProcessorArch</div></div></div>;
+    } 	<div class="def" id="NI$CSPLATFORM"><div><div class="token cpp_type">CSPLATFORM</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagQUERYCONTEXT"><div><div class="token cpp_type">tagQUERYCONTEXT</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagQUERYCONTEXT::dwContext"><div><div class="token cpp_field">dwContext</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['CSPLATFORM'], [], [])"><div class="token cpp_type">CSPLATFORM</div></div> <div class="def" id="NI$tagQUERYCONTEXT::Platform"><div><div class="token cpp_field">Platform</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LCID'], [], [])"><div class="token cpp_type">LCID</div></div> <div class="def" id="NI$tagQUERYCONTEXT::Locale"><div><div class="token cpp_field">Locale</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagQUERYCONTEXT::dwVersionHi"><div><div class="token cpp_field">dwVersionHi</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$tagQUERYCONTEXT::dwVersionLo"><div><div class="token cpp_field">dwVersionLo</div></div></div>;
+    } 	<div class="def" id="NI$QUERYCONTEXT"><div><div class="token cpp_type">QUERYCONTEXT</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [v1_enum] */</div> 
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$tagTYSPEC"><div><div class="token cpp_type">tagTYSPEC</div></div></div>
+    {
+        <div class="def" id="NI$tagTYSPEC::TYSPEC_CLSID"><div><div class="token cpp_enum">TYSPEC_CLSID</div></div></div>	= <div class="token cpp_number ">0</div>,
+        <div class="def" id="NI$tagTYSPEC::TYSPEC_FILEEXT"><div><div class="token cpp_enum">TYSPEC_FILEEXT</div></div></div>	= ( <div class="ref" onclick="jumpToSymbol([], ['tagTYSPEC::TYSPEC_CLSID'], [], [])"><div class="token cpp_enum">TYSPEC_CLSID</div></div> + <div class="token cpp_number ">1</div> ) ,
+        <div class="def" id="NI$tagTYSPEC::TYSPEC_MIMETYPE"><div><div class="token cpp_enum">TYSPEC_MIMETYPE</div></div></div>	= ( <div class="ref" onclick="jumpToSymbol([], ['tagTYSPEC::TYSPEC_FILEEXT'], [], [])"><div class="token cpp_enum">TYSPEC_FILEEXT</div></div> + <div class="token cpp_number ">1</div> ) ,
+        <div class="def" id="NI$tagTYSPEC::TYSPEC_FILENAME"><div><div class="token cpp_enum">TYSPEC_FILENAME</div></div></div>	= ( <div class="ref" onclick="jumpToSymbol([], ['tagTYSPEC::TYSPEC_MIMETYPE'], [], [])"><div class="token cpp_enum">TYSPEC_MIMETYPE</div></div> + <div class="token cpp_number ">1</div> ) ,
+        <div class="def" id="NI$tagTYSPEC::TYSPEC_PROGID"><div><div class="token cpp_enum">TYSPEC_PROGID</div></div></div>	= ( <div class="ref" onclick="jumpToSymbol([], ['tagTYSPEC::TYSPEC_FILENAME'], [], [])"><div class="token cpp_enum">TYSPEC_FILENAME</div></div> + <div class="token cpp_number ">1</div> ) ,
+        <div class="def" id="NI$tagTYSPEC::TYSPEC_PACKAGENAME"><div><div class="token cpp_enum">TYSPEC_PACKAGENAME</div></div></div>	= ( <div class="ref" onclick="jumpToSymbol([], ['tagTYSPEC::TYSPEC_PROGID'], [], [])"><div class="token cpp_enum">TYSPEC_PROGID</div></div> + <div class="token cpp_number ">1</div> ) ,
+        <div class="def" id="NI$tagTYSPEC::TYSPEC_OBJECTID"><div><div class="token cpp_enum">TYSPEC_OBJECTID</div></div></div>	= ( <div class="ref" onclick="jumpToSymbol([], ['tagTYSPEC::TYSPEC_PACKAGENAME'], [], [])"><div class="token cpp_enum">TYSPEC_PACKAGENAME</div></div> + <div class="token cpp_number ">1</div> ) 
+    } 	<div class="def" id="NI$TYSPEC"><div><div class="token cpp_type">TYSPEC</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_comment ">/* [public] */</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001"><div><div class="token cpp_type">__MIDL___MIDL_itf_wtypes_0000_0001_0001</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::tyspec"><div><div class="token cpp_field">tyspec</div></div></div>;
+    <div class="token cpp_comment ">/* [switch_is] */</div> <div class="token cpp_comment ">/* [switch_type] */</div> <div class="token cpp_keyword ">union</div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005"><div><div class="token cpp_type">__MIDL___MIDL_itf_wtypes_0000_0001_0005</div></div></div>
+        {
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::clsid"><div><div class="token cpp_field">clsid</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::pFileExt"><div><div class="token cpp_field">pFileExt</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::pMimeType"><div><div class="token cpp_field">pMimeType</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::pProgId"><div><div class="token cpp_field">pProgId</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::pFileName"><div><div class="token cpp_field">pFileName</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="token cpp_keyword ">struct</div> 
+            {
+            <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::<anonymous>370::pPackageName"><div><div class="token cpp_field">pPackageName</div></div></div>;
+            <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::<anonymous>370::PolicyId"><div><div class="token cpp_field">PolicyId</div></div></div>;
+            } 	<div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::ByName"><div><div class="token cpp_field">ByName</div></div></div>;
+        <div class="token cpp_comment ">/* [case()] */</div> <div class="token cpp_keyword ">struct</div> 
+            {
+            <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::<anonymous>371::ObjectId"><div><div class="token cpp_field">ObjectId</div></div></div>;
+            <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::<anonymous>371::PolicyId"><div><div class="token cpp_field">PolicyId</div></div></div>;
+            } 	<div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::__MIDL___MIDL_itf_wtypes_0000_0001_0005::ByObjectId"><div><div class="token cpp_field">ByObjectId</div></div></div>;
+        } 	<div class="def" id="NI$__MIDL___MIDL_itf_wtypes_0000_0001_0001::tagged_union"><div><div class="token cpp_field">tagged_union</div></div></div>;
+    } 	<div class="def" id="NI$uCLSSPEC"><div><div class="token cpp_type">uCLSSPEC</div></div></div>;
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_wtypes_0000_0001_v0_0_c_ifspec"><div>__MIDL_itf_wtypes_0000_0001_v0_0_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_wtypes_0000_0001_v0_0_s_ifspec"><div>__MIDL_itf_wtypes_0000_0001_v0_0_s_ifspec</div></div>;
+
+<div class="token cpp_comment ">/* Additional Prototypes for ALL interfaces */</div>
+
+<div class="token cpp_comment ">/* end of Additional Prototypes */</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif</div>
+
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BSTR': {
+        'displayNameInHtml': '<span class="cpp_type">BSTR</span>',
+        'impls': [
+            'NI$BSTR'
+        ],
+        'decls': []
+    },
+    'BYTE': {
+        'displayNameInHtml': '<span class="cpp_type">BYTE</span>',
+        'impls': [
+            'NI$BYTE'
+        ],
+        'decls': []
+    },
+    'BYTE_BLOB': {
+        'displayNameInHtml': '<span class="cpp_type">BYTE_BLOB</span>',
+        'impls': [
+            'NI$BYTE_BLOB'
+        ],
+        'decls': []
+    },
+    'CLSID': {
+        'displayNameInHtml': '<span class="cpp_type">CLSID</span>',
+        'impls': [
+            'NI$CLSID'
+        ],
+        'decls': []
+    },
+    'CSPLATFORM': {
+        'displayNameInHtml': '<span class="cpp_type">CSPLATFORM</span>',
+        'impls': [
+            'NI$CSPLATFORM'
+        ],
+        'decls': []
+    },
+    'CY': {
+        'displayNameInHtml': '<span class="cpp_type">CY</span>',
+        'impls': [
+            'NI$CY'
+        ],
+        'decls': []
+    },
+    'DECIMAL': {
+        'displayNameInHtml': '<span class="cpp_type">DECIMAL</span>',
+        'impls': [
+            'NI$DECIMAL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'DWORD_BLOB': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD_BLOB</span>',
+        'impls': [
+            'NI$DWORD_BLOB'
+        ],
+        'decls': []
+    },
+    'FLAGGED_BYTE_BLOB': {
+        'displayNameInHtml': '<span class="cpp_type">FLAGGED_BYTE_BLOB</span>',
+        'impls': [
+            'NI$FLAGGED_BYTE_BLOB'
+        ],
+        'decls': []
+    },
+    'FLAGGED_WORD_BLOB': {
+        'displayNameInHtml': '<span class="cpp_type">FLAGGED_WORD_BLOB</span>',
+        'impls': [
+            'NI$FLAGGED_WORD_BLOB'
+        ],
+        'decls': []
+    },
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'LANGID': {
+        'displayNameInHtml': '<span class="cpp_type">LANGID</span>',
+        'impls': [
+            'NI$LANGID'
+        ],
+        'decls': []
+    },
+    'LCID': {
+        'displayNameInHtml': '<span class="cpp_type">LCID</span>',
+        'impls': [
+            'NI$LCID'
+        ],
+        'decls': []
+    },
+    'LOGPALETTE': {
+        'displayNameInHtml': '<span class="cpp_type">LOGPALETTE</span>',
+        'impls': [
+            'NI$LOGPALETTE'
+        ],
+        'decls': []
+    },
+    'LONG': {
+        'displayNameInHtml': '<span class="cpp_type">LONG</span>',
+        'impls': [
+            'NI$LONG'
+        ],
+        'decls': []
+    },
+    'LONGLONG': {
+        'displayNameInHtml': '<span class="cpp_type">LONGLONG</span>',
+        'impls': [
+            'NI$LONGLONG'
+        ],
+        'decls': []
+    },
+    'LPOLESTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLESTR</span>',
+        'impls': [
+            'NI$LPOLESTR'
+        ],
+        'decls': []
+    },
+    'OLECHAR': {
+        'displayNameInHtml': '<span class="cpp_type">OLECHAR</span>',
+        'impls': [
+            'NI$OLECHAR'
+        ],
+        'decls': []
+    },
+    'RPC_IF_HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_IF_HANDLE</span>',
+        'impls': [
+            'NI$RPC_IF_HANDLE'
+        ],
+        'decls': []
+    },
+    'RemotableHandle': {
+        'displayNameInHtml': '<span class="cpp_type">RemotableHandle</span>',
+        'impls': [
+            'NI$RemotableHandle'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'ULONGLONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONGLONG</span>',
+        'impls': [
+            'NI$ULONGLONG'
+        ],
+        'decls': []
+    },
+    'USHORT': {
+        'displayNameInHtml': '<span class="cpp_type">USHORT</span>',
+        'impls': [
+            'NI$USHORT'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    },
+    'byte': {
+        'displayNameInHtml': '<span class="cpp_type">byte</span>',
+        'impls': [
+            'NI$byte'
+        ],
+        'decls': []
+    },
+    'remoteMETAFILEPICT': {
+        'displayNameInHtml': '<span class="cpp_type">remoteMETAFILEPICT</span>',
+        'impls': [
+            'NI$remoteMETAFILEPICT'
+        ],
+        'decls': []
+    },
+    'tagBSTRBLOB': {
+        'displayNameInHtml': '<span class="cpp_type">tagBSTRBLOB</span>',
+        'impls': [
+            'NI$tagBSTRBLOB'
+        ],
+        'decls': []
+    },
+    'tagTYSPEC::TYSPEC_CLSID': {
+        'displayNameInHtml': '<span class="cpp_type">tagTYSPEC</span>::<span class="cpp_enum">TYSPEC_CLSID</span>',
+        'impls': [
+            'NI$tagTYSPEC::TYSPEC_CLSID'
+        ],
+        'decls': []
+    },
+    'tagTYSPEC::TYSPEC_FILEEXT': {
+        'displayNameInHtml': '<span class="cpp_type">tagTYSPEC</span>::<span class="cpp_enum">TYSPEC_FILEEXT</span>',
+        'impls': [
+            'NI$tagTYSPEC::TYSPEC_FILEEXT'
+        ],
+        'decls': []
+    },
+    'tagTYSPEC::TYSPEC_FILENAME': {
+        'displayNameInHtml': '<span class="cpp_type">tagTYSPEC</span>::<span class="cpp_enum">TYSPEC_FILENAME</span>',
+        'impls': [
+            'NI$tagTYSPEC::TYSPEC_FILENAME'
+        ],
+        'decls': []
+    },
+    'tagTYSPEC::TYSPEC_MIMETYPE': {
+        'displayNameInHtml': '<span class="cpp_type">tagTYSPEC</span>::<span class="cpp_enum">TYSPEC_MIMETYPE</span>',
+        'impls': [
+            'NI$tagTYSPEC::TYSPEC_MIMETYPE'
+        ],
+        'decls': []
+    },
+    'tagTYSPEC::TYSPEC_PACKAGENAME': {
+        'displayNameInHtml': '<span class="cpp_type">tagTYSPEC</span>::<span class="cpp_enum">TYSPEC_PACKAGENAME</span>',
+        'impls': [
+            'NI$tagTYSPEC::TYSPEC_PACKAGENAME'
+        ],
+        'decls': []
+    },
+    'tagTYSPEC::TYSPEC_PROGID': {
+        'displayNameInHtml': '<span class="cpp_type">tagTYSPEC</span>::<span class="cpp_enum">TYSPEC_PROGID</span>',
+        'impls': [
+            'NI$tagTYSPEC::TYSPEC_PROGID'
+        ],
+        'decls': []
+    },
+    'userBITMAP': {
+        'displayNameInHtml': '<span class="cpp_type">userBITMAP</span>',
+        'impls': [
+            'NI$userBITMAP'
+        ],
+        'decls': []
+    },
+    'userCLIPFORMAT': {
+        'displayNameInHtml': '<span class="cpp_type">userCLIPFORMAT</span>',
+        'impls': [
+            'NI$userCLIPFORMAT'
+        ],
+        'decls': []
+    },
+    'userHBITMAP': {
+        'displayNameInHtml': '<span class="cpp_type">userHBITMAP</span>',
+        'impls': [
+            'NI$userHBITMAP'
+        ],
+        'decls': []
+    },
+    'userHENHMETAFILE': {
+        'displayNameInHtml': '<span class="cpp_type">userHENHMETAFILE</span>',
+        'impls': [
+            'NI$userHENHMETAFILE'
+        ],
+        'decls': []
+    },
+    'userHGLOBAL': {
+        'displayNameInHtml': '<span class="cpp_type">userHGLOBAL</span>',
+        'impls': [
+            'NI$userHGLOBAL'
+        ],
+        'decls': []
+    },
+    'userHMETAFILE': {
+        'displayNameInHtml': '<span class="cpp_type">userHMETAFILE</span>',
+        'impls': [
+            'NI$userHMETAFILE'
+        ],
+        'decls': []
+    },
+    'userHMETAFILEPICT': {
+        'displayNameInHtml': '<span class="cpp_type">userHMETAFILEPICT</span>',
+        'impls': [
+            'NI$userHMETAFILEPICT'
+        ],
+        'decls': []
+    },
+    'userHPALETTE': {
+        'displayNameInHtml': '<span class="cpp_type">userHPALETTE</span>',
+        'impls': [
+            'NI$userHPALETTE'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BSTR': null,
+    'NI$BYTE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$BYTE_BLOB': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$CLSID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$CSPLATFORM': null,
+    'NI$CY': null,
+    'NI$DECIMAL': null,
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD_BLOB': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$FLAGGED_BYTE_BLOB': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$FLAGGED_WORD_BLOB': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$GUID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$LANGID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LCID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LOGPALETTE': { 'htmlFileName': 'wingdi.h', 'displayName': 'wingdi.h' },
+    'NI$LONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LONGLONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPOLESTR': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$OLECHAR': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$RPC_IF_HANDLE': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' },
+    'NI$RemotableHandle': null,
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONGLONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$USHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$byte': { 'htmlFileName': 'rpcndr.h', 'displayName': 'rpcndr.h' },
+    'NI$remoteMETAFILEPICT': null,
+    'NI$tagBSTRBLOB': null,
+    'NI$tagTYSPEC::TYSPEC_CLSID': null,
+    'NI$tagTYSPEC::TYSPEC_FILEEXT': null,
+    'NI$tagTYSPEC::TYSPEC_FILENAME': null,
+    'NI$tagTYSPEC::TYSPEC_MIMETYPE': null,
+    'NI$tagTYSPEC::TYSPEC_PACKAGENAME': null,
+    'NI$tagTYSPEC::TYSPEC_PROGID': null,
+    'NI$userBITMAP': null,
+    'NI$userCLIPFORMAT': null,
+    'NI$userHBITMAP': null,
+    'NI$userHENHMETAFILE': null,
+    'NI$userHGLOBAL': null,
+    'NI$userHMETAFILE': null,
+    'NI$userHMETAFILEPICT': null,
+    'NI$userHPALETTE': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

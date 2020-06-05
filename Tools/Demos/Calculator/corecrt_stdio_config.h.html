@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt_stdio_config.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt_stdio_config.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Per-module &lt;stdio.h&gt; configuration.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+<div class="disabled">#if !defined _NO_CRT_STDIO_INLINE &amp;&amp; !_CRT_FUNCTIONS_REQUIRED</div>
+<div class="disabled">    #define _NO_CRT_STDIO_INLINE
+#endif</div>
+
+<div class="disabled">#if defined _NO_CRT_STDIO_INLINE</div>
+<div class="disabled">    #undef _CRT_STDIO_INLINE</div>
+<div class="disabled">    #define _CRT_STDIO_INLINE
+#elif !defined _CRT_STDIO_INLINE</div>
+<div class="disabled">    #define _CRT_STDIO_INLINE __inline
+#endif</div>
+
+<div class="disabled">#if !defined RC_INVOKED // RC has no target architecture</div>
+<div class="disabled">    #if defined _M_IX86</div>
+<div class="disabled">        #define _CRT_INTERNAL_STDIO_SYMBOL_PREFIX &quot;_&quot;</div>
+<div class="disabled">    #elif defined _M_X64 || defined _M_ARM || defined _M_ARM64</div>
+<div class="disabled">        #define _CRT_INTERNAL_STDIO_SYMBOL_PREFIX &quot;&quot;</div>
+<div class="disabled">    #else</div>
+<div class="disabled">        #error Unsupported architecture
+    #endif
+#endif</div>
+
+
+
+<div class="token cpp_comment ">// Predefine _CRT_STDIO_ISO_WIDE_SPECIFIERS to use ISO-conforming behavior for</div>
+<div class="token cpp_comment ">// the wide string printf and scanf functions (%s, %c, and %[] specifiers).</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Predefine _CRT_STDIO_LEGACY_WIDE_SPECIFIERS to use VC++ 2013 and earlier behavior for</div>
+<div class="token cpp_comment ">// the wide string printf and scanf functions (%s, %c, and %[] specifiers).</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Predefine _CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS when building code that does</div>
+<div class="token cpp_comment ">// not use these format specifiers without a length modifier and thus can be</div>
+<div class="token cpp_comment ">// used with either the legacy (default) or the conforming mode.  (This option</div>
+<div class="token cpp_comment ">// is intended for use by static libraries).</div>
+<div class="disabled">#if !defined RC_INVOKED // _CRT_STDIO_LEGACY_WIDE_SPECIFIERS et al. are too long for rc</div>
+<div class="disabled">    #if defined _CRT_STDIO_ISO_WIDE_SPECIFIERS</div>
+<div class="disabled">        #if defined _CRT_STDIO_LEGACY_WIDE_SPECIFIERS</div>
+<div class="disabled">            #error _CRT_STDIO_ISO_WIDE_SPECIFIERS and _CRT_STDIO_LEGACY_WIDE_SPECIFIERS cannot be defined together.</div>
+<div class="disabled">        #endif</div>
+
+<div class="disabled">        #if !defined _M_CEE_PURE</div>
+<div class="disabled">            #pragma comment(lib, &quot;iso_stdio_wide_specifiers&quot;)</div>
+<div class="disabled">            #pragma comment(linker, &quot;/include:&quot; _CRT_INTERNAL_STDIO_SYMBOL_PREFIX &quot;__PLEASE_LINK_WITH_iso_stdio_wide_specifiers.lib&quot;)</div>
+<div class="disabled">        #endif
+    #elif defined _CRT_STDIO_LEGACY_WIDE_SPECIFIERS</div>
+<div class="disabled">        #if !defined _M_CEE_PURE</div>
+<div class="disabled">            #pragma comment(lib, &quot;legacy_stdio_wide_specifiers&quot;)</div>
+<div class="disabled">            #pragma comment(linker, &quot;/include:&quot; _CRT_INTERNAL_STDIO_SYMBOL_PREFIX &quot;__PLEASE_LINK_WITH_legacy_stdio_wide_specifiers.lib&quot;)</div>
+<div class="disabled">        #endif
+    #endif</div>
+
+<div class="disabled">    #if defined __cplusplus &amp;&amp; !defined _CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS</div>
+<div class="disabled">        #ifdef _CRT_STDIO_ISO_WIDE_SPECIFIERS</div>
+<div class="disabled">            #pragma detect_mismatch(&quot;_CRT_STDIO_ISO_WIDE_SPECIFIERS&quot;, &quot;1&quot;)</div>
+<div class="disabled">        #else</div>
+<div class="expandable"><div class="disabled">            #pragma detect_mismatch(&quot;_CRT_STDIO_ISO_WIDE_SPECIFIERS&quot;, &quot;0&quot;)
+        #endif
+    #endif
+#endif</div>
+<div class="expanded">#pragma detect_mismatch(<div class="token cpp_string ">&quot;_CRT_STDIO_ISO_WIDE_SPECIFIERS&quot;</div>, <div class="token cpp_string ">&quot;0&quot;</div>)</div></div>
+
+<div class="token cpp_comment ">// If we&apos;re compiling mixed managed code, make sure these inline functions are</div>
+<div class="token cpp_comment ">// compiled as native to ensure that there is only one instance of each of the</div>
+<div class="token cpp_comment ">// function-local static variables.</div>
+<div class="disabled">#if defined _M_CEE &amp;&amp; !defined _M_CEE_PURE</div>
+<div class="disabled">    #pragma managed(push, off)
+#endif</div>
+
+<div class="disabled">#if _CRT_FUNCTIONS_REQUIRED</div>
+    <div class="token cpp_comment ">// This function must not be inlined into callers to avoid ODR violations.  The</div>
+    <div class="token cpp_comment ">// static local variable has different names in C and in C++ translation units.</div>
+<div class="disabled">    _Check_return_ _Ret_notnull_</div>
+<div class="disabled">    _CRT_INLINE_PURE_SECURITYCRITICAL_ATTRIBUTE</div>
+<div class="expandable"><div class="disabled">    __declspec(noinline) __inline unsigned __int64* __CRTDECL __local_stdio_printf_options(void)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(noinline) <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__local_stdio_printf_options@unsigned __int64 *()[impl0]"><div><div class="token cpp_function">__local_stdio_printf_options</div></div></div>(<div class="token cpp_keyword ">void</div>)</div></div>
+    {
+        <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div> <div class="def" id="NF[0]$__local_stdio_printf_options@unsigned __int64 *()[impl0]::_OptionsStorage"><div>_OptionsStorage</div></div>;
+        <div class="token cpp_keyword ">return</div> &amp;<div class="ref" onclick="jumpToSymbol([], ['__local_stdio_printf_options@unsigned __int64 *()[impl0]::_OptionsStorage'], [], [])">_OptionsStorage</div>;
+    }
+
+    <div class="token cpp_comment ">// This function must not be inlined into callers to avoid ODR violations.  The</div>
+    <div class="token cpp_comment ">// static local variable has different names in C and in C++ translation units.</div>
+<div class="disabled">    _Check_return_ _Ret_notnull_</div>
+<div class="disabled">    _CRT_INLINE_PURE_SECURITYCRITICAL_ATTRIBUTE</div>
+<div class="expandable"><div class="disabled">    __declspec(noinline) __inline unsigned __int64* __CRTDECL __local_stdio_scanf_options(void)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(noinline) <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__local_stdio_scanf_options@unsigned __int64 *()[impl0]"><div><div class="token cpp_function">__local_stdio_scanf_options</div></div></div>(<div class="token cpp_keyword ">void</div>)</div></div>
+    {
+        <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div> <div class="def" id="NF[0]$__local_stdio_scanf_options@unsigned __int64 *()[impl0]::_OptionsStorage"><div>_OptionsStorage</div></div>;
+        <div class="token cpp_keyword ">return</div> &amp;<div class="ref" onclick="jumpToSymbol([], ['__local_stdio_scanf_options@unsigned __int64 *()[impl0]::_OptionsStorage'], [], [])">_OptionsStorage</div>;
+    }
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if defined _M_CEE &amp;&amp; !defined _M_CEE_PURE</div>
+<div class="disabled">    #pragma managed(pop)
+#endif</div>
+
+<div class="disabled">#define _CRT_INTERNAL_LOCAL_PRINTF_OPTIONS (*__local_stdio_printf_options())</div>
+<div class="disabled">#define _CRT_INTERNAL_LOCAL_SCANF_OPTIONS  (*__local_stdio_scanf_options ())</div>
+
+
+
+<div class="disabled">#define _CRT_INTERNAL_PRINTF_LEGACY_VSPRINTF_NULL_TERMINATION (1ULL &lt;&lt; 0)</div>
+<div class="disabled">#define _CRT_INTERNAL_PRINTF_STANDARD_SNPRINTF_BEHAVIOR       (1ULL &lt;&lt; 1)</div>
+<div class="disabled">#define _CRT_INTERNAL_PRINTF_LEGACY_WIDE_SPECIFIERS           (1ULL &lt;&lt; 2)</div>
+<div class="disabled">#define _CRT_INTERNAL_PRINTF_LEGACY_MSVCRT_COMPATIBILITY      (1ULL &lt;&lt; 3)</div>
+<div class="disabled">#define _CRT_INTERNAL_PRINTF_LEGACY_THREE_DIGIT_EXPONENTS     (1ULL &lt;&lt; 4)</div>
+
+
+<div class="disabled">#define _CRT_INTERNAL_SCANF_SECURECRT                   (1ULL &lt;&lt; 0)</div>
+<div class="disabled">#define _CRT_INTERNAL_SCANF_LEGACY_WIDE_SPECIFIERS      (1ULL &lt;&lt; 1)</div>
+<div class="disabled">#define _CRT_INTERNAL_SCANF_LEGACY_MSVCRT_COMPATIBILITY (1ULL &lt;&lt; 2)</div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '__local_stdio_printf_options@unsigned __int64 *()[impl0]::_OptionsStorage': {
+        'displayNameInHtml': '_OptionsStorage',
+        'impls': [],
+        'decls': [
+            'NF[0]$__local_stdio_printf_options@unsigned __int64 *()[impl0]::_OptionsStorage'
+        ]
+    },
+    '__local_stdio_scanf_options@unsigned __int64 *()[impl0]::_OptionsStorage': {
+        'displayNameInHtml': '_OptionsStorage',
+        'impls': [],
+        'decls': [
+            'NF[0]$__local_stdio_scanf_options@unsigned __int64 *()[impl0]::_OptionsStorage'
+        ]
+    }
+};
+symbolToFiles = {
+    'NF[0]$__local_stdio_printf_options@unsigned __int64 *()[impl0]::_OptionsStorage': null,
+    'NF[0]$__local_stdio_scanf_options@unsigned __int64 *()[impl0]::_OptionsStorage': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

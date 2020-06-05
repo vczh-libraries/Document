@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt_search.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt_search.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Declarations of functions for sorting and searching.  These declarations are</div>
+<div class="token cpp_comment ">// split out so that they may be included by both &lt;stdlib.h&gt; and &lt;search.h&gt;.</div>
+<div class="token cpp_comment ">// &lt;stdlib.h&gt; does not include &lt;search.h&gt; to avoid introducing conflicts with</div>
+<div class="token cpp_comment ">// other user headers named &lt;search.h&gt;.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled">#include &lt;corecrt.h&gt;
+#include &lt;stddef.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div> (<div class="token cpp_keyword ">__cdecl</div>* <div class="def" id="NI$_CoreCrtSecureSearchSortCompareFunction"><div><div class="token cpp_type">_CoreCrtSecureSearchSortCompareFunction</div></div></div>)(<div class="token cpp_keyword ">void</div>*, <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*, <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*);
+    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div> (<div class="token cpp_keyword ">__cdecl</div>* <div class="def" id="NI$_CoreCrtNonSecureSearchSortCompareFunction"><div><div class="token cpp_type">_CoreCrtNonSecureSearchSortCompareFunction</div></div></div>)(<div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*, <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*);
+
+
+<div class="disabled">#if __STDC_WANT_SECURE_LIB__</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP void* __cdecl bsearch_s(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$bsearch_s@void *(void const *, void const *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]"><div><div class="token cpp_function">bsearch_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_                                               void const* _Key,</div>
+<div class="expanded">                                                        <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$bsearch_s@void *(void const *, void const *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Key"><div>_Key</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_reads_bytes_(_NumOfElements * _SizeOfElements) void const* _Base,</div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$bsearch_s@void *(void const *, void const *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                                               rsize_t     _NumOfElements,</div>
+<div class="expanded">                                                        <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [], [])"><div class="token cpp_type">rsize_t</div></div>     <div class="def" id="NI$bsearch_s@void *(void const *, void const *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                                               rsize_t     _SizeOfElements,</div>
+<div class="expanded">                                                        <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [], [])"><div class="token cpp_type">rsize_t</div></div>     <div class="def" id="NI$bsearch_s@void *(void const *, void const *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                   _CoreCrtSecureSearchSortCompareFunction _CompareFunction,</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$bsearch_s@void *(void const *, void const *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_CompareFunction"><div>_CompareFunction</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_                                           void*       _Context</div>
+<div class="expanded">                                                    <div class="token cpp_keyword ">void</div>*       <div class="def" id="NI$bsearch_s@void *(void const *, void const *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Context"><div>_Context</div></div></div></div>
+        );
+
+<div class="expandable"><div class="disabled">    _ACRTIMP void __cdecl qsort_s(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$qsort_s@void(void *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]"><div><div class="token cpp_function">qsort_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _Inout_updates_bytes_(_NumOfElements * _SizeOfElements) void*   _Base,</div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div>*   <div class="def" id="NI$qsort_s@void(void *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                                                    rsize_t _NumOfElements,</div>
+<div class="expanded">                                                             <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [], [])"><div class="token cpp_type">rsize_t</div></div> <div class="def" id="NI$qsort_s@void(void *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                                                    rsize_t _SizeOfElements,</div>
+<div class="expanded">                                                             <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [], [])"><div class="token cpp_type">rsize_t</div></div> <div class="def" id="NI$qsort_s@void(void *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                    _CoreCrtSecureSearchSortCompareFunction _CompareFunction,</div>
+<div class="expanded">                             <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$qsort_s@void(void *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_CompareFunction"><div>_CompareFunction</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_                                                void*   _Context</div>
+<div class="expanded">                                                         <div class="token cpp_keyword ">void</div>*   <div class="def" id="NI$qsort_s@void(void *, ::rsize_t, ::rsize_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Context"><div>_Context</div></div></div></div>
+        );
+
+<div class="disabled">#endif // __STDC_WANT_SECURE_LIB__</div>
+
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP void* __cdecl bsearch(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$bsearch@void *(void const *, void const *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]"><div><div class="token cpp_function">bsearch</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_                                               void const* _Key,</div>
+<div class="expanded">                                                    <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$bsearch@void *(void const *, void const *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Key"><div>_Key</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_(_NumOfElements * _SizeOfElements) void const* _Base,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$bsearch@void *(void const *, void const *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                               size_t      _NumOfElements,</div>
+<div class="expanded">                                                    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>      <div class="def" id="NI$bsearch@void *(void const *, void const *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                               size_t      _SizeOfElements,</div>
+<div class="expanded">                                                    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>      <div class="def" id="NI$bsearch@void *(void const *, void const *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                _CoreCrtNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="expanded">                     <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtNonSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtNonSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$bsearch@void *(void const *, void const *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_CompareFunction"><div>_CompareFunction</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">_ACRTIMP void __cdecl qsort(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$qsort@void(void *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]"><div><div class="token cpp_function">qsort</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Inout_updates_bytes_(_NumOfElements * _SizeOfElements) void*  _Base,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div>*  <div class="def" id="NI$qsort@void(void *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                    size_t _NumOfElements,</div>
+<div class="expanded">                                                         <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$qsort@void(void *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                    size_t _SizeOfElements,</div>
+<div class="expanded">                                                         <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$qsort@void(void *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                _CoreCrtNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="expanded">                     <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtNonSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtNonSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$qsort@void(void *, ::size_t, ::size_t, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_CompareFunction"><div>_CompareFunction</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP void* __cdecl _lfind_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_lfind_s@void *(void const *, void const *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]"><div><div class="token cpp_function">_lfind_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                  void const*   _Key,</div>
+<div class="expanded">                                                       <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$_lfind_s@void *(void const *, void const *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Key"><div>_Key</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_((*_NumOfElements) * _SizeOfElements) void const*   _Base,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$_lfind_s@void *(void const *, void const *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_                                               unsigned int* _NumOfElements,</div>
+<div class="expanded">                                                    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_lfind_s@void *(void const *, void const *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                  size_t        _SizeOfElements,</div>
+<div class="expanded">                                                       <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>        <div class="def" id="NI$_lfind_s@void *(void const *, void const *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                        _CoreCrtSecureSearchSortCompareFunction _CompareFunction,</div>
+<div class="expanded">                             <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$_lfind_s@void *(void const *, void const *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_CompareFunction"><div>_CompareFunction</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                  void*         _Context</div>
+<div class="expanded">                                                       <div class="token cpp_keyword ">void</div>*         <div class="def" id="NI$_lfind_s@void *(void const *, void const *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Context"><div>_Context</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP void* __cdecl _lfind(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]"><div><div class="token cpp_function">_lfind</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                  void const*   _Key,</div>
+<div class="expanded">                                                       <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$_lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Key"><div>_Key</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_((*_NumOfElements) * _SizeOfElements) void const*   _Base,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$_lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_                                               unsigned int* _NumOfElements,</div>
+<div class="expanded">                                                    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                  unsigned int  _SizeOfElements,</div>
+<div class="expanded">                                                       <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$_lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                     _CoreCrtNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="expanded">                          <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtNonSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtNonSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$_lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_CompareFunction"><div>_CompareFunction</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP void* __cdecl _lsearch_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_lsearch_s@void *(void const *, void *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]"><div><div class="token cpp_function">_lsearch_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                        void const*   _Key,</div>
+<div class="expanded">                                                             <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$_lsearch_s@void *(void const *, void *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Key"><div>_Key</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_updates_bytes_((*_NumOfElements ) * _SizeOfElements) void*         _Base,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div>*         <div class="def" id="NI$_lsearch_s@void *(void const *, void *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_                                                     unsigned int* _NumOfElements,</div>
+<div class="expanded">                                                          <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_lsearch_s@void *(void const *, void *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                        size_t        _SizeOfElements,</div>
+<div class="expanded">                                                             <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>        <div class="def" id="NI$_lsearch_s@void *(void const *, void *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                              _CoreCrtSecureSearchSortCompareFunction _CompareFunction,</div>
+<div class="expanded">                                   <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$_lsearch_s@void *(void const *, void *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_CompareFunction"><div>_CompareFunction</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                        void*         _Context</div>
+<div class="expanded">                                                             <div class="token cpp_keyword ">void</div>*         <div class="def" id="NI$_lsearch_s@void *(void const *, void *, unsigned int *, ::size_t, ::_CoreCrtSecureSearchSortCompareFunction, void *)[decl0]::_Context"><div>_Context</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP void* __cdecl _lsearch(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]"><div><div class="token cpp_function">_lsearch</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                        void const*   _Key,</div>
+<div class="expanded">                                                             <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$_lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Key"><div>_Key</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_updates_bytes_((*_NumOfElements ) * _SizeOfElements) void*         _Base,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div>*         <div class="def" id="NI$_lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_                                                     unsigned int* _NumOfElements,</div>
+<div class="expanded">                                                          <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                        unsigned int  _SizeOfElements,</div>
+<div class="expanded">                                                             <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$_lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                           _CoreCrtNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtNonSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtNonSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$_lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_CompareFunction"><div>_CompareFunction</div></div></div></div>
+    );
+
+
+
+<div class="token cpp_comment ">// Managed search routines</div>
+<div class="disabled">#if defined __cplusplus &amp;&amp; defined _M_CEE</div>
+<div class="disabled">extern &quot;C++&quot;</div>
+<div class="disabled">{</div>
+<div class="disabled">    typedef int (__clrcall* _CoreCrtMgdSecureSearchSortCompareFunction)(void*, void const*, void const*);</div>
+<div class="disabled">    typedef int (__clrcall* _CoreCrtMgdNonSecureSearchSortCompareFunction)(void const*, void const*);</div>
+
+<div class="disabled">    #if __STDC_WANT_SECURE_LIB__</div>
+
+<div class="disabled">        _Check_return_</div>
+<div class="disabled">        void* __clrcall bsearch_s(</div>
+<div class="disabled">                _In_                                               void const* _Key,</div>
+<div class="disabled">                _In_reads_bytes_(_NumOfElements * _SizeOfElements) void const* _Base,</div>
+<div class="disabled">                _In_                                               rsize_t     _NumOfElements,</div>
+<div class="disabled">                _In_                                               rsize_t     _SizeOfElements,</div>
+<div class="disabled">                _In_                _CoreCrtMgdSecureSearchSortCompareFunction _CompareFunction,</div>
+<div class="disabled">                _In_                                               void*       _Context);</div>
+
+<div class="disabled">        void __clrcall qsort_s(</div>
+<div class="disabled">                _Inout_updates_bytes_(_NumOfElements * _SizeOfElements) void*   _Base,</div>
+<div class="disabled">                _In_                                                    rsize_t _NumOfElements,</div>
+<div class="disabled">                _In_                                                    rsize_t _SizeOfElements,</div>
+<div class="disabled">                _In_                 _CoreCrtMgdSecureSearchSortCompareFunction _CompareFunction,</div>
+<div class="disabled">                _In_                                                    void*   _Context);</div>
+
+<div class="disabled">    #endif // __STDC_WANT_SECURE_LIB__</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="disabled">    void* __clrcall bsearch(</div>
+<div class="disabled">        _In_                                               void const* _Key,</div>
+<div class="disabled">        _In_reads_bytes_(_NumOfElements * _SizeOfElements) void const* _Base,</div>
+<div class="disabled">        _In_                                               size_t _NumOfElements,</div>
+<div class="disabled">        _In_                                               size_t _SizeOfElements,</div>
+<div class="disabled">        _In_        _CoreCrtMgdNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="disabled">    void* __clrcall _lfind_s(</div>
+<div class="disabled">        _In_                                               void const*   _Key,</div>
+<div class="disabled">        _In_reads_bytes_(_NumOfElements * _SizeOfElements) void const*   _Base,</div>
+<div class="disabled">        _Inout_                                            unsigned int* _NumOfElements,</div>
+<div class="disabled">        _In_                                               size_t        _SizeOfElements,</div>
+<div class="disabled">        _In_                  _CoreCrtMgdSecureSearchSortCompareFunction _CompareFunction,</div>
+<div class="disabled">        _In_                                               void*         _Context</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="disabled">    void* __clrcall _lfind(</div>
+<div class="disabled">        _In_                                                  void const*   _Key,</div>
+<div class="disabled">        _In_reads_bytes_((*_NumOfElements) * _SizeOfElements) void const*   _Base,</div>
+<div class="disabled">        _Inout_                                               unsigned int* _NumOfElements,</div>
+<div class="disabled">        _In_                                                  unsigned int  _SizeOfElements,</div>
+<div class="disabled">        _In_                  _CoreCrtMgdNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="disabled">    void* __clrcall _lsearch_s(</div>
+<div class="disabled">        _In_                                                  void const*   _Key,</div>
+<div class="disabled">        _In_reads_bytes_((*_NumOfElements) * _SizeOfElements) void*         _Base,</div>
+<div class="disabled">        _In_                                                  unsigned int* _NumOfElements,</div>
+<div class="disabled">        _In_                                                  size_t        _SizeOfElements,</div>
+<div class="disabled">        _In_                     _CoreCrtMgdSecureSearchSortCompareFunction _CompareFunction,</div>
+<div class="disabled">        _In_                                                  void*         _Context</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="disabled">    void* __clrcall _lsearch(</div>
+<div class="disabled">        _In_                                                       void const*   _Key,</div>
+<div class="disabled">        _Inout_updates_bytes_((*_NumOfElements) * _SizeOfElements) void*         _Base,</div>
+<div class="disabled">        _Inout_                                                    unsigned int* _NumOfElements,</div>
+<div class="disabled">        _In_                                                       unsigned int  _SizeOfElements,</div>
+<div class="disabled">        _In_                       _CoreCrtMgdNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    void __clrcall qsort(</div>
+<div class="disabled">        _Inout_updates_bytes_(_NumOfElements * _SizeOfElements) void*  _Base,</div>
+<div class="disabled">        _In_                                                    size_t _NumOfElements,</div>
+<div class="disabled">        _In_                                                    size_t _SizeOfElements,</div>
+<div class="disabled">        _In_             _CoreCrtMgdNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="disabled">        );</div>
+<div class="disabled">}
+#endif // defined __cplusplus &amp;&amp; defined _M_CEE</div>
+
+
+
+<div class="disabled">#if _CRT_INTERNAL_NONSTDC_NAMES</div>
+
+<div class="expandable"><div class="disabled">    _Check_return_ _CRT_NONSTDC_DEPRECATE(_lfind)</div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_lfind&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="expandable"><div class="disabled">    _ACRTIMP void* __cdecl lfind(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]"><div><div class="token cpp_function">lfind</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_                                                  void const*   _Key,</div>
+<div class="expanded">                                                           <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Key"><div>_Key</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_reads_bytes_((*_NumOfElements) * _SizeOfElements) void const*   _Base,</div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _Inout_                                               unsigned int* _NumOfElements,</div>
+<div class="expanded">                                                        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                                                  unsigned int  _SizeOfElements,</div>
+<div class="expanded">                                                           <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                     _CoreCrtNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="expanded">                              <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtNonSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtNonSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$lfind@void *(void const *, void const *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_CompareFunction"><div>_CompareFunction</div></div></div></div>
+        );
+
+<div class="expandable"><div class="disabled">    _Check_return_ _CRT_NONSTDC_DEPRECATE(_lsearch)</div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_lsearch&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="expandable"><div class="disabled">    _ACRTIMP void* __cdecl lsearch(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]"><div><div class="token cpp_function">lsearch</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_                                                       void const*   _Key,</div>
+<div class="expanded">                                                                <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Key"><div>_Key</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _Inout_updates_bytes_((*_NumOfElements) * _SizeOfElements) void*         _Base,</div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div>*         <div class="def" id="NI$lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_Base"><div>_Base</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _Inout_                                                    unsigned int* _NumOfElements,</div>
+<div class="expanded">                                                             <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_NumOfElements"><div>_NumOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                                                       unsigned int  _SizeOfElements,</div>
+<div class="expanded">                                                                <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_SizeOfElements"><div>_SizeOfElements</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                          _CoreCrtNonSecureSearchSortCompareFunction _CompareFunction</div>
+<div class="expanded">                                   <div class="ref" onclick="jumpToSymbol([], ['_CoreCrtNonSecureSearchSortCompareFunction'], [], [])"><div class="token cpp_type">_CoreCrtNonSecureSearchSortCompareFunction</div></div> <div class="def" id="NI$lsearch@void *(void const *, void *, unsigned int *, unsigned int, ::_CoreCrtNonSecureSearchSortCompareFunction)[decl0]::_CompareFunction"><div>_CompareFunction</div></div></div></div>
+        );
+
+<div class="disabled">#endif // _CRT_INTERNAL_NONSTDC_NAMES</div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_CoreCrtNonSecureSearchSortCompareFunction': {
+        'displayNameInHtml': '<span class="cpp_type">_CoreCrtNonSecureSearchSortCompareFunction</span>',
+        'impls': [
+            'NI$_CoreCrtNonSecureSearchSortCompareFunction'
+        ],
+        'decls': []
+    },
+    '_CoreCrtSecureSearchSortCompareFunction': {
+        'displayNameInHtml': '<span class="cpp_type">_CoreCrtSecureSearchSortCompareFunction</span>',
+        'impls': [
+            'NI$_CoreCrtSecureSearchSortCompareFunction'
+        ],
+        'decls': []
+    },
+    'rsize_t': {
+        'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
+        'impls': [
+            'NI$rsize_t'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$_CoreCrtNonSecureSearchSortCompareFunction': null,
+    'NI$_CoreCrtSecureSearchSortCompareFunction': null,
+    'NI$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

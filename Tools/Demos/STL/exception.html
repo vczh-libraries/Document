@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>exception</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// exception standard header</div>
+#pragma once
+<div class="disabled">#ifndef _EXCEPTION_</div>
+<div class="disabled">#define _EXCEPTION_</div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+
+<div class="disabled">#include &lt;yvals.h&gt;
+#include &lt;type_traits&gt;</div>
+
+<div class="expandable"><div class="disabled"> #pragma pack(push,_CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(push,_STL_WARNING_LEVEL)</div>
+<div class="expanded">#pragma warning(push,<div class="token cpp_number ">3</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4455</div> <div class="token cpp_number ">4494</div>  <div class="token cpp_number ">4619</div> <div class="token cpp_number ">4643</div> <div class="token cpp_number ">4702</div> <div class="token cpp_number ">4984</div> <div class="token cpp_number ">4988</div> )</div></div>
+<div class="disabled"> _STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled"> #pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled"> #undef new</div>
+
+<div class="expandable"><div class="disabled">_STD_BEGIN</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[9]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+
+<div class="expandable"><div class="disabled">_CXX17_DEPRECATE_UNCAUGHT_EXCEPTION _CRTIMP2_PURE bool __CLRCALL_PURE_OR_CDECL uncaught_exception() noexcept;</div>
+<div class="expanded">  <div class="token cpp_keyword ">bool</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::uncaught_exception@bool()[decl0]"><div><div class="token cpp_function">uncaught_exception</div></div></div>() <div class="token cpp_keyword ">noexcept</div>;</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE int __CLRCALL_PURE_OR_CDECL uncaught_exceptions() noexcept;</div>
+<div class="expanded"> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::uncaught_exceptions@int()[decl0]"><div><div class="token cpp_function">uncaught_exceptions</div></div></div>() <div class="token cpp_keyword ">noexcept</div>;</div></div>
+
+<div class="expandable"><div class="disabled">_STD_END</div>
+<div class="expanded">}</div></div>
+
+<div class="disabled"> #if _HAS_EXCEPTIONS</div>
+
+<div class="disabled">#include &lt;malloc.h&gt;
+#include &lt;vcruntime_exception.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_STD_BEGIN</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[11]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+
+<div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['terminate@void()'], [], [])"><div class="token cpp_function">terminate</div></div>;
+
+<div class="disabled">#ifndef _M_CEE_PURE</div>
+<div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['set_terminate@::terminate_handler(::terminate_handler)'], [], [])"><div class="token cpp_function">set_terminate</div></div>;
+<div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['terminate_handler'], [], [])"><div class="token cpp_type">terminate_handler</div></div>;
+
+<div class="expandable"><div class="disabled">_NODISCARD inline terminate_handler __CRTDECL get_terminate() noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['terminate_handler'], [], [])"><div class="token cpp_type">terminate_handler</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::get_terminate@::terminate_handler()[impl0]"><div><div class="token cpp_function">get_terminate</div></div></div>() <div class="token cpp_keyword ">noexcept</div></div></div>
+	{	<div class="token cpp_comment ">// get current terminate handler</div>
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['_get_terminate@::terminate_handler()'], ['_get_terminate@::terminate_handler()'], [], [])"><div class="token cpp_function">_get_terminate</div></div>());
+	}
+<div class="disabled">#endif /* _M_CEE_PURE */</div>
+
+<div class="disabled">#if _HAS_UNEXPECTED</div>
+<div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['unexpected@void()'], [], [])"><div class="token cpp_function">unexpected</div></div>;
+
+<div class="disabled"> #ifndef _M_CEE_PURE</div>
+<div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['set_unexpected@::unexpected_handler(::unexpected_handler)'], [], [])"><div class="token cpp_function">set_unexpected</div></div>;
+<div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['unexpected_handler'], [], [])"><div class="token cpp_type">unexpected_handler</div></div>;
+
+<div class="expandable"><div class="disabled">_NODISCARD inline unexpected_handler __CRTDECL get_unexpected() noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['unexpected_handler'], [], [])"><div class="token cpp_type">unexpected_handler</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::get_unexpected@::unexpected_handler()[impl0]"><div><div class="token cpp_function">get_unexpected</div></div></div>() <div class="token cpp_keyword ">noexcept</div></div></div>
+	{	<div class="token cpp_comment ">// get current unexpected handler</div>
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['_get_unexpected@::unexpected_handler()'], ['_get_unexpected@::unexpected_handler()'], [], [])"><div class="token cpp_function">_get_unexpected</div></div>());
+	}
+<div class="disabled"> #endif /* _M_CEE_PURE */
+#endif /* _HAS_UNEXPECTED */</div>
+
+<div class="expandable"><div class="disabled">_STD_END</div>
+<div class="expanded">}</div></div>
+
+<div class="disabled"> #else /* _HAS_EXCEPTIONS */</div>
+
+<div class="disabled">		// CLASS exception</div>
+<div class="disabled">_STDEXT_BEGIN</div>
+<div class="disabled">class exception;</div>
+<div class="disabled">_STDEXT_END</div>
+
+<div class="disabled">_STD_BEGIN</div>
+
+<div class="disabled">using _STDEXT exception;</div>
+
+<div class="disabled">typedef void (__cdecl *_Prhand)(const exception&amp;);</div>
+<div class="disabled">extern _CRTIMP2_NCEEPURE_IMPORT _Prhand _Raise_handler;	// pointer to raise handler</div>
+
+<div class="disabled">_STD_END</div>
+
+<div class="disabled">_STDEXT_BEGIN</div>
+<div class="disabled">class exception</div>
+<div class="disabled">	{	// base of all library exceptions</div>
+<div class="disabled">public:</div>
+
+<div class="disabled">	static _STD _Prhand _Set_raise_handler(_STD _Prhand _Pnew)</div>
+<div class="disabled">		{	// register a handler for _Raise calls</div>
+<div class="disabled">		const _STD _Prhand _Pold = _STD _Raise_handler;</div>
+<div class="disabled">		_STD _Raise_handler = _Pnew;</div>
+<div class="disabled">		return (_Pold);</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	// this constructor is necessary to compile</div>
+<div class="disabled">	// successfully header new for _HAS_EXCEPTIONS==0 scenario</div>
+<div class="disabled">	explicit __CLR_OR_THIS_CALL exception(const char *_Message = &quot;unknown&quot;, int = 1) noexcept</div>
+<div class="disabled">		: _Ptr(_Message)</div>
+<div class="disabled">		{	// construct from message string</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	__CLR_OR_THIS_CALL exception(const exception&amp; _Right) noexcept</div>
+<div class="disabled">		: _Ptr(_Right._Ptr)</div>
+<div class="disabled">		{	// construct by copying _Right</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	exception&amp; __CLR_OR_THIS_CALL operator=(const exception&amp; _Right) noexcept</div>
+<div class="disabled">		{	// assign _Right</div>
+<div class="disabled">		_Ptr = _Right._Ptr;</div>
+<div class="disabled">		return (*this);</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	virtual __CLR_OR_THIS_CALL ~exception() noexcept</div>
+<div class="disabled">		{	// destroy the object</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	_NODISCARD virtual const char * __CLR_OR_THIS_CALL what() const noexcept</div>
+<div class="disabled">		{	// return pointer to message string</div>
+<div class="disabled">		return (_Ptr != nullptr ? _Ptr : &quot;unknown exception&quot;);</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	void __CLR_OR_THIS_CALL _Raise() const</div>
+<div class="disabled">		{	// raise the exception</div>
+<div class="disabled">		if (_STD _Raise_handler != nullptr)</div>
+<div class="disabled">			(*_STD _Raise_handler)(*this);	// call raise handler if present</div>
+
+<div class="disabled">		_Doraise();	// call the protected virtual</div>
+<div class="disabled">		_RAISE(*this);	// raise this exception</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">protected:</div>
+<div class="disabled">	virtual void __CLR_OR_THIS_CALL _Doraise() const</div>
+<div class="disabled">		{	// perform class-specific exception handling</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">protected:</div>
+<div class="disabled">	const char *_Ptr;	// the message pointer</div>
+<div class="disabled">	};</div>
+
+<div class="disabled">	// CLASS bad_exception</div>
+<div class="disabled">class bad_exception : public exception</div>
+<div class="disabled">	{	// base of all bad exceptions</div>
+<div class="disabled">public:</div>
+<div class="disabled">	__CLR_OR_THIS_CALL bad_exception(const char *_Message = &quot;bad exception&quot;) noexcept</div>
+<div class="disabled">		: exception(_Message)</div>
+<div class="disabled">		{	// construct from message string</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	virtual __CLR_OR_THIS_CALL ~bad_exception() noexcept</div>
+<div class="disabled">		{	// destroy the object</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">protected:</div>
+<div class="disabled">	virtual void __CLR_OR_THIS_CALL _Doraise() const</div>
+<div class="disabled">		{	// raise this exception</div>
+<div class="disabled">		_RAISE(*this);</div>
+<div class="disabled">		}</div>
+<div class="disabled">	};</div>
+
+<div class="disabled">	// CLASS bad_alloc</div>
+<div class="disabled">class bad_alloc : public exception</div>
+<div class="disabled">	{	// base of all bad allocation exceptions</div>
+<div class="disabled">public:</div>
+<div class="disabled">	__CLR_OR_THIS_CALL bad_alloc() noexcept</div>
+<div class="disabled">		: exception(&quot;bad allocation&quot;, 1)</div>
+<div class="disabled">		{	// construct from message string with no memory allocation</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">	virtual __CLR_OR_THIS_CALL ~bad_alloc() noexcept</div>
+<div class="disabled">		{	// destroy the object</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">private:</div>
+<div class="disabled">	friend class bad_array_new_length;</div>
+
+<div class="disabled">	__CLR_OR_THIS_CALL bad_alloc(const char *_Message) noexcept</div>
+<div class="disabled">		: exception(_Message, 1)</div>
+<div class="disabled">		{	// construct from message string with no memory allocation</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">protected:</div>
+<div class="disabled">	virtual void __CLR_OR_THIS_CALL _Doraise() const</div>
+<div class="disabled">		{	// perform class-specific exception handling</div>
+<div class="disabled">		_RAISE(*this);</div>
+<div class="disabled">		}</div>
+<div class="disabled">	};</div>
+
+<div class="disabled">_STDEXT_END</div>
+
+<div class="disabled">_STD_BEGIN</div>
+<div class="disabled">		// DUMMY FUNCTION DECLARATIONS</div>
+<div class="disabled">typedef void (__cdecl *terminate_handler)();</div>
+
+<div class="disabled">inline terminate_handler __CRTDECL set_terminate(terminate_handler) noexcept</div>
+<div class="disabled">	{	// register a terminate handler</div>
+<div class="disabled">	return nullptr;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">inline void __CRTDECL terminate() noexcept</div>
+<div class="disabled">	{	// handle exception termination</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">_NODISCARD inline terminate_handler __CRTDECL get_terminate() noexcept</div>
+<div class="disabled">	{	// get current terminate handler</div>
+<div class="disabled">	return (nullptr);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">#if _HAS_UNEXPECTED</div>
+<div class="disabled">typedef void (__cdecl *unexpected_handler)();</div>
+
+<div class="disabled">inline unexpected_handler __CRTDECL set_unexpected(unexpected_handler) noexcept</div>
+<div class="disabled">	{	// register an unexpected handler</div>
+<div class="disabled">	return nullptr;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">inline void __CRTDECL unexpected()</div>
+<div class="disabled">	{	// handle unexpected exception</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">_NODISCARD inline unexpected_handler __CRTDECL get_unexpected() noexcept</div>
+<div class="disabled">	{	// get current unexpected handler</div>
+<div class="disabled">	return (nullptr);</div>
+<div class="disabled">	}</div>
+<div class="disabled">#endif /* _HAS_UNEXPECTED */</div>
+
+<div class="disabled">using _STDEXT bad_alloc;</div>
+<div class="disabled">using _STDEXT bad_exception;</div>
+
+<div class="disabled">_STD_END</div>
+
+<div class="disabled"> #endif /* _HAS_EXCEPTIONS */</div>
+
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE void __CLRCALL_PURE_OR_CDECL __ExceptionPtrCreate(_Out_ void*);</div>
+<div class="expanded"> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrCreate@void(void *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrCreate</div></div></div>(  <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE void __CLRCALL_PURE_OR_CDECL __ExceptionPtrDestroy(_Inout_ void*);</div>
+<div class="expanded"> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrDestroy@void(void *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrDestroy</div></div></div>(  <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE void __CLRCALL_PURE_OR_CDECL __ExceptionPtrCopy(_Out_ void*, _In_ const void*);</div>
+<div class="expanded"> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrCopy@void(void *, void const *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrCopy</div></div></div>(  <div class="token cpp_keyword ">void</div>*,   <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE void __CLRCALL_PURE_OR_CDECL __ExceptionPtrAssign(_Inout_ void*, _In_ const void*);</div>
+<div class="expanded"> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrAssign@void(void *, void const *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrAssign</div></div></div>(  <div class="token cpp_keyword ">void</div>*,   <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE bool __CLRCALL_PURE_OR_CDECL __ExceptionPtrCompare(_In_ const void*, _In_ const void*);</div>
+<div class="expanded"> <div class="token cpp_keyword ">bool</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrCompare@bool(void const *, void const *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrCompare</div></div></div>(  <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>*,   <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE bool __CLRCALL_PURE_OR_CDECL __ExceptionPtrToBool(_In_ const void*);</div>
+<div class="expanded"> <div class="token cpp_keyword ">bool</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrToBool@bool(void const *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrToBool</div></div></div>(  <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE void __CLRCALL_PURE_OR_CDECL __ExceptionPtrSwap(_Inout_ void*, _Inout_ void*);</div>
+<div class="expanded"> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrSwap@void(void *, void *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrSwap</div></div></div>(  <div class="token cpp_keyword ">void</div>*,   <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE void __CLRCALL_PURE_OR_CDECL __ExceptionPtrCurrentException(_Out_ void*);</div>
+<div class="expanded"> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrCurrentException@void(void *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrCurrentException</div></div></div>(  <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">[[noreturn]] _CRTIMP2_PURE void __CLRCALL_PURE_OR_CDECL __ExceptionPtrRethrow(_In_ const void*);</div>
+<div class="expanded">[[noreturn]]  <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrRethrow@void(void const *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrRethrow</div></div></div>(  <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>*);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE void __CLRCALL_PURE_OR_CDECL __ExceptionPtrCopyException(</div>
+<div class="expanded"> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__ExceptionPtrCopyException@void(void *, void const *, void const *)[decl0]"><div><div class="token cpp_function">__ExceptionPtrCopyException</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">	_Inout_ void*, _In_ const void*, _In_ const void*);</div>
+<div class="expanded">	  <div class="token cpp_keyword ">void</div>*,   <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>*,   <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>*);</div></div>
+
+<div class="expandable"><div class="disabled">_STD_BEGIN</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[12]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+
+<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::exception_ptr"><div><div class="token cpp_type">exception_ptr</div></div></div>
+	{
+<div class="token cpp_keyword ">public</div>:
+	<div class="def" id="FB$std::exception_ptr::$__ctor@()[impl0]"><div><div class="token cpp_function">exception_ptr</div></div></div>() <div class="token cpp_keyword ">noexcept</div>
+		{
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrCreate@void(void *)'], ['__ExceptionPtrCreate@void(void *)'], [], [])"><div class="token cpp_function">__ExceptionPtrCreate</div></div>(<div class="token cpp_keyword ">this</div>);
+		}
+
+	<div class="def" id="FB$std::exception_ptr::$__ctor@(::std::nullptr_t)[impl0]"><div><div class="token cpp_function">exception_ptr</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::nullptr_t'], [], [])"><div class="token cpp_type">nullptr_t</div></div>) <div class="token cpp_keyword ">noexcept</div>
+		{
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrCreate@void(void *)'], ['__ExceptionPtrCreate@void(void *)'], [], [])"><div class="token cpp_function">__ExceptionPtrCreate</div></div>(<div class="token cpp_keyword ">this</div>);
+		}
+
+	<div class="def" id="FB$std::exception_ptr::~exception_ptr@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">exception_ptr</div></div></div>() <div class="token cpp_keyword ">noexcept</div>
+		{
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrDestroy@void(void *)'], ['__ExceptionPtrDestroy@void(void *)'], [], [])"><div class="token cpp_function">__ExceptionPtrDestroy</div></div>(<div class="token cpp_keyword ">this</div>);
+		}
+
+	<div class="def" id="FB$std::exception_ptr::$__ctor@(::std::exception_ptr const &)[impl0]"><div><div class="token cpp_function">exception_ptr</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::exception_ptr::$__ctor@(::std::exception_ptr const &)[impl0]::_Rhs"><div><div class="token cpp_argument">_Rhs</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
+		{
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrCopy@void(void *, void const *)'], ['__ExceptionPtrCopy@void(void *, void const *)'], [], [])"><div class="token cpp_function">__ExceptionPtrCopy</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::$__ctor@(::std::exception_ptr const &)[impl0]::_Rhs'], [], [])"><div class="token cpp_argument">_Rhs</div></div>);
+		}
+
+	<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="FB$std::exception_ptr::operator =@::std::exception_ptr &(::std::exception_ptr const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::exception_ptr::operator =@::std::exception_ptr &(::std::exception_ptr const &)[impl0]::_Rhs"><div><div class="token cpp_argument">_Rhs</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
+		{
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrAssign@void(void *, void const *)'], ['__ExceptionPtrAssign@void(void *, void const *)'], [], [])"><div class="token cpp_function">__ExceptionPtrAssign</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::operator =@::std::exception_ptr &(::std::exception_ptr const &)[impl0]::_Rhs'], [], [])"><div class="token cpp_argument">_Rhs</div></div>);
+		<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
+		}
+
+	<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="FB$std::exception_ptr::operator =@::std::exception_ptr &(::std::nullptr_t)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::nullptr_t'], [], [])"><div class="token cpp_type">nullptr_t</div></div>) <div class="token cpp_keyword ">noexcept</div>
+		{
+		<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="NI$std::exception_ptr::operator =@::std::exception_ptr &(::std::nullptr_t)[impl0]::_Ptr"><div>_Ptr</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrAssign@void(void *, void const *)'], ['__ExceptionPtrAssign@void(void *, void const *)'], [], [])"><div class="token cpp_function">__ExceptionPtrAssign</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::operator =@::std::exception_ptr &(::std::nullptr_t)[impl0]::_Ptr'], [], [])">_Ptr</div>);
+		<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
+		}
+
+	<div class="token cpp_keyword ">explicit</div> <div class="def" id="FB$std::exception_ptr::$__type@bool()[impl0]"><div><div class="token cpp_keyword ">operator</div></div></div> <div class="token cpp_keyword ">bool</div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div>
+		{
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['__ExceptionPtrToBool@bool(void const *)'], ['__ExceptionPtrToBool@bool(void const *)'], [], [])"><div class="token cpp_function">__ExceptionPtrToBool</div></div>(<div class="token cpp_keyword ">this</div>);
+		}
+
+	[[noreturn]] <div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::exception_ptr::_RethrowException@void()[impl0]"><div><div class="token cpp_function">_RethrowException</div></div></div>() <div class="token cpp_keyword ">const</div>
+		{
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrRethrow@void(void const *)'], ['__ExceptionPtrRethrow@void(void const *)'], [], [])"><div class="token cpp_function">__ExceptionPtrRethrow</div></div>(<div class="token cpp_keyword ">this</div>);
+		}
+
+	<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="FB$std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]"><div><div class="token cpp_function">_Current_exception</div></div></div>() <div class="token cpp_keyword ">noexcept</div>
+		{
+		<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="NI$std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]::_Retval"><div>_Retval</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrCurrentException@void(void *)'], ['__ExceptionPtrCurrentException@void(void *)'], [], [])"><div class="token cpp_function">__ExceptionPtrCurrentException</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]::_Retval'], [], [])">_Retval</div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]::_Retval'], [], [])">_Retval</div>;
+		}
+
+<div class="expandable"><div class="disabled">	static exception_ptr _Copy_exception(_In_ void* _Except, _In_ const void* _Ptr)</div>
+<div class="expanded">	<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="FB$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]"><div><div class="token cpp_function">_Copy_exception</div></div></div>(  <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Except"><div><div class="token cpp_argument">_Except</div></div></div>,   <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Ptr"><div><div class="token cpp_argument">_Ptr</div></div></div>)</div></div>
+		{
+		<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Retval"><div>_Retval</div></div>;
+		<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>)
+			{
+			<div class="token cpp_comment ">// unsupported exceptions</div>
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Retval'], [], [])">_Retval</div>;
+			}
+		<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrCopyException@void(void *, void const *, void const *)'], ['__ExceptionPtrCopyException@void(void *, void const *, void const *)'], [], [])"><div class="token cpp_function">__ExceptionPtrCopyException</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Retval'], [], [])">_Retval</div>, <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Except'], [], [])"><div class="token cpp_argument">_Except</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Retval'], [], [])">_Retval</div>;
+		}
+
+<div class="token cpp_keyword ">private</div>:
+<div class="disabled">#ifdef __clang__</div>
+<div class="disabled"> #pragma clang diagnostic push</div>
+<div class="disabled"> #pragma clang diagnostic ignored &quot;-Wunused-private-field&quot;</div>
+<div class="disabled">#endif /* __clang__ */</div>
+	<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$std::exception_ptr::_Data1"><div><div class="token cpp_field">_Data1</div></div></div>;
+	<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$std::exception_ptr::_Data2"><div><div class="token cpp_field">_Data2</div></div></div>;
+<div class="disabled">#ifdef __clang__</div>
+<div class="disabled"> #pragma clang diagnostic pop</div>
+<div class="disabled">#endif /* __clang__ */</div>
+	};
+
+<div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]"><div><div class="token cpp_function">swap</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Lhs"><div><div class="token cpp_argument">_Lhs</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Rhs"><div><div class="token cpp_argument">_Rhs</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
+	{
+	<div class="ref" onclick="jumpToSymbol(['__ExceptionPtrSwap@void(void *, void *)'], ['__ExceptionPtrSwap@void(void *, void *)'], [], [])"><div class="token cpp_function">__ExceptionPtrSwap</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Lhs'], [], [])"><div class="token cpp_argument">_Lhs</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Rhs'], [], [])"><div class="token cpp_argument">_Rhs</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">_NODISCARD inline bool operator==(const exception_ptr&amp; _Lhs, const exception_ptr&amp; _Rhs) noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs"><div><div class="token cpp_argument">_Lhs</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs"><div><div class="token cpp_argument">_Rhs</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{
+	<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['__ExceptionPtrCompare@bool(void const *, void const *)'], ['__ExceptionPtrCompare@bool(void const *, void const *)'], [], [])"><div class="token cpp_function">__ExceptionPtrCompare</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs'], [], [])"><div class="token cpp_argument">_Lhs</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs'], [], [])"><div class="token cpp_argument">_Rhs</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">_NODISCARD inline bool operator==(nullptr_t, const exception_ptr&amp; _Rhs) noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::nullptr_t'], [], [])"><div class="token cpp_type">nullptr_t</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs"><div><div class="token cpp_argument">_Rhs</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{
+	<div class="token cpp_keyword ">return</div> !<div class="ref" onclick="jumpToSymbol([], ['std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs'], [], [])"><div class="token cpp_argument">_Rhs</div></div>;
+	}
+
+<div class="expandable"><div class="disabled">_NODISCARD inline bool operator==(const exception_ptr&amp; _Lhs, nullptr_t) noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs"><div><div class="token cpp_argument">_Lhs</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::nullptr_t'], [], [])"><div class="token cpp_type">nullptr_t</div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{
+	<div class="token cpp_keyword ">return</div> !<div class="ref" onclick="jumpToSymbol([], ['std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs'], [], [])"><div class="token cpp_argument">_Lhs</div></div>;
+	}
+
+<div class="expandable"><div class="disabled">_NODISCARD inline bool operator!=(const exception_ptr&amp; _Lhs, const exception_ptr&amp; _Rhs) noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs"><div><div class="token cpp_argument">_Lhs</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs"><div><div class="token cpp_argument">_Rhs</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{
+	<div class="token cpp_keyword ">return</div> !(<div class="ref" onclick="jumpToSymbol([], ['std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs'], [], [])"><div class="token cpp_argument">_Lhs</div></div> <div class="ref" onclick="jumpToSymbol(['std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)'], [], [], [])"><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs'], [], [])"><div class="token cpp_argument">_Rhs</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">_NODISCARD inline bool operator!=(nullptr_t _Lhs, const exception_ptr&amp; _Rhs) noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::nullptr_t'], [], [])"><div class="token cpp_type">nullptr_t</div></div> <div class="def" id="NI$std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Lhs"><div><div class="token cpp_argument">_Lhs</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs"><div><div class="token cpp_argument">_Rhs</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{
+	<div class="token cpp_keyword ">return</div> !(<div class="ref" onclick="jumpToSymbol([], ['std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Lhs'], [], [])"><div class="token cpp_argument">_Lhs</div></div> <div class="ref" onclick="jumpToSymbol(['std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)'], [], [], [])"><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs'], [], [])"><div class="token cpp_argument">_Rhs</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">_NODISCARD inline bool operator!=(const exception_ptr&amp; _Lhs, nullptr_t _Rhs) noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>&amp; <div class="def" id="NI$std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs"><div><div class="token cpp_argument">_Lhs</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::nullptr_t'], [], [])"><div class="token cpp_type">nullptr_t</div></div> <div class="def" id="NI$std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Rhs"><div><div class="token cpp_argument">_Rhs</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{
+	<div class="token cpp_keyword ">return</div> !(<div class="ref" onclick="jumpToSymbol([], ['std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs'], [], [])"><div class="token cpp_argument">_Lhs</div></div> <div class="ref" onclick="jumpToSymbol(['std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)'], [], [], [])"><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Rhs'], [], [])"><div class="token cpp_argument">_Rhs</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">_NODISCARD inline exception_ptr current_exception() noexcept</div>
+<div class="expanded"> <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="FB$std::current_exception@::std::exception_ptr()[impl0]"><div><div class="token cpp_function">current_exception</div></div></div>() <div class="token cpp_keyword ">noexcept</div></div></div>
+	{
+	<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>::<div class="ref" onclick="jumpToSymbol(['std::exception_ptr::_Current_exception@::std::exception_ptr()'], ['std::exception_ptr::_Current_exception@::std::exception_ptr()'], [], [])"><div class="token cpp_function">_Current_exception</div></div>();
+	}
+
+<div class="expandable"><div class="disabled">[[noreturn]] inline void rethrow_exception(_In_ exception_ptr _Ptr)</div>
+<div class="expanded">[[noreturn]] <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::rethrow_exception@void(::std::exception_ptr)[impl0]"><div><div class="token cpp_function">rethrow_exception</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="NI$std::rethrow_exception@void(::std::exception_ptr)[impl0]::_Ptr"><div><div class="token cpp_argument">_Ptr</div></div></div>)</div></div>
+	{
+	<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_exception@void(::std::exception_ptr)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>.<div class="ref" onclick="jumpToSymbol(['std::exception_ptr::_RethrowException@void()'], ['std::exception_ptr::_RethrowException@void()'], [], [])"><div class="token cpp_function">_RethrowException</div></div>();
+	}
+
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::__GetExceptionInfo@void *([_Ex])[decl0]::_Ex"><div><div class="token cpp_type">_Ex</div></div></div>&gt; <div class="token cpp_keyword ">void</div> *<div class="def" id="FB$std::__GetExceptionInfo@void *([_Ex])[decl0]"><div><div class="token cpp_function">__GetExceptionInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::__GetExceptionInfo@void *([_Ex])[decl0]::_Ex'], [], [])"><div class="token cpp_type">_Ex</div></div>);
+
+<div class="expandable"><div class="disabled">template&lt;class _Ex&gt; _NODISCARD exception_ptr make_exception_ptr(_Ex _Except) noexcept</div>
+<div class="expanded"><div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Ex"><div><div class="token cpp_type">_Ex</div></div></div>&gt;  <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="FB$std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]"><div><div class="token cpp_function">make_exception_ptr</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Ex'], [], [])"><div class="token cpp_type">_Ex</div></div> <div class="def" id="NI$std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Except"><div><div class="token cpp_argument">_Except</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+	{
+<div class="expandable"><div class="disabled">	return exception_ptr::_Copy_exception(_STD addressof(_Except), __GetExceptionInfo(_Except));</div>
+<div class="expanded">	<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)'], [], [])"><div class="token cpp_function">_Copy_exception</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::addressof@[_Ty] *([_Ty] &)', 'std::addressof@[_Ty] const *([_Ty] const &&)'], [], [])"><div class="token cpp_function">addressof</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Except'], [], [])"><div class="token cpp_argument">_Except</div></div>), <div class="ref" onclick="jumpToSymbol(['std::__GetExceptionInfo@void *([_Ex])'], ['std::__GetExceptionInfo@void *([_Ex])'], [], [])"><div class="token cpp_function">__GetExceptionInfo</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Except'], [], [])"><div class="token cpp_argument">_Except</div></div>));</div></div>
+	}
+
+	<div class="token cpp_comment ">// CLASS nested_exception</div>
+<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::nested_exception"><div><div class="token cpp_type">nested_exception</div></div></div>
+	{	<div class="token cpp_comment ">// wrap an exception_ptr</div>
+<div class="token cpp_keyword ">public</div>:
+	<div class="def" id="FB$std::nested_exception::$__ctor@()[impl0]"><div><div class="token cpp_function">nested_exception</div></div></div>() <div class="token cpp_keyword ">noexcept</div>
+<div class="expandable"><div class="disabled">		: _Exc(_STD current_exception())</div>
+<div class="expanded">		: _Exc(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::current_exception@::std::exception_ptr()'], ['std::current_exception@::std::exception_ptr()'], [], [])"><div class="token cpp_function">current_exception</div></div>())</div></div>
+		{	<div class="token cpp_comment ">// default construct</div>
+		}
+
+	<div class="def" id="FB$std::nested_exception::$__ctor@(::std::nested_exception const &)[decl0]"><div><div class="token cpp_function">nested_exception</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>&amp;) <div class="token cpp_keyword ">noexcept</div> = <div class="token cpp_keyword ">default</div>;
+	<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>&amp; <div class="def" id="FB$std::nested_exception::operator =@::std::nested_exception &(::std::nested_exception const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>&amp;) <div class="token cpp_keyword ">noexcept</div> = <div class="token cpp_keyword ">default</div>;
+	<div class="token cpp_keyword ">virtual</div> <div class="def" id="FB$std::nested_exception::~nested_exception@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">nested_exception</div></div></div>() <div class="token cpp_keyword ">noexcept</div>
+		{
+		}
+
+	[[noreturn]] <div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::nested_exception::rethrow_nested@void()[impl0]"><div><div class="token cpp_function">rethrow_nested</div></div></div>() <div class="token cpp_keyword ">const</div>
+		{	<div class="token cpp_comment ">// throw wrapped exception_ptr</div>
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception::_Exc'], [], [])"><div class="token cpp_field">_Exc</div></div>)
+<div class="expandable"><div class="disabled">			_STD rethrow_exception(_Exc);</div>
+<div class="expanded">			::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::rethrow_exception@void(::std::exception_ptr)'], ['std::rethrow_exception@void(::std::exception_ptr)'], [], [])"><div class="token cpp_function">rethrow_exception</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception::_Exc'], [], [])"><div class="token cpp_field">_Exc</div></div>);</div></div>
+		<div class="token cpp_keyword ">else</div>
+<div class="expandable"><div class="disabled">			_STD terminate();</div>
+<div class="expanded">			::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['terminate@void()'], ['terminate@void()'], [], [])"><div class="token cpp_function">terminate</div></div>();</div></div>
+		}
+
+<div class="expandable"><div class="disabled">	_NODISCARD exception_ptr nested_ptr() const noexcept</div>
+<div class="expanded">	 <div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="FB$std::nested_exception::nested_ptr@::std::exception_ptr()[impl0]"><div><div class="token cpp_function">nested_ptr</div></div></div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// return wrapped exception_ptr</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception::_Exc'], [], [])"><div class="token cpp_field">_Exc</div></div>);
+		}
+
+<div class="token cpp_keyword ">private</div>:
+	<div class="ref" onclick="jumpToSymbol([], ['std::exception_ptr'], [], [])"><div class="token cpp_type">exception_ptr</div></div> <div class="def" id="NI$std::nested_exception::_Exc"><div><div class="token cpp_field">_Exc</div></div></div>;
+	};
+
+	<div class="token cpp_comment ">// FUNCTION TEMPLATE throw_with_nested</div>
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_With_nested::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>,
+	<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_With_nested::_Uty"><div><div class="token cpp_type">_Uty</div></div></div>&gt;
+	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$std::_With_nested"><div><div class="token cpp_type">_With_nested</div></div></div>
+		: <div class="ref" onclick="jumpToSymbol([], ['std::_With_nested::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>
+	{	<div class="token cpp_comment ">// glue user exception to nested_exception</div>
+	<div class="token cpp_keyword ">explicit</div> <div class="def" id="FB$std::_With_nested::$__ctor@([_Ty] &&)[impl0]"><div><div class="token cpp_function">_With_nested</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_With_nested::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&amp;&amp; <div class="def" id="NI$std::_With_nested::$__ctor@([_Ty] &&)[impl0]::_Arg"><div><div class="token cpp_argument">_Arg</div></div></div>)
+<div class="expandable"><div class="disabled">		: _Uty(_STD forward&lt;_Ty&gt;(_Arg)), nested_exception()</div>
+<div class="expanded">		: <div class="ref" onclick="jumpToSymbol([], ['std::_With_nested::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], ['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], [], [])"><div class="token cpp_function">forward</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_With_nested::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::_With_nested::$__ctor@([_Ty] &&)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>)), <div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>()</div></div>
+		{	<div class="token cpp_comment ">// store user exception and current_exception()</div>
+		}
+	};
+
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt;
+	[[noreturn]] <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]"><div><div class="token cpp_function">_Throw_with_nested</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&amp;&amp; <div class="def" id="NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Arg"><div><div class="token cpp_argument">_Arg</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::true_type'], [], [])"><div class="token cpp_type">true_type</div></div>)
+	{	<div class="token cpp_comment ">// throw user exception glued to nested_exception</div>
+	<div class="token cpp_keyword ">using</div> <div class="def" id="NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Uty"><div><div class="token cpp_type">_Uty</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::decay_t'], [], [])"><div class="token cpp_type">decay_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;;
+	<div class="token cpp_keyword ">using</div> <div class="def" id="NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Glued"><div><div class="token cpp_type">_Glued</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::_With_nested'], [], [])"><div class="token cpp_type">_With_nested</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;;
+
+<div class="expandable"><div class="disabled">	_THROW(_Glued(_STD forward&lt;_Ty&gt;(_Arg)));</div>
+<div class="expanded">	<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Glued'], [], [])"><div class="token cpp_type">_Glued</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], ['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], [], [])"><div class="token cpp_function">forward</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>));</div></div>
+	}
+
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt;
+	[[noreturn]] <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]"><div><div class="token cpp_function">_Throw_with_nested</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&amp;&amp; <div class="def" id="NI$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Arg"><div><div class="token cpp_argument">_Arg</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::false_type'], [], [])"><div class="token cpp_type">false_type</div></div>)
+	{	<div class="token cpp_comment ">// throw user exception by itself</div>
+<div class="expandable"><div class="disabled">	_THROW(_STD forward&lt;_Ty&gt;(_Arg));</div>
+<div class="expanded">	<div class="token cpp_keyword ">throw</div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], ['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], [], [])"><div class="token cpp_function">forward</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>);</div></div>
+	}
+
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt;
+	[[noreturn]] <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::throw_with_nested@void([_Ty] &&)[impl0]"><div><div class="token cpp_function">throw_with_nested</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&amp;&amp; <div class="def" id="NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Arg"><div><div class="token cpp_argument">_Arg</div></div></div>)
+	{	<div class="token cpp_comment ">// throw user exception, glued to nested_exception if possible</div>
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::decay_t'], [], [])"><div class="token cpp_type">decay_t</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt; <div class="def" id="NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty"><div><div class="token cpp_type">_Uty</div></div></div>;
+
+	<div class="ref" onclick="jumpToSymbol([], ['std::bool_constant'], [], [])"><div class="token cpp_type">bool_constant</div></div>&lt;
+		<div class="ref" onclick="jumpToSymbol([], ['std::is_class_v'], [], [])"><div class="token cpp_enum">is_class_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;
+		&amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['std::is_base_of_v'], [], [])"><div class="token cpp_enum">is_base_of_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;
+		&amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['std::is_final_v'], [], [])"><div class="token cpp_enum">is_final_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'], [], [])"><div class="token cpp_type">_Uty</div></div>&gt;&gt; <div class="def" id="NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Tag"><div>_Tag</div></div>;
+
+<div class="expandable"><div class="disabled">	_Throw_with_nested(_STD forward&lt;_Ty&gt;(_Arg), _Tag);</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)', 'std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)'], [], [])"><div class="token cpp_function">_Throw_with_nested</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], ['std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)', 'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)'], [], [])"><div class="token cpp_function">forward</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>), <div class="ref" onclick="jumpToSymbol([], ['std::throw_with_nested@void([_Ty] &&)[impl0]::_Tag'], [], [])">_Tag</div>);</div></div>
+	}
+
+<div class="disabled">#ifdef _CPPRTTI</div>
+	<div class="token cpp_comment ">// FUNCTION TEMPLATE rethrow_if_nested</div>
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt; <div class="token cpp_keyword ">inline</div>
+	<div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]"><div><div class="token cpp_function">_Rethrow_if_nested</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div> *<div class="def" id="NI$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ptr"><div><div class="token cpp_argument">_Ptr</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::true_type'], [], [])"><div class="token cpp_type">true_type</div></div>)
+	{	<div class="token cpp_comment ">// use dynamic_cast</div>
+	<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">auto</div> <div class="def" id="NI$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Nested"><div>_Nested</div></div> = <div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div> *&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>);
+
+	<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Nested'], [], [])">_Nested</div>)
+		<div class="ref" onclick="jumpToSymbol([], ['std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Nested'], [], [])">_Nested</div>-&gt;<div class="ref" onclick="jumpToSymbol(['std::nested_exception::rethrow_nested@void()'], ['std::nested_exception::rethrow_nested@void()'], [], [])"><div class="token cpp_function">rethrow_nested</div></div>();
+	}
+
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)[impl0]::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt; <div class="token cpp_keyword ">inline</div>
+	<div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)[impl0]"><div><div class="token cpp_function">_Rethrow_if_nested</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div> *, <div class="ref" onclick="jumpToSymbol([], ['std::false_type'], [], [])"><div class="token cpp_type">false_type</div></div>)
+	{	<div class="token cpp_comment ">// can&apos;t use dynamic_cast</div>
+	}
+
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty"><div><div class="token cpp_type">_Ty</div></div></div>&gt; <div class="token cpp_keyword ">inline</div>
+	<div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::rethrow_if_nested@void([_Ty] const &)[impl0]"><div><div class="token cpp_function">rethrow_if_nested</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&amp; <div class="def" id="NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Arg"><div><div class="token cpp_argument">_Arg</div></div></div>)
+	{	<div class="token cpp_comment ">// detect nested_exception inheritance</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::bool_constant'], [], [])"><div class="token cpp_type">bool_constant</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::is_polymorphic_v'], [], [])"><div class="token cpp_enum">is_polymorphic_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt; &amp;&amp; (!<div class="ref" onclick="jumpToSymbol([], ['std::is_base_of_v'], [], [])"><div class="token cpp_enum">is_base_of_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div>&gt;
+		|| <div class="ref" onclick="jumpToSymbol([], ['std::is_convertible_v'], [], [])"><div class="token cpp_enum">is_convertible_v</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'], [], [])"><div class="token cpp_type">_Ty</div></div> *, <div class="ref" onclick="jumpToSymbol([], ['std::nested_exception'], [], [])"><div class="token cpp_type">nested_exception</div></div> *&gt;)&gt; <div class="def" id="NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Tag"><div>_Tag</div></div>;
+
+<div class="expandable"><div class="disabled">	_Rethrow_if_nested(_STD addressof(_Arg), _Tag);</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)', 'std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)'], [], [])"><div class="token cpp_function">_Rethrow_if_nested</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::addressof@[_Ty] *([_Ty] &)'], ['std::addressof@[_Ty] *([_Ty] &)', 'std::addressof@[_Ty] const *([_Ty] const &&)'], [], [])"><div class="token cpp_function">addressof</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Arg'], [], [])"><div class="token cpp_argument">_Arg</div></div>), <div class="ref" onclick="jumpToSymbol([], ['std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Tag'], [], [])">_Tag</div>);</div></div>
+	}
+<div class="disabled">#else /* _CPPRTTI */</div>
+<div class="disabled">template&lt;class _Ty&gt;</div>
+<div class="disabled">	void rethrow_if_nested(const _Ty&amp;) = delete;	// requires /GR option
+#endif /* _CPPRTTI */</div>
+
+<div class="expandable"><div class="disabled">_STD_END</div>
+<div class="expanded">}</div></div>
+
+<div class="disabled"> #pragma pop_macro(&quot;new&quot;)</div>
+<div class="disabled"> _STL_RESTORE_CLANG_WARNINGS</div>
+<div class="expandable"><div class="disabled"> #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+<div class="expandable"><div class="disabled"> #pragma pack(pop)</div>
+<div class="expanded">#pragma pack(pop)</div></div>
+
+<div class="disabled">#endif /* RC_INVOKED */
+#endif /* _EXCEPTION_ */</div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) by P.J. Plauger. All rights reserved.
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '__ExceptionPtrAssign@void(void *, void const *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrAssign</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrAssign@void(void *, void const *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrCompare@bool(void const *, void const *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrCompare</span>(<span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrCompare@bool(void const *, void const *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrCopy@void(void *, void const *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrCopy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrCopy@void(void *, void const *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrCopyException@void(void *, void const *, void const *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrCopyException</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrCopyException@void(void *, void const *, void const *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrCreate@void(void *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrCreate</span>(<span class="cpp_keyword">void</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrCreate@void(void *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrCurrentException@void(void *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrCurrentException</span>(<span class="cpp_keyword">void</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrCurrentException@void(void *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrDestroy@void(void *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrDestroy</span>(<span class="cpp_keyword">void</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrDestroy@void(void *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrRethrow@void(void const *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrRethrow</span>(<span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrRethrow@void(void const *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrSwap@void(void *, void *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrSwap</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrSwap@void(void *, void *)[decl0]'
+        ]
+    },
+    '__ExceptionPtrToBool@bool(void const *)': {
+        'displayNameInHtml': '<span class="cpp_function">__ExceptionPtrToBool</span>(<span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__ExceptionPtrToBool@bool(void const *)[decl0]'
+        ]
+    },
+    '_get_terminate@::terminate_handler()': {
+        'displayNameInHtml': '<span class="cpp_function">_get_terminate</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_get_terminate@::terminate_handler()[decl0]'
+        ]
+    },
+    '_get_unexpected@::unexpected_handler()': {
+        'displayNameInHtml': '<span class="cpp_function">_get_unexpected</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_get_unexpected@::unexpected_handler()[decl0]'
+        ]
+    },
+    'set_terminate@::terminate_handler(::terminate_handler)': {
+        'displayNameInHtml': '<span class="cpp_function">set_terminate</span>(<span class="cpp_type">terminate_handler</span>)',
+        'impls': [],
+        'decls': [
+            'FB$set_terminate@::terminate_handler(::terminate_handler)[decl0]'
+        ]
+    },
+    'set_unexpected@::unexpected_handler(::unexpected_handler)': {
+        'displayNameInHtml': '<span class="cpp_function">set_unexpected</span>(<span class="cpp_type">unexpected_handler</span>)',
+        'impls': [],
+        'decls': [
+            'FB$set_unexpected@::unexpected_handler(::unexpected_handler)[decl0]'
+        ]
+    },
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std',
+            'NF[1]$std',
+            'NF[2]$std',
+            'NF[3]$std',
+            'NF[4]$std',
+            'NF[5]$std',
+            'NF[6]$std',
+            'NF[7]$std',
+            'NF[8]$std',
+            'NF[9]$std',
+            'NF[10]$std',
+            'NF[11]$std',
+            'NF[12]$std',
+            'NF[13]$std',
+            'NF[14]$std',
+            'NF[15]$std',
+            'NF[16]$std',
+            'NF[17]$std',
+            'NF[18]$std',
+            'NF[19]$std',
+            'NF[20]$std',
+            'NF[21]$std',
+            'NF[22]$std',
+            'NF[23]$std',
+            'NF[24]$std',
+            'NF[25]$std',
+            'NF[26]$std',
+            'NF[27]$std',
+            'NF[28]$std',
+            'NF[29]$std',
+            'NF[30]$std',
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std',
+            'NF[37]$std',
+            'NF[38]$std',
+            'NF[39]$std',
+            'NF[40]$std',
+            'NF[41]$std',
+            'NF[42]$std',
+            'NF[43]$std',
+            'NF[44]$std',
+            'NF[45]$std',
+            'NF[46]$std',
+            'NF[47]$std',
+            'NF[48]$std',
+            'NF[49]$std',
+            'NF[50]$std',
+            'NF[51]$std',
+            'NF[52]$std',
+            'NF[53]$std',
+            'NF[54]$std',
+            'NF[55]$std',
+            'NF[56]$std',
+            'NF[57]$std',
+            'NF[58]$std',
+            'NF[59]$std',
+            'NF[60]$std',
+            'NF[61]$std'
+        ]
+    },
+    'std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)': {
+        'displayNameInHtml': '<span class="cpp_function">_Rethrow_if_nested</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">_Ty</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">false_type</span>)',
+        'impls': [
+            'FB$std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)[impl0]::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
+        'impls': [
+            'TA$std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)[impl0]::_Ty'
+        ],
+        'decls': []
+    },
+    'std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)': {
+        'displayNameInHtml': '<span class="cpp_function">_Rethrow_if_nested</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">_Ty</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">true_type</span>)',
+        'impls': [
+            'FB$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Nested': {
+        'displayNameInHtml': '_Nested',
+        'impls': [
+            'NI$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Nested'
+        ],
+        'decls': []
+    },
+    'std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ptr': {
+        'displayNameInHtml': '_Ptr',
+        'impls': [
+            'NI$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ptr'
+        ],
+        'decls': []
+    },
+    'std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
+        'impls': [
+            'TA$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ty'
+        ],
+        'decls': []
+    },
+    'std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)': {
+        'displayNameInHtml': '<span class="cpp_function">_Throw_with_nested</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">_Ty</span> &&, <span class="cpp_type">false_type</span>)',
+        'impls': [
+            'FB$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Arg': {
+        'displayNameInHtml': '_Arg',
+        'impls': [
+            'NI$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Arg'
+        ],
+        'decls': []
+    },
+    'std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
+        'impls': [
+            'TA$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Ty'
+        ],
+        'decls': []
+    },
+    'std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)': {
+        'displayNameInHtml': '<span class="cpp_function">_Throw_with_nested</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">_Ty</span> &&, <span class="cpp_type">true_type</span>)',
+        'impls': [
+            'FB$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Arg': {
+        'displayNameInHtml': '_Arg',
+        'impls': [
+            'NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Arg'
+        ],
+        'decls': []
+    },
+    'std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Glued': {
+        'displayNameInHtml': '<span class="cpp_function">_Throw_with_nested</span>&lt;<span class="cpp_type">_Ty</span>&gt;::$::<span class="cpp_type">_Glued</span>',
+        'impls': [
+            'NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Glued'
+        ],
+        'decls': []
+    },
+    'std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
+        'impls': [
+            'TA$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Ty'
+        ],
+        'decls': []
+    },
+    'std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Uty': {
+        'displayNameInHtml': '<span class="cpp_function">_Throw_with_nested</span>&lt;<span class="cpp_type">_Ty</span>&gt;::$::<span class="cpp_type">_Uty</span>',
+        'impls': [
+            'NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Uty'
+        ],
+        'decls': []
+    },
+    'std::_With_nested': {
+        'displayNameInHtml': '<span class="cpp_type">_With_nested</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Uty</span>&gt;',
+        'impls': [
+            'NI$std::_With_nested'
+        ],
+        'decls': []
+    },
+    'std::_With_nested::$__ctor@([_Ty] &&)[impl0]::_Arg': {
+        'displayNameInHtml': '_Arg',
+        'impls': [
+            'NI$std::_With_nested::$__ctor@([_Ty] &&)[impl0]::_Arg'
+        ],
+        'decls': []
+    },
+    'std::_With_nested::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
+        'impls': [
+            'TA$std::_With_nested::_Ty'
+        ],
+        'decls': []
+    },
+    'std::_With_nested::_Uty': {
+        'displayNameInHtml': '<span class="cpp_type">_Uty</span>',
+        'impls': [
+            'TA$std::_With_nested::_Uty'
+        ],
+        'decls': []
+    },
+    'std::__GetExceptionInfo@void *([_Ex])': {
+        'displayNameInHtml': '<span class="cpp_function">__GetExceptionInfo</span>&lt;<span class="cpp_type">_Ex</span>&gt;(<span class="cpp_type">_Ex</span>)',
+        'impls': [],
+        'decls': [
+            'FB$std::__GetExceptionInfo@void *([_Ex])[decl0]'
+        ]
+    },
+    'std::__GetExceptionInfo@void *([_Ex])[decl0]::_Ex': {
+        'displayNameInHtml': '<span class="cpp_type">_Ex</span>',
+        'impls': [
+            'TA$std::__GetExceptionInfo@void *([_Ex])[decl0]::_Ex'
+        ],
+        'decls': []
+    },
+    'std::addressof@[_Ty] *([_Ty] &)': {
+        'displayNameInHtml': '<span class="cpp_function">addressof</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">_Ty</span> &)',
+        'impls': [
+            'FB$std::addressof@[_Ty] *([_Ty] &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::addressof@[_Ty] const *([_Ty] const &&)': {
+        'displayNameInHtml': '<span class="cpp_function">addressof</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">_Ty</span><span class="cpp_keyword"> const</span> &&)',
+        'impls': [],
+        'decls': [
+            'FB$std::addressof@[_Ty] const *([_Ty] const &&)[decl0]'
+        ]
+    },
+    'std::bool_constant': {
+        'displayNameInHtml': '<span class="cpp_type">bool_constant</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;',
+        'impls': [
+            'NI$std::bool_constant'
+        ],
+        'decls': []
+    },
+    'std::current_exception@::std::exception_ptr()': {
+        'displayNameInHtml': '<span class="cpp_function">current_exception</span>()',
+        'impls': [
+            'FB$std::current_exception@::std::exception_ptr()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::decay_t': {
+        'displayNameInHtml': '<span class="cpp_type">decay_t</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'impls': [
+            'NI$std::decay_t'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr': {
+        'displayNameInHtml': '<span class="cpp_type">exception_ptr</span>',
+        'impls': [
+            'NI$std::exception_ptr'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::$__ctor@(::std::exception_ptr const &)[impl0]::_Rhs': {
+        'displayNameInHtml': '_Rhs',
+        'impls': [
+            'NI$std::exception_ptr::$__ctor@(::std::exception_ptr const &)[impl0]::_Rhs'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)': {
+        'displayNameInHtml': '<span class="cpp_type">exception_ptr</span>::<span class="cpp_function">_Copy_exception</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Except': {
+        'displayNameInHtml': '_Except',
+        'impls': [
+            'NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Except'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Ptr': {
+        'displayNameInHtml': '_Ptr',
+        'impls': [
+            'NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Ptr'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Retval': {
+        'displayNameInHtml': '_Retval',
+        'impls': [
+            'NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Retval'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::_Current_exception@::std::exception_ptr()': {
+        'displayNameInHtml': '<span class="cpp_type">exception_ptr</span>::<span class="cpp_function">_Current_exception</span>()',
+        'impls': [
+            'FB$std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]::_Retval': {
+        'displayNameInHtml': '_Retval',
+        'impls': [
+            'NI$std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]::_Retval'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::_RethrowException@void()': {
+        'displayNameInHtml': '<span class="cpp_type">exception_ptr</span>::<span class="cpp_function">_RethrowException</span>()',
+        'impls': [
+            'FB$std::exception_ptr::_RethrowException@void()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::operator =@::std::exception_ptr &(::std::exception_ptr const &)[impl0]::_Rhs': {
+        'displayNameInHtml': '_Rhs',
+        'impls': [
+            'NI$std::exception_ptr::operator =@::std::exception_ptr &(::std::exception_ptr const &)[impl0]::_Rhs'
+        ],
+        'decls': []
+    },
+    'std::exception_ptr::operator =@::std::exception_ptr &(::std::nullptr_t)[impl0]::_Ptr': {
+        'displayNameInHtml': '_Ptr',
+        'impls': [
+            'NI$std::exception_ptr::operator =@::std::exception_ptr &(::std::nullptr_t)[impl0]::_Ptr'
+        ],
+        'decls': []
+    },
+    'std::false_type': {
+        'displayNameInHtml': '<span class="cpp_type">false_type</span>',
+        'impls': [
+            'NI$std::false_type'
+        ],
+        'decls': []
+    },
+    'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)': {
+        'displayNameInHtml': '<span class="cpp_function">forward</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">remove_reference_t</span>&lt;<span class="cpp_type">_Ty</span>&gt; &&)',
+        'impls': [
+            'FB$std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">forward</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">remove_reference_t</span>&lt;<span class="cpp_type">_Ty</span>&gt; &)',
+        'impls': [
+            'FB$std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::is_base_of_v': {
+        'displayNameInHtml': '<span class="cpp_enum">is_base_of_v</span>&lt;<span class="cpp_type">_Base</span>, <span class="cpp_type">_Derived</span>&gt;',
+        'impls': [
+            'NI$std::is_base_of_v'
+        ],
+        'decls': []
+    },
+    'std::is_class_v': {
+        'displayNameInHtml': '<span class="cpp_enum">is_class_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'impls': [
+            'NI$std::is_class_v'
+        ],
+        'decls': []
+    },
+    'std::is_convertible_v': {
+        'displayNameInHtml': '<span class="cpp_enum">is_convertible_v</span>&lt;<span class="cpp_type">_From</span>, <span class="cpp_type">_To</span>&gt;',
+        'impls': [
+            'NI$std::is_convertible_v'
+        ],
+        'decls': []
+    },
+    'std::is_final_v': {
+        'displayNameInHtml': '<span class="cpp_enum">is_final_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'impls': [
+            'NI$std::is_final_v'
+        ],
+        'decls': []
+    },
+    'std::is_polymorphic_v': {
+        'displayNameInHtml': '<span class="cpp_enum">is_polymorphic_v</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'impls': [
+            'NI$std::is_polymorphic_v'
+        ],
+        'decls': []
+    },
+    'std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Ex': {
+        'displayNameInHtml': '<span class="cpp_type">_Ex</span>',
+        'impls': [
+            'TA$std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Ex'
+        ],
+        'decls': []
+    },
+    'std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Except': {
+        'displayNameInHtml': '_Except',
+        'impls': [
+            'NI$std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Except'
+        ],
+        'decls': []
+    },
+    'std::nested_exception': {
+        'displayNameInHtml': '<span class="cpp_type">nested_exception</span>',
+        'impls': [
+            'NI$std::nested_exception'
+        ],
+        'decls': []
+    },
+    'std::nested_exception::_Exc': {
+        'displayNameInHtml': '<span class="cpp_type">nested_exception</span>::<span class="cpp_field">_Exc</span>',
+        'impls': [
+            'NI$std::nested_exception::_Exc'
+        ],
+        'decls': []
+    },
+    'std::nested_exception::rethrow_nested@void()': {
+        'displayNameInHtml': '<span class="cpp_type">nested_exception</span>::<span class="cpp_function">rethrow_nested</span>()',
+        'impls': [
+            'FB$std::nested_exception::rethrow_nested@void()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::nullptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">nullptr_t</span>',
+        'impls': [
+            'NI$std::nullptr_t'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs': {
+        'displayNameInHtml': '_Lhs',
+        'impls': [
+            'NI$std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs': {
+        'displayNameInHtml': '_Rhs',
+        'impls': [
+            'NI$std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs': {
+        'displayNameInHtml': '_Lhs',
+        'impls': [
+            'NI$std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Rhs': {
+        'displayNameInHtml': '_Rhs',
+        'impls': [
+            'NI$std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Rhs'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Lhs': {
+        'displayNameInHtml': '_Lhs',
+        'impls': [
+            'NI$std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Lhs'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs': {
+        'displayNameInHtml': '_Rhs',
+        'impls': [
+            'NI$std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs'
+        ],
+        'decls': []
+    },
+    'std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)': {
+        'displayNameInHtml': '<span class="cpp_function">operator ==</span>(<span class="cpp_type">exception_ptr</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">exception_ptr</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs': {
+        'displayNameInHtml': '_Lhs',
+        'impls': [
+            'NI$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs'
+        ],
+        'decls': []
+    },
+    'std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs': {
+        'displayNameInHtml': '_Rhs',
+        'impls': [
+            'NI$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs'
+        ],
+        'decls': []
+    },
+    'std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)': {
+        'displayNameInHtml': '<span class="cpp_function">operator ==</span>(<span class="cpp_type">exception_ptr</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">nullptr_t</span>)',
+        'impls': [
+            'FB$std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs': {
+        'displayNameInHtml': '_Lhs',
+        'impls': [
+            'NI$std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs'
+        ],
+        'decls': []
+    },
+    'std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)': {
+        'displayNameInHtml': '<span class="cpp_function">operator ==</span>(<span class="cpp_type">nullptr_t</span>, <span class="cpp_type">exception_ptr</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs': {
+        'displayNameInHtml': '_Rhs',
+        'impls': [
+            'NI$std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs'
+        ],
+        'decls': []
+    },
+    'std::rethrow_exception@void(::std::exception_ptr)': {
+        'displayNameInHtml': '<span class="cpp_function">rethrow_exception</span>(<span class="cpp_type">exception_ptr</span>)',
+        'impls': [
+            'FB$std::rethrow_exception@void(::std::exception_ptr)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::rethrow_exception@void(::std::exception_ptr)[impl0]::_Ptr': {
+        'displayNameInHtml': '_Ptr',
+        'impls': [
+            'NI$std::rethrow_exception@void(::std::exception_ptr)[impl0]::_Ptr'
+        ],
+        'decls': []
+    },
+    'std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Arg': {
+        'displayNameInHtml': '_Arg',
+        'impls': [
+            'NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Arg'
+        ],
+        'decls': []
+    },
+    'std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Tag': {
+        'displayNameInHtml': '_Tag',
+        'impls': [
+            'NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Tag'
+        ],
+        'decls': []
+    },
+    'std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
+        'impls': [
+            'TA$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Lhs': {
+        'displayNameInHtml': '_Lhs',
+        'impls': [
+            'NI$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Lhs'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Rhs': {
+        'displayNameInHtml': '_Rhs',
+        'impls': [
+            'NI$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Rhs'
+        ],
+        'decls': []
+    },
+    'std::throw_with_nested@void([_Ty] &&)[impl0]::_Arg': {
+        'displayNameInHtml': '_Arg',
+        'impls': [
+            'NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Arg'
+        ],
+        'decls': []
+    },
+    'std::throw_with_nested@void([_Ty] &&)[impl0]::_Tag': {
+        'displayNameInHtml': '_Tag',
+        'impls': [
+            'NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Tag'
+        ],
+        'decls': []
+    },
+    'std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty': {
+        'displayNameInHtml': '<span class="cpp_type">_Ty</span>',
+        'impls': [
+            'TA$std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty'
+        ],
+        'decls': []
+    },
+    'std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty': {
+        'displayNameInHtml': '<span class="cpp_function">throw_with_nested</span>&lt;<span class="cpp_type">_Ty</span>&gt;::$::<span class="cpp_type">_Uty</span>',
+        'impls': [
+            'NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty'
+        ],
+        'decls': []
+    },
+    'std::true_type': {
+        'displayNameInHtml': '<span class="cpp_type">true_type</span>',
+        'impls': [
+            'NI$std::true_type'
+        ],
+        'decls': []
+    },
+    'terminate@void()': {
+        'displayNameInHtml': '<span class="cpp_function">terminate</span>()',
+        'impls': [],
+        'decls': [
+            'FB$terminate@void()[decl0]'
+        ]
+    },
+    'terminate_handler': {
+        'displayNameInHtml': '<span class="cpp_type">terminate_handler</span>',
+        'impls': [
+            'NI$terminate_handler'
+        ],
+        'decls': []
+    },
+    'unexpected@void()': {
+        'displayNameInHtml': '<span class="cpp_function">unexpected</span>()',
+        'impls': [],
+        'decls': [
+            'FB$unexpected@void()[decl0]'
+        ]
+    },
+    'unexpected_handler': {
+        'displayNameInHtml': '<span class="cpp_type">unexpected_handler</span>',
+        'impls': [
+            'NI$unexpected_handler'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$__ExceptionPtrAssign@void(void *, void const *)[decl0]': null,
+    'FB$__ExceptionPtrCompare@bool(void const *, void const *)[decl0]': null,
+    'FB$__ExceptionPtrCopy@void(void *, void const *)[decl0]': null,
+    'FB$__ExceptionPtrCopyException@void(void *, void const *, void const *)[decl0]': null,
+    'FB$__ExceptionPtrCreate@void(void *)[decl0]': null,
+    'FB$__ExceptionPtrCurrentException@void(void *)[decl0]': null,
+    'FB$__ExceptionPtrDestroy@void(void *)[decl0]': null,
+    'FB$__ExceptionPtrRethrow@void(void const *)[decl0]': null,
+    'FB$__ExceptionPtrSwap@void(void *, void *)[decl0]': null,
+    'FB$__ExceptionPtrToBool@bool(void const *)[decl0]': null,
+    'FB$_get_terminate@::terminate_handler()[decl0]': { 'htmlFileName': 'corecrt_terminate.h', 'displayName': 'corecrt_terminate.h' },
+    'FB$_get_unexpected@::unexpected_handler()[decl0]': { 'htmlFileName': 'eh.h', 'displayName': 'eh.h' },
+    'FB$set_terminate@::terminate_handler(::terminate_handler)[decl0]': { 'htmlFileName': 'corecrt_terminate.h', 'displayName': 'corecrt_terminate.h' },
+    'FB$set_unexpected@::unexpected_handler(::unexpected_handler)[decl0]': { 'htmlFileName': 'eh.h', 'displayName': 'eh.h' },
+    'FB$std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)[impl0]': null,
+    'FB$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]': null,
+    'FB$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]': null,
+    'FB$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]': null,
+    'FB$std::__GetExceptionInfo@void *([_Ex])[decl0]': null,
+    'FB$std::addressof@[_Ty] *([_Ty] &)[impl0]': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'FB$std::addressof@[_Ty] const *([_Ty] const &&)[decl0]': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'FB$std::current_exception@::std::exception_ptr()[impl0]': null,
+    'FB$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]': null,
+    'FB$std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]': null,
+    'FB$std::exception_ptr::_RethrowException@void()[impl0]': null,
+    'FB$std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &&)[impl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'FB$std::forward@[_Ty] &&(::std::remove_reference_t<[_Ty]> &)[impl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'FB$std::nested_exception::rethrow_nested@void()[impl0]': null,
+    'FB$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]': null,
+    'FB$std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]': null,
+    'FB$std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]': null,
+    'FB$std::rethrow_exception@void(::std::exception_ptr)[impl0]': null,
+    'FB$terminate@void()[decl0]': { 'htmlFileName': 'corecrt_terminate.h', 'displayName': 'corecrt_terminate.h' },
+    'FB$unexpected@void()[decl0]': { 'htmlFileName': 'eh.h', 'displayName': 'eh.h' },
+    'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
+    'NF[10]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[11]$std': null,
+    'NF[12]$std': null,
+    'NF[13]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
+    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
+    'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
+    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[28]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[29]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
+    'NF[2]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NF[30]$std': { 'htmlFileName': 'vector', 'displayName': 'vector' },
+    'NF[31]$std': { 'htmlFileName': 'xtree', 'displayName': 'xtree' },
+    'NF[32]$std': { 'htmlFileName': 'set', 'displayName': 'set' },
+    'NF[33]$std': { 'htmlFileName': 'tuple', 'displayName': 'tuple' },
+    'NF[34]$std': { 'htmlFileName': 'map', 'displayName': 'map' },
+    'NF[35]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[36]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[37]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[38]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[39]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[3]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[40]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[41]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NF[42]$std': { 'htmlFileName': 'xcall_once.h', 'displayName': 'xcall_once.h' },
+    'NF[43]$std': { 'htmlFileName': 'xerrc.h', 'displayName': 'xerrc.h' },
+    'NF[44]$std': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'NF[45]$std': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[46]$std': { 'htmlFileName': 'streambuf', 'displayName': 'streambuf' },
+    'NF[47]$std': { 'htmlFileName': 'xlocnum', 'displayName': 'xlocnum' },
+    'NF[48]$std': { 'htmlFileName': 'ios', 'displayName': 'ios' },
+    'NF[49]$std': { 'htmlFileName': 'ostream', 'displayName': 'ostream' },
+    'NF[4]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[50]$std': { 'htmlFileName': 'istream', 'displayName': 'istream' },
+    'NF[51]$std': { 'htmlFileName': 'xstring_insert.h', 'displayName': 'xstring_insert.h' },
+    'NF[52]$std': { 'htmlFileName': 'string', 'displayName': 'string' },
+    'NF[53]$std': { 'htmlFileName': 'xlocbuf', 'displayName': 'xlocbuf' },
+    'NF[54]$std': { 'htmlFileName': 'xlocmes', 'displayName': 'xlocmes' },
+    'NF[55]$std': { 'htmlFileName': 'xlocmon', 'displayName': 'xlocmon' },
+    'NF[56]$std': { 'htmlFileName': 'ctime', 'displayName': 'ctime' },
+    'NF[57]$std': { 'htmlFileName': 'xloctime', 'displayName': 'xloctime' },
+    'NF[58]$std': { 'htmlFileName': 'locale', 'displayName': 'locale' },
+    'NF[59]$std': { 'htmlFileName': 'codecvt', 'displayName': 'codecvt' },
+    'NF[5]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[60]$std': { 'htmlFileName': 'functional', 'displayName': 'functional' },
+    'NF[61]$std': { 'htmlFileName': 'iostream', 'displayName': 'iostream' },
+    'NF[6]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[7]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[8]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[9]$std': null,
+    'NI$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Nested': null,
+    'NI$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ptr': null,
+    'NI$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Arg': null,
+    'NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Arg': null,
+    'NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Glued': null,
+    'NI$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Uty': null,
+    'NI$std::_With_nested': null,
+    'NI$std::_With_nested::$__ctor@([_Ty] &&)[impl0]::_Arg': null,
+    'NI$std::bool_constant': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NI$std::decay_t': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NI$std::exception_ptr': null,
+    'NI$std::exception_ptr::$__ctor@(::std::exception_ptr const &)[impl0]::_Rhs': null,
+    'NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Except': null,
+    'NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Ptr': null,
+    'NI$std::exception_ptr::_Copy_exception@::std::exception_ptr(void *, void const *)[impl0]::_Retval': null,
+    'NI$std::exception_ptr::_Current_exception@::std::exception_ptr()[impl0]::_Retval': null,
+    'NI$std::exception_ptr::operator =@::std::exception_ptr &(::std::exception_ptr const &)[impl0]::_Rhs': null,
+    'NI$std::exception_ptr::operator =@::std::exception_ptr &(::std::nullptr_t)[impl0]::_Ptr': null,
+    'NI$std::false_type': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NI$std::is_base_of_v': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NI$std::is_class_v': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NI$std::is_convertible_v': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NI$std::is_final_v': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NI$std::is_polymorphic_v': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NI$std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Except': null,
+    'NI$std::nested_exception': null,
+    'NI$std::nested_exception::_Exc': null,
+    'NI$std::nullptr_t': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NI$std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs': null,
+    'NI$std::operator !=@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs': null,
+    'NI$std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs': null,
+    'NI$std::operator !=@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Rhs': null,
+    'NI$std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Lhs': null,
+    'NI$std::operator !=@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs': null,
+    'NI$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Lhs': null,
+    'NI$std::operator ==@bool(::std::exception_ptr const &, ::std::exception_ptr const &)[impl0]::_Rhs': null,
+    'NI$std::operator ==@bool(::std::exception_ptr const &, ::std::nullptr_t)[impl0]::_Lhs': null,
+    'NI$std::operator ==@bool(::std::nullptr_t, ::std::exception_ptr const &)[impl0]::_Rhs': null,
+    'NI$std::rethrow_exception@void(::std::exception_ptr)[impl0]::_Ptr': null,
+    'NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Arg': null,
+    'NI$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Tag': null,
+    'NI$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Lhs': null,
+    'NI$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]::_Rhs': null,
+    'NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Arg': null,
+    'NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Tag': null,
+    'NI$std::throw_with_nested@void([_Ty] &&)[impl0]::_Uty': null,
+    'NI$std::true_type': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NI$terminate_handler': { 'htmlFileName': 'corecrt_terminate.h', 'displayName': 'corecrt_terminate.h' },
+    'NI$unexpected_handler': { 'htmlFileName': 'eh.h', 'displayName': 'eh.h' },
+    'TA$std::_Rethrow_if_nested@void([_Ty] const *, ::std::false_type)[impl0]::_Ty': null,
+    'TA$std::_Rethrow_if_nested@void([_Ty] const *, ::std::true_type)[impl0]::_Ty': null,
+    'TA$std::_Throw_with_nested@void([_Ty] &&, ::std::false_type)[impl0]::_Ty': null,
+    'TA$std::_Throw_with_nested@void([_Ty] &&, ::std::true_type)[impl0]::_Ty': null,
+    'TA$std::_With_nested::_Ty': null,
+    'TA$std::_With_nested::_Uty': null,
+    'TA$std::__GetExceptionInfo@void *([_Ex])[decl0]::_Ex': null,
+    'TA$std::make_exception_ptr@::std::exception_ptr([_Ex])[impl0]::_Ex': null,
+    'TA$std::rethrow_if_nested@void([_Ty] const &)[impl0]::_Ty': null,
+    'TA$std::throw_with_nested@void([_Ty] &&)[impl0]::_Ty': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

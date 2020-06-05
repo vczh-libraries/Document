@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ios</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// ios standard header</div>
+#pragma once
+<div class="disabled">#ifndef _IOS_</div>
+<div class="disabled">#define _IOS_</div>
+<div class="disabled">#ifndef RC_INVOKED
+#include &lt;xlocnum&gt;</div>
+
+<div class="expandable"><div class="disabled"> #pragma pack(push,_CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(push,_STL_WARNING_LEVEL)</div>
+<div class="expanded">#pragma warning(push,<div class="token cpp_number ">3</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4455</div> <div class="token cpp_number ">4494</div>  <div class="token cpp_number ">4619</div> <div class="token cpp_number ">4643</div> <div class="token cpp_number ">4702</div> <div class="token cpp_number ">4984</div> <div class="token cpp_number ">4988</div> )</div></div>
+<div class="disabled"> _STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled"> #pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled"> #undef new</div>
+
+<div class="expandable"><div class="disabled">_STD_BEGIN</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[48]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+		<div class="token cpp_comment ">// CLASS TEMPLATE basic_ios</div>
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::basic_ios::_Elem2"><div><div class="token cpp_type">_Elem</div></div></div>,
+	<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::basic_ios::_Traits2"><div><div class="token cpp_type">_Traits</div></div></div>&gt;
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::basic_ios"><div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div></div>
+		: <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>
+	{	<div class="token cpp_comment ">// base class for basic_istream/basic_ostream</div>
+<div class="token cpp_keyword ">public</div>:
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ostream'], [], [])"><div class="token cpp_type">basic_ostream</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Traits2'], [], [])"><div class="token cpp_type">_Traits</div></div>&gt; <div class="def" id="NI$std::basic_ios::_Myos"><div><div class="token cpp_type">_Myos</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_streambuf'], [], [])"><div class="token cpp_type">basic_streambuf</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Traits2'], [], [])"><div class="token cpp_type">_Traits</div></div>&gt; <div class="def" id="NI$std::basic_ios::_Mysb"><div><div class="token cpp_type">_Mysb</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol(['std::ctype', 'std::ctype@<char>', 'std::ctype@<unsigned short>', 'std::ctype@<wchar_t>'], ['std::ctype'], [], [])"><div class="token cpp_type">ctype</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt; <div class="def" id="NI$std::basic_ios::_Ctype"><div><div class="token cpp_type">_Ctype</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div> <div class="def" id="NI$std::basic_ios::char_type"><div><div class="token cpp_type">char_type</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Traits2'], [], [])"><div class="token cpp_type">_Traits</div></div> <div class="def" id="NI$std::basic_ios::traits_type"><div><div class="token cpp_type">traits_type</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Traits2'], [], [])"><div class="token cpp_type">_Traits</div></div>::int_type <div class="def" id="NI$std::basic_ios::int_type"><div><div class="token cpp_type">int_type</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Traits2'], [], [])"><div class="token cpp_type">_Traits</div></div>::pos_type <div class="def" id="NI$std::basic_ios::pos_type"><div><div class="token cpp_type">pos_type</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Traits2'], [], [])"><div class="token cpp_type">_Traits</div></div>::off_type <div class="def" id="NI$std::basic_ios::off_type"><div><div class="token cpp_type">off_type</div></div></div>;
+
+<div class="expandable"><div class="disabled">	explicit __CLR_OR_THIS_CALL basic_ios(_Mysb *_Strbuf)</div>
+<div class="expanded">	<div class="token cpp_keyword ">explicit</div>  <div class="def" id="FB$std::basic_ios::$__ctor@(::std::basic_ios::_Mysb *)[impl0]"><div><div class="token cpp_function">basic_ios</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mysb'], [], [])"><div class="token cpp_type">_Mysb</div></div> *<div class="def" id="NI$std::basic_ios::$__ctor@(::std::basic_ios::_Mysb *)[impl0]::_Strbuf"><div><div class="token cpp_argument">_Strbuf</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// construct from stream buffer pointer</div>
+		<div class="ref" onclick="jumpToSymbol(['std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)'], ['std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)'], [], [])"><div class="token cpp_function">init</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::$__ctor@(::std::basic_ios::_Mysb *)[impl0]::_Strbuf'], [], [])"><div class="token cpp_argument">_Strbuf</div></div>);
+		}
+
+<div class="expandable"><div class="disabled">	virtual __CLR_OR_THIS_CALL ~basic_ios() noexcept</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div>  <div class="def" id="FB$std::basic_ios::~basic_ios@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">basic_ios</div></div></div>() <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// destroy the object</div>
+		}
+
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL clear(iostate _State = goodbit, bool _Reraise = false)</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]"><div><div class="token cpp_function">clear</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base::iostate'], [], [])"><div class="token cpp_type">iostate</div></div> <div class="def" id="NI$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_State"><div><div class="token cpp_argument">_State</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::goodbit'], [], [])"><div class="token cpp_field">goodbit</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_Reraise"><div><div class="token cpp_argument">_Reraise</div></div></div> = <div class="token cpp_keyword ">false</div>)</div></div>
+		{	<div class="token cpp_comment ">// set state, possibly reraise exception</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::ios_base::clear@void(::std::ios_base::io_state)', 'std::ios_base::clear@void(::std::ios_base::iostate)', 'std::ios_base::clear@void(::std::ios_base::iostate, bool)'], [], [])"><div class="token cpp_function">clear</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div> == <div class="token cpp_keyword ">nullptr</div> ? (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_State'], [], [])"><div class="token cpp_argument">_State</div></div> | <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::badbit'], [], [])"><div class="token cpp_field">badbit</div></div>) : <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_State'], [], [])"><div class="token cpp_argument">_State</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_Reraise'], [], [])"><div class="token cpp_argument">_Reraise</div></div>);
+		}
+
+<div class="disabled"> #if _HAS_OLD_IOSTREAMS_MEMBERS</div>
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL clear(io_state _State)</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::clear@void(::std::ios_base::io_state)[impl0]"><div><div class="token cpp_function">clear</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base::io_state'], [], [])"><div class="token cpp_type">io_state</div></div> <div class="def" id="NI$std::basic_ios::clear@void(::std::ios_base::io_state)[impl0]::_State"><div><div class="token cpp_argument">_State</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// set state to _State</div>
+		<div class="ref" onclick="jumpToSymbol(['std::basic_ios::clear@void(::std::ios_base::iostate, bool)'], ['std::basic_ios::clear@void(::std::ios_base::io_state)', 'std::basic_ios::clear@void(::std::ios_base::iostate, bool)'], [], [])"><div class="token cpp_function">clear</div></div>((<div class="ref" onclick="jumpToSymbol([], ['std::ios_base::iostate'], [], [])"><div class="token cpp_type">iostate</div></div>)<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::clear@void(::std::ios_base::io_state)[impl0]::_State'], [], [])"><div class="token cpp_argument">_State</div></div>);
+		}
+<div class="disabled"> #endif /* _HAS_OLD_IOSTREAMS_MEMBERS */</div>
+
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL setstate(iostate _State, bool _Reraise = false)</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]"><div><div class="token cpp_function">setstate</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base::iostate'], [], [])"><div class="token cpp_type">iostate</div></div> <div class="def" id="NI$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_State"><div><div class="token cpp_argument">_State</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_Reraise"><div><div class="token cpp_argument">_Reraise</div></div></div> = <div class="token cpp_keyword ">false</div>)</div></div>
+		{	<div class="token cpp_comment ">// merge _State into state, possibly reraise exception</div>
+		<div class="ref" onclick="jumpToSymbol(['std::basic_ios::clear@void(::std::ios_base::iostate, bool)'], ['std::basic_ios::clear@void(::std::ios_base::io_state)', 'std::basic_ios::clear@void(::std::ios_base::iostate, bool)'], [], [])"><div class="token cpp_function">clear</div></div>(<div class="ref" onclick="jumpToSymbol(['std::ios_base::rdstate@::std::ios_base::iostate()'], ['std::ios_base::rdstate@::std::ios_base::iostate()'], [], [])"><div class="token cpp_function">rdstate</div></div>() | <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_State'], [], [])"><div class="token cpp_argument">_State</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_Reraise'], [], [])"><div class="token cpp_argument">_Reraise</div></div>);
+		}
+
+<div class="disabled"> #if _HAS_OLD_IOSTREAMS_MEMBERS</div>
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL setstate(io_state _State)</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::setstate@void(::std::ios_base::io_state)[impl0]"><div><div class="token cpp_function">setstate</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base::io_state'], [], [])"><div class="token cpp_type">io_state</div></div> <div class="def" id="NI$std::basic_ios::setstate@void(::std::ios_base::io_state)[impl0]::_State"><div><div class="token cpp_argument">_State</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// merge _State into state</div>
+		<div class="ref" onclick="jumpToSymbol(['std::basic_ios::setstate@void(::std::ios_base::iostate, bool)'], ['std::basic_ios::setstate@void(::std::ios_base::io_state)', 'std::basic_ios::setstate@void(::std::ios_base::iostate, bool)'], [], [])"><div class="token cpp_function">setstate</div></div>((<div class="ref" onclick="jumpToSymbol([], ['std::ios_base::iostate'], [], [])"><div class="token cpp_type">iostate</div></div>)<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::setstate@void(::std::ios_base::io_state)[impl0]::_State'], [], [])"><div class="token cpp_argument">_State</div></div>);
+		}
+<div class="disabled"> #endif /* _HAS_OLD_IOSTREAMS_MEMBERS */</div>
+
+<div class="expandable"><div class="disabled">	basic_ios&amp; __CLR_OR_THIS_CALL copyfmt(const basic_ios&amp; _Right)</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&amp;  <div class="def" id="FB$std::basic_ios::copyfmt@::std::basic_ios &(::std::basic_ios const &)[impl0]"><div><div class="token cpp_function">copyfmt</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&amp; <div class="def" id="NI$std::basic_ios::copyfmt@::std::basic_ios &(::std::basic_ios const &)[impl0]::_Right"><div><div class="token cpp_argument">_Right</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// copy format parameters</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::copyfmt@::std::basic_ios &(::std::basic_ios const &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>.<div class="ref" onclick="jumpToSymbol(['std::basic_ios::tie@::std::basic_ios::_Myos *()'], ['std::basic_ios::tie@::std::basic_ios::_Myos *()', 'std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)'], [], [])"><div class="token cpp_function">tie</div></div>();
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Fillch'], [], [])"><div class="token cpp_field">_Fillch</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::copyfmt@::std::basic_ios &(::std::basic_ios const &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>.<div class="ref" onclick="jumpToSymbol(['std::basic_ios::fill@[_Elem]()'], ['std::basic_ios::fill@[_Elem]()', 'std::basic_ios::fill@[_Elem]([_Elem])'], [], [])"><div class="token cpp_function">fill</div></div>();
+		<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol(['std::ios_base::copyfmt@::std::ios_base &(::std::ios_base const &)'], ['std::ios_base::copyfmt@::std::ios_base &(::std::ios_base const &)'], [], [])"><div class="token cpp_function">copyfmt</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::copyfmt@::std::basic_ios &(::std::basic_ios const &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>);
+		<div class="token cpp_keyword ">return</div> (*<div class="token cpp_keyword ">this</div>);
+		}
+
+<div class="expandable"><div class="disabled">	_Myos *__CLR_OR_THIS_CALL tie() const</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Myos'], [], [])"><div class="token cpp_type">_Myos</div></div> * <div class="def" id="FB$std::basic_ios::tie@::std::basic_ios::_Myos *()[impl0]"><div><div class="token cpp_function">tie</div></div></div>() <div class="token cpp_keyword ">const</div></div></div>
+		{	<div class="token cpp_comment ">// return tie pointer</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div>);
+		}
+
+<div class="expandable"><div class="disabled">	_Myos *__CLR_OR_THIS_CALL tie(_Myos *_Newtie)</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Myos'], [], [])"><div class="token cpp_type">_Myos</div></div> * <div class="def" id="FB$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]"><div><div class="token cpp_function">tie</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Myos'], [], [])"><div class="token cpp_type">_Myos</div></div> *<div class="def" id="NI$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Newtie"><div><div class="token cpp_argument">_Newtie</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// set tie pointer</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Myos'], [], [])"><div class="token cpp_type">_Myos</div></div> *<div class="def" id="NI$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Oldtie"><div>_Oldtie</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Newtie'], [], [])"><div class="token cpp_argument">_Newtie</div></div>;
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Oldtie'], [], [])">_Oldtie</div>);
+		}
+
+<div class="expandable"><div class="disabled">	_NODISCARD _Mysb *__CLR_OR_THIS_CALL rdbuf() const</div>
+<div class="expanded">	 <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mysb'], [], [])"><div class="token cpp_type">_Mysb</div></div> * <div class="def" id="FB$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *()[impl0]"><div><div class="token cpp_function">rdbuf</div></div></div>() <div class="token cpp_keyword ">const</div></div></div>
+		{	<div class="token cpp_comment ">// return stream buffer pointer</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div>);
+		}
+
+<div class="expandable"><div class="disabled">	_Mysb *__CLR_OR_THIS_CALL rdbuf(_Mysb *_Strbuf)</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mysb'], [], [])"><div class="token cpp_type">_Mysb</div></div> * <div class="def" id="FB$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]"><div><div class="token cpp_function">rdbuf</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mysb'], [], [])"><div class="token cpp_type">_Mysb</div></div> *<div class="def" id="NI$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Strbuf"><div><div class="token cpp_argument">_Strbuf</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// set stream buffer pointer</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mysb'], [], [])"><div class="token cpp_type">_Mysb</div></div> *<div class="def" id="NI$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Oldstrbuf"><div>_Oldstrbuf</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Strbuf'], [], [])"><div class="token cpp_argument">_Strbuf</div></div>;
+		<div class="ref" onclick="jumpToSymbol(['std::basic_ios::clear@void(::std::ios_base::iostate, bool)'], ['std::basic_ios::clear@void(::std::ios_base::io_state)', 'std::basic_ios::clear@void(::std::ios_base::iostate, bool)'], [], [])"><div class="token cpp_function">clear</div></div>();
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Oldstrbuf'], [], [])">_Oldstrbuf</div>);
+		}
+
+<div class="expandable"><div class="disabled">	locale __CLR_OR_THIS_CALL imbue(const locale&amp; _Loc)</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>  <div class="def" id="FB$std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]"><div><div class="token cpp_function">imbue</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>&amp; <div class="def" id="NI$std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Loc"><div><div class="token cpp_argument">_Loc</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// set locale to argument</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div> <div class="def" id="NI$std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Oldlocale"><div>_Oldlocale</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol(['std::ios_base::imbue@::std::locale(::std::locale const &)'], ['std::ios_base::imbue@::std::locale(::std::locale const &)'], [], [])"><div class="token cpp_function">imbue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Loc'], [], [])"><div class="token cpp_argument">_Loc</div></div>);
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::rdbuf@::std::basic_ios::_Mysb *()', 'std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)'], [], [])"><div class="token cpp_function">rdbuf</div></div>() != <div class="token cpp_keyword ">nullptr</div>)
+			<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::rdbuf@::std::basic_ios::_Mysb *()', 'std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)'], [], [])"><div class="token cpp_function">rdbuf</div></div>()-&gt;pubimbue(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Loc'], [], [])"><div class="token cpp_argument">_Loc</div></div>);
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Oldlocale'], [], [])">_Oldlocale</div>);
+		}
+
+<div class="expandable"><div class="disabled">	_Elem __CLR_OR_THIS_CALL fill() const</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div>  <div class="def" id="FB$std::basic_ios::fill@[_Elem]()[impl0]"><div><div class="token cpp_function">fill</div></div></div>() <div class="token cpp_keyword ">const</div></div></div>
+		{	<div class="token cpp_comment ">// return fill character</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Fillch'], [], [])"><div class="token cpp_field">_Fillch</div></div>);
+		}
+
+<div class="expandable"><div class="disabled">	_Elem __CLR_OR_THIS_CALL fill(_Elem _Newfill)</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div>  <div class="def" id="FB$std::basic_ios::fill@[_Elem]([_Elem])[impl0]"><div><div class="token cpp_function">fill</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div> <div class="def" id="NI$std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Newfill"><div><div class="token cpp_argument">_Newfill</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// set fill character</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div> <div class="def" id="NI$std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Oldfill"><div>_Oldfill</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Fillch'], [], [])"><div class="token cpp_field">_Fillch</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Fillch'], [], [])"><div class="token cpp_field">_Fillch</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Newfill'], [], [])"><div class="token cpp_argument">_Newfill</div></div>;
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Oldfill'], [], [])">_Oldfill</div>);
+		}
+
+<div class="expandable"><div class="disabled">	char __CLR_OR_THIS_CALL narrow(_Elem _Ch, char _Dflt = &apos;\0&apos;) const</div>
+<div class="expanded">	<div class="token cpp_keyword ">char</div>  <div class="def" id="FB$std::basic_ios::narrow@char([_Elem], char)[impl0]"><div><div class="token cpp_function">narrow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div> <div class="def" id="NI$std::basic_ios::narrow@char([_Elem], char)[impl0]::_Ch"><div><div class="token cpp_argument">_Ch</div></div></div>, <div class="token cpp_keyword ">char</div> <div class="def" id="NI$std::basic_ios::narrow@char([_Elem], char)[impl0]::_Dflt"><div><div class="token cpp_argument">_Dflt</div></div></div> = <div class="token cpp_string ">&apos;\0&apos;</div>) <div class="token cpp_keyword ">const</div></div></div>
+		{	<div class="token cpp_comment ">// convert _Ch to byte using imbued locale</div>
+<div class="expandable"><div class="disabled">		return (_STD use_facet&lt;_Ctype&gt;(getloc()).narrow(_Ch, _Dflt));</div>
+<div class="expanded">		<div class="token cpp_keyword ">return</div> (::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::use_facet@[_Facet] const &(::std::locale const &)'], ['std::use_facet@[_Facet] const &(::std::locale const &)'], [], [])"><div class="token cpp_function">use_facet</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Ctype'], [], [])"><div class="token cpp_type">_Ctype</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['std::ios_base::getloc@::std::locale()'], ['std::ios_base::getloc@::std::locale()'], [], [])"><div class="token cpp_function">getloc</div></div>()).<div class="ref" onclick="jumpToSymbol(['std::ctype::narrow@char([_Elem], char)', 'std::ctype@<char>::narrow@::std::ctype@<char>::_Elem(::std::ctype@<char>::_Elem, char)', 'std::ctype@<unsigned short>::narrow@char(::std::ctype@<unsigned short>::_Elem, char)', 'std::ctype@<wchar_t>::narrow@char(::std::ctype@<wchar_t>::_Elem, char)'], ['std::ctype::narrow@[_Elem] const *([_Elem] const *, [_Elem] const *, char, char *)', 'std::ctype::narrow@char([_Elem], char)', 'std::ctype@<char>::narrow@::std::ctype@<char>::_Elem const *(::std::ctype@<char>::_Elem const *, ::std::ctype@<char>::_Elem const *, char, char *)', 'std::ctype@<char>::narrow@::std::ctype@<char>::_Elem(::std::ctype@<char>::_Elem, char)', 'std::ctype@<unsigned short>::narrow@::std::ctype@<unsigned short>::_Elem const *(::std::ctype@<unsigned short>::_Elem const *, ::std::ctype@<unsigned short>::_Elem const *, char, char *)', 'std::ctype@<unsigned short>::narrow@char(::std::ctype@<unsigned short>::_Elem, char)', 'std::ctype@<wchar_t>::narrow@::std::ctype@<wchar_t>::_Elem const *(::std::ctype@<wchar_t>::_Elem const *, ::std::ctype@<wchar_t>::_Elem const *, char, char *)', 'std::ctype@<wchar_t>::narrow@char(::std::ctype@<wchar_t>::_Elem, char)'], [], [])"><div class="token cpp_function">narrow</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::narrow@char([_Elem], char)[impl0]::_Ch'], [], [])"><div class="token cpp_argument">_Ch</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::narrow@char([_Elem], char)[impl0]::_Dflt'], [], [])"><div class="token cpp_argument">_Dflt</div></div>));</div></div>
+		}
+
+<div class="expandable"><div class="disabled">	_Elem __CLR_OR_THIS_CALL widen(char _Byte) const</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div>  <div class="def" id="FB$std::basic_ios::widen@[_Elem](char)[impl0]"><div><div class="token cpp_function">widen</div></div></div>(<div class="token cpp_keyword ">char</div> <div class="def" id="NI$std::basic_ios::widen@[_Elem](char)[impl0]::_Byte"><div><div class="token cpp_argument">_Byte</div></div></div>) <div class="token cpp_keyword ">const</div></div></div>
+		{	<div class="token cpp_comment ">// convert _Byte to character using imbued locale</div>
+<div class="expandable"><div class="disabled">		return (_STD use_facet&lt;_Ctype&gt;(getloc()).widen(_Byte));</div>
+<div class="expanded">		<div class="token cpp_keyword ">return</div> (::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::use_facet@[_Facet] const &(::std::locale const &)'], ['std::use_facet@[_Facet] const &(::std::locale const &)'], [], [])"><div class="token cpp_function">use_facet</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Ctype'], [], [])"><div class="token cpp_type">_Ctype</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['std::ios_base::getloc@::std::locale()'], ['std::ios_base::getloc@::std::locale()'], [], [])"><div class="token cpp_function">getloc</div></div>()).<div class="ref" onclick="jumpToSymbol(['std::ctype::widen@[_Elem](char)', 'std::ctype@<char>::widen@::std::ctype@<char>::_Elem(char)', 'std::ctype@<unsigned short>::widen@::std::ctype@<unsigned short>::_Elem(char)', 'std::ctype@<wchar_t>::widen@::std::ctype@<wchar_t>::_Elem(char)'], ['std::ctype::widen@[_Elem](char)', 'std::ctype::widen@char const *(char const *, char const *, [_Elem] *)', 'std::ctype@<char>::widen@::std::ctype@<char>::_Elem const *(char const *, char const *, ::std::ctype@<char>::_Elem *)', 'std::ctype@<char>::widen@::std::ctype@<char>::_Elem(char)', 'std::ctype@<unsigned short>::widen@::std::ctype@<unsigned short>::_Elem(char)', 'std::ctype@<unsigned short>::widen@char const *(char const *, char const *, ::std::ctype@<unsigned short>::_Elem *)', 'std::ctype@<wchar_t>::widen@::std::ctype@<wchar_t>::_Elem(char)', 'std::ctype@<wchar_t>::widen@char const *(char const *, char const *, ::std::ctype@<wchar_t>::_Elem *)'], [], [])"><div class="token cpp_function">widen</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::widen@[_Elem](char)[impl0]::_Byte'], [], [])"><div class="token cpp_argument">_Byte</div></div>));</div></div>
+		}
+
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL move(basic_ios&amp; _Right)</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::move@void(::std::basic_ios &)[impl0]"><div><div class="token cpp_function">move</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&amp; <div class="def" id="NI$std::basic_ios::move@void(::std::basic_ios &)[impl0]::_Right"><div><div class="token cpp_argument">_Right</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// assign by moving _Right</div>
+<div class="expandable"><div class="disabled">		if (this != _STD addressof(_Right))</div>
+<div class="expanded">		<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">this</div> <div class="ref" onclick="jumpToSymbol(['std::operator !=@bool(::std::error_code const &, ::std::error_code const &)', 'std::operator !=@bool(::std::error_code const &, ::std::error_condition const &)', 'std::operator !=@bool(::std::error_condition const &, ::std::error_code const &)', 'std::operator !=@bool(::std::error_condition const &, ::std::error_condition const &)'], [], [], [])"><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::addressof@[_Ty] *([_Ty] &)'], ['std::addressof@[_Ty] *([_Ty] &)', 'std::addressof@[_Ty] const *([_Ty] const &&)'], [], [])"><div class="token cpp_function">addressof</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::move@void(::std::basic_ios &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>))</div></div>
+			{	<div class="token cpp_comment ">// different, do the move</div>
+			<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+			<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['std::basic_ios::swap@void(::std::basic_ios &)'], ['std::basic_ios::swap@void(::std::basic_ios &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::move@void(::std::basic_ios &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>);
+			}
+		}
+
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL move(basic_ios&amp;&amp; _Right)</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::move@void(::std::basic_ios &&)[impl0]"><div><div class="token cpp_function">move</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&amp;&amp; <div class="def" id="NI$std::basic_ios::move@void(::std::basic_ios &&)[impl0]::_Right"><div><div class="token cpp_argument">_Right</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// assign by moving _Right</div>
+<div class="expandable"><div class="disabled">		if (this != _STD addressof(_Right))</div>
+<div class="expanded">		<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">this</div> <div class="ref" onclick="jumpToSymbol(['std::operator !=@bool(::std::error_code const &, ::std::error_code const &)', 'std::operator !=@bool(::std::error_code const &, ::std::error_condition const &)', 'std::operator !=@bool(::std::error_condition const &, ::std::error_code const &)', 'std::operator !=@bool(::std::error_condition const &, ::std::error_condition const &)'], [], [], [])"><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::addressof@[_Ty] *([_Ty] &)'], ['std::addressof@[_Ty] *([_Ty] &)', 'std::addressof@[_Ty] const *([_Ty] const &&)'], [], [])"><div class="token cpp_function">addressof</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::move@void(::std::basic_ios &&)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>))</div></div>
+			{	<div class="token cpp_comment ">// different, do the move</div>
+			<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+			<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['std::basic_ios::swap@void(::std::basic_ios &)'], ['std::basic_ios::swap@void(::std::basic_ios &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::move@void(::std::basic_ios &&)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>);
+			}
+		}
+
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL swap(basic_ios&amp; _Right) noexcept</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::swap@void(::std::basic_ios &)[impl0]"><div><div class="token cpp_function">swap</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&amp; <div class="def" id="NI$std::basic_ios::swap@void(::std::basic_ios &)[impl0]::_Right"><div><div class="token cpp_argument">_Right</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// swap all but rdbuf() with right</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol(['std::ios_base::swap@void(::std::ios_base &)'], ['std::ios_base::swap@void(::std::ios_base &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::swap@void(::std::basic_ios &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>);
+<div class="expandable"><div class="disabled">		_STD swap(_Fillch, _Right._Fillch);</div>
+<div class="expanded">		::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)'], ['std::swap@void(::std::_Vb_reference<[_Alvbase_wrapped]>, ::std::_Vb_reference<[_Alvbase_wrapped]>)', 'std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)', 'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::function<[_Fty]> &, ::std::function<[_Fty]> &)', 'std::swap@void(::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &)', 'std::swap@void(::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &)', 'std::swap@void(::std::multiset<[_Kty], [_Pr], [_Alloc]> &, ::std::multiset<[_Kty], [_Pr], [_Alloc]> &)', 'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)', 'std::swap@void(::std::set<[_Kty], [_Pr], [_Alloc]> &, ::std::set<[_Kty], [_Pr], [_Alloc]> &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::tuple<[_Types]...> &, ::std::tuple<[_Types]...> &)', 'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)', 'std::swap@void(::std::vector<[_Ty], [_Alloc]> &, ::std::vector<[_Ty], [_Alloc]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)', 'std::swap@void([_Ty] &, [_Ty] &)', 'std::swap@void([_Ty] [*] &, [_Ty] [*] &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Fillch'], [], [])"><div class="token cpp_field">_Fillch</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::swap@void(::std::basic_ios &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>.<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Fillch'], [], [])"><div class="token cpp_field">_Fillch</div></div>);</div></div>
+<div class="expandable"><div class="disabled">		_STD swap(_Tiestr, _Right._Tiestr);</div>
+<div class="expanded">		::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::swap@void(::std::_Vb_reference<[_Alvbase_wrapped]>, ::std::_Vb_reference<[_Alvbase_wrapped]>)', 'std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)', 'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)', 'std::swap@void(::std::function<[_Fty]> &, ::std::function<[_Fty]> &)', 'std::swap@void(::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &)', 'std::swap@void(::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &)', 'std::swap@void(::std::multiset<[_Kty], [_Pr], [_Alloc]> &, ::std::multiset<[_Kty], [_Pr], [_Alloc]> &)', 'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)', 'std::swap@void(::std::set<[_Kty], [_Pr], [_Alloc]> &, ::std::set<[_Kty], [_Pr], [_Alloc]> &)', 'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)', 'std::swap@void(::std::tuple<[_Types]...> &, ::std::tuple<[_Types]...> &)', 'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)', 'std::swap@void(::std::vector<[_Ty], [_Alloc]> &, ::std::vector<[_Ty], [_Alloc]> &)', 'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)', 'std::swap@void([_Ty] &, [_Ty] &)', 'std::swap@void([_Ty] [*] &, [_Ty] [*] &)'], [], [])"><div class="token cpp_function">swap</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::swap@void(::std::basic_ios &)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>.<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div>);</div></div>
+		}
+
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL set_rdbuf(_Mysb *_Strbuf)</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::set_rdbuf@void(::std::basic_ios::_Mysb *)[impl0]"><div><div class="token cpp_function">set_rdbuf</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mysb'], [], [])"><div class="token cpp_type">_Mysb</div></div> *<div class="def" id="NI$std::basic_ios::set_rdbuf@void(::std::basic_ios::_Mysb *)[impl0]::_Strbuf"><div><div class="token cpp_argument">_Strbuf</div></div></div>)</div></div>
+		{	<div class="token cpp_comment ">// set stream buffer pointer without changing state</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::set_rdbuf@void(::std::basic_ios::_Mysb *)[impl0]::_Strbuf'], [], [])"><div class="token cpp_argument">_Strbuf</div></div>;
+		}
+
+<div class="token cpp_keyword ">protected</div>:
+<div class="expandable"><div class="disabled">	void __CLR_OR_THIS_CALL init(_Mysb *_Strbuf = nullptr,</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]"><div><div class="token cpp_function">init</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mysb'], [], [])"><div class="token cpp_type">_Mysb</div></div> *<div class="def" id="NI$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Strbuf"><div><div class="token cpp_argument">_Strbuf</div></div></div> = <div class="token cpp_keyword ">nullptr</div>,</div></div>
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Isstd"><div><div class="token cpp_argument">_Isstd</div></div></div> = <div class="token cpp_keyword ">false</div>)
+		{	<div class="token cpp_comment ">// initialize with stream buffer pointer</div>
+		<div class="ref" onclick="jumpToSymbol(['std::ios_base::_Init@void()'], ['std::ios_base::_Init@void()'], [], [])"><div class="token cpp_function">_Init</div></div>();	<div class="token cpp_comment ">// initialize ios_base</div>
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div> = <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Strbuf'], [], [])"><div class="token cpp_argument">_Strbuf</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Tiestr'], [], [])"><div class="token cpp_field">_Tiestr</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Fillch'], [], [])"><div class="token cpp_field">_Fillch</div></div> = <div class="ref" onclick="jumpToSymbol(['std::basic_ios::widen@[_Elem](char)'], ['std::basic_ios::widen@[_Elem](char)'], [], [])"><div class="token cpp_function">widen</div></div>(<div class="token cpp_string ">&apos; &apos;</div>);
+
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mystrbuf'], [], [])"><div class="token cpp_field">_Mystrbuf</div></div> == <div class="token cpp_keyword ">nullptr</div>)
+			<div class="ref" onclick="jumpToSymbol(['std::basic_ios::setstate@void(::std::ios_base::iostate, bool)'], ['std::basic_ios::setstate@void(::std::ios_base::io_state)', 'std::basic_ios::setstate@void(::std::ios_base::iostate, bool)'], [], [])"><div class="token cpp_function">setstate</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::badbit'], [], [])"><div class="token cpp_field">badbit</div></div>);
+
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Isstd'], [], [])"><div class="token cpp_argument">_Isstd</div></div>)
+			<div class="ref" onclick="jumpToSymbol(['std::ios_base::_Addstd@void(::std::ios_base *)'], ['std::ios_base::_Addstd@void(::std::ios_base *)'], [], [])"><div class="token cpp_function">_Addstd</div></div>(<div class="token cpp_keyword ">this</div>);	<div class="token cpp_comment ">// special handling for standard streams</div>
+		}
+
+<div class="expandable"><div class="disabled">	__CLR_OR_THIS_CALL basic_ios()</div>
+<div class="expanded">	 <div class="def" id="FB$std::basic_ios::$__ctor@()[impl0]"><div><div class="token cpp_function">basic_ios</div></div></div>()</div></div>
+		{	<div class="token cpp_comment ">// default constructor, do nothing</div>
+		}
+
+<div class="token cpp_keyword ">private</div>:
+	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Mysb'], [], [])"><div class="token cpp_type">_Mysb</div></div> *<div class="def" id="NI$std::basic_ios::_Mystrbuf"><div><div class="token cpp_field">_Mystrbuf</div></div></div>;	<div class="token cpp_comment ">// pointer to stream buffer</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Myos'], [], [])"><div class="token cpp_type">_Myos</div></div> *<div class="def" id="NI$std::basic_ios::_Tiestr"><div><div class="token cpp_field">_Tiestr</div></div></div>;	<div class="token cpp_comment ">// pointer to tied output stream</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios::_Elem2'], [], [])"><div class="token cpp_type">_Elem</div></div> <div class="def" id="NI$std::basic_ios::_Fillch"><div><div class="token cpp_field">_Fillch</div></div></div>;	<div class="token cpp_comment ">// the fill character</div>
+
+<div class="token cpp_keyword ">public</div>:
+<div class="expandable"><div class="disabled">	__CLR_OR_THIS_CALL basic_ios(const basic_ios&amp;) = delete;</div>
+<div class="expanded">	 <div class="def" id="FB$std::basic_ios::$__ctor@(::std::basic_ios const &)[decl0]"><div><div class="token cpp_function">basic_ios</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&amp;) = <div class="token cpp_keyword ">delete</div>;</div></div>
+<div class="expandable"><div class="disabled">	basic_ios&amp; __CLR_OR_THIS_CALL operator=(const basic_ios&amp;) = delete;</div>
+<div class="expanded">	<div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&amp;  <div class="def" id="FB$std::basic_ios::operator =@::std::basic_ios &(::std::basic_ios const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&amp;) = <div class="token cpp_keyword ">delete</div>;</div></div>
+	};
+
+<div class="disabled"> #if defined(_DLL_CPPLIB)</div>
+
+<div class="disabled">  #if !defined(_CRTBLD) || defined(__FORCE_INSTANCE)</div>
+<div class="expandable"><div class="disabled">template class _CRTIMP2_PURE_IMPORT basic_ios&lt;char,</div>
+<div class="expanded"><div class="token cpp_keyword ">template</div> <div class="token cpp_keyword ">class</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&lt;<div class="token cpp_keyword ">char</div>,</div></div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::char_traits'], [], [])"><div class="token cpp_type">char_traits</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt; &gt;;
+<div class="expandable"><div class="disabled">template class _CRTIMP2_PURE_IMPORT basic_ios&lt;wchar_t,</div>
+<div class="expanded"><div class="token cpp_keyword ">template</div> <div class="token cpp_keyword ">class</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['std::basic_ios'], [], [])"><div class="token cpp_type">basic_ios</div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>,</div></div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::char_traits'], [], [])"><div class="token cpp_type">char_traits</div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>&gt; &gt;;
+<div class="disabled">  #endif /* !defined(_CRTBLD) || defined(__FORCE_INSTANCE) */</div>
+
+<div class="disabled">  #ifdef __FORCE_INSTANCE</div>
+<div class="disabled">template class _CRTIMP2_PURE_IMPORT basic_ios&lt;unsigned short,</div>
+<div class="disabled">	char_traits&lt;unsigned short&gt; &gt;;</div>
+<div class="disabled">  #endif /* __FORCE_INSTANCE */
+ #endif /* defined(_DLL_CPPLIB) */</div>
+
+		<div class="token cpp_comment ">// MANIPULATORS</div>
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL boolalpha(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::boolalpha@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">boolalpha</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::boolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set boolalpha</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::boolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::boolalpha'], [], [])"><div class="token cpp_field">boolalpha</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::boolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL dec(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::dec@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">dec</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::dec@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set basefield to dec</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::dec@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::dec'], [], [])"><div class="token cpp_field">dec</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::basefield'], [], [])"><div class="token cpp_field">basefield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::dec@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL defaultfloat(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::defaultfloat@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">defaultfloat</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::defaultfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// clear floatfield</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::defaultfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], ['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">unsetf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::floatfield'], [], [])"><div class="token cpp_field">floatfield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::defaultfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL fixed(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::fixed@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">fixed</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::fixed@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set floatfield to fixed</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::fixed@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::fixed'], [], [])"><div class="token cpp_field">fixed</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::floatfield'], [], [])"><div class="token cpp_field">floatfield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::fixed@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL hex(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::hex@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">hex</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::hex@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set basefield to hex</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::hex@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::hex'], [], [])"><div class="token cpp_field">hex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::basefield'], [], [])"><div class="token cpp_field">basefield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::hex@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL hexfloat(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">hexfloat</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set floatfield to hexfloat</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::hexfloat'], [], [])"><div class="token cpp_field">hexfloat</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::floatfield'], [], [])"><div class="token cpp_field">floatfield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL internal(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::internal@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">internal</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::internal@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set adjustfield to internal</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::internal@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::internal'], [], [])"><div class="token cpp_field">internal</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::adjustfield'], [], [])"><div class="token cpp_field">adjustfield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::internal@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL left(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::left@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">left</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::left@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set adjustfield to left</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::left@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::left'], [], [])"><div class="token cpp_field">left</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::adjustfield'], [], [])"><div class="token cpp_field">adjustfield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::left@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL noboolalpha(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::noboolalpha@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">noboolalpha</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::noboolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// clear boolalpha</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::noboolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], ['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">unsetf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::boolalpha'], [], [])"><div class="token cpp_field">boolalpha</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::noboolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL noshowbase(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::noshowbase@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">noshowbase</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::noshowbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// clear showbase</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::noshowbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], ['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">unsetf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::showbase'], [], [])"><div class="token cpp_field">showbase</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::noshowbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL noshowpoint(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::noshowpoint@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">noshowpoint</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::noshowpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// clear showpoint</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::noshowpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], ['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">unsetf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::showpoint'], [], [])"><div class="token cpp_field">showpoint</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::noshowpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL noshowpos(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::noshowpos@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">noshowpos</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::noshowpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// clear showpos</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::noshowpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], ['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">unsetf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::showpos'], [], [])"><div class="token cpp_field">showpos</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::noshowpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL noskipws(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::noskipws@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">noskipws</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::noskipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// clear skipws</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::noskipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], ['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">unsetf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::skipws'], [], [])"><div class="token cpp_field">skipws</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::noskipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL nounitbuf(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::nounitbuf@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">nounitbuf</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::nounitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// clear unitbuf</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::nounitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], ['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">unsetf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::unitbuf'], [], [])"><div class="token cpp_field">unitbuf</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::nounitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL nouppercase(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::nouppercase@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">nouppercase</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::nouppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// clear uppercase</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::nouppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], ['std::ios_base::unsetf@void(::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">unsetf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::uppercase'], [], [])"><div class="token cpp_field">uppercase</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::nouppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL oct(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::oct@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">oct</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::oct@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set oct in basefield</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::oct@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::oct'], [], [])"><div class="token cpp_field">oct</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::basefield'], [], [])"><div class="token cpp_field">basefield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::oct@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL right(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::right@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">right</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::right@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set right in adjustfield</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::right@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::right'], [], [])"><div class="token cpp_field">right</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::adjustfield'], [], [])"><div class="token cpp_field">adjustfield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::right@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL scientific(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::scientific@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">scientific</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::scientific@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set scientific in floatfield</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::scientific@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::scientific'], [], [])"><div class="token cpp_field">scientific</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::floatfield'], [], [])"><div class="token cpp_field">floatfield</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::scientific@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL showbase(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::showbase@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">showbase</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::showbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set showbase</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::showbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::showbase'], [], [])"><div class="token cpp_field">showbase</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::showbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL showpoint(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::showpoint@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">showpoint</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::showpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set showpoint</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::showpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::showpoint'], [], [])"><div class="token cpp_field">showpoint</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::showpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL showpos(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::showpos@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">showpos</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::showpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set showpos</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::showpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::showpos'], [], [])"><div class="token cpp_field">showpos</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::showpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL skipws(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::skipws@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">skipws</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::skipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set skipws</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::skipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::skipws'], [], [])"><div class="token cpp_field">skipws</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::skipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL unitbuf(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::unitbuf@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">unitbuf</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::unitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set unitbuf</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::unitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::unitbuf'], [], [])"><div class="token cpp_field">unitbuf</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::unitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="expandable"><div class="disabled">inline ios_base&amp; __CLRCALL_OR_CDECL uppercase(ios_base&amp; _Iosbase)</div>
+<div class="expanded"><div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$std::uppercase@::std::ios_base &(::std::ios_base &)[impl0]"><div><div class="token cpp_function">uppercase</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>&amp; <div class="def" id="NI$std::uppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase"><div><div class="token cpp_argument">_Iosbase</div></div></div>)</div></div>
+	{	<div class="token cpp_comment ">// set uppercase</div>
+	<div class="ref" onclick="jumpToSymbol([], ['std::uppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>.<div class="ref" onclick="jumpToSymbol(['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)'], ['std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)', 'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)'], [], [])"><div class="token cpp_function">setf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::ios_base'], [], [])"><div class="token cpp_type">ios_base</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::_Iosb::uppercase'], [], [])"><div class="token cpp_field">uppercase</div></div>);
+	<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::uppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'], [], [])"><div class="token cpp_argument">_Iosbase</div></div>);
+	}
+
+<div class="disabled">#if _HAS_TR1_NAMESPACE</div>
+<div class="expandable"><div class="disabled">namespace _DEPRECATE_TR1_NAMESPACE tr1 {</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> [[deprecated(<div class="token cpp_string ">&quot;warning STL4002: &quot;</div> <div class="token cpp_string ">&quot;The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can &quot;</div> <div class="token cpp_string ">&quot;define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.&quot;</div>)]] <div class="def" id="NF[5]$std::tr1"><div class="ref" onclick="jumpToSymbol([], ['std::tr1'], [], [])">tr1</div></div> {</div></div>
+<div class="expandable"><div class="disabled">using _STD hexfloat;</div>
+<div class="expanded"><div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol([], ['std::hexfloat@::std::ios_base &(::std::ios_base &)'], [], [])"><div class="token cpp_function">hexfloat</div></div>;</div></div>
+}
+<div class="disabled">#endif /* _HAS_TR1_NAMESPACE */</div>
+
+<div class="expandable"><div class="disabled">_STD_END</div>
+<div class="expanded">}</div></div>
+
+<div class="disabled"> #pragma pop_macro(&quot;new&quot;)</div>
+<div class="disabled"> _STL_RESTORE_CLANG_WARNINGS</div>
+<div class="expandable"><div class="disabled"> #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+<div class="expandable"><div class="disabled"> #pragma pack(pop)
+#endif /* RC_INVOKED */
+#endif /* _IOS_ */</div>
+<div class="expanded">#pragma pack(pop)</div></div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) by P.J. Plauger. All rights reserved.
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std',
+            'NF[1]$std',
+            'NF[2]$std',
+            'NF[3]$std',
+            'NF[4]$std',
+            'NF[5]$std',
+            'NF[6]$std',
+            'NF[7]$std',
+            'NF[8]$std',
+            'NF[9]$std',
+            'NF[10]$std',
+            'NF[11]$std',
+            'NF[12]$std',
+            'NF[13]$std',
+            'NF[14]$std',
+            'NF[15]$std',
+            'NF[16]$std',
+            'NF[17]$std',
+            'NF[18]$std',
+            'NF[19]$std',
+            'NF[20]$std',
+            'NF[21]$std',
+            'NF[22]$std',
+            'NF[23]$std',
+            'NF[24]$std',
+            'NF[25]$std',
+            'NF[26]$std',
+            'NF[27]$std',
+            'NF[28]$std',
+            'NF[29]$std',
+            'NF[30]$std',
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std',
+            'NF[37]$std',
+            'NF[38]$std',
+            'NF[39]$std',
+            'NF[40]$std',
+            'NF[41]$std',
+            'NF[42]$std',
+            'NF[43]$std',
+            'NF[44]$std',
+            'NF[45]$std',
+            'NF[46]$std',
+            'NF[47]$std',
+            'NF[48]$std',
+            'NF[49]$std',
+            'NF[50]$std',
+            'NF[51]$std',
+            'NF[52]$std',
+            'NF[53]$std',
+            'NF[54]$std',
+            'NF[55]$std',
+            'NF[56]$std',
+            'NF[57]$std',
+            'NF[58]$std',
+            'NF[59]$std',
+            'NF[60]$std',
+            'NF[61]$std'
+        ]
+    },
+    'std::_Iosb::adjustfield': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">adjustfield</span>',
+        'impls': [
+            'NI$std::_Iosb::adjustfield'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::adjustfield'
+        ]
+    },
+    'std::_Iosb::badbit': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">badbit</span>',
+        'impls': [
+            'NI$std::_Iosb::badbit'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::badbit'
+        ]
+    },
+    'std::_Iosb::basefield': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">basefield</span>',
+        'impls': [
+            'NI$std::_Iosb::basefield'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::basefield'
+        ]
+    },
+    'std::_Iosb::boolalpha': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">boolalpha</span>',
+        'impls': [
+            'NI$std::_Iosb::boolalpha'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::boolalpha'
+        ]
+    },
+    'std::_Iosb::dec': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">dec</span>',
+        'impls': [
+            'NI$std::_Iosb::dec'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::dec'
+        ]
+    },
+    'std::_Iosb::fixed': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">fixed</span>',
+        'impls': [
+            'NI$std::_Iosb::fixed'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::fixed'
+        ]
+    },
+    'std::_Iosb::floatfield': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">floatfield</span>',
+        'impls': [
+            'NI$std::_Iosb::floatfield'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::floatfield'
+        ]
+    },
+    'std::_Iosb::goodbit': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">goodbit</span>',
+        'impls': [
+            'NI$std::_Iosb::goodbit'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::goodbit'
+        ]
+    },
+    'std::_Iosb::hex': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">hex</span>',
+        'impls': [
+            'NI$std::_Iosb::hex'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::hex'
+        ]
+    },
+    'std::_Iosb::hexfloat': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">hexfloat</span>',
+        'impls': [
+            'NI$std::_Iosb::hexfloat'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::hexfloat'
+        ]
+    },
+    'std::_Iosb::internal': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">internal</span>',
+        'impls': [
+            'NI$std::_Iosb::internal'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::internal'
+        ]
+    },
+    'std::_Iosb::left': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">left</span>',
+        'impls': [
+            'NI$std::_Iosb::left'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::left'
+        ]
+    },
+    'std::_Iosb::oct': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">oct</span>',
+        'impls': [
+            'NI$std::_Iosb::oct'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::oct'
+        ]
+    },
+    'std::_Iosb::right': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">right</span>',
+        'impls': [
+            'NI$std::_Iosb::right'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::right'
+        ]
+    },
+    'std::_Iosb::scientific': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">scientific</span>',
+        'impls': [
+            'NI$std::_Iosb::scientific'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::scientific'
+        ]
+    },
+    'std::_Iosb::showbase': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">showbase</span>',
+        'impls': [
+            'NI$std::_Iosb::showbase'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::showbase'
+        ]
+    },
+    'std::_Iosb::showpoint': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">showpoint</span>',
+        'impls': [
+            'NI$std::_Iosb::showpoint'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::showpoint'
+        ]
+    },
+    'std::_Iosb::showpos': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">showpos</span>',
+        'impls': [
+            'NI$std::_Iosb::showpos'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::showpos'
+        ]
+    },
+    'std::_Iosb::skipws': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">skipws</span>',
+        'impls': [
+            'NI$std::_Iosb::skipws'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::skipws'
+        ]
+    },
+    'std::_Iosb::unitbuf': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">unitbuf</span>',
+        'impls': [
+            'NI$std::_Iosb::unitbuf'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::unitbuf'
+        ]
+    },
+    'std::_Iosb::uppercase': {
+        'displayNameInHtml': '<span class="cpp_type">_Iosb</span>&lt;<span class="cpp_type">_Dummy</span>&gt;::<span class="cpp_field">uppercase</span>',
+        'impls': [
+            'NI$std::_Iosb::uppercase'
+        ],
+        'decls': [
+            'NF[0]$std::_Iosb::uppercase'
+        ]
+    },
+    'std::addressof@[_Ty] *([_Ty] &)': {
+        'displayNameInHtml': '<span class="cpp_function">addressof</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">_Ty</span> &)',
+        'impls': [
+            'FB$std::addressof@[_Ty] *([_Ty] &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::addressof@[_Ty] const *([_Ty] const &&)': {
+        'displayNameInHtml': '<span class="cpp_function">addressof</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">_Ty</span><span class="cpp_keyword"> const</span> &&)',
+        'impls': [],
+        'decls': [
+            'FB$std::addressof@[_Ty] const *([_Ty] const &&)[decl0]'
+        ]
+    },
+    'std::basic_ios': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;',
+        'impls': [
+            'NI$std::basic_ios'
+        ],
+        'decls': [
+            'NF[0]$std::basic_ios'
+        ]
+    },
+    'std::basic_ios::$__ctor@(::std::basic_ios::_Mysb *)[impl0]::_Strbuf': {
+        'displayNameInHtml': '_Strbuf',
+        'impls': [
+            'NI$std::basic_ios::$__ctor@(::std::basic_ios::_Mysb *)[impl0]::_Strbuf'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::_Ctype': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_type">_Ctype</span>',
+        'impls': [
+            'NI$std::basic_ios::_Ctype'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::_Elem2': {
+        'displayNameInHtml': '<span class="cpp_type">_Elem</span>',
+        'impls': [
+            'TA$std::basic_ios::_Elem2'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::_Fillch': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_field">_Fillch</span>',
+        'impls': [
+            'NI$std::basic_ios::_Fillch'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::_Myos': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_type">_Myos</span>',
+        'impls': [
+            'NI$std::basic_ios::_Myos'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::_Mysb': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_type">_Mysb</span>',
+        'impls': [
+            'NI$std::basic_ios::_Mysb'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::_Mystrbuf': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_field">_Mystrbuf</span>',
+        'impls': [
+            'NI$std::basic_ios::_Mystrbuf'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::_Tiestr': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_field">_Tiestr</span>',
+        'impls': [
+            'NI$std::basic_ios::_Tiestr'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::_Traits2': {
+        'displayNameInHtml': '<span class="cpp_type">_Traits</span>',
+        'impls': [
+            'TA$std::basic_ios::_Traits2'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::clear@void(::std::ios_base::io_state)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">clear</span>(<span class="cpp_type">io_state</span>)',
+        'impls': [
+            'FB$std::basic_ios::clear@void(::std::ios_base::io_state)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::clear@void(::std::ios_base::io_state)[impl0]::_State': {
+        'displayNameInHtml': '_State',
+        'impls': [
+            'NI$std::basic_ios::clear@void(::std::ios_base::io_state)[impl0]::_State'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::clear@void(::std::ios_base::iostate, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">clear</span>(<span class="cpp_type">iostate</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_Reraise': {
+        'displayNameInHtml': '_Reraise',
+        'impls': [
+            'NI$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_Reraise'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_State': {
+        'displayNameInHtml': '_State',
+        'impls': [
+            'NI$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_State'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::copyfmt@::std::basic_ios &(::std::basic_ios const &)[impl0]::_Right': {
+        'displayNameInHtml': '_Right',
+        'impls': [
+            'NI$std::basic_ios::copyfmt@::std::basic_ios &(::std::basic_ios const &)[impl0]::_Right'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::fill@[_Elem]()': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">fill</span>()',
+        'impls': [
+            'FB$std::basic_ios::fill@[_Elem]()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::fill@[_Elem]([_Elem])': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">fill</span>(<span class="cpp_type">_Elem</span>)',
+        'impls': [
+            'FB$std::basic_ios::fill@[_Elem]([_Elem])[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Newfill': {
+        'displayNameInHtml': '_Newfill',
+        'impls': [
+            'NI$std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Newfill'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Oldfill': {
+        'displayNameInHtml': '_Oldfill',
+        'impls': [
+            'NI$std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Oldfill'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Loc': {
+        'displayNameInHtml': '_Loc',
+        'impls': [
+            'NI$std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Loc'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Oldlocale': {
+        'displayNameInHtml': '_Oldlocale',
+        'impls': [
+            'NI$std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Oldlocale'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">init</span>(<span class="cpp_type">_Mysb</span> *, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Isstd': {
+        'displayNameInHtml': '_Isstd',
+        'impls': [
+            'NI$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Isstd'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Strbuf': {
+        'displayNameInHtml': '_Strbuf',
+        'impls': [
+            'NI$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Strbuf'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::move@void(::std::basic_ios &&)[impl0]::_Right': {
+        'displayNameInHtml': '_Right',
+        'impls': [
+            'NI$std::basic_ios::move@void(::std::basic_ios &&)[impl0]::_Right'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::move@void(::std::basic_ios &)[impl0]::_Right': {
+        'displayNameInHtml': '_Right',
+        'impls': [
+            'NI$std::basic_ios::move@void(::std::basic_ios &)[impl0]::_Right'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::narrow@char([_Elem], char)[impl0]::_Ch': {
+        'displayNameInHtml': '_Ch',
+        'impls': [
+            'NI$std::basic_ios::narrow@char([_Elem], char)[impl0]::_Ch'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::narrow@char([_Elem], char)[impl0]::_Dflt': {
+        'displayNameInHtml': '_Dflt',
+        'impls': [
+            'NI$std::basic_ios::narrow@char([_Elem], char)[impl0]::_Dflt'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::rdbuf@::std::basic_ios::_Mysb *()': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">rdbuf</span>()',
+        'impls': [
+            'FB$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">rdbuf</span>(<span class="cpp_type">_Mysb</span> *)',
+        'impls': [
+            'FB$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Oldstrbuf': {
+        'displayNameInHtml': '_Oldstrbuf',
+        'impls': [
+            'NI$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Oldstrbuf'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Strbuf': {
+        'displayNameInHtml': '_Strbuf',
+        'impls': [
+            'NI$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Strbuf'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::set_rdbuf@void(::std::basic_ios::_Mysb *)[impl0]::_Strbuf': {
+        'displayNameInHtml': '_Strbuf',
+        'impls': [
+            'NI$std::basic_ios::set_rdbuf@void(::std::basic_ios::_Mysb *)[impl0]::_Strbuf'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::setstate@void(::std::ios_base::io_state)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">setstate</span>(<span class="cpp_type">io_state</span>)',
+        'impls': [
+            'FB$std::basic_ios::setstate@void(::std::ios_base::io_state)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::setstate@void(::std::ios_base::io_state)[impl0]::_State': {
+        'displayNameInHtml': '_State',
+        'impls': [
+            'NI$std::basic_ios::setstate@void(::std::ios_base::io_state)[impl0]::_State'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::setstate@void(::std::ios_base::iostate, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">setstate</span>(<span class="cpp_type">iostate</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_Reraise': {
+        'displayNameInHtml': '_Reraise',
+        'impls': [
+            'NI$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_Reraise'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_State': {
+        'displayNameInHtml': '_State',
+        'impls': [
+            'NI$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_State'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::swap@void(::std::basic_ios &)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">swap</span>(<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt; &)',
+        'impls': [
+            'FB$std::basic_ios::swap@void(::std::basic_ios &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::swap@void(::std::basic_ios &)[impl0]::_Right': {
+        'displayNameInHtml': '_Right',
+        'impls': [
+            'NI$std::basic_ios::swap@void(::std::basic_ios &)[impl0]::_Right'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::tie@::std::basic_ios::_Myos *()': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">tie</span>()',
+        'impls': [
+            'FB$std::basic_ios::tie@::std::basic_ios::_Myos *()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">tie</span>(<span class="cpp_type">_Myos</span> *)',
+        'impls': [
+            'FB$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Newtie': {
+        'displayNameInHtml': '_Newtie',
+        'impls': [
+            'NI$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Newtie'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Oldtie': {
+        'displayNameInHtml': '_Oldtie',
+        'impls': [
+            'NI$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Oldtie'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::widen@[_Elem](char)': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ios</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::basic_ios::widen@[_Elem](char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::basic_ios::widen@[_Elem](char)[impl0]::_Byte': {
+        'displayNameInHtml': '_Byte',
+        'impls': [
+            'NI$std::basic_ios::widen@[_Elem](char)[impl0]::_Byte'
+        ],
+        'decls': []
+    },
+    'std::basic_ostream': {
+        'displayNameInHtml': '<span class="cpp_type">basic_ostream</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;',
+        'impls': [
+            'NI$std::basic_ostream'
+        ],
+        'decls': [
+            'NF[0]$std::basic_ostream'
+        ]
+    },
+    'std::basic_streambuf': {
+        'displayNameInHtml': '<span class="cpp_type">basic_streambuf</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>&gt;',
+        'impls': [
+            'NI$std::basic_streambuf'
+        ],
+        'decls': [
+            'NF[0]$std::basic_streambuf'
+        ]
+    },
+    'std::boolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::boolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::char_traits': {
+        'displayNameInHtml': '<span class="cpp_type">char_traits</span>&lt;<span class="cpp_type">_Elem</span>&gt;',
+        'impls': [
+            'NI$std::char_traits'
+        ],
+        'decls': []
+    },
+    'std::ctype': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_type">_Elem</span>&gt;',
+        'impls': [
+            'NI$std::ctype'
+        ],
+        'decls': []
+    },
+    'std::ctype::narrow@[_Elem] const *([_Elem] const *, [_Elem] const *, char, char *)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">narrow</span>(<span class="cpp_type">_Elem</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_Elem</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span> *)',
+        'impls': [
+            'FB$std::ctype::narrow@[_Elem] const *([_Elem] const *, [_Elem] const *, char, char *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype::narrow@char([_Elem], char)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">narrow</span>(<span class="cpp_type">_Elem</span>, <span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::ctype::narrow@char([_Elem], char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype::widen@[_Elem](char)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::ctype::widen@[_Elem](char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype::widen@char const *(char const *, char const *, [_Elem] *)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_Elem</span> *)',
+        'impls': [
+            'FB$std::ctype::widen@char const *(char const *, char const *, [_Elem] *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<char>': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">char</span>&gt;',
+        'impls': [
+            'NI$std::ctype@<char>'
+        ],
+        'decls': []
+    },
+    'std::ctype@<char>::narrow@::std::ctype@<char>::_Elem const *(::std::ctype@<char>::_Elem const *, ::std::ctype@<char>::_Elem const *, char, char *)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">char</span>&gt;::<span class="cpp_function">narrow</span>(<span class="cpp_type">_Elem</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_Elem</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span> *)',
+        'impls': [
+            'FB$std::ctype@<char>::narrow@::std::ctype@<char>::_Elem const *(::std::ctype@<char>::_Elem const *, ::std::ctype@<char>::_Elem const *, char, char *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<char>::narrow@::std::ctype@<char>::_Elem(::std::ctype@<char>::_Elem, char)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">char</span>&gt;::<span class="cpp_function">narrow</span>(<span class="cpp_type">_Elem</span>, <span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::ctype@<char>::narrow@::std::ctype@<char>::_Elem(::std::ctype@<char>::_Elem, char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<char>::widen@::std::ctype@<char>::_Elem const *(char const *, char const *, ::std::ctype@<char>::_Elem *)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">char</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_Elem</span> *)',
+        'impls': [
+            'FB$std::ctype@<char>::widen@::std::ctype@<char>::_Elem const *(char const *, char const *, ::std::ctype@<char>::_Elem *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<char>::widen@::std::ctype@<char>::_Elem(char)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">char</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::ctype@<char>::widen@::std::ctype@<char>::_Elem(char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<unsigned short>': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span>&gt;',
+        'impls': [
+            'NI$std::ctype@<unsigned short>'
+        ],
+        'decls': []
+    },
+    'std::ctype@<unsigned short>::narrow@::std::ctype@<unsigned short>::_Elem const *(::std::ctype@<unsigned short>::_Elem const *, ::std::ctype@<unsigned short>::_Elem const *, char, char *)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span>&gt;::<span class="cpp_function">narrow</span>(<span class="cpp_type">_Elem</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_Elem</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span> *)',
+        'impls': [
+            'FB$std::ctype@<unsigned short>::narrow@::std::ctype@<unsigned short>::_Elem const *(::std::ctype@<unsigned short>::_Elem const *, ::std::ctype@<unsigned short>::_Elem const *, char, char *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<unsigned short>::narrow@char(::std::ctype@<unsigned short>::_Elem, char)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span>&gt;::<span class="cpp_function">narrow</span>(<span class="cpp_type">_Elem</span>, <span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::ctype@<unsigned short>::narrow@char(::std::ctype@<unsigned short>::_Elem, char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<unsigned short>::widen@::std::ctype@<unsigned short>::_Elem(char)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::ctype@<unsigned short>::widen@::std::ctype@<unsigned short>::_Elem(char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<unsigned short>::widen@char const *(char const *, char const *, ::std::ctype@<unsigned short>::_Elem *)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_Elem</span> *)',
+        'impls': [
+            'FB$std::ctype@<unsigned short>::widen@char const *(char const *, char const *, ::std::ctype@<unsigned short>::_Elem *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<wchar_t>': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">wchar_t</span>&gt;',
+        'impls': [
+            'NI$std::ctype@<wchar_t>'
+        ],
+        'decls': []
+    },
+    'std::ctype@<wchar_t>::narrow@::std::ctype@<wchar_t>::_Elem const *(::std::ctype@<wchar_t>::_Elem const *, ::std::ctype@<wchar_t>::_Elem const *, char, char *)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">wchar_t</span>&gt;::<span class="cpp_function">narrow</span>(<span class="cpp_type">_Elem</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_Elem</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span>, <span class="cpp_keyword">char</span> *)',
+        'impls': [
+            'FB$std::ctype@<wchar_t>::narrow@::std::ctype@<wchar_t>::_Elem const *(::std::ctype@<wchar_t>::_Elem const *, ::std::ctype@<wchar_t>::_Elem const *, char, char *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<wchar_t>::narrow@char(::std::ctype@<wchar_t>::_Elem, char)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">wchar_t</span>&gt;::<span class="cpp_function">narrow</span>(<span class="cpp_type">_Elem</span>, <span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::ctype@<wchar_t>::narrow@char(::std::ctype@<wchar_t>::_Elem, char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<wchar_t>::widen@::std::ctype@<wchar_t>::_Elem(char)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">wchar_t</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span>)',
+        'impls': [
+            'FB$std::ctype@<wchar_t>::widen@::std::ctype@<wchar_t>::_Elem(char)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ctype@<wchar_t>::widen@char const *(char const *, char const *, ::std::ctype@<wchar_t>::_Elem *)': {
+        'displayNameInHtml': '<span class="cpp_type">ctype</span>&lt;<span class="cpp_keyword">wchar_t</span>&gt;::<span class="cpp_function">widen</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">_Elem</span> *)',
+        'impls': [
+            'FB$std::ctype@<wchar_t>::widen@char const *(char const *, char const *, ::std::ctype@<wchar_t>::_Elem *)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::dec@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::dec@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::defaultfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::defaultfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::fixed@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::fixed@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::hex@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::hex@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::hexfloat@::std::ios_base &(::std::ios_base &)': {
+        'displayNameInHtml': '<span class="cpp_function">hexfloat</span>(<span class="cpp_type">ios_base</span> &)',
+        'impls': [
+            'FB$std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::internal@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::internal@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::ios_base': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>',
+        'impls': [
+            'NI$std::ios_base'
+        ],
+        'decls': [
+            'NF[0]$std::ios_base'
+        ]
+    },
+    'std::ios_base::_Addstd@void(::std::ios_base *)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">_Addstd</span>(<span class="cpp_type">ios_base</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$std::ios_base::_Addstd@void(::std::ios_base *)[decl0]'
+        ]
+    },
+    'std::ios_base::_Init@void()': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">_Init</span>()',
+        'impls': [
+            'FB$std::ios_base::_Init@void()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::clear@void(::std::ios_base::io_state)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">clear</span>(<span class="cpp_type">io_state</span>)',
+        'impls': [
+            'FB$std::ios_base::clear@void(::std::ios_base::io_state)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::clear@void(::std::ios_base::iostate)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">clear</span>(<span class="cpp_type">iostate</span>)',
+        'impls': [
+            'FB$std::ios_base::clear@void(::std::ios_base::iostate)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::clear@void(::std::ios_base::iostate, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">clear</span>(<span class="cpp_type">iostate</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$std::ios_base::clear@void(::std::ios_base::iostate, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::copyfmt@::std::ios_base &(::std::ios_base const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">copyfmt</span>(<span class="cpp_type">ios_base</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::ios_base::copyfmt@::std::ios_base &(::std::ios_base const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::getloc@::std::locale()': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">getloc</span>()',
+        'impls': [
+            'FB$std::ios_base::getloc@::std::locale()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::imbue@::std::locale(::std::locale const &)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">imbue</span>(<span class="cpp_type">locale</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::ios_base::imbue@::std::locale(::std::locale const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::io_state': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_type">io_state</span>',
+        'impls': [
+            'NI$std::ios_base::io_state'
+        ],
+        'decls': []
+    },
+    'std::ios_base::iostate': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_type">iostate</span>',
+        'impls': [
+            'NI$std::ios_base::iostate'
+        ],
+        'decls': []
+    },
+    'std::ios_base::rdstate@::std::ios_base::iostate()': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">rdstate</span>()',
+        'impls': [
+            'FB$std::ios_base::rdstate@::std::ios_base::iostate()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">setf</span>(<span class="cpp_type">fmtflags</span>)',
+        'impls': [
+            'FB$std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">setf</span>(<span class="cpp_type">fmtflags</span>, <span class="cpp_type">fmtflags</span>)',
+        'impls': [
+            'FB$std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::swap@void(::std::ios_base &)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">swap</span>(<span class="cpp_type">ios_base</span> &)',
+        'impls': [
+            'FB$std::ios_base::swap@void(::std::ios_base &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::ios_base::unsetf@void(::std::ios_base::fmtflags)': {
+        'displayNameInHtml': '<span class="cpp_type">ios_base</span>::<span class="cpp_function">unsetf</span>(<span class="cpp_type">fmtflags</span>)',
+        'impls': [
+            'FB$std::ios_base::unsetf@void(::std::ios_base::fmtflags)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::left@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::left@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::locale': {
+        'displayNameInHtml': '<span class="cpp_type">locale</span>',
+        'impls': [
+            'NI$std::locale'
+        ],
+        'decls': [
+            'NF[0]$std::locale'
+        ]
+    },
+    'std::noboolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::noboolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::noshowbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::noshowbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::noshowpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::noshowpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::noshowpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::noshowpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::noskipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::noskipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::nounitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::nounitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::nouppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::nouppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::oct@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::oct@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::error_code const &, ::std::error_code const &)': {
+        'displayNameInHtml': '<span class="cpp_function">operator !=</span>(<span class="cpp_type">error_code</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">error_code</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::operator !=@bool(::std::error_code const &, ::std::error_code const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::error_code const &, ::std::error_condition const &)': {
+        'displayNameInHtml': '<span class="cpp_function">operator !=</span>(<span class="cpp_type">error_code</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">error_condition</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::operator !=@bool(::std::error_code const &, ::std::error_condition const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::error_condition const &, ::std::error_code const &)': {
+        'displayNameInHtml': '<span class="cpp_function">operator !=</span>(<span class="cpp_type">error_condition</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">error_code</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::operator !=@bool(::std::error_condition const &, ::std::error_code const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::operator !=@bool(::std::error_condition const &, ::std::error_condition const &)': {
+        'displayNameInHtml': '<span class="cpp_function">operator !=</span>(<span class="cpp_type">error_condition</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">error_condition</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::operator !=@bool(::std::error_condition const &, ::std::error_condition const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::right@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::right@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::scientific@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::scientific@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::showbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::showbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::showpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::showpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::showpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::showpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::skipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::skipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::_Vb_reference<[_Alvbase_wrapped]>, ::std::_Vb_reference<[_Alvbase_wrapped]>)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Alvbase_wrapped</span>&gt;(<span class="cpp_type">_Vb_reference</span>&lt;<span class="cpp_type">_Alvbase_wrapped</span>&gt;, <span class="cpp_type">_Vb_reference</span>&lt;<span class="cpp_type">_Alvbase_wrapped</span>&gt;)',
+        'impls': [
+            'FB$std::swap@void(::std::_Vb_reference<[_Alvbase_wrapped]>, ::std::_Vb_reference<[_Alvbase_wrapped]>)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt;(<span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt; &, <span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>(<span class="cpp_type">exception_ptr</span> &, <span class="cpp_type">exception_ptr</span> &)',
+        'impls': [
+            'FB$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::function<[_Fty]> &, ::std::function<[_Fty]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Fty</span>&gt;(<span class="cpp_type">function</span>&lt;<span class="cpp_type">_Fty</span>&gt; &, <span class="cpp_type">function</span>&lt;<span class="cpp_type">_Fty</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::function<[_Fty]> &, ::std::function<[_Fty]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Ty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt;(<span class="cpp_type">map</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Ty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt; &, <span class="cpp_type">map</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Ty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Ty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt;(<span class="cpp_type">multimap</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Ty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt; &, <span class="cpp_type">multimap</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Ty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::multiset<[_Kty], [_Pr], [_Alloc]> &, ::std::multiset<[_Kty], [_Pr], [_Alloc]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt;(<span class="cpp_type">multiset</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt; &, <span class="cpp_type">multiset</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::multiset<[_Kty], [_Pr], [_Alloc]> &, ::std::multiset<[_Kty], [_Pr], [_Alloc]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Ty1</span>, <span class="cpp_type">_Ty2</span>, <span class="cpp_type"></span>&gt;(<span class="cpp_type">pair</span>&lt;<span class="cpp_type">_Ty1</span>, <span class="cpp_type">_Ty2</span>&gt; &, <span class="cpp_type">pair</span>&lt;<span class="cpp_type">_Ty1</span>, <span class="cpp_type">_Ty2</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::set<[_Kty], [_Pr], [_Alloc]> &, ::std::set<[_Kty], [_Pr], [_Alloc]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt;(<span class="cpp_type">set</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt; &, <span class="cpp_type">set</span>&lt;<span class="cpp_type">_Kty</span>, <span class="cpp_type">_Pr</span>, <span class="cpp_type">_Alloc</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::set<[_Kty], [_Pr], [_Alloc]> &, ::std::set<[_Kty], [_Pr], [_Alloc]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">shared_ptr</span>&lt;<span class="cpp_type">_Ty</span>&gt; &, <span class="cpp_type">shared_ptr</span>&lt;<span class="cpp_type">_Ty</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::tuple<[_Types]...> &, ::std::tuple<[_Types]...> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Types</span> ..., <span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_type">tuple</span>&lt;<span class="cpp_type">_Types</span> ...&gt; &, <span class="cpp_type">tuple</span>&lt;<span class="cpp_type">_Types</span> ...&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::tuple<[_Types]...> &, ::std::tuple<[_Types]...> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Dx</span>, <span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_type">unique_ptr</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Dx</span>&gt; &, <span class="cpp_type">unique_ptr</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Dx</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::vector<[_Ty], [_Alloc]> &, ::std::vector<[_Ty], [_Alloc]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Alloc</span>&gt;(<span class="cpp_type">vector</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Alloc</span>&gt; &, <span class="cpp_type">vector</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type">_Alloc</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::vector<[_Ty], [_Alloc]> &, ::std::vector<[_Ty], [_Alloc]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Ty</span>&gt;(<span class="cpp_type">weak_ptr</span>&lt;<span class="cpp_type">_Ty</span>&gt; &, <span class="cpp_type">weak_ptr</span>&lt;<span class="cpp_type">_Ty</span>&gt; &)',
+        'impls': [
+            'FB$std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::swap@void([_Ty] &, [_Ty] &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_type"></span>&gt;(<span class="cpp_type">_Ty</span> &, <span class="cpp_type">_Ty</span> &)',
+        'impls': [
+            'FB$std::swap@void([_Ty] &, [_Ty] &)[impl0]'
+        ],
+        'decls': [
+            'FB$std::swap@void([_Ty] &, [_Ty] &)[decl0]'
+        ]
+    },
+    'std::swap@void([_Ty] [*] &, [_Ty] [*] &)': {
+        'displayNameInHtml': '<span class="cpp_function">swap</span>&lt;<span class="cpp_type">_Ty</span>, <span class="cpp_keyword">(expr)</span>, <span class="cpp_type"></span>&gt;(<span class="cpp_type">_Ty</span>( &)[<span class="cpp_keyword">(expr)</span>], <span class="cpp_type">_Ty</span>( &)[<span class="cpp_keyword">(expr)</span>])',
+        'impls': [
+            'FB$std::swap@void([_Ty] [*] &, [_Ty] [*] &)[impl0]'
+        ],
+        'decls': [
+            'FB$std::swap@void([_Ty] [*] &, [_Ty] [*] &)[decl0]'
+        ]
+    },
+    'std::tr1': {
+        'displayNameInHtml': 'std::tr1',
+        'impls': [],
+        'decls': [
+            'NF[0]$std::tr1',
+            'NF[1]$std::tr1',
+            'NF[2]$std::tr1',
+            'NF[3]$std::tr1',
+            'NF[4]$std::tr1',
+            'NF[5]$std::tr1',
+            'NF[6]$std::tr1'
+        ]
+    },
+    'std::unitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::unitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::uppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': {
+        'displayNameInHtml': '_Iosbase',
+        'impls': [
+            'NI$std::uppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase'
+        ],
+        'decls': []
+    },
+    'std::use_facet@[_Facet] const &(::std::locale const &)': {
+        'displayNameInHtml': '<span class="cpp_function">use_facet</span>&lt;<span class="cpp_type">_Facet</span>&gt;(<span class="cpp_type">locale</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::use_facet@[_Facet] const &(::std::locale const &)[impl0]'
+        ],
+        'decls': [
+            'FB$std::use_facet@[_Facet] const &(::std::locale const &)[decl0]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$std::addressof@[_Ty] *([_Ty] &)[impl0]': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'FB$std::addressof@[_Ty] const *([_Ty] const &&)[decl0]': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'FB$std::basic_ios::clear@void(::std::ios_base::io_state)[impl0]': null,
+    'FB$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]': null,
+    'FB$std::basic_ios::fill@[_Elem]()[impl0]': null,
+    'FB$std::basic_ios::fill@[_Elem]([_Elem])[impl0]': null,
+    'FB$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]': null,
+    'FB$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *()[impl0]': null,
+    'FB$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]': null,
+    'FB$std::basic_ios::setstate@void(::std::ios_base::io_state)[impl0]': null,
+    'FB$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]': null,
+    'FB$std::basic_ios::swap@void(::std::basic_ios &)[impl0]': null,
+    'FB$std::basic_ios::tie@::std::basic_ios::_Myos *()[impl0]': null,
+    'FB$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]': null,
+    'FB$std::basic_ios::widen@[_Elem](char)[impl0]': null,
+    'FB$std::ctype::narrow@[_Elem] const *([_Elem] const *, [_Elem] const *, char, char *)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype::narrow@char([_Elem], char)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype::widen@[_Elem](char)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype::widen@char const *(char const *, char const *, [_Elem] *)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<char>::narrow@::std::ctype@<char>::_Elem const *(::std::ctype@<char>::_Elem const *, ::std::ctype@<char>::_Elem const *, char, char *)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<char>::narrow@::std::ctype@<char>::_Elem(::std::ctype@<char>::_Elem, char)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<char>::widen@::std::ctype@<char>::_Elem const *(char const *, char const *, ::std::ctype@<char>::_Elem *)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<char>::widen@::std::ctype@<char>::_Elem(char)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<unsigned short>::narrow@::std::ctype@<unsigned short>::_Elem const *(::std::ctype@<unsigned short>::_Elem const *, ::std::ctype@<unsigned short>::_Elem const *, char, char *)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<unsigned short>::narrow@char(::std::ctype@<unsigned short>::_Elem, char)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<unsigned short>::widen@::std::ctype@<unsigned short>::_Elem(char)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<unsigned short>::widen@char const *(char const *, char const *, ::std::ctype@<unsigned short>::_Elem *)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<wchar_t>::narrow@::std::ctype@<wchar_t>::_Elem const *(::std::ctype@<wchar_t>::_Elem const *, ::std::ctype@<wchar_t>::_Elem const *, char, char *)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<wchar_t>::narrow@char(::std::ctype@<wchar_t>::_Elem, char)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<wchar_t>::widen@::std::ctype@<wchar_t>::_Elem(char)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::ctype@<wchar_t>::widen@char const *(char const *, char const *, ::std::ctype@<wchar_t>::_Elem *)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]': null,
+    'FB$std::ios_base::_Addstd@void(::std::ios_base *)[decl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::_Init@void()[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::clear@void(::std::ios_base::io_state)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::clear@void(::std::ios_base::iostate)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::clear@void(::std::ios_base::iostate, bool)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::copyfmt@::std::ios_base &(::std::ios_base const &)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::getloc@::std::locale()[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::imbue@::std::locale(::std::locale const &)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::rdstate@::std::ios_base::iostate()[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::setf@::std::ios_base::fmtflags(::std::ios_base::fmtflags, ::std::ios_base::fmtflags)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::swap@void(::std::ios_base &)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::ios_base::unsetf@void(::std::ios_base::fmtflags)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'FB$std::operator !=@bool(::std::error_code const &, ::std::error_code const &)[impl0]': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'FB$std::operator !=@bool(::std::error_code const &, ::std::error_condition const &)[impl0]': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'FB$std::operator !=@bool(::std::error_condition const &, ::std::error_code const &)[impl0]': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'FB$std::operator !=@bool(::std::error_condition const &, ::std::error_condition const &)[impl0]': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'FB$std::swap@void(::std::_Vb_reference<[_Alvbase_wrapped]>, ::std::_Vb_reference<[_Alvbase_wrapped]>)[impl0]': { 'htmlFileName': 'vector', 'displayName': 'vector' },
+    'FB$std::swap@void(::std::basic_string<[_Elem], [_Traits], [_Alloc]> &, ::std::basic_string<[_Elem], [_Traits], [_Alloc]> &)[impl0]': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'FB$std::swap@void(::std::exception_ptr &, ::std::exception_ptr &)[impl0]': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'FB$std::swap@void(::std::function<[_Fty]> &, ::std::function<[_Fty]> &)[impl0]': { 'htmlFileName': 'functional', 'displayName': 'functional' },
+    'FB$std::swap@void(::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::map<[_Kty], [_Ty], [_Pr], [_Alloc]> &)[impl0]': { 'htmlFileName': 'map', 'displayName': 'map' },
+    'FB$std::swap@void(::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &, ::std::multimap<[_Kty], [_Ty], [_Pr], [_Alloc]> &)[impl0]': { 'htmlFileName': 'map', 'displayName': 'map' },
+    'FB$std::swap@void(::std::multiset<[_Kty], [_Pr], [_Alloc]> &, ::std::multiset<[_Kty], [_Pr], [_Alloc]> &)[impl0]': { 'htmlFileName': 'set', 'displayName': 'set' },
+    'FB$std::swap@void(::std::pair<[_Ty1], [_Ty2]> &, ::std::pair<[_Ty1], [_Ty2]> &)[impl0]': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'FB$std::swap@void(::std::set<[_Kty], [_Pr], [_Alloc]> &, ::std::set<[_Kty], [_Pr], [_Alloc]> &)[impl0]': { 'htmlFileName': 'set', 'displayName': 'set' },
+    'FB$std::swap@void(::std::shared_ptr<[_Ty]> &, ::std::shared_ptr<[_Ty]> &)[impl0]': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'FB$std::swap@void(::std::tuple<[_Types]...> &, ::std::tuple<[_Types]...> &)[impl0]': { 'htmlFileName': 'tuple', 'displayName': 'tuple' },
+    'FB$std::swap@void(::std::unique_ptr<[_Ty], [_Dx]> &, ::std::unique_ptr<[_Ty], [_Dx]> &)[impl0]': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'FB$std::swap@void(::std::vector<[_Ty], [_Alloc]> &, ::std::vector<[_Ty], [_Alloc]> &)[impl0]': { 'htmlFileName': 'vector', 'displayName': 'vector' },
+    'FB$std::swap@void(::std::weak_ptr<[_Ty]> &, ::std::weak_ptr<[_Ty]> &)[impl0]': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'FB$std::swap@void([_Ty] &, [_Ty] &)[decl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'FB$std::swap@void([_Ty] &, [_Ty] &)[impl0]': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'FB$std::swap@void([_Ty] [*] &, [_Ty] [*] &)[decl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'FB$std::swap@void([_Ty] [*] &, [_Ty] [*] &)[impl0]': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'FB$std::use_facet@[_Facet] const &(::std::locale const &)[decl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::use_facet@[_Facet] const &(::std::locale const &)[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
+    'NF[0]$std::_Iosb::adjustfield': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::badbit': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::basefield': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::boolalpha': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::dec': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::fixed': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::floatfield': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::goodbit': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::hex': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::hexfloat': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::internal': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::left': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::oct': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::right': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::scientific': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::showbase': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::showpoint': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::showpos': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::skipws': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::unitbuf': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::_Iosb::uppercase': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[0]$std::basic_ios': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[0]$std::basic_ostream': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[0]$std::basic_streambuf': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[0]$std::ios_base': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[0]$std::locale': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NF[0]$std::tr1': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[10]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[11]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
+    'NF[1]$std::tr1': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
+    'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
+    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[28]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[29]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
+    'NF[2]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NF[2]$std::tr1': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[30]$std': { 'htmlFileName': 'vector', 'displayName': 'vector' },
+    'NF[31]$std': { 'htmlFileName': 'xtree', 'displayName': 'xtree' },
+    'NF[32]$std': { 'htmlFileName': 'set', 'displayName': 'set' },
+    'NF[33]$std': { 'htmlFileName': 'tuple', 'displayName': 'tuple' },
+    'NF[34]$std': { 'htmlFileName': 'map', 'displayName': 'map' },
+    'NF[35]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[36]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[37]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[38]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[39]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[3]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[3]$std::tr1': { 'htmlFileName': 'tuple', 'displayName': 'tuple' },
+    'NF[40]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[41]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NF[42]$std': { 'htmlFileName': 'xcall_once.h', 'displayName': 'xcall_once.h' },
+    'NF[43]$std': { 'htmlFileName': 'xerrc.h', 'displayName': 'xerrc.h' },
+    'NF[44]$std': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'NF[45]$std': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[46]$std': { 'htmlFileName': 'streambuf', 'displayName': 'streambuf' },
+    'NF[47]$std': { 'htmlFileName': 'xlocnum', 'displayName': 'xlocnum' },
+    'NF[48]$std': null,
+    'NF[49]$std': { 'htmlFileName': 'ostream', 'displayName': 'ostream' },
+    'NF[4]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[4]$std::tr1': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[50]$std': { 'htmlFileName': 'istream', 'displayName': 'istream' },
+    'NF[51]$std': { 'htmlFileName': 'xstring_insert.h', 'displayName': 'xstring_insert.h' },
+    'NF[52]$std': { 'htmlFileName': 'string', 'displayName': 'string' },
+    'NF[53]$std': { 'htmlFileName': 'xlocbuf', 'displayName': 'xlocbuf' },
+    'NF[54]$std': { 'htmlFileName': 'xlocmes', 'displayName': 'xlocmes' },
+    'NF[55]$std': { 'htmlFileName': 'xlocmon', 'displayName': 'xlocmon' },
+    'NF[56]$std': { 'htmlFileName': 'ctime', 'displayName': 'ctime' },
+    'NF[57]$std': { 'htmlFileName': 'xloctime', 'displayName': 'xloctime' },
+    'NF[58]$std': { 'htmlFileName': 'locale', 'displayName': 'locale' },
+    'NF[59]$std': { 'htmlFileName': 'codecvt', 'displayName': 'codecvt' },
+    'NF[5]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[5]$std::tr1': null,
+    'NF[60]$std': { 'htmlFileName': 'functional', 'displayName': 'functional' },
+    'NF[61]$std': { 'htmlFileName': 'iostream', 'displayName': 'iostream' },
+    'NF[6]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[6]$std::tr1': { 'htmlFileName': 'functional', 'displayName': 'functional' },
+    'NF[7]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[8]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[9]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NI$std::_Iosb::adjustfield': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::badbit': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::basefield': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::boolalpha': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::dec': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::fixed': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::floatfield': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::goodbit': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::hex': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::hexfloat': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::internal': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::left': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::oct': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::right': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::scientific': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::showbase': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::showpoint': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::showpos': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::skipws': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::unitbuf': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::_Iosb::uppercase': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::basic_ios': null,
+    'NI$std::basic_ios::$__ctor@(::std::basic_ios::_Mysb *)[impl0]::_Strbuf': null,
+    'NI$std::basic_ios::_Ctype': null,
+    'NI$std::basic_ios::_Fillch': null,
+    'NI$std::basic_ios::_Myos': null,
+    'NI$std::basic_ios::_Mysb': null,
+    'NI$std::basic_ios::_Mystrbuf': null,
+    'NI$std::basic_ios::_Tiestr': null,
+    'NI$std::basic_ios::clear@void(::std::ios_base::io_state)[impl0]::_State': null,
+    'NI$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_Reraise': null,
+    'NI$std::basic_ios::clear@void(::std::ios_base::iostate, bool)[impl0]::_State': null,
+    'NI$std::basic_ios::copyfmt@::std::basic_ios &(::std::basic_ios const &)[impl0]::_Right': null,
+    'NI$std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Newfill': null,
+    'NI$std::basic_ios::fill@[_Elem]([_Elem])[impl0]::_Oldfill': null,
+    'NI$std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Loc': null,
+    'NI$std::basic_ios::imbue@::std::locale(::std::locale const &)[impl0]::_Oldlocale': null,
+    'NI$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Isstd': null,
+    'NI$std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)[impl0]::_Strbuf': null,
+    'NI$std::basic_ios::move@void(::std::basic_ios &&)[impl0]::_Right': null,
+    'NI$std::basic_ios::move@void(::std::basic_ios &)[impl0]::_Right': null,
+    'NI$std::basic_ios::narrow@char([_Elem], char)[impl0]::_Ch': null,
+    'NI$std::basic_ios::narrow@char([_Elem], char)[impl0]::_Dflt': null,
+    'NI$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Oldstrbuf': null,
+    'NI$std::basic_ios::rdbuf@::std::basic_ios::_Mysb *(::std::basic_ios::_Mysb *)[impl0]::_Strbuf': null,
+    'NI$std::basic_ios::set_rdbuf@void(::std::basic_ios::_Mysb *)[impl0]::_Strbuf': null,
+    'NI$std::basic_ios::setstate@void(::std::ios_base::io_state)[impl0]::_State': null,
+    'NI$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_Reraise': null,
+    'NI$std::basic_ios::setstate@void(::std::ios_base::iostate, bool)[impl0]::_State': null,
+    'NI$std::basic_ios::swap@void(::std::basic_ios &)[impl0]::_Right': null,
+    'NI$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Newtie': null,
+    'NI$std::basic_ios::tie@::std::basic_ios::_Myos *(::std::basic_ios::_Myos *)[impl0]::_Oldtie': null,
+    'NI$std::basic_ios::widen@[_Elem](char)[impl0]::_Byte': null,
+    'NI$std::basic_ostream': { 'htmlFileName': 'ostream', 'displayName': 'ostream' },
+    'NI$std::basic_streambuf': { 'htmlFileName': 'streambuf', 'displayName': 'streambuf' },
+    'NI$std::boolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::char_traits': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NI$std::ctype': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NI$std::ctype@<char>': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NI$std::ctype@<unsigned short>': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NI$std::ctype@<wchar_t>': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NI$std::dec@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::defaultfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::fixed@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::hex@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::hexfloat@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::internal@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::ios_base': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::ios_base::io_state': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::ios_base::iostate': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NI$std::left@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::locale': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NI$std::noboolalpha@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::noshowbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::noshowpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::noshowpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::noskipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::nounitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::nouppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::oct@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::right@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::scientific@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::showbase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::showpoint@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::showpos@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::skipws@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::unitbuf@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'NI$std::uppercase@::std::ios_base &(::std::ios_base &)[impl0]::_Iosbase': null,
+    'TA$std::basic_ios::_Elem2': null,
+    'TA$std::basic_ios::_Traits2': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

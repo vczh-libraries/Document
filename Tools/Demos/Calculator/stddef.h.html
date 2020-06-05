@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>stddef.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// stddef.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The C &lt;stddef.h&gt; Standard Library header.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="disabled">#ifndef _INC_STDDEF // include guard for 3rd party interop</div>
+<div class="disabled">#define _INC_STDDEF</div>
+
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="disabled">#ifdef __cplusplus</div>
+    <div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$std"><div>std</div></div>
+    {
+        <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">decltype</div>(<div class="token cpp_keyword ">__nullptr</div>) <div class="def" id="NI$std::nullptr_t"><div><div class="token cpp_type">nullptr_t</div></div></div>;
+    }
+
+    <div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>::<div class="ref" onclick="jumpToSymbol([], ['std::nullptr_t'], [], [])"><div class="token cpp_type">nullptr_t</div></div>;
+<div class="disabled">#endif</div>
+
+
+
+<div class="disabled">#if _CRT_FUNCTIONS_REQUIRED</div>
+
+<div class="expandable"><div class="disabled">    _ACRTIMP int* __cdecl _errno(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_errno@int *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_errno@int *()'], [], [])"><div class="token cpp_function">_errno</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="disabled">    #define errno (*_errno())</div>
+
+<div class="expandable"><div class="disabled">    _ACRTIMP errno_t __cdecl _set_errno(_In_ int _Value);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_set_errno@::errno_t(int)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_set_errno@::errno_t(int)'], [], [])"><div class="token cpp_function">_set_errno</div></div></div>(  <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_set_errno@::errno_t(int)[decl0]::_Value"><div>_Value</div></div>);</div></div>
+<div class="expandable"><div class="disabled">    _ACRTIMP errno_t __cdecl _get_errno(_Out_ int* _Value);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_errno@::errno_t(int *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_get_errno@::errno_t(int *)'], [], [])"><div class="token cpp_function">_get_errno</div></div></div>(  <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_get_errno@::errno_t(int *)[decl0]::_Value"><div>_Value</div></div>);</div></div>
+
+<div class="disabled">#endif // _CRT_FUNCTIONS_REQUIRED</div>
+
+
+
+<div class="disabled">#if defined _MSC_VER &amp;&amp; !defined _CRT_USE_BUILTIN_OFFSETOF</div>
+<div class="disabled">    #ifdef __cplusplus</div>
+<div class="disabled">        #define offsetof(s,m) ((::size_t)&amp;reinterpret_cast&lt;char const volatile&amp;&gt;((((s*)0)-&gt;m)))</div>
+<div class="disabled">    #else</div>
+<div class="disabled">        #define offsetof(s,m) ((size_t)&amp;(((s*)0)-&gt;m))</div>
+<div class="disabled">    #endif
+#else</div>
+<div class="disabled">    #define offsetof(s,m) __builtin_offsetof(s,m)
+#endif</div>
+
+<div class="expandable"><div class="disabled">_ACRTIMP extern unsigned long  __cdecl __threadid(void);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div>  <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__threadid@unsigned long()[decl0]"><div><div class="token cpp_function">__threadid</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="disabled">#define _threadid (__threadid())</div>
+<div class="expandable"><div class="disabled">_ACRTIMP extern uintptr_t __cdecl __threadhandle(void);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['uintptr_t'], [], [])"><div class="token cpp_type">uintptr_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__threadhandle@::uintptr_t()[decl0]"><div><div class="token cpp_function">__threadhandle</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+#endif // _INC_STDDEF
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_errno@int *()': {
+        'displayNameInHtml': '<span class="cpp_function">_errno</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_errno@int *()[decl0]',
+            'FB$_errno@int *()[decl1]',
+            'FB$_errno@int *()[decl2]'
+        ]
+    },
+    '_get_errno@::errno_t(int *)': {
+        'displayNameInHtml': '<span class="cpp_function">_get_errno</span>(<span class="cpp_keyword">int</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_get_errno@::errno_t(int *)[decl0]',
+            'FB$_get_errno@::errno_t(int *)[decl1]',
+            'FB$_get_errno@::errno_t(int *)[decl2]'
+        ]
+    },
+    '_set_errno@::errno_t(int)': {
+        'displayNameInHtml': '<span class="cpp_function">_set_errno</span>(<span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_set_errno@::errno_t(int)[decl0]',
+            'FB$_set_errno@::errno_t(int)[decl1]',
+            'FB$_set_errno@::errno_t(int)[decl2]'
+        ]
+    },
+    'errno_t': {
+        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
+        'impls': [
+            'NI$errno_t'
+        ],
+        'decls': []
+    },
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std'
+        ]
+    },
+    'std::nullptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">nullptr_t</span>',
+        'impls': [
+            'NI$std::nullptr_t'
+        ],
+        'decls': []
+    },
+    'uintptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">uintptr_t</span>',
+        'impls': [
+            'NI$uintptr_t'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$_errno@int *()[decl0]': null,
+    'FB$_errno@int *()[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
+    'FB$_errno@int *()[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_get_errno@::errno_t(int *)[decl0]': null,
+    'FB$_get_errno@::errno_t(int *)[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
+    'FB$_get_errno@::errno_t(int *)[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'FB$_set_errno@::errno_t(int)[decl0]': null,
+    'FB$_set_errno@::errno_t(int)[decl1]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
+    'FB$_set_errno@::errno_t(int)[decl2]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
+    'NF[0]$std': null,
+    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$std::nullptr_t': null,
+    'NI$uintptr_t': { 'htmlFileName': 'vadefs.h', 'displayName': 'vadefs.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

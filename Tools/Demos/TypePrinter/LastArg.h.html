@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LastArg.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default">#pragma once
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$last_arg"><div>last_arg</div></div>
+{
+	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$last_arg::VoidType"><div><div class="token cpp_type">VoidType</div></div></div>
+	{
+		<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$last_arg::VoidType::tag"><div><div class="token cpp_field">tag</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
+	};
+
+	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$last_arg::IntType"><div><div class="token cpp_type">IntType</div></div></div>
+	{
+		<div class="token cpp_keyword ">int</div> <div class="def" id="NI$last_arg::IntType::tag"><div><div class="token cpp_field">tag</div></div></div> = <div class="token cpp_number ">0</div>;
+	};
+
+	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$last_arg::BoolType"><div><div class="token cpp_type">BoolType</div></div></div>
+	{
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$last_arg::BoolType::tag"><div><div class="token cpp_field">tag</div></div></div> = <div class="token cpp_keyword ">false</div>;
+	};
+
+	<div class="ref" onclick="jumpToSymbol([], ['last_arg::VoidType'], [], [])"><div class="token cpp_type">VoidType</div></div> <div class="def" id="FB$last_arg::LastArg@::last_arg::VoidType()[impl0]"><div><div class="token cpp_function">LastArg</div></div></div>() { <div class="token cpp_keyword ">return</div> {}; }
+	<div class="ref" onclick="jumpToSymbol([], ['last_arg::IntType'], [], [])"><div class="token cpp_type">IntType</div></div> <div class="def" id="FB$last_arg::LastArg@::last_arg::IntType(int)[impl0]"><div><div class="token cpp_function">LastArg</div></div></div>(<div class="token cpp_keyword ">int</div>) { <div class="token cpp_keyword ">return</div> {}; }
+	<div class="ref" onclick="jumpToSymbol([], ['last_arg::BoolType'], [], [])"><div class="token cpp_type">BoolType</div></div> <div class="def" id="FB$last_arg::LastArg@::last_arg::BoolType(bool)[impl0]"><div><div class="token cpp_function">LastArg</div></div></div>(<div class="token cpp_keyword ">bool</div>) { <div class="token cpp_keyword ">return</div> {}; }
+
+	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$last_arg::LastArg@auto([T])[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+	<div class="token cpp_keyword ">auto</div> <div class="def" id="FB$last_arg::LastArg@auto([T])[impl0]"><div><div class="token cpp_function">LastArg</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['last_arg::LastArg@auto([T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$last_arg::LastArg@auto([T])[impl0]::t"><div><div class="token cpp_argument">t</div></div></div>) { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['last_arg::LastArg@auto([T])[impl0]::t'], [], [])"><div class="token cpp_argument">t</div></div>; }
+
+	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$last_arg::LastArg@auto([T], [Ts]...)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">typename</div>... <div class="def" id="TA$last_arg::LastArg@auto([T], [Ts]...)[impl0]::Ts"><div><div class="token cpp_type">Ts</div></div></div>&gt;
+	<div class="token cpp_keyword ">auto</div> <div class="def" id="FB$last_arg::LastArg@auto([T], [Ts]...)[impl0]"><div><div class="token cpp_function">LastArg</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['last_arg::LastArg@auto([T], [Ts]...)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$last_arg::LastArg@auto([T], [Ts]...)[impl0]::t"><div><div class="token cpp_argument">t</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['last_arg::LastArg@auto([T], [Ts]...)[impl0]::Ts'], [], [])"><div class="token cpp_type">Ts</div></div>... <div class="def" id="NI$last_arg::LastArg@auto([T], [Ts]...)[impl0]::ts"><div><div class="token cpp_argument">ts</div></div></div>)
+	{
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['last_arg::LastArg@::last_arg::BoolType(bool)', 'last_arg::LastArg@::last_arg::IntType(int)', 'last_arg::LastArg@::last_arg::VoidType()', 'last_arg::LastArg@auto([T])', 'last_arg::LastArg@auto([T], [Ts]...)'], ['last_arg::LastArg@::last_arg::BoolType(bool)', 'last_arg::LastArg@::last_arg::IntType(int)', 'last_arg::LastArg@::last_arg::VoidType()', 'last_arg::LastArg@auto([T])', 'last_arg::LastArg@auto([T], [Ts]...)'], [], [])"><div class="token cpp_function">LastArg</div></div>(<div class="ref" onclick="jumpToSymbol([], ['last_arg::LastArg@auto([T], [Ts]...)[impl0]::ts'], [], [])"><div class="token cpp_argument">ts</div></div>...);
+	}
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'last_arg::BoolType': {
+        'displayNameInHtml': '<span class="cpp_type">BoolType</span>',
+        'impls': [
+            'NI$last_arg::BoolType'
+        ],
+        'decls': []
+    },
+    'last_arg::IntType': {
+        'displayNameInHtml': '<span class="cpp_type">IntType</span>',
+        'impls': [
+            'NI$last_arg::IntType'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@::last_arg::BoolType(bool)': {
+        'displayNameInHtml': '<span class="cpp_function">LastArg</span>(<span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$last_arg::LastArg@::last_arg::BoolType(bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@::last_arg::IntType(int)': {
+        'displayNameInHtml': '<span class="cpp_function">LastArg</span>(<span class="cpp_keyword">int</span>)',
+        'impls': [
+            'FB$last_arg::LastArg@::last_arg::IntType(int)[impl0]'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@::last_arg::VoidType()': {
+        'displayNameInHtml': '<span class="cpp_function">LastArg</span>()',
+        'impls': [
+            'FB$last_arg::LastArg@::last_arg::VoidType()[impl0]'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@auto([T])': {
+        'displayNameInHtml': '<span class="cpp_function">LastArg</span>&lt;<span class="cpp_type">T</span>&gt;(<span class="cpp_type">T</span>)',
+        'impls': [
+            'FB$last_arg::LastArg@auto([T])[impl0]'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@auto([T])[impl0]::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$last_arg::LastArg@auto([T])[impl0]::T'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@auto([T])[impl0]::t': {
+        'displayNameInHtml': 't',
+        'impls': [
+            'NI$last_arg::LastArg@auto([T])[impl0]::t'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@auto([T], [Ts]...)': {
+        'displayNameInHtml': '<span class="cpp_function">LastArg</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">Ts</span> ...&gt;(<span class="cpp_type">T</span>, <span class="cpp_type">Ts</span>...)',
+        'impls': [
+            'FB$last_arg::LastArg@auto([T], [Ts]...)[impl0]'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@auto([T], [Ts]...)[impl0]::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$last_arg::LastArg@auto([T], [Ts]...)[impl0]::T'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@auto([T], [Ts]...)[impl0]::Ts': {
+        'displayNameInHtml': '<span class="cpp_type">Ts</span>',
+        'impls': [
+            'TA$last_arg::LastArg@auto([T], [Ts]...)[impl0]::Ts'
+        ],
+        'decls': []
+    },
+    'last_arg::LastArg@auto([T], [Ts]...)[impl0]::ts': {
+        'displayNameInHtml': 'ts',
+        'impls': [
+            'NI$last_arg::LastArg@auto([T], [Ts]...)[impl0]::ts'
+        ],
+        'decls': []
+    },
+    'last_arg::VoidType': {
+        'displayNameInHtml': '<span class="cpp_type">VoidType</span>',
+        'impls': [
+            'NI$last_arg::VoidType'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$last_arg::LastArg@::last_arg::BoolType(bool)[impl0]': null,
+    'FB$last_arg::LastArg@::last_arg::IntType(int)[impl0]': null,
+    'FB$last_arg::LastArg@::last_arg::VoidType()[impl0]': null,
+    'FB$last_arg::LastArg@auto([T])[impl0]': null,
+    'FB$last_arg::LastArg@auto([T], [Ts]...)[impl0]': null,
+    'NI$last_arg::BoolType': null,
+    'NI$last_arg::IntType': null,
+    'NI$last_arg::LastArg@auto([T])[impl0]::t': null,
+    'NI$last_arg::LastArg@auto([T], [Ts]...)[impl0]::ts': null,
+    'NI$last_arg::VoidType': null,
+    'TA$last_arg::LastArg@auto([T])[impl0]::T': null,
+    'TA$last_arg::LastArg@auto([T], [Ts]...)[impl0]::T': null,
+    'TA$last_arg::LastArg@auto([T], [Ts]...)[impl0]::Ts': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

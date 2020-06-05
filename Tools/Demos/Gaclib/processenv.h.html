@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>processenv.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* ProcessEnv.h -- ApiSet Contract for api-ms-win-core-processenvironment-l1     *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _PROCESSENV_</div>
+<div class="disabled">#define _PROCESSENV_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+
+
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetEnvironmentStringsW@::BOOL(::LPWCH)[decl0]"><div><div class="token cpp_function">SetEnvironmentStringsW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ _Pre_ _NullNull_terminated_ LPWCH NewEnvironment</div>
+<div class="expanded">         <div class="ref" onclick="jumpToSymbol([], ['LPWCH'], [], [])"><div class="token cpp_type">LPWCH</div></div> <div class="def" id="NI$SetEnvironmentStringsW@::BOOL(::LPWCH)[decl0]::NewEnvironment"><div>NewEnvironment</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define SetEnvironmentStrings  SetEnvironmentStringsW
+#endif</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region PC Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PC_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetStdHandle@::HANDLE(::DWORD)[decl0]"><div><div class="token cpp_function">GetStdHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD nStdHandle</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetStdHandle@::HANDLE(::DWORD)[decl0]::nStdHandle"><div>nStdHandle</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetStdHandle@::BOOL(::DWORD, ::HANDLE)[decl0]"><div><div class="token cpp_function">SetStdHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD nStdHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetStdHandle@::BOOL(::DWORD, ::HANDLE)[decl0]::nStdHandle"><div>nStdHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HANDLE hHandle</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$SetStdHandle@::BOOL(::DWORD, ::HANDLE)[decl0]::hHandle"><div>hHandle</div></div></div></div>
+    );
+
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetStdHandleEx@::BOOL(::DWORD, ::HANDLE, ::PHANDLE)[decl0]"><div><div class="token cpp_function">SetStdHandleEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD nStdHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetStdHandleEx@::BOOL(::DWORD, ::HANDLE, ::PHANDLE)[decl0]::nStdHandle"><div>nStdHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HANDLE hHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$SetStdHandleEx@::BOOL(::DWORD, ::HANDLE, ::PHANDLE)[decl0]::hHandle"><div>hHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ PHANDLE phPrevValue</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PHANDLE'], [], [])"><div class="token cpp_type">PHANDLE</div></div> <div class="def" id="NI$SetStdHandleEx@::BOOL(::DWORD, ::HANDLE, ::PHANDLE)[decl0]::phPrevValue"><div>phPrevValue</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // _WIN32_WINNT &gt;= 0x0600</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PC_APP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetCommandLineA@::LPSTR()[decl0]"><div><div class="token cpp_function">GetCommandLineA</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetCommandLineW@::LPWSTR()[decl0]"><div><div class="token cpp_function">GetCommandLineW</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetCommandLine  GetCommandLineW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetCommandLine  GetCommandLineA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_NullNull_terminated_</div>
+<div class="ref" onclick="jumpToSymbol([], ['LPCH'], [], [])"><div class="token cpp_type">LPCH</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetEnvironmentStrings@::LPCH()[decl0]"><div><div class="token cpp_function">GetEnvironmentStrings</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_NullNull_terminated_</div>
+<div class="ref" onclick="jumpToSymbol([], ['LPWCH'], [], [])"><div class="token cpp_type">LPWCH</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetEnvironmentStringsW@::LPWCH()[decl0]"><div><div class="token cpp_function">GetEnvironmentStringsW</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetEnvironmentStrings  GetEnvironmentStringsW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetEnvironmentStringsA  GetEnvironmentStrings
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FreeEnvironmentStringsA@::BOOL(::LPCH)[decl0]"><div><div class="token cpp_function">FreeEnvironmentStringsA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ _Pre_ _NullNull_terminated_ LPCH penv</div>
+<div class="expanded">         <div class="ref" onclick="jumpToSymbol([], ['LPCH'], [], [])"><div class="token cpp_type">LPCH</div></div> <div class="def" id="NI$FreeEnvironmentStringsA@::BOOL(::LPCH)[decl0]::penv"><div>penv</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FreeEnvironmentStringsW@::BOOL(::LPWCH)[decl0]"><div><div class="token cpp_function">FreeEnvironmentStringsW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ _Pre_ _NullNull_terminated_ LPWCH penv</div>
+<div class="expanded">         <div class="ref" onclick="jumpToSymbol([], ['LPWCH'], [], [])"><div class="token cpp_type">LPWCH</div></div> <div class="def" id="NI$FreeEnvironmentStringsW@::BOOL(::LPWCH)[decl0]::penv"><div>penv</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define FreeEnvironmentStrings  FreeEnvironmentStringsW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define FreeEnvironmentStrings  FreeEnvironmentStringsA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; nSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetEnvironmentVariableA@::DWORD(::LPCSTR, ::LPSTR, ::DWORD)[decl0]"><div><div class="token cpp_function">GetEnvironmentVariableA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPCSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$GetEnvironmentVariableA@::DWORD(::LPCSTR, ::LPSTR, ::DWORD)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(nSize,return + 1) LPSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetEnvironmentVariableA@::DWORD(::LPCSTR, ::LPSTR, ::DWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetEnvironmentVariableA@::DWORD(::LPCSTR, ::LPSTR, ::DWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; nSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetEnvironmentVariableW@::DWORD(::LPCWSTR, ::LPWSTR, ::DWORD)[decl0]"><div><div class="token cpp_function">GetEnvironmentVariableW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPCWSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$GetEnvironmentVariableW@::DWORD(::LPCWSTR, ::LPWSTR, ::DWORD)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(nSize,return + 1) LPWSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetEnvironmentVariableW@::DWORD(::LPCWSTR, ::LPWSTR, ::DWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetEnvironmentVariableW@::DWORD(::LPCWSTR, ::LPWSTR, ::DWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetEnvironmentVariable  GetEnvironmentVariableW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetEnvironmentVariable  GetEnvironmentVariableA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetEnvironmentVariableA@::BOOL(::LPCSTR, ::LPCSTR)[decl0]"><div><div class="token cpp_function">SetEnvironmentVariableA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$SetEnvironmentVariableA@::BOOL(::LPCSTR, ::LPCSTR)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPCSTR lpValue</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$SetEnvironmentVariableA@::BOOL(::LPCSTR, ::LPCSTR)[decl0]::lpValue"><div>lpValue</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetEnvironmentVariableW@::BOOL(::LPCWSTR, ::LPCWSTR)[decl0]"><div><div class="token cpp_function">SetEnvironmentVariableW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SetEnvironmentVariableW@::BOOL(::LPCWSTR, ::LPCWSTR)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPCWSTR lpValue</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SetEnvironmentVariableW@::BOOL(::LPCWSTR, ::LPCWSTR)[decl0]::lpValue"><div>lpValue</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define SetEnvironmentVariable  SetEnvironmentVariableW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define SetEnvironmentVariable  SetEnvironmentVariableA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt;= nSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ExpandEnvironmentStringsA@::DWORD(::LPCSTR, ::LPSTR, ::DWORD)[decl0]"><div><div class="token cpp_function">ExpandEnvironmentStringsA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpSrc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$ExpandEnvironmentStringsA@::DWORD(::LPCSTR, ::LPSTR, ::DWORD)[decl0]::lpSrc"><div>lpSrc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(nSize,return) LPSTR lpDst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$ExpandEnvironmentStringsA@::DWORD(::LPCSTR, ::LPSTR, ::DWORD)[decl0]::lpDst"><div>lpDst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ExpandEnvironmentStringsA@::DWORD(::LPCSTR, ::LPSTR, ::DWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt;= nSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ExpandEnvironmentStringsW@::DWORD(::LPCWSTR, ::LPWSTR, ::DWORD)[decl0]"><div><div class="token cpp_function">ExpandEnvironmentStringsW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpSrc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$ExpandEnvironmentStringsW@::DWORD(::LPCWSTR, ::LPWSTR, ::DWORD)[decl0]::lpSrc"><div>lpSrc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(nSize,return) LPWSTR lpDst,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$ExpandEnvironmentStringsW@::DWORD(::LPCWSTR, ::LPWSTR, ::DWORD)[decl0]::lpDst"><div>lpDst</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ExpandEnvironmentStringsW@::DWORD(::LPCWSTR, ::LPWSTR, ::DWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define ExpandEnvironmentStrings  ExpandEnvironmentStringsW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define ExpandEnvironmentStrings  ExpandEnvironmentStringsA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetCurrentDirectoryA@::BOOL(::LPCSTR)[decl0]"><div><div class="token cpp_function">SetCurrentDirectoryA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpPathName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$SetCurrentDirectoryA@::BOOL(::LPCSTR)[decl0]::lpPathName"><div>lpPathName</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetCurrentDirectoryW@::BOOL(::LPCWSTR)[decl0]"><div><div class="token cpp_function">SetCurrentDirectoryW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpPathName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SetCurrentDirectoryW@::BOOL(::LPCWSTR)[decl0]::lpPathName"><div>lpPathName</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define SetCurrentDirectory  SetCurrentDirectoryW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define SetCurrentDirectory  SetCurrentDirectoryA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; nBufferLength)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetCurrentDirectoryA@::DWORD(::DWORD, ::LPSTR)[decl0]"><div><div class="token cpp_function">GetCurrentDirectoryA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD nBufferLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetCurrentDirectoryA@::DWORD(::DWORD, ::LPSTR)[decl0]::nBufferLength"><div>nBufferLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(nBufferLength,return + 1) LPSTR lpBuffer</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetCurrentDirectoryA@::DWORD(::DWORD, ::LPSTR)[decl0]::lpBuffer"><div>lpBuffer</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; nBufferLength)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetCurrentDirectoryW@::DWORD(::DWORD, ::LPWSTR)[decl0]"><div><div class="token cpp_function">GetCurrentDirectoryW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD nBufferLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetCurrentDirectoryW@::DWORD(::DWORD, ::LPWSTR)[decl0]::nBufferLength"><div>nBufferLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(nBufferLength,return + 1) LPWSTR lpBuffer</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetCurrentDirectoryW@::DWORD(::DWORD, ::LPWSTR)[decl0]::lpBuffer"><div>lpBuffer</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetCurrentDirectory  GetCurrentDirectoryW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetCurrentDirectory  GetCurrentDirectoryA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SearchPathW@::DWORD(::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::DWORD, ::LPWSTR, ::LPWSTR *)[decl0]"><div><div class="token cpp_function">SearchPathW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPCWSTR lpPath,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SearchPathW@::DWORD(::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::DWORD, ::LPWSTR, ::LPWSTR *)[decl0]::lpPath"><div>lpPath</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpFileName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SearchPathW@::DWORD(::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::DWORD, ::LPWSTR, ::LPWSTR *)[decl0]::lpFileName"><div>lpFileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPCWSTR lpExtension,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SearchPathW@::DWORD(::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::DWORD, ::LPWSTR, ::LPWSTR *)[decl0]::lpExtension"><div>lpExtension</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nBufferLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SearchPathW@::DWORD(::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::DWORD, ::LPWSTR, ::LPWSTR *)[decl0]::nBufferLength"><div>nBufferLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(nBufferLength,return + 1) LPWSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$SearchPathW@::DWORD(::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::DWORD, ::LPWSTR, ::LPWSTR *)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPWSTR* lpFilePart</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>* <div class="def" id="NI$SearchPathW@::DWORD(::LPCWSTR, ::LPCWSTR, ::LPCWSTR, ::DWORD, ::LPWSTR, ::LPWSTR *)[decl0]::lpFilePart"><div>lpFilePart</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define SearchPath  SearchPathW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define SearchPath  SearchPathA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SearchPathA@::DWORD(::LPCSTR, ::LPCSTR, ::LPCSTR, ::DWORD, ::LPSTR, ::LPSTR *)[decl0]"><div><div class="token cpp_function">SearchPathA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPCSTR lpPath,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$SearchPathA@::DWORD(::LPCSTR, ::LPCSTR, ::LPCSTR, ::DWORD, ::LPSTR, ::LPSTR *)[decl0]::lpPath"><div>lpPath</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpFileName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$SearchPathA@::DWORD(::LPCSTR, ::LPCSTR, ::LPCSTR, ::DWORD, ::LPSTR, ::LPSTR *)[decl0]::lpFileName"><div>lpFileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPCSTR lpExtension,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$SearchPathA@::DWORD(::LPCSTR, ::LPCSTR, ::LPCSTR, ::DWORD, ::LPSTR, ::LPSTR *)[decl0]::lpExtension"><div>lpExtension</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nBufferLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SearchPathA@::DWORD(::LPCSTR, ::LPCSTR, ::LPCSTR, ::DWORD, ::LPSTR, ::LPSTR *)[decl0]::nBufferLength"><div>nBufferLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(nBufferLength,return + 1) LPSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$SearchPathA@::DWORD(::LPCSTR, ::LPCSTR, ::LPCSTR, ::DWORD, ::LPSTR, ::LPSTR *)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPSTR* lpFilePart</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div>* <div class="def" id="NI$SearchPathA@::DWORD(::LPCSTR, ::LPCSTR, ::LPCSTR, ::DWORD, ::LPSTR, ::LPSTR *)[decl0]::lpFilePart"><div>lpFilePart</div></div></div></div>
+    );
+
+
+<div class="disabled">#if _WIN32_WINNT &gt;= 0x0502</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$NeedCurrentDirectoryForExePathA@::BOOL(::LPCSTR)[decl0]"><div><div class="token cpp_function">NeedCurrentDirectoryForExePathA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCSTR ExeName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$NeedCurrentDirectoryForExePathA@::BOOL(::LPCSTR)[decl0]::ExeName"><div>ExeName</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$NeedCurrentDirectoryForExePathW@::BOOL(::LPCWSTR)[decl0]"><div><div class="token cpp_function">NeedCurrentDirectoryForExePathW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR ExeName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$NeedCurrentDirectoryForExePathW@::BOOL(::LPCWSTR)[decl0]::ExeName"><div>ExeName</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define NeedCurrentDirectoryForExePath  NeedCurrentDirectoryForExePathW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define NeedCurrentDirectoryForExePath  NeedCurrentDirectoryForExePathA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif // _WIN32_WINNT &gt;= 0x0502</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _PROCESSENV_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'LPCH': {
+        'displayNameInHtml': '<span class="cpp_type">LPCH</span>',
+        'impls': [
+            'NI$LPCH'
+        ],
+        'decls': []
+    },
+    'LPCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCSTR</span>',
+        'impls': [
+            'NI$LPCSTR'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTR</span>',
+        'impls': [
+            'NI$LPSTR'
+        ],
+        'decls': []
+    },
+    'LPWCH': {
+        'displayNameInHtml': '<span class="cpp_type">LPWCH</span>',
+        'impls': [
+            'NI$LPWCH'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'PHANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">PHANDLE</span>',
+        'impls': [
+            'NI$PHANDLE'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCH': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPWCH': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PHANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

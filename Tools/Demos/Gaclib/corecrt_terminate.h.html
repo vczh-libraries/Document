@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt_terminate.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt_terminate.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The terminate handler</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+
+<div class="disabled">#ifndef RC_INVOKED</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+<div class="token cpp_comment ">// terminate_handler is the standard name; terminate_function is defined for</div>
+<div class="token cpp_comment ">// source compatibility.</div>
+<div class="expandable"><div class="disabled">typedef void (__CRTDECL* terminate_handler )();</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> (<div class="token cpp_keyword ">__cdecl</div>* <div class="def" id="NI$terminate_handler"><div><div class="token cpp_type">terminate_handler</div></div></div> )();</div></div>
+<div class="expandable"><div class="disabled">typedef void (__CRTDECL* terminate_function)();</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> (<div class="token cpp_keyword ">__cdecl</div>* <div class="def" id="NI$terminate_function"><div><div class="token cpp_type">terminate_function</div></div></div>)();</div></div>
+
+<div class="disabled">#ifdef _M_CEE</div>
+<div class="disabled">    typedef void (__clrcall* __terminate_function_m)();</div>
+<div class="disabled">    typedef void (__clrcall* __terminate_handler_m )();</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+
+<div class="expandable"><div class="disabled">    _ACRTIMP __declspec(noreturn) void __cdecl abort();</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(noreturn) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$abort@void()[decl1]"><div class="ref" onclick="jumpToSymbol([], ['abort@void()'], [], [])"><div class="token cpp_function">abort</div></div></div>();</div></div>
+<div class="expandable"><div class="disabled">    _ACRTIMP __declspec(noreturn) void __cdecl terminate() throw();</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(noreturn) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$terminate@void()[decl0]"><div><div class="token cpp_function">terminate</div></div></div>() <div class="token cpp_keyword ">throw</div>();</div></div>
+
+<div class="disabled">    #ifndef _M_CEE_PURE</div>
+
+<div class="expandable"><div class="disabled">        _ACRTIMP terminate_handler __cdecl set_terminate(</div>
+<div class="expanded">        <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['terminate_handler'], [], [])"><div class="token cpp_type">terminate_handler</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$set_terminate@::terminate_handler(::terminate_handler)[decl0]"><div><div class="token cpp_function">set_terminate</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">            _In_opt_ terminate_handler _NewTerminateHandler</div>
+<div class="expanded">              <div class="ref" onclick="jumpToSymbol([], ['terminate_handler'], [], [])"><div class="token cpp_type">terminate_handler</div></div> <div class="def" id="NI$set_terminate@::terminate_handler(::terminate_handler)[decl0]::_NewTerminateHandler"><div>_NewTerminateHandler</div></div></div></div>
+            ) <div class="token cpp_keyword ">throw</div>();
+
+<div class="expandable"><div class="disabled">        _ACRTIMP terminate_handler __cdecl _get_terminate();</div>
+<div class="expanded">        <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['terminate_handler'], [], [])"><div class="token cpp_type">terminate_handler</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_terminate@::terminate_handler()[decl0]"><div><div class="token cpp_function">_get_terminate</div></div></div>();</div></div>
+
+<div class="disabled">    #endif</div>
+
+<div class="disabled">#endif // __cplusplus</div>
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+
+<div class="disabled">#endif // RC_INVOKED
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'abort@void()': {
+        'displayNameInHtml': '<span class="cpp_function">abort</span>()',
+        'impls': [],
+        'decls': [
+            'FB$abort@void()[decl0]',
+            'FB$abort@void()[decl1]'
+        ]
+    },
+    'terminate_handler': {
+        'displayNameInHtml': '<span class="cpp_type">terminate_handler</span>',
+        'impls': [
+            'NI$terminate_handler'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$abort@void()[decl0]': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
+    'FB$abort@void()[decl1]': null,
+    'NI$terminate_handler': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

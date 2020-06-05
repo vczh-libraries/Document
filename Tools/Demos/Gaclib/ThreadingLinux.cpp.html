@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ThreadingLinux.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;Threading.h&quot;</div>
+<div class="disabled">#ifdef VCZH_GCC</div>
+<div class="disabled">#include &lt;pthread.h&gt;</div>
+<div class="disabled">#include &lt;unistd.h&gt;</div>
+<div class="disabled">#include &lt;fcntl.h&gt;</div>
+<div class="disabled">#include &lt;sys/stat.h&gt;</div>
+<div class="disabled">#include &lt;semaphore.h&gt;</div>
+<div class="disabled">#include &lt;errno.h&gt;</div>
+<div class="disabled">#if defined(__APPLE__) || defined(__APPLE_CC__)</div>
+<div class="disabled">#include &lt;CoreFoundation/CoreFoundation.h&gt;</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">namespace vl</div>
+<div class="disabled">{</div>
+<div class="disabled">	using namespace threading_internal;</div>
+<div class="disabled">	using namespace collections;</div>
+
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">Thread</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	namespace threading_internal</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct ThreadData</div>
+<div class="disabled">		{</div>
+<div class="disabled">			pthread_t					id;</div>
+<div class="disabled">			EventObject					ev;</div>
+<div class="disabled">		};</div>
+
+<div class="disabled">		class ProceduredThread : public Thread</div>
+<div class="disabled">		{</div>
+<div class="disabled">		private:</div>
+<div class="disabled">			Thread::ThreadProcedure		procedure;</div>
+<div class="disabled">			void*						argument;</div>
+<div class="disabled">			bool						deleteAfterStopped;</div>
+
+<div class="disabled">		protected:</div>
+<div class="disabled">			void Run()</div>
+<div class="disabled">			{</div>
+<div class="disabled">				bool deleteAfterStopped = this-&gt;deleteAfterStopped;</div>
+<div class="disabled">				ThreadLocalStorage::FixStorages();</div>
+<div class="disabled">				try</div>
+<div class="disabled">				{</div>
+<div class="disabled">					procedure(this, argument);</div>
+<div class="disabled">					threadState=Thread::Stopped;</div>
+<div class="disabled">					internalData-&gt;ev.Signal();</div>
+<div class="disabled">					ThreadLocalStorage::ClearStorages();</div>
+<div class="disabled">				}</div>
+<div class="disabled">				catch (...)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					ThreadLocalStorage::ClearStorages();</div>
+<div class="disabled">					throw;</div>
+<div class="disabled">				}</div>
+<div class="disabled">				if(deleteAfterStopped)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					delete this;</div>
+<div class="disabled">				}</div>
+<div class="disabled">			}</div>
+<div class="disabled">		public:</div>
+<div class="disabled">			ProceduredThread(Thread::ThreadProcedure _procedure, void* _argument, bool _deleteAfterStopped)</div>
+<div class="disabled">				:procedure(_procedure)</div>
+<div class="disabled">				,argument(_argument)</div>
+<div class="disabled">				,deleteAfterStopped(_deleteAfterStopped)</div>
+<div class="disabled">			{</div>
+<div class="disabled">			}</div>
+<div class="disabled">		};</div>
+
+<div class="disabled">		class LambdaThread : public Thread</div>
+<div class="disabled">		{</div>
+<div class="disabled">		private:</div>
+<div class="disabled">			Func&lt;void()&gt;				procedure;</div>
+<div class="disabled">			bool						deleteAfterStopped;</div>
+
+<div class="disabled">		protected:</div>
+<div class="disabled">			void Run()</div>
+<div class="disabled">			{</div>
+<div class="disabled">				bool deleteAfterStopped = this-&gt;deleteAfterStopped;</div>
+<div class="disabled">				ThreadLocalStorage::FixStorages();</div>
+<div class="disabled">				try</div>
+<div class="disabled">				{</div>
+<div class="disabled">					procedure();</div>
+<div class="disabled">					threadState=Thread::Stopped;</div>
+<div class="disabled">					internalData-&gt;ev.Signal();</div>
+<div class="disabled">					ThreadLocalStorage::ClearStorages();</div>
+<div class="disabled">				}</div>
+<div class="disabled">				catch (...)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					ThreadLocalStorage::ClearStorages();</div>
+<div class="disabled">					throw;</div>
+<div class="disabled">				}</div>
+<div class="disabled">				if(deleteAfterStopped)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					delete this;</div>
+<div class="disabled">				}</div>
+<div class="disabled">			}</div>
+<div class="disabled">		public:</div>
+<div class="disabled">			LambdaThread(const Func&lt;void()&gt;&amp; _procedure, bool _deleteAfterStopped)</div>
+<div class="disabled">				:procedure(_procedure)</div>
+<div class="disabled">				,deleteAfterStopped(_deleteAfterStopped)</div>
+<div class="disabled">			{</div>
+<div class="disabled">			}</div>
+<div class="disabled">		};</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void InternalThreadProc(Thread* thread)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		thread-&gt;Run();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void* InternalThreadProcWrapper(void* lpParameter)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		InternalThreadProc((Thread*)lpParameter);</div>
+<div class="disabled">		return 0;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	Thread::Thread()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		internalData=new ThreadData;</div>
+<div class="disabled">		internalData-&gt;ev.CreateManualUnsignal(false);</div>
+<div class="disabled">		threadState=Thread::NotStarted;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	Thread::~Thread()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (internalData)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			Stop();</div>
+<div class="disabled">			if (threadState!=Thread::NotStarted)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				pthread_detach(internalData-&gt;id);</div>
+<div class="disabled">			}</div>
+<div class="disabled">			delete internalData;</div>
+<div class="disabled">		}</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	Thread* Thread::CreateAndStart(ThreadProcedure procedure, void* argument, bool deleteAfterStopped)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if(procedure)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			Thread* thread=new ProceduredThread(procedure, argument, deleteAfterStopped);</div>
+<div class="disabled">			if(thread-&gt;Start())</div>
+<div class="disabled">			{</div>
+<div class="disabled">				return thread;</div>
+<div class="disabled">			}</div>
+<div class="disabled">			else</div>
+<div class="disabled">			{</div>
+<div class="disabled">				delete thread;</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+<div class="disabled">		return 0;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	Thread* Thread::CreateAndStart(const Func&lt;void()&gt;&amp; procedure, bool deleteAfterStopped)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		Thread* thread=new LambdaThread(procedure, deleteAfterStopped);</div>
+<div class="disabled">		if(thread-&gt;Start())</div>
+<div class="disabled">		{</div>
+<div class="disabled">			return thread;</div>
+<div class="disabled">		}</div>
+<div class="disabled">		else</div>
+<div class="disabled">		{</div>
+<div class="disabled">			delete thread;</div>
+<div class="disabled">		}</div>
+<div class="disabled">		return 0;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void Thread::Sleep(vint ms)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (ms &gt;= 1000)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			sleep(ms / 1000);</div>
+<div class="disabled">		}</div>
+<div class="disabled">		if (ms % 1000)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			usleep((ms % 1000) * 1000);</div>
+<div class="disabled">		}</div>
+<div class="disabled">	}</div>
+<div class="disabled">	</div>
+<div class="disabled">	vint Thread::GetCPUCount()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return (vint)sysconf(_SC_NPROCESSORS_ONLN);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	vint Thread::GetCurrentThreadId()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return (vint)::pthread_self();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Thread::Start()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if(threadState==Thread::NotStarted)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			if(pthread_create(&amp;internalData-&gt;id, nullptr, &amp;InternalThreadProcWrapper, this)==0)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				threadState=Thread::Running;</div>
+<div class="disabled">				return true;</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+<div class="disabled">		return false;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Thread::Wait()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return internalData-&gt;ev.Wait();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Thread::Stop()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (threadState==Thread::Running)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			if(pthread_cancel(internalData-&gt;id)==0)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				threadState=Thread::Stopped;</div>
+<div class="disabled">				internalData-&gt;ev.Signal();</div>
+<div class="disabled">				return true;</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+<div class="disabled">		return false;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	Thread::ThreadState Thread::GetState()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return threadState;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">Mutex</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	namespace threading_internal</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct MutexData</div>
+<div class="disabled">		{</div>
+<div class="disabled">			Semaphore			sem;</div>
+<div class="disabled">		};</div>
+<div class="disabled">	};</div>
+
+<div class="disabled">	Mutex::Mutex()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		internalData = new MutexData;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	Mutex::~Mutex()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		delete internalData;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Mutex::Create(bool owned, const WString&amp; name)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return internalData-&gt;sem.Create(owned ? 0 : 1, 1, name);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Mutex::Open(bool inheritable, const WString&amp; name)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return internalData-&gt;sem.Open(inheritable, name);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Mutex::Release()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return internalData-&gt;sem.Release();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Mutex::Wait()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return internalData-&gt;sem.Wait();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">Semaphore</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	namespace threading_internal</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct SemaphoreData</div>
+<div class="disabled">		{</div>
+<div class="disabled">			sem_t			semUnnamed;</div>
+<div class="disabled">			sem_t*			semNamed = nullptr;</div>
+<div class="disabled">		};</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	Semaphore::Semaphore()</div>
+<div class="disabled">		:internalData(0)</div>
+<div class="disabled">	{</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	Semaphore::~Semaphore()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (internalData)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			if (internalData-&gt;semNamed)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				sem_close(internalData-&gt;semNamed);</div>
+<div class="disabled">			}</div>
+<div class="disabled">			else</div>
+<div class="disabled">			{</div>
+<div class="disabled">				sem_destroy(&amp;internalData-&gt;semUnnamed);</div>
+<div class="disabled">			}</div>
+<div class="disabled">			delete internalData;</div>
+<div class="disabled">		}</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Semaphore::Create(vint initialCount, vint maxCount, const WString&amp; name)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (internalData) return false;</div>
+<div class="disabled">		if (initialCount &gt; maxCount) return false;</div>
+
+<div class="disabled">		internalData = new SemaphoreData;</div>
+<div class="disabled">#if defined(__APPLE__)</div>
+<div class="disabled">        </div>
+<div class="disabled">		AString auuid;</div>
+<div class="disabled">		if(name.Length() == 0)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			CFUUIDRef cfuuid = CFUUIDCreate(kCFAllocatorDefault);</div>
+<div class="disabled">			CFStringRef cfstr = CFUUIDCreateString(kCFAllocatorDefault, cfuuid);</div>
+<div class="disabled">			auuid = CFStringGetCStringPtr(cfstr, kCFStringEncodingASCII);</div>
+
+<div class="disabled">			CFRelease(cfstr);</div>
+<div class="disabled">			CFRelease(cfuuid);</div>
+<div class="disabled">		}</div>
+<div class="disabled">		auuid = auuid.Insert(0, &quot;/&quot;);</div>
+<div class="disabled">		// OSX SEM_NAME_LENGTH = 31</div>
+<div class="disabled">		if(auuid.Length() &gt;= 30)</div>
+<div class="disabled">			auuid = auuid.Sub(0, 30);</div>
+<div class="disabled">        </div>
+<div class="disabled">		if ((internalData-&gt;semNamed = sem_open(auuid.Buffer(), O_CREAT, O_RDWR, initialCount)) == SEM_FAILED)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			delete internalData;</div>
+<div class="disabled">			internalData = 0;</div>
+<div class="disabled">			return false;</div>
+<div class="disabled">		}</div>
+<div class="disabled">        </div>
+<div class="disabled">#else</div>
+<div class="disabled">		if (name == L&quot;&quot;)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			if(sem_init(&amp;internalData-&gt;semUnnamed, 0, (int)initialCount) == -1)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				delete internalData;</div>
+<div class="disabled">				internalData = 0;</div>
+<div class="disabled">				return false;</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+<div class="disabled">        	else</div>
+<div class="disabled">        	{</div>
+<div class="disabled">			AString astr = wtoa(name);</div>
+<div class="disabled">            </div>
+<div class="disabled">			if ((internalData-&gt;semNamed = sem_open(astr.Buffer(), O_CREAT, 0777, initialCount)) == SEM_FAILED)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				delete internalData;</div>
+<div class="disabled">				internalData = 0;</div>
+<div class="disabled">				return false;</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">		Release(initialCount);</div>
+<div class="disabled">		return true;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Semaphore::Open(bool inheritable, const WString&amp; name)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (internalData) return false;</div>
+<div class="disabled">		if (inheritable) return false;</div>
+
+<div class="disabled">		internalData = new SemaphoreData;</div>
+<div class="disabled">		if (!(internalData-&gt;semNamed = sem_open(wtoa(name).Buffer(), 0)))</div>
+<div class="disabled">		{</div>
+<div class="disabled">            delete internalData;</div>
+<div class="disabled">            internalData = 0;</div>
+<div class="disabled">			return false;</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">		return true;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Semaphore::Release()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return Release(1);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	vint Semaphore::Release(vint count)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		for (vint i = 0; i &lt; count; i++)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			if (internalData-&gt;semNamed)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				sem_post(internalData-&gt;semNamed);</div>
+<div class="disabled">			}</div>
+<div class="disabled">			else</div>
+<div class="disabled">			{</div>
+<div class="disabled">				sem_post(&amp;internalData-&gt;semUnnamed);</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+<div class="disabled">		return true;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool Semaphore::Wait()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (internalData-&gt;semNamed)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			return sem_wait(internalData-&gt;semNamed) == 0;</div>
+<div class="disabled">		}</div>
+<div class="disabled">		else</div>
+<div class="disabled">		{</div>
+<div class="disabled">			return sem_wait(&amp;internalData-&gt;semUnnamed) == 0;</div>
+<div class="disabled">		}</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">EventObject</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	namespace threading_internal</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct EventData</div>
+<div class="disabled">		{</div>
+<div class="disabled">			bool				autoReset;</div>
+<div class="disabled">			volatile bool		signaled;</div>
+<div class="disabled">			CriticalSection		mutex;</div>
+<div class="disabled">			ConditionVariable	cond;</div>
+<div class="disabled">			volatile vint		counter = 0;</div>
+<div class="disabled">		};</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	EventObject::EventObject()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		internalData = nullptr;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	EventObject::~EventObject()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (internalData)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			delete internalData;</div>
+<div class="disabled">		}</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool EventObject::CreateAutoUnsignal(bool signaled, const WString&amp; name)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (name!=L&quot;&quot;) return false;</div>
+<div class="disabled">		if (internalData) return false;</div>
+
+<div class="disabled">		internalData = new EventData;</div>
+<div class="disabled">		internalData-&gt;autoReset = true;</div>
+<div class="disabled">		internalData-&gt;signaled = signaled;</div>
+<div class="disabled">		return true;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool EventObject::CreateManualUnsignal(bool signaled, const WString&amp; name)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (name!=L&quot;&quot;) return false;</div>
+<div class="disabled">		if (internalData) return false;</div>
+
+<div class="disabled">		internalData = new EventData;</div>
+<div class="disabled">		internalData-&gt;autoReset = false;</div>
+<div class="disabled">		internalData-&gt;signaled = signaled;</div>
+<div class="disabled">		return true;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool EventObject::Signal()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (!internalData) return false;</div>
+
+<div class="disabled">		internalData-&gt;mutex.Enter();</div>
+<div class="disabled">		internalData-&gt;signaled = true;</div>
+<div class="disabled">		if (internalData-&gt;counter)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			if (internalData-&gt;autoReset)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				internalData-&gt;cond.WakeOnePending();</div>
+<div class="disabled">				internalData-&gt;signaled = false;</div>
+<div class="disabled">			}</div>
+<div class="disabled">			else</div>
+<div class="disabled">			{</div>
+<div class="disabled">				internalData-&gt;cond.WakeAllPendings();</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+<div class="disabled">		internalData-&gt;mutex.Leave();</div>
+<div class="disabled">		return true;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool EventObject::Unsignal()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (!internalData) return false;</div>
+
+<div class="disabled">		internalData-&gt;mutex.Enter();</div>
+<div class="disabled">		internalData-&gt;signaled = false;</div>
+<div class="disabled">		internalData-&gt;mutex.Leave();</div>
+<div class="disabled">		return true;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool EventObject::Wait()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		if (!internalData) return false;</div>
+
+<div class="disabled">		internalData-&gt;mutex.Enter();</div>
+<div class="disabled">		if (internalData-&gt;signaled)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			if (internalData-&gt;autoReset)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				internalData-&gt;signaled = false;</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+<div class="disabled">		else</div>
+<div class="disabled">		{</div>
+<div class="disabled">			internalData-&gt;counter++;</div>
+<div class="disabled">			internalData-&gt;cond.SleepWith(internalData-&gt;mutex);</div>
+<div class="disabled">			internalData-&gt;counter--;</div>
+<div class="disabled">		}</div>
+<div class="disabled">		internalData-&gt;mutex.Leave();</div>
+<div class="disabled">		return true;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">ThreadPoolLite</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	namespace threading_internal</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct ThreadPoolTask</div>
+<div class="disabled">		{</div>
+<div class="disabled">			Func&lt;void()&gt;			task;</div>
+<div class="disabled">			Ptr&lt;ThreadPoolTask&gt;		next;</div>
+<div class="disabled">		};</div>
+
+<div class="disabled">		struct ThreadPoolData</div>
+<div class="disabled">		{</div>
+<div class="disabled">			Semaphore				semaphore;</div>
+<div class="disabled">			EventObject				taskFinishEvent;</div>
+<div class="disabled">			Ptr&lt;ThreadPoolTask&gt;		taskBegin;</div>
+<div class="disabled">			Ptr&lt;ThreadPoolTask&gt;*	taskEnd = nullptr;</div>
+<div class="disabled">			volatile bool			stopping = false;</div>
+<div class="disabled">			List&lt;Thread*&gt;			taskThreads;</div>
+<div class="disabled">		};</div>
+
+<div class="disabled">		SpinLock					threadPoolLock;</div>
+<div class="disabled">		ThreadPoolData*				threadPoolData = nullptr;</div>
+
+<div class="disabled">		void ThreadPoolProc(Thread* thread, void* argument)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			while (true)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				Ptr&lt;ThreadPoolTask&gt; task;</div>
+
+<div class="disabled">				threadPoolData-&gt;semaphore.Wait();</div>
+<div class="disabled">				SPIN_LOCK(threadPoolLock)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					if (threadPoolData-&gt;taskBegin)</div>
+<div class="disabled">					{</div>
+<div class="disabled">						task = threadPoolData-&gt;taskBegin;</div>
+<div class="disabled">						threadPoolData-&gt;taskBegin = task-&gt;next;</div>
+<div class="disabled">					}</div>
+
+<div class="disabled">					if (!threadPoolData-&gt;taskBegin)</div>
+<div class="disabled">					{</div>
+<div class="disabled">						threadPoolData-&gt;taskEnd = &amp;threadPoolData-&gt;taskBegin;</div>
+<div class="disabled">						threadPoolData-&gt;taskFinishEvent.Signal();</div>
+<div class="disabled">					}</div>
+<div class="disabled">				}</div>
+
+<div class="disabled">				if (task)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					ThreadLocalStorage::FixStorages();</div>
+<div class="disabled">					try</div>
+<div class="disabled">					{</div>
+<div class="disabled">						task-&gt;task();</div>
+<div class="disabled">						ThreadLocalStorage::ClearStorages();</div>
+<div class="disabled">					}</div>
+<div class="disabled">					catch (...)</div>
+<div class="disabled">					{</div>
+<div class="disabled">						ThreadLocalStorage::ClearStorages();</div>
+<div class="disabled">					}</div>
+<div class="disabled">				}</div>
+<div class="disabled">				else if (threadPoolData-&gt;stopping)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					return;</div>
+<div class="disabled">				}</div>
+<div class="disabled">			}</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">		bool ThreadPoolQueue(const Func&lt;void()&gt;&amp; proc)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			SPIN_LOCK(threadPoolLock)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				if (!threadPoolData)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					threadPoolData = new ThreadPoolData;</div>
+<div class="disabled">					threadPoolData-&gt;semaphore.Create(0, 65536);</div>
+<div class="disabled">					threadPoolData-&gt;taskFinishEvent.CreateManualUnsignal(false);</div>
+<div class="disabled">					threadPoolData-&gt;taskEnd = &amp;threadPoolData-&gt;taskBegin;</div>
+
+<div class="disabled">					for (vint i = 0; i &lt; Thread::GetCPUCount() * 4; i++)</div>
+<div class="disabled">					{</div>
+<div class="disabled">						threadPoolData-&gt;taskThreads.Add(Thread::CreateAndStart(&amp;ThreadPoolProc, nullptr, false));</div>
+<div class="disabled">					}</div>
+<div class="disabled">				}</div>
+
+<div class="disabled">				if (threadPoolData)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					if (threadPoolData-&gt;stopping)</div>
+<div class="disabled">					{</div>
+<div class="disabled">						return false;</div>
+<div class="disabled">					}</div>
+
+<div class="disabled">					auto task = MakePtr&lt;ThreadPoolTask&gt;();</div>
+<div class="disabled">					task-&gt;task = proc;</div>
+<div class="disabled">					*threadPoolData-&gt;taskEnd = task;</div>
+<div class="disabled">					threadPoolData-&gt;taskEnd = &amp;task-&gt;next;</div>
+<div class="disabled">					threadPoolData-&gt;semaphore.Release();</div>
+<div class="disabled">					threadPoolData-&gt;taskFinishEvent.Unsignal();</div>
+<div class="disabled">				}</div>
+<div class="disabled">			}</div>
+<div class="disabled">			return true;</div>
+<div class="disabled">		}</div>
+
+<div class="disabled">		bool ThreadPoolStop(bool discardPendingTasks)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			SPIN_LOCK(threadPoolLock)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				if (!threadPoolData) return false;</div>
+<div class="disabled">				if (threadPoolData-&gt;stopping) return false;</div>
+
+<div class="disabled">				threadPoolData-&gt;stopping = true;</div>
+<div class="disabled">				if (discardPendingTasks)</div>
+<div class="disabled">				{</div>
+<div class="disabled">					threadPoolData-&gt;taskEnd = &amp;threadPoolData-&gt;taskBegin;</div>
+<div class="disabled">					threadPoolData-&gt;taskBegin = nullptr;</div>
+<div class="disabled">				}</div>
+
+<div class="disabled">				threadPoolData-&gt;semaphore.Release(threadPoolData-&gt;taskThreads.Count());</div>
+<div class="disabled">			}</div>
+
+<div class="disabled">			threadPoolData-&gt;taskFinishEvent.Wait();</div>
+<div class="disabled">			for (vint i = 0; i &lt; threadPoolData-&gt;taskThreads.Count(); i++)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				auto thread = threadPoolData-&gt;taskThreads[i];</div>
+<div class="disabled">				thread-&gt;Wait();</div>
+<div class="disabled">				delete thread;</div>
+<div class="disabled">			}</div>
+<div class="disabled">			threadPoolData-&gt;taskThreads.Clear();</div>
+
+<div class="disabled">			SPIN_LOCK(threadPoolLock)</div>
+<div class="disabled">			{</div>
+<div class="disabled">				delete threadPoolData;</div>
+<div class="disabled">				threadPoolData = nullptr;</div>
+<div class="disabled">			}</div>
+<div class="disabled">			return true;</div>
+<div class="disabled">		}</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ThreadPoolLite::ThreadPoolLite()</div>
+<div class="disabled">	{</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ThreadPoolLite::~ThreadPoolLite()</div>
+<div class="disabled">	{</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool ThreadPoolLite::Queue(void(*proc)(void*), void* argument)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return ThreadPoolQueue([proc, argument](){proc(argument);});</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool ThreadPoolLite::Queue(const Func&lt;void()&gt;&amp; proc)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return ThreadPoolQueue(proc);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool ThreadPoolLite::Stop(bool discardPendingTasks)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return ThreadPoolStop(discardPendingTasks);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">CriticalSection</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	namespace threading_internal</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct CriticalSectionData</div>
+<div class="disabled">		{</div>
+<div class="disabled">			pthread_mutex_t		mutex;</div>
+<div class="disabled">		};</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	CriticalSection::CriticalSection()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		internalData = new CriticalSectionData;</div>
+<div class="disabled">		pthread_mutex_init(&amp;internalData-&gt;mutex, nullptr);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	CriticalSection::~CriticalSection()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_mutex_destroy(&amp;internalData-&gt;mutex);</div>
+<div class="disabled">		delete internalData;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool CriticalSection::TryEnter()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return pthread_mutex_trylock(&amp;internalData-&gt;mutex) == 0;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void CriticalSection::Enter()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_mutex_lock(&amp;internalData-&gt;mutex);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void CriticalSection::Leave()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_mutex_unlock(&amp;internalData-&gt;mutex);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	CriticalSection::Scope::Scope(CriticalSection&amp; _criticalSection)</div>
+<div class="disabled">		:criticalSection(&amp;_criticalSection)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		criticalSection-&gt;Enter();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	CriticalSection::Scope::~Scope()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		criticalSection-&gt;Leave();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">ReaderWriterLock</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	namespace threading_internal</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct ReaderWriterLockData</div>
+<div class="disabled">		{</div>
+<div class="disabled">			pthread_rwlock_t			rwlock;</div>
+<div class="disabled">		};</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ReaderWriterLock::ReaderWriterLock()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		internalData = new ReaderWriterLockData;</div>
+<div class="disabled">		pthread_rwlock_init(&amp;internalData-&gt;rwlock, nullptr);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ReaderWriterLock::~ReaderWriterLock()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_rwlock_destroy(&amp;internalData-&gt;rwlock);</div>
+<div class="disabled">		delete internalData;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool ReaderWriterLock::TryEnterReader()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return pthread_rwlock_tryrdlock(&amp;internalData-&gt;rwlock) == 0;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void ReaderWriterLock::EnterReader()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_rwlock_rdlock(&amp;internalData-&gt;rwlock);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void ReaderWriterLock::LeaveReader()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_rwlock_unlock(&amp;internalData-&gt;rwlock);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool ReaderWriterLock::TryEnterWriter()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return pthread_rwlock_trywrlock(&amp;internalData-&gt;rwlock) == 0;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void ReaderWriterLock::EnterWriter()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_rwlock_wrlock(&amp;internalData-&gt;rwlock);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void ReaderWriterLock::LeaveWriter()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_rwlock_unlock(&amp;internalData-&gt;rwlock);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ReaderWriterLock::ReaderScope::ReaderScope(ReaderWriterLock&amp; _lock)</div>
+<div class="disabled">		:lock(&amp;_lock)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		lock-&gt;EnterReader();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ReaderWriterLock::ReaderScope::~ReaderScope()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		lock-&gt;LeaveReader();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ReaderWriterLock::WriterScope::WriterScope(ReaderWriterLock&amp; _lock)</div>
+<div class="disabled">		:lock(&amp;_lock)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		lock-&gt;EnterWriter();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ReaderWriterLock::WriterScope::~WriterScope()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		lock-&gt;LeaveReader();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">ConditionVariable</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	namespace threading_internal</div>
+<div class="disabled">	{</div>
+<div class="disabled">		struct ConditionVariableData</div>
+<div class="disabled">		{</div>
+<div class="disabled">			pthread_cond_t			cond;</div>
+<div class="disabled">		};</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ConditionVariable::ConditionVariable()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		internalData = new ConditionVariableData;</div>
+<div class="disabled">		pthread_cond_init(&amp;internalData-&gt;cond, nullptr);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ConditionVariable::~ConditionVariable()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_cond_destroy(&amp;internalData-&gt;cond);</div>
+<div class="disabled">		delete internalData;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool ConditionVariable::SleepWith(CriticalSection&amp; cs)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return pthread_cond_wait(&amp;internalData-&gt;cond, &amp;cs.internalData-&gt;mutex) == 0;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void ConditionVariable::WakeOnePending()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_cond_signal(&amp;internalData-&gt;cond);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void ConditionVariable::WakeAllPendings()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_cond_broadcast(&amp;internalData-&gt;cond);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">SpinLock</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">	SpinLock::Scope::Scope(SpinLock&amp; _spinLock)</div>
+<div class="disabled">		:spinLock(&amp;_spinLock)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		spinLock-&gt;Enter();</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	SpinLock::Scope::~Scope()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		spinLock-&gt;Leave();</div>
+<div class="disabled">	}</div>
+<div class="disabled">			</div>
+<div class="disabled">	SpinLock::SpinLock()</div>
+<div class="disabled">		:token(0)</div>
+<div class="disabled">	{</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	SpinLock::~SpinLock()</div>
+<div class="disabled">	{</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	bool SpinLock::TryEnter()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		return __sync_lock_test_and_set(&amp;token, 1)==0;</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void SpinLock::Enter()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		while(__sync_val_compare_and_swap(&amp;token, 0, 1)!=0)</div>
+<div class="disabled">		{</div>
+<div class="disabled">			while(token!=0) _mm_pause();</div>
+<div class="disabled">		}</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void SpinLock::Leave()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		__sync_lock_test_and_set(&amp;token, 0);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">/***********************************************************************</div>
+<div class="disabled">ThreadLocalStorage</div>
+<div class="disabled">***********************************************************************/</div>
+
+<div class="disabled">#define KEY ((pthread_key_t&amp;)key)</div>
+
+<div class="disabled">	ThreadLocalStorage::ThreadLocalStorage(Destructor _destructor)</div>
+<div class="disabled">		:destructor(_destructor)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		static_assert(sizeof(key) &gt;= sizeof(pthread_key_t), &quot;ThreadLocalStorage&apos;s key storage is not large enouth.&quot;);</div>
+<div class="disabled">		PushStorage(this);</div>
+<div class="disabled">		auto error = pthread_key_create(&amp;KEY, destructor);</div>
+<div class="disabled">		CHECK_ERROR(error != EAGAIN &amp;&amp; error != ENOMEM, L&quot;vl::ThreadLocalStorage::ThreadLocalStorage()#Failed to create a thread local storage index.&quot;);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	ThreadLocalStorage::~ThreadLocalStorage()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		pthread_key_delete(KEY);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void* ThreadLocalStorage::Get()</div>
+<div class="disabled">	{</div>
+<div class="disabled">		CHECK_ERROR(!disposed, L&quot;vl::ThreadLocalStorage::Get()#Cannot access a disposed ThreadLocalStorage.&quot;);</div>
+<div class="disabled">		return pthread_getspecific(KEY);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">	void ThreadLocalStorage::Set(void* data)</div>
+<div class="disabled">	{</div>
+<div class="disabled">		CHECK_ERROR(!disposed, L&quot;vl::ThreadLocalStorage::Set()#Cannot access a disposed ThreadLocalStorage.&quot;);</div>
+<div class="disabled">		pthread_setspecific(KEY, data);</div>
+<div class="disabled">	}</div>
+
+<div class="disabled">#undef KEY</div>
+<div class="disabled">}</div>
+<div class="disabled">#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

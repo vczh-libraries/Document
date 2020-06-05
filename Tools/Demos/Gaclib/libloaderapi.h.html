@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>libloaderapi.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* libloaderapi.h -- ApiSet Contract for api-ms-win-core-libraryloader-l1        *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _APISETLIBLOADER_</div>
+<div class="disabled">#define _APISETLIBLOADER_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#define  FIND_RESOURCE_DIRECTORY_TYPES       (0x0100)</div>
+<div class="disabled">#define  FIND_RESOURCE_DIRECTORY_NAMES       (0x0200)</div>
+<div class="disabled">#define  FIND_RESOURCE_DIRECTORY_LANGUAGES   (0x0400)</div>
+
+<div class="disabled">#define  RESOURCE_ENUM_LN               (0x0001)</div>
+<div class="disabled">#define  RESOURCE_ENUM_MUI              (0x0002)</div>
+<div class="disabled">#define  RESOURCE_ENUM_MUI_SYSTEM       (0x0004)</div>
+<div class="disabled">#define  RESOURCE_ENUM_VALIDATE         (0x0008)</div>
+<div class="disabled">#define  RESOURCE_ENUM_MODULE_EXACT     (0x0010)</div>
+
+<div class="disabled">#define SUPPORT_LANG_NUMBER  32</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagENUMUILANG"><div><div class="token cpp_type">tagENUMUILANG</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>  <div class="def" id="NI$tagENUMUILANG::NumOfEnumUILang"><div><div class="token cpp_field">NumOfEnumUILang</div></div></div>;    <div class="token cpp_comment ">// Acutall number of enumerated languages</div>
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>  <div class="def" id="NI$tagENUMUILANG::SizeOfEnumUIBuffer"><div><div class="token cpp_field">SizeOfEnumUIBuffer</div></div></div>; <div class="token cpp_comment ">// Buffer size of pMUIEnumUILanguages</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LANGID'], [], [])"><div class="token cpp_type">LANGID</div></div> *<div class="def" id="NI$tagENUMUILANG::pEnumUIBuffer"><div><div class="token cpp_field">pEnumUIBuffer</div></div></div>;
+} <div class="def" id="NI$ENUMUILANG"><div><div class="token cpp_type">ENUMUILANG</div></div></div>, *<div class="def" id="NI$PENUMUILANG"><div><div class="token cpp_type">PENUMUILANG</div></div></div>;
+
+<div class="disabled">#ifdef STRICT</div>
+
+<div class="expandable"><div class="disabled">typedef BOOL (CALLBACK* ENUMRESLANGPROCA)(</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$ENUMRESLANGPROCA"><div><div class="token cpp_type">ENUMRESLANGPROCA</div></div></div>)(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> hModule,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> lpType,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> lpName,</div></div>
+<div class="expandable"><div class="disabled">    _In_ WORD wLanguage,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> wLanguage,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> lParam);</div></div>
+<div class="expandable"><div class="disabled">typedef BOOL (CALLBACK* ENUMRESLANGPROCW)(</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$ENUMRESLANGPROCW"><div><div class="token cpp_type">ENUMRESLANGPROCW</div></div></div>)(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> hModule,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> lpType,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> lpName,</div></div>
+<div class="expandable"><div class="disabled">    _In_ WORD wLanguage,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> wLanguage,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> lParam);</div></div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define ENUMRESLANGPROC  ENUMRESLANGPROCW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define ENUMRESLANGPROC  ENUMRESLANGPROCA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">typedef BOOL (CALLBACK* ENUMRESNAMEPROCA)(</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$ENUMRESNAMEPROCA"><div><div class="token cpp_type">ENUMRESNAMEPROCA</div></div></div>)(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> hModule,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> lpType,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> lpName,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> lParam);</div></div>
+<div class="expandable"><div class="disabled">typedef BOOL (CALLBACK* ENUMRESNAMEPROCW)(</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$ENUMRESNAMEPROCW"><div><div class="token cpp_type">ENUMRESNAMEPROCW</div></div></div>)(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> hModule,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> lpType,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPWSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> lpName,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> lParam);</div></div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define ENUMRESNAMEPROC  ENUMRESNAMEPROCW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define ENUMRESNAMEPROC  ENUMRESNAMEPROCA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">typedef BOOL (CALLBACK* ENUMRESTYPEPROCA)(</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$ENUMRESTYPEPROCA"><div><div class="token cpp_type">ENUMRESTYPEPROCA</div></div></div>)(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> hModule,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> lpType,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> lParam</div></div>
+    );
+<div class="expandable"><div class="disabled">typedef BOOL (CALLBACK* ENUMRESTYPEPROCW)(</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$ENUMRESTYPEPROCW"><div><div class="token cpp_type">ENUMRESTYPEPROCW</div></div></div>)(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> hModule,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPWSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> lpType,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> lParam</div></div>
+    );
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define ENUMRESTYPEPROC  ENUMRESTYPEPROCW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define ENUMRESTYPEPROC  ENUMRESTYPEPROCA
+#endif // !UNICODE</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">typedef FARPROC ENUMRESTYPEPROCA;</div>
+<div class="disabled">typedef FARPROC ENUMRESTYPEPROCW;</div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">typedef ENUMRESTYPEPROCW ENUMRESTYPEPROC;</div>
+<div class="disabled">#else</div>
+<div class="disabled">typedef ENUMRESTYPEPROCA ENUMRESTYPEPROC;</div>
+<div class="disabled">#endif // UNICODE</div>
+<div class="disabled">typedef FARPROC ENUMRESNAMEPROCA;</div>
+<div class="disabled">typedef FARPROC ENUMRESNAMEPROCW;</div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">typedef ENUMRESNAMEPROCW ENUMRESNAMEPROC;</div>
+<div class="disabled">#else</div>
+<div class="disabled">typedef ENUMRESNAMEPROCA ENUMRESNAMEPROC;</div>
+<div class="disabled">#endif // UNICODE</div>
+<div class="disabled">typedef FARPROC ENUMRESLANGPROCA;</div>
+<div class="disabled">typedef FARPROC ENUMRESLANGPROCW;</div>
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">typedef ENUMRESLANGPROCW ENUMRESLANGPROC;</div>
+<div class="disabled">#else</div>
+<div class="disabled">typedef ENUMRESLANGPROCA ENUMRESLANGPROC;</div>
+<div class="disabled">#endif // UNICODE</div>
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DisableThreadLibraryCalls@::BOOL(::HMODULE)[decl0]"><div><div class="token cpp_function">DisableThreadLibraryCalls</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HMODULE hLibModule</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$DisableThreadLibraryCalls@::BOOL(::HMODULE)[decl0]::hLibModule"><div>hLibModule</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['HRSRC'], [], [])"><div class="token cpp_type">HRSRC</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FindResourceExW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::WORD)[decl0]"><div><div class="token cpp_function">FindResourceExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$FindResourceExW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::WORD)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$FindResourceExW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::WORD)[decl0]::lpType"><div>lpType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$FindResourceExW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::WORD)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ WORD wLanguage</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$FindResourceExW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::WORD)[decl0]::wLanguage"><div>wLanguage</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define FindResourceEx  FindResourceExW
+#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN7)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">int</div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FindStringOrdinal@int(::DWORD, ::LPCWSTR, int, ::LPCWSTR, int, ::BOOL)[decl0]"><div><div class="token cpp_function">FindStringOrdinal</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFindStringOrdinalFlags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$FindStringOrdinal@int(::DWORD, ::LPCWSTR, int, ::LPCWSTR, int, ::BOOL)[decl0]::dwFindStringOrdinalFlags"><div>dwFindStringOrdinalFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_(cchSource) LPCWSTR lpStringSource,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$FindStringOrdinal@int(::DWORD, ::LPCWSTR, int, ::LPCWSTR, int, ::BOOL)[decl0]::lpStringSource"><div>lpStringSource</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int cchSource,</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$FindStringOrdinal@int(::DWORD, ::LPCWSTR, int, ::LPCWSTR, int, ::BOOL)[decl0]::cchSource"><div>cchSource</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_(cchValue) LPCWSTR lpStringValue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$FindStringOrdinal@int(::DWORD, ::LPCWSTR, int, ::LPCWSTR, int, ::BOOL)[decl0]::lpStringValue"><div>lpStringValue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int cchValue,</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$FindStringOrdinal@int(::DWORD, ::LPCWSTR, int, ::LPCWSTR, int, ::BOOL)[decl0]::cchValue"><div>cchValue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ BOOL bIgnoreCase</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$FindStringOrdinal@int(::DWORD, ::LPCWSTR, int, ::LPCWSTR, int, ::BOOL)[decl0]::bIgnoreCase"><div>bIgnoreCase</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN7)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FreeLibrary@::BOOL(::HMODULE)[decl0]"><div><div class="token cpp_function">FreeLibrary</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HMODULE hLibModule</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$FreeLibrary@::BOOL(::HMODULE)[decl0]::hLibModule"><div>hLibModule</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">DECLSPEC_NORETURN</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(noreturn)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FreeLibraryAndExitThread@void(::HMODULE, ::DWORD)[decl0]"><div><div class="token cpp_function">FreeLibraryAndExitThread</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HMODULE hLibModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$FreeLibraryAndExitThread@void(::HMODULE, ::DWORD)[decl0]::hLibModule"><div>hLibModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwExitCode</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$FreeLibraryAndExitThread@void(::HMODULE, ::DWORD)[decl0]::dwExitCode"><div>dwExitCode</div></div></div></div>
+    );
+
+    
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FreeResource@::BOOL(::HGLOBAL)[decl0]"><div><div class="token cpp_function">FreeResource</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HGLOBAL hResData</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HGLOBAL'], [], [])"><div class="token cpp_type">HGLOBAL</div></div> <div class="def" id="NI$FreeResource@::BOOL(::HGLOBAL)[decl0]::hResData"><div>hResData</div></div></div></div>
+    );
+
+    
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0)</div>
+<div class="disabled">_Ret_range_(1,nSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetModuleFileNameA@::DWORD(::HMODULE, ::LPSTR, ::DWORD)[decl0]"><div><div class="token cpp_function">GetModuleFileNameA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$GetModuleFileNameA@::DWORD(::HMODULE, ::LPSTR, ::DWORD)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_(nSize,((return &lt; nSize) ? (return + 1) : nSize)) LPSTR lpFilename,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetModuleFileNameA@::DWORD(::HMODULE, ::LPSTR, ::DWORD)[decl0]::lpFilename"><div>lpFilename</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetModuleFileNameA@::DWORD(::HMODULE, ::LPSTR, ::DWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0)</div>
+<div class="disabled">_Ret_range_(1,nSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetModuleFileNameW@::DWORD(::HMODULE, ::LPWSTR, ::DWORD)[decl0]"><div><div class="token cpp_function">GetModuleFileNameW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$GetModuleFileNameW@::DWORD(::HMODULE, ::LPWSTR, ::DWORD)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_(nSize,((return &lt; nSize) ? (return + 1) : nSize)) LPWSTR lpFilename,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetModuleFileNameW@::DWORD(::HMODULE, ::LPWSTR, ::DWORD)[decl0]::lpFilename"><div>lpFilename</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetModuleFileNameW@::DWORD(::HMODULE, ::LPWSTR, ::DWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetModuleFileName  GetModuleFileNameW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetModuleFileName  GetModuleFileNameA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_When_(lpModuleName == NULL,_Ret_notnull_)</div>
+<div class="disabled">_When_(lpModuleName != NULL,_Ret_maybenull_)</div>
+<div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetModuleHandleA@::HMODULE(::LPCSTR)[decl0]"><div><div class="token cpp_function">GetModuleHandleA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPCSTR lpModuleName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$GetModuleHandleA@::HMODULE(::LPCSTR)[decl0]::lpModuleName"><div>lpModuleName</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_When_(lpModuleName == NULL,_Ret_notnull_)</div>
+<div class="disabled">_When_(lpModuleName != NULL,_Ret_maybenull_)</div>
+<div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetModuleHandleW@::HMODULE(::LPCWSTR)[decl0]"><div><div class="token cpp_function">GetModuleHandleW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPCWSTR lpModuleName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$GetModuleHandleW@::HMODULE(::LPCWSTR)[decl0]::lpModuleName"><div>lpModuleName</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetModuleHandle  GetModuleHandleW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetModuleHandle  GetModuleHandleA
+#endif // !UNICODE</div>
+
+<div class="disabled">#if !defined(RC_INVOKED)</div>
+
+<div class="disabled">#define GET_MODULE_HANDLE_EX_FLAG_PIN                 (0x00000001)</div>
+<div class="disabled">#define GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT  (0x00000002)</div>
+<div class="disabled">#define GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS        (0x00000004)</div>
+
+<div class="token cpp_keyword ">typedef</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">(WINAPI*</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div>*</div></div>
+<div class="def" id="NI$PGET_MODULE_HANDLE_EXA"><div><div class="token cpp_type">PGET_MODULE_HANDLE_EXA</div></div></div>)(
+<div class="expandable"><div class="disabled">    _In_        DWORD        dwFlags,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>        dwFlags,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_    LPCSTR     lpModuleName,</div>
+<div class="expanded">         <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div>     lpModuleName,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ HMODULE*    phModule</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>*    phModule</div></div>
+    );
+<div class="token cpp_keyword ">typedef</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">(WINAPI*</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div>*</div></div>
+<div class="def" id="NI$PGET_MODULE_HANDLE_EXW"><div><div class="token cpp_type">PGET_MODULE_HANDLE_EXW</div></div></div>)(
+<div class="expandable"><div class="disabled">    _In_        DWORD        dwFlags,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>        dwFlags,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_    LPCWSTR     lpModuleName,</div>
+<div class="expanded">         <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>     lpModuleName,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ HMODULE*    phModule</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>*    phModule</div></div>
+    );
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define PGET_MODULE_HANDLE_EX  PGET_MODULE_HANDLE_EXW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PGET_MODULE_HANDLE_EX  PGET_MODULE_HANDLE_EXA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetModuleHandleExA@::BOOL(::DWORD, ::LPCSTR, ::HMODULE *)[decl0]"><div><div class="token cpp_function">GetModuleHandleExA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetModuleHandleExA@::BOOL(::DWORD, ::LPCSTR, ::HMODULE *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPCSTR lpModuleName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$GetModuleHandleExA@::BOOL(::DWORD, ::LPCSTR, ::HMODULE *)[decl0]::lpModuleName"><div>lpModuleName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ HMODULE* phModule</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>* <div class="def" id="NI$GetModuleHandleExA@::BOOL(::DWORD, ::LPCSTR, ::HMODULE *)[decl0]::phModule"><div>phModule</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetModuleHandleExW@::BOOL(::DWORD, ::LPCWSTR, ::HMODULE *)[decl0]"><div><div class="token cpp_function">GetModuleHandleExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetModuleHandleExW@::BOOL(::DWORD, ::LPCWSTR, ::HMODULE *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPCWSTR lpModuleName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$GetModuleHandleExW@::BOOL(::DWORD, ::LPCWSTR, ::HMODULE *)[decl0]::lpModuleName"><div>lpModuleName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ HMODULE* phModule</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>* <div class="def" id="NI$GetModuleHandleExW@::BOOL(::DWORD, ::LPCWSTR, ::HMODULE *)[decl0]::phModule"><div>phModule</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetModuleHandleEx  GetModuleHandleExW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetModuleHandleEx  GetModuleHandleExA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['FARPROC'], [], [])"><div class="token cpp_type">FARPROC</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetProcAddress@::FARPROC(::HMODULE, ::LPCSTR)[decl0]"><div><div class="token cpp_function">GetProcAddress</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$GetProcAddress@::FARPROC(::HMODULE, ::LPCSTR)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpProcName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$GetProcAddress@::FARPROC(::HMODULE, ::LPCSTR)[decl0]::lpProcName"><div>lpProcName</div></div></div></div>
+    );
+
+
+<div class="disabled">#define CURRENT_IMPORT_REDIRECTION_VERSION      1</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_REDIRECTION_FUNCTION_DESCRIPTOR"><div><div class="token cpp_type">_REDIRECTION_FUNCTION_DESCRIPTOR</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['PCSTR'], [], [])"><div class="token cpp_type">PCSTR</div></div> <div class="def" id="NI$_REDIRECTION_FUNCTION_DESCRIPTOR::DllName"><div><div class="token cpp_field">DllName</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['PCSTR'], [], [])"><div class="token cpp_type">PCSTR</div></div> <div class="def" id="NI$_REDIRECTION_FUNCTION_DESCRIPTOR::FunctionName"><div><div class="token cpp_field">FunctionName</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$_REDIRECTION_FUNCTION_DESCRIPTOR::RedirectionTarget"><div><div class="token cpp_field">RedirectionTarget</div></div></div>;
+} <div class="def" id="NI$REDIRECTION_FUNCTION_DESCRIPTOR"><div><div class="token cpp_type">REDIRECTION_FUNCTION_DESCRIPTOR</div></div></div>, *<div class="def" id="NI$PREDIRECTION_FUNCTION_DESCRIPTOR"><div><div class="token cpp_type">PREDIRECTION_FUNCTION_DESCRIPTOR</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['REDIRECTION_FUNCTION_DESCRIPTOR'], [], [])"><div class="token cpp_type">REDIRECTION_FUNCTION_DESCRIPTOR</div></div> *<div class="def" id="NI$PCREDIRECTION_FUNCTION_DESCRIPTOR"><div><div class="token cpp_type">PCREDIRECTION_FUNCTION_DESCRIPTOR</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_REDIRECTION_DESCRIPTOR"><div><div class="token cpp_type">_REDIRECTION_DESCRIPTOR</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_REDIRECTION_DESCRIPTOR::Version"><div><div class="token cpp_field">Version</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_REDIRECTION_DESCRIPTOR::FunctionCount"><div><div class="token cpp_field">FunctionCount</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['PCREDIRECTION_FUNCTION_DESCRIPTOR'], [], [])"><div class="token cpp_type">PCREDIRECTION_FUNCTION_DESCRIPTOR</div></div> <div class="def" id="NI$_REDIRECTION_DESCRIPTOR::Redirections"><div><div class="token cpp_field">Redirections</div></div></div>;
+} <div class="def" id="NI$REDIRECTION_DESCRIPTOR"><div><div class="token cpp_type">REDIRECTION_DESCRIPTOR</div></div></div>, *<div class="def" id="NI$PREDIRECTION_DESCRIPTOR"><div><div class="token cpp_type">PREDIRECTION_DESCRIPTOR</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['REDIRECTION_DESCRIPTOR'], [], [])"><div class="token cpp_type">REDIRECTION_DESCRIPTOR</div></div> *<div class="def" id="NI$PCREDIRECTION_DESCRIPTOR"><div><div class="token cpp_type">PCREDIRECTION_DESCRIPTOR</div></div></div>;
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LoadLibraryExA@::HMODULE(::LPCSTR, ::HANDLE, ::DWORD)[decl0]"><div><div class="token cpp_function">LoadLibraryExA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpLibFileName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$LoadLibraryExA@::HMODULE(::LPCSTR, ::HANDLE, ::DWORD)[decl0]::lpLibFileName"><div>lpLibFileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ HANDLE hFile,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$LoadLibraryExA@::HMODULE(::LPCSTR, ::HANDLE, ::DWORD)[decl0]::hFile"><div>hFile</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$LoadLibraryExA@::HMODULE(::LPCSTR, ::HANDLE, ::DWORD)[decl0]::dwFlags"><div>dwFlags</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LoadLibraryExW@::HMODULE(::LPCWSTR, ::HANDLE, ::DWORD)[decl0]"><div><div class="token cpp_function">LoadLibraryExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpLibFileName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$LoadLibraryExW@::HMODULE(::LPCWSTR, ::HANDLE, ::DWORD)[decl0]::lpLibFileName"><div>lpLibFileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ HANDLE hFile,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$LoadLibraryExW@::HMODULE(::LPCWSTR, ::HANDLE, ::DWORD)[decl0]::hFile"><div>hFile</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$LoadLibraryExW@::HMODULE(::LPCWSTR, ::HANDLE, ::DWORD)[decl0]::dwFlags"><div>dwFlags</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define LoadLibraryEx  LoadLibraryExW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define LoadLibraryEx  LoadLibraryExA
+#endif // !UNICODE</div>
+
+<div class="disabled">#define DONT_RESOLVE_DLL_REFERENCES         0x00000001</div>
+<div class="disabled">#define LOAD_LIBRARY_AS_DATAFILE            0x00000002</div>
+<div class="token cpp_comment ">// reserved for internal LOAD_PACKAGED_LIBRARY: 0x00000004</div>
+<div class="disabled">#define LOAD_WITH_ALTERED_SEARCH_PATH       0x00000008</div>
+<div class="disabled">#define LOAD_IGNORE_CODE_AUTHZ_LEVEL        0x00000010</div>
+<div class="disabled">#define LOAD_LIBRARY_AS_IMAGE_RESOURCE      0x00000020</div>
+<div class="disabled">#define LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE  0x00000040</div>
+<div class="disabled">#define LOAD_LIBRARY_REQUIRE_SIGNED_TARGET  0x00000080</div>
+<div class="disabled">#define LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR    0x00000100</div>
+<div class="disabled">#define LOAD_LIBRARY_SEARCH_APPLICATION_DIR 0x00000200</div>
+<div class="disabled">#define LOAD_LIBRARY_SEARCH_USER_DIRS       0x00000400</div>
+<div class="disabled">#define LOAD_LIBRARY_SEARCH_SYSTEM32        0x00000800</div>
+<div class="disabled">#define LOAD_LIBRARY_SEARCH_DEFAULT_DIRS    0x00001000</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN10_RS1)</div>
+
+<div class="disabled">#define LOAD_LIBRARY_SAFE_CURRENT_DIRS      0x00002000</div>
+
+<div class="disabled">#define LOAD_LIBRARY_SEARCH_SYSTEM32_NO_FORWARDER   0x00004000</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// For anything building for downlevel, set the flag to be the same as LOAD_LIBRARY_SEARCH_SYSTEM32</div>
+<div class="disabled">// such that they&apos;re treated the same when running on older version of OS.</div>
+<div class="disabled">//</div>
+
+<div class="disabled">#define LOAD_LIBRARY_SEARCH_SYSTEM32_NO_FORWARDER   LOAD_LIBRARY_SEARCH_SYSTEM32</div>
+
+<div class="disabled">#endif // (_APISET_LIBLOADER_VER &gt;= 0x0202)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN10_RS2)</div>
+
+<div class="disabled">#define LOAD_LIBRARY_OS_INTEGRITY_CONTINUITY   0x00008000</div>
+
+<div class="disabled">#endif</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['HGLOBAL'], [], [])"><div class="token cpp_type">HGLOBAL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LoadResource@::HGLOBAL(::HMODULE, ::HRSRC)[decl0]"><div><div class="token cpp_function">LoadResource</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$LoadResource@::HGLOBAL(::HMODULE, ::HRSRC)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HRSRC hResInfo</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HRSRC'], [], [])"><div class="token cpp_type">HRSRC</div></div> <div class="def" id="NI$LoadResource@::HGLOBAL(::HMODULE, ::HRSRC)[decl0]::hResInfo"><div>hResInfo</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINUSERAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">int</div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LoadStringA@int(::HINSTANCE, ::UINT, ::LPSTR, int)[decl0]"><div><div class="token cpp_function">LoadStringA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HINSTANCE hInstance,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$LoadStringA@int(::HINSTANCE, ::UINT, ::LPSTR, int)[decl0]::hInstance"><div>hInstance</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$LoadStringA@int(::HINSTANCE, ::UINT, ::LPSTR, int)[decl0]::uID"><div>uID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_(cchBufferMax,return + 1) LPSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$LoadStringA@int(::HINSTANCE, ::UINT, ::LPSTR, int)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int cchBufferMax</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$LoadStringA@int(::HINSTANCE, ::UINT, ::LPSTR, int)[decl0]::cchBufferMax"><div>cchBufferMax</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINUSERAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">int</div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LoadStringW@int(::HINSTANCE, ::UINT, ::LPWSTR, int)[decl0]"><div><div class="token cpp_function">LoadStringW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HINSTANCE hInstance,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$LoadStringW@int(::HINSTANCE, ::UINT, ::LPWSTR, int)[decl0]::hInstance"><div>hInstance</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$LoadStringW@int(::HINSTANCE, ::UINT, ::LPWSTR, int)[decl0]::uID"><div>uID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_(cchBufferMax,return + 1) LPWSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$LoadStringW@int(::HINSTANCE, ::UINT, ::LPWSTR, int)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int cchBufferMax</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> <div class="def" id="NI$LoadStringW@int(::HINSTANCE, ::UINT, ::LPWSTR, int)[decl0]::cchBufferMax"><div>cchBufferMax</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define LoadString  LoadStringW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define LoadString  LoadStringA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LockResource@::LPVOID(::HGLOBAL)[decl0]"><div><div class="token cpp_function">LockResource</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HGLOBAL hResData</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HGLOBAL'], [], [])"><div class="token cpp_type">HGLOBAL</div></div> <div class="def" id="NI$LockResource@::LPVOID(::HGLOBAL)[decl0]::hResData"><div>hResData</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SizeofResource@::DWORD(::HMODULE, ::HRSRC)[decl0]"><div><div class="token cpp_function">SizeofResource</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$SizeofResource@::DWORD(::HMODULE, ::HRSRC)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HRSRC hResInfo</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HRSRC'], [], [])"><div class="token cpp_type">HRSRC</div></div> <div class="def" id="NI$SizeofResource@::DWORD(::HMODULE, ::HRSRC)[decl0]::hResInfo"><div>hResInfo</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$DLL_DIRECTORY_COOKIE"><div><div class="token cpp_type">DLL_DIRECTORY_COOKIE</div></div></div>, *<div class="def" id="NI$PDLL_DIRECTORY_COOKIE"><div><div class="token cpp_type">PDLL_DIRECTORY_COOKIE</div></div></div>;
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['DLL_DIRECTORY_COOKIE'], [], [])"><div class="token cpp_type">DLL_DIRECTORY_COOKIE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$AddDllDirectory@::DLL_DIRECTORY_COOKIE(::PCWSTR)[decl0]"><div><div class="token cpp_function">AddDllDirectory</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ PCWSTR NewDirectory</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PCWSTR'], [], [])"><div class="token cpp_type">PCWSTR</div></div> <div class="def" id="NI$AddDllDirectory@::DLL_DIRECTORY_COOKIE(::PCWSTR)[decl0]::NewDirectory"><div>NewDirectory</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$RemoveDllDirectory@::BOOL(::DLL_DIRECTORY_COOKIE)[decl0]"><div><div class="token cpp_function">RemoveDllDirectory</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DLL_DIRECTORY_COOKIE Cookie</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DLL_DIRECTORY_COOKIE'], [], [])"><div class="token cpp_type">DLL_DIRECTORY_COOKIE</div></div> <div class="def" id="NI$RemoveDllDirectory@::BOOL(::DLL_DIRECTORY_COOKIE)[decl0]::Cookie"><div>Cookie</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetDefaultDllDirectories@::BOOL(::DWORD)[decl0]"><div><div class="token cpp_function">SetDefaultDllDirectories</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD DirectoryFlags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetDefaultDllDirectories@::BOOL(::DWORD)[decl0]::DirectoryFlags"><div>DirectoryFlags</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_VISTA)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumResourceLanguagesExA@::BOOL(::HMODULE, ::LPCSTR, ::LPCSTR, ::ENUMRESLANGPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]"><div><div class="token cpp_function">EnumResourceLanguagesExA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$EnumResourceLanguagesExA@::BOOL(::HMODULE, ::LPCSTR, ::LPCSTR, ::ENUMRESLANGPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$EnumResourceLanguagesExA@::BOOL(::HMODULE, ::LPCSTR, ::LPCSTR, ::ENUMRESLANGPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpType"><div>lpType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$EnumResourceLanguagesExA@::BOOL(::HMODULE, ::LPCSTR, ::LPCSTR, ::ENUMRESLANGPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ENUMRESLANGPROCA lpEnumFunc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ENUMRESLANGPROCA'], [], [])"><div class="token cpp_type">ENUMRESLANGPROCA</div></div> <div class="def" id="NI$EnumResourceLanguagesExA@::BOOL(::HMODULE, ::LPCSTR, ::LPCSTR, ::ENUMRESLANGPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpEnumFunc"><div>lpEnumFunc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LONG_PTR lParam,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> <div class="def" id="NI$EnumResourceLanguagesExA@::BOOL(::HMODULE, ::LPCSTR, ::LPCSTR, ::ENUMRESLANGPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lParam"><div>lParam</div></div>,</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumResourceLanguagesExA@::BOOL(::HMODULE, ::LPCSTR, ::LPCSTR, ::ENUMRESLANGPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::dwFlags"><div>dwFlags</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['LANGID'], [], [])"><div class="token cpp_type">LANGID</div></div> <div class="def" id="NI$EnumResourceLanguagesExA@::BOOL(::HMODULE, ::LPCSTR, ::LPCSTR, ::ENUMRESLANGPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::LangId"><div>LangId</div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumResourceLanguagesExW@::BOOL(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::ENUMRESLANGPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]"><div><div class="token cpp_function">EnumResourceLanguagesExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$EnumResourceLanguagesExW@::BOOL(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::ENUMRESLANGPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$EnumResourceLanguagesExW@::BOOL(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::ENUMRESLANGPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpType"><div>lpType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$EnumResourceLanguagesExW@::BOOL(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::ENUMRESLANGPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ENUMRESLANGPROCW lpEnumFunc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ENUMRESLANGPROCW'], [], [])"><div class="token cpp_type">ENUMRESLANGPROCW</div></div> <div class="def" id="NI$EnumResourceLanguagesExW@::BOOL(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::ENUMRESLANGPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpEnumFunc"><div>lpEnumFunc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LONG_PTR lParam,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> <div class="def" id="NI$EnumResourceLanguagesExW@::BOOL(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::ENUMRESLANGPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lParam"><div>lParam</div></div>,</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumResourceLanguagesExW@::BOOL(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::ENUMRESLANGPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::dwFlags"><div>dwFlags</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['LANGID'], [], [])"><div class="token cpp_type">LANGID</div></div> <div class="def" id="NI$EnumResourceLanguagesExW@::BOOL(::HMODULE, ::LPCWSTR, ::LPCWSTR, ::ENUMRESLANGPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::LangId"><div>LangId</div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define EnumResourceLanguagesEx  EnumResourceLanguagesExW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define EnumResourceLanguagesEx  EnumResourceLanguagesExA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumResourceNamesExA@::BOOL(::HMODULE, ::LPCSTR, ::ENUMRESNAMEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]"><div><div class="token cpp_function">EnumResourceNamesExA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$EnumResourceNamesExA@::BOOL(::HMODULE, ::LPCSTR, ::ENUMRESNAMEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$EnumResourceNamesExA@::BOOL(::HMODULE, ::LPCSTR, ::ENUMRESNAMEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpType"><div>lpType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ENUMRESNAMEPROCA lpEnumFunc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ENUMRESNAMEPROCA'], [], [])"><div class="token cpp_type">ENUMRESNAMEPROCA</div></div> <div class="def" id="NI$EnumResourceNamesExA@::BOOL(::HMODULE, ::LPCSTR, ::ENUMRESNAMEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpEnumFunc"><div>lpEnumFunc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> <div class="def" id="NI$EnumResourceNamesExA@::BOOL(::HMODULE, ::LPCSTR, ::ENUMRESNAMEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lParam"><div>lParam</div></div>,</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumResourceNamesExA@::BOOL(::HMODULE, ::LPCSTR, ::ENUMRESNAMEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::dwFlags"><div>dwFlags</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['LANGID'], [], [])"><div class="token cpp_type">LANGID</div></div> <div class="def" id="NI$EnumResourceNamesExA@::BOOL(::HMODULE, ::LPCSTR, ::ENUMRESNAMEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::LangId"><div>LangId</div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumResourceNamesExW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]"><div><div class="token cpp_function">EnumResourceNamesExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$EnumResourceNamesExW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$EnumResourceNamesExW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpType"><div>lpType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ENUMRESNAMEPROCW lpEnumFunc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ENUMRESNAMEPROCW'], [], [])"><div class="token cpp_type">ENUMRESNAMEPROCW</div></div> <div class="def" id="NI$EnumResourceNamesExW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpEnumFunc"><div>lpEnumFunc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> <div class="def" id="NI$EnumResourceNamesExW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lParam"><div>lParam</div></div>,</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumResourceNamesExW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::dwFlags"><div>dwFlags</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['LANGID'], [], [])"><div class="token cpp_type">LANGID</div></div> <div class="def" id="NI$EnumResourceNamesExW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::LangId"><div>LangId</div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define EnumResourceNamesEx  EnumResourceNamesExW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define EnumResourceNamesEx  EnumResourceNamesExA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumResourceTypesExA@::BOOL(::HMODULE, ::ENUMRESTYPEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]"><div><div class="token cpp_function">EnumResourceTypesExA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$EnumResourceTypesExA@::BOOL(::HMODULE, ::ENUMRESTYPEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ENUMRESTYPEPROCA lpEnumFunc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ENUMRESTYPEPROCA'], [], [])"><div class="token cpp_type">ENUMRESTYPEPROCA</div></div> <div class="def" id="NI$EnumResourceTypesExA@::BOOL(::HMODULE, ::ENUMRESTYPEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpEnumFunc"><div>lpEnumFunc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> <div class="def" id="NI$EnumResourceTypesExA@::BOOL(::HMODULE, ::ENUMRESTYPEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lParam"><div>lParam</div></div>,</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumResourceTypesExA@::BOOL(::HMODULE, ::ENUMRESTYPEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::dwFlags"><div>dwFlags</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['LANGID'], [], [])"><div class="token cpp_type">LANGID</div></div> <div class="def" id="NI$EnumResourceTypesExA@::BOOL(::HMODULE, ::ENUMRESTYPEPROCA, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::LangId"><div>LangId</div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumResourceTypesExW@::BOOL(::HMODULE, ::ENUMRESTYPEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]"><div><div class="token cpp_function">EnumResourceTypesExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$EnumResourceTypesExW@::BOOL(::HMODULE, ::ENUMRESTYPEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ENUMRESTYPEPROCW lpEnumFunc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ENUMRESTYPEPROCW'], [], [])"><div class="token cpp_type">ENUMRESTYPEPROCW</div></div> <div class="def" id="NI$EnumResourceTypesExW@::BOOL(::HMODULE, ::ENUMRESTYPEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lpEnumFunc"><div>lpEnumFunc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> <div class="def" id="NI$EnumResourceTypesExW@::BOOL(::HMODULE, ::ENUMRESTYPEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::lParam"><div>lParam</div></div>,</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumResourceTypesExW@::BOOL(::HMODULE, ::ENUMRESTYPEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::dwFlags"><div>dwFlags</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['LANGID'], [], [])"><div class="token cpp_type">LANGID</div></div> <div class="def" id="NI$EnumResourceTypesExW@::BOOL(::HMODULE, ::ENUMRESTYPEPROCW, ::LONG_PTR, ::DWORD, ::LANGID)[decl0]::LangId"><div>LangId</div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define EnumResourceTypesEx  EnumResourceTypesExW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define EnumResourceTypesEx  EnumResourceTypesExA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_VISTA)</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['HRSRC'], [], [])"><div class="token cpp_type">HRSRC</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FindResourceW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR)[decl0]"><div><div class="token cpp_function">FindResourceW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$FindResourceW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$FindResourceW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpType</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$FindResourceW@::HRSRC(::HMODULE, ::LPCWSTR, ::LPCWSTR)[decl0]::lpType"><div>lpType</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define FindResource  FindResourceW
+#endif</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LoadLibraryA@::HMODULE(::LPCSTR)[decl0]"><div><div class="token cpp_function">LoadLibraryA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpLibFileName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$LoadLibraryA@::HMODULE(::LPCSTR)[decl0]::lpLibFileName"><div>lpLibFileName</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LoadLibraryW@::HMODULE(::LPCWSTR)[decl0]"><div><div class="token cpp_function">LoadLibraryW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpLibFileName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$LoadLibraryW@::HMODULE(::LPCWSTR)[decl0]::lpLibFileName"><div>lpLibFileName</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define LoadLibrary  LoadLibraryW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define LoadLibrary  LoadLibraryA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumResourceNamesW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR)[decl0]"><div><div class="token cpp_function">EnumResourceNamesW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HMODULE hModule,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$EnumResourceNamesW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR)[decl0]::hModule"><div>hModule</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$EnumResourceNamesW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR)[decl0]::lpType"><div>lpType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ENUMRESNAMEPROCW lpEnumFunc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ENUMRESNAMEPROCW'], [], [])"><div class="token cpp_type">ENUMRESNAMEPROCW</div></div> <div class="def" id="NI$EnumResourceNamesW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR)[decl0]::lpEnumFunc"><div>lpEnumFunc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG_PTR lParam</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div> <div class="def" id="NI$EnumResourceNamesW@::BOOL(::HMODULE, ::LPCWSTR, ::ENUMRESNAMEPROCW, ::LONG_PTR)[decl0]::lParam"><div>lParam</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define EnumResourceNames  EnumResourceNamesW
+#endif</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _APISETLIBLOADER_</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DLL_DIRECTORY_COOKIE': {
+        'displayNameInHtml': '<span class="cpp_type">DLL_DIRECTORY_COOKIE</span>',
+        'impls': [
+            'NI$DLL_DIRECTORY_COOKIE'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'ENUMRESLANGPROCA': {
+        'displayNameInHtml': '<span class="cpp_type">ENUMRESLANGPROCA</span>',
+        'impls': [
+            'NI$ENUMRESLANGPROCA'
+        ],
+        'decls': []
+    },
+    'ENUMRESLANGPROCW': {
+        'displayNameInHtml': '<span class="cpp_type">ENUMRESLANGPROCW</span>',
+        'impls': [
+            'NI$ENUMRESLANGPROCW'
+        ],
+        'decls': []
+    },
+    'ENUMRESNAMEPROCA': {
+        'displayNameInHtml': '<span class="cpp_type">ENUMRESNAMEPROCA</span>',
+        'impls': [
+            'NI$ENUMRESNAMEPROCA'
+        ],
+        'decls': []
+    },
+    'ENUMRESNAMEPROCW': {
+        'displayNameInHtml': '<span class="cpp_type">ENUMRESNAMEPROCW</span>',
+        'impls': [
+            'NI$ENUMRESNAMEPROCW'
+        ],
+        'decls': []
+    },
+    'ENUMRESTYPEPROCA': {
+        'displayNameInHtml': '<span class="cpp_type">ENUMRESTYPEPROCA</span>',
+        'impls': [
+            'NI$ENUMRESTYPEPROCA'
+        ],
+        'decls': []
+    },
+    'ENUMRESTYPEPROCW': {
+        'displayNameInHtml': '<span class="cpp_type">ENUMRESTYPEPROCW</span>',
+        'impls': [
+            'NI$ENUMRESTYPEPROCW'
+        ],
+        'decls': []
+    },
+    'FARPROC': {
+        'displayNameInHtml': '<span class="cpp_type">FARPROC</span>',
+        'impls': [
+            'NI$FARPROC'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'HGLOBAL': {
+        'displayNameInHtml': '<span class="cpp_type">HGLOBAL</span>',
+        'impls': [
+            'NI$HGLOBAL'
+        ],
+        'decls': []
+    },
+    'HINSTANCE': {
+        'displayNameInHtml': '<span class="cpp_type">HINSTANCE</span>',
+        'impls': [
+            'NI$HINSTANCE'
+        ],
+        'decls': []
+    },
+    'HMODULE': {
+        'displayNameInHtml': '<span class="cpp_type">HMODULE</span>',
+        'impls': [
+            'NI$HMODULE'
+        ],
+        'decls': []
+    },
+    'HRSRC': {
+        'displayNameInHtml': '<span class="cpp_type">HRSRC</span>',
+        'impls': [
+            'NI$HRSRC'
+        ],
+        'decls': []
+    },
+    'LANGID': {
+        'displayNameInHtml': '<span class="cpp_type">LANGID</span>',
+        'impls': [
+            'NI$LANGID'
+        ],
+        'decls': []
+    },
+    'LONG_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">LONG_PTR</span>',
+        'impls': [
+            'NI$LONG_PTR'
+        ],
+        'decls': []
+    },
+    'LPCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCSTR</span>',
+        'impls': [
+            'NI$LPCSTR'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTR</span>',
+        'impls': [
+            'NI$LPSTR'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'PCREDIRECTION_FUNCTION_DESCRIPTOR': {
+        'displayNameInHtml': '<span class="cpp_type">PCREDIRECTION_FUNCTION_DESCRIPTOR</span>',
+        'impls': [
+            'NI$PCREDIRECTION_FUNCTION_DESCRIPTOR'
+        ],
+        'decls': []
+    },
+    'PCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">PCSTR</span>',
+        'impls': [
+            'NI$PCSTR'
+        ],
+        'decls': []
+    },
+    'PCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">PCWSTR</span>',
+        'impls': [
+            'NI$PCWSTR'
+        ],
+        'decls': []
+    },
+    'PVOID': {
+        'displayNameInHtml': '<span class="cpp_type">PVOID</span>',
+        'impls': [
+            'NI$PVOID'
+        ],
+        'decls': []
+    },
+    'REDIRECTION_DESCRIPTOR': {
+        'displayNameInHtml': '<span class="cpp_type">REDIRECTION_DESCRIPTOR</span>',
+        'impls': [
+            'NI$REDIRECTION_DESCRIPTOR'
+        ],
+        'decls': []
+    },
+    'REDIRECTION_FUNCTION_DESCRIPTOR': {
+        'displayNameInHtml': '<span class="cpp_type">REDIRECTION_FUNCTION_DESCRIPTOR</span>',
+        'impls': [
+            'NI$REDIRECTION_FUNCTION_DESCRIPTOR'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DLL_DIRECTORY_COOKIE': null,
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ENUMRESLANGPROCA': null,
+    'NI$ENUMRESLANGPROCW': null,
+    'NI$ENUMRESNAMEPROCA': null,
+    'NI$ENUMRESNAMEPROCW': null,
+    'NI$ENUMRESTYPEPROCA': null,
+    'NI$ENUMRESTYPEPROCW': null,
+    'NI$FARPROC': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HGLOBAL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HINSTANCE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HMODULE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HRSRC': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LANGID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LONG_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$LPCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PCREDIRECTION_FUNCTION_DESCRIPTOR': null,
+    'NI$PCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PVOID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$REDIRECTION_DESCRIPTOR': null,
+    'NI$REDIRECTION_FUNCTION_DESCRIPTOR': null,
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

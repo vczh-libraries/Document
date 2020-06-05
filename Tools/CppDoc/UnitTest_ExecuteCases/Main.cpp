@@ -186,7 +186,7 @@ void IndexCppCode(
 /***********************************************************************
 Main
 
-Set root folder which contains UnitTest_Cases.vcxproj
+Set root folder to /Tools/Demos
 Open http://127.0.0.1:8080/Debug/FileIndex.html
 Open http://127.0.0.1:8080/Calculator/FileIndex.html
 Open http://127.0.0.1:8080/TypePrinter/FileIndex.html
@@ -206,8 +206,11 @@ int main()
 	Console::WriteLine(L"Cleaning ...");
 	FOREACH(File, file, preprocessedFiles)
 	{
+		WString projectName = file.GetFilePath().GetName();
+		projectName = projectName.Left(projectName.Length() - 1);
 		Folder folderInput(file.GetFilePath().GetFullPath() + L".Input");
-		Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
+		Folder folderOutput(file.GetFilePath().GetFolder() / (L"../../Demos/" + projectName));
+
 		if (folderInput.Exists())
 		{
 			folderInput.Delete(true);
@@ -221,8 +224,11 @@ int main()
 
 	FOREACH(File, file, preprocessedFiles)
 	{
+		WString projectName = file.GetFilePath().GetName();
+		projectName = projectName.Left(projectName.Length() - 1);
 		Folder folderInput(file.GetFilePath().GetFullPath() + L".Input");
-		Folder folderOutput(file.GetFilePath().GetFullPath() + L".Output");
+		Folder folderOutput(file.GetFilePath().GetFolder() / (L"../../Demos/" + projectName));
+
 		auto pathPreprocessed = folderInput.GetFilePath() / L"Preprocessed.cpp";
 		auto pathInput = folderInput.GetFilePath() / L"Input.cpp";
 		auto pathMapping = folderInput.GetFilePath() / L"Mapping.bin";

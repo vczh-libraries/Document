@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>assert.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// assert.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Defines the assert macro and related functionality.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#if defined _VCRT_BUILD &amp;&amp; !defined _ASSERT_OK</div>
+<div class="disabled">    #error assert.h not for CRT internal use
+#endif</div>
+
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="disabled">#undef assert</div>
+
+<div class="disabled">#ifdef NDEBUG</div>
+
+<div class="disabled">    #define assert(expression) ((void)0)</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">    _ACRTIMP void __cdecl _wassert(</div>
+<div class="disabled">        _In_z_ wchar_t const* _Message,</div>
+<div class="disabled">        _In_z_ wchar_t const* _File,</div>
+<div class="disabled">        _In_   unsigned       _Line</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    #define assert(expression) (void)(                                                       \</div>
+<div class="disabled">            (!!(expression)) ||                                                              \</div>
+<div class="disabled">            (_wassert(_CRT_WIDE(#expression), _CRT_WIDE(__FILE__), (unsigned)(__LINE__)), 0) \</div>
+<div class="disabled">        )</div>
+
+<div class="disabled">#endif</div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

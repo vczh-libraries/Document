@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>d3d10_1.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/*-------------------------------------------------------------------------------------
+ *
+ * Copyright (c) Microsoft Corporation
+ *
+ *-------------------------------------------------------------------------------------*/</div>
+
+
+<div class="token cpp_comment ">/* this ALWAYS GENERATED file contains the definitions for the interfaces */</div>
+
+
+ <div class="token cpp_comment ">/* File created by MIDL compiler version 8.01.0622 */</div>
+<div class="token cpp_comment ">/* @@MIDL_FILE_HEADING(  ) */</div>
+
+
+
+<div class="token cpp_comment ">/* verify that the &lt;rpcndr.h&gt; version is high enough to compile this file*/</div>
+<div class="disabled">#ifndef __REQUIRED_RPCNDR_H_VERSION__</div>
+<div class="disabled">#define __REQUIRED_RPCNDR_H_VERSION__ 500</div>
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">/* verify that the &lt;rpcsal.h&gt; version is high enough to compile this file*/</div>
+<div class="disabled">#ifndef __REQUIRED_RPCSAL_H_VERSION__</div>
+<div class="disabled">#define __REQUIRED_RPCSAL_H_VERSION__ 100</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#include &quot;rpc.h&quot;</div>
+<div class="disabled">#include &quot;rpcndr.h&quot;</div>
+
+<div class="disabled">#ifndef __RPCNDR_H_VERSION__</div>
+<div class="disabled">#error this stub requires an updated version of &lt;rpcndr.h&gt;</div>
+<div class="disabled">#endif /* __RPCNDR_H_VERSION__ */</div>
+
+<div class="disabled">#ifndef COM_NO_WINDOWS_H</div>
+<div class="disabled">#include &quot;windows.h&quot;</div>
+<div class="disabled">#include &quot;ole2.h&quot;
+#endif /*COM_NO_WINDOWS_H*/</div>
+
+<div class="disabled">#ifndef __d3d10_1_h__</div>
+<div class="disabled">#define __d3d10_1_h__</div>
+
+<div class="disabled">#if defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1020)</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">/* Forward Declarations */</div> 
+
+<div class="disabled">#ifndef __ID3D10BlendState1_FWD_DEFINED__</div>
+<div class="disabled">#define __ID3D10BlendState1_FWD_DEFINED__</div>
+<div class="expandable"><div class="disabled">typedef interface ID3D10BlendState1 ID3D10BlendState1;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> ID3D10BlendState1 <div class="ref" onclick="jumpToSymbol([], ['ID3D10BlendState1'], [], [])"><div class="token cpp_type">ID3D10BlendState1</div></div>;</div></div>
+
+<div class="disabled">#endif 	/* __ID3D10BlendState1_FWD_DEFINED__ */</div>
+
+
+<div class="disabled">#ifndef __ID3D10ShaderResourceView1_FWD_DEFINED__</div>
+<div class="disabled">#define __ID3D10ShaderResourceView1_FWD_DEFINED__</div>
+<div class="expandable"><div class="disabled">typedef interface ID3D10ShaderResourceView1 ID3D10ShaderResourceView1;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> ID3D10ShaderResourceView1 <div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderResourceView1'], [], [])"><div class="token cpp_type">ID3D10ShaderResourceView1</div></div>;</div></div>
+
+<div class="disabled">#endif 	/* __ID3D10ShaderResourceView1_FWD_DEFINED__ */</div>
+
+
+<div class="disabled">#ifndef __ID3D10Device1_FWD_DEFINED__</div>
+<div class="disabled">#define __ID3D10Device1_FWD_DEFINED__</div>
+<div class="expandable"><div class="disabled">typedef interface ID3D10Device1 ID3D10Device1;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> ID3D10Device1 <div class="ref" onclick="jumpToSymbol([], ['ID3D10Device1'], [], [])"><div class="token cpp_type">ID3D10Device1</div></div>;</div></div>
+
+<div class="disabled">#endif 	/* __ID3D10Device1_FWD_DEFINED__ */</div>
+
+
+<div class="token cpp_comment ">/* header files for imported files */</div>
+<div class="disabled">#include &quot;oaidl.h&quot;
+#include &quot;ocidl.h&quot;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div>{
+<div class="disabled">#endif </div>
+
+
+<div class="token cpp_comment ">/* interface __MIDL_itf_d3d10_1_0000_0000 */</div>
+<div class="token cpp_comment ">/* [local] */</div> 
+
+<div class="disabled">#if defined( __d3d10_h__ ) &amp;&amp; !defined( D3D10_ARBITRARY_HEADER_ORDERING )</div>
+<div class="disabled">#error d3d10.h is included before d3d10_1.h, and it will confuse tools that honor SAL annotations. \</div>
+<div class="disabled">If possibly targeting d3d10.1, include d3d10_1.h instead of d3d10.h, or ensure d3d10_1.h is included before d3d10.h
+#endif</div>
+<div class="disabled">#ifndef _D3D10_1_CONSTANTS</div>
+<div class="disabled">#define _D3D10_1_CONSTANTS</div>
+<div class="disabled">#define	D3D10_1_DEFAULT_SAMPLE_MASK	( 0xffffffff )</div>
+
+<div class="disabled">#define D3D10_1_FLOAT16_FUSED_TOLERANCE_IN_ULP	( 0.6 )</div>
+<div class="disabled">#define D3D10_1_FLOAT32_TO_INTEGER_TOLERANCE_IN_ULP	( 0.6f )</div>
+<div class="disabled">#define	D3D10_1_GS_INPUT_REGISTER_COUNT	( 32 )</div>
+
+<div class="disabled">#define	D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT	( 32 )</div>
+
+<div class="disabled">#define	D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS	( 128 )</div>
+
+<div class="disabled">#define	D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT	( 32 )</div>
+
+<div class="disabled">#define	D3D10_1_PS_OUTPUT_MASK_REGISTER_COMPONENTS	( 1 )</div>
+
+<div class="disabled">#define	D3D10_1_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT	( 32 )</div>
+
+<div class="disabled">#define	D3D10_1_PS_OUTPUT_MASK_REGISTER_COUNT	( 1 )</div>
+
+<div class="disabled">#define	D3D10_1_SHADER_MAJOR_VERSION	( 4 )</div>
+
+<div class="disabled">#define	D3D10_1_SHADER_MINOR_VERSION	( 1 )</div>
+
+<div class="disabled">#define	D3D10_1_SO_BUFFER_MAX_STRIDE_IN_BYTES	( 2048 )</div>
+
+<div class="disabled">#define	D3D10_1_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES	( 256 )</div>
+
+<div class="disabled">#define	D3D10_1_SO_BUFFER_SLOT_COUNT	( 4 )</div>
+
+<div class="disabled">#define	D3D10_1_SO_MULTIPLE_BUFFER_ELEMENTS_PER_BUFFER	( 1 )</div>
+
+<div class="disabled">#define	D3D10_1_SO_SINGLE_BUFFER_COMPONENT_LIMIT	( 64 )</div>
+
+<div class="disabled">#define	D3D10_1_STANDARD_VERTEX_ELEMENT_COUNT	( 32 )</div>
+
+<div class="disabled">#define	D3D10_1_SUBPIXEL_FRACTIONAL_BIT_COUNT	( 8 )</div>
+
+<div class="disabled">#define	D3D10_1_VS_INPUT_REGISTER_COUNT	( 32 )</div>
+
+<div class="disabled">#define	D3D10_1_VS_OUTPUT_REGISTER_COUNT	( 32 )</div>
+
+<div class="disabled">#endif</div>
+<div class="disabled">#include &lt;winapifamily.h&gt;
+#include &quot;d3d10.h&quot; //</div>
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="token cpp_keyword ">typedef</div> 
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$D3D10_FEATURE_LEVEL1"><div><div class="token cpp_type">D3D10_FEATURE_LEVEL1</div></div></div>
+    {
+        <div class="def" id="NI$D3D10_FEATURE_LEVEL1::D3D10_FEATURE_LEVEL_10_0"><div><div class="token cpp_enum">D3D10_FEATURE_LEVEL_10_0</div></div></div>	= <div class="token cpp_number ">0xa000</div>,
+        <div class="def" id="NI$D3D10_FEATURE_LEVEL1::D3D10_FEATURE_LEVEL_10_1"><div><div class="token cpp_enum">D3D10_FEATURE_LEVEL_10_1</div></div></div>	= <div class="token cpp_number ">0xa100</div>,
+        <div class="def" id="NI$D3D10_FEATURE_LEVEL1::D3D10_FEATURE_LEVEL_9_1"><div><div class="token cpp_enum">D3D10_FEATURE_LEVEL_9_1</div></div></div>	= <div class="token cpp_number ">0x9100</div>,
+        <div class="def" id="NI$D3D10_FEATURE_LEVEL1::D3D10_FEATURE_LEVEL_9_2"><div><div class="token cpp_enum">D3D10_FEATURE_LEVEL_9_2</div></div></div>	= <div class="token cpp_number ">0x9200</div>,
+        <div class="def" id="NI$D3D10_FEATURE_LEVEL1::D3D10_FEATURE_LEVEL_9_3"><div><div class="token cpp_enum">D3D10_FEATURE_LEVEL_9_3</div></div></div>	= <div class="token cpp_number ">0x9300</div>
+    } 	<div class="ref" onclick="jumpToSymbol([], ['D3D10_FEATURE_LEVEL1'], [], [])"><div class="token cpp_type">D3D10_FEATURE_LEVEL1</div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1"><div><div class="token cpp_type">D3D10_RENDER_TARGET_BLEND_DESC1</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1::BlendEnable"><div><div class="token cpp_field">BlendEnable</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND'], [], [])"><div class="token cpp_type">D3D10_BLEND</div></div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1::SrcBlend"><div><div class="token cpp_field">SrcBlend</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND'], [], [])"><div class="token cpp_type">D3D10_BLEND</div></div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1::DestBlend"><div><div class="token cpp_field">DestBlend</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND_OP'], [], [])"><div class="token cpp_type">D3D10_BLEND_OP</div></div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1::BlendOp"><div><div class="token cpp_field">BlendOp</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND'], [], [])"><div class="token cpp_type">D3D10_BLEND</div></div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1::SrcBlendAlpha"><div><div class="token cpp_field">SrcBlendAlpha</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND'], [], [])"><div class="token cpp_type">D3D10_BLEND</div></div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1::DestBlendAlpha"><div><div class="token cpp_field">DestBlendAlpha</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND_OP'], [], [])"><div class="token cpp_type">D3D10_BLEND_OP</div></div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1::BlendOpAlpha"><div><div class="token cpp_field">BlendOpAlpha</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT8'], [], [])"><div class="token cpp_type">UINT8</div></div> <div class="def" id="NI$D3D10_RENDER_TARGET_BLEND_DESC1::RenderTargetWriteMask"><div><div class="token cpp_field">RenderTargetWriteMask</div></div></div>;
+    } 	<div class="ref" onclick="jumpToSymbol([], ['D3D10_RENDER_TARGET_BLEND_DESC1'], [], [])"><div class="token cpp_type">D3D10_RENDER_TARGET_BLEND_DESC1</div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$D3D10_BLEND_DESC1"><div><div class="token cpp_type">D3D10_BLEND_DESC1</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$D3D10_BLEND_DESC1::AlphaToCoverageEnable"><div><div class="token cpp_field">AlphaToCoverageEnable</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$D3D10_BLEND_DESC1::IndependentBlendEnable"><div><div class="token cpp_field">IndependentBlendEnable</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_RENDER_TARGET_BLEND_DESC1'], [], [])"><div class="token cpp_type">D3D10_RENDER_TARGET_BLEND_DESC1</div></div> <div class="def" id="NI$D3D10_BLEND_DESC1::RenderTarget"><div><div class="token cpp_field">RenderTarget</div></div></div>[ <div class="token cpp_number ">8</div> ];
+    } 	<div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND_DESC1'], [], [])"><div class="token cpp_type">D3D10_BLEND_DESC1</div></div>;
+
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_d3d10_1_0000_0000_v0_0_c_ifspec"><div>__MIDL_itf_d3d10_1_0000_0000_v0_0_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_d3d10_1_0000_0000_v0_0_s_ifspec"><div>__MIDL_itf_d3d10_1_0000_0000_v0_0_s_ifspec</div></div>;
+
+<div class="disabled">#ifndef __ID3D10BlendState1_INTERFACE_DEFINED__</div>
+<div class="disabled">#define __ID3D10BlendState1_INTERFACE_DEFINED__</div>
+
+<div class="token cpp_comment ">/* interface ID3D10BlendState1 */</div>
+<div class="token cpp_comment ">/* [unique][local][object][uuid] */</div> 
+
+
+<div class="expandable"><div class="disabled">EXTERN_C const IID IID_ID3D10BlendState1;</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NI$IID_ID3D10BlendState1"><div class="ref" onclick="jumpToSymbol([], ['IID_ID3D10BlendState1'], [], [])">IID_ID3D10BlendState1</div></div>;</div></div>
+
+<div class="disabled">#if defined(__cplusplus) &amp;&amp; !defined(CINTERFACE)</div>
+    
+<div class="expandable"><div class="disabled">    MIDL_INTERFACE(&quot;EDAD8D99-8A35-4d6d-8566-2EA276CDE161&quot;)</div>
+<div class="expanded">    <div class="token cpp_keyword ">struct</div> <div class="token cpp_keyword ">__declspec</div>(uuid(<div class="token cpp_string ">&quot;EDAD8D99-8A35-4d6d-8566-2EA276CDE161&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(novtable)</div></div>
+    <div class="def" id="NI$ID3D10BlendState1"><div class="ref" onclick="jumpToSymbol([], ['ID3D10BlendState1'], [], [])"><div class="token cpp_type">ID3D10BlendState1</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['ID3D10BlendState'], [], [])"><div class="token cpp_type">ID3D10BlendState</div></div>
+    {
+    <div class="token cpp_keyword ">public</div>:
+<div class="expandable"><div class="disabled">        virtual void STDMETHODCALLTYPE GetDesc1( </div>
+<div class="expanded">        <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10BlendState1::GetDesc1@void(::D3D10_BLEND_DESC1 *)[decl0]"><div><div class="token cpp_function">GetDesc1</div></div></div>( </div></div>
+            <div class="token cpp_comment ">/* [annotation] */</div> 
+<div class="expandable"><div class="disabled">            _Out_  D3D10_BLEND_DESC1 *pDesc) = 0;</div>
+<div class="expanded">               <div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND_DESC1'], [], [])"><div class="token cpp_type">D3D10_BLEND_DESC1</div></div> *<div class="def" id="NI$ID3D10BlendState1::GetDesc1@void(::D3D10_BLEND_DESC1 *)[decl0]::pDesc"><div>pDesc</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+        
+    };
+    
+    
+<div class="disabled">#else 	/* C style interface */</div>
+
+<div class="disabled">    typedef struct ID3D10BlendState1Vtbl</div>
+<div class="disabled">    {</div>
+<div class="disabled">        BEGIN_INTERFACE</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( </div>
+<div class="disabled">            ID3D10BlendState1 * This,</div>
+<div class="disabled">            /* [in] */ REFIID riid,</div>
+<div class="disabled">            /* [annotation][iid_is][out] */ </div>
+<div class="disabled">            _COM_Outptr_  void **ppvObject);</div>
+<div class="disabled">        </div>
+<div class="disabled">        ULONG ( STDMETHODCALLTYPE *AddRef )( </div>
+<div class="disabled">            ID3D10BlendState1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        ULONG ( STDMETHODCALLTYPE *Release )( </div>
+<div class="disabled">            ID3D10BlendState1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetDevice )( </div>
+<div class="disabled">            ID3D10BlendState1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10Device **ppDevice);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( </div>
+<div class="disabled">            ID3D10BlendState1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Inout_  UINT *pDataSize,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_bytes_opt_(*pDataSize)  void *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *SetPrivateData )( </div>
+<div class="disabled">            ID3D10BlendState1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DataSize,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_bytes_opt_(DataSize)  const void *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *SetPrivateDataInterface )( </div>
+<div class="disabled">            ID3D10BlendState1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const IUnknown *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetDesc )( </div>
+<div class="disabled">            ID3D10BlendState1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  D3D10_BLEND_DESC *pDesc);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetDesc1 )( </div>
+<div class="disabled">            ID3D10BlendState1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  D3D10_BLEND_DESC1 *pDesc);</div>
+<div class="disabled">        </div>
+<div class="disabled">        END_INTERFACE</div>
+<div class="disabled">    } ID3D10BlendState1Vtbl;</div>
+
+<div class="disabled">    interface ID3D10BlendState1</div>
+<div class="disabled">    {</div>
+<div class="disabled">        CONST_VTBL struct ID3D10BlendState1Vtbl *lpVtbl;</div>
+<div class="disabled">    };</div>
+
+<div class="disabled">    </div>
+
+<div class="disabled">#ifdef COBJMACROS</div>
+
+
+<div class="disabled">#define ID3D10BlendState1_QueryInterface(This,riid,ppvObject)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; QueryInterface(This,riid,ppvObject) ) </div>
+
+<div class="disabled">#define ID3D10BlendState1_AddRef(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; AddRef(This) ) </div>
+
+<div class="disabled">#define ID3D10BlendState1_Release(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; Release(This) ) </div>
+
+
+<div class="disabled">#define ID3D10BlendState1_GetDevice(This,ppDevice)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetDevice(This,ppDevice) ) </div>
+
+<div class="disabled">#define ID3D10BlendState1_GetPrivateData(This,guid,pDataSize,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetPrivateData(This,guid,pDataSize,pData) ) </div>
+
+<div class="disabled">#define ID3D10BlendState1_SetPrivateData(This,guid,DataSize,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetPrivateData(This,guid,DataSize,pData) ) </div>
+
+<div class="disabled">#define ID3D10BlendState1_SetPrivateDataInterface(This,guid,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetPrivateDataInterface(This,guid,pData) ) </div>
+
+
+<div class="disabled">#define ID3D10BlendState1_GetDesc(This,pDesc)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetDesc(This,pDesc) ) </div>
+
+
+<div class="disabled">#define ID3D10BlendState1_GetDesc1(This,pDesc)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetDesc1(This,pDesc) ) </div>
+
+<div class="disabled">#endif /* COBJMACROS */</div>
+
+
+<div class="disabled">#endif 	/* C style interface */</div>
+
+
+
+
+<div class="disabled">#endif 	/* __ID3D10BlendState1_INTERFACE_DEFINED__ */</div>
+
+
+<div class="token cpp_comment ">/* interface __MIDL_itf_d3d10_1_0000_0001 */</div>
+<div class="token cpp_comment ">/* [local] */</div> 
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$D3D10_TEXCUBE_ARRAY_SRV1"><div><div class="token cpp_type">D3D10_TEXCUBE_ARRAY_SRV1</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$D3D10_TEXCUBE_ARRAY_SRV1::MostDetailedMip"><div><div class="token cpp_field">MostDetailedMip</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$D3D10_TEXCUBE_ARRAY_SRV1::MipLevels"><div><div class="token cpp_field">MipLevels</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$D3D10_TEXCUBE_ARRAY_SRV1::First2DArrayFace"><div><div class="token cpp_field">First2DArrayFace</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$D3D10_TEXCUBE_ARRAY_SRV1::NumCubes"><div><div class="token cpp_field">NumCubes</div></div></div>;
+    } 	<div class="ref" onclick="jumpToSymbol([], ['D3D10_TEXCUBE_ARRAY_SRV1'], [], [])"><div class="token cpp_type">D3D10_TEXCUBE_ARRAY_SRV1</div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['D3D_SRV_DIMENSION'], [], [])"><div class="token cpp_type">D3D_SRV_DIMENSION</div></div> <div class="def" id="NI$D3D10_SRV_DIMENSION1"><div><div class="token cpp_type">D3D10_SRV_DIMENSION1</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1"><div><div class="token cpp_type">D3D10_SHADER_RESOURCE_VIEW_DESC1</div></div></div>
+    {
+    <div class="ref" onclick="jumpToSymbol([], ['DXGI_FORMAT'], [], [])"><div class="token cpp_type">DXGI_FORMAT</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Format"><div><div class="token cpp_field">Format</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_SRV_DIMENSION1'], [], [])"><div class="token cpp_type">D3D10_SRV_DIMENSION1</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::ViewDimension"><div><div class="token cpp_field">ViewDimension</div></div></div>;
+    <div class="token cpp_keyword ">union</div> 
+        {
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_BUFFER_SRV'], [], [])"><div class="token cpp_type">D3D10_BUFFER_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Buffer"><div><div class="token cpp_field">Buffer</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEX1D_SRV'], [], [])"><div class="token cpp_type">D3D10_TEX1D_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Texture1D"><div><div class="token cpp_field">Texture1D</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEX1D_ARRAY_SRV'], [], [])"><div class="token cpp_type">D3D10_TEX1D_ARRAY_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Texture1DArray"><div><div class="token cpp_field">Texture1DArray</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEX2D_SRV'], [], [])"><div class="token cpp_type">D3D10_TEX2D_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Texture2D"><div><div class="token cpp_field">Texture2D</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEX2D_ARRAY_SRV'], [], [])"><div class="token cpp_type">D3D10_TEX2D_ARRAY_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Texture2DArray"><div><div class="token cpp_field">Texture2DArray</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEX2DMS_SRV'], [], [])"><div class="token cpp_type">D3D10_TEX2DMS_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Texture2DMS"><div><div class="token cpp_field">Texture2DMS</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEX2DMS_ARRAY_SRV'], [], [])"><div class="token cpp_type">D3D10_TEX2DMS_ARRAY_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Texture2DMSArray"><div><div class="token cpp_field">Texture2DMSArray</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEX3D_SRV'], [], [])"><div class="token cpp_type">D3D10_TEX3D_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::Texture3D"><div><div class="token cpp_field">Texture3D</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEXCUBE_SRV'], [], [])"><div class="token cpp_type">D3D10_TEXCUBE_SRV</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::TextureCube"><div><div class="token cpp_field">TextureCube</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['D3D10_TEXCUBE_ARRAY_SRV1'], [], [])"><div class="token cpp_type">D3D10_TEXCUBE_ARRAY_SRV1</div></div> <div class="def" id="NI$D3D10_SHADER_RESOURCE_VIEW_DESC1::TextureCubeArray"><div><div class="token cpp_field">TextureCubeArray</div></div></div>;
+        } 	;
+    } 	<div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_RESOURCE_VIEW_DESC1'], [], [])"><div class="token cpp_type">D3D10_SHADER_RESOURCE_VIEW_DESC1</div></div>;
+
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_d3d10_1_0000_0001_v0_0_c_ifspec"><div>__MIDL_itf_d3d10_1_0000_0001_v0_0_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_d3d10_1_0000_0001_v0_0_s_ifspec"><div>__MIDL_itf_d3d10_1_0000_0001_v0_0_s_ifspec</div></div>;
+
+<div class="disabled">#ifndef __ID3D10ShaderResourceView1_INTERFACE_DEFINED__</div>
+<div class="disabled">#define __ID3D10ShaderResourceView1_INTERFACE_DEFINED__</div>
+
+<div class="token cpp_comment ">/* interface ID3D10ShaderResourceView1 */</div>
+<div class="token cpp_comment ">/* [unique][local][object][uuid] */</div> 
+
+
+<div class="expandable"><div class="disabled">EXTERN_C const IID IID_ID3D10ShaderResourceView1;</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NI$IID_ID3D10ShaderResourceView1"><div class="ref" onclick="jumpToSymbol([], ['IID_ID3D10ShaderResourceView1'], [], [])">IID_ID3D10ShaderResourceView1</div></div>;</div></div>
+
+<div class="disabled">#if defined(__cplusplus) &amp;&amp; !defined(CINTERFACE)</div>
+    
+<div class="expandable"><div class="disabled">    MIDL_INTERFACE(&quot;9B7E4C87-342C-4106-A19F-4F2704F689F0&quot;)</div>
+<div class="expanded">    <div class="token cpp_keyword ">struct</div> <div class="token cpp_keyword ">__declspec</div>(uuid(<div class="token cpp_string ">&quot;9B7E4C87-342C-4106-A19F-4F2704F689F0&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(novtable)</div></div>
+    <div class="def" id="NI$ID3D10ShaderResourceView1"><div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderResourceView1'], [], [])"><div class="token cpp_type">ID3D10ShaderResourceView1</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderResourceView'], [], [])"><div class="token cpp_type">ID3D10ShaderResourceView</div></div>
+    {
+    <div class="token cpp_keyword ">public</div>:
+<div class="expandable"><div class="disabled">        virtual void STDMETHODCALLTYPE GetDesc1( </div>
+<div class="expanded">        <div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10ShaderResourceView1::GetDesc1@void(::D3D10_SHADER_RESOURCE_VIEW_DESC1 *)[decl0]"><div><div class="token cpp_function">GetDesc1</div></div></div>( </div></div>
+            <div class="token cpp_comment ">/* [annotation] */</div> 
+<div class="expandable"><div class="disabled">            _Out_  D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc) = 0;</div>
+<div class="expanded">               <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_RESOURCE_VIEW_DESC1'], [], [])"><div class="token cpp_type">D3D10_SHADER_RESOURCE_VIEW_DESC1</div></div> *<div class="def" id="NI$ID3D10ShaderResourceView1::GetDesc1@void(::D3D10_SHADER_RESOURCE_VIEW_DESC1 *)[decl0]::pDesc"><div>pDesc</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+        
+    };
+    
+    
+<div class="disabled">#else 	/* C style interface */</div>
+
+<div class="disabled">    typedef struct ID3D10ShaderResourceView1Vtbl</div>
+<div class="disabled">    {</div>
+<div class="disabled">        BEGIN_INTERFACE</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This,</div>
+<div class="disabled">            /* [in] */ REFIID riid,</div>
+<div class="disabled">            /* [annotation][iid_is][out] */ </div>
+<div class="disabled">            _COM_Outptr_  void **ppvObject);</div>
+<div class="disabled">        </div>
+<div class="disabled">        ULONG ( STDMETHODCALLTYPE *AddRef )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        ULONG ( STDMETHODCALLTYPE *Release )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetDevice )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10Device **ppDevice);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Inout_  UINT *pDataSize,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_bytes_opt_(*pDataSize)  void *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *SetPrivateData )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DataSize,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_bytes_opt_(DataSize)  const void *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *SetPrivateDataInterface )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const IUnknown *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetResource )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10Resource **ppResource);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetDesc )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  D3D10_SHADER_RESOURCE_VIEW_DESC *pDesc);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetDesc1 )( </div>
+<div class="disabled">            ID3D10ShaderResourceView1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc);</div>
+<div class="disabled">        </div>
+<div class="disabled">        END_INTERFACE</div>
+<div class="disabled">    } ID3D10ShaderResourceView1Vtbl;</div>
+
+<div class="disabled">    interface ID3D10ShaderResourceView1</div>
+<div class="disabled">    {</div>
+<div class="disabled">        CONST_VTBL struct ID3D10ShaderResourceView1Vtbl *lpVtbl;</div>
+<div class="disabled">    };</div>
+
+<div class="disabled">    </div>
+
+<div class="disabled">#ifdef COBJMACROS</div>
+
+
+<div class="disabled">#define ID3D10ShaderResourceView1_QueryInterface(This,riid,ppvObject)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; QueryInterface(This,riid,ppvObject) ) </div>
+
+<div class="disabled">#define ID3D10ShaderResourceView1_AddRef(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; AddRef(This) ) </div>
+
+<div class="disabled">#define ID3D10ShaderResourceView1_Release(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; Release(This) ) </div>
+
+
+<div class="disabled">#define ID3D10ShaderResourceView1_GetDevice(This,ppDevice)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetDevice(This,ppDevice) ) </div>
+
+<div class="disabled">#define ID3D10ShaderResourceView1_GetPrivateData(This,guid,pDataSize,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetPrivateData(This,guid,pDataSize,pData) ) </div>
+
+<div class="disabled">#define ID3D10ShaderResourceView1_SetPrivateData(This,guid,DataSize,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetPrivateData(This,guid,DataSize,pData) ) </div>
+
+<div class="disabled">#define ID3D10ShaderResourceView1_SetPrivateDataInterface(This,guid,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetPrivateDataInterface(This,guid,pData) ) </div>
+
+
+<div class="disabled">#define ID3D10ShaderResourceView1_GetResource(This,ppResource)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetResource(This,ppResource) ) </div>
+
+
+<div class="disabled">#define ID3D10ShaderResourceView1_GetDesc(This,pDesc)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetDesc(This,pDesc) ) </div>
+
+
+<div class="disabled">#define ID3D10ShaderResourceView1_GetDesc1(This,pDesc)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetDesc1(This,pDesc) ) </div>
+
+<div class="disabled">#endif /* COBJMACROS */</div>
+
+
+<div class="disabled">#endif 	/* C style interface */</div>
+
+
+
+
+<div class="disabled">#endif 	/* __ID3D10ShaderResourceView1_INTERFACE_DEFINED__ */</div>
+
+
+<div class="token cpp_comment ">/* interface __MIDL_itf_d3d10_1_0000_0002 */</div>
+<div class="token cpp_comment ">/* [local] */</div> 
+
+<div class="token cpp_keyword ">typedef</div> 
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS"><div><div class="token cpp_type">D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS</div></div></div>
+    {
+        <div class="def" id="NI$D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS::D3D10_STANDARD_MULTISAMPLE_PATTERN"><div><div class="token cpp_enum">D3D10_STANDARD_MULTISAMPLE_PATTERN</div></div></div>	= <div class="token cpp_number ">0xffffffff</div>,
+        <div class="def" id="NI$D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS::D3D10_CENTER_MULTISAMPLE_PATTERN"><div><div class="token cpp_enum">D3D10_CENTER_MULTISAMPLE_PATTERN</div></div></div>	= <div class="token cpp_number ">0xfffffffe</div>
+    } 	<div class="ref" onclick="jumpToSymbol([], ['D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS'], [], [])"><div class="token cpp_type">D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS</div></div>;
+
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_d3d10_1_0000_0002_v0_0_c_ifspec"><div>__MIDL_itf_d3d10_1_0000_0002_v0_0_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_d3d10_1_0000_0002_v0_0_s_ifspec"><div>__MIDL_itf_d3d10_1_0000_0002_v0_0_s_ifspec</div></div>;
+
+<div class="disabled">#ifndef __ID3D10Device1_INTERFACE_DEFINED__</div>
+<div class="disabled">#define __ID3D10Device1_INTERFACE_DEFINED__</div>
+
+<div class="token cpp_comment ">/* interface ID3D10Device1 */</div>
+<div class="token cpp_comment ">/* [unique][local][object][uuid] */</div> 
+
+
+<div class="expandable"><div class="disabled">EXTERN_C const IID IID_ID3D10Device1;</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> <div class="def" id="NI$IID_ID3D10Device1"><div class="ref" onclick="jumpToSymbol([], ['IID_ID3D10Device1'], [], [])">IID_ID3D10Device1</div></div>;</div></div>
+
+<div class="disabled">#if defined(__cplusplus) &amp;&amp; !defined(CINTERFACE)</div>
+    
+<div class="expandable"><div class="disabled">    MIDL_INTERFACE(&quot;9B7E4C8F-342C-4106-A19F-4F2704F689F0&quot;)</div>
+<div class="expanded">    <div class="token cpp_keyword ">struct</div> <div class="token cpp_keyword ">__declspec</div>(uuid(<div class="token cpp_string ">&quot;9B7E4C8F-342C-4106-A19F-4F2704F689F0&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(novtable)</div></div>
+    <div class="def" id="NI$ID3D10Device1"><div class="ref" onclick="jumpToSymbol([], ['ID3D10Device1'], [], [])"><div class="token cpp_type">ID3D10Device1</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['ID3D10Device'], [], [])"><div class="token cpp_type">ID3D10Device</div></div>
+    {
+    <div class="token cpp_keyword ">public</div>:
+<div class="expandable"><div class="disabled">        virtual HRESULT STDMETHODCALLTYPE CreateShaderResourceView1( </div>
+<div class="expanded">        <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10Device1::CreateShaderResourceView1@::HRESULT(::ID3D10Resource *, ::D3D10_SHADER_RESOURCE_VIEW_DESC1 const *, ::ID3D10ShaderResourceView1 * *)[decl0]"><div><div class="token cpp_function">CreateShaderResourceView1</div></div></div>( </div></div>
+            <div class="token cpp_comment ">/* [annotation] */</div> 
+<div class="expandable"><div class="disabled">            _In_  ID3D10Resource *pResource,</div>
+<div class="expanded">               <div class="ref" onclick="jumpToSymbol([], ['ID3D10Resource'], [], [])"><div class="token cpp_type">ID3D10Resource</div></div> *<div class="def" id="NI$ID3D10Device1::CreateShaderResourceView1@::HRESULT(::ID3D10Resource *, ::D3D10_SHADER_RESOURCE_VIEW_DESC1 const *, ::ID3D10ShaderResourceView1 * *)[decl0]::pResource"><div>pResource</div></div>,</div></div>
+            <div class="token cpp_comment ">/* [annotation] */</div> 
+<div class="expandable"><div class="disabled">            _In_opt_  const D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc,</div>
+<div class="expanded">               <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['D3D10_SHADER_RESOURCE_VIEW_DESC1'], [], [])"><div class="token cpp_type">D3D10_SHADER_RESOURCE_VIEW_DESC1</div></div> *<div class="def" id="NI$ID3D10Device1::CreateShaderResourceView1@::HRESULT(::ID3D10Resource *, ::D3D10_SHADER_RESOURCE_VIEW_DESC1 const *, ::ID3D10ShaderResourceView1 * *)[decl0]::pDesc"><div>pDesc</div></div>,</div></div>
+            <div class="token cpp_comment ">/* [annotation] */</div> 
+<div class="expandable"><div class="disabled">            _Out_opt_  ID3D10ShaderResourceView1 **ppSRView) = 0;</div>
+<div class="expanded">               <div class="ref" onclick="jumpToSymbol([], ['ID3D10ShaderResourceView1'], [], [])"><div class="token cpp_type">ID3D10ShaderResourceView1</div></div> **<div class="def" id="NI$ID3D10Device1::CreateShaderResourceView1@::HRESULT(::ID3D10Resource *, ::D3D10_SHADER_RESOURCE_VIEW_DESC1 const *, ::ID3D10ShaderResourceView1 * *)[decl0]::ppSRView"><div>ppSRView</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+        
+<div class="expandable"><div class="disabled">        virtual HRESULT STDMETHODCALLTYPE CreateBlendState1( </div>
+<div class="expanded">        <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10Device1::CreateBlendState1@::HRESULT(::D3D10_BLEND_DESC1 const *, ::ID3D10BlendState1 * *)[decl0]"><div><div class="token cpp_function">CreateBlendState1</div></div></div>( </div></div>
+            <div class="token cpp_comment ">/* [annotation] */</div> 
+<div class="expandable"><div class="disabled">            _In_  const D3D10_BLEND_DESC1 *pBlendStateDesc,</div>
+<div class="expanded">               <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['D3D10_BLEND_DESC1'], [], [])"><div class="token cpp_type">D3D10_BLEND_DESC1</div></div> *<div class="def" id="NI$ID3D10Device1::CreateBlendState1@::HRESULT(::D3D10_BLEND_DESC1 const *, ::ID3D10BlendState1 * *)[decl0]::pBlendStateDesc"><div>pBlendStateDesc</div></div>,</div></div>
+            <div class="token cpp_comment ">/* [annotation] */</div> 
+<div class="expandable"><div class="disabled">            _Out_opt_  ID3D10BlendState1 **ppBlendState) = 0;</div>
+<div class="expanded">               <div class="ref" onclick="jumpToSymbol([], ['ID3D10BlendState1'], [], [])"><div class="token cpp_type">ID3D10BlendState1</div></div> **<div class="def" id="NI$ID3D10Device1::CreateBlendState1@::HRESULT(::D3D10_BLEND_DESC1 const *, ::ID3D10BlendState1 * *)[decl0]::ppBlendState"><div>ppBlendState</div></div>) = <div class="token cpp_number ">0</div>;</div></div>
+        
+<div class="expandable"><div class="disabled">        virtual D3D10_FEATURE_LEVEL1 STDMETHODCALLTYPE GetFeatureLevel( void) = 0;</div>
+<div class="expanded">        <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['D3D10_FEATURE_LEVEL1'], [], [])"><div class="token cpp_type">D3D10_FEATURE_LEVEL1</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ID3D10Device1::GetFeatureLevel@::D3D10_FEATURE_LEVEL1()[decl0]"><div><div class="token cpp_function">GetFeatureLevel</div></div></div>( <div class="token cpp_keyword ">void</div>) = <div class="token cpp_number ">0</div>;</div></div>
+        
+    };
+    
+    
+<div class="disabled">#else 	/* C style interface */</div>
+
+<div class="disabled">    typedef struct ID3D10Device1Vtbl</div>
+<div class="disabled">    {</div>
+<div class="disabled">        BEGIN_INTERFACE</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [in] */ REFIID riid,</div>
+<div class="disabled">            /* [annotation][iid_is][out] */ </div>
+<div class="disabled">            _COM_Outptr_  void **ppvObject);</div>
+<div class="disabled">        </div>
+<div class="disabled">        ULONG ( STDMETHODCALLTYPE *AddRef )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        ULONG ( STDMETHODCALLTYPE *Release )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *VSSetConstantBuffers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *PSSetShaderResources )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *PSSetShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10PixelShader *pPixelShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *PSSetSamplers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumSamplers)  ID3D10SamplerState *const *ppSamplers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *VSSetShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10VertexShader *pVertexShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *DrawIndexed )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT IndexCount,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT StartIndexLocation,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  INT BaseVertexLocation);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *Draw )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT VertexCount,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT StartVertexLocation);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *PSSetConstantBuffers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *IASetInputLayout )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10InputLayout *pInputLayout);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *IASetVertexBuffers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppVertexBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumBuffers)  const UINT *pStrides,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumBuffers)  const UINT *pOffsets);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *IASetIndexBuffer )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10Buffer *pIndexBuffer,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  DXGI_FORMAT Format,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT Offset);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *DrawIndexedInstanced )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT IndexCountPerInstance,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT InstanceCount,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT StartIndexLocation,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  INT BaseVertexLocation,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT StartInstanceLocation);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *DrawInstanced )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT VertexCountPerInstance,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT InstanceCount,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT StartVertexLocation,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT StartInstanceLocation);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GSSetConstantBuffers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GSSetShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10GeometryShader *pShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *IASetPrimitiveTopology )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  D3D10_PRIMITIVE_TOPOLOGY Topology);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *VSSetShaderResources )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *VSSetSamplers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumSamplers)  ID3D10SamplerState *const *ppSamplers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *SetPredication )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10Predicate *pPredicate,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  BOOL PredicateValue);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GSSetShaderResources )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GSSetSamplers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumSamplers)  ID3D10SamplerState *const *ppSamplers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *OMSetRenderTargets )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT )  UINT NumViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumViews)  ID3D10RenderTargetView *const *ppRenderTargetViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10DepthStencilView *pDepthStencilView);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *OMSetBlendState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10BlendState *pBlendState,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const FLOAT BlendFactor[ 4 ],</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT SampleMask);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *OMSetDepthStencilState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10DepthStencilState *pDepthStencilState,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT StencilRef);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *SOSetTargets )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_SO_BUFFER_SLOT_COUNT)  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppSOTargets,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumBuffers)  const UINT *pOffsets);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *DrawAuto )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *RSSetState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  ID3D10RasterizerState *pRasterizerState);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *RSSetViewports )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE)  UINT NumViewports,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumViewports)  const D3D10_VIEWPORT *pViewports);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *RSSetScissorRects )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE)  UINT NumRects,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumRects)  const D3D10_RECT *pRects);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *CopySubresourceRegion )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pDstResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DstSubresource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DstX,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DstY,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DstZ,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pSrcResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT SrcSubresource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const D3D10_BOX *pSrcBox);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *CopyResource )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pDstResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pSrcResource);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *UpdateSubresource )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pDstResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DstSubresource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const D3D10_BOX *pDstBox,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const void *pSrcData,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT SrcRowPitch,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT SrcDepthPitch);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *ClearRenderTargetView )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10RenderTargetView *pRenderTargetView,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const FLOAT ColorRGBA[ 4 ]);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *ClearDepthStencilView )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10DepthStencilView *pDepthStencilView,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT ClearFlags,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  FLOAT Depth,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT8 Stencil);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GenerateMips )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10ShaderResourceView *pShaderResourceView);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *ResolveSubresource )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pDstResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DstSubresource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pSrcResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT SrcSubresource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  DXGI_FORMAT Format);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *VSGetConstantBuffers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppConstantBuffers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *PSGetShaderResources )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *PSGetShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10PixelShader **ppPixelShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *PSGetSamplers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumSamplers)  ID3D10SamplerState **ppSamplers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *VSGetShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10VertexShader **ppVertexShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *PSGetConstantBuffers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppConstantBuffers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *IAGetInputLayout )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10InputLayout **ppInputLayout);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *IAGetVertexBuffers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppVertexBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumBuffers)  UINT *pStrides,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumBuffers)  UINT *pOffsets);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *IAGetIndexBuffer )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10Buffer **pIndexBuffer,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  DXGI_FORMAT *Format,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  UINT *Offset);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GSGetConstantBuffers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppConstantBuffers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GSGetShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10GeometryShader **ppGeometryShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *IAGetPrimitiveTopology )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  D3D10_PRIMITIVE_TOPOLOGY *pTopology);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *VSGetShaderResources )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *VSGetSamplers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumSamplers)  ID3D10SamplerState **ppSamplers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetPredication )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10Predicate **ppPredicate,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  BOOL *pPredicateValue);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GSGetShaderResources )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GSGetSamplers )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumSamplers)  ID3D10SamplerState **ppSamplers);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *OMGetRenderTargets )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT )  UINT NumViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumViews)  ID3D10RenderTargetView **ppRenderTargetViews,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10DepthStencilView **ppDepthStencilView);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *OMGetBlendState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10BlendState **ppBlendState,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  FLOAT BlendFactor[ 4 ],</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  UINT *pSampleMask);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *OMGetDepthStencilState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10DepthStencilState **ppDepthStencilState,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  UINT *pStencilRef);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *SOGetTargets )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_SO_BUFFER_SLOT_COUNT )  UINT NumBuffers,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppSOTargets,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(NumBuffers)  UINT *pOffsets);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *RSGetState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10RasterizerState **ppRasterizerState);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *RSGetViewports )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Inout_ /*_range(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE )*/   UINT *NumViewports,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(*NumViewports)  D3D10_VIEWPORT *pViewports);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *RSGetScissorRects )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Inout_ /*_range(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE )*/   UINT *NumRects,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(*NumRects)  D3D10_RECT *pRects);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *GetDeviceRemovedReason )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *SetExceptionMode )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            UINT RaiseFlags);</div>
+<div class="disabled">        </div>
+<div class="disabled">        UINT ( STDMETHODCALLTYPE *GetExceptionMode )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Inout_  UINT *pDataSize,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_bytes_opt_(*pDataSize)  void *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *SetPrivateData )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT DataSize,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_bytes_opt_(DataSize)  const void *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *SetPrivateDataInterface )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFGUID guid,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const IUnknown *pData);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *ClearState )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *Flush )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateBuffer )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_BUFFER_DESC *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const D3D10_SUBRESOURCE_DATA *pInitialData,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10Buffer **ppBuffer);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateTexture1D )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_TEXTURE1D_DESC *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(_Inexpressible_(pDesc-&gt;MipLevels * pDesc-&gt;ArraySize))  const D3D10_SUBRESOURCE_DATA *pInitialData,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10Texture1D **ppTexture1D);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateTexture2D )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_TEXTURE2D_DESC *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(_Inexpressible_(pDesc-&gt;MipLevels * pDesc-&gt;ArraySize))  const D3D10_SUBRESOURCE_DATA *pInitialData,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10Texture2D **ppTexture2D);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateTexture3D )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_TEXTURE3D_DESC *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(_Inexpressible_(pDesc-&gt;MipLevels))  const D3D10_SUBRESOURCE_DATA *pInitialData,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  ID3D10Texture3D **ppTexture3D);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateShaderResourceView )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const D3D10_SHADER_RESOURCE_VIEW_DESC *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10ShaderResourceView **ppSRView);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateRenderTargetView )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const D3D10_RENDER_TARGET_VIEW_DESC *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10RenderTargetView **ppRTView);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateDepthStencilView )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const D3D10_DEPTH_STENCIL_VIEW_DESC *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10DepthStencilView **ppDepthStencilView);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateInputLayout )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_(NumElements)  const D3D10_INPUT_ELEMENT_DESC *pInputElementDescs,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT )  UINT NumElements,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_(BytecodeLength)  const void *pShaderBytecodeWithInputSignature,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  SIZE_T BytecodeLength,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10InputLayout **ppInputLayout);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateVertexShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_(BytecodeLength)  const void *pShaderBytecode,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  SIZE_T BytecodeLength,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10VertexShader **ppVertexShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateGeometryShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_(BytecodeLength)  const void *pShaderBytecode,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  SIZE_T BytecodeLength,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10GeometryShader **ppGeometryShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateGeometryShaderWithStreamOutput )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_(BytecodeLength)  const void *pShaderBytecode,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  SIZE_T BytecodeLength,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_opt_(NumEntries)  const D3D10_SO_DECLARATION_ENTRY *pSODeclaration,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_range_( 0, D3D10_SO_SINGLE_BUFFER_COMPONENT_LIMIT )  UINT NumEntries,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT OutputStreamStride,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10GeometryShader **ppGeometryShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreatePixelShader )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_reads_(BytecodeLength)  const void *pShaderBytecode,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  SIZE_T BytecodeLength,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10PixelShader **ppPixelShader);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateBlendState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_BLEND_DESC *pBlendStateDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10BlendState **ppBlendState);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateDepthStencilState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_DEPTH_STENCIL_DESC *pDepthStencilDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10DepthStencilState **ppDepthStencilState);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateRasterizerState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_RASTERIZER_DESC *pRasterizerDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10RasterizerState **ppRasterizerState);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateSamplerState )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_SAMPLER_DESC *pSamplerDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10SamplerState **ppSamplerState);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateQuery )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_QUERY_DESC *pQueryDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10Query **ppQuery);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreatePredicate )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_QUERY_DESC *pPredicateDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10Predicate **ppPredicate);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateCounter )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_COUNTER_DESC *pCounterDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10Counter **ppCounter);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CheckFormatSupport )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  DXGI_FORMAT Format,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  UINT *pFormatSupport);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CheckMultisampleQualityLevels )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  DXGI_FORMAT Format,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT SampleCount,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  UINT *pNumQualityLevels);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *CheckCounterInfo )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  D3D10_COUNTER_INFO *pCounterInfo);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CheckCounter )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_COUNTER_DESC *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  D3D10_COUNTER_TYPE *pType,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_  UINT *pActiveCounters,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(*pNameLength)  LPSTR szName,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Inout_opt_  UINT *pNameLength,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(*pUnitsLength)  LPSTR szUnits,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Inout_opt_  UINT *pUnitsLength,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_writes_opt_(*pDescriptionLength)  LPSTR szDescription,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Inout_opt_  UINT *pDescriptionLength);</div>
+<div class="disabled">        </div>
+<div class="disabled">        UINT ( STDMETHODCALLTYPE *GetCreationFlags )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *OpenSharedResource )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  HANDLE hResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  REFIID ReturnedInterface,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  void **ppResource);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *SetTextFilterSize )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT Width,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  UINT Height);</div>
+<div class="disabled">        </div>
+<div class="disabled">        void ( STDMETHODCALLTYPE *GetTextFilterSize )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  UINT *pWidth,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  UINT *pHeight);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateShaderResourceView1 )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  ID3D10Resource *pResource,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_opt_  const D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10ShaderResourceView1 **ppSRView);</div>
+<div class="disabled">        </div>
+<div class="disabled">        HRESULT ( STDMETHODCALLTYPE *CreateBlendState1 )( </div>
+<div class="disabled">            ID3D10Device1 * This,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _In_  const D3D10_BLEND_DESC1 *pBlendStateDesc,</div>
+<div class="disabled">            /* [annotation] */ </div>
+<div class="disabled">            _Out_opt_  ID3D10BlendState1 **ppBlendState);</div>
+<div class="disabled">        </div>
+<div class="disabled">        D3D10_FEATURE_LEVEL1 ( STDMETHODCALLTYPE *GetFeatureLevel )( </div>
+<div class="disabled">            ID3D10Device1 * This);</div>
+<div class="disabled">        </div>
+<div class="disabled">        END_INTERFACE</div>
+<div class="disabled">    } ID3D10Device1Vtbl;</div>
+
+<div class="disabled">    interface ID3D10Device1</div>
+<div class="disabled">    {</div>
+<div class="disabled">        CONST_VTBL struct ID3D10Device1Vtbl *lpVtbl;</div>
+<div class="disabled">    };</div>
+
+<div class="disabled">    </div>
+
+<div class="disabled">#ifdef COBJMACROS</div>
+
+
+<div class="disabled">#define ID3D10Device1_QueryInterface(This,riid,ppvObject)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; QueryInterface(This,riid,ppvObject) ) </div>
+
+<div class="disabled">#define ID3D10Device1_AddRef(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; AddRef(This) ) </div>
+
+<div class="disabled">#define ID3D10Device1_Release(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; Release(This) ) </div>
+
+
+<div class="disabled">#define ID3D10Device1_VSSetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; VSSetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_PSSetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; PSSetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews) ) </div>
+
+<div class="disabled">#define ID3D10Device1_PSSetShader(This,pPixelShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; PSSetShader(This,pPixelShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_PSSetSamplers(This,StartSlot,NumSamplers,ppSamplers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; PSSetSamplers(This,StartSlot,NumSamplers,ppSamplers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_VSSetShader(This,pVertexShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; VSSetShader(This,pVertexShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_DrawIndexed(This,IndexCount,StartIndexLocation,BaseVertexLocation)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; DrawIndexed(This,IndexCount,StartIndexLocation,BaseVertexLocation) ) </div>
+
+<div class="disabled">#define ID3D10Device1_Draw(This,VertexCount,StartVertexLocation)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; Draw(This,VertexCount,StartVertexLocation) ) </div>
+
+<div class="disabled">#define ID3D10Device1_PSSetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; PSSetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_IASetInputLayout(This,pInputLayout)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; IASetInputLayout(This,pInputLayout) ) </div>
+
+<div class="disabled">#define ID3D10Device1_IASetVertexBuffers(This,StartSlot,NumBuffers,ppVertexBuffers,pStrides,pOffsets)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; IASetVertexBuffers(This,StartSlot,NumBuffers,ppVertexBuffers,pStrides,pOffsets) ) </div>
+
+<div class="disabled">#define ID3D10Device1_IASetIndexBuffer(This,pIndexBuffer,Format,Offset)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; IASetIndexBuffer(This,pIndexBuffer,Format,Offset) ) </div>
+
+<div class="disabled">#define ID3D10Device1_DrawIndexedInstanced(This,IndexCountPerInstance,InstanceCount,StartIndexLocation,BaseVertexLocation,StartInstanceLocation)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; DrawIndexedInstanced(This,IndexCountPerInstance,InstanceCount,StartIndexLocation,BaseVertexLocation,StartInstanceLocation) ) </div>
+
+<div class="disabled">#define ID3D10Device1_DrawInstanced(This,VertexCountPerInstance,InstanceCount,StartVertexLocation,StartInstanceLocation)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; DrawInstanced(This,VertexCountPerInstance,InstanceCount,StartVertexLocation,StartInstanceLocation) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GSSetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GSSetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GSSetShader(This,pShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GSSetShader(This,pShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_IASetPrimitiveTopology(This,Topology)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; IASetPrimitiveTopology(This,Topology) ) </div>
+
+<div class="disabled">#define ID3D10Device1_VSSetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; VSSetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews) ) </div>
+
+<div class="disabled">#define ID3D10Device1_VSSetSamplers(This,StartSlot,NumSamplers,ppSamplers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; VSSetSamplers(This,StartSlot,NumSamplers,ppSamplers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_SetPredication(This,pPredicate,PredicateValue)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetPredication(This,pPredicate,PredicateValue) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GSSetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GSSetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GSSetSamplers(This,StartSlot,NumSamplers,ppSamplers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GSSetSamplers(This,StartSlot,NumSamplers,ppSamplers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_OMSetRenderTargets(This,NumViews,ppRenderTargetViews,pDepthStencilView)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; OMSetRenderTargets(This,NumViews,ppRenderTargetViews,pDepthStencilView) ) </div>
+
+<div class="disabled">#define ID3D10Device1_OMSetBlendState(This,pBlendState,BlendFactor,SampleMask)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; OMSetBlendState(This,pBlendState,BlendFactor,SampleMask) ) </div>
+
+<div class="disabled">#define ID3D10Device1_OMSetDepthStencilState(This,pDepthStencilState,StencilRef)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; OMSetDepthStencilState(This,pDepthStencilState,StencilRef) ) </div>
+
+<div class="disabled">#define ID3D10Device1_SOSetTargets(This,NumBuffers,ppSOTargets,pOffsets)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SOSetTargets(This,NumBuffers,ppSOTargets,pOffsets) ) </div>
+
+<div class="disabled">#define ID3D10Device1_DrawAuto(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; DrawAuto(This) ) </div>
+
+<div class="disabled">#define ID3D10Device1_RSSetState(This,pRasterizerState)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; RSSetState(This,pRasterizerState) ) </div>
+
+<div class="disabled">#define ID3D10Device1_RSSetViewports(This,NumViewports,pViewports)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; RSSetViewports(This,NumViewports,pViewports) ) </div>
+
+<div class="disabled">#define ID3D10Device1_RSSetScissorRects(This,NumRects,pRects)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; RSSetScissorRects(This,NumRects,pRects) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CopySubresourceRegion(This,pDstResource,DstSubresource,DstX,DstY,DstZ,pSrcResource,SrcSubresource,pSrcBox)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CopySubresourceRegion(This,pDstResource,DstSubresource,DstX,DstY,DstZ,pSrcResource,SrcSubresource,pSrcBox) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CopyResource(This,pDstResource,pSrcResource)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CopyResource(This,pDstResource,pSrcResource) ) </div>
+
+<div class="disabled">#define ID3D10Device1_UpdateSubresource(This,pDstResource,DstSubresource,pDstBox,pSrcData,SrcRowPitch,SrcDepthPitch)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; UpdateSubresource(This,pDstResource,DstSubresource,pDstBox,pSrcData,SrcRowPitch,SrcDepthPitch) ) </div>
+
+<div class="disabled">#define ID3D10Device1_ClearRenderTargetView(This,pRenderTargetView,ColorRGBA)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; ClearRenderTargetView(This,pRenderTargetView,ColorRGBA) ) </div>
+
+<div class="disabled">#define ID3D10Device1_ClearDepthStencilView(This,pDepthStencilView,ClearFlags,Depth,Stencil)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; ClearDepthStencilView(This,pDepthStencilView,ClearFlags,Depth,Stencil) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GenerateMips(This,pShaderResourceView)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GenerateMips(This,pShaderResourceView) ) </div>
+
+<div class="disabled">#define ID3D10Device1_ResolveSubresource(This,pDstResource,DstSubresource,pSrcResource,SrcSubresource,Format)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; ResolveSubresource(This,pDstResource,DstSubresource,pSrcResource,SrcSubresource,Format) ) </div>
+
+<div class="disabled">#define ID3D10Device1_VSGetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; VSGetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_PSGetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; PSGetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews) ) </div>
+
+<div class="disabled">#define ID3D10Device1_PSGetShader(This,ppPixelShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; PSGetShader(This,ppPixelShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_PSGetSamplers(This,StartSlot,NumSamplers,ppSamplers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; PSGetSamplers(This,StartSlot,NumSamplers,ppSamplers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_VSGetShader(This,ppVertexShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; VSGetShader(This,ppVertexShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_PSGetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; PSGetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_IAGetInputLayout(This,ppInputLayout)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; IAGetInputLayout(This,ppInputLayout) ) </div>
+
+<div class="disabled">#define ID3D10Device1_IAGetVertexBuffers(This,StartSlot,NumBuffers,ppVertexBuffers,pStrides,pOffsets)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; IAGetVertexBuffers(This,StartSlot,NumBuffers,ppVertexBuffers,pStrides,pOffsets) ) </div>
+
+<div class="disabled">#define ID3D10Device1_IAGetIndexBuffer(This,pIndexBuffer,Format,Offset)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; IAGetIndexBuffer(This,pIndexBuffer,Format,Offset) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GSGetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GSGetConstantBuffers(This,StartSlot,NumBuffers,ppConstantBuffers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GSGetShader(This,ppGeometryShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GSGetShader(This,ppGeometryShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_IAGetPrimitiveTopology(This,pTopology)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; IAGetPrimitiveTopology(This,pTopology) ) </div>
+
+<div class="disabled">#define ID3D10Device1_VSGetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; VSGetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews) ) </div>
+
+<div class="disabled">#define ID3D10Device1_VSGetSamplers(This,StartSlot,NumSamplers,ppSamplers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; VSGetSamplers(This,StartSlot,NumSamplers,ppSamplers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GetPredication(This,ppPredicate,pPredicateValue)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetPredication(This,ppPredicate,pPredicateValue) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GSGetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GSGetShaderResources(This,StartSlot,NumViews,ppShaderResourceViews) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GSGetSamplers(This,StartSlot,NumSamplers,ppSamplers)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GSGetSamplers(This,StartSlot,NumSamplers,ppSamplers) ) </div>
+
+<div class="disabled">#define ID3D10Device1_OMGetRenderTargets(This,NumViews,ppRenderTargetViews,ppDepthStencilView)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; OMGetRenderTargets(This,NumViews,ppRenderTargetViews,ppDepthStencilView) ) </div>
+
+<div class="disabled">#define ID3D10Device1_OMGetBlendState(This,ppBlendState,BlendFactor,pSampleMask)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; OMGetBlendState(This,ppBlendState,BlendFactor,pSampleMask) ) </div>
+
+<div class="disabled">#define ID3D10Device1_OMGetDepthStencilState(This,ppDepthStencilState,pStencilRef)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; OMGetDepthStencilState(This,ppDepthStencilState,pStencilRef) ) </div>
+
+<div class="disabled">#define ID3D10Device1_SOGetTargets(This,NumBuffers,ppSOTargets,pOffsets)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SOGetTargets(This,NumBuffers,ppSOTargets,pOffsets) ) </div>
+
+<div class="disabled">#define ID3D10Device1_RSGetState(This,ppRasterizerState)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; RSGetState(This,ppRasterizerState) ) </div>
+
+<div class="disabled">#define ID3D10Device1_RSGetViewports(This,NumViewports,pViewports)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; RSGetViewports(This,NumViewports,pViewports) ) </div>
+
+<div class="disabled">#define ID3D10Device1_RSGetScissorRects(This,NumRects,pRects)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; RSGetScissorRects(This,NumRects,pRects) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GetDeviceRemovedReason(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetDeviceRemovedReason(This) ) </div>
+
+<div class="disabled">#define ID3D10Device1_SetExceptionMode(This,RaiseFlags)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetExceptionMode(This,RaiseFlags) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GetExceptionMode(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetExceptionMode(This) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GetPrivateData(This,guid,pDataSize,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetPrivateData(This,guid,pDataSize,pData) ) </div>
+
+<div class="disabled">#define ID3D10Device1_SetPrivateData(This,guid,DataSize,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetPrivateData(This,guid,DataSize,pData) ) </div>
+
+<div class="disabled">#define ID3D10Device1_SetPrivateDataInterface(This,guid,pData)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetPrivateDataInterface(This,guid,pData) ) </div>
+
+<div class="disabled">#define ID3D10Device1_ClearState(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; ClearState(This) ) </div>
+
+<div class="disabled">#define ID3D10Device1_Flush(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; Flush(This) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateBuffer(This,pDesc,pInitialData,ppBuffer)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateBuffer(This,pDesc,pInitialData,ppBuffer) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateTexture1D(This,pDesc,pInitialData,ppTexture1D)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateTexture1D(This,pDesc,pInitialData,ppTexture1D) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateTexture2D(This,pDesc,pInitialData,ppTexture2D)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateTexture2D(This,pDesc,pInitialData,ppTexture2D) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateTexture3D(This,pDesc,pInitialData,ppTexture3D)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateTexture3D(This,pDesc,pInitialData,ppTexture3D) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateShaderResourceView(This,pResource,pDesc,ppSRView)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateShaderResourceView(This,pResource,pDesc,ppSRView) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateRenderTargetView(This,pResource,pDesc,ppRTView)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateRenderTargetView(This,pResource,pDesc,ppRTView) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateDepthStencilView(This,pResource,pDesc,ppDepthStencilView)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateDepthStencilView(This,pResource,pDesc,ppDepthStencilView) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateInputLayout(This,pInputElementDescs,NumElements,pShaderBytecodeWithInputSignature,BytecodeLength,ppInputLayout)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateInputLayout(This,pInputElementDescs,NumElements,pShaderBytecodeWithInputSignature,BytecodeLength,ppInputLayout) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateVertexShader(This,pShaderBytecode,BytecodeLength,ppVertexShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateVertexShader(This,pShaderBytecode,BytecodeLength,ppVertexShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateGeometryShader(This,pShaderBytecode,BytecodeLength,ppGeometryShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateGeometryShader(This,pShaderBytecode,BytecodeLength,ppGeometryShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateGeometryShaderWithStreamOutput(This,pShaderBytecode,BytecodeLength,pSODeclaration,NumEntries,OutputStreamStride,ppGeometryShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateGeometryShaderWithStreamOutput(This,pShaderBytecode,BytecodeLength,pSODeclaration,NumEntries,OutputStreamStride,ppGeometryShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreatePixelShader(This,pShaderBytecode,BytecodeLength,ppPixelShader)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreatePixelShader(This,pShaderBytecode,BytecodeLength,ppPixelShader) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateBlendState(This,pBlendStateDesc,ppBlendState)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateBlendState(This,pBlendStateDesc,ppBlendState) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateDepthStencilState(This,pDepthStencilDesc,ppDepthStencilState)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateDepthStencilState(This,pDepthStencilDesc,ppDepthStencilState) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateRasterizerState(This,pRasterizerDesc,ppRasterizerState)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateRasterizerState(This,pRasterizerDesc,ppRasterizerState) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateSamplerState(This,pSamplerDesc,ppSamplerState)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateSamplerState(This,pSamplerDesc,ppSamplerState) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateQuery(This,pQueryDesc,ppQuery)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateQuery(This,pQueryDesc,ppQuery) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreatePredicate(This,pPredicateDesc,ppPredicate)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreatePredicate(This,pPredicateDesc,ppPredicate) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateCounter(This,pCounterDesc,ppCounter)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateCounter(This,pCounterDesc,ppCounter) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CheckFormatSupport(This,Format,pFormatSupport)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CheckFormatSupport(This,Format,pFormatSupport) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CheckMultisampleQualityLevels(This,Format,SampleCount,pNumQualityLevels)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CheckMultisampleQualityLevels(This,Format,SampleCount,pNumQualityLevels) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CheckCounterInfo(This,pCounterInfo)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CheckCounterInfo(This,pCounterInfo) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CheckCounter(This,pDesc,pType,pActiveCounters,szName,pNameLength,szUnits,pUnitsLength,szDescription,pDescriptionLength)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CheckCounter(This,pDesc,pType,pActiveCounters,szName,pNameLength,szUnits,pUnitsLength,szDescription,pDescriptionLength) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GetCreationFlags(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetCreationFlags(This) ) </div>
+
+<div class="disabled">#define ID3D10Device1_OpenSharedResource(This,hResource,ReturnedInterface,ppResource)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; OpenSharedResource(This,hResource,ReturnedInterface,ppResource) ) </div>
+
+<div class="disabled">#define ID3D10Device1_SetTextFilterSize(This,Width,Height)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; SetTextFilterSize(This,Width,Height) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GetTextFilterSize(This,pWidth,pHeight)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetTextFilterSize(This,pWidth,pHeight) ) </div>
+
+
+<div class="disabled">#define ID3D10Device1_CreateShaderResourceView1(This,pResource,pDesc,ppSRView)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateShaderResourceView1(This,pResource,pDesc,ppSRView) ) </div>
+
+<div class="disabled">#define ID3D10Device1_CreateBlendState1(This,pBlendStateDesc,ppBlendState)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; CreateBlendState1(This,pBlendStateDesc,ppBlendState) ) </div>
+
+<div class="disabled">#define ID3D10Device1_GetFeatureLevel(This)	\</div>
+<div class="disabled">    ( (This)-&gt;lpVtbl -&gt; GetFeatureLevel(This) ) </div>
+
+<div class="disabled">#endif /* COBJMACROS */</div>
+
+
+<div class="disabled">#endif 	/* C style interface */</div>
+
+
+
+
+<div class="disabled">#endif 	/* __ID3D10Device1_INTERFACE_DEFINED__ */</div>
+
+
+<div class="token cpp_comment ">/* interface __MIDL_itf_d3d10_1_0000_0003 */</div>
+<div class="token cpp_comment ">/* [local] */</div> 
+
+<div class="disabled">#define	D3D10_1_SDK_VERSION	( ( 0 + 0x20 )  )</div>
+
+<div class="disabled">#include &quot;d3d10_1shader.h&quot; </div>
+
+<div class="token cpp_comment ">///////////////////////////////////////////////////////////////////////////</div>
+<div class="token cpp_comment ">// D3D10CreateDevice1</div>
+<div class="token cpp_comment ">// ------------------</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// pAdapter</div>
+<div class="token cpp_comment ">//      If NULL, D3D10CreateDevice1 will choose the primary adapter and</div>
+<div class="token cpp_comment ">//      create a new instance from a temporarily created IDXGIFactory.</div>
+<div class="token cpp_comment ">//      If non-NULL, D3D10CreateDevice1 will register the appropriate</div>
+<div class="token cpp_comment ">//      device, if necessary (via IDXGIAdapter::RegisterDrver), before</div>
+<div class="token cpp_comment ">//      creating the device.</div>
+<div class="token cpp_comment ">// DriverType</div>
+<div class="token cpp_comment ">//      Specifies the driver type to be created: hardware, reference or</div>
+<div class="token cpp_comment ">//      null.</div>
+<div class="token cpp_comment ">// Software</div>
+<div class="token cpp_comment ">//      HMODULE of a DLL implementing a software rasterizer. Must be NULL for</div>
+<div class="token cpp_comment ">//      non-Software driver types.</div>
+<div class="token cpp_comment ">// Flags</div>
+<div class="token cpp_comment ">//      Any of those documented for D3D10CreateDeviceAndSwapChain1.</div>
+<div class="token cpp_comment ">// HardwareLevel</div>
+<div class="token cpp_comment ">//      Any of those documented for D3D10CreateDeviceAndSwapChain1.</div>
+<div class="token cpp_comment ">// SDKVersion</div>
+<div class="token cpp_comment ">//      SDK version. Use the D3D10_1_SDK_VERSION macro.</div>
+<div class="token cpp_comment ">// ppDevice</div>
+<div class="token cpp_comment ">//      Pointer to returned interface.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Return Values</div>
+<div class="token cpp_comment ">//  Any of those documented for </div>
+<div class="token cpp_comment ">//          CreateDXGIFactory</div>
+<div class="token cpp_comment ">//          IDXGIFactory::EnumAdapters</div>
+<div class="token cpp_comment ">//          IDXGIAdapter::RegisterDriver</div>
+<div class="token cpp_comment ">//          D3D10CreateDevice1</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">///////////////////////////////////////////////////////////////////////////</div>
+<div class="expandable"><div class="disabled">typedef HRESULT (WINAPI* PFN_D3D10_CREATE_DEVICE1)(IDXGIAdapter *, </div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$PFN_D3D10_CREATE_DEVICE1"><div><div class="token cpp_type">PFN_D3D10_CREATE_DEVICE1</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['IDXGIAdapter'], [], [])"><div class="token cpp_type">IDXGIAdapter</div></div> *, </div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_DRIVER_TYPE'], [], [])"><div class="token cpp_type">D3D10_DRIVER_TYPE</div></div>, <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['D3D10_FEATURE_LEVEL1'], [], [])"><div class="token cpp_type">D3D10_FEATURE_LEVEL1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['ID3D10Device1'], [], [])"><div class="token cpp_type">ID3D10Device1</div></div>**);
+
+<div class="expandable"><div class="disabled">HRESULT WINAPI D3D10CreateDevice1(</div>
+<div class="expanded"><div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$D3D10CreateDevice1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::ID3D10Device1 * *)[decl0]"><div><div class="token cpp_function">D3D10CreateDevice1</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ IDXGIAdapter *pAdapter,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IDXGIAdapter'], [], [])"><div class="token cpp_type">IDXGIAdapter</div></div> *<div class="def" id="NI$D3D10CreateDevice1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::ID3D10Device1 * *)[decl0]::pAdapter"><div>pAdapter</div></div>,</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_DRIVER_TYPE'], [], [])"><div class="token cpp_type">D3D10_DRIVER_TYPE</div></div> <div class="def" id="NI$D3D10CreateDevice1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::ID3D10Device1 * *)[decl0]::DriverType"><div>DriverType</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$D3D10CreateDevice1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::ID3D10Device1 * *)[decl0]::Software"><div>Software</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$D3D10CreateDevice1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::ID3D10Device1 * *)[decl0]::Flags"><div>Flags</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_FEATURE_LEVEL1'], [], [])"><div class="token cpp_type">D3D10_FEATURE_LEVEL1</div></div> <div class="def" id="NI$D3D10CreateDevice1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::ID3D10Device1 * *)[decl0]::HardwareLevel"><div>HardwareLevel</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$D3D10CreateDevice1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::ID3D10Device1 * *)[decl0]::SDKVersion"><div>SDKVersion</div></div>,
+<div class="expandable"><div class="disabled">    _Out_opt_ ID3D10Device1 **ppDevice);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ID3D10Device1'], [], [])"><div class="token cpp_type">ID3D10Device1</div></div> **<div class="def" id="NI$D3D10CreateDevice1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::ID3D10Device1 * *)[decl0]::ppDevice"><div>ppDevice</div></div>);</div></div>
+
+<div class="token cpp_comment ">///////////////////////////////////////////////////////////////////////////</div>
+<div class="token cpp_comment ">// D3D10CreateDeviceAndSwapChain1</div>
+<div class="token cpp_comment ">// ------------------------------</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// ppAdapter</div>
+<div class="token cpp_comment ">//      If NULL, D3D10CreateDevice1 will choose the primary adapter and </div>
+<div class="token cpp_comment ">//      create a new instance from a temporarily created IDXGIFactory.</div>
+<div class="token cpp_comment ">//      If non-NULL, D3D10CreateDevice1 will register the appropriate</div>
+<div class="token cpp_comment ">//      device, if necessary (via IDXGIAdapter::RegisterDrver), before</div>
+<div class="token cpp_comment ">//      creating the device.</div>
+<div class="token cpp_comment ">// DriverType</div>
+<div class="token cpp_comment ">//      Specifies the driver type to be created: hardware, reference or</div>
+<div class="token cpp_comment ">//      null.</div>
+<div class="token cpp_comment ">// Software</div>
+<div class="token cpp_comment ">//      HMODULE of a DLL implementing a software rasterizer. Must be NULL for</div>
+<div class="token cpp_comment ">//      non-Software driver types.</div>
+<div class="token cpp_comment ">// Flags</div>
+<div class="token cpp_comment ">//      Any of those documented for D3D10CreateDevice1.</div>
+<div class="token cpp_comment ">// HardwareLevel</div>
+<div class="token cpp_comment ">//      Any of:</div>
+<div class="token cpp_comment ">//          D3D10_CREATE_LEVEL_10_0</div>
+<div class="token cpp_comment ">//          D3D10_CREATE_LEVEL_10_1</div>
+<div class="token cpp_comment ">// SDKVersion</div>
+<div class="token cpp_comment ">//      SDK version. Use the D3D10_1_SDK_VERSION macro.</div>
+<div class="token cpp_comment ">// pSwapChainDesc</div>
+<div class="token cpp_comment ">//      Swap chain description, may be NULL.</div>
+<div class="token cpp_comment ">// ppSwapChain</div>
+<div class="token cpp_comment ">//      Pointer to returned interface. May be NULL.</div>
+<div class="token cpp_comment ">// ppDevice</div>
+<div class="token cpp_comment ">//      Pointer to returned interface.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Return Values</div>
+<div class="token cpp_comment ">//  Any of those documented for </div>
+<div class="token cpp_comment ">//          CreateDXGIFactory</div>
+<div class="token cpp_comment ">//          IDXGIFactory::EnumAdapters</div>
+<div class="token cpp_comment ">//          IDXGIAdapter::RegisterDriver</div>
+<div class="token cpp_comment ">//          D3D10CreateDevice1</div>
+<div class="token cpp_comment ">//          IDXGIFactory::CreateSwapChain</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">///////////////////////////////////////////////////////////////////////////</div>
+<div class="expandable"><div class="disabled">typedef HRESULT (WINAPI* PFN_D3D10_CREATE_DEVICE_AND_SWAP_CHAIN1)(IDXGIAdapter *, </div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$PFN_D3D10_CREATE_DEVICE_AND_SWAP_CHAIN1"><div><div class="token cpp_type">PFN_D3D10_CREATE_DEVICE_AND_SWAP_CHAIN1</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['IDXGIAdapter'], [], [])"><div class="token cpp_type">IDXGIAdapter</div></div> *, </div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_DRIVER_TYPE'], [], [])"><div class="token cpp_type">D3D10_DRIVER_TYPE</div></div>, <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div>, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['D3D10_FEATURE_LEVEL1'], [], [])"><div class="token cpp_type">D3D10_FEATURE_LEVEL1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['DXGI_SWAP_CHAIN_DESC'], [], [])"><div class="token cpp_type">DXGI_SWAP_CHAIN_DESC</div></div> *, <div class="ref" onclick="jumpToSymbol([], ['IDXGISwapChain'], [], [])"><div class="token cpp_type">IDXGISwapChain</div></div> **, <div class="ref" onclick="jumpToSymbol([], ['ID3D10Device1'], [], [])"><div class="token cpp_type">ID3D10Device1</div></div> **);
+
+<div class="expandable"><div class="disabled">HRESULT WINAPI D3D10CreateDeviceAndSwapChain1(</div>
+<div class="expanded"><div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]"><div><div class="token cpp_function">D3D10CreateDeviceAndSwapChain1</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ IDXGIAdapter *pAdapter,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IDXGIAdapter'], [], [])"><div class="token cpp_type">IDXGIAdapter</div></div> *<div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::pAdapter"><div>pAdapter</div></div>,</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_DRIVER_TYPE'], [], [])"><div class="token cpp_type">D3D10_DRIVER_TYPE</div></div> <div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::DriverType"><div>DriverType</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['HMODULE'], [], [])"><div class="token cpp_type">HMODULE</div></div> <div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::Software"><div>Software</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::Flags"><div>Flags</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['D3D10_FEATURE_LEVEL1'], [], [])"><div class="token cpp_type">D3D10_FEATURE_LEVEL1</div></div> <div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::HardwareLevel"><div>HardwareLevel</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::SDKVersion"><div>SDKVersion</div></div>,
+<div class="expandable"><div class="disabled">    _In_opt_ DXGI_SWAP_CHAIN_DESC *pSwapChainDesc,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DXGI_SWAP_CHAIN_DESC'], [], [])"><div class="token cpp_type">DXGI_SWAP_CHAIN_DESC</div></div> *<div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::pSwapChainDesc"><div>pSwapChainDesc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ IDXGISwapChain **ppSwapChain,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IDXGISwapChain'], [], [])"><div class="token cpp_type">IDXGISwapChain</div></div> **<div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::ppSwapChain"><div>ppSwapChain</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ ID3D10Device1 **ppDevice);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ID3D10Device1'], [], [])"><div class="token cpp_type">ID3D10Device1</div></div> **<div class="def" id="NI$D3D10CreateDeviceAndSwapChain1@::HRESULT(::IDXGIAdapter *, ::D3D10_DRIVER_TYPE, ::HMODULE, ::UINT, ::D3D10_FEATURE_LEVEL1, ::UINT, ::DXGI_SWAP_CHAIN_DESC *, ::IDXGISwapChain * *, ::ID3D10Device1 * *)[decl0]::ppDevice"><div>ppDevice</div></div>);</div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+<div class="expandable"><div class="disabled">DEFINE_GUID(IID_ID3D10BlendState1,0xEDAD8D99,0x8A35,0x4d6d,0x85,0x66,0x2E,0xA2,0x76,0xCD,0xE1,0x61);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>  <div class="def" id="NF[0]$IID_ID3D10BlendState1"><div class="ref" onclick="jumpToSymbol([], ['IID_ID3D10BlendState1'], [], [])">IID_ID3D10BlendState1</div></div>;</div></div>
+<div class="expandable"><div class="disabled">DEFINE_GUID(IID_ID3D10ShaderResourceView1,0x9B7E4C87,0x342C,0x4106,0xA1,0x9F,0x4F,0x27,0x04,0xF6,0x89,0xF0);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>  <div class="def" id="NF[0]$IID_ID3D10ShaderResourceView1"><div class="ref" onclick="jumpToSymbol([], ['IID_ID3D10ShaderResourceView1'], [], [])">IID_ID3D10ShaderResourceView1</div></div>;</div></div>
+<div class="expandable"><div class="disabled">DEFINE_GUID(IID_ID3D10Device1,0x9B7E4C8F,0x342C,0x4106,0xA1,0x9F,0x4F,0x27,0x04,0xF6,0x89,0xF0);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>  <div class="def" id="NF[0]$IID_ID3D10Device1"><div class="ref" onclick="jumpToSymbol([], ['IID_ID3D10Device1'], [], [])">IID_ID3D10Device1</div></div>;</div></div>
+
+
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_d3d10_1_0000_0003_v0_0_c_ifspec"><div>__MIDL_itf_d3d10_1_0000_0003_v0_0_c_ifspec</div></div>;
+<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NF[0]$__MIDL_itf_d3d10_1_0000_0003_v0_0_s_ifspec"><div>__MIDL_itf_d3d10_1_0000_0003_v0_0_s_ifspec</div></div>;
+
+<div class="token cpp_comment ">/* Additional Prototypes for ALL interfaces */</div>
+
+<div class="token cpp_comment ">/* end of Additional Prototypes */</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif</div>
+
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'D3D10_BLEND': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_BLEND</span>',
+        'impls': [
+            'NI$D3D10_BLEND'
+        ],
+        'decls': []
+    },
+    'D3D10_BLEND_DESC1': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_BLEND_DESC1</span>',
+        'impls': [
+            'NI$D3D10_BLEND_DESC1'
+        ],
+        'decls': []
+    },
+    'D3D10_BLEND_OP': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_BLEND_OP</span>',
+        'impls': [
+            'NI$D3D10_BLEND_OP'
+        ],
+        'decls': []
+    },
+    'D3D10_BUFFER_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_BUFFER_SRV</span>',
+        'impls': [
+            'NI$D3D10_BUFFER_SRV'
+        ],
+        'decls': []
+    },
+    'D3D10_DRIVER_TYPE': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_DRIVER_TYPE</span>',
+        'impls': [
+            'NI$D3D10_DRIVER_TYPE'
+        ],
+        'decls': []
+    },
+    'D3D10_FEATURE_LEVEL1': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_FEATURE_LEVEL1</span>',
+        'impls': [
+            'NI$D3D10_FEATURE_LEVEL1'
+        ],
+        'decls': []
+    },
+    'D3D10_RENDER_TARGET_BLEND_DESC1': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_RENDER_TARGET_BLEND_DESC1</span>',
+        'impls': [
+            'NI$D3D10_RENDER_TARGET_BLEND_DESC1'
+        ],
+        'decls': []
+    },
+    'D3D10_SHADER_RESOURCE_VIEW_DESC1': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SHADER_RESOURCE_VIEW_DESC1</span>',
+        'impls': [
+            'NI$D3D10_SHADER_RESOURCE_VIEW_DESC1'
+        ],
+        'decls': []
+    },
+    'D3D10_SRV_DIMENSION1': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_SRV_DIMENSION1</span>',
+        'impls': [
+            'NI$D3D10_SRV_DIMENSION1'
+        ],
+        'decls': []
+    },
+    'D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS</span>',
+        'impls': [
+            'NI$D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS'
+        ],
+        'decls': []
+    },
+    'D3D10_TEX1D_ARRAY_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEX1D_ARRAY_SRV</span>',
+        'impls': [
+            'NI$D3D10_TEX1D_ARRAY_SRV'
+        ],
+        'decls': []
+    },
+    'D3D10_TEX1D_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEX1D_SRV</span>',
+        'impls': [
+            'NI$D3D10_TEX1D_SRV'
+        ],
+        'decls': []
+    },
+    'D3D10_TEX2DMS_ARRAY_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEX2DMS_ARRAY_SRV</span>',
+        'impls': [
+            'NI$D3D10_TEX2DMS_ARRAY_SRV'
+        ],
+        'decls': []
+    },
+    'D3D10_TEX2DMS_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEX2DMS_SRV</span>',
+        'impls': [
+            'NI$D3D10_TEX2DMS_SRV'
+        ],
+        'decls': []
+    },
+    'D3D10_TEX2D_ARRAY_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEX2D_ARRAY_SRV</span>',
+        'impls': [
+            'NI$D3D10_TEX2D_ARRAY_SRV'
+        ],
+        'decls': []
+    },
+    'D3D10_TEX2D_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEX2D_SRV</span>',
+        'impls': [
+            'NI$D3D10_TEX2D_SRV'
+        ],
+        'decls': []
+    },
+    'D3D10_TEX3D_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEX3D_SRV</span>',
+        'impls': [
+            'NI$D3D10_TEX3D_SRV'
+        ],
+        'decls': []
+    },
+    'D3D10_TEXCUBE_ARRAY_SRV1': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEXCUBE_ARRAY_SRV1</span>',
+        'impls': [
+            'NI$D3D10_TEXCUBE_ARRAY_SRV1'
+        ],
+        'decls': []
+    },
+    'D3D10_TEXCUBE_SRV': {
+        'displayNameInHtml': '<span class="cpp_type">D3D10_TEXCUBE_SRV</span>',
+        'impls': [
+            'NI$D3D10_TEXCUBE_SRV'
+        ],
+        'decls': []
+    },
+    'D3D_SRV_DIMENSION': {
+        'displayNameInHtml': '<span class="cpp_type">D3D_SRV_DIMENSION</span>',
+        'impls': [
+            'NI$D3D_SRV_DIMENSION'
+        ],
+        'decls': []
+    },
+    'DXGI_FORMAT': {
+        'displayNameInHtml': '<span class="cpp_type">DXGI_FORMAT</span>',
+        'impls': [
+            'NI$DXGI_FORMAT'
+        ],
+        'decls': []
+    },
+    'DXGI_SWAP_CHAIN_DESC': {
+        'displayNameInHtml': '<span class="cpp_type">DXGI_SWAP_CHAIN_DESC</span>',
+        'impls': [
+            'NI$DXGI_SWAP_CHAIN_DESC'
+        ],
+        'decls': []
+    },
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'HMODULE': {
+        'displayNameInHtml': '<span class="cpp_type">HMODULE</span>',
+        'impls': [
+            'NI$HMODULE'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'ID3D10BlendState': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10BlendState</span>',
+        'impls': [
+            'NI$ID3D10BlendState'
+        ],
+        'decls': [
+            'NF[0]$ID3D10BlendState'
+        ]
+    },
+    'ID3D10BlendState1': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10BlendState1</span>',
+        'impls': [
+            'NI$ID3D10BlendState1'
+        ],
+        'decls': [
+            'NF[0]$ID3D10BlendState1'
+        ]
+    },
+    'ID3D10Device': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10Device</span>',
+        'impls': [
+            'NI$ID3D10Device'
+        ],
+        'decls': [
+            'NF[0]$ID3D10Device'
+        ]
+    },
+    'ID3D10Device1': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10Device1</span>',
+        'impls': [
+            'NI$ID3D10Device1'
+        ],
+        'decls': [
+            'NF[0]$ID3D10Device1'
+        ]
+    },
+    'ID3D10Resource': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10Resource</span>',
+        'impls': [
+            'NI$ID3D10Resource'
+        ],
+        'decls': [
+            'NF[0]$ID3D10Resource'
+        ]
+    },
+    'ID3D10ShaderResourceView': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10ShaderResourceView</span>',
+        'impls': [
+            'NI$ID3D10ShaderResourceView'
+        ],
+        'decls': [
+            'NF[0]$ID3D10ShaderResourceView'
+        ]
+    },
+    'ID3D10ShaderResourceView1': {
+        'displayNameInHtml': '<span class="cpp_type">ID3D10ShaderResourceView1</span>',
+        'impls': [
+            'NI$ID3D10ShaderResourceView1'
+        ],
+        'decls': [
+            'NF[0]$ID3D10ShaderResourceView1'
+        ]
+    },
+    'IDXGIAdapter': {
+        'displayNameInHtml': '<span class="cpp_type">IDXGIAdapter</span>',
+        'impls': [
+            'NI$IDXGIAdapter'
+        ],
+        'decls': [
+            'NF[0]$IDXGIAdapter'
+        ]
+    },
+    'IDXGISwapChain': {
+        'displayNameInHtml': '<span class="cpp_type">IDXGISwapChain</span>',
+        'impls': [
+            'NI$IDXGISwapChain'
+        ],
+        'decls': [
+            'NF[0]$IDXGISwapChain'
+        ]
+    },
+    'IID': {
+        'displayNameInHtml': '<span class="cpp_type">IID</span>',
+        'impls': [
+            'NI$IID'
+        ],
+        'decls': []
+    },
+    'IID_ID3D10BlendState1': {
+        'displayNameInHtml': 'IID_ID3D10BlendState1',
+        'impls': [
+            'NI$IID_ID3D10BlendState1'
+        ],
+        'decls': [
+            'NF[0]$IID_ID3D10BlendState1'
+        ]
+    },
+    'IID_ID3D10Device1': {
+        'displayNameInHtml': 'IID_ID3D10Device1',
+        'impls': [
+            'NI$IID_ID3D10Device1'
+        ],
+        'decls': [
+            'NF[0]$IID_ID3D10Device1'
+        ]
+    },
+    'IID_ID3D10ShaderResourceView1': {
+        'displayNameInHtml': 'IID_ID3D10ShaderResourceView1',
+        'impls': [
+            'NI$IID_ID3D10ShaderResourceView1'
+        ],
+        'decls': [
+            'NF[0]$IID_ID3D10ShaderResourceView1'
+        ]
+    },
+    'RPC_IF_HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_IF_HANDLE</span>',
+        'impls': [
+            'NI$RPC_IF_HANDLE'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'UINT8': {
+        'displayNameInHtml': '<span class="cpp_type">UINT8</span>',
+        'impls': [
+            'NI$UINT8'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NF[0]$IID_ID3D10BlendState1': null,
+    'NF[0]$IID_ID3D10Device1': null,
+    'NF[0]$IID_ID3D10ShaderResourceView1': null,
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$D3D10_BLEND': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_BLEND_DESC1': null,
+    'NI$D3D10_BLEND_OP': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_BUFFER_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_DRIVER_TYPE': { 'htmlFileName': 'd3d10misc.h', 'displayName': 'd3d10misc.h' },
+    'NI$D3D10_FEATURE_LEVEL1': null,
+    'NI$D3D10_RENDER_TARGET_BLEND_DESC1': null,
+    'NI$D3D10_SHADER_RESOURCE_VIEW_DESC1': null,
+    'NI$D3D10_SRV_DIMENSION1': null,
+    'NI$D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS': null,
+    'NI$D3D10_TEX1D_ARRAY_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_TEX1D_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_TEX2DMS_ARRAY_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_TEX2DMS_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_TEX2D_ARRAY_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_TEX2D_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_TEX3D_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D10_TEXCUBE_ARRAY_SRV1': null,
+    'NI$D3D10_TEXCUBE_SRV': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$D3D_SRV_DIMENSION': { 'htmlFileName': 'd3dcommon.h', 'displayName': 'd3dcommon.h' },
+    'NI$DXGI_FORMAT': { 'htmlFileName': 'dxgiformat.h', 'displayName': 'dxgiformat.h' },
+    'NI$DXGI_SWAP_CHAIN_DESC': { 'htmlFileName': 'dxgi.h', 'displayName': 'dxgi.h' },
+    'NI$GUID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$HMODULE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$ID3D10BlendState': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$ID3D10BlendState1': null,
+    'NI$ID3D10Device': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$ID3D10Device1': null,
+    'NI$ID3D10Resource': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$ID3D10ShaderResourceView': { 'htmlFileName': 'd3d10.h', 'displayName': 'd3d10.h' },
+    'NI$ID3D10ShaderResourceView1': null,
+    'NI$IDXGIAdapter': { 'htmlFileName': 'dxgi.h', 'displayName': 'dxgi.h' },
+    'NI$IDXGISwapChain': { 'htmlFileName': 'dxgi.h', 'displayName': 'dxgi.h' },
+    'NI$IID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$IID_ID3D10BlendState1': null,
+    'NI$IID_ID3D10Device1': null,
+    'NI$IID_ID3D10ShaderResourceView1': null,
+    'NI$RPC_IF_HANDLE': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' },
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$UINT8': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GacUI.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI Header Files and Common Namespaces
+
+Global Objects:
+	vl::reflection::description::					GetGlobalTypeManager
+	vl::presentation::								GetParserManager
+	vl::presentation::								GetResourceResolverManager
+	vl::presentation::								GetCurrentController
+	vl::presentation::								GetInstanceLoaderManager
+	vl::presentation::elements::					GetGuiGraphicsResourceManager
+	vl::presentation::controls::					GetApplication
+	vl::presentation::controls::					GetPluginManager
+	vl::presentation::theme::						GetCurrentTheme
+
+	vl::presentation::windows::						GetDirect2DFactory
+	vl::presentation::windows::						GetDirectWriteFactory
+	vl::presentation::elements_windows_gdi::		GetWindowsGDIResourceManager
+	vl::presentation::elements_windows_gdi::		GetWindowsGDIObjectProvider
+	vl::presentation::elements_windows_d2d::		GetWindowsDirect2DResourceManager
+	vl::presentation::elements_windows_d2d::		GetWindowsDirect2DObjectProvider
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_PRESENTATION_GACUI</div>
+<div class="disabled">#define VCZH_PRESENTATION_GACUI</div>
+
+<div class="disabled">#include &quot;GacUIReflectionHelper.h&quot;</div>
+
+<div class="disabled">#ifdef GAC_HEADER_USE_NAMESPACE</div>
+
+<div class="disabled">using namespace vl;</div>
+<div class="disabled">using namespace vl::presentation;</div>
+<div class="disabled">using namespace vl::presentation::elements;</div>
+<div class="disabled">using namespace vl::presentation::compositions;</div>
+<div class="disabled">using namespace vl::presentation::controls;</div>
+<div class="disabled">using namespace vl::presentation::theme;</div>
+<div class="disabled">using namespace vl::presentation::templates;</div>
+
+<div class="disabled">#endif</div>
+
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$SetupWindowsGDIRenderer@int()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['SetupWindowsGDIRenderer@int()'], [], [])"><div class="token cpp_function">SetupWindowsGDIRenderer</div></div></div>();
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$SetupWindowsDirect2DRenderer@int()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['SetupWindowsDirect2DRenderer@int()'], [], [])"><div class="token cpp_function">SetupWindowsDirect2DRenderer</div></div></div>();
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$SetupOSXCoreGraphicsRenderer@int()[decl0]"><div><div class="token cpp_function">SetupOSXCoreGraphicsRenderer</div></div></div>();
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'SetupWindowsDirect2DRenderer@int()': {
+        'displayNameInHtml': '<span class="cpp_function">SetupWindowsDirect2DRenderer</span>()',
+        'impls': [
+            'FB$SetupWindowsDirect2DRenderer@int()[impl0]'
+        ],
+        'decls': [
+            'FB$SetupWindowsDirect2DRenderer@int()[decl0]'
+        ]
+    },
+    'SetupWindowsGDIRenderer@int()': {
+        'displayNameInHtml': '<span class="cpp_function">SetupWindowsGDIRenderer</span>()',
+        'impls': [
+            'FB$SetupWindowsGDIRenderer@int()[impl0]'
+        ],
+        'decls': [
+            'FB$SetupWindowsGDIRenderer@int()[decl0]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$SetupWindowsDirect2DRenderer@int()[decl0]': null,
+    'FB$SetupWindowsDirect2DRenderer@int()[impl0]': { 'htmlFileName': 'WinDirect2DApplication.cpp', 'displayName': 'WinDirect2DApplication.cpp' },
+    'FB$SetupWindowsGDIRenderer@int()[decl0]': null,
+    'FB$SetupWindowsGDIRenderer@int()[impl0]': { 'htmlFileName': 'WinGDIApplication.cpp', 'displayName': 'WinGDIApplication.cpp' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>specstrings.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#ifndef SPECSTRINGS_H // [</div>
+<div class="disabled">#define SPECSTRINGS_H</div>
+
+<div class="token cpp_comment ">/***
+*specstrings.h - support for markers for documenting the semantics of APIs
+*
+*       Copyright (c) Microsoft Corporation. All rights reserved.
+*
+*       [Public]
+****/</div>
+
+<div class="token cpp_comment ">/*************************************************************************
+* See specstrings_strict.h for documentation of all user visible macros.
+*************************************************************************/</div>
+
+<div class="disabled">#if _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4668) // #if not_defined treated as #if 0
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4668</div>) </div></div>
+
+<div class="disabled">#if !defined(_SAL_VERSION_SAL2) // [</div>
+
+<div class="disabled"> #if defined(__BUILDMACHINE__) || defined(_USE_SAL2_ONLY)</div>
+<div class="disabled">  #define _SAL_VERSION_SAL2(_A) SAL_2_Clean_Violation_using ## _A
+ #else</div>
+<div class="disabled">  #define _SAL_VERSION_SAL2(_A)
+ #endif</div>
+
+<div class="disabled"> #ifdef _USE_SAL2_ONLY</div>
+<div class="disabled">  #define _SAL2_STRICT</div>
+<div class="disabled">  #define _SAL_VERSION_CHECK(_A) _SAL_VERSION_SAL2(_A)</div>
+<div class="disabled"> #else</div>
+<div class="disabled">  #define _SAL_VERSION_CHECK(_A)
+ #endif</div>
+
+<div class="disabled"> #ifndef SAL_VERSION_CHECK</div>
+<div class="disabled">  #define SAL_VERSION_CHECK(_A) _SAL_VERSION_CHECK(_A)</div>
+<div class="disabled">  #define SAL_VERSION_SAL2(_A) _SAL_VERSION_SAL2(_A)
+ #endif</div>
+
+<div class="disabled">#endif // ]</div>
+
+<div class="token cpp_comment ">/* Begin compatibility fixes required for Win8/VS2012 RTM sal.h */</div>
+<div class="disabled">#ifndef _SAL_L_Source_</div>
+
+<div class="disabled">// Some annotations aren&apos;t officially SAL2 yet.</div>
+<div class="disabled">#if _USE_ATTRIBUTES_FOR_SAL /*IFSTRIP=IGN*/</div>
+<div class="disabled">#define _SAL_L_Source_(Name, args, annotes) _SA_annotes3(SAL_name, #Name, &quot;&quot;, &quot;2&quot;) _Group_(annotes _SAL_nop_impl_)</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define _SAL_L_Source_(Name, args, annotes) _SA_annotes3(SAL_name, #Name, &quot;&quot;, &quot;2&quot;) _GrouP_(annotes _SAL_nop_impl_)</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">/* End compatibility fixes required for Win8/VS2012 RTM sal.h */</div>
+
+<div class="disabled">#include &lt;sal.h&gt;</div>
+
+<div class="token cpp_comment ">/* This version symbol is deprecated in favor of __SAL_H_VER */</div>
+<div class="disabled">#ifndef __SAL_H_FULL_VER</div>
+<div class="disabled">#define __SAL_H_FULL_VER 140050727
+#endif</div>
+
+<div class="disabled">#ifdef  __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">/* version specific fixes to bring sal.h upto date */</div>
+<div class="disabled">#if __SAL_H_FULL_VER &lt;= 140050727 // [</div>
+
+<div class="disabled">#if !defined(__midl) &amp;&amp; defined(_PREFAST_) &amp;&amp; _MSC_VER &gt;= 1000 // [</div>
+
+<div class="disabled">/* Missing from RTM sal.h */</div>
+<div class="disabled">#define __inner_bound                     _SAL_L_Source_(__inner_bound, (), _SA_annotes0(SAL_bound))</div>
+<div class="disabled">#define __inner_range(lb,ub)              _SAL_L_Source_(__inner_range, (lb,ub), _SA_annotes2(SAL_range,lb,ub))</div>
+<div class="disabled">#define __inner_assume_bound_dec          __inline __nothrow void __AssumeBoundInt(_Post_ __inner_bound int i) {i;}</div>
+<div class="disabled">#define __inner_assume_bound(i)           __AssumeBoundInt(i);</div>
+<div class="disabled">#define __inner_allocator                 _SAL_L_Source_(__inner_allocater, (), _SA_annotes0(SAL_allocator))</div>
+
+<div class="disabled">#define __static_context(ctx, annotes) \</div>
+<div class="disabled">    _SAL_L_Source_(__static_context, (ctx, annotes), _SA_annotes1(SAL_context,ctx) _Group_(__nop_impl(annotes)))</div>
+
+<div class="disabled">#define __failure(x) __static_context(SAL_return_convention, \</div>
+<div class="disabled">    _SAL_L_Source_(__failure, (x), _SA_annotes1(SAL_failure,x)))</div>
+
+<div class="disabled">__ANNOTATION(SAL_valueUndefined(void));</div>
+<div class="disabled">#define __valueUndefined _SAL_L_Source_(__valueUndefined, (), _SA_annotes0(SAL_valueUndefined))</div>
+
+<div class="disabled">enum __SAL_failureKind{__failureUnspecified = 0, __failureUndefined = 1};</div>
+
+<div class="disabled">__ANNOTATION(SAL_failureDefault(enum __SAL_failureKind));</div>
+<div class="disabled">#define __failureDefault(kind) _SAL_L_Source_(__failureDefault, (kind), __static_context(SAL_return_convention,  \</div>
+<div class="disabled">        _SA_annotes1(SAL_failureDefault,kind)))</div>
+
+<div class="disabled">#else // ][</div>
+
+<div class="disabled">#define __inner_bound</div>
+<div class="disabled">#define __inner_range(lb,ub)</div>
+<div class="disabled">#define __inner_assume_bound_dec</div>
+<div class="disabled">#define __inner_assume_bound(i)</div>
+<div class="disabled">#define __inner_allocator</div>
+
+<div class="disabled">#define __static_context(ctx, annotes)</div>
+<div class="disabled">#define __failure(x)</div>
+<div class="disabled">#define __valueUndefined</div>
+<div class="disabled">#define __failureDefault(x)</div>
+
+<div class="disabled">#endif // ]</div>
+
+<div class="disabled">#define __xcount(size)                                          _SAL1_Source_(__xcount, (size), __notnull __inexpressible_writableTo(size))</div>
+<div class="disabled">#define __in_xcount(size)                                       _SAL1_Source_(__in_xcount, (size),  __in _Pre_ __inexpressible_readableTo(size))</div>
+<div class="disabled">#define __out_xcount(size)                                      _SAL1_Source_(__out_xcount, (size),  __xcount(size) _Post_ __valid __refparam)</div>
+<div class="disabled">#define __out_xcount_part(size,length)                          _SAL1_Source_(__out_xcount_part_, (size,length),  __out_xcount(size) _Post_ __inexpressible_readableTo(length))</div>
+<div class="disabled">#define __out_xcount_full(size)                                 _SAL1_Source_(__out_xcount_full, (size),  __out_xcount_part(size,size))</div>
+<div class="disabled">#define __inout_xcount(size)                                    _SAL1_Source_(__inout_xcount, (size), __out_xcount(size) _Pre_ __valid)</div>
+<div class="disabled">#define __inout_xcount_part(size,length)                        _SAL1_Source_(__inout_xcount_part, (size,length),  __out_xcount_part(size,length) _Pre_ __valid _Pre_ __inexpressible_readableTo(length))</div>
+<div class="disabled">#define __inout_xcount_full(size)                               _SAL1_Source_(__inout_xcount_full, (size),  __inout_xcount_part(size,size))</div>
+<div class="disabled">#define __xcount_opt(size)                                      _SAL1_Source_(__xcount_opt, (size),  __xcount(size)                              __exceptthat __maybenull)</div>
+<div class="disabled">#define __in_xcount_opt(size)                                   _SAL1_Source_(__in_xcount_opt, (size),  __in_xcount(size)                           __exceptthat __maybenull)</div>
+<div class="disabled">#define __out_xcount_opt(size)                                  _SAL1_Source_(__out_xcount_opt, (size),  __out_xcount(size)                          __exceptthat __maybenull)</div>
+<div class="disabled">#define __out_xcount_part_opt(size,length)                      _SAL1_Source_(__out_xcount_part_opt, (size,length),  __out_xcount_part(size,length)              __exceptthat __maybenull)</div>
+<div class="disabled">#define __out_xcount_full_opt(size)                             _SAL1_Source_(__out_xcount_full_opt, (size),  __out_xcount_full(size)                     __exceptthat __maybenull)</div>
+<div class="disabled">#define __inout_xcount_opt(size)                                _SAL1_Source_(__inout_xcount_opt, (size),  __inout_xcount(size)                        __exceptthat __maybenull)</div>
+<div class="disabled">#define __inout_xcount_part_opt(size,length)                    _SAL1_Source_(__inout_xcount_part_opt, (size, length),  __inout_xcount_part(size,length)            __exceptthat __maybenull)</div>
+<div class="disabled">#define __inout_xcount_full_opt(size)                           _SAL1_Source_(__inout_xcount_full_opt, (size),  __inout_xcount_full(size)                   __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_xcount(size)                                    _SAL1_Source_(__deref_xcount, (size),  __ecount(1) _Post_ __elem_readableTo(1) _Post_ __deref __notnull _Post_ __deref __inexpressible_writableTo(size))</div>
+<div class="disabled">#define __deref_in                                              _SAL1_Source_(__deref_in, (),  __in _Pre_ __deref __deref __readonly)</div>
+<div class="disabled">#define __deref_in_ecount(size)                                 _SAL1_Source_(__deref_in_ecount, (size),  __deref_in _Pre_ __deref __elem_readableTo(size))</div>
+<div class="disabled">#define __deref_in_bcount(size)                                 _SAL1_Source_(__deref_in_bcount, (size),  __deref_in _Pre_ __deref __byte_readableTo(size))</div>
+<div class="disabled">#define __deref_in_xcount(size)                                 _SAL1_Source_(__deref_in_xcount, (size),  __deref_in _Pre_ __deref __inexpressible_readableTo(size))</div>
+<div class="disabled">#define __deref_out_xcount(size)                                _SAL1_Source_(__deref_out_xcount, (size),  __deref_xcount(size) _Post_ __deref __valid __refparam)</div>
+<div class="disabled">#define __deref_out_xcount_part(size,length)                    _SAL1_Source_(__deref_out_xcount_part, (size,length),  __deref_out_xcount(size) _Post_ __deref __inexpressible_readableTo(length))</div>
+<div class="disabled">#define __deref_out_xcount_full(size)                           _SAL1_Source_(__deref_out_xcount_full, (size),  __deref_out_xcount_part(size,size))</div>
+<div class="disabled">#define __deref_out_xcount(size)                                _SAL1_Source_(__deref_out_xcount, (size),  __deref_xcount(size) _Post_ __deref __valid __refparam)</div>
+<div class="disabled">#define __inout_xcount_opt(size)                                _SAL1_Source_(__inout_xcount_opt, (size),  __inout_xcount(size)                        __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_xcount(size)                                    _SAL1_Source_(__deref_xcount, (size),  __ecount(1) _Post_ __elem_readableTo(1) _Post_ __deref __notnull _Post_ __deref __inexpressible_writableTo(size))</div>
+<div class="disabled">#define __deref_in                                              _SAL1_Source_(__deref_in, (),  __in _Pre_ __deref __deref __readonly)</div>
+<div class="disabled">#define __deref_in_ecount(size)                                 _SAL1_Source_(__deref_in_ecount, (size),  __deref_in _Pre_ __deref __elem_readableTo(size))</div>
+<div class="disabled">#define __deref_in_bcount(size)                                 _SAL1_Source_(__deref_in_bcount, (size),  __deref_in _Pre_ __deref __byte_readableTo(size))</div>
+<div class="disabled">#define __deref_in_xcount(size)                                 _SAL1_Source_(__deref_in_xcount, (size),  __deref_in _Pre_ __deref __inexpressible_readableTo(size))</div>
+<div class="disabled">#define __deref_out_xcount(size)                                _SAL1_Source_(__deref_out_xcount, (size),  __deref_xcount(size) _Post_ __deref __valid __refparam)</div>
+<div class="disabled">#define __deref_out_xcount_part(size,length)                    _SAL1_Source_(__deref_out_xcount_part, (size,length),  __deref_out_xcount(size) _Post_ __deref __inexpressible_readableTo(length))</div>
+<div class="disabled">#define __deref_out_xcount_full(size)                           _SAL1_Source_(__deref_out_xcount_full, (size),  __deref_out_xcount_part(size,size))</div>
+<div class="disabled">#define __deref_out_xcount(size)                                _SAL1_Source_(__deref_out_xcount, (size),  __deref_xcount(size) _Post_ __deref __valid __refparam)</div>
+<div class="disabled">#define __deref_inout_xcount(size)                              _SAL1_Source_(__deref_inout_xcount, (size),  __deref_inout _Pre_ __deref __inexpressible_writableTo(size) _Post_ __deref __inexpressible_writableTo(size))</div>
+<div class="disabled">#define __deref_inout_xcount_part(size,length)                  _SAL1_Source_(__deref_inout_xcount_part, (size,length),  __deref_inout_xcount(size) _Pre_ __deref __inexpressible_readableTo(length) _Post_ __deref __inexpressible_readableTo(length))</div>
+<div class="disabled">#define __deref_inout_xcount_full(size)                         _SAL1_Source_(__deref_inout_xcount_full, (size),  __deref_inout_xcount_part(size,size))</div>
+<div class="disabled">#define __deref_xcount_opt(size)                                _SAL1_Source_(__deref_xcount_opt, (size),  __deref_xcount(size)                        _Post_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_in_opt                                          _SAL1_Source_(__deref_in_opt, (),  __deref_in                                  _Pre_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_in_opt_out                                      _SAL1_Source_(__deref_in_opt_out, (),  __deref_inout                               _Pre_ __deref __exceptthat __maybenull  _Post_ __deref __notnull)</div>
+<div class="disabled">#define __deref_in_ecount_opt(size)                             _SAL1_Source_(__deref_in_ecount_opt, (size),  __deref_in_ecount(size)                     _Pre_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_in_bcount_opt(size)                             _SAL1_Source_(__deref_in_bcount_opt_, (size),  __deref_in_bcount(size)                     _Pre_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_in_xcount_opt(size)                             _SAL1_Source_(__deref_in_xcount_opt, (size),  __deref_in_xcount(size)                     _Pre_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_out_xcount_opt(size)                            _SAL1_Source_(__deref_out_xcount_opt, (size),  __deref_out_xcount(size)                    _Post_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_out_xcount_part_opt(size,length)                _SAL1_Source_(__deref_out_xcount_part_opt, (size,length),  __deref_out_xcount_part(size,length)        _Post_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_out_xcount_full_opt(size)                       _SAL1_Source_(__deref_out_xcount_full_opt, (size),  __deref_out_xcount_full(size)               _Post_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_inout_xcount_opt(size)                          _SAL1_Source_(__deref_inout_xcount_opt, (size),  __deref_inout_xcount(size)                  _Pre_ __deref __exceptthat __maybenull _Post_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_inout_xcount_part_opt(size,length)              _SAL1_Source_(__deref_inout_xcount_part_opt, (size,length),  __deref_inout_xcount_part(size,length)      _Pre_ __deref __exceptthat __maybenull _Post_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_inout_xcount_full_opt(size)                     _SAL1_Source_(__deref_inout_xcount_full_opt, (size),  __deref_inout_xcount_full(size)             _Pre_ __deref __exceptthat __maybenull _Post_ __deref __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_xcount(size)                                _SAL1_Source_(__deref_opt_xcount, (size),  __deref_xcount(size)                        __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_in                                          _SAL1_Source_(__deref_opt_in, (),  __deref_in                                  __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_in_ecount(size)                             _SAL1_Source_(__deref_opt_in_ecount, (size),  __deref_in_ecount(size)                     __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_in_bcount(size)                             _SAL1_Source_(__deref_opt_in_bcount, (size),  __deref_in_bcount(size)                     __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_in_xcount(size)                             _SAL1_Source_(__deref_opt_in_xcount, (size),  __deref_in_xcount(size)                     __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_out_xcount(size)                            _SAL1_Source_(__deref_opt_out_xcount, (size),  __deref_out_xcount(size)                    __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_out_xcount_part(size,length)                _SAL1_Source_(__deref_opt_out_xcount_part, (size,length),  __deref_out_xcount_part(size,length)        __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_out_xcount_full(size)                       _SAL1_Source_(__deref_opt_out_xcount_full, (size),  __deref_out_xcount_full(size)               __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_inout_xcount(size)                          _SAL1_Source_(__deref_opt_inout_xcount, (size),  __deref_inout_xcount(size)                  __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_inout_xcount_part(size,length)              _SAL1_Source_(__deref_opt_inout_xcount_part, (size,length),  __deref_inout_xcount_part(size,length)      __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_inout_xcount_full(size)                     _SAL1_Source_(__deref_opt_inout_xcount_full, (size),  __deref_inout_xcount_full(size)             __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_xcount_opt(size)                            _SAL1_Source_(__deref_opt_xcount_opt, (size),  __deref_xcount_opt(size)                    __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_in_opt                                      _SAL1_Source_(__deref_opt_in_opt, (),  __deref_in_opt                              __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_in_ecount_opt(size)                         _SAL1_Source_(__deref_opt_in_ecount_opt, (size),  __deref_in_ecount_opt(size)                 __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_in_bcount_opt(size)                         _SAL1_Source_(__deref_opt_in_bcount_opt, (size),  __deref_in_bcount_opt(size)                 __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_in_xcount_opt(size)                         _SAL1_Source_(__deref_opt_in_xcount_opt, (size),  __deref_in_xcount_opt(size)                 __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_out_xcount_opt(size)                        _SAL1_Source_(__deref_opt_out_xcount_opt, (size),  __deref_out_xcount_opt(size)                __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_out_xcount_part_opt(size,length)            _SAL1_Source_(__deref_opt_out_xcount_part_opt, (size,length),  __deref_out_xcount_part_opt(size,length)    __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_out_xcount_full_opt(size)                   _SAL1_Source_(__deref_opt_out_scount_full_opt, (size),  __deref_out_xcount_full_opt(size)           __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_inout_xcount_opt(size)                      _SAL1_Source_(__deref_opt_inout_xcount_opt, (size),  __deref_inout_xcount_opt(size)              __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_inout_xcount_part_opt(size,length)          _SAL1_Source_(__deref_inout_xcount_part_opt(size, (size,length), length)  __exceptthat __maybenull)</div>
+<div class="disabled">#define __deref_opt_inout_xcount_full_opt(size)                 _SAL1_Source_(__deref_opt_inout_scount_full_opt, (size),  __deref_inout_xcount_full_opt(size)         __exceptthat __maybenull)</div>
+
+<div class="disabled">#define __deref_in_ecount_iterator(size, incr)                  _SAL1_Source_(__deref_in_ecount_iterator, (size,incr),  __inout _Pre_ __deref __elem_readableTo(size) __deref_out_range(==, _Old_(*_Curr_) + incr))</div>
+<div class="disabled">#define __deref_out_ecount_iterator(size, incr)                 _SAL1_Source_(__deref_out_ecount_iterator, (size,incr),  __inout _Pre_ __deref __elem_writableTo(size) __deref_out_range(==, _Old_(*_Curr_) + incr))</div>
+<div class="disabled">#define __deref_inout_ecount_iterator(size, incr)               _SAL1_Source_(__deref_inout_ecount_iterator, (size,incr),  __inout _Pre_ __deref __elem_readableTo(size) _Pre_ __deref __elem_writableTo(size) __deref_out_range(==, _Old_(*_Curr_) + incr))</div>
+
+<div class="disabled">#define __post_bcount(size)                                     _SAL1_Source_(__post_bcount, (size),  _Post_ __byte_writableTo(size))</div>
+<div class="disabled">#define __post_ecount(size)                                     _SAL1_Source_(__post_ecount, (size),  _Post_ __elem_writableTo(size))</div>
+
+<div class="disabled">#define __deref_realloc_bcount(insize, outsize)                 _SAL1_Source_(__deref_realloc_bcount, (insize,outsize),  __inout _Pre_ __deref __byte_readableTo(insize) _Post_ __deref __byte_writableTo(outsize))</div>
+
+<div class="token cpp_comment ">/* __in_ecount_or_z(c) specifies semantics like strncmp, where a string
+ * parameter is either null terminated, or valid up to c elements.
+ */</div>
+<div class="disabled">#define __in_ecount_or_z(c)            _SAL1_Source_(__in_ecount_or_z, (c),  _When_(_String_length_(_Curr_) &lt; (c), __in_z) \</div>
+<div class="disabled">                                       _When_(_String_length_(_Curr_) &gt;= (c), __in_ecount(c)))</div>
+
+
+<div class="token cpp_comment ">/* Provide default definition to be overridden when needed */</div>
+<div class="disabled">#define __post_nullnullterminated</div>
+
+<div class="token cpp_comment ">/* Must protect redfinitions of macros to workaround rc.exe issues. */</div>
+<div class="disabled">#ifndef RC_INVOKED // [</div>
+
+<div class="disabled">#undef __nullnullterminated</div>
+<div class="disabled">#define __nullnullterminated _SAL1_Source_(__nullnullterminated, (),  __inexpressible_readableTo(&quot;string terminated by two nulls&quot;) __nullterminated)</div>
+
+<div class="disabled">#undef __post_nullnullterminated</div>
+<div class="disabled">#define __post_nullnullterminated _SAL1_Source_(__post_nullnullterminated, (),  _Post_ __inexpressible_readableTo(&quot;string terminated by two nulls&quot;) _Post_ __nullterminated)</div>
+
+<div class="disabled">#endif // ]
+#endif  //__SAL_H_FULL_VER &lt;= 140050727 // ]</div>
+
+<div class="token cpp_comment ">/************************************************************************
+ New extensions to sal.h follow here.
+*************************************************************************/</div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 1000) &amp;&amp; !defined(__midl) &amp;&amp; defined(_PREFAST_) // [</div>
+
+<div class="disabled">#define __file_parser(typ)                  _SAL_L_Source_(__file_parser, (typ),  _SA_annotes2(SAL_file_parser,&quot;function&quot;,typ))</div>
+<div class="disabled">#define __file_parser_class(typ)            _SAL_L_Source_(__file_parser_class, (typ), _SA_annotes2(SAL_file_parser,&quot;class&quot;,typ))</div>
+<div class="disabled">#define __file_parser_library(typ)          extern int _SAL_L_Source_(__file_parser_library, (typ), _SA_annotes2(SAL_file_parser, &quot;library&quot;, typ)) __iSALFileParserLibrary##typ;</div>
+<div class="disabled">#define __source_code_content(typ)          extern int _SAL_L_Source_(__source_code_content, (typ),  _SA_annotes1(SAL_source_code_content, typ)) __iSAL_Source_Code_Content##typ;</div>
+<div class="disabled">#define __class_code_content(typ)           _SAL_L_Source_(__class_code_content, (typ),  _SA_annotes1(SAL_class_code_content, typ))</div>
+<div class="disabled">#define __analysis_assert(e)                __assume(e)</div>
+<div class="disabled">#define __analysis_hint(hint)               _SAL_L_Source_(__analysis_hint, (hint),  _SA_annotes1(SAL_analysisHint, hint))</div>
+<div class="disabled">// For &quot;breakpoint&quot;: doesn&apos;t return as far as analysis is concerned.</div>
+<div class="disabled">#define __analysis_noreturn                 __declspec(noreturn)</div>
+<div class="disabled">/* Internal defintions */</div>
+<div class="disabled">#define __inner_data_source(src_raw)        _SAL_L_Source_(__inner_data_source, (src_raw),  _SA_annotes1(SAL_untrusted_data_source,src_raw))</div>
+<div class="disabled">#define __inner_this_data_source(src_raw)   _SAL_L_Source_(__inner_this_data_source, (src_raw),  _SA_annotes1(SAL_untrusted_data_source_this,src_raw))</div>
+<div class="disabled">#define __inner_out_validated(typ_raw)      _SAL_L_Source_(__inner_out_validated, (typ_raw),  _Post_ _SA_annotes1(SAL_validated,typ_raw))</div>
+<div class="disabled">#define __inner_this_out_validated(typ_raw) _SAL_L_Source_(__inner_this_out_validated, (typ_raw),  _SA_annotes1(SAL_validated_this,typ_raw))</div>
+<div class="disabled">#define __inner_assume_validated_dec        __inline __nothrow void __AssumeValidated(__inner_out_validated(&quot;BY_DESIGN&quot;) const void *p) {p;}</div>
+<div class="disabled">#define __inner_assume_validated(p)         __AssumeValidated(p)</div>
+<div class="disabled">#define __inner_transfer(formal)            _SAL_L_Source_(__inner_transfer, (formal),  _SA_annotes1(SAL_transfer_adt_property_from,formal))</div>
+<div class="disabled">#define __inner_encoded                     _SAL_L_Source_(__inner_encoded, (),  _SA_annotes0(SAL_encoded))</div>
+
+<div class="disabled">#if defined(_MSC_EXTENSIONS) || defined(_PREFAST_) || defined(OACR) // [</div>
+<div class="disabled">#define __inner_adt_prop(adt,prop)               _SAL_L_Source_(__inner_adt_prop, (adt,prop),  _SA_annotes2(SAL_adt, adt,prop))</div>
+<div class="disabled">#define __inner_adt_add_prop(adt,prop)           _SAL_L_Source_(__inner_adt_add_prop, (adt,prop),  _SA_annotes2(SAL_add_adt_property,adt,prop))</div>
+<div class="disabled">#define __inner_adt_remove_prop(adt,prop)        _SAL_L_Source_(__inner_adt_remove_prop, (adt,prop),  _SA_annotes2(SAL_remove_adt_property,adt,prop))</div>
+<div class="disabled">#define __inner_adt_transfer_prop(arg)           _SAL_L_Source_(__inner_adt_trasnfer_prop, (arg),  _SA_annotes1(SAL_transfer_adt_property_from,arg))</div>
+<div class="disabled">#define __inner_adt_type_props(typ)              _SAL_L_Source_(__inner_adt_type_props, (typ), _SA_annotes1(SAL_post_type,typ))</div>
+<div class="disabled">#define __inner_volatile                         _SAL_L_Source_(__inner_volatile, (),  _SA_annotes0(SAL_volatile))</div>
+<div class="disabled">#define __inner_nonvolatile                      _SAL_L_Source_(__inner_nonvolatile, (),  _SA_annotes0(SAL_nonvolatile))</div>
+<div class="disabled">#define __inner_possibly_notnullterminated       _SAL_L_Source_(__inner_possibly_notnulltermiated, (),  _SA_annotes1(SAL_nullTerminated,__maybe))</div>
+<div class="disabled">#endif // ]</div>
+
+<div class="disabled">///////////////////////////////////////////////////////////////////////////////</div>
+<div class="disabled">//</div>
+<div class="disabled">// Low Level Memory Correctness annotations</div>
+<div class="disabled">// </div>
+<div class="disabled">// These are the implementation details for the Memory Correctness annotations</div>
+<div class="disabled">// that support checking of kernel/user memory handling within kernel mode code.</div>
+<div class="disabled">//</div>
+<div class="disabled">///////////////////////////////////////////////////////////////////////////////</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// The enum that defines the types of memory context that exist in the system.</div>
+<div class="disabled">//</div>
+<div class="disabled">enum _SAL_ExecutionContext { SAL_KernelMode, SAL_UserMode };</div>
+
+<div class="disabled">// </div>
+<div class="disabled">// temporary hack: Globals that stand in for the globally available SAL-pseudo-variables</div>
+<div class="disabled">// _Current_execution_context_ and _Previous_execution_context_. NMM will need to be modified</div>
+<div class="disabled">// to offer these.</div>
+<div class="disabled">//</div>
+<div class="disabled">enum _SAL_ExecutionContext _Previous_execution_context_;</div>
+<div class="disabled">enum _SAL_ExecutionContext _Current_execution_context_;</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// Annotation elements that support the memory origin concept.</div>
+<div class="disabled">// The &quot;When&quot; variant is a hack for now until NMM can parse _Previous_execution_context_</div>
+<div class="disabled">// and _Current_execution_context_</div>
+<div class="disabled">//</div>
+<div class="disabled">__ANNOTATION(SAL_MemoryOrigin(__In_impl_ enum _SAL_ExecutionContext);)</div>
+<div class="disabled">__ANNOTATION(SAL_MemoryOriginWhen(__In_impl_ enum _SAL_ExecutionContext, __In_impl_ enum _SAL_ExecutionContext);)</div>
+
+<div class="disabled">#define _Memory_origin_(context)    _SAL2_Source_(_Memory_origin_, (context), _SA_annotes1(SAL_MemoryOrigin, context))</div>
+<div class="disabled">#define _Memory_origin_when_(previousContext, context)   _SAL2_Source_(_Memory_origin_when_, (previousContext, context), _SA_annotes2(SAL_MemoryOriginWhen, previousContext, context))</div>
+
+
+<div class="disabled">// </div>
+<div class="disabled">// Annotation elements that support the memory accessibility concept.</div>
+<div class="disabled">// The &quot;When&quot; variant is a hack for new until NMM can parse _Previous_execution_context_</div>
+<div class="disabled">// and _Current_execution_context_</div>
+<div class="disabled">//</div>
+<div class="disabled">__ANNOTATION(SAL_AccessibleTo(__In_impl_ enum _SAL_ExecutionContext, __In_impl_ __int64 count);)</div>
+<div class="disabled">__ANNOTATION(SAL_AccessibleToWhen(__In_impl_ enum _SAL_ExecutionContext, __In_impl_ enum _SAL_ExecutionContext, __In_impl_ __int64 count);)</div>
+
+<div class="disabled">#define _Accessible_bytes_(context, expr)    _SAL2_Source_(_Accessible_bytes_, (context, expr), _SA_annotes2(SAL_AccessibleTo, context, expr))</div>
+<div class="disabled">#define _Accessible_bytes_when_(previousContext, context, expr)   _SAL2_Source_(_Accessible_bytes_when_, (context, previousContext, expr), _SA_annotes3(SAL_AccessibleToWhen, context, previousContext, expr))</div>
+<div class="disabled">#define _Pre_accessible_bytes_(context, expr)      _Pre_ _Accessible_bytes_(context, expr)</div>
+<div class="disabled">#define _Pre_accessible_bytes_when_(context, previousContext, expr)   _Pre_ _Accessible_bytes_when_(context, previousContext, expr)</div>
+
+
+<div class="disabled">///////////////////////////////////////////////////////////////////////////////</div>
+<div class="disabled">//</div>
+<div class="disabled">// High Level Memory Correctness annotations</div>
+<div class="disabled">//</div>
+<div class="disabled">// These annotations form the expected interface for users to the Memory Correctness</div>
+<div class="disabled">// annotations that support checking of kernel/user memory handling within</div>
+<div class="disabled">// kernel mode code.</div>
+<div class="disabled">// </div>
+<div class="disabled">///////////////////////////////////////////////////////////////////////////////</div>
+<div class="disabled">#define _User_            _Memory_origin_when_(SAL_UserMode, SAL_UserMode) _Pre_accessible_bytes_when_(SAL_UserMode, SAL_KernelMode, 0)</div>
+<div class="disabled">#define _User_on_(expr)   _When_((expr) != SAL_KernelMode, _User_always_)</div>
+<div class="disabled">#define _User_always_     _Memory_origin_(SAL_UserMode) _Pre_accessible_bytes_(SAL_KernelMode, 0)</div>
+<div class="disabled">#define _User_always_and_needs_probe_on_(mode)  _User_always_ _Pre_accessible_bytes_when_(SAL_UserMode, SAL_KernelMode, 0) _Pre_satisfies_(mode == _Previous_execution_context_)</div>
+<div class="disabled">#define _Kernel_entry_              _SAL2_Source_(_Kernel_entry_, (), __inner_control_entrypoint(UserToKernel))</div>
+<div class="disabled">#define _Kernel_entry_always_       _SAL2_Source_(_Kernel_entry_, (), __inner_control_entrypoint(UserToKernel)) _Pre_satisfies_(_Previous_execution_context_ == SAL_UserMode)</div>
+
+
+<div class="disabled">#else // ][</div>
+
+<div class="disabled">#define __file_parser(typ)</div>
+<div class="disabled">#define __file_parser_class(typ)</div>
+<div class="disabled">#define __file_parser_library(typ)</div>
+<div class="disabled">#define __source_code_content(typ)</div>
+<div class="disabled">#define __class_code_content(typ)</div>
+<div class="disabled">#define __analysis_assert(e)</div>
+<div class="disabled">#define __analysis_hint(hint)</div>
+<div class="disabled">#define __analysis_noreturn</div>
+<div class="token cpp_comment ">/* Internal defintions */</div>
+<div class="disabled">#define __inner_data_source(src_raw)</div>
+<div class="disabled">#define __inner_this_data_source(src_raw)</div>
+<div class="disabled">#define __inner_out_validated(typ_raw)</div>
+<div class="disabled">#define __inner_this_out_validated(typ_raw)</div>
+<div class="disabled">#define __inner_assume_validated_dec</div>
+<div class="disabled">#define __inner_assume_validated(p)</div>
+<div class="disabled">#define __inner_transfer(formal)</div>
+<div class="disabled">#define __inner_encoded</div>
+<div class="disabled">#define __inner_adt_prop(adt,prop)</div>
+<div class="disabled">#define __inner_adt_add_prop(adt,prop)</div>
+<div class="disabled">#define __inner_adt_remove_prop(adt,prop)</div>
+<div class="disabled">#define __inner_adt_transfer_prop(arg)</div>
+<div class="disabled">#define __inner_adt_type_props(typ)</div>
+<div class="disabled">#define __inner_volatile</div>
+<div class="disabled">#define __inner_nonvolatile</div>
+<div class="disabled">#define __inner_possibly_notnullterminated</div>
+
+<div class="token cpp_comment ">///////////////////////////////////////////////////////////////////////////////</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Low Level Memory Correctness annotations</div>
+<div class="token cpp_comment ">// </div>
+<div class="token cpp_comment ">// These are the implementation details for the Memory Correctness annotations</div>
+<div class="token cpp_comment ">// that support checking of kernel/user memory handling within kernel mode code.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">///////////////////////////////////////////////////////////////////////////////</div>
+<div class="disabled">#define _Memory_origin_(context)</div>
+<div class="disabled">#define _Memory_origin_when_(previousContext, context)</div>
+<div class="disabled">#define _Accessible_bytes_(context, expr)    </div>
+<div class="disabled">#define _Accessible_bytes_when_(previousContext, context, expr)</div>
+<div class="disabled">#define _Pre_accessible_bytes_(context, expr)</div>
+<div class="disabled">#define _Pre_accessible_bytes_when_(context, previousContext, expr)   </div>
+
+
+<div class="token cpp_comment ">///////////////////////////////////////////////////////////////////////////////</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// High Level Memory Correctness annotations</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// These annotations form the expected interface for users to the Memory Correctness</div>
+<div class="token cpp_comment ">// annotations that support checking of kernel/user memory handling within</div>
+<div class="token cpp_comment ">// kernel mode code.</div>
+<div class="token cpp_comment ">// </div>
+<div class="token cpp_comment ">///////////////////////////////////////////////////////////////////////////////</div>
+<div class="disabled">#define _User_           </div>
+<div class="disabled">#define _User_on_(expr)  </div>
+<div class="disabled">#define _User_always_    </div>
+<div class="disabled">#define _User_always_and_needs_probe_on_(mode)</div>
+<div class="disabled">#define _Kernel_entry_              </div>
+<div class="disabled">#define _Kernel_entry_always_</div>
+
+<div class="disabled">#endif // ] // #if (_MSC_VER &gt;= 1000) &amp;&amp; !defined(__midl) &amp;&amp; defined(_PREFAST_)</div>
+
+<div class="disabled">#define __field_ecount(size)                _SAL1_Source_(__field_ecount, (size),  __notnull __elem_writableTo(size))</div>
+<div class="disabled">#define __field_bcount(size)                _SAL1_Source_(__field_bcount, (size),  __notnull __byte_writableTo(size))</div>
+<div class="disabled">#define __field_xcount(size)                _SAL1_Source_(__field_xcount, (size),  __notnull __inexpressible_writableTo(size))</div>
+
+<div class="disabled">#define __field_ecount_opt(size)            _SAL1_Source_(__field_ecount_opt, (size),  __maybenull __elem_writableTo(size))</div>
+<div class="disabled">#define __field_bcount_opt(size)            _SAL1_Source_(__field_bcount_opt, (size),  __maybenull __byte_writableTo(size))</div>
+<div class="disabled">#define __field_xcount_opt(size)            _SAL1_Source_(__field_xcount_opt, (size),  __maybenull __inexpressible_writableTo(size))</div>
+
+<div class="disabled">#define __field_ecount_part(size,init)      _SAL1_Source_(__field_ecount_part, (size,init),  __notnull __elem_writableTo(size) __elem_readableTo(init))</div>
+<div class="disabled">#define __field_bcount_part(size,init)      _SAL1_Source_(__field_bcount_part, (size,init),  __notnull __byte_writableTo(size) __byte_readableTo(init))</div>
+<div class="disabled">#define __field_xcount_part(size,init)      _SAL1_Source_(__field_xcount_part, (size,init),  __notnull __inexpressible_writableTo(size) __inexpressible_readableTo(init))</div>
+
+<div class="disabled">#define __field_ecount_part_opt(size,init)  _SAL1_Source_(__field_ecount_part_opt, (size,init),  __maybenull __elem_writableTo(size) __elem_readableTo(init))</div>
+<div class="disabled">#define __field_bcount_part_opt(size,init)  _SAL1_Source_(__field_bcount_part_opt, (size,init), __maybenull __byte_writableTo(size) __byte_readableTo(init))</div>
+<div class="disabled">#define __field_xcount_part_opt(size,init)  _SAL1_Source_(__field_xcount_part_opt, (size,init),  __maybenull __inexpressible_writableTo(size) __inexpressible_readableTo(init))</div>
+
+<div class="disabled">#define __field_ecount_full(size)           _SAL1_Source_(__field_ecount_full, (size),  __field_ecount_part(size,size))</div>
+<div class="disabled">#define __field_bcount_full(size)           _SAL1_Source_(__field_bcount_full, (size),  __field_bcount_part(size,size))</div>
+<div class="disabled">#define __field_xcount_full(size)           _SAL1_Source_(__field_xcount_full, (size),  __field_xcount_part(size,size))</div>
+
+<div class="disabled">#define __field_ecount_full_opt(size)       _SAL1_Source_(__field_ecount_full_opt, (size),  __field_ecount_part_opt(size,size))</div>
+<div class="disabled">#define __field_bcount_full_opt(size)       _SAL1_Source_(__field_bcount_full_opt, (size), __field_bcount_part_opt(size,size))</div>
+<div class="disabled">#define __field_xcount_full_opt(size)       _SAL1_Source_(__field_xcount_full_opt, (size),  __field_xcount_part_opt(size,size))</div>
+
+<div class="disabled">#define __field_nullterminated              _SAL1_Source_(__field_nullterminated, (),  __nullterminated)</div>
+
+<div class="disabled">#define __struct_bcount(size)               _SAL1_Source_(__struct_bcount, (size),  __byte_writableTo(size))</div>
+<div class="disabled">#define __struct_xcount(size)               _SAL1_Source_(__struct_xcount, (size),  __inexpressible_writableTo(size))</div>
+
+<div class="disabled">#define __out_awcount(expr,size)            _SAL1_Source_(__out_awcount, (expr,size),  _Pre_ __notnull \</div>
+<div class="disabled">					    __byte_writableTo((expr) ? (size) : (size) * 2) \</div>
+<div class="disabled">                                            _Post_ __valid __refparam)</div>
+<div class="disabled">#define __in_awcount(expr,size)             _SAL1_Source_(__in_awcount, (expr,size),  _Pre_ __valid \</div>
+<div class="disabled">                                            _Pre_ _Notref_ __deref __readonly \</div>
+<div class="disabled">				            __byte_readableTo((expr) ? (size) : (size) * 2))</div>
+<div class="disabled">#define __post_invalid                      _SAL1_Source_(__post_invalid, (),  _Post_ __notvalid)</div>
+<div class="token cpp_comment ">/* integer related macros */</div>
+<div class="disabled">#define __allocator                         _SAL_L_Source_(__allocator, (), __inner_allocator)</div>
+<div class="disabled">#define __deallocate(kind)                  _SAL_L_Source_(__deallocate, (kind), _Pre_ __notnull __post_invalid)</div>
+<div class="disabled">#define __deallocate_opt(kind)              _SAL_L_Source_(__deallocate_opt, (kind), _Pre_ __maybenull __post_invalid)</div>
+<div class="disabled">#define __bound                             _SAL_L_Source_(__bound, (), __inner_bound)</div>
+<div class="disabled">#define __range(lb,ub)                      _SAL_L_Source_(__range, (lb,ub), __inner_range(lb,ub))</div>
+<div class="disabled">#define __in_bound                          _SAL_L_Source_(__in_bound, (), _Pre_ __inner_bound)</div>
+<div class="disabled">#define __out_bound                         _SAL_L_Source_(__out_bound, (), _Post_ __inner_bound)</div>
+<div class="disabled">#define __deref_out_bound                   _SAL_L_Source_(__deref_out_bound, (), _Post_ __deref __inner_bound)</div>
+<div class="disabled">#define __in_range(lb,ub)                   _SAL_L_Source_(__in_range, (lb,ub), _Pre_ __inner_range(lb,ub))</div>
+<div class="disabled">#define __out_range(lb,ub)                  _SAL_L_Source_(__out_range, (lb,ub), _Post_ __inner_range(lb,ub))</div>
+<div class="disabled">#define __deref_in_range(lb,ub)             _SAL_L_Source_(__deref_in_range, (lb,ub), _Pre_ __deref __inner_range(lb,ub))</div>
+<div class="disabled">#define __deref_out_range(lb,ub)            _SAL_L_Source_(__deref_out_range, (lb,ub), _Post_ __deref __inner_range(lb,ub))</div>
+<div class="disabled">#define __deref_inout_range(lb,ub)          _SAL_L_Source_(__deref_inout_range, (lb,ub), __deref_in_range(lb,ub) __deref_out_range(lb,ub))</div>
+<div class="disabled">#define __field_range(lb,ub)                _SAL_L_Source_(__field_range, (lb,ub), __range(lb,ub))</div>
+<div class="disabled">#define __field_data_source(src_sym)        _SAL_L_Source_(__field_data_source, (lb,ub), __inner_data_source(#src_sym))</div>
+
+<div class="disabled">#define __range_max(a,b)                    _SAL_L_Source_(__range_max, (a,b), __range(==, a &gt; b ? a : b))</div>
+<div class="disabled">#define __range_min(a,b)                    _SAL_L_Source_(__range_min, (a,b), __range(==, a &lt; b ? a : b))</div>
+
+
+<div class="token cpp_comment ">/* Penetration review macros */</div>
+<div class="disabled">#define __in_data_source(src_sym)           _SAL_L_Source_(__in_data_source, (src_sym),  _Pre_ __inner_data_source(#src_sym))</div>
+<div class="disabled">#define __out_data_source(src_sym)          _SAL_L_Source_(__out_data_source, (src_sym),  _Post_ __inner_data_source(#src_sym))</div>
+<div class="disabled">#define __out_validated(typ_sym)            _SAL_L_Source_(__out_validated, (src_sym),  __inner_out_validated(#typ_sym))</div>
+<div class="disabled">#define __this_out_data_source(src_sym)     _SAL_L_Source_(__this_out_data_source, (src_sym),  __inner_this_data_source(#src_sym))</div>
+<div class="disabled">#define __this_out_validated(typ_sym)       _SAL_L_Source_(__this_out_validated, (src_sym),  __inner_this_out_validated(#typ_sym))</div>
+<div class="disabled">#define __transfer(formal)                  _SAL_L_Source_(__transfer, (src_sym),  _Post_ __inner_transfer(formal))</div>
+<div class="disabled">#define __rpc_entry                         _SAL_L_Source_(__rpc_entry, (formal),  __inner_control_entrypoint(RPC))</div>
+<div class="disabled">#define __kernel_entry                      _SAL_L_Source_(__kernel_entry, (),  __inner_control_entrypoint(UserToKernel))</div>
+<div class="disabled">#define __gdi_entry                         _SAL_L_Source_(__gdi_entry, (),  __inner_control_entrypoint(GDI))</div>
+<div class="disabled">#define __encoded_pointer                   _SAL_L_Source_(__encoded_pointer, (),  __inner_encoded)</div>
+<div class="disabled">#define __encoded_array                     _SAL_L_Source_(__encoded_array, (),  __inner_encoded)</div>
+<div class="disabled">#define __field_encoded_pointer             _SAL_L_Source_(__field_encoded_pointer, (),  __inner_encoded)</div>
+<div class="disabled">#define __field_encoded_array               _SAL_L_Source_(__field_encoded_array, (),  __inner_encoded)</div>
+<div class="disabled">#if defined(_MSC_EXTENSIONS) || defined(_PREFAST_) || defined(OACR) // [</div>
+<div class="disabled">#define __type_has_adt_prop(adt,prop)       _SAL_L_Source_(__type_has_adt_prop, (adt,prop),  __inner_adt_prop(adt,prop))</div>
+<div class="disabled">#define __out_has_adt_prop(adt,prop)        _SAL_L_Source_(__out_has_adt_prop, (adt,prop),  _Post_ __inner_adt_add_prop(adt,prop))</div>
+<div class="disabled">#define __out_not_has_adt_prop(adt,prop)    _SAL_L_Source_(__out_not_has_adt_prop, (adt,prop),  _Post_ __inner_adt_remove_prop(adt,prop))</div>
+<div class="disabled">#define __out_transfer_adt_prop(arg)        _SAL_L_Source_(__out_transfer_adt_prop, (arg),  _Post_ __inner_adt_transfer_prop(arg))</div>
+<div class="disabled">#define __out_has_type_adt_props(typ)       _SAL_L_Source_(__out_has_type_adt_props, (typ),  _Post_ __inner_adt_type_props(typ))</div>
+
+<div class="token cpp_comment ">/* useful PFD related macros */</div>
+<div class="disabled">#define __possibly_notnullterminated        _SAL_L_Source_(__possibly_notnullterminated, (),  __inner_possibly_notnullterminated)</div>
+
+<div class="token cpp_comment ">/* Windows Internal */</div>
+<div class="disabled">#define __volatile                          _SAL_L_Source_(__volatile, (),  __inner_volatile)</div>
+<div class="disabled">#define __nonvolatile                       _SAL_L_Source_(__nonvolatile, (),  __inner_nonvolatile)</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define __out_has_type_adt_props(typ)       /* nothing */
+#endif</div>
+<div class="disabled">#define __deref_volatile                    _SAL_L_Source_(__deref_volatile, (),  __deref __volatile)</div>
+<div class="disabled">#define __deref_nonvolatile                 _SAL_L_Source_(__deref_nonvolatile, (),  __deref __nonvolatile)</div>
+
+<div class="token cpp_comment ">/* declare stub functions for macros */</div>
+<div class="disabled">__inner_assume_validated_dec</div>
+<div class="disabled">__inner_assume_bound_dec</div>
+<div class="disabled">#define __analysis_assume_nullterminated(x) _Analysis_assume_nullterminated_(x)</div>
+<div class="disabled">#define __assume_validated(p) __inner_assume_validated(p)</div>
+<div class="disabled">#define __assume_bound(i) __inner_assume_bound(i)</div>
+
+
+<div class="token cpp_comment ">/**************************************************************************
+* SAL 2 extensions for Windows-specific APIs.
+***************************************************************************/</div>
+
+<div class="token cpp_comment ">// Annotation for parameters that are not used in any way by the function.</div>
+<div class="token cpp_comment ">// Unlike _Reserved_, an _Unreferenced_parameter_ pointer need not be NULL.</div>
+<div class="disabled">#ifndef _Unreferenced_parameter_</div>
+<div class="disabled">#define _Unreferenced_parameter_  _SAL2_Source_(_Unreferenced_parameter_, (), _Const_)
+#endif</div>
+
+<div class="token cpp_comment ">// Pointer parameters that are freed by the function, and thus the pointed-to</div>
+<div class="token cpp_comment ">// memory should not be used after return.</div>
+<div class="disabled">#ifndef _Frees_ptr_</div>
+<div class="disabled">#define _Frees_ptr_               _SAL_L_Source_(_Frees_ptr_, (),  _Pre_notnull_ _Post_ptr_invalid_ __drv_freesMem(Mem))
+#endif</div>
+<div class="disabled">#ifndef _Frees_ptr_opt_</div>
+<div class="disabled">#define _Frees_ptr_opt_           _SAL_L_Source_(_Frees_ptr_opt_, (),  _Pre_maybenull_ _Post_ptr_invalid_ __drv_freesMem(Mem))
+#endif</div>
+
+
+<div class="token cpp_comment ">// Functions which behave like realloc in that they may succeed by</div>
+<div class="token cpp_comment ">// freeing one block of memory and allocating another, or may fail, in</div>
+<div class="token cpp_comment ">// which case the original block is still valid, or may be used to</div>
+<div class="token cpp_comment ">// free memory directly by requesting that the new block is of size</div>
+<div class="token cpp_comment ">// zero.  We do not say here whether the before may be null, we leave</div>
+<div class="token cpp_comment ">// that to the annotation on the argument</div>
+<div class="disabled">#define _Reallocation_function_(after, before, size) \</div>
+<div class="disabled">       _Success_((after) != NULL || (size) == 0) \</div>
+<div class="disabled">       _At_((after), _Post_maybenull_ _Post_writable_byte_size_(size) \</div>
+<div class="disabled">            _When_(((before) == NULL || (size) &gt; 0), _Must_inspect_result_)) \</div>
+<div class="disabled">       _At_((before), _Post_ptr_invalid_ __drv_freesMem(Mem))</div>
+
+<div class="disabled">#define _Ret_reallocated_bytes_(before, size) \</div>
+<div class="disabled">       _Reallocation_function_(_Curr_, before, size)</div>
+
+
+<div class="token cpp_comment ">// NLS APIs allow strings to be specified either by an element count or</div>
+<div class="token cpp_comment ">// null termination. Unlike _In_reads_or_z_, this is not whichever comes</div>
+<div class="token cpp_comment ">// first, but based on whether the size is negative or not.</div>
+<div class="disabled">#define _In_NLS_string_(size)     _SAL_L_Source_(_In_NLS_string_, (size),  _When_((size) &lt; 0,  _In_z_)           \</div>
+<div class="disabled">                                  _When_((size) &gt;= 0, _In_reads_(size)))</div>
+
+
+<div class="token cpp_comment ">// Minifilter CompletionContext parameters on the pre-operation callback</div>
+<div class="token cpp_comment ">// default to NULL.  For return type FLT_PREOP_SUCCESS_WITH_CALLBACK or</div>
+<div class="token cpp_comment ">// FLT_PREOP_SYNCHRONIZE, it may be set to NULL or a valid pointer.  For all</div>
+<div class="token cpp_comment ">// other returns, it must be NULL.</div>
+<div class="disabled">#define _Flt_CompletionContext_Outptr_   \</div>
+<div class="disabled">           _SAL_L_Source_(_Flt_CompletionContext_Outptr_, (),  _Outptr_result_maybenull_ _Pre_valid_ \</div>
+<div class="disabled">           _At_(*_Curr_, _Pre_null_ \</div>
+<div class="disabled">               _When_(return != FLT_PREOP_SUCCESS_WITH_CALLBACK &amp;&amp; return != FLT_PREOP_SYNCHRONIZE, _Post_null_)))</div>
+
+<div class="token cpp_comment ">// Minifilter ConnectionCookie parameters on the port connect notify callback</div>
+<div class="token cpp_comment ">// default to NULL.  On successful return, it may be set to NULL or non-NULL,</div>
+<div class="token cpp_comment ">// but it must be NULL on failure.</div>
+<div class="disabled">#define _Flt_ConnectionCookie_Outptr_      \</div>
+<div class="disabled">     _SAL_L_Source_(_Flt_ConnectionCookie_Outptr_, (),  _Outptr_result_maybenull_ _Pre_valid_ \</div>
+<div class="disabled">     _At_(*_Curr_, _Pre_null_ _On_failure_(_Post_null_)))</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// A common pattern is to pass an &quot;_Inout_ PCHAR* ppBuf&quot; of size &quot;_Inout_ DWORD* pSize&quot;</div>
+<div class="token cpp_comment ">// to a function that writes to **pBuf, incrementing *ppBuf to point to one</div>
+<div class="token cpp_comment ">// past the last written byte. Thus the length of the write is</div>
+<div class="token cpp_comment ">// (*ppBuf - Old(*ppBuf)). The size of the remaining unwritten capacity</div>
+<div class="token cpp_comment ">// is written to *pSize.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This pattern is frequently used when progressively filling a</div>
+<div class="token cpp_comment ">// large buffer in chunks</div>
+<div class="token cpp_comment ">// (e.g. when reading from a network interface in a driver).</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// It is expected that these supplementary annotations would be used inside an</div>
+<div class="token cpp_comment ">// _At_, like so:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// _At_(*ppBuf, _Writes_and_advances_ptr_(*pBufSize))</div>
+<div class="token cpp_comment ">// HRESULT WriteChunkOfData(_Inout_ PCHAR* ppBuf, _Inout_ DWORD* pBufSize);</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#ifndef _Writes_and_advances_ptr_ // [</div>
+<div class="disabled">#define _Writes_and_advances_ptr_(size) \</div>
+<div class="disabled">                                _SAL2_Source_(_Writes_and_advances_ptr_, (size),  _At_((void*)_Curr_, _Inout_) \</div>
+<div class="disabled">                                _At_(_Curr_, \</div>
+<div class="disabled">                                    _Pre_writable_size_(size) \</div>
+<div class="disabled">                                    _Post_writable_size_(size) \</div>
+<div class="disabled">                                    _Post_satisfies_(_Curr_ - _Old_(_Curr_) == _Old_(size) - size)) \</div>
+<div class="disabled">                                _At_(_Old_(_Curr_), \</div>
+<div class="disabled">                                    _Post_readable_size_(_Old_(size) - size)))
+#endif // ]</div>
+
+<div class="disabled">#ifndef _Writes_bytes_and_advances_ptr_ // [</div>
+<div class="disabled">#define _Writes_bytes_and_advances_ptr_(size) \</div>
+<div class="disabled">                                _SAL2_Source_(_Writes_bytes_and_advances_ptr, (size),  _At_((void*)_Curr_, _Inout_) \</div>
+<div class="disabled">                                _At_(_Curr_, \</div>
+<div class="disabled">                                    _Pre_writable_byte_size_(size) \</div>
+<div class="disabled">                                    _Post_writable_byte_size_(size) \</div>
+<div class="disabled">                                    _Post_satisfies_(((char*)_Curr_) - ((char*)_Old_(_Curr_)) == _Old_(size) - size)) \</div>
+<div class="disabled">                                _At_(_Old_(_Curr_), \</div>
+<div class="disabled">                                    _Post_readable_byte_size_(_Old_(size) - size)))
+#endif // ]</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Gets the current error code (as returned by GetLastError()), and stores</div>
+<div class="token cpp_comment ">// in _Curr_ as a postcondition. This is currently approximated by assuming</div>
+<div class="token cpp_comment ">// that GetLastError() always returns a failed error code. This is not a</div>
+<div class="token cpp_comment ">// completely accurate approximation, but reasonable.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define _Post_equals_last_error_     _SAL2_Source_(_Post_equals_last_error_, (),  _Post_satisfies_(_Curr_ != 0))</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Indicates the function simply translates the given Win32 error code into an HRESULT</div>
+<div class="token cpp_comment ">// with broadly the same semantics as HRESULT_FROM_WIN32().</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This convenience macro allows analyzers to understand the many bespoke error-translation</div>
+<div class="token cpp_comment ">// functions as simple translators that can be treated as equivalent to HRESULT_FROM_WIN32().</div>
+<div class="token cpp_comment ">// This results in fewer false positives and unnecessary path explorations. This is because</div>
+<div class="token cpp_comment ">// for analysis, the specific translations rarely matter, it is more important to know the</div>
+<div class="token cpp_comment ">// that function cannot fail and the conditions under which it will return an error-range</div>
+<div class="token cpp_comment ">// HRESULT and when a success-range HRESULT.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#ifndef _Translates_Win32_to_HRESULT_ // [</div>
+
+<div class="disabled">#define _Translates_Win32_to_HRESULT_(errorCode)   \</div>
+<div class="disabled">                                        _SAL2_Source_(_Translates_Win32_to_HRESULT_, (errorCode), \</div>
+<div class="disabled">                                        _Always_( \</div>
+<div class="disabled">                                        _When_((HRESULT)errorCode &lt;= 0, \</div>
+<div class="disabled">                                          _At_(_Curr_, _Post_equal_to_((HRESULT)errorCode))) \</div>
+<div class="disabled">                                        _When_((HRESULT)errorCode &gt; 0, \</div>
+<div class="disabled">                                          _At_(_Curr_, _Post_equal_to_((HRESULT)((errorCode &amp; 0x0000FFFF) | (FACILITY_WIN32 &lt;&lt; 16) | 0x80000000))))))</div>
+
+<div class="disabled">#endif // ]</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Indicates the function just directly translates the given NTSTATUS error code into an HRESULT.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This convenience macro allows analyzers to understand the many bespoke error-translation</div>
+<div class="token cpp_comment ">// functions as simple translators that can be treated as equivalent to HRESULT_FROM_NT().</div>
+<div class="token cpp_comment ">// This results in fewer false positives and unnecessary path explorations. This is because</div>
+<div class="token cpp_comment ">// for analysis, the specific translations rarely matter.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#ifndef _Translates_NTSTATUS_to_HRESULT_    // [</div>
+
+<div class="disabled">#define _Translates_NTSTATUS_to_HRESULT_(status)    \</div>
+<div class="disabled">                                        _SAL2_Source_(_Translates_NTSTATUS_to_HRESULT_, (status), \</div>
+<div class="disabled">                                        _Always_( \</div>
+<div class="disabled">                                        _Post_equal_to_((HRESULT)(status | FACILITY_NT_BIT))))</div>
+
+<div class="disabled">#endif // ]</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Indicates the funtion just translates the result of GetLastError() into an HRESULT.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This convenience macro allows analyzers to understand the many bespoke GetLastError-translation</div>
+<div class="token cpp_comment ">// functions as simple translators that will always return a failure-value HRESULT (these functions</div>
+<div class="token cpp_comment ">// are almost never meant to be called when GetLastError() could return 0).</div>
+<div class="token cpp_comment ">// This results in fewer false positives and unnecessary path explorations. This is because</div>
+<div class="token cpp_comment ">// for analysis, the specific translations rarely matter.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#ifndef _Translates_last_error_to_HRESULT_ // [</div>
+
+<div class="disabled">#define _Translates_last_error_to_HRESULT_          \</div>
+<div class="disabled">                                        _SAL2_Source_(_Translates_last_error_to_HRESULT_, (), \</div>
+<div class="disabled">                                        _Always_( \</div>
+<div class="disabled">                                        _Post_satisfies_(_Curr_ &lt; 0)))</div>
+
+<div class="disabled">#endif // ]</div>
+
+<div class="disabled">#ifdef  __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef _PREFIX_ // [</div>
+<div class="disabled">/**************************************************************************</div>
+<div class="disabled">* Defintion of __pfx_assume and __pfx_assert. Thse should be the only</div>
+<div class="disabled">* defintions of these functions.</div>
+<div class="disabled">***************************************************************************/</div>
+<div class="disabled">#if __cplusplus // [</div>
+<div class="disabled">extern &quot;C&quot; void __pfx_assert(bool, const char *);</div>
+<div class="disabled">extern &quot;C&quot; void __pfx_assume(bool, const char *);</div>
+<div class="disabled">#else // ][</div>
+<div class="disabled">void __pfx_assert(int, const char *);</div>
+<div class="disabled">void __pfx_assume(int, const char *);</div>
+<div class="disabled">#endif // ]</div>
+<div class="disabled">/**************************************************************************</div>
+<div class="disabled">* Redefintion of __analysis_assume and __analysis_assert for PREFIX build</div>
+<div class="disabled">**************************************************************************/</div>
+<div class="disabled">#undef  __analysis_assume</div>
+<div class="disabled">#undef  __analysis_assert</div>
+<div class="disabled">#define __analysis_assume(e) (__pfx_assume(e,&quot;pfx_assume&quot;),__assume(e));</div>
+<div class="disabled">#define __analysis_assert(e) (__pfx_assert(e,&quot;pfx_assert&quot;),__assume(e));</div>
+<div class="disabled">#endif /* ifdef _PREFIX_ */ // ]</div>
+
+<div class="token cpp_comment ">/**************************************************************************
+* This include should always be the last thing in this file.
+* Must avoid redfinitions of macros to workaround rc.exe issues.
+***************************************************************************/</div>
+<div class="disabled">#if !(defined(RC_INVOKED) || defined(SORTPP_PASS))
+#include &lt;specstrings_strict.h&gt;
+#endif /* if !(defined(RC_INVOKED) || defined(SORTPP_PASS)) */</div>
+
+<div class="token cpp_comment ">/*
+ If no SAL 2 appears to have been defined (_Outptr_ is a representative choice)
+ then we must be operating in a downlevel build environment (such as VS10).
+ We also test against the compiler version to identify a downlevel environment,
+ as VS11 is the minimum required for SAL 2 support.
+
+ If we are operating in a downlevel build environment (such as VS10)
+ we need to undefine the following symbols before including driverspecs.h
+ or we will end up referencing SAL 2 implementation symbols and cause
+ build failures.
+*/</div>
+<div class="disabled">#if (!defined(_Outptr_) || _MSC_FULL_VER &lt;= 160000000) &amp;&amp; !( defined( MIDL_PASS ) || defined(__midl) || defined(RC_INVOKED) ) /*IFSTRIP=IGN*/ // [</div>
+<div class="disabled">#undef __ANNOTATION</div>
+<div class="disabled">#define __ANNOTATION(fun) /* fun */</div>
+<div class="disabled">#undef __PRIMOP</div>
+<div class="disabled">#define __PRIMOP(type, fun)
+#endif /* !defined(_Outptr_) || _MSC_VER &lt;= 1600 */ // ]</div>
+
+<div class="disabled">#include &lt;driverspecs.h&gt;</div>
+
+<div class="token cpp_comment ">/*
+ If no SAL 2 appears to have been defined (_Outptr_ is a representative choice)
+ then we must be operating in a downlevel build environment (such as VS10).
+ We also test against the compiler version to identify a downlevel environment,
+ as VS11 is the minimum required for SAL 2 support.
+
+ If we are in a downlevel environment, we can go ahead and include no_sal2.h
+ to make all of SAL 2 no-ops to ensure no build failures.
+*/</div>
+<div class="disabled">#if (!defined(_Outptr_) || _MSC_FULL_VER &lt;= 160000000) &amp;&amp; !( defined( MIDL_PASS ) || defined(__midl) || defined(RC_INVOKED) ) &amp;&amp; !( defined( _SDV_ ) ) /*IFSTRIP=IGN*/ // [</div>
+<div class="disabled">#include &lt;no_sal2.h&gt;
+#endif /* !defined(_Outptr_) || _MSC_VER &lt;= 1600 */ // ]</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* #ifndef SPECSTRINGS_H */  // ]
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

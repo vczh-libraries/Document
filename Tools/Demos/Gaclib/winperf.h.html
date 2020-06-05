@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>winperf.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/*++
+
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Module Name:
+
+    winperf.h
+
+Abstract:
+
+    Header file for the Performance Monitor data.
+
+    This file contains the definitions of the data structures returned
+    by the Configuration Registry in response to a request for
+    performance data.  This file is used by both the Configuration
+    Registry and the Performance Monitor to define their interface.
+    The complete interface is described here, except for the name
+    of the node to query in the registry.  It is
+
+                   HKEY_PERFORMANCE_DATA.
+
+    By querying that node with a subkey of &quot;Global&quot; the caller will
+    retrieve the structures described here.
+
+    There is no need to RegOpenKey() the reserved handle HKEY_PERFORMANCE_DATA,
+    but the caller should RegCloseKey() the handle so that network transports
+    and drivers can be removed or installed (which cannot happen while
+    they are open for monitoring.)  Remote requests must first
+    RegConnectRegistry().
+
+--*/</div>
+
+<div class="disabled">#ifndef _WINPERF_</div>
+<div class="disabled">#define _WINPERF_</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) // padding added after data member
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="disabled">#include &lt;pshpack8.h&gt;</div>
+
+<div class="token cpp_comment ">//  Data structure definitions.</div>
+
+<div class="token cpp_comment ">//  In order for data to be returned through the Configuration Registry</div>
+<div class="token cpp_comment ">//  in a system-independent fashion, it must be self-describing.</div>
+
+<div class="token cpp_comment ">//  In the following, all offsets are in bytes.</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Data is returned through the Configuration Registry in a</div>
+<div class="token cpp_comment ">//  a data block which begins with a _PERF_DATA_BLOCK structure.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define PERF_DATA_VERSION   1</div>
+<div class="disabled">#define PERF_DATA_REVISION  1</div>
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PERF_DATA_BLOCK"><div><div class="token cpp_type">_PERF_DATA_BLOCK</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::Signature"><div><div class="token cpp_field">Signature</div></div></div>[<div class="token cpp_number ">4</div>];       <div class="token cpp_comment ">// Signature: Unicode &quot;PERF&quot;</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::LittleEndian"><div><div class="token cpp_field">LittleEndian</div></div></div>;       <div class="token cpp_comment ">// 0 = Big Endian, 1 = Little Endian</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::Version"><div><div class="token cpp_field">Version</div></div></div>;            <div class="token cpp_comment ">// Version of these data structures</div>
+                                        <div class="token cpp_comment ">// starting at 1</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::Revision"><div><div class="token cpp_field">Revision</div></div></div>;           <div class="token cpp_comment ">// Revision of these data structures</div>
+                                        <div class="token cpp_comment ">// starting at 0 for each Version</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::TotalByteLength"><div><div class="token cpp_field">TotalByteLength</div></div></div>;    <div class="token cpp_comment ">// Total length of data block</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::HeaderLength"><div><div class="token cpp_field">HeaderLength</div></div></div>;       <div class="token cpp_comment ">// Length of this structure</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::NumObjectTypes"><div><div class="token cpp_field">NumObjectTypes</div></div></div>;     <div class="token cpp_comment ">// Number of types of objects</div>
+                                        <div class="token cpp_comment ">// being reported</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>            <div class="def" id="NI$_PERF_DATA_BLOCK::DefaultObject"><div><div class="token cpp_field">DefaultObject</div></div></div>;      <div class="token cpp_comment ">// Object Title Index of default</div>
+                                        <div class="token cpp_comment ">// object to display when data from</div>
+                                        <div class="token cpp_comment ">// this system is retrieved (-1 =</div>
+                                        <div class="token cpp_comment ">// none, but this is not expected to</div>
+                                        <div class="token cpp_comment ">// be used)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>      <div class="def" id="NI$_PERF_DATA_BLOCK::SystemTime"><div><div class="token cpp_field">SystemTime</div></div></div>;         <div class="token cpp_comment ">// Time at the system under</div>
+                                        <div class="token cpp_comment ">// measurement</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LARGE_INTEGER'], [], [])"><div class="token cpp_type">LARGE_INTEGER</div></div>   <div class="def" id="NI$_PERF_DATA_BLOCK::PerfTime"><div><div class="token cpp_field">PerfTime</div></div></div>;           <div class="token cpp_comment ">// Performance counter value</div>
+                                        <div class="token cpp_comment ">// at the system under measurement</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LARGE_INTEGER'], [], [])"><div class="token cpp_type">LARGE_INTEGER</div></div>   <div class="def" id="NI$_PERF_DATA_BLOCK::PerfFreq"><div><div class="token cpp_field">PerfFreq</div></div></div>;           <div class="token cpp_comment ">// Performance counter frequency</div>
+                                        <div class="token cpp_comment ">// at the system under measurement</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LARGE_INTEGER'], [], [])"><div class="token cpp_type">LARGE_INTEGER</div></div>   <div class="def" id="NI$_PERF_DATA_BLOCK::PerfTime100nSec"><div><div class="token cpp_field">PerfTime100nSec</div></div></div>;    <div class="token cpp_comment ">// Performance counter time in 100 nsec</div>
+                                        <div class="token cpp_comment ">// units at the system under measurement</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::SystemNameLength"><div><div class="token cpp_field">SystemNameLength</div></div></div>;   <div class="token cpp_comment ">// Length of the system name</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_DATA_BLOCK::SystemNameOffset"><div><div class="token cpp_field">SystemNameOffset</div></div></div>;   <div class="token cpp_comment ">// Offset, from beginning of this</div>
+                                        <div class="token cpp_comment ">// structure, to name of system</div>
+                                        <div class="token cpp_comment ">// being measured</div>
+} <div class="def" id="NI$PERF_DATA_BLOCK"><div><div class="token cpp_type">PERF_DATA_BLOCK</div></div></div>, *<div class="def" id="NI$PPERF_DATA_BLOCK"><div><div class="token cpp_type">PPERF_DATA_BLOCK</div></div></div>;
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  The _PERF_DATA_BLOCK structure is followed by NumObjectTypes of</div>
+<div class="token cpp_comment ">//  data sections, one for each type of object measured.  Each object</div>
+<div class="token cpp_comment ">//  type section begins with a _PERF_OBJECT_TYPE structure.</div>
+<div class="token cpp_comment ">//</div>
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PERF_OBJECT_TYPE"><div><div class="token cpp_type">_PERF_OBJECT_TYPE</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_OBJECT_TYPE::TotalByteLength"><div><div class="token cpp_field">TotalByteLength</div></div></div>;    <div class="token cpp_comment ">// Length of this object definition</div>
+                                        <div class="token cpp_comment ">// including this structure, the</div>
+                                        <div class="token cpp_comment ">// counter definitions, and the</div>
+                                        <div class="token cpp_comment ">// instance definitions and the</div>
+                                        <div class="token cpp_comment ">// counter blocks for each instance:</div>
+                                        <div class="token cpp_comment ">// This is the offset from this</div>
+                                        <div class="token cpp_comment ">// structure to the next object, if</div>
+                                        <div class="token cpp_comment ">// any</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_OBJECT_TYPE::DefinitionLength"><div><div class="token cpp_field">DefinitionLength</div></div></div>;   <div class="token cpp_comment ">// Length of object definition,</div>
+                                        <div class="token cpp_comment ">// which includes this structure</div>
+                                        <div class="token cpp_comment ">// and the counter definition</div>
+                                        <div class="token cpp_comment ">// structures for this object: this</div>
+                                        <div class="token cpp_comment ">// is the offset of the first</div>
+                                        <div class="token cpp_comment ">// instance or of the counters</div>
+                                        <div class="token cpp_comment ">// for this object if there is</div>
+                                        <div class="token cpp_comment ">// no instance</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_OBJECT_TYPE::HeaderLength"><div><div class="token cpp_field">HeaderLength</div></div></div>;       <div class="token cpp_comment ">// Length of this structure: this</div>
+                                        <div class="token cpp_comment ">// is the offset to the first</div>
+                                        <div class="token cpp_comment ">// counter definition for this</div>
+                                        <div class="token cpp_comment ">// object</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_OBJECT_TYPE::ObjectNameTitleIndex"><div><div class="token cpp_field">ObjectNameTitleIndex</div></div></div>;
+                                        <div class="token cpp_comment ">// Index to name in Title Database</div>
+<div class="disabled">#ifdef _WIN64</div>
+<div class="disabled">    DWORD           ObjectNameTitle;    // Should use this as an offset</div>
+<div class="disabled">#else</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>          <div class="def" id="NI$_PERF_OBJECT_TYPE::ObjectNameTitle"><div><div class="token cpp_field">ObjectNameTitle</div></div></div>;    <div class="token cpp_comment ">// Initially NULL, for use by</div>
+                                        <div class="token cpp_comment ">// analysis program to point to</div>
+                                        <div class="token cpp_comment ">// retrieved title string</div>
+<div class="disabled">#endif</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_OBJECT_TYPE::ObjectHelpTitleIndex"><div><div class="token cpp_field">ObjectHelpTitleIndex</div></div></div>;
+                                        <div class="token cpp_comment ">// Index to Help in Title Database</div>
+<div class="disabled">#ifdef _WIN64</div>
+<div class="disabled">    DWORD           ObjectHelpTitle;    // Should use this as an offset</div>
+<div class="disabled">#else</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>          <div class="def" id="NI$_PERF_OBJECT_TYPE::ObjectHelpTitle"><div><div class="token cpp_field">ObjectHelpTitle</div></div></div>;    <div class="token cpp_comment ">// Initially NULL, for use by</div>
+                                        <div class="token cpp_comment ">// analysis program to point to</div>
+                                        <div class="token cpp_comment ">// retrieved title string</div>
+<div class="disabled">#endif</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_OBJECT_TYPE::DetailLevel"><div><div class="token cpp_field">DetailLevel</div></div></div>;        <div class="token cpp_comment ">// Object level of detail (for</div>
+                                        <div class="token cpp_comment ">// controlling display complexity);</div>
+                                        <div class="token cpp_comment ">// will be min of detail levels</div>
+                                        <div class="token cpp_comment ">// for all this object&apos;s counters</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_OBJECT_TYPE::NumCounters"><div><div class="token cpp_field">NumCounters</div></div></div>;        <div class="token cpp_comment ">// Number of counters in each</div>
+                                        <div class="token cpp_comment ">// counter block (one counter</div>
+                                        <div class="token cpp_comment ">// block per instance)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>            <div class="def" id="NI$_PERF_OBJECT_TYPE::DefaultCounter"><div><div class="token cpp_field">DefaultCounter</div></div></div>;     <div class="token cpp_comment ">// Default counter to display when</div>
+                                        <div class="token cpp_comment ">// this object is selected, index</div>
+                                        <div class="token cpp_comment ">// starting at 0 (-1 = none, but</div>
+                                        <div class="token cpp_comment ">// this is not expected to be used)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>            <div class="def" id="NI$_PERF_OBJECT_TYPE::NumInstances"><div><div class="token cpp_field">NumInstances</div></div></div>;       <div class="token cpp_comment ">// Number of object instances</div>
+                                        <div class="token cpp_comment ">// for which counters are being</div>
+                                        <div class="token cpp_comment ">// returned from the system under</div>
+                                        <div class="token cpp_comment ">// measurement. If the object defined</div>
+                                        <div class="token cpp_comment ">// will never have any instance data</div>
+                                        <div class="token cpp_comment ">// structures (PERF_INSTANCE_DEFINITION)</div>
+                                        <div class="token cpp_comment ">// then this value should be -1, if the</div>
+                                        <div class="token cpp_comment ">// object can have 0 or more instances,</div>
+                                        <div class="token cpp_comment ">// but has none present, then this</div>
+                                        <div class="token cpp_comment ">// should be 0, otherwise this field</div>
+                                        <div class="token cpp_comment ">// contains the number of instances of</div>
+                                        <div class="token cpp_comment ">// this counter.</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_OBJECT_TYPE::CodePage"><div><div class="token cpp_field">CodePage</div></div></div>;           <div class="token cpp_comment ">// 0 if instance strings are in</div>
+                                        <div class="token cpp_comment ">// UNICODE, else the Code Page of</div>
+                                        <div class="token cpp_comment ">// the instance names</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LARGE_INTEGER'], [], [])"><div class="token cpp_type">LARGE_INTEGER</div></div>   <div class="def" id="NI$_PERF_OBJECT_TYPE::PerfTime"><div><div class="token cpp_field">PerfTime</div></div></div>;           <div class="token cpp_comment ">// Sample Time in &quot;Object&quot; units</div>
+                                        <div class="token cpp_comment ">//</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LARGE_INTEGER'], [], [])"><div class="token cpp_type">LARGE_INTEGER</div></div>   <div class="def" id="NI$_PERF_OBJECT_TYPE::PerfFreq"><div><div class="token cpp_field">PerfFreq</div></div></div>;           <div class="token cpp_comment ">// Frequency of &quot;Object&quot; units in</div>
+                                        <div class="token cpp_comment ">// counts per second.</div>
+} <div class="def" id="NI$PERF_OBJECT_TYPE"><div><div class="token cpp_type">PERF_OBJECT_TYPE</div></div></div>, *<div class="def" id="NI$PPERF_OBJECT_TYPE"><div><div class="token cpp_type">PPERF_OBJECT_TYPE</div></div></div>;
+
+<div class="disabled">#define PERF_NO_INSTANCES           -1  // no instances (see NumInstances above)</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  PERF_COUNTER_DEFINITION.CounterType field values</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//        Counter ID Field Definition:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//   3      2        2    2    2        1        1    1</div>
+<div class="token cpp_comment ">//   1      8        4    2    0        6        2    0    8                0</div>
+<div class="token cpp_comment ">//  +--------+--------+----+----+--------+--------+----+----+----------------+</div>
+<div class="token cpp_comment ">//  |Display |Calculation  |Time|Counter |        |Ctr |Size|                |</div>
+<div class="token cpp_comment ">//  |Flags   |Modifiers    |Base|SubType |Reserved|Type|Fld |   Reserved     |</div>
+<div class="token cpp_comment ">//  +--------+--------+----+----+--------+--------+----+----+----------------+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  The counter type is the &quot;or&quot; of the following values as described below</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  select one of the following to indicate the counter&apos;s data size</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_SIZE_DWORD         0x00000000  // 32 bit field</div>
+<div class="disabled">#define PERF_SIZE_LARGE         0x00000100  // 64 bit field</div>
+<div class="disabled">#define PERF_SIZE_ZERO          0x00000200  // for Zero Length fields</div>
+<div class="disabled">#define PERF_SIZE_VARIABLE_LEN  0x00000300  // length is in CounterLength field</div>
+                                            <div class="token cpp_comment ">//  of Counter Definition struct</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  select one of the following values to indicate the counter field usage</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_TYPE_NUMBER        0x00000000  // a number (not a counter)</div>
+<div class="disabled">#define PERF_TYPE_COUNTER       0x00000400  // an increasing numeric value</div>
+<div class="disabled">#define PERF_TYPE_TEXT          0x00000800  // a text field</div>
+<div class="disabled">#define PERF_TYPE_ZERO          0x00000C00  // displays a zero</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  If the PERF_TYPE_NUMBER field was selected, then select one of the</div>
+<div class="token cpp_comment ">//  following to describe the Number</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_NUMBER_HEX         0x00000000  // display as HEX value</div>
+<div class="disabled">#define PERF_NUMBER_DECIMAL     0x00010000  // display as a decimal integer</div>
+<div class="disabled">#define PERF_NUMBER_DEC_1000    0x00020000  // display as a decimal/1000</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  If the PERF_TYPE_COUNTER value was selected then select one of the</div>
+<div class="token cpp_comment ">//  following to indicate the type of counter</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_COUNTER_VALUE      0x00000000  // display counter value</div>
+<div class="disabled">#define PERF_COUNTER_RATE       0x00010000  // divide ctr / delta time</div>
+<div class="disabled">#define PERF_COUNTER_FRACTION   0x00020000  // divide ctr / base</div>
+<div class="disabled">#define PERF_COUNTER_BASE       0x00030000  // base value used in fractions</div>
+<div class="disabled">#define PERF_COUNTER_ELAPSED    0x00040000  // subtract counter from current time</div>
+<div class="disabled">#define PERF_COUNTER_QUEUELEN   0x00050000  // Use Queuelen processing func.</div>
+<div class="disabled">#define PERF_COUNTER_HISTOGRAM  0x00060000  // Counter begins or ends a histogram</div>
+<div class="disabled">#define PERF_COUNTER_PRECISION  0x00070000  // divide ctr / private clock</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  If the PERF_TYPE_TEXT value was selected, then select one of the</div>
+<div class="token cpp_comment ">//  following to indicate the type of TEXT data.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_TEXT_UNICODE       0x00000000  // type of text in text field</div>
+<div class="disabled">#define PERF_TEXT_ASCII         0x00010000  // ASCII using the CodePage field</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Timer SubTypes</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_TIMER_TICK         0x00000000  // use system perf. freq for base</div>
+<div class="disabled">#define PERF_TIMER_100NS        0x00100000  // use 100 NS timer time base units</div>
+<div class="disabled">#define PERF_OBJECT_TIMER       0x00200000  // use the object timer freq</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Any types that have calculations performed can use one or more of</div>
+<div class="token cpp_comment ">//  the following calculation modification flags listed here</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_DELTA_COUNTER      0x00400000  // compute difference first</div>
+<div class="disabled">#define PERF_DELTA_BASE         0x00800000  // compute base diff as well</div>
+<div class="disabled">#define PERF_INVERSE_COUNTER    0x01000000  // show as 1.00-value (assumes:</div>
+<div class="disabled">#define PERF_MULTI_COUNTER      0x02000000  // sum of multiple instances</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Select one of the following values to indicate the display suffix (if any)</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_DISPLAY_NO_SUFFIX  0x00000000  // no suffix</div>
+<div class="disabled">#define PERF_DISPLAY_PER_SEC    0x10000000  // &quot;/sec&quot;</div>
+<div class="disabled">#define PERF_DISPLAY_PERCENT    0x20000000  // &quot;%&quot;</div>
+<div class="disabled">#define PERF_DISPLAY_SECONDS    0x30000000  // &quot;secs&quot;</div>
+<div class="disabled">#define PERF_DISPLAY_NOSHOW     0x40000000  // value is not displayed</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Predefined counter types</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="token cpp_comment ">// 32-bit Counter.  Divide delta by delta time.  Display suffix: &quot;/sec&quot;</div>
+<div class="disabled">#define PERF_COUNTER_COUNTER        \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_TIMER_TICK | PERF_DELTA_COUNTER | PERF_DISPLAY_PER_SEC)</div>
+
+
+<div class="token cpp_comment ">// 64-bit Timer.  Divide delta by delta time.  Display suffix: &quot;%&quot;</div>
+<div class="disabled">#define PERF_COUNTER_TIMER          \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_TIMER_TICK | PERF_DELTA_COUNTER | PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// Queue Length Space-Time Product. Divide delta by delta time. No Display Suffix.</div>
+<div class="disabled">#define PERF_COUNTER_QUEUELEN_TYPE  \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_QUEUELEN |\</div>
+<div class="disabled">            PERF_TIMER_TICK | PERF_DELTA_COUNTER | PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// Queue Length Space-Time Product. Divide delta by delta time. No Display Suffix.</div>
+<div class="disabled">#define PERF_COUNTER_LARGE_QUEUELEN_TYPE  \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_QUEUELEN |\</div>
+<div class="disabled">            PERF_TIMER_TICK | PERF_DELTA_COUNTER | PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// Queue Length Space-Time Product using 100 Ns timebase.</div>
+<div class="token cpp_comment ">// Divide delta by delta time. No Display Suffix.</div>
+<div class="disabled">#define PERF_COUNTER_100NS_QUEUELEN_TYPE  \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_QUEUELEN |\</div>
+<div class="disabled">            PERF_TIMER_100NS | PERF_DELTA_COUNTER | PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// Queue Length Space-Time Product using Object specific timebase.</div>
+<div class="token cpp_comment ">// Divide delta by delta time. No Display Suffix.</div>
+<div class="disabled">#define PERF_COUNTER_OBJ_TIME_QUEUELEN_TYPE  \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_QUEUELEN |\</div>
+<div class="disabled">            PERF_OBJECT_TIMER | PERF_DELTA_COUNTER | PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// 64-bit Counter.  Divide delta by delta time. Display Suffix: &quot;/sec&quot;</div>
+<div class="disabled">#define PERF_COUNTER_BULK_COUNT     \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_TIMER_TICK | PERF_DELTA_COUNTER | PERF_DISPLAY_PER_SEC)</div>
+
+<div class="token cpp_comment ">// Indicates the counter is not a  counter but rather Unicode text Display as text.</div>
+<div class="disabled">#define PERF_COUNTER_TEXT           \</div>
+<div class="disabled">            (PERF_SIZE_VARIABLE_LEN | PERF_TYPE_TEXT | PERF_TEXT_UNICODE |\</div>
+<div class="disabled">            PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// Indicates the data is a counter  which should not be</div>
+<div class="token cpp_comment ">// time averaged on display (such as an error counter on a serial line)</div>
+<div class="token cpp_comment ">// Display as is.  No Display Suffix.</div>
+<div class="disabled">#define PERF_COUNTER_RAWCOUNT       \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_NUMBER | PERF_NUMBER_DECIMAL |\</div>
+<div class="disabled">            PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// Same as PERF_COUNTER_RAWCOUNT except its size is a large integer</div>
+<div class="disabled">#define PERF_COUNTER_LARGE_RAWCOUNT       \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_NUMBER | PERF_NUMBER_DECIMAL |\</div>
+<div class="disabled">            PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// Special case for RAWCOUNT that want to be displayed in hex</div>
+<div class="token cpp_comment ">// Indicates the data is a counter  which should not be</div>
+<div class="token cpp_comment ">// time averaged on display (such as an error counter on a serial line)</div>
+<div class="token cpp_comment ">// Display as is.  No Display Suffix.</div>
+<div class="disabled">#define PERF_COUNTER_RAWCOUNT_HEX       \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_NUMBER | PERF_NUMBER_HEX |\</div>
+<div class="disabled">            PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// Same as PERF_COUNTER_RAWCOUNT_HEX except its size is a large integer</div>
+<div class="disabled">#define PERF_COUNTER_LARGE_RAWCOUNT_HEX       \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_NUMBER | PERF_NUMBER_HEX |\</div>
+<div class="disabled">            PERF_DISPLAY_NO_SUFFIX)</div>
+
+
+<div class="token cpp_comment ">// A count which is either 1 or 0 on each sampling interrupt (% busy)</div>
+<div class="token cpp_comment ">// Divide delta by delta base. Display Suffix: &quot;%&quot;</div>
+<div class="disabled">#define PERF_SAMPLE_FRACTION        \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_FRACTION |\</div>
+<div class="disabled">            PERF_DELTA_COUNTER | PERF_DELTA_BASE | PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// A count which is sampled on each sampling interrupt (queue length)</div>
+<div class="token cpp_comment ">// Divide delta by delta time. No Display Suffix.</div>
+<div class="disabled">#define PERF_SAMPLE_COUNTER         \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_TIMER_TICK | PERF_DELTA_COUNTER | PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="token cpp_comment ">// A label: no data is associated with this counter (it has 0 length)</div>
+<div class="token cpp_comment ">// Do not display.</div>
+<div class="disabled">#define PERF_COUNTER_NODATA         \</div>
+<div class="disabled">            (PERF_SIZE_ZERO | PERF_DISPLAY_NOSHOW)</div>
+
+<div class="token cpp_comment ">// 64-bit Timer inverse (e.g., idle is measured, but display busy %)</div>
+<div class="token cpp_comment ">// Display 100 - delta divided by delta time.  Display suffix: &quot;%&quot;</div>
+<div class="disabled">#define PERF_COUNTER_TIMER_INV      \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_TIMER_TICK | PERF_DELTA_COUNTER | PERF_INVERSE_COUNTER | \</div>
+<div class="disabled">            PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// The divisor for a sample, used with the previous counter to form a</div>
+<div class="token cpp_comment ">// sampled %.  You must check for &gt;0 before dividing by this!  This</div>
+<div class="token cpp_comment ">// counter will directly follow the  numerator counter.  It should not</div>
+<div class="token cpp_comment ">// be displayed to the user.</div>
+<div class="disabled">#define PERF_SAMPLE_BASE            \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_BASE |\</div>
+<div class="disabled">            PERF_DISPLAY_NOSHOW |\</div>
+<div class="disabled">            0x00000001)  // for compatibility with pre-beta versions</div>
+
+<div class="token cpp_comment ">// A timer which, when divided by an average base, produces a time</div>
+<div class="token cpp_comment ">// in seconds which is the average time of some operation.  This</div>
+<div class="token cpp_comment ">// timer times total operations, and  the base is the number of opera-</div>
+<div class="token cpp_comment ">// tions.  Display Suffix: &quot;sec&quot;</div>
+<div class="disabled">#define PERF_AVERAGE_TIMER          \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_FRACTION |\</div>
+<div class="disabled">            PERF_DISPLAY_SECONDS)</div>
+
+<div class="token cpp_comment ">// Used as the denominator in the computation of time or count</div>
+<div class="token cpp_comment ">// averages.  Must directly follow the numerator counter.  Not dis-</div>
+<div class="token cpp_comment ">// played to the user.</div>
+<div class="disabled">#define PERF_AVERAGE_BASE           \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_BASE |\</div>
+<div class="disabled">            PERF_DISPLAY_NOSHOW |\</div>
+<div class="disabled">            0x00000002)  // for compatibility with pre-beta versions</div>
+
+
+<div class="token cpp_comment ">// A bulk count which, when divided (typically) by the number of</div>
+<div class="token cpp_comment ">// operations, gives (typically) the number of bytes per operation.</div>
+<div class="token cpp_comment ">// No Display Suffix.</div>
+<div class="disabled">#define PERF_AVERAGE_BULK           \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_FRACTION  |\</div>
+<div class="disabled">            PERF_DISPLAY_NOSHOW)</div>
+
+<div class="token cpp_comment ">// 64-bit Timer in object specific units. Display delta divided by</div>
+<div class="token cpp_comment ">// delta time as returned in the object type header structure.  Display suffix: &quot;%&quot;</div>
+<div class="disabled">#define PERF_OBJ_TIME_TIMER    \</div>
+<div class="disabled">            (PERF_SIZE_LARGE   | PERF_TYPE_COUNTER  | PERF_COUNTER_RATE |\</div>
+<div class="disabled">             PERF_OBJECT_TIMER | PERF_DELTA_COUNTER | PERF_DISPLAY_PERCENT)</div>
+
+
+<div class="token cpp_comment ">// 64-bit Timer in 100 nsec units. Display delta divided by</div>
+<div class="token cpp_comment ">// delta time.  Display suffix: &quot;%&quot;</div>
+<div class="disabled">#define PERF_100NSEC_TIMER          \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_TIMER_100NS | PERF_DELTA_COUNTER | PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// 64-bit Timer inverse (e.g., idle is measured, but display busy %)</div>
+<div class="token cpp_comment ">// Display 100 - delta divided by delta time.  Display suffix: &quot;%&quot;</div>
+<div class="disabled">#define PERF_100NSEC_TIMER_INV      \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_TIMER_100NS | PERF_DELTA_COUNTER | PERF_INVERSE_COUNTER  |\</div>
+<div class="disabled">            PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// 64-bit Timer.  Divide delta by delta time.  Display suffix: &quot;%&quot;</div>
+<div class="token cpp_comment ">// Timer for multiple instances, so result can exceed 100%.</div>
+<div class="disabled">#define PERF_COUNTER_MULTI_TIMER    \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_DELTA_COUNTER | PERF_TIMER_TICK | PERF_MULTI_COUNTER |\</div>
+<div class="disabled">            PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// 64-bit Timer inverse (e.g., idle is measured, but display busy %)</div>
+<div class="token cpp_comment ">// Display 100 * _MULTI_BASE - delta divided by delta time.</div>
+<div class="token cpp_comment ">// Display suffix: &quot;%&quot; Timer for multiple instances, so result</div>
+<div class="token cpp_comment ">// can exceed 100%.  Followed by a counter of type _MULTI_BASE.</div>
+<div class="disabled">#define PERF_COUNTER_MULTI_TIMER_INV \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_RATE |\</div>
+<div class="disabled">            PERF_DELTA_COUNTER | PERF_MULTI_COUNTER | PERF_TIMER_TICK |\</div>
+<div class="disabled">            PERF_INVERSE_COUNTER | PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// Number of instances to which the preceding _MULTI_..._INV counter</div>
+<div class="token cpp_comment ">// applies.  Used as a factor to get the percentage.</div>
+<div class="disabled">#define PERF_COUNTER_MULTI_BASE     \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_BASE |\</div>
+<div class="disabled">            PERF_MULTI_COUNTER | PERF_DISPLAY_NOSHOW)</div>
+
+<div class="token cpp_comment ">// 64-bit Timer in 100 nsec units. Display delta divided by delta time.</div>
+<div class="token cpp_comment ">// Display suffix: &quot;%&quot; Timer for multiple instances, so result can exceed 100%.</div>
+<div class="disabled">#define PERF_100NSEC_MULTI_TIMER   \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_DELTA_COUNTER  |\</div>
+<div class="disabled">            PERF_COUNTER_RATE | PERF_TIMER_100NS | PERF_MULTI_COUNTER |\</div>
+<div class="disabled">            PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// 64-bit Timer inverse (e.g., idle is measured, but display busy %)</div>
+<div class="token cpp_comment ">// Display 100 * _MULTI_BASE - delta divided by delta time.</div>
+<div class="token cpp_comment ">// Display suffix: &quot;%&quot; Timer for multiple instances, so result</div>
+<div class="token cpp_comment ">// can exceed 100%.  Followed by a counter of type _MULTI_BASE.</div>
+<div class="disabled">#define PERF_100NSEC_MULTI_TIMER_INV \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_DELTA_COUNTER  |\</div>
+<div class="disabled">            PERF_COUNTER_RATE | PERF_TIMER_100NS | PERF_MULTI_COUNTER |\</div>
+<div class="disabled">            PERF_INVERSE_COUNTER | PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// Indicates the data is a fraction of the following counter  which</div>
+<div class="token cpp_comment ">// should not be time averaged on display (such as free space over</div>
+<div class="token cpp_comment ">// total space.) Display as is.  Display the quotient as &quot;%&quot;.</div>
+<div class="disabled">#define PERF_RAW_FRACTION           \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_FRACTION |\</div>
+<div class="disabled">            PERF_DISPLAY_PERCENT)</div>
+
+<div class="disabled">#define PERF_LARGE_RAW_FRACTION           \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_FRACTION |\</div>
+<div class="disabled">            PERF_DISPLAY_PERCENT)</div>
+
+<div class="token cpp_comment ">// Indicates the data is a base for the preceding counter which should</div>
+<div class="token cpp_comment ">// not be time averaged on display (such as free space over total space.)</div>
+<div class="disabled">#define PERF_RAW_BASE               \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_BASE |\</div>
+<div class="disabled">            PERF_DISPLAY_NOSHOW |\</div>
+<div class="disabled">            0x00000003)  // for compatibility with pre-beta versions</div>
+
+<div class="disabled">#define PERF_LARGE_RAW_BASE               \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_BASE |\</div>
+<div class="disabled">            PERF_DISPLAY_NOSHOW )</div>
+
+<div class="token cpp_comment ">// The data collected in this counter is actually the start time of the</div>
+<div class="token cpp_comment ">// item being measured. For display, this data is subtracted from the</div>
+<div class="token cpp_comment ">// sample time to yield the elapsed time as the difference between the two.</div>
+<div class="token cpp_comment ">// In the definition below, the PerfTime field of the Object contains</div>
+<div class="token cpp_comment ">// the sample time as indicated by the PERF_OBJECT_TIMER bit and the</div>
+<div class="token cpp_comment ">// difference is scaled by the PerfFreq of the Object to convert the time</div>
+<div class="token cpp_comment ">// units into seconds.</div>
+<div class="disabled">#define PERF_ELAPSED_TIME           \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_ELAPSED |\</div>
+<div class="disabled">            PERF_OBJECT_TIMER | PERF_DISPLAY_SECONDS)</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  The following counter type can be used with the preceding types to</div>
+<div class="token cpp_comment ">//  define a range of values to be displayed in a histogram.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define PERF_COUNTER_HISTOGRAM_TYPE   0x80000000</div>
+                                        <div class="token cpp_comment ">// Counter begins or ends a histogram</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  This counter is used to display the difference from one sample</div>
+<div class="token cpp_comment ">//  to the next. The counter value is a constantly increasing number</div>
+<div class="token cpp_comment ">//  and the value displayed is the difference between the current</div>
+<div class="token cpp_comment ">//  value and the previous value. Negative numbers are not allowed</div>
+<div class="token cpp_comment ">//  which shouldn&apos;t be a problem as long as the counter value is</div>
+<div class="token cpp_comment ">//  increasing or unchanged.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_COUNTER_DELTA      \</div>
+<div class="disabled">            (PERF_SIZE_DWORD | PERF_TYPE_COUNTER | PERF_COUNTER_VALUE |\</div>
+<div class="disabled">            PERF_DELTA_COUNTER | PERF_DISPLAY_NO_SUFFIX)</div>
+
+<div class="disabled">#define PERF_COUNTER_LARGE_DELTA      \</div>
+<div class="disabled">            (PERF_SIZE_LARGE | PERF_TYPE_COUNTER | PERF_COUNTER_VALUE |\</div>
+<div class="disabled">            PERF_DELTA_COUNTER | PERF_DISPLAY_NO_SUFFIX)</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  The precision counters are timers that consist of two counter values:</div>
+<div class="token cpp_comment ">//      1) the count of elapsed time of the event being monitored</div>
+<div class="token cpp_comment ">//      2) the &quot;clock&quot; time in the same units</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  the precision timers are used where the standard system timers are not</div>
+<div class="token cpp_comment ">//  precise enough for accurate readings. It&apos;s assumed that the service</div>
+<div class="token cpp_comment ">//  providing the data is also providing a timestamp at the same time which</div>
+<div class="token cpp_comment ">//  will eliminate any error that may occur since some small and variable</div>
+<div class="token cpp_comment ">//  time elapses between the time the system timestamp is captured and when</div>
+<div class="token cpp_comment ">//  the data is collected from the performance DLL. Only in extreme cases</div>
+<div class="token cpp_comment ">//  has this been observed to be problematic.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  when using this type of timer, the definition of the</div>
+<div class="token cpp_comment ">//      PERF_PRECISION_TIMESTAMP counter must immediately follow the</div>
+<div class="token cpp_comment ">//      definition of the PERF_PRECISION_*_TIMER in the Object header</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The timer used has the same frequency as the System Performance Timer</div>
+<div class="disabled">#define PERF_PRECISION_SYSTEM_TIMER \</div>
+<div class="disabled">        (PERF_SIZE_LARGE    | PERF_TYPE_COUNTER     | PERF_COUNTER_PRECISION    | \</div>
+<div class="disabled">         PERF_TIMER_TICK    | PERF_DELTA_COUNTER    | PERF_DISPLAY_PERCENT   )</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The timer used has the same frequency as the 100 NanoSecond Timer</div>
+<div class="disabled">#define PERF_PRECISION_100NS_TIMER  \</div>
+<div class="disabled">        (PERF_SIZE_LARGE    | PERF_TYPE_COUNTER     | PERF_COUNTER_PRECISION    | \</div>
+<div class="disabled">         PERF_TIMER_100NS   | PERF_DELTA_COUNTER    | PERF_DISPLAY_PERCENT   )</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The timer used is of the frequency specified in the Object header&apos;s</div>
+<div class="token cpp_comment ">//  PerfFreq field (PerfTime is ignored)</div>
+<div class="disabled">#define PERF_PRECISION_OBJECT_TIMER \</div>
+<div class="disabled">        (PERF_SIZE_LARGE    | PERF_TYPE_COUNTER     | PERF_COUNTER_PRECISION    | \</div>
+<div class="disabled">         PERF_OBJECT_TIMER  | PERF_DELTA_COUNTER    | PERF_DISPLAY_PERCENT   )</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This is the timestamp to use in the computation of the timer specified</div>
+<div class="token cpp_comment ">// in the previous description block</div>
+<div class="disabled">#define PERF_PRECISION_TIMESTAMP    PERF_LARGE_RAW_BASE</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  The following are used to determine the level of detail associated</div>
+<div class="token cpp_comment ">//  with the counter.  The user will be setting the level of detail</div>
+<div class="token cpp_comment ">//  that should be displayed at any given time.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define PERF_DETAIL_NOVICE          100 // The uninformed can understand it</div>
+<div class="disabled">#define PERF_DETAIL_ADVANCED        200 // For the advanced user</div>
+<div class="disabled">#define PERF_DETAIL_EXPERT          300 // For the expert user</div>
+<div class="disabled">#define PERF_DETAIL_WIZARD          400 // For the system designer</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  There is one of the following for each of the</div>
+<div class="token cpp_comment ">//  PERF_OBJECT_TYPE.NumCounters.  The Unicode names in this structure MUST</div>
+<div class="token cpp_comment ">//  come from a message file.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PERF_COUNTER_DEFINITION"><div><div class="token cpp_type">_PERF_COUNTER_DEFINITION</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_COUNTER_DEFINITION::ByteLength"><div><div class="token cpp_field">ByteLength</div></div></div>;         <div class="token cpp_comment ">// Length in bytes of this structure</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_COUNTER_DEFINITION::CounterNameTitleIndex"><div><div class="token cpp_field">CounterNameTitleIndex</div></div></div>;
+                                        <div class="token cpp_comment ">// Index of Counter name into</div>
+                                        <div class="token cpp_comment ">// Title Database</div>
+<div class="disabled">#ifdef _WIN64</div>
+<div class="disabled">    DWORD           CounterNameTitle;</div>
+<div class="disabled">#else</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>          <div class="def" id="NI$_PERF_COUNTER_DEFINITION::CounterNameTitle"><div><div class="token cpp_field">CounterNameTitle</div></div></div>;   <div class="token cpp_comment ">// Initially NULL, for use by</div>
+                                        <div class="token cpp_comment ">// analysis program to point to</div>
+                                        <div class="token cpp_comment ">// retrieved title string</div>
+<div class="disabled">#endif</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_COUNTER_DEFINITION::CounterHelpTitleIndex"><div><div class="token cpp_field">CounterHelpTitleIndex</div></div></div>;
+                                        <div class="token cpp_comment ">// Index of Counter Help into</div>
+                                        <div class="token cpp_comment ">// Title Database</div>
+<div class="disabled">#ifdef _WIN64</div>
+<div class="disabled">    DWORD           CounterHelpTitle;</div>
+<div class="disabled">#else</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>          <div class="def" id="NI$_PERF_COUNTER_DEFINITION::CounterHelpTitle"><div><div class="token cpp_field">CounterHelpTitle</div></div></div>;   <div class="token cpp_comment ">// Initially NULL, for use by</div>
+                                        <div class="token cpp_comment ">// analysis program to point to</div>
+                                        <div class="token cpp_comment ">// retrieved title string</div>
+<div class="disabled">#endif</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>            <div class="def" id="NI$_PERF_COUNTER_DEFINITION::DefaultScale"><div><div class="token cpp_field">DefaultScale</div></div></div>;       <div class="token cpp_comment ">// Power of 10 by which to scale</div>
+                                        <div class="token cpp_comment ">// chart line if vertical axis is 100</div>
+                                        <div class="token cpp_comment ">// 0 ==&gt; 1, 1 ==&gt; 10, -1 ==&gt;1/10, etc.</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_COUNTER_DEFINITION::DetailLevel"><div><div class="token cpp_field">DetailLevel</div></div></div>;        <div class="token cpp_comment ">// Counter level of detail (for</div>
+                                        <div class="token cpp_comment ">// controlling display complexity)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_COUNTER_DEFINITION::CounterType"><div><div class="token cpp_field">CounterType</div></div></div>;        <div class="token cpp_comment ">// Type of counter</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_COUNTER_DEFINITION::CounterSize"><div><div class="token cpp_field">CounterSize</div></div></div>;        <div class="token cpp_comment ">// Size of counter in bytes</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_COUNTER_DEFINITION::CounterOffset"><div><div class="token cpp_field">CounterOffset</div></div></div>;      <div class="token cpp_comment ">// Offset from the start of the</div>
+                                        <div class="token cpp_comment ">// PERF_COUNTER_BLOCK to the first</div>
+                                        <div class="token cpp_comment ">// byte of this counter</div>
+} <div class="def" id="NI$PERF_COUNTER_DEFINITION"><div><div class="token cpp_type">PERF_COUNTER_DEFINITION</div></div></div>, *<div class="def" id="NI$PPERF_COUNTER_DEFINITION"><div><div class="token cpp_type">PPERF_COUNTER_DEFINITION</div></div></div>;
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  If (PERF_DATA_BLOCK.NumInstances &gt;= 0) then there will be</div>
+<div class="token cpp_comment ">//  PERF_DATA_BLOCK.NumInstances of a (PERF_INSTANCE_DEFINITION</div>
+<div class="token cpp_comment ">//  followed by a PERF_COUNTER_BLOCK followed by the counter data fields)</div>
+<div class="token cpp_comment ">//  for each instance.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  If (PERF_DATA_BLOCK.NumInstances &lt; 0) then the counter definition</div>
+<div class="token cpp_comment ">//  structure above will be followed by only a PERF_COUNTER_BLOCK and the</div>
+<div class="token cpp_comment ">//  counter data for that COUNTER.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define PERF_NO_UNIQUE_ID -1</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PERF_INSTANCE_DEFINITION"><div><div class="token cpp_type">_PERF_INSTANCE_DEFINITION</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_INSTANCE_DEFINITION::ByteLength"><div><div class="token cpp_field">ByteLength</div></div></div>;         <div class="token cpp_comment ">// Length in bytes of this structure,</div>
+                                        <div class="token cpp_comment ">// including the subsequent name</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_INSTANCE_DEFINITION::ParentObjectTitleIndex"><div><div class="token cpp_field">ParentObjectTitleIndex</div></div></div>;
+                                        <div class="token cpp_comment ">// Title Index to name of &quot;parent&quot;</div>
+                                        <div class="token cpp_comment ">// object (e.g., if thread, then</div>
+                                        <div class="token cpp_comment ">// process is parent object type);</div>
+                                        <div class="token cpp_comment ">// if logical drive, the physical</div>
+                                        <div class="token cpp_comment ">// drive is parent object type</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_INSTANCE_DEFINITION::ParentObjectInstance"><div><div class="token cpp_field">ParentObjectInstance</div></div></div>;
+                                        <div class="token cpp_comment ">// Index to instance of parent object</div>
+                                        <div class="token cpp_comment ">// type which is the parent of this</div>
+                                        <div class="token cpp_comment ">// instance.</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>            <div class="def" id="NI$_PERF_INSTANCE_DEFINITION::UniqueID"><div><div class="token cpp_field">UniqueID</div></div></div>;           <div class="token cpp_comment ">// A unique ID used instead of</div>
+                                        <div class="token cpp_comment ">// matching the name to identify</div>
+                                        <div class="token cpp_comment ">// this instance, -1 = none</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_INSTANCE_DEFINITION::NameOffset"><div><div class="token cpp_field">NameOffset</div></div></div>;         <div class="token cpp_comment ">// Offset from beginning of</div>
+                                        <div class="token cpp_comment ">// this struct to the Unicode name</div>
+                                        <div class="token cpp_comment ">// of this instance</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_INSTANCE_DEFINITION::NameLength"><div><div class="token cpp_field">NameLength</div></div></div>;         <div class="token cpp_comment ">// Length in bytes of name; 0 = none</div>
+                                        <div class="token cpp_comment ">// this length includes the characters</div>
+                                        <div class="token cpp_comment ">// in the string plus the size of the</div>
+                                        <div class="token cpp_comment ">// terminating NULL char. It does not</div>
+                                        <div class="token cpp_comment ">// include any additional pad bytes to</div>
+                                        <div class="token cpp_comment ">// correct structure alignment</div>
+} <div class="def" id="NI$PERF_INSTANCE_DEFINITION"><div><div class="token cpp_type">PERF_INSTANCE_DEFINITION</div></div></div>, *<div class="def" id="NI$PPERF_INSTANCE_DEFINITION"><div><div class="token cpp_type">PPERF_INSTANCE_DEFINITION</div></div></div>;
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  If .ParentObjectName is 0, there</div>
+<div class="token cpp_comment ">//  is no parent-child hierarchy for this object type.  Otherwise,</div>
+<div class="token cpp_comment ">//   the .ParentObjectInstance is an index, starting at 0, into the</div>
+<div class="token cpp_comment ">//  instances reported for the parent object type.  It is only</div>
+<div class="token cpp_comment ">//  meaningful if .ParentObjectName is not 0.  The purpose of all this</div>
+<div class="token cpp_comment ">//  is to permit reporting/summation of object instances like threads</div>
+<div class="token cpp_comment ">//  within processes, and logical drives within physical drives.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  The PERF_INSTANCE_DEFINITION will be followed by a PERF_COUNTER_BLOCK.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PERF_COUNTER_BLOCK"><div><div class="token cpp_type">_PERF_COUNTER_BLOCK</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$_PERF_COUNTER_BLOCK::ByteLength"><div><div class="token cpp_field">ByteLength</div></div></div>;         <div class="token cpp_comment ">// Length in bytes of this structure,</div>
+                                        <div class="token cpp_comment ">// including the following counters</div>
+} <div class="def" id="NI$PERF_COUNTER_BLOCK"><div><div class="token cpp_type">PERF_COUNTER_BLOCK</div></div></div>, *<div class="def" id="NI$PPERF_COUNTER_BLOCK"><div><div class="token cpp_type">PPERF_COUNTER_BLOCK</div></div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  The PERF_COUNTER_BLOCK is followed by PERF_OBJECT_TYPE.NumCounters</div>
+<div class="token cpp_comment ">//  number of counters.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Support for New Extensible API starting with NT 5.0</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define     PERF_QUERY_OBJECTS      ((LONG)0x80000000)</div>
+<div class="disabled">#define     PERF_QUERY_GLOBAL       ((LONG)0x80000001)</div>
+<div class="disabled">#define     PERF_QUERY_COSTLY       ((LONG)0x80000002)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  function typedefs for extensible counter function prototypes</div>
+<div class="token cpp_comment ">//</div>
+<div class="expandable"><div class="disabled">typedef DWORD (APIENTRY PM_OPEN_PROC) (_In_opt_ LPWSTR);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> (<div class="token cpp_keyword ">__stdcall</div> <div class="def" id="NI$PM_OPEN_PROC"><div><div class="token cpp_type">PM_OPEN_PROC</div></div></div>) (  <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>);</div></div>
+<div class="expandable"><div class="disabled">typedef DWORD (APIENTRY PM_COLLECT_PROC) (_In_opt_ LPWSTR lpValueName, </div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> (<div class="token cpp_keyword ">__stdcall</div> <div class="def" id="NI$PM_COLLECT_PROC"><div><div class="token cpp_type">PM_COLLECT_PROC</div></div></div>) (  <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> lpValueName, </div></div>
+<div class="disabled">                                          _Inout_</div>
+<div class="disabled">                                            _At_(*lppData, _Pre_writable_byte_size_(*lpcbTotalBytes) _Post_writable_byte_size_(*lpcbTotalBytes))</div>
+<div class="disabled">                                            _At_(_Old_(*lppData), _Post_writable_byte_size_(*lpcbTotalBytes))</div>
+                                                  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> *lppData, 
+<div class="expandable"><div class="disabled">                                          _Inout_ LPDWORD lpcbTotalBytes, </div>
+<div class="expanded">                                            <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> lpcbTotalBytes, </div></div>
+<div class="expandable"><div class="disabled">                                          _Inout_ LPDWORD lpNumObjectTypes);</div>
+<div class="expanded">                                            <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> lpNumObjectTypes);</div></div>
+<div class="expandable"><div class="disabled">typedef DWORD (APIENTRY PM_CLOSE_PROC) (void);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> (<div class="token cpp_keyword ">__stdcall</div> <div class="def" id="NI$PM_CLOSE_PROC"><div><div class="token cpp_type">PM_CLOSE_PROC</div></div></div>) (<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="expandable"><div class="disabled">typedef DWORD (APIENTRY PM_QUERY_PROC) (LPDWORD, LPVOID *, LPDWORD, LPDWORD);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> (<div class="token cpp_keyword ">__stdcall</div> <div class="def" id="NI$PM_QUERY_PROC"><div><div class="token cpp_type">PM_QUERY_PROC</div></div></div>) (<div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> *, <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div>);</div></div>
+
+<div class="disabled">#if ((defined(_WIN32_WINDOWS) &amp;&amp; _WIN32_WINDOWS &gt;= 0x0501) || _WIN32_WINNT &gt;= 0x0501 || (defined(NTDDI_VERSION) &amp;&amp; NTDDI_VERSION &gt;= NTDDI_WINXP))</div>
+<div class="disabled">#define     MAX_PERF_OBJECTS_IN_QUERY_FUNCTION      (64L)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The following are the possible values for</div>
+<div class="token cpp_comment ">// HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib\EventLogLevel</div>
+<div class="token cpp_comment ">// The default is WINPERF_LOG_NONE if the registry value is not defined.</div>
+<div class="token cpp_comment ">// This should be adopted by all perfdlls to avoid flooding the application</div>
+<div class="token cpp_comment ">// event log.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define  WINPERF_LOG_NONE       0           // No event reported</div>
+<div class="disabled">#define  WINPERF_LOG_USER       1           // Report only errors</div>
+<div class="disabled">#define  WINPERF_LOG_DEBUG      2           // Report debug errors as well</div>
+<div class="disabled">#define  WINPERF_LOG_VERBOSE    3           // Report everything</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define     MAX_PERF_OBJECTS_IN_QUERY_FUNCTION      (8L)
+#endif</div>
+
+<div class="disabled">#include &lt;poppack.h&gt;</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _WINPERF_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'LARGE_INTEGER': {
+        'displayNameInHtml': '<span class="cpp_type">LARGE_INTEGER</span>',
+        'impls': [
+            'NI$LARGE_INTEGER'
+        ],
+        'decls': []
+    },
+    'LONG': {
+        'displayNameInHtml': '<span class="cpp_type">LONG</span>',
+        'impls': [
+            'NI$LONG'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'SYSTEMTIME': {
+        'displayNameInHtml': '<span class="cpp_type">SYSTEMTIME</span>',
+        'impls': [
+            'NI$SYSTEMTIME'
+        ],
+        'decls': []
+    },
+    'WCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">WCHAR</span>',
+        'impls': [
+            'NI$WCHAR'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LARGE_INTEGER': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$SYSTEMTIME': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$WCHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>
