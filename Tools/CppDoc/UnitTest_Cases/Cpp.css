@@ -252,3 +252,27 @@ a.symbolIndex {
     .dropdownData.link a:hover {
         text-decoration: underline;
     }
+
+/* symbol index page */
+
+div.symbol_header {
+    position: absolute;
+}
+
+a.symbol_expanding {
+    position: absolute;
+    left: -1em;
+    color: #569cd6;
+    cursor: pointer;
+}
+
+    a.symbol_expanding:hover {
+        text-decoration: underline;
+    }
+
+div.symbol_dropdown_container {
+}
+
+div.symbol_dropdown {
+    margin-left: 3em;
+}

@@ -135,119 +135,132 @@ RenderSymbolGroup
 
 void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<SymbolGroup> symbolGroup)
 {
-	switch (symbolGroup->kind)
+	if (symbolGroup->kind != SymbolGroupKind::Root)
 	{
-	case SymbolGroupKind::Group:
-		writer.WriteString(L"<span class=\"fileGroupLabel\">");
-		WriteHtmlTextSingleLine(symbolGroup->name, writer);
-		writer.WriteLine(L"</span>");
-		break;
-	case SymbolGroupKind::Text:
-		WriteHtmlTextSingleLine(symbolGroup->name, writer);
-		break;
-	case SymbolGroupKind::Symbol:
+		writer.WriteString(L"<div><div class=\"symbol_header\">");
+		if (symbolGroup->children.Count() > 0)
 		{
-			const wchar_t* keyword = nullptr;
-			switch (symbolGroup->symbol->kind)
-			{
-			case symbol_component::SymbolKind::Enum:
-				{
-					auto decl = symbolGroup->symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
-					if (decl->enumClass)
-					{
-						keyword = L"enum class";
-					}
-					else
-					{
-						keyword = L"enum";
-					}
-				}
-				break;
-			case symbol_component::SymbolKind::Class:
-				keyword = L"class";
-				break;
-			case symbol_component::SymbolKind::Struct:
-				keyword = L"struct";
-				break;
-			case symbol_component::SymbolKind::Union:
-				keyword = L"union";
-				break;
-			case symbol_component::SymbolKind::TypeAlias:
-				keyword = L"typedef";
-				break;
-			case symbol_component::SymbolKind::FunctionSymbol:
-				keyword = L"function";
-				break;
-			case symbol_component::SymbolKind::Variable:
-				keyword = L"variable";
-				break;
-			case symbol_component::SymbolKind::ValueAlias:
-				keyword = L"constexpr";
-				break;
-			case symbol_component::SymbolKind::Namespace:
-				keyword = L"namespace";
-				break;
-			default:
-				throw UnexpectedSymbolCategoryException();
-			}
-
-			writer.WriteString(L"<div class=\"codebox\">");
-			writer.WriteString(L"<div class=\"cpp_keyword\">");
-			writer.WriteString(keyword);
-			writer.WriteString(L"</div>");
-			writer.WriteChar(L' ');
-			writer.WriteString(GetUnscopedSymbolDisplayNameInHtml(symbolGroup->symbol, true));
-			if (auto funcDecl = symbolGroup->symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
-			{
-				if (auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>())
-				{
-					writer.WriteString(AppendFunctionParametersInHtml(funcType.Obj()));
-				}
-			}
-
-			if (symbolGroup->symbol->kind != symbol_component::SymbolKind::Namespace)
-			{
-				auto writeTag = [&](const WString& declId, const WString& tag, DeclOrArg declOrArg)
-				{
-					vint index = global->declToFiles.Keys().IndexOf(declOrArg);
-					if (index != -1)
-					{
-						auto filePath = global->declToFiles.Values()[index];
-						auto htmlFileName = global->fileLines[filePath]->htmlFileName;
-						writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
-						WriteHtmlAttribute(htmlFileName, writer);
-						writer.WriteString(L".html#");
-						WriteHtmlAttribute(declId, writer);
-						writer.WriteString(L"\">");
-						WriteHtmlTextSingleLine(tag, writer);
-						writer.WriteString(L"</a>");
-					}
-				};
-
-				EnumerateDecls(symbolGroup->symbol, [&](DeclOrArg declOrArg, bool isImpl, vint index)
-				{
-					writeTag(GetDeclId(declOrArg), (isImpl ? L"impl" : L"decl"), declOrArg);
-				});
-			}
-			writer.WriteLine(L"</div>");
+			writer.WriteString(L"<a class=\"symbol_expanding\">-</a>");
 		}
-		break;
+		switch (symbolGroup->kind)
+		{
+		case SymbolGroupKind::Group:
+			writer.WriteString(L"<span class=\"fileGroupLabel\">");
+			WriteHtmlTextSingleLine(symbolGroup->name, writer);
+			writer.WriteString(L"</span>");
+			break;
+		case SymbolGroupKind::Text:
+			writer.WriteString(L"<span>");
+			WriteHtmlTextSingleLine(symbolGroup->name, writer);
+			writer.WriteString(L"</span>");
+			break;
+		case SymbolGroupKind::Symbol:
+			{
+				const wchar_t* keyword = nullptr;
+				switch (symbolGroup->symbol->kind)
+				{
+				case symbol_component::SymbolKind::Enum:
+					{
+						auto decl = symbolGroup->symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
+						if (decl->enumClass)
+						{
+							keyword = L"enum class";
+						}
+						else
+						{
+							keyword = L"enum";
+						}
+					}
+					break;
+				case symbol_component::SymbolKind::Class:
+					keyword = L"class";
+					break;
+				case symbol_component::SymbolKind::Struct:
+					keyword = L"struct";
+					break;
+				case symbol_component::SymbolKind::Union:
+					keyword = L"union";
+					break;
+				case symbol_component::SymbolKind::TypeAlias:
+					keyword = L"typedef";
+					break;
+				case symbol_component::SymbolKind::FunctionSymbol:
+					keyword = L"function";
+					break;
+				case symbol_component::SymbolKind::Variable:
+					keyword = L"variable";
+					break;
+				case symbol_component::SymbolKind::ValueAlias:
+					keyword = L"constexpr";
+					break;
+				case symbol_component::SymbolKind::Namespace:
+					keyword = L"namespace";
+					break;
+				default:
+					throw UnexpectedSymbolCategoryException();
+				}
+
+				writer.WriteString(L"<div class=\"codebox\">");
+				writer.WriteString(L"<div class=\"cpp_keyword\">");
+				writer.WriteString(keyword);
+				writer.WriteString(L"</div>");
+				writer.WriteChar(L' ');
+				writer.WriteString(GetUnscopedSymbolDisplayNameInHtml(symbolGroup->symbol, true));
+				if (auto funcDecl = symbolGroup->symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>())
+				{
+					if (auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>())
+					{
+						writer.WriteString(AppendFunctionParametersInHtml(funcType.Obj()));
+					}
+				}
+
+				if (symbolGroup->symbol->kind != symbol_component::SymbolKind::Namespace)
+				{
+					auto writeTag = [&](const WString& declId, const WString& tag, DeclOrArg declOrArg)
+					{
+						vint index = global->declToFiles.Keys().IndexOf(declOrArg);
+						if (index != -1)
+						{
+							auto filePath = global->declToFiles.Values()[index];
+							auto htmlFileName = global->fileLines[filePath]->htmlFileName;
+							writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
+							WriteHtmlAttribute(htmlFileName, writer);
+							writer.WriteString(L".html#");
+							WriteHtmlAttribute(declId, writer);
+							writer.WriteString(L"\">");
+							WriteHtmlTextSingleLine(tag, writer);
+							writer.WriteString(L"</a>");
+						}
+					};
+
+					EnumerateDecls(symbolGroup->symbol, [&](DeclOrArg declOrArg, bool isImpl, vint index)
+					{
+						writeTag(GetDeclId(declOrArg), (isImpl ? L"impl" : L"decl"), declOrArg);
+					});
+				}
+				writer.WriteString(L"</div>");
+			}
+			break;
+		}
+		writer.WriteLine(L"</div>&nbsp;</div>");
 	}
 
 	if (symbolGroup->children.Count() > 0)
 	{
+		writer.WriteString(L"<div class=\"symbol_dropdown_container\">");
 		if (symbolGroup->braces)
 		{
-			writer.WriteLine(L"{");
+			writer.WriteString(L"{");
 		}
 
 		if (symbolGroup->kind != SymbolGroupKind::Root)
 		{
-			writer.WriteString(L"<div style=\"margin-left: 4em;\">");
+			writer.WriteString(L"<div class=\"symbol_dropdown\">");
 		}
 
 		for (vint i = 0; i < symbolGroup->children.Count(); i++)
 		{
+			writer.WriteLine(L"");
 			auto childGroup = symbolGroup->children[i];
 			RenderSymbolGroup(global, writer, childGroup);
 		}
@@ -259,8 +272,9 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 
 		if (symbolGroup->braces)
 		{
-			writer.WriteLine(L"}");
+			writer.WriteString(L"}");
 		}
+		writer.WriteLine(L"</div>");
 	}
 }
 
