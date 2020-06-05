@@ -187,21 +187,21 @@ void IndexCppCode(
 Main
 
 Set root folder which contains UnitTest_Cases.vcxproj
-Open http://127.0.0.1:8080/Debug.i.Output/FileIndex.html
-Open http://127.0.0.1:8080/Calculator.i.Output/FileIndex.html
-Open http://127.0.0.1:8080/TypePrinter.i.Output/FileIndex.html
-Open http://127.0.0.1:8080/STL.i.Output/FileIndex.html
-Open http://127.0.0.1:8080/Gaclib.i.Output/FileIndex.html
+Open http://127.0.0.1:8080/Debug/FileIndex.html
+Open http://127.0.0.1:8080/Calculator/FileIndex.html
+Open http://127.0.0.1:8080/TypePrinter/FileIndex.html
+Open http://127.0.0.1:8080/STL/FileIndex.html
+Open http://127.0.0.1:8080/Gaclib/FileIndex.html
 ***********************************************************************/
 
 int main()
 {
 	List<File> preprocessedFiles;
-	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Debug.i"));
-	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/Debug.i"));
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
 	preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
-	//preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
-	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Gaclib.i"));
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/Gaclib.i"));
 	
 	Console::WriteLine(L"Cleaning ...");
 	FOREACH(File, file, preprocessedFiles)

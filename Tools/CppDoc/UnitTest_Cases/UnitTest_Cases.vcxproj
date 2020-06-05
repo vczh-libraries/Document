@@ -198,13 +198,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cpp.css" />
-    <None Include="Cpp.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="favicon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Calculator\Calculator.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
