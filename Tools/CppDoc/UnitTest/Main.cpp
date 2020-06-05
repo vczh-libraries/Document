@@ -7,7 +7,7 @@ Ptr<RegexLexer> GlobalCppLexer()
 	return cppLexer;
 }
 
-int wmain(vint argc, wchar_t* argv[])
+int wmain(int argc, wchar_t* argv[])
 {
 	cppLexer = CreateCppLexer();
 	int result = unittest::UnitTest::RunAndDisposeTests(argc, argv);

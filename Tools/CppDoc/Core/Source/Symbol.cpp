@@ -833,19 +833,19 @@ TemplateArgumentContext::TemplateArgumentContext(Symbol* _symbolToApply, vint ar
 	InitArguments(argumentCount);
 }
 
-TemplateArgumentContext::TemplateArgumentContext(TemplateArgumentContext* prototypeContext, bool copyArguments)
-	:symbolToApply(prototypeContext->symbolToApply)
-	, parent(prototypeContext->parent)
+TemplateArgumentContext::TemplateArgumentContext(const TemplateArgumentContext& prototypeContext, bool copyArguments)
+	:symbolToApply(prototypeContext.symbolToApply)
+	, parent(prototypeContext.parent)
 {
 	if (copyArguments)
 	{
-		CopyFrom(assignedArguments, prototypeContext->assignedArguments);
-		CopyFrom(assignedKeys, prototypeContext->assignedKeys);
-		availableCount = prototypeContext->availableCount;
+		CopyFrom(assignedArguments, prototypeContext.assignedArguments);
+		CopyFrom(assignedKeys, prototypeContext.assignedKeys);
+		availableCount = prototypeContext.availableCount;
 	}
 	else
 	{
-		InitArguments(prototypeContext->assignedArguments.Count());
+		InitArguments(prototypeContext.assignedArguments.Count());
 	}
 }
 

@@ -188,7 +188,7 @@ namespace infer_function_type
 					for (vint j = 0; j < count; j++)
 					{
 						auto assignedTsysItem = ApplyExprTsysType(assignedTsys->GetParam(j), assignedTsys->GetInit().headers[j].type);
-						TemplateArgumentContext localVariadicContext(&taContext, false);
+						TemplateArgumentContext localVariadicContext(taContext, false);
 
 						// infer all affected variadic arguments to any_t, result will be overrided if more precise types are inferred
 						for (vint j = 0; j < vas.Count(); j++)

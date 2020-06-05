@@ -581,7 +581,11 @@ TEST_FILE
 
 		TEST_CASE(L"Checking")
 		{
+#ifdef VCZH_64
+#define TEST_VAR(NAME1, NAME2) AssertBinary<__int32>(pa, L#NAME1, L#NAME2, L"-");
+#else
 #define TEST_VAR(NAME1, NAME2) AssertBinary<decltype((NAME1-NAME2))>(pa, L#NAME1, L#NAME2, L"-");
+#endif
 			TEST_EACH_VAR_PTR_PTR(TEST_VAR)
 #undef TEST_VAR
 		});

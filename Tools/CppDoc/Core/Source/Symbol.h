@@ -472,7 +472,7 @@ public:
 	Dictionary<Symbol*, Ptr<symbol_component::Evaluation>>		symbolEvaluations;
 
 	TemplateArgumentContext(Symbol* _symbolToApply, vint argumentCount);
-	TemplateArgumentContext(TemplateArgumentContext* prototypeContext, bool copyArguments);
+	TemplateArgumentContext(const TemplateArgumentContext& prototypeContext, bool copyArguments);
 
 	Symbol*											GetSymbolToApply()const;
 	vint											GetArgumentCount()const;
