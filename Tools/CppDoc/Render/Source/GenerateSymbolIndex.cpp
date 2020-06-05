@@ -16,11 +16,74 @@ enum class SymbolGroupKind
 struct SymbolGroup
 {
 	SymbolGroupKind					kind = SymbolGroupKind::Symbol;
+	WString							uniqueId;
 	WString							name;
 	Symbol*							symbol = nullptr;
 	bool							braces = false;
 	List<Ptr<SymbolGroup>>			children;
 };
+
+/***********************************************************************
+GenerateSymbolGroupUniqueId
+***********************************************************************/
+
+void SetUniqueId(Ptr<SymbolGroup> symbolGroup, WString id, SortedList<WString>& ids)
+{
+	id = wupper(id);
+	if (!ids.Contains(id))
+	{
+		symbolGroup->uniqueId = id;
+		ids.Add(id);
+	}
+	else
+	{
+		vint index = 2;
+		while (true)
+		{
+			auto newId = id + itow(index);
+			if (!ids.Contains(newId))
+			{
+				symbolGroup->uniqueId = newId;
+				ids.Add(newId);
+				break;
+			}
+			else
+			{
+				index++;
+			}
+		}
+	}
+}
+
+void GenerateSymbolGroupUniqueId(Ptr<SymbolGroup> symbolGroup, const WString& prefix, SortedList<WString>& ids)
+{
+	if (symbolGroup->children.Count() == 0) return;
+
+	Array<wchar_t> buffer(65);
+	memset(&buffer[0], 0, sizeof(wchar_t) * buffer.Count());
+
+	auto reference = symbolGroup->symbol ? symbolGroup->symbol->uniqueId : symbolGroup->name;
+	for (vint i = 0; i < buffer.Count() - 1; i++)
+	{
+		if (i == reference.Length()) break;
+		switch (auto c = reference[i])
+		{
+		case ' ':case '<':case '>':case ':':case '\"':case '/':case '\\':case '|':case '?':case '*':
+			buffer[i] = L'_';
+			break;
+		default:
+			buffer[i] = c;
+		}
+	}
+
+	auto uniqueId = prefix + L"_" + wupper(&buffer[0]);
+	SetUniqueId(symbolGroup, uniqueId, ids);
+
+	for (vint i = 0; i < symbolGroup->children.Count(); i++)
+	{
+		GenerateSymbolGroupUniqueId(symbolGroup->children[i], prefix, ids);
+	}
+}
 
 /***********************************************************************
 GenerateSymbolGroupForFileGroup
@@ -401,6 +464,21 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 				fileGroup->kind = SymbolGroupKind::Group;
 				fileGroup->name = fileGroups[i].f1;
 				rootGroup->children.Add(fileGroup);
+			}
+		}
+	}
+	{
+		Regex extractLastWord(L"^(/.*/W)?(<word>/w+)/W*$");
+		SortedList<WString> ids;
+		for (vint i = 0; i < rootGroup->children.Count(); i++)
+		{
+			auto fileGroup = rootGroup->children[i];
+			auto match = extractLastWord.MatchHead(fileGroup->name);
+			SetUniqueId(fileGroup, match->Groups()[L"word"][0].Value(), ids);
+
+			for (vint j = 0; j < fileGroup->children.Count(); j++)
+			{
+				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup->uniqueId, ids);
 			}
 		}
 	}
