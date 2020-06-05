@@ -38,6 +38,73 @@ bool IsDeclInFileGroup(Ptr<GlobalLinesRecord> global, Ptr<Declaration> decl, con
 	return false;
 }
 
+bool IsSymbolInFileGroup(Ptr<GlobalLinesRecord> global, Symbol* context, const WString& fileGroupPrefix, bool& generateChildSymbols)
+{
+	generateChildSymbols = false;
+	switch (context->GetCategory())
+	{
+	case symbol_component::SymbolCategory::Normal:
+		if (auto decl = context->GetImplDecl_NFb())
+		{
+			if (!decl->implicitlyGeneratedMember)
+			{
+				if (IsDeclInFileGroup(global, decl, fileGroupPrefix))
+				{
+					generateChildSymbols = true;
+					return true;
+				}
+			}
+			return false;
+		}
+		for (vint i = 0; i < context->GetForwardDecls_N().Count(); i++)
+		{
+			auto decl = context->GetForwardDecls_N()[i];
+			if (!decl->implicitlyGeneratedMember)
+			{
+				if (IsDeclInFileGroup(global, decl, fileGroupPrefix))
+				{
+					return true;
+				}
+			}
+		}
+		break;
+	case symbol_component::SymbolCategory::Function:
+		for (vint i = 0; i < context->GetImplSymbols_F().Count(); i++)
+		{
+			auto decl = context->GetImplSymbols_F()[i]->GetImplDecl_NFb();
+			if (!decl->implicitlyGeneratedMember)
+			{
+				if (IsDeclInFileGroup(global, decl, fileGroupPrefix))
+				{
+					generateChildSymbols = true;
+					return true;
+				}
+			}
+		}
+
+		if (context->GetImplSymbols_F().Count() > 0)
+		{
+			return false;
+		}
+
+		for (vint i = 0; i < context->GetForwardSymbols_F().Count(); i++)
+		{
+			auto decl = context->GetForwardSymbols_F()[i]->GetForwardDecl_Fb();
+			if (!decl->implicitlyGeneratedMember)
+			{
+				if (IsDeclInFileGroup(global, decl, fileGroupPrefix))
+				{
+					return true;
+				}
+			}
+		}
+		break;
+	case symbol_component::SymbolCategory::FunctionBody:
+		throw UnexpectedSymbolCategoryException();
+	}
+	return false;
+}
+
 Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, const WString& fileGroupPrefix, Symbol* context)
 {
 	if (context->kind != symbol_component::SymbolKind::Root)
