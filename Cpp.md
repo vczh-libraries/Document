@@ -57,12 +57,7 @@
     - [ ] Generate `ClassMemberCache` for generated special members.
     - [ ] Generate special members for declarations with `specializationSpec`.
 - [ ] Render
-  - [ ] Expandable symbol index page
-    - [x] Expandable
-    - [x] Group all partial specializations together.
-      - [x] If the primary symbol exists in the current file group, place inside the primary symbol as a text group `Partial Specializations`.
-      - [x] If not, still place the header, appending `(Partial Specializations)`.
-    - [ ] Dynamic loading instead of downloading everything.
+  - [ ] Dynamic loading instead of downloading everything.
   - [ ] Add link to `#include "File"` and `#include <File>`.
   - [ ] Attach document content to declarations.
   - [ ] Enable markdown inside xml elements in comment.

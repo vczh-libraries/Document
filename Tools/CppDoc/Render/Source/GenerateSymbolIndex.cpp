@@ -203,7 +203,9 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, 
 					psGroup->kind = SymbolGroupKind::SymbolAndText;
 					psGroup->name = L"(Partial Specializations)";
 					psGroup->symbol = primary;
-					psContainers.Add(context, psGroup);
+
+					parentGroup->children.Add(psGroup);
+					psContainers.Add(primary, psGroup);
 				}
 			}
 
