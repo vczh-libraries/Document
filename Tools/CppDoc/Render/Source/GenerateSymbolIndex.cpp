@@ -50,7 +50,12 @@ bool IsSymbolInFileGroup(Ptr<GlobalLinesRecord> global, Symbol* context, const W
 			{
 				if (IsDeclInFileGroup(global, decl, fileGroupPrefix))
 				{
-					generateChildSymbols = true;
+					switch (context->kind)
+					{
+					case CLASS_SYMBOL_KIND:
+						generateChildSymbols = true;
+						break;
+					}
 					return true;
 				}
 			}
@@ -63,6 +68,12 @@ bool IsSymbolInFileGroup(Ptr<GlobalLinesRecord> global, Symbol* context, const W
 			{
 				if (IsDeclInFileGroup(global, decl, fileGroupPrefix))
 				{
+					switch (context->kind)
+					{
+					case symbol_component::SymbolKind::Namespace:
+						generateChildSymbols = true;
+						break;
+					}
 					return true;
 				}
 			}
@@ -76,7 +87,6 @@ bool IsSymbolInFileGroup(Ptr<GlobalLinesRecord> global, Symbol* context, const W
 			{
 				if (IsDeclInFileGroup(global, decl, fileGroupPrefix))
 				{
-					generateChildSymbols = true;
 					return true;
 				}
 			}
@@ -107,67 +117,27 @@ bool IsSymbolInFileGroup(Ptr<GlobalLinesRecord> global, Symbol* context, const W
 
 Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, const WString& fileGroupPrefix, Symbol* context)
 {
-	if (context->kind != symbol_component::SymbolKind::Root)
+	bool generateChildSymbols = false;
+	if (context->kind == symbol_component::SymbolKind::Root)
 	{
-		switch (context->GetCategory())
-		{
-		case symbol_component::SymbolCategory::Normal:
-			if (auto decl = context->GetImplDecl_NFb())
-			{
-				if (!decl->implicitlyGeneratedMember)
-				{
-					if (IsDeclInFileGroup(global, decl, fileGroupPrefix)) goto GENERATE_SYMBOL_GROUP;
-				}
-			}
-			for (vint i = 0; i < context->GetForwardDecls_N().Count(); i++)
-			{
-				auto decl = context->GetForwardDecls_N()[i];
-				if (!decl->implicitlyGeneratedMember)
-				{
-					if (IsDeclInFileGroup(global, decl, fileGroupPrefix)) goto GENERATE_SYMBOL_GROUP;
-				}
-			}
-			break;
-		case symbol_component::SymbolCategory::Function:
-			for (vint i = 0; i < context->GetImplSymbols_F().Count(); i++)
-			{
-				if (auto decl = context->GetImplSymbols_F()[i]->GetImplDecl_NFb())
-				{
-					if (!decl->implicitlyGeneratedMember)
-					{
-						if (IsDeclInFileGroup(global, decl, fileGroupPrefix)) goto GENERATE_SYMBOL_GROUP;
-					}
-				}
-			}
-			for (vint i = 0; i < context->GetForwardSymbols_F().Count(); i++)
-			{
-				if (auto decl = context->GetForwardSymbols_F()[i]->GetForwardDecl_Fb())
-				{
-					if (!decl->implicitlyGeneratedMember)
-					{
-						if (IsDeclInFileGroup(global, decl, fileGroupPrefix)) goto GENERATE_SYMBOL_GROUP;
-					}
-				}
-			}
-			break;
-		case symbol_component::SymbolCategory::FunctionBody:
-			throw UnexpectedSymbolCategoryException();
-		}
-		return nullptr;
+		generateChildSymbols = true;
 	}
-GENERATE_SYMBOL_GROUP:
+	else
+	{
+		if (!IsSymbolInFileGroup(global, context, fileGroupPrefix, generateChildSymbols))
+		{
+			return nullptr;
+		}
+	}
 
 	auto symbolGroup = MakePtr<SymbolGroup>();
 	symbolGroup->symbol = context;
-	switch (context->kind)
+	if (generateChildSymbols && context->kind != symbol_component::SymbolKind::Root)
 	{
-	case CLASS_SYMBOL_KIND:
-	case symbol_component::SymbolKind::Namespace:
 		symbolGroup->braces = true;
-		break;
 	}
 
-	if (context->kind == symbol_component::SymbolKind::Root || symbolGroup->braces)
+	if (generateChildSymbols)
 	{
 		for (vint i = 0; i < context->GetChildren_NFb().Count(); i++)
 		{
