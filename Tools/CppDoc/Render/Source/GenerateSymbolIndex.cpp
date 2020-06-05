@@ -285,7 +285,7 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, 
 RenderSymbolGroup
 ***********************************************************************/
 
-void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<SymbolGroup> symbolGroup)
+void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<SymbolGroup> symbolGroup, const FilePath& fragmentFolder)
 {
 	writer.WriteString(L"<div>");
 	if (symbolGroup->kind != SymbolGroupKind::Root)
@@ -413,28 +413,36 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 		}
 		else
 		{
-			writer.WriteString(L"<div class=\"symbol_dropdown_container\">");
+			writer.WriteString(L"<div class=\"symbol_dropdown_container\" data-status=\"empty\" data-uniqueId=\"" + symbolGroup->uniqueId + L"\">");
 		}
 		if (symbolGroup->braces)
 		{
 			writer.WriteString(L"{");
 		}
 
-		if (symbolGroup->kind != SymbolGroupKind::Root)
+		if (symbolGroup->kind == SymbolGroupKind::Root)
 		{
-			writer.WriteString(L"<div class=\"symbol_dropdown\">");
+			for (vint i = 0; i < symbolGroup->children.Count(); i++)
+			{
+				auto childGroup = symbolGroup->children[i];
+				RenderSymbolGroup(global, writer, childGroup, fragmentFolder);
+			}
 		}
-
-		for (vint i = 0; i < symbolGroup->children.Count(); i++)
+		else
 		{
-			writer.WriteLine(L"");
-			auto childGroup = symbolGroup->children[i];
-			RenderSymbolGroup(global, writer, childGroup);
-		}
+			writer.WriteString(L"<div class=\"symbol_dropdown\">Loading...</div>");
+			{
+				FileStream fileStream((fragmentFolder / (symbolGroup->uniqueId + L".html")).GetFullPath(), FileStream::WriteOnly);
+				Utf8Encoder encoder;
+				EncoderStream encoderStream(fileStream, encoder);
+				StreamWriter fragmentWriter(encoderStream);
 
-		if (symbolGroup->kind != SymbolGroupKind::Root)
-		{
-			writer.WriteString(L"</div>");
+				for (vint i = 0; i < symbolGroup->children.Count(); i++)
+				{
+					auto childGroup = symbolGroup->children[i];
+					RenderSymbolGroup(global, fragmentWriter, childGroup, fragmentFolder);
+				}
+			}
 		}
 
 		if (symbolGroup->braces)
@@ -503,7 +511,12 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 	writer.WriteLine(L"<br>");
 	writer.WriteString(L"<div class=\"cpp_default\"><div class=\"symbol_root\">");
 
-	RenderSymbolGroup(global, writer, rootGroup);
+	FilePath fragmentFolder = pathHtml.GetFolder() / L"SymbolIndexFragments";
+	if (!Folder(fragmentFolder).Exists())
+	{
+		Folder(fragmentFolder).Create(true);
+	}
+	RenderSymbolGroup(global, writer, rootGroup, fragmentFolder);
 
 	writer.WriteLine(L"</div></div>");
 	writer.WriteLine(L"</body>");
