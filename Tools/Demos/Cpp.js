@@ -249,4 +249,28 @@ function toggleSymbolDropdown(symbolExpanding) {
         symbolExpanding.textContent = '-';
         containerElement.classList.add('expanded');
     }
+
+    let status = containerElement.getAttribute('data-status');
+    if (status == 'empty' && symbolExpanding.textContent == '-') {
+        let uniqueId = containerElement.getAttribute('data-uniqueId');
+        let dropdownElement = containerElement.getElementsByClassName('symbol_dropdown')[0];
+
+        containerElement.setAttribute('data-status', 'loading');
+        let url = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'SymbolIndexFragments/' + uniqueId + '.html';
+
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    containerElement.setAttribute('data-status', 'loaded');
+                    dropdownElement.innerHTML = xhr.responseText;
+                } else {
+                    containerElement.setAttribute('data-status', 'empty');
+                    dropdownElement.textContent = 'Failed to load, please expand again to retry.';
+                }
+            }
+        };
+        xhr.open('GET', url);
+        xhr.send();
+    }
 }
