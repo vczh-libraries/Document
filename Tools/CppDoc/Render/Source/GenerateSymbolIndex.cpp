@@ -133,13 +133,8 @@ GENERATE_SYMBOL_GROUP:
 RenderSymbolGroup
 ***********************************************************************/
 
-void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<SymbolGroup> symbolGroup, vint indentation)
+void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<SymbolGroup> symbolGroup)
 {
-	for (vint i = 0; i < indentation; i++)
-	{
-		writer.WriteString(L"    ");
-	}
-
 	switch (symbolGroup->kind)
 	{
 	case SymbolGroupKind::Group:
@@ -196,6 +191,7 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 				throw UnexpectedSymbolCategoryException();
 			}
 
+			writer.WriteString(L"<div class=\"codebox\">");
 			writer.WriteString(L"<div class=\"cpp_keyword\">");
 			writer.WriteString(keyword);
 			writer.WriteString(L"</div>");
@@ -233,7 +229,7 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 					writeTag(GetDeclId(declOrArg), (isImpl ? L"impl" : L"decl"), declOrArg);
 				});
 			}
-			writer.WriteLine(L"");
+			writer.WriteLine(L"</div>");
 		}
 		break;
 	}
@@ -242,25 +238,27 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 	{
 		if (symbolGroup->braces)
 		{
-			for (vint i = 0; i < indentation; i++)
-			{
-				writer.WriteString(L"    ");
-			}
 			writer.WriteLine(L"{");
+		}
+
+		if (symbolGroup->kind != SymbolGroupKind::Root)
+		{
+			writer.WriteString(L"<div style=\"margin-left: 4em;\">");
 		}
 
 		for (vint i = 0; i < symbolGroup->children.Count(); i++)
 		{
 			auto childGroup = symbolGroup->children[i];
-			RenderSymbolGroup(global, writer, childGroup, indentation + 1);
+			RenderSymbolGroup(global, writer, childGroup);
+		}
+
+		if (symbolGroup->kind != SymbolGroupKind::Root)
+		{
+			writer.WriteString(L"</div>");
 		}
 
 		if (symbolGroup->braces)
 		{
-			for (vint i = 0; i < indentation; i++)
-			{
-				writer.WriteString(L"    ");
-			}
 			writer.WriteLine(L"}");
 		}
 	}
@@ -304,11 +302,11 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
 	writer.WriteLine(L"<br>");
 	writer.WriteLine(L"<br>");
-	writer.WriteString(L"<div class=\"codebox\"><div class=\"cpp_default\">");
+	writer.WriteString(L"<div class=\"cpp_default\">");
 
-	RenderSymbolGroup(global, writer, rootGroup, -1);
+	RenderSymbolGroup(global, writer, rootGroup);
 
-	writer.WriteLine(L"</div></div>");
+	writer.WriteLine(L"</div>");
 	writer.WriteLine(L"</body>");
 	writer.WriteLine(L"</html>");
 }
