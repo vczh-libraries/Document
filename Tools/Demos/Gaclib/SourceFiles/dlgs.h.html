@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>dlgs.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/*++
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Module Name:
+
+    dlgs.h
+
+Abstract:
+
+    This module contains the UI dialog header information.
+
+--*/</div>
+
+#pragma once
+
+<div class="disabled">#ifndef _DLGSH_INCLUDED_</div>
+<div class="disabled">#define _DLGSH_INCLUDED_</div>
+
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Constant Declarations.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define ctlFirst    0x0400</div>
+<div class="disabled">#define ctlLast     0x04ff</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Push buttons.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define psh1        0x0400</div>
+<div class="disabled">#define psh2        0x0401</div>
+<div class="disabled">#define psh3        0x0402</div>
+<div class="disabled">#define psh4        0x0403</div>
+<div class="disabled">#define psh5        0x0404</div>
+<div class="disabled">#define psh6        0x0405</div>
+<div class="disabled">#define psh7        0x0406</div>
+<div class="disabled">#define psh8        0x0407</div>
+<div class="disabled">#define psh9        0x0408</div>
+<div class="disabled">#define psh10       0x0409</div>
+<div class="disabled">#define psh11       0x040a</div>
+<div class="disabled">#define psh12       0x040b</div>
+<div class="disabled">#define psh13       0x040c</div>
+<div class="disabled">#define psh14       0x040d</div>
+<div class="disabled">#define psh15       0x040e</div>
+<div class="disabled">#define pshHelp     psh15</div>
+<div class="disabled">#define psh16       0x040f</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Checkboxes.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define chx1        0x0410</div>
+<div class="disabled">#define chx2        0x0411</div>
+<div class="disabled">#define chx3        0x0412</div>
+<div class="disabled">#define chx4        0x0413</div>
+<div class="disabled">#define chx5        0x0414</div>
+<div class="disabled">#define chx6        0x0415</div>
+<div class="disabled">#define chx7        0x0416</div>
+<div class="disabled">#define chx8        0x0417</div>
+<div class="disabled">#define chx9        0x0418</div>
+<div class="disabled">#define chx10       0x0419</div>
+<div class="disabled">#define chx11       0x041a</div>
+<div class="disabled">#define chx12       0x041b</div>
+<div class="disabled">#define chx13       0x041c</div>
+<div class="disabled">#define chx14       0x041d</div>
+<div class="disabled">#define chx15       0x041e</div>
+<div class="disabled">#define chx16       0x041f</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Radio buttons.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define rad1        0x0420</div>
+<div class="disabled">#define rad2        0x0421</div>
+<div class="disabled">#define rad3        0x0422</div>
+<div class="disabled">#define rad4        0x0423</div>
+<div class="disabled">#define rad5        0x0424</div>
+<div class="disabled">#define rad6        0x0425</div>
+<div class="disabled">#define rad7        0x0426</div>
+<div class="disabled">#define rad8        0x0427</div>
+<div class="disabled">#define rad9        0x0428</div>
+<div class="disabled">#define rad10       0x0429</div>
+<div class="disabled">#define rad11       0x042a</div>
+<div class="disabled">#define rad12       0x042b</div>
+<div class="disabled">#define rad13       0x042c</div>
+<div class="disabled">#define rad14       0x042d</div>
+<div class="disabled">#define rad15       0x042e</div>
+<div class="disabled">#define rad16       0x042f</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Groups, frames, rectangles, and icons.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define grp1        0x0430</div>
+<div class="disabled">#define grp2        0x0431</div>
+<div class="disabled">#define grp3        0x0432</div>
+<div class="disabled">#define grp4        0x0433</div>
+<div class="disabled">#define frm1        0x0434</div>
+<div class="disabled">#define frm2        0x0435</div>
+<div class="disabled">#define frm3        0x0436</div>
+<div class="disabled">#define frm4        0x0437</div>
+<div class="disabled">#define rct1        0x0438</div>
+<div class="disabled">#define rct2        0x0439</div>
+<div class="disabled">#define rct3        0x043a</div>
+<div class="disabled">#define rct4        0x043b</div>
+<div class="disabled">#define ico1        0x043c</div>
+<div class="disabled">#define ico2        0x043d</div>
+<div class="disabled">#define ico3        0x043e</div>
+<div class="disabled">#define ico4        0x043f</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Static text.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define stc1        0x0440</div>
+<div class="disabled">#define stc2        0x0441</div>
+<div class="disabled">#define stc3        0x0442</div>
+<div class="disabled">#define stc4        0x0443</div>
+<div class="disabled">#define stc5        0x0444</div>
+<div class="disabled">#define stc6        0x0445</div>
+<div class="disabled">#define stc7        0x0446</div>
+<div class="disabled">#define stc8        0x0447</div>
+<div class="disabled">#define stc9        0x0448</div>
+<div class="disabled">#define stc10       0x0449</div>
+<div class="disabled">#define stc11       0x044a</div>
+<div class="disabled">#define stc12       0x044b</div>
+<div class="disabled">#define stc13       0x044c</div>
+<div class="disabled">#define stc14       0x044d</div>
+<div class="disabled">#define stc15       0x044e</div>
+<div class="disabled">#define stc16       0x044f</div>
+<div class="disabled">#define stc17       0x0450</div>
+<div class="disabled">#define stc18       0x0451</div>
+<div class="disabled">#define stc19       0x0452</div>
+<div class="disabled">#define stc20       0x0453</div>
+<div class="disabled">#define stc21       0x0454</div>
+<div class="disabled">#define stc22       0x0455</div>
+<div class="disabled">#define stc23       0x0456</div>
+<div class="disabled">#define stc24       0x0457</div>
+<div class="disabled">#define stc25       0x0458</div>
+<div class="disabled">#define stc26       0x0459</div>
+<div class="disabled">#define stc27       0x045a</div>
+<div class="disabled">#define stc28       0x045b</div>
+<div class="disabled">#define stc29       0x045c</div>
+<div class="disabled">#define stc30       0x045d</div>
+<div class="disabled">#define stc31       0x045e</div>
+<div class="disabled">#define stc32       0x045f</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Listboxes.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define lst1        0x0460</div>
+<div class="disabled">#define lst2        0x0461</div>
+<div class="disabled">#define lst3        0x0462</div>
+<div class="disabled">#define lst4        0x0463</div>
+<div class="disabled">#define lst5        0x0464</div>
+<div class="disabled">#define lst6        0x0465</div>
+<div class="disabled">#define lst7        0x0466</div>
+<div class="disabled">#define lst8        0x0467</div>
+<div class="disabled">#define lst9        0x0468</div>
+<div class="disabled">#define lst10       0x0469</div>
+<div class="disabled">#define lst11       0x046a</div>
+<div class="disabled">#define lst12       0x046b</div>
+<div class="disabled">#define lst13       0x046c</div>
+<div class="disabled">#define lst14       0x046d</div>
+<div class="disabled">#define lst15       0x046e</div>
+<div class="disabled">#define lst16       0x046f</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Combo boxes.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define cmb1        0x0470</div>
+<div class="disabled">#define cmb2        0x0471</div>
+<div class="disabled">#define cmb3        0x0472</div>
+<div class="disabled">#define cmb4        0x0473</div>
+<div class="disabled">#define cmb5        0x0474</div>
+<div class="disabled">#define cmb6        0x0475</div>
+<div class="disabled">#define cmb7        0x0476</div>
+<div class="disabled">#define cmb8        0x0477</div>
+<div class="disabled">#define cmb9        0x0478</div>
+<div class="disabled">#define cmb10       0x0479</div>
+<div class="disabled">#define cmb11       0x047a</div>
+<div class="disabled">#define cmb12       0x047b</div>
+<div class="disabled">#define cmb13       0x047c</div>
+<div class="disabled">#define cmb14       0x047d</div>
+<div class="disabled">#define cmb15       0x047e</div>
+<div class="disabled">#define cmb16       0x047f</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Edit controls.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define edt1        0x0480</div>
+<div class="disabled">#define edt2        0x0481</div>
+<div class="disabled">#define edt3        0x0482</div>
+<div class="disabled">#define edt4        0x0483</div>
+<div class="disabled">#define edt5        0x0484</div>
+<div class="disabled">#define edt6        0x0485</div>
+<div class="disabled">#define edt7        0x0486</div>
+<div class="disabled">#define edt8        0x0487</div>
+<div class="disabled">#define edt9        0x0488</div>
+<div class="disabled">#define edt10       0x0489</div>
+<div class="disabled">#define edt11       0x048a</div>
+<div class="disabled">#define edt12       0x048b</div>
+<div class="disabled">#define edt13       0x048c</div>
+<div class="disabled">#define edt14       0x048d</div>
+<div class="disabled">#define edt15       0x048e</div>
+<div class="disabled">#define edt16       0x048f</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Scroll bars.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define scr1        0x0490</div>
+<div class="disabled">#define scr2        0x0491</div>
+<div class="disabled">#define scr3        0x0492</div>
+<div class="disabled">#define scr4        0x0493</div>
+<div class="disabled">#define scr5        0x0494</div>
+<div class="disabled">#define scr6        0x0495</div>
+<div class="disabled">#define scr7        0x0496</div>
+<div class="disabled">#define scr8        0x0497</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Controls</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define ctl1        0x04A0</div>
+
+<div class="disabled">#define FILEOPENORD             1536</div>
+<div class="disabled">#define MULTIFILEOPENORD        1537</div>
+<div class="disabled">#define PRINTDLGORD             1538</div>
+<div class="disabled">#define PRNSETUPDLGORD          1539</div>
+<div class="disabled">#define FINDDLGORD              1540</div>
+<div class="disabled">#define REPLACEDLGORD           1541</div>
+<div class="disabled">#define FONTDLGORD              1542</div>
+<div class="disabled">#define FORMATDLGORD31          1543</div>
+<div class="disabled">#define FORMATDLGORD30          1544</div>
+<div class="disabled">#define RUNDLGORD               1545</div>
+
+<div class="disabled">#if (WINVER &gt;= 0x400)</div>
+<div class="disabled">#define PAGESETUPDLGORD         1546</div>
+<div class="disabled">#define NEWFILEOPENORD          1547</div>
+<div class="disabled">#define PRINTDLGEXORD           1549</div>
+<div class="disabled">#define PAGESETUPDLGORDMOTIF    1550</div>
+<div class="disabled">#define COLORMGMTDLGORD         1551</div>
+<div class="disabled">#define NEWFILEOPENV2ORD        1552
+#endif /* WINVER &gt;= 0x400) */</div>
+
+<div class="token cpp_comment ">// 1581 - 1590</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define NEWFILEOPENV3ORD        1553
+#endif // NTDDI_VISTA</div>
+
+<div class="token cpp_comment ">// 1591 - 1600</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN7)</div>
+<div class="disabled">#define NEWFORMATDLGWITHLINK    1591</div>
+<div class="disabled">#define IDC_MANAGE_LINK         1592
+#endif</div>
+
+<div class="disabled">#ifndef RC_INVOKED</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Typedef Declarations.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagCRGB"><div><div class="token cpp_type">tagCRGB</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div>    <div class="def" id="NI$tagCRGB::bRed"><div><div class="token cpp_field">bRed</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div>    <div class="def" id="NI$tagCRGB::bGreen"><div><div class="token cpp_field">bGreen</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div>    <div class="def" id="NI$tagCRGB::bBlue"><div><div class="token cpp_field">bBlue</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div>    <div class="def" id="NI$tagCRGB::bExtra"><div><div class="token cpp_field">bExtra</div></div></div>;
+} <div class="def" id="NI$CRGB"><div><div class="token cpp_type">CRGB</div></div></div>;           <div class="token cpp_comment ">/* RGB Color */</div>
+
+<div class="disabled">#endif /* !RC_INVOKED */</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+
+<div class="disabled">#endif // _DLGSH_INCLUDED_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BYTE': {
+        'displayNameInHtml': '<span class="cpp_type">BYTE</span>',
+        'impls': [
+            'NI$BYTE'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BYTE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

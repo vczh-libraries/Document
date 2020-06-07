@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>windef.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/****************************************************************************
+*                                                                           *
+* windef.h -- Basic Windows Type Definitions                                *
+*                                                                           *
+* Copyright (c) Microsoft Corporation. All rights reserved.                 *
+*                                                                           *
+****************************************************************************/</div>
+
+
+<div class="disabled">#ifndef _WINDEF_</div>
+<div class="disabled">#define _WINDEF_</div>
+#pragma once
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef _M_CEE_PURE</div>
+<div class="disabled">#define WINAPI_INLINE  __clrcall</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+
+<div class="disabled">#ifndef WINVER</div>
+<div class="disabled">#define WINVER 0x0500</div>
+<div class="disabled">#endif /* WINVER */</div>
+
+<div class="disabled">#ifndef NT_INCLUDED</div>
+<div class="disabled">#include &lt;winnt.h&gt;
+#endif /* NT_INCLUDED */</div>
+
+<div class="disabled">#ifndef WIN_INTERNAL</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">DECLARE_HANDLE            (HWND);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HWND__"><div><div class="token cpp_type">HWND__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HWND__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HWND__'], [], [])"><div class="token cpp_type">HWND__</div></div> *<div class="def" id="NI$HWND"><div><div class="token cpp_type">HWND</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE            (HHOOK);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HHOOK__"><div><div class="token cpp_type">HHOOK__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HHOOK__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HHOOK__'], [], [])"><div class="token cpp_type">HHOOK__</div></div> *<div class="def" id="NI$HHOOK"><div><div class="token cpp_type">HHOOK</div></div></div>;</div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef WINABLE</div>
+
+<div class="disabled">#pragma region Desktop Family</div>
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="disabled">DECLARE_HANDLE            (HEVENT);</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+<div class="disabled">#pragma endregion</div>
+
+<div class="disabled">#endif
+#endif</div>
+
+#pragma region Application Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if !defined(_MAC) || !defined(GDI_INTERNAL)</div>
+<div class="disabled">#ifdef STRICT</div>
+<div class="expandable"><div class="disabled">typedef void NEAR* HGDIOBJ;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$HGDIOBJ"><div><div class="token cpp_type">HGDIOBJ</div></div></div>;</div></div>
+<div class="disabled">#else</div>
+<div class="disabled">DECLARE_HANDLE(HGDIOBJ);
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(_MAC) || !defined(WIN_INTERNAL)</div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HACCEL);
+#endif</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HACCEL__"><div><div class="token cpp_type">HACCEL__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HACCEL__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HACCEL__'], [], [])"><div class="token cpp_type">HACCEL__</div></div> *<div class="def" id="NI$HACCEL"><div><div class="token cpp_type">HACCEL</div></div></div>;</div></div>
+<div class="disabled">#if !defined(_MAC) || !defined(GDI_INTERNAL)</div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HBITMAP);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HBITMAP__"><div><div class="token cpp_type">HBITMAP__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HBITMAP__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HBITMAP__'], [], [])"><div class="token cpp_type">HBITMAP__</div></div> *<div class="def" id="NI$HBITMAP"><div><div class="token cpp_type">HBITMAP</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HBRUSH);
+#endif</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HBRUSH__"><div><div class="token cpp_type">HBRUSH__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HBRUSH__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HBRUSH__'], [], [])"><div class="token cpp_type">HBRUSH__</div></div> *<div class="def" id="NI$HBRUSH"><div><div class="token cpp_type">HBRUSH</div></div></div>;</div></div>
+<div class="disabled">#if(WINVER &gt;= 0x0400)</div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HCOLORSPACE);
+#endif /* WINVER &gt;= 0x0400 */</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HCOLORSPACE__"><div><div class="token cpp_type">HCOLORSPACE__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HCOLORSPACE__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HCOLORSPACE__'], [], [])"><div class="token cpp_type">HCOLORSPACE__</div></div> *<div class="def" id="NI$HCOLORSPACE"><div><div class="token cpp_type">HCOLORSPACE</div></div></div>;</div></div>
+<div class="disabled">#if !defined(_MAC) || !defined(GDI_INTERNAL)</div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HDC);
+#endif</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HDC__"><div><div class="token cpp_type">HDC__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HDC__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HDC__'], [], [])"><div class="token cpp_type">HDC__</div></div> *<div class="def" id="NI$HDC"><div><div class="token cpp_type">HDC</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HGLRC);          // OpenGL</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HGLRC__"><div><div class="token cpp_type">HGLRC__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HGLRC__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HGLRC__'], [], [])"><div class="token cpp_type">HGLRC__</div></div> *<div class="def" id="NI$HGLRC"><div><div class="token cpp_type">HGLRC</div></div></div>;          <div class="token cpp_comment ">// OpenGL</div></div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HDESK);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HDESK__"><div><div class="token cpp_type">HDESK__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HDESK__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HDESK__'], [], [])"><div class="token cpp_type">HDESK__</div></div> *<div class="def" id="NI$HDESK"><div><div class="token cpp_type">HDESK</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HENHMETAFILE);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HENHMETAFILE__"><div><div class="token cpp_type">HENHMETAFILE__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HENHMETAFILE__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HENHMETAFILE__'], [], [])"><div class="token cpp_type">HENHMETAFILE__</div></div> *<div class="def" id="NI$HENHMETAFILE"><div><div class="token cpp_type">HENHMETAFILE</div></div></div>;</div></div>
+<div class="disabled">#if !defined(_MAC) || !defined(GDI_INTERNAL)</div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HFONT);
+#endif</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HFONT__"><div><div class="token cpp_type">HFONT__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HFONT__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HFONT__'], [], [])"><div class="token cpp_type">HFONT__</div></div> *<div class="def" id="NI$HFONT"><div><div class="token cpp_type">HFONT</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HICON);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HICON__"><div><div class="token cpp_type">HICON__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HICON__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HICON__'], [], [])"><div class="token cpp_type">HICON__</div></div> *<div class="def" id="NI$HICON"><div><div class="token cpp_type">HICON</div></div></div>;</div></div>
+<div class="disabled">#if !defined(_MAC) || !defined(WIN_INTERNAL)</div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HMENU);
+#endif</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HMENU__"><div><div class="token cpp_type">HMENU__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HMENU__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HMENU__'], [], [])"><div class="token cpp_type">HMENU__</div></div> *<div class="def" id="NI$HMENU"><div><div class="token cpp_type">HMENU</div></div></div>;</div></div>
+<div class="disabled">#if !defined(_MAC) || !defined(GDI_INTERNAL)</div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HPALETTE);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HPALETTE__"><div><div class="token cpp_type">HPALETTE__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HPALETTE__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HPALETTE__'], [], [])"><div class="token cpp_type">HPALETTE__</div></div> *<div class="def" id="NI$HPALETTE"><div><div class="token cpp_type">HPALETTE</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HPEN);
+#endif</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HPEN__"><div><div class="token cpp_type">HPEN__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HPEN__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HPEN__'], [], [])"><div class="token cpp_type">HPEN__</div></div> *<div class="def" id="NI$HPEN"><div><div class="token cpp_type">HPEN</div></div></div>;</div></div>
+
+<div class="disabled">#if(WINVER &gt;= 0x0400)</div>
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HWINEVENTHOOK);
+#endif /* WINVER &gt;= 0x0400 */</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HWINEVENTHOOK__"><div><div class="token cpp_type">HWINEVENTHOOK__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HWINEVENTHOOK__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HWINEVENTHOOK__'], [], [])"><div class="token cpp_type">HWINEVENTHOOK__</div></div> *<div class="def" id="NI$HWINEVENTHOOK"><div><div class="token cpp_type">HWINEVENTHOOK</div></div></div>;</div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#if(WINVER &gt;= 0x0500)</div>
+<div class="disabled">#ifndef _MAC</div>
+
+#pragma region Application Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HMONITOR);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HMONITOR__"><div><div class="token cpp_type">HMONITOR__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HMONITOR__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HMONITOR__'], [], [])"><div class="token cpp_type">HMONITOR__</div></div> *<div class="def" id="NI$HMONITOR"><div><div class="token cpp_type">HMONITOR</div></div></div>;</div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(HUMPD);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$HUMPD__"><div><div class="token cpp_type">HUMPD__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$HUMPD__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['HUMPD__'], [], [])"><div class="token cpp_type">HUMPD__</div></div> *<div class="def" id="NI$HUMPD"><div><div class="token cpp_type">HUMPD</div></div></div>;</div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+<div class="disabled">#endif /* WINVER &gt;= 0x0500 */</div>
+
+#pragma region Application Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#ifndef _MAC</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$HCURSOR"><div><div class="token cpp_type">HCURSOR</div></div></div>;      <div class="token cpp_comment ">/* HICONs &amp; HCURSORs are polymorphic */</div>
+<div class="disabled">#else</div>
+<div class="disabled">DECLARE_HANDLE(HCURSOR);    /* HICONs &amp; HCURSORs are not polymorphic */
+#endif</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$COLORREF"><div><div class="token cpp_type">COLORREF</div></div></div>;
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   *<div class="def" id="NI$LPCOLORREF"><div><div class="token cpp_type">LPCOLORREF</div></div></div>;
+
+<div class="disabled">#define HFILE_ERROR ((HFILE)-1)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+#pragma region Application Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagRECT"><div><div class="token cpp_type">tagRECT</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>    <div class="def" id="NI$tagRECT::left"><div><div class="token cpp_field">left</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>    <div class="def" id="NI$tagRECT::top"><div><div class="token cpp_field">top</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>    <div class="def" id="NI$tagRECT::right"><div><div class="token cpp_field">right</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>    <div class="def" id="NI$tagRECT::bottom"><div><div class="token cpp_field">bottom</div></div></div>;
+<div class="expandable"><div class="disabled">} RECT, *PRECT, NEAR *NPRECT, FAR *LPRECT;</div>
+<div class="expanded">} <div class="def" id="NI$RECT"><div><div class="token cpp_type">RECT</div></div></div>, *<div class="def" id="NI$PRECT"><div><div class="token cpp_type">PRECT</div></div></div>,  *<div class="def" id="NI$NPRECT"><div><div class="token cpp_type">NPRECT</div></div></div>,  *<div class="def" id="NI$LPRECT"><div><div class="token cpp_type">LPRECT</div></div></div>;</div></div>
+
+<div class="expandable"><div class="disabled">typedef const RECT FAR* LPCRECT;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['RECT'], [], [])"><div class="token cpp_type">RECT</div></div> * <div class="def" id="NI$LPCRECT"><div><div class="token cpp_type">LPCRECT</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RECTL"><div><div class="token cpp_type">_RECTL</div></div></div>       <div class="token cpp_comment ">/* rcl */</div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>    <div class="def" id="NI$_RECTL::left"><div><div class="token cpp_field">left</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>    <div class="def" id="NI$_RECTL::top"><div><div class="token cpp_field">top</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>    <div class="def" id="NI$_RECTL::right"><div><div class="token cpp_field">right</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>    <div class="def" id="NI$_RECTL::bottom"><div><div class="token cpp_field">bottom</div></div></div>;
+} <div class="def" id="NI$RECTL"><div><div class="token cpp_type">RECTL</div></div></div>, *<div class="def" id="NI$PRECTL"><div><div class="token cpp_type">PRECTL</div></div></div>, *<div class="def" id="NI$LPRECTL"><div><div class="token cpp_type">LPRECTL</div></div></div>;
+
+<div class="expandable"><div class="disabled">typedef const RECTL FAR* LPCRECTL;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['RECTL'], [], [])"><div class="token cpp_type">RECTL</div></div> * <div class="def" id="NI$LPCRECTL"><div><div class="token cpp_type">LPCRECTL</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagPOINT"><div><div class="token cpp_type">tagPOINT</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>  <div class="def" id="NI$tagPOINT::x"><div><div class="token cpp_field">x</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>  <div class="def" id="NI$tagPOINT::y"><div><div class="token cpp_field">y</div></div></div>;
+<div class="expandable"><div class="disabled">} POINT, *PPOINT, NEAR *NPPOINT, FAR *LPPOINT;</div>
+<div class="expanded">} <div class="def" id="NI$POINT"><div><div class="token cpp_type">POINT</div></div></div>, *<div class="def" id="NI$PPOINT"><div><div class="token cpp_type">PPOINT</div></div></div>,  *<div class="def" id="NI$NPPOINT"><div><div class="token cpp_type">NPPOINT</div></div></div>,  *<div class="def" id="NI$LPPOINT"><div><div class="token cpp_type">LPPOINT</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_POINTL"><div><div class="token cpp_type">_POINTL</div></div></div>      <div class="token cpp_comment ">/* ptl  */</div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>  <div class="def" id="NI$_POINTL::x"><div><div class="token cpp_field">x</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>  <div class="def" id="NI$_POINTL::y"><div><div class="token cpp_field">y</div></div></div>;
+} <div class="def" id="NI$POINTL"><div><div class="token cpp_type">POINTL</div></div></div>, *<div class="def" id="NI$PPOINTL"><div><div class="token cpp_type">PPOINTL</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagSIZE"><div><div class="token cpp_type">tagSIZE</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>        <div class="def" id="NI$tagSIZE::cx"><div><div class="token cpp_field">cx</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>        <div class="def" id="NI$tagSIZE::cy"><div><div class="token cpp_field">cy</div></div></div>;
+} <div class="def" id="NI$SIZE"><div><div class="token cpp_type">SIZE</div></div></div>, *<div class="def" id="NI$PSIZE"><div><div class="token cpp_type">PSIZE</div></div></div>, *<div class="def" id="NI$LPSIZE"><div><div class="token cpp_type">LPSIZE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['SIZE'], [], [])"><div class="token cpp_type">SIZE</div></div>               <div class="def" id="NI$SIZEL"><div><div class="token cpp_type">SIZEL</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['SIZE'], [], [])"><div class="token cpp_type">SIZE</div></div>               *<div class="def" id="NI$PSIZEL"><div><div class="token cpp_type">PSIZEL</div></div></div>, *<div class="def" id="NI$LPSIZEL"><div><div class="token cpp_type">LPSIZEL</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagPOINTS"><div><div class="token cpp_type">tagPOINTS</div></div></div>
+{
+<div class="disabled">#ifndef _MAC</div>
+    <div class="ref" onclick="jumpToSymbol([], ['SHORT'], [], [])"><div class="token cpp_type">SHORT</div></div>   <div class="def" id="NI$tagPOINTS::x"><div><div class="token cpp_field">x</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['SHORT'], [], [])"><div class="token cpp_type">SHORT</div></div>   <div class="def" id="NI$tagPOINTS::y"><div><div class="token cpp_field">y</div></div></div>;
+<div class="disabled">#else</div>
+<div class="disabled">    SHORT   y;</div>
+<div class="disabled">    SHORT   x;
+#endif</div>
+} <div class="def" id="NI$POINTS"><div><div class="token cpp_type">POINTS</div></div></div>, *<div class="def" id="NI$PPOINTS"><div><div class="token cpp_type">PPOINTS</div></div></div>, *<div class="def" id="NI$LPPOINTS"><div><div class="token cpp_type">LPPOINTS</div></div></div>;
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="token cpp_comment ">/* mode selections for the device mode function */</div>
+<div class="disabled">#define DM_UPDATE           1</div>
+<div class="disabled">#define DM_COPY             2</div>
+<div class="disabled">#define DM_PROMPT           4</div>
+<div class="disabled">#define DM_MODIFY           8</div>
+
+<div class="disabled">#define DM_IN_BUFFER        DM_MODIFY</div>
+<div class="disabled">#define DM_IN_PROMPT        DM_PROMPT</div>
+<div class="disabled">#define DM_OUT_BUFFER       DM_COPY</div>
+<div class="disabled">#define DM_OUT_DEFAULT      DM_UPDATE</div>
+
+<div class="token cpp_comment ">/* device capabilities indices */</div>
+<div class="disabled">#define DC_FIELDS           1</div>
+<div class="disabled">#define DC_PAPERS           2</div>
+<div class="disabled">#define DC_PAPERSIZE        3</div>
+<div class="disabled">#define DC_MINEXTENT        4</div>
+<div class="disabled">#define DC_MAXEXTENT        5</div>
+<div class="disabled">#define DC_BINS             6</div>
+<div class="disabled">#define DC_DUPLEX           7</div>
+<div class="disabled">#define DC_SIZE             8</div>
+<div class="disabled">#define DC_EXTRA            9</div>
+<div class="disabled">#define DC_VERSION          10</div>
+<div class="disabled">#define DC_DRIVER           11</div>
+<div class="disabled">#define DC_BINNAMES         12</div>
+<div class="disabled">#define DC_ENUMRESOLUTIONS  13</div>
+<div class="disabled">#define DC_FILEDEPENDENCIES 14</div>
+<div class="disabled">#define DC_TRUETYPE         15</div>
+<div class="disabled">#define DC_PAPERNAMES       16</div>
+<div class="disabled">#define DC_ORIENTATION      17</div>
+<div class="disabled">#define DC_COPIES           18</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family
+
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="disabled">#define _DPI_AWARENESS_CONTEXTS_</div>
+
+<div class="expandable"><div class="disabled">DECLARE_HANDLE(DPI_AWARENESS_CONTEXT);</div>
+<div class="expanded"><div class="token cpp_keyword ">struct</div> <div class="def" id="NI$DPI_AWARENESS_CONTEXT__"><div><div class="token cpp_type">DPI_AWARENESS_CONTEXT__</div></div></div>{<div class="token cpp_keyword ">int</div> <div class="def" id="NI$DPI_AWARENESS_CONTEXT__::unused"><div><div class="token cpp_field">unused</div></div></div>;}; <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['DPI_AWARENESS_CONTEXT__'], [], [])"><div class="token cpp_type">DPI_AWARENESS_CONTEXT__</div></div> *<div class="def" id="NI$DPI_AWARENESS_CONTEXT"><div><div class="token cpp_type">DPI_AWARENESS_CONTEXT</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$DPI_AWARENESS"><div><div class="token cpp_type">DPI_AWARENESS</div></div></div> {
+    <div class="def" id="NI$DPI_AWARENESS::DPI_AWARENESS_INVALID"><div><div class="token cpp_enum">DPI_AWARENESS_INVALID</div></div></div>           = -<div class="token cpp_number ">1</div>,
+    <div class="def" id="NI$DPI_AWARENESS::DPI_AWARENESS_UNAWARE"><div><div class="token cpp_enum">DPI_AWARENESS_UNAWARE</div></div></div>           = <div class="token cpp_number ">0</div>,
+    <div class="def" id="NI$DPI_AWARENESS::DPI_AWARENESS_SYSTEM_AWARE"><div><div class="token cpp_enum">DPI_AWARENESS_SYSTEM_AWARE</div></div></div>      = <div class="token cpp_number ">1</div>,
+    <div class="def" id="NI$DPI_AWARENESS::DPI_AWARENESS_PER_MONITOR_AWARE"><div><div class="token cpp_enum">DPI_AWARENESS_PER_MONITOR_AWARE</div></div></div> = <div class="token cpp_number ">2</div>
+} <div class="ref" onclick="jumpToSymbol([], ['DPI_AWARENESS'], [], [])"><div class="token cpp_type">DPI_AWARENESS</div></div>;
+
+<div class="disabled">#define DPI_AWARENESS_CONTEXT_UNAWARE               ((DPI_AWARENESS_CONTEXT)-1)</div>
+<div class="disabled">#define DPI_AWARENESS_CONTEXT_SYSTEM_AWARE          ((DPI_AWARENESS_CONTEXT)-2)</div>
+<div class="disabled">#define DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE     ((DPI_AWARENESS_CONTEXT)-3)</div>
+<div class="disabled">#define DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2  ((DPI_AWARENESS_CONTEXT)-4)</div>
+<div class="disabled">#define DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED     ((DPI_AWARENESS_CONTEXT)-5)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$DPI_HOSTING_BEHAVIOR"><div><div class="token cpp_type">DPI_HOSTING_BEHAVIOR</div></div></div> {
+    <div class="def" id="NI$DPI_HOSTING_BEHAVIOR::DPI_HOSTING_BEHAVIOR_INVALID"><div><div class="token cpp_enum">DPI_HOSTING_BEHAVIOR_INVALID</div></div></div>     = -<div class="token cpp_number ">1</div>,
+    <div class="def" id="NI$DPI_HOSTING_BEHAVIOR::DPI_HOSTING_BEHAVIOR_DEFAULT"><div><div class="token cpp_enum">DPI_HOSTING_BEHAVIOR_DEFAULT</div></div></div>     = <div class="token cpp_number ">0</div>,
+    <div class="def" id="NI$DPI_HOSTING_BEHAVIOR::DPI_HOSTING_BEHAVIOR_MIXED"><div><div class="token cpp_enum">DPI_HOSTING_BEHAVIOR_MIXED</div></div></div>       = <div class="token cpp_number ">1</div>
+} <div class="ref" onclick="jumpToSymbol([], ['DPI_HOSTING_BEHAVIOR'], [], [])"><div class="token cpp_type">DPI_HOSTING_BEHAVIOR</div></div>;
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* _WINDEF_ */</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'DPI_AWARENESS': {
+        'displayNameInHtml': '<span class="cpp_type">DPI_AWARENESS</span>',
+        'impls': [
+            'NI$DPI_AWARENESS'
+        ],
+        'decls': []
+    },
+    'DPI_AWARENESS_CONTEXT__': {
+        'displayNameInHtml': '<span class="cpp_type">DPI_AWARENESS_CONTEXT__</span>',
+        'impls': [
+            'NI$DPI_AWARENESS_CONTEXT__'
+        ],
+        'decls': []
+    },
+    'DPI_HOSTING_BEHAVIOR': {
+        'displayNameInHtml': '<span class="cpp_type">DPI_HOSTING_BEHAVIOR</span>',
+        'impls': [
+            'NI$DPI_HOSTING_BEHAVIOR'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HACCEL__': {
+        'displayNameInHtml': '<span class="cpp_type">HACCEL__</span>',
+        'impls': [
+            'NI$HACCEL__'
+        ],
+        'decls': []
+    },
+    'HBITMAP__': {
+        'displayNameInHtml': '<span class="cpp_type">HBITMAP__</span>',
+        'impls': [
+            'NI$HBITMAP__'
+        ],
+        'decls': []
+    },
+    'HBRUSH__': {
+        'displayNameInHtml': '<span class="cpp_type">HBRUSH__</span>',
+        'impls': [
+            'NI$HBRUSH__'
+        ],
+        'decls': []
+    },
+    'HCOLORSPACE__': {
+        'displayNameInHtml': '<span class="cpp_type">HCOLORSPACE__</span>',
+        'impls': [
+            'NI$HCOLORSPACE__'
+        ],
+        'decls': []
+    },
+    'HDC__': {
+        'displayNameInHtml': '<span class="cpp_type">HDC__</span>',
+        'impls': [
+            'NI$HDC__'
+        ],
+        'decls': []
+    },
+    'HDESK__': {
+        'displayNameInHtml': '<span class="cpp_type">HDESK__</span>',
+        'impls': [
+            'NI$HDESK__'
+        ],
+        'decls': []
+    },
+    'HENHMETAFILE__': {
+        'displayNameInHtml': '<span class="cpp_type">HENHMETAFILE__</span>',
+        'impls': [
+            'NI$HENHMETAFILE__'
+        ],
+        'decls': []
+    },
+    'HFONT__': {
+        'displayNameInHtml': '<span class="cpp_type">HFONT__</span>',
+        'impls': [
+            'NI$HFONT__'
+        ],
+        'decls': []
+    },
+    'HGLRC__': {
+        'displayNameInHtml': '<span class="cpp_type">HGLRC__</span>',
+        'impls': [
+            'NI$HGLRC__'
+        ],
+        'decls': []
+    },
+    'HHOOK__': {
+        'displayNameInHtml': '<span class="cpp_type">HHOOK__</span>',
+        'impls': [
+            'NI$HHOOK__'
+        ],
+        'decls': []
+    },
+    'HICON': {
+        'displayNameInHtml': '<span class="cpp_type">HICON</span>',
+        'impls': [
+            'NI$HICON'
+        ],
+        'decls': []
+    },
+    'HICON__': {
+        'displayNameInHtml': '<span class="cpp_type">HICON__</span>',
+        'impls': [
+            'NI$HICON__'
+        ],
+        'decls': []
+    },
+    'HMENU__': {
+        'displayNameInHtml': '<span class="cpp_type">HMENU__</span>',
+        'impls': [
+            'NI$HMENU__'
+        ],
+        'decls': []
+    },
+    'HMONITOR__': {
+        'displayNameInHtml': '<span class="cpp_type">HMONITOR__</span>',
+        'impls': [
+            'NI$HMONITOR__'
+        ],
+        'decls': []
+    },
+    'HPALETTE__': {
+        'displayNameInHtml': '<span class="cpp_type">HPALETTE__</span>',
+        'impls': [
+            'NI$HPALETTE__'
+        ],
+        'decls': []
+    },
+    'HPEN__': {
+        'displayNameInHtml': '<span class="cpp_type">HPEN__</span>',
+        'impls': [
+            'NI$HPEN__'
+        ],
+        'decls': []
+    },
+    'HUMPD__': {
+        'displayNameInHtml': '<span class="cpp_type">HUMPD__</span>',
+        'impls': [
+            'NI$HUMPD__'
+        ],
+        'decls': []
+    },
+    'HWINEVENTHOOK__': {
+        'displayNameInHtml': '<span class="cpp_type">HWINEVENTHOOK__</span>',
+        'impls': [
+            'NI$HWINEVENTHOOK__'
+        ],
+        'decls': []
+    },
+    'HWND__': {
+        'displayNameInHtml': '<span class="cpp_type">HWND__</span>',
+        'impls': [
+            'NI$HWND__'
+        ],
+        'decls': []
+    },
+    'LONG': {
+        'displayNameInHtml': '<span class="cpp_type">LONG</span>',
+        'impls': [
+            'NI$LONG'
+        ],
+        'decls': []
+    },
+    'RECT': {
+        'displayNameInHtml': '<span class="cpp_type">RECT</span>',
+        'impls': [
+            'NI$RECT'
+        ],
+        'decls': []
+    },
+    'RECTL': {
+        'displayNameInHtml': '<span class="cpp_type">RECTL</span>',
+        'impls': [
+            'NI$RECTL'
+        ],
+        'decls': []
+    },
+    'SHORT': {
+        'displayNameInHtml': '<span class="cpp_type">SHORT</span>',
+        'impls': [
+            'NI$SHORT'
+        ],
+        'decls': []
+    },
+    'SIZE': {
+        'displayNameInHtml': '<span class="cpp_type">SIZE</span>',
+        'impls': [
+            'NI$SIZE'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$DPI_AWARENESS': null,
+    'NI$DPI_AWARENESS_CONTEXT__': null,
+    'NI$DPI_HOSTING_BEHAVIOR': null,
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HACCEL__': null,
+    'NI$HBITMAP__': null,
+    'NI$HBRUSH__': null,
+    'NI$HCOLORSPACE__': null,
+    'NI$HDC__': null,
+    'NI$HDESK__': null,
+    'NI$HENHMETAFILE__': null,
+    'NI$HFONT__': null,
+    'NI$HGLRC__': null,
+    'NI$HHOOK__': null,
+    'NI$HICON': null,
+    'NI$HICON__': null,
+    'NI$HMENU__': null,
+    'NI$HMONITOR__': null,
+    'NI$HPALETTE__': null,
+    'NI$HPEN__': null,
+    'NI$HUMPD__': null,
+    'NI$HWINEVENTHOOK__': null,
+    'NI$HWND__': null,
+    'NI$LONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$RECT': null,
+    'NI$RECTL': null,
+    'NI$SHORT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$SIZE': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

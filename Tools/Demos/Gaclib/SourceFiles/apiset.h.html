@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>apiset.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/*++
+
+Copyright (c) 2008  Microsoft Corporation
+
+Module Name:
+
+    apiset.h
+
+Abstract:
+
+    This module contains definitions related to the management of API namespaces.
+
+Author:
+
+    Arun Kishan (arunki) 14-Sep-2008
+
+--*/</div>
+
+<div class="disabled">#ifndef _API_SET_H_</div>
+<div class="disabled">#define _API_SET_H_</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// API set interface definitions.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define API_SET_OVERRIDE(X)             X##Implementation</div>
+<div class="disabled">#define API_SET_LEGACY_OVERRIDE_DEF(X)  X = API_SET_OVERRIDE(X)</div>
+<div class="disabled">#define API_SET_OVERRIDE_DEF(X)         API_SET_LEGACY_OVERRIDE_DEF(X) PRIVATE</div>
+
+<div class="disabled">#ifdef _M_HYBRID_X86_ARM64</div>
+
+<div class="disabled">#define API_SET_CHPE_GUEST X86</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">#define API_SET_CHPE_GUEST</div>
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef _API_SET_HOST</div>
+<div class="disabled">// This section is intended for hosting contracts. Any legacy host definitions are ignored.</div>
+
+<div class="disabled">#undef API_SET_LIBRARY</div>
+
+<div class="disabled">#define API_SET_LIBRARY(X)</div>
+
+<div class="disabled">#undef API_SET</div>
+<div class="disabled">#undef API_SET_DIR</div>
+<div class="disabled">#undef API_SET_PRIVATE</div>
+<div class="disabled">#undef API_SET_PRIVATE_DIR</div>
+<div class="disabled">#undef API_SET_BY_ORDINAL</div>
+<div class="disabled">#undef API_SET_BY_ORDINAL_DIR</div>
+<div class="disabled">#undef API_SET_BY_ORDINAL_PRIVATE</div>
+<div class="disabled">#undef API_SET_BY_ORDINAL_PRIVATE_DIR</div>
+
+<div class="disabled">#undef API_SET_LEGACY</div>
+<div class="disabled">#undef API_SET_LEGACY_DIR</div>
+<div class="disabled">#undef API_SET_LEGACY_PRIVATE</div>
+<div class="disabled">#undef API_SET_LEGACY_PRIVATE_DIR</div>
+<div class="disabled">#undef API_SET_LEGACY_BY_ORDINAL</div>
+<div class="disabled">#undef API_SET_LEGACY_BY_ORDINAL_DIR</div>
+<div class="disabled">#undef API_SET_LEGACY_BY_ORDINAL_PRIVATE</div>
+<div class="disabled">#undef API_SET_LEGACY_BY_ORDINAL_PRIVATE_DIR</div>
+
+<div class="disabled">#define API_SET(X)                                  X PRIVATE</div>
+<div class="disabled">#define API_SET_DIR(X,DIR)                          X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_PRIVATE(X)                          X PRIVATE</div>
+<div class="disabled">#define API_SET_PRIVATE_DIR(X, DIR)                 X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL(X,O,PO)                  X @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_DIR(X,O,PO,DIR)          X @##O NONAME DIR PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_PRIVATE(X,O,PO)          X @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_PRIVATE_DIR(X,O,PO,DIR)  X @##O NONAME DIR PRIVATE</div>
+
+<div class="disabled">#define API_SET_LEGACY(X,L)                         X PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_DIR(X,L,DIR)                 X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_PRIVATE(X,L)                 X PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_PRIVATE_DIR(X,L,DIR)         X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL(X,L,O,PO)         X @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_DIR(X,L,O,PO,DIR) X @##O NONAME DIR PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_PRIVATE(X,L,O,PO) X @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_PRIVATE_DIR(X,L,O,PO,DIR) X @##O NONAME DIR PRIVATE</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">#if defined(_API_SET_LEGACY_TARGET)</div>
+<div class="disabled">// This section is intended for &quot;classic apiset forwarders&quot; that are forwarding back to a legacy host.</div>
+<div class="disabled">// In this section, the definition for _API_SET_LEGACY_TARGET is taken as the default legacy host for the</div>
+<div class="disabled">// entire contract. But any APIs which specify LegacyHost directly will override this definition.</div>
+
+<div class="disabled">#define API_SET(X)                                  X = _API_SET_LEGACY_TARGET##.##X</div>
+<div class="disabled">#define API_SET_DIR(X,DIR)                          X = _API_SET_LEGACY_TARGET##.##X DIR</div>
+<div class="disabled">#define API_SET_PRIVATE(X)                          X = _API_SET_LEGACY_TARGET##.##X PRIVATE</div>
+<div class="disabled">#define API_SET_PRIVATE_DIR(X,DIR)                  X = _API_SET_LEGACY_TARGET##.##X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL(X,O,PO)                  X = _API_SET_LEGACY_TARGET##.##PO @##O NONAME</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_DIR(X,O,PO,DIR)          X = _API_SET_LEGACY_TARGET##.##PO @##O NONAME DIR</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_PRIVATE(X,O,PO)          X = _API_SET_LEGACY_TARGET##.##PO @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_PRIVATE_DIR(X,O,PO,DIR)  X = _API_SET_LEGACY_TARGET##.##PO @##O NONAME DIR PRIVATE</div>
+
+<div class="disabled">#define API_SET_LEGACY(X,L)                         X = L##.##X</div>
+<div class="disabled">#define API_SET_LEGACY_DIR(X,L,DIR)                 X = L##.##X DIR</div>
+<div class="disabled">#define API_SET_LEGACY_PRIVATE(X,L)                 X = L##.##X PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_PRIVATE_DIR(X,L,DIR)         X = L##.##X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL(X,L,O,PO)         X = L##.##PO @##O NONAME</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_DIR(X,L,O,PO,DIR) X = L##.##PO @##O NONAME DIR</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_PRIVATE(X,L,O,PO) X = L##.##PO @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_PRIVATE_DIR(X,L,O,PO,DIR) X = L##.##PO @##O NONAME DIR PRIVATE</div>
+
+<div class="disabled">#elif defined(_API_SET_FORWARDER_TARGET)</div>
+<div class="disabled">// This section is intended for &quot;reverse forwarders&quot; that are forwarding to an explicit apiset name.</div>
+<div class="disabled">// Any legacy targets are ignored.</div>
+<div class="disabled">#define API_SET(X)                                  X = _API_SET_FORWARDER_TARGET##.##X</div>
+<div class="disabled">#define API_SET_DIR(X,DIR)                          X = _API_SET_FORWARDER_TARGET##.##X DIR</div>
+<div class="disabled">#define API_SET_PRIVATE(X)                          X = _API_SET_FORWARDER_TARGET##.##X PRIVATE</div>
+<div class="disabled">#define API_SET_PRIVATE_DIR(X,DIR)                  X = _API_SET_FORWARDER_TARGET##.##X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL(X,O,PO)                  X = _API_SET_FORWARDER_TARGET##.##PO @##O NONAME</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_DIR(X,O,PO,DIR)          X = _API_SET_FORWARDER_TARGET##.##PO @##O NONAME DIR</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_PRIVATE(X,O,PO)          X = _API_SET_FORWARDER_TARGET##.##PO @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_PRIVATE_DIR(X,O,PO,DIR)  X = _API_SET_FORWARDER_TARGET##.##PO @##O NONAME DIR PRIVATE</div>
+
+<div class="disabled">#define API_SET_LEGACY(X,L)                         X = _API_SET_FORWARDER_TARGET##.##X</div>
+<div class="disabled">#define API_SET_LEGACY_DIR(X,L,DIR)                 X = _API_SET_FORWARDER_TARGET##.##X DIR</div>
+<div class="disabled">#define API_SET_LEGACY_PRIVATE(X,L)                 X = _API_SET_FORWARDER_TARGET##.##X PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_PRIVATE_DIR(X,L,DIR)         X = _API_SET_FORWARDER_TARGET##.##X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL(X,L,O,PO)         X = _API_SET_FORWARDER_TARGET##.##PO @##O NONAME</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_DIR(X,L,O,PO,DIR) X = _API_SET_FORWARDER_TARGET##.##PO @##O NONAME DIR</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_PRIVATE(X,L,O,PO) X = _API_SET_FORWARDER_TARGET##.##PO @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_PRIVATE_DIR(X,L,O,PO,DIR) X = _API_SET_FORWARDER_TARGET##.##PO @##O NONAME DIR PRIVATE</div>
+
+<div class="disabled">#else</div>
+<div class="token cpp_comment ">// This section is intended for internal contract generation to build artifacts that model the contract without forwarding.</div>
+
+<div class="disabled">#define API_SET(X)                                  X</div>
+<div class="disabled">#define API_SET_DIR(X,DIR)                          X DIR</div>
+<div class="disabled">#define API_SET_PRIVATE(X)                          X PRIVATE</div>
+<div class="disabled">#define API_SET_PRIVATE_DIR(X,DIR)                  X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL(X,O,PO)                  X @##O NONAME</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_DIR(X,O,PO,DIR)          X @##O NONAME DIR</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_PRIVATE(X,O,PO)          X @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_BY_ORDINAL_PRIVATE_DIR(X,O,PO,DIR)  X @##O NONAME DIR PRIVATE</div>
+
+<div class="disabled">#define API_SET_LEGACY(X,L)                         X</div>
+<div class="disabled">#define API_SET_LEGACY_DIR(X,L,DIR)                 X DIR</div>
+<div class="disabled">#define API_SET_LEGACY_PRIVATE(X,L)                 X PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_PRIVATE_DIR(X,L,DIR)         X DIR PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL(X,L,O,PO)         X @##O NONAME</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_DIR(X,L,O,PO,DIR) X @##O NONAME DIR</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_PRIVATE(X,L,O,PO) X @##O NONAME PRIVATE</div>
+<div class="disabled">#define API_SET_LEGACY_BY_ORDINAL_PRIVATE_DIR(X,L,O,PO,DIR) X @##O NONAME DIR PRIVATE</div>
+
+<div class="disabled">#endif // _API_SET_LEGACY_TARGET, _API_SET_FORWARDER_TARGET</div>
+
+<div class="disabled">#define API_SET_LIBRARY(X)              LIBRARY X</div>
+
+<div class="disabled">#endif // _API_SET_HOST</div>
+
+<div class="disabled">#endif // _API_SET_H_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

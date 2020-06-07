@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>interlockedapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"> 
+<div class="token cpp_comment ">// begin_1_0</div>
+<div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* interlockedapi.h -- ApiSet Contract for api-ms-win-core-interlocked-l1        *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _INTERLOCKAPI_H_</div>
+<div class="disabled">#define _INTERLOCKAPI_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Application Family or OneCore Family
+
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#ifndef NOWINBASEINTERLOCK</div>
+
+<div class="disabled">#ifndef _NTOS_</div>
+
+
+<div class="disabled">#if defined(_SLIST_HEADER_) &amp;&amp; !defined(_NTOSP_)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$InitializeSListHead@void(::PSLIST_HEADER)[decl0]"><div><div class="token cpp_function">InitializeSListHead</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PSLIST_HEADER ListHead</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSLIST_HEADER'], [], [])"><div class="token cpp_type">PSLIST_HEADER</div></div> <div class="def" id="NI$InitializeSListHead@void(::PSLIST_HEADER)[decl0]::ListHead"><div>ListHead</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['PSLIST_ENTRY'], [], [])"><div class="token cpp_type">PSLIST_ENTRY</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$InterlockedPopEntrySList@::PSLIST_ENTRY(::PSLIST_HEADER)[decl0]"><div><div class="token cpp_function">InterlockedPopEntrySList</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ PSLIST_HEADER ListHead</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSLIST_HEADER'], [], [])"><div class="token cpp_type">PSLIST_HEADER</div></div> <div class="def" id="NI$InterlockedPopEntrySList@::PSLIST_ENTRY(::PSLIST_HEADER)[decl0]::ListHead"><div>ListHead</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['PSLIST_ENTRY'], [], [])"><div class="token cpp_type">PSLIST_ENTRY</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$InterlockedPushEntrySList@::PSLIST_ENTRY(::PSLIST_HEADER, ::PSLIST_ENTRY)[decl0]"><div><div class="token cpp_function">InterlockedPushEntrySList</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ PSLIST_HEADER ListHead,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSLIST_HEADER'], [], [])"><div class="token cpp_type">PSLIST_HEADER</div></div> <div class="def" id="NI$InterlockedPushEntrySList@::PSLIST_ENTRY(::PSLIST_HEADER, ::PSLIST_ENTRY)[decl0]::ListHead"><div>ListHead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ __drv_aliasesMem PSLIST_ENTRY ListEntry</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['PSLIST_ENTRY'], [], [])"><div class="token cpp_type">PSLIST_ENTRY</div></div> <div class="def" id="NI$InterlockedPushEntrySList@::PSLIST_ENTRY(::PSLIST_HEADER, ::PSLIST_ENTRY)[decl0]::ListEntry"><div>ListEntry</div></div></div></div>
+    );
+
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+
+<div class="disabled">#define InterlockedPushListSList InterlockedPushListSListEx</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['PSLIST_ENTRY'], [], [])"><div class="token cpp_type">PSLIST_ENTRY</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$InterlockedPushListSListEx@::PSLIST_ENTRY(::PSLIST_HEADER, ::PSLIST_ENTRY, ::PSLIST_ENTRY, ::ULONG)[decl0]"><div><div class="token cpp_function">InterlockedPushListSListEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ PSLIST_HEADER ListHead,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSLIST_HEADER'], [], [])"><div class="token cpp_type">PSLIST_HEADER</div></div> <div class="def" id="NI$InterlockedPushListSListEx@::PSLIST_ENTRY(::PSLIST_HEADER, ::PSLIST_ENTRY, ::PSLIST_ENTRY, ::ULONG)[decl0]::ListHead"><div>ListHead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ PSLIST_ENTRY List,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSLIST_ENTRY'], [], [])"><div class="token cpp_type">PSLIST_ENTRY</div></div> <div class="def" id="NI$InterlockedPushListSListEx@::PSLIST_ENTRY(::PSLIST_HEADER, ::PSLIST_ENTRY, ::PSLIST_ENTRY, ::ULONG)[decl0]::List"><div>List</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ PSLIST_ENTRY ListEnd,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSLIST_ENTRY'], [], [])"><div class="token cpp_type">PSLIST_ENTRY</div></div> <div class="def" id="NI$InterlockedPushListSListEx@::PSLIST_ENTRY(::PSLIST_HEADER, ::PSLIST_ENTRY, ::PSLIST_ENTRY, ::ULONG)[decl0]::ListEnd"><div>ListEnd</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG Count</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$InterlockedPushListSListEx@::PSLIST_ENTRY(::PSLIST_HEADER, ::PSLIST_ENTRY, ::PSLIST_ENTRY, ::ULONG)[decl0]::Count"><div>Count</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['PSLIST_ENTRY'], [], [])"><div class="token cpp_type">PSLIST_ENTRY</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$InterlockedFlushSList@::PSLIST_ENTRY(::PSLIST_HEADER)[decl0]"><div><div class="token cpp_function">InterlockedFlushSList</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ PSLIST_HEADER ListHead</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSLIST_HEADER'], [], [])"><div class="token cpp_type">PSLIST_HEADER</div></div> <div class="def" id="NI$InterlockedFlushSList@::PSLIST_ENTRY(::PSLIST_HEADER)[decl0]::ListHead"><div>ListHead</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryDepthSList@::USHORT(::PSLIST_HEADER)[decl0]"><div><div class="token cpp_function">QueryDepthSList</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ PSLIST_HEADER ListHead</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSLIST_HEADER'], [], [])"><div class="token cpp_type">PSLIST_HEADER</div></div> <div class="def" id="NI$QueryDepthSList@::USHORT(::PSLIST_HEADER)[decl0]::ListHead"><div>ListHead</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* SLIST_HEADER_ */</div>
+
+<div class="disabled">#endif /* _NTOS_ */</div>
+
+<div class="disabled">#endif /* NOWINBASEINTERLOCK */</div>
+
+<div class="token cpp_comment ">// end_1_0</div>
+<div class="token cpp_comment ">// begin_1_0</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _INTERLOCKAPI_H_</div>
+<div class="token cpp_comment ">// end_1_0</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'PSLIST_ENTRY': {
+        'displayNameInHtml': '<span class="cpp_type">PSLIST_ENTRY</span>',
+        'impls': [
+            'NI$PSLIST_ENTRY'
+        ],
+        'decls': []
+    },
+    'PSLIST_HEADER': {
+        'displayNameInHtml': '<span class="cpp_type">PSLIST_HEADER</span>',
+        'impls': [
+            'NI$PSLIST_HEADER'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'USHORT': {
+        'displayNameInHtml': '<span class="cpp_type">USHORT</span>',
+        'impls': [
+            'NI$USHORT'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$PSLIST_ENTRY': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PSLIST_HEADER': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$USHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

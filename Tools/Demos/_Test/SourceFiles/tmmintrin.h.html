@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>tmmintrin.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***
+*** Copyright (C) 1985-2015 Intel Corporation.  All rights reserved.
+***
+*** The information and source code contained herein is the exclusive
+*** property of Intel Corporation and may not be disclosed, examined
+*** or reproduced in whole or in part without explicit written authorization
+*** from the company.
+***
+****/</div>
+
+#pragma once
+
+<div class="disabled">#if !defined(_M_IX86) &amp;&amp; !defined(_M_X64)</div>
+<div class="disabled">#error This header is specific to X86 and X64 targets
+#endif</div>
+
+<div class="disabled">#ifndef _INCLUDED_TMM</div>
+<div class="disabled">#define _INCLUDED_TMM</div>
+<div class="disabled">#ifndef __midl</div>
+
+<div class="disabled">#if defined (_M_CEE_PURE)</div>
+<div class="disabled">        #error ERROR: XMM intrinsics not supported in the pure mode!
+#else  /* defined (_M_CEE_PURE) */</div>
+
+<div class="disabled">#include &lt;pmmintrin.h&gt;</div>
+
+<div class="disabled">#ifdef _MM2_FUNCTIONALITY</div>
+<div class="disabled">/* support old notation */</div>
+<div class="disabled">#ifndef _MM_FUNCTIONALITY</div>
+<div class="disabled">#define _MM_FUNCTIONALITY</div>
+<div class="disabled">#endif  /* _MM_FUNCTIONALITY */</div>
+<div class="disabled">#endif  /* _MM2_FUNCTIONALITY */</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif  /* __cplusplus */</div>
+
+    <div class="token cpp_comment ">// Horizontal Add: add pairs of adjacent words or double words.</div>
+    <div class="token cpp_comment ">// Each field in the result is the sum of two adjacent fields</div>
+    <div class="token cpp_comment ">// from the arguments, with the lower result fields coming from</div>
+    <div class="token cpp_comment ">// the first argument and the upper result fields coming from</div>
+    <div class="token cpp_comment ">// the second argument. The &quot;hadds&quot; forms saturate the signed</div>
+    <div class="token cpp_comment ">// addition rather than wrapping.</div>
+
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_hadd_epi16@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hadd_epi16@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_hadd_epi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_hadd_epi32@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hadd_epi32@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_hadd_epi32</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_hadds_epi16@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hadds_epi16@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_hadds_epi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+
+<div class="disabled">#if defined(_M_IX86)</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_hadd_pi16@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hadd_pi16@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_hadd_pi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_hadd_pi32@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hadd_pi32@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_hadd_pi32</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_hadds_pi16@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hadds_pi16@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_hadds_pi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+<div class="disabled">#endif</div>
+
+    <div class="token cpp_comment ">// Horizontal Subtract: subtract pairs of adjacent words or double</div>
+    <div class="token cpp_comment ">// words. Each field in the result is the difference of two adjacent</div>
+    <div class="token cpp_comment ">// fields from the arguments, where the upper field is subtracted</div>
+    <div class="token cpp_comment ">// from the lower field. The lower result fields come from</div>
+    <div class="token cpp_comment ">// the first argument and the upper result fields come from</div>
+    <div class="token cpp_comment ">// the second argument. The &quot;hsubs&quot; forms saturate the signed</div>
+    <div class="token cpp_comment ">// subtraction rather than wrapping.</div>
+
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_hsub_epi16@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hsub_epi16@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_hsub_epi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_hsub_epi32@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hsub_epi32@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_hsub_epi32</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_hsubs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hsubs_epi16@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_hsubs_epi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+
+<div class="disabled">#if defined(_M_IX86)</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_hsub_pi16@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hsub_pi16@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_hsub_pi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_hsub_pi32@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hsub_pi32@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_hsub_pi32</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_hsubs_pi16@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_hsubs_pi16@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_hsubs_pi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+<div class="disabled">#endif</div>
+
+    <div class="token cpp_comment ">// Multiply unsigned bytes by signed bytes and sum the word</div>
+    <div class="token cpp_comment ">// results in pairs with saturation. Each byte of the first</div>
+    <div class="token cpp_comment ">// argument is zero-extended to a word field and each byte</div>
+    <div class="token cpp_comment ">// of the second argument is sign-extended to a word field,</div>
+    <div class="token cpp_comment ">// then each pair of words is multiplied together to give</div>
+    <div class="token cpp_comment ">// signed word intermediate results. Pairs of words from</div>
+    <div class="token cpp_comment ">// that result are added horizontally with saturation</div>
+    <div class="token cpp_comment ">// to give the final result.</div>
+
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_maddubs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_maddubs_epi16@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_maddubs_epi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+
+<div class="disabled">#if defined(_M_IX86)</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_maddubs_pi16@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_maddubs_pi16@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_maddubs_pi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+<div class="disabled">#endif</div>
+
+    <div class="token cpp_comment ">// Packed multiply high integers with round and scaling,</div>
+    <div class="token cpp_comment ">// {X,}MM2/m{128,64} (b) to {X,}MM1 (a).</div>
+
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_mulhrs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mulhrs_epi16@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_mulhrs_epi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+
+<div class="disabled">#if defined(_M_IX86)</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_mulhrs_pi16@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_mulhrs_pi16@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_mulhrs_pi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+<div class="disabled">#endif</div>
+
+    <div class="token cpp_comment ">// Packed shuffle bytes</div>
+    <div class="token cpp_comment ">// {X,}MM2/m{128,64} (b) by {X,}MM1 (a).</div>
+
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_shuffle_epi8@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_shuffle_epi8@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_shuffle_epi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+
+<div class="disabled">#if defined(_M_IX86)</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_shuffle_pi8@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_shuffle_pi8@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_shuffle_pi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+<div class="disabled">#endif</div>
+
+    <div class="token cpp_comment ">// Packed byte, word, double word sign, {X,}MM2/m{128,64} (b) to</div>
+    <div class="token cpp_comment ">// {X,}MM1 (a).</div>
+
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sign_epi8@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sign_epi8@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_sign_epi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sign_epi16@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sign_epi16@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_sign_epi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_sign_epi32@::__m128i(::__m128i, ::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sign_epi32@::__m128i(::__m128i, ::__m128i)'], [], [])"><div class="token cpp_function">_mm_sign_epi32</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+
+<div class="disabled">#if defined(_M_IX86)</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_sign_pi8@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sign_pi8@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_sign_pi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_sign_pi16@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sign_pi16@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_sign_pi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_sign_pi32@::__m64(::__m64, ::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_sign_pi32@::__m64(::__m64, ::__m64)'], [], [])"><div class="token cpp_function">_mm_sign_pi32</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+<div class="disabled">#endif</div>
+
+    <div class="token cpp_comment ">// Packed align and shift right by n*8 bits,</div>
+    <div class="token cpp_comment ">// {X,}MM2/m{128,64} (b) to {X,}MM1 (a).</div>
+
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_alignr_epi8@::__m128i(::__m128i, ::__m128i, int)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_alignr_epi8@::__m128i(::__m128i, ::__m128i, int)'], [], [])"><div class="token cpp_function">_mm_alignr_epi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>, <div class="token cpp_keyword ">int</div>);
+
+<div class="disabled">#if defined(_M_IX86)</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_alignr_pi8@::__m64(::__m64, ::__m64, int)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_alignr_pi8@::__m64(::__m64, ::__m64, int)'], [], [])"><div class="token cpp_function">_mm_alignr_pi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>, <div class="token cpp_keyword ">int</div>);
+<div class="disabled">#endif</div>
+
+    <div class="token cpp_comment ">// Packed byte, word, double word absolute value,</div>
+    <div class="token cpp_comment ">// {X,}MM2/m{128,64} (b) to {X,}MM1 (a).</div>
+
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_abs_epi8@::__m128i(::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_abs_epi8@::__m128i(::__m128i)'], [], [])"><div class="token cpp_function">_mm_abs_epi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_abs_epi16@::__m128i(::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_abs_epi16@::__m128i(::__m128i)'], [], [])"><div class="token cpp_function">_mm_abs_epi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div> <div class="def" id="FB$_mm_abs_epi32@::__m128i(::__m128i)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_abs_epi32@::__m128i(::__m128i)'], [], [])"><div class="token cpp_function">_mm_abs_epi32</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m128i'], [], [])"><div class="token cpp_type">__m128i</div></div>);
+
+<div class="disabled">#if defined(_M_IX86)</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_abs_pi8@::__m64(::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_abs_pi8@::__m64(::__m64)'], [], [])"><div class="token cpp_function">_mm_abs_pi8</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_abs_pi16@::__m64(::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_abs_pi16@::__m64(::__m64)'], [], [])"><div class="token cpp_function">_mm_abs_pi16</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div> <div class="def" id="FB$_mm_abs_pi32@::__m64(::__m64)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_mm_abs_pi32@::__m64(::__m64)'], [], [])"><div class="token cpp_function">_mm_abs_pi32</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['__m64'], [], [])"><div class="token cpp_type">__m64</div></div>);
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+};
+<div class="disabled">#endif  /* __cplusplus */</div>
+
+<div class="disabled">#endif  /* defined (_M_CEE_PURE) */
+#endif  /* __midl */
+#endif  /* _INCLUDED_TMM */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '__m128i': {
+        'displayNameInHtml': '<span class="cpp_type">__m128i</span>',
+        'impls': [
+            'NI$__m128i'
+        ],
+        'decls': []
+    },
+    '__m64': {
+        'displayNameInHtml': '<span class="cpp_type">__m64</span>',
+        'impls': [
+            'NI$__m64'
+        ],
+        'decls': []
+    },
+    '_mm_abs_epi16@::__m128i(::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_abs_epi16</span>(<span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_epi16@::__m128i(::__m128i)[decl0]',
+            'FB$_mm_abs_epi16@::__m128i(::__m128i)[decl1]'
+        ]
+    },
+    '_mm_abs_epi32@::__m128i(::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_abs_epi32</span>(<span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_epi32@::__m128i(::__m128i)[decl0]',
+            'FB$_mm_abs_epi32@::__m128i(::__m128i)[decl1]'
+        ]
+    },
+    '_mm_abs_epi8@::__m128i(::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_abs_epi8</span>(<span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_epi8@::__m128i(::__m128i)[decl0]',
+            'FB$_mm_abs_epi8@::__m128i(::__m128i)[decl1]'
+        ]
+    },
+    '_mm_abs_pi16@::__m64(::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_abs_pi16</span>(<span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_pi16@::__m64(::__m64)[decl0]',
+            'FB$_mm_abs_pi16@::__m64(::__m64)[decl1]'
+        ]
+    },
+    '_mm_abs_pi32@::__m64(::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_abs_pi32</span>(<span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_pi32@::__m64(::__m64)[decl0]',
+            'FB$_mm_abs_pi32@::__m64(::__m64)[decl1]'
+        ]
+    },
+    '_mm_abs_pi8@::__m64(::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_abs_pi8</span>(<span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_abs_pi8@::__m64(::__m64)[decl0]',
+            'FB$_mm_abs_pi8@::__m64(::__m64)[decl1]'
+        ]
+    },
+    '_mm_alignr_epi8@::__m128i(::__m128i, ::__m128i, int)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_alignr_epi8</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_alignr_epi8@::__m128i(::__m128i, ::__m128i, int)[decl0]',
+            'FB$_mm_alignr_epi8@::__m128i(::__m128i, ::__m128i, int)[decl1]'
+        ]
+    },
+    '_mm_alignr_pi8@::__m64(::__m64, ::__m64, int)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_alignr_pi8</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_alignr_pi8@::__m64(::__m64, ::__m64, int)[decl0]',
+            'FB$_mm_alignr_pi8@::__m64(::__m64, ::__m64, int)[decl1]'
+        ]
+    },
+    '_mm_hadd_epi16@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hadd_epi16</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadd_epi16@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_hadd_epi16@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_hadd_epi32@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hadd_epi32</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadd_epi32@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_hadd_epi32@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_hadd_pi16@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hadd_pi16</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadd_pi16@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_hadd_pi16@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_hadd_pi32@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hadd_pi32</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadd_pi32@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_hadd_pi32@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_hadds_epi16@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hadds_epi16</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadds_epi16@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_hadds_epi16@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_hadds_pi16@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hadds_pi16</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hadds_pi16@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_hadds_pi16@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_hsub_epi16@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hsub_epi16</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsub_epi16@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_hsub_epi16@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_hsub_epi32@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hsub_epi32</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsub_epi32@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_hsub_epi32@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_hsub_pi16@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hsub_pi16</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsub_pi16@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_hsub_pi16@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_hsub_pi32@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hsub_pi32</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsub_pi32@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_hsub_pi32@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_hsubs_epi16@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hsubs_epi16</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsubs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_hsubs_epi16@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_hsubs_pi16@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_hsubs_pi16</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_hsubs_pi16@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_hsubs_pi16@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_maddubs_epi16@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_maddubs_epi16</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_maddubs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_maddubs_epi16@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_maddubs_pi16@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_maddubs_pi16</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_maddubs_pi16@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_maddubs_pi16@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_mulhrs_epi16@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_mulhrs_epi16</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_mulhrs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_mulhrs_epi16@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_mulhrs_pi16@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_mulhrs_pi16</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_mulhrs_pi16@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_mulhrs_pi16@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_shuffle_epi8@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_shuffle_epi8</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_shuffle_epi8@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_shuffle_epi8@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_shuffle_pi8@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_shuffle_pi8</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_shuffle_pi8@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_shuffle_pi8@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_sign_epi16@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_sign_epi16</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_epi16@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_sign_epi16@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_sign_epi32@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_sign_epi32</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_epi32@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_sign_epi32@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_sign_epi8@::__m128i(::__m128i, ::__m128i)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_sign_epi8</span>(<span class="cpp_type">__m128i</span>, <span class="cpp_type">__m128i</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_epi8@::__m128i(::__m128i, ::__m128i)[decl0]',
+            'FB$_mm_sign_epi8@::__m128i(::__m128i, ::__m128i)[decl1]'
+        ]
+    },
+    '_mm_sign_pi16@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_sign_pi16</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_pi16@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_sign_pi16@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_sign_pi32@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_sign_pi32</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_pi32@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_sign_pi32@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    },
+    '_mm_sign_pi8@::__m64(::__m64, ::__m64)': {
+        'displayNameInHtml': '<span class="cpp_function">_mm_sign_pi8</span>(<span class="cpp_type">__m64</span>, <span class="cpp_type">__m64</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_mm_sign_pi8@::__m64(::__m64, ::__m64)[decl0]',
+            'FB$_mm_sign_pi8@::__m64(::__m64, ::__m64)[decl1]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$_mm_abs_epi16@::__m128i(::__m128i)[decl0]': null,
+    'FB$_mm_abs_epi16@::__m128i(::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_epi32@::__m128i(::__m128i)[decl0]': null,
+    'FB$_mm_abs_epi32@::__m128i(::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_epi8@::__m128i(::__m128i)[decl0]': null,
+    'FB$_mm_abs_epi8@::__m128i(::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_pi16@::__m64(::__m64)[decl0]': null,
+    'FB$_mm_abs_pi16@::__m64(::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_pi32@::__m64(::__m64)[decl0]': null,
+    'FB$_mm_abs_pi32@::__m64(::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_abs_pi8@::__m64(::__m64)[decl0]': null,
+    'FB$_mm_abs_pi8@::__m64(::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_alignr_epi8@::__m128i(::__m128i, ::__m128i, int)[decl0]': null,
+    'FB$_mm_alignr_epi8@::__m128i(::__m128i, ::__m128i, int)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_alignr_pi8@::__m64(::__m64, ::__m64, int)[decl0]': null,
+    'FB$_mm_alignr_pi8@::__m64(::__m64, ::__m64, int)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadd_epi16@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_hadd_epi16@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadd_epi32@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_hadd_epi32@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadd_pi16@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_hadd_pi16@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadd_pi32@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_hadd_pi32@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadds_epi16@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_hadds_epi16@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hadds_pi16@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_hadds_pi16@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_epi16@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_hsub_epi16@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_epi32@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_hsub_epi32@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_pi16@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_hsub_pi16@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsub_pi32@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_hsub_pi32@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsubs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_hsubs_epi16@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_hsubs_pi16@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_hsubs_pi16@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_maddubs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_maddubs_epi16@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_maddubs_pi16@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_maddubs_pi16@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_mulhrs_epi16@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_mulhrs_epi16@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_mulhrs_pi16@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_mulhrs_pi16@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_shuffle_epi8@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_shuffle_epi8@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_shuffle_pi8@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_shuffle_pi8@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_epi16@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_sign_epi16@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_epi32@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_sign_epi32@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_epi8@::__m128i(::__m128i, ::__m128i)[decl0]': null,
+    'FB$_mm_sign_epi8@::__m128i(::__m128i, ::__m128i)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_pi16@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_sign_pi16@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_pi32@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_sign_pi32@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'FB$_mm_sign_pi8@::__m64(::__m64, ::__m64)[decl0]': null,
+    'FB$_mm_sign_pi8@::__m64(::__m64, ::__m64)[decl1]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
+    'NI$__m128i': { 'htmlFileName': 'emmintrin.h', 'displayName': 'emmintrin.h' },
+    'NI$__m64': { 'htmlFileName': 'mmintrin.h', 'displayName': 'mmintrin.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

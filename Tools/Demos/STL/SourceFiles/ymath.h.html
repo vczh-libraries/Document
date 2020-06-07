@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ymath.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/* ymath.h internal header */</div>
+#pragma once
+<div class="disabled">#ifndef _YMATH</div>
+<div class="disabled">#define _YMATH</div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+<div class="disabled">#include &lt;yvals.h&gt;</div>
+<div class="expandable"><div class="disabled"> #pragma pack(push,_CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(push,_STL_WARNING_LEVEL)</div>
+<div class="expanded">#pragma warning(push,<div class="token cpp_number ">3</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4455</div> <div class="token cpp_number ">4494</div>  <div class="token cpp_number ">4619</div> <div class="token cpp_number ">4643</div> <div class="token cpp_number ">4702</div> <div class="token cpp_number ">4984</div> <div class="token cpp_number ">4988</div> )</div></div>
+<div class="disabled"> _STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled"> #pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled"> #undef new</div>
+
+<div class="disabled"> #if !defined(MRTDLL) || !defined(_CRTBLD)</div>
+<div class="disabled"> #ifndef _M_CEE_PURE</div>
+<div class="expandable"><div class="disabled">_EXTERN_C
+ #endif /* _M_CEE_PURE */
+ #endif /* !MRTDLL || !_CRTBLD */</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+		<div class="token cpp_comment ">/* MACROS FOR _Dtest RETURN (0 =&gt; ZERO) */</div>
+<div class="disabled">#define _DENORM		(-2)	/* C9X only */</div>
+<div class="disabled">#define _FINITE		(-1)</div>
+<div class="disabled">#define _INFCODE	1</div>
+<div class="disabled">#define _NANCODE	2</div>
+
+		<div class="token cpp_comment ">/* MACROS FOR _Feraise ARGUMENT */</div>
+<div class="disabled">#define _FE_DIVBYZERO	0x04</div>
+<div class="disabled">#define _FE_INEXACT	0x20</div>
+<div class="disabled">#define _FE_INVALID	0x01</div>
+<div class="disabled">#define _FE_OVERFLOW	0x08</div>
+<div class="disabled">#define _FE_UNDERFLOW	0x10</div>
+
+<div class="expandable"><div class="disabled">void __CLRCALL_PURE_OR_CDECL _Feraise(int);</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Feraise@void(int)[decl0]"><div><div class="token cpp_function">_Feraise</div></div></div>(<div class="token cpp_keyword ">int</div>);</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">union</div>
+	{	<div class="token cpp_comment ">/* pun float types as integer array */</div>
+	<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$<anonymous>12::_Word"><div><div class="token cpp_field">_Word</div></div></div>[<div class="token cpp_number ">8</div>];
+	<div class="token cpp_keyword ">float</div> <div class="def" id="NI$<anonymous>12::_Float"><div><div class="token cpp_field">_Float</div></div></div>;
+	<div class="token cpp_keyword ">double</div> <div class="def" id="NI$<anonymous>12::_Double"><div><div class="token cpp_field">_Double</div></div></div>;
+	<div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div> <div class="def" id="NI$<anonymous>12::_Long_double"><div><div class="token cpp_field">_Long_double</div></div></div>;
+	} <div class="def" id="NI$_Dconst"><div><div class="token cpp_type">_Dconst</div></div></div>;
+
+		<div class="token cpp_comment ">/* double DECLARATIONS */</div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE double __CLRCALL_PURE_OR_CDECL _Cosh(double, double);</div>
+<div class="expanded"> <div class="token cpp_keyword ">double</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Cosh@double(double, double)[decl0]"><div><div class="token cpp_function">_Cosh</div></div></div>(<div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">double</div>);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE short __CLRCALL_PURE_OR_CDECL _Dtest(double *);</div>
+<div class="expanded"> <div class="token cpp_keyword ">short</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Dtest@short(double *)[decl0]"><div><div class="token cpp_function">_Dtest</div></div></div>(<div class="token cpp_keyword ">double</div> *);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE double __CLRCALL_PURE_OR_CDECL _Sinh(double, double);</div>
+<div class="expanded"> <div class="token cpp_keyword ">double</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Sinh@double(double, double)[decl0]"><div><div class="token cpp_function">_Sinh</div></div></div>(<div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">double</div>);</div></div>
+
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE short __CLRCALL_PURE_OR_CDECL _Exp(double *, double, short);</div>
+<div class="expanded"> <div class="token cpp_keyword ">short</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Exp@short(double *, double, short)[decl0]"><div><div class="token cpp_function">_Exp</div></div></div>(<div class="token cpp_keyword ">double</div> *, <div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">short</div>);</div></div>
+<div class="expandable"><div class="disabled">extern _CRTIMP2_PURE_IMPORT /* const */ _Dconst _Denorm, _Hugeval, _Inf,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_comment ">/* const */</div> <div class="ref" onclick="jumpToSymbol([], ['_Dconst'], [], [])"><div class="token cpp_type">_Dconst</div></div> <div class="def" id="NF[0]$_Denorm"><div>_Denorm</div></div>, <div class="def" id="NF[0]$_Hugeval"><div>_Hugeval</div></div>, <div class="def" id="NF[0]$_Inf"><div>_Inf</div></div>,</div></div>
+	<div class="def" id="NF[0]$_Nan"><div>_Nan</div></div>, <div class="def" id="NF[0]$_Snan"><div>_Snan</div></div>;
+
+		<div class="token cpp_comment ">/* float DECLARATIONS */</div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE float __CLRCALL_PURE_OR_CDECL _FCosh(float, float);</div>
+<div class="expanded"> <div class="token cpp_keyword ">float</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_FCosh@float(float, float)[decl0]"><div><div class="token cpp_function">_FCosh</div></div></div>(<div class="token cpp_keyword ">float</div>, <div class="token cpp_keyword ">float</div>);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE short __CLRCALL_PURE_OR_CDECL _FDtest(float *);</div>
+<div class="expanded"> <div class="token cpp_keyword ">short</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_FDtest@short(float *)[decl0]"><div><div class="token cpp_function">_FDtest</div></div></div>(<div class="token cpp_keyword ">float</div> *);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE float __CLRCALL_PURE_OR_CDECL _FSinh(float, float);</div>
+<div class="expanded"> <div class="token cpp_keyword ">float</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_FSinh@float(float, float)[decl0]"><div><div class="token cpp_function">_FSinh</div></div></div>(<div class="token cpp_keyword ">float</div>, <div class="token cpp_keyword ">float</div>);</div></div>
+
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE short __CLRCALL_PURE_OR_CDECL _FExp(float *, float, short);</div>
+<div class="expanded"> <div class="token cpp_keyword ">short</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_FExp@short(float *, float, short)[decl0]"><div><div class="token cpp_function">_FExp</div></div></div>(<div class="token cpp_keyword ">float</div> *, <div class="token cpp_keyword ">float</div>, <div class="token cpp_keyword ">short</div>);</div></div>
+<div class="expandable"><div class="disabled">extern _CRTIMP2_PURE_IMPORT /* const */ _Dconst _FDenorm, _FInf, _FNan, _FSnan;</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_comment ">/* const */</div> <div class="ref" onclick="jumpToSymbol([], ['_Dconst'], [], [])"><div class="token cpp_type">_Dconst</div></div> <div class="def" id="NF[0]$_FDenorm"><div>_FDenorm</div></div>, <div class="def" id="NF[0]$_FInf"><div>_FInf</div></div>, <div class="def" id="NF[0]$_FNan"><div>_FNan</div></div>, <div class="def" id="NF[0]$_FSnan"><div>_FSnan</div></div>;</div></div>
+
+		<div class="token cpp_comment ">/* long double DECLARATIONS */</div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE long double __CLRCALL_PURE_OR_CDECL _LCosh(long double, long double);</div>
+<div class="expanded"> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_LCosh@long double(long double, long double)[decl0]"><div><div class="token cpp_function">_LCosh</div></div></div>(<div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div>);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE short __CLRCALL_PURE_OR_CDECL _LDtest(long double *);</div>
+<div class="expanded"> <div class="token cpp_keyword ">short</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_LDtest@short(long double *)[decl0]"><div><div class="token cpp_function">_LDtest</div></div></div>(<div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div> *);</div></div>
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE long double __CLRCALL_PURE_OR_CDECL _LSinh(long double, long double);</div>
+<div class="expanded"> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_LSinh@long double(long double, long double)[decl0]"><div><div class="token cpp_function">_LSinh</div></div></div>(<div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div>);</div></div>
+
+<div class="expandable"><div class="disabled">_CRTIMP2_PURE short __CLRCALL_PURE_OR_CDECL _LExp(long double *, long double, short);</div>
+<div class="expanded"> <div class="token cpp_keyword ">short</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_LExp@short(long double *, long double, short)[decl0]"><div><div class="token cpp_function">_LExp</div></div></div>(<div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div> *, <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">double</div>, <div class="token cpp_keyword ">short</div>);</div></div>
+<div class="expandable"><div class="disabled">extern _CRTIMP2_PURE_IMPORT /* const */ _Dconst _LDenorm, _LInf, _LNan, _LSnan;</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_comment ">/* const */</div> <div class="ref" onclick="jumpToSymbol([], ['_Dconst'], [], [])"><div class="token cpp_type">_Dconst</div></div> <div class="def" id="NF[0]$_LDenorm"><div>_LDenorm</div></div>, <div class="def" id="NF[0]$_LInf"><div>_LInf</div></div>, <div class="def" id="NF[0]$_LNan"><div>_LNan</div></div>, <div class="def" id="NF[0]$_LSnan"><div>_LSnan</div></div>;</div></div>
+
+<div class="disabled"> #if !defined(MRTDLL) || !defined(_CRTBLD)</div>
+<div class="disabled"> #ifndef _M_CEE_PURE</div>
+<div class="expandable"><div class="disabled">_END_EXTERN_C
+ #endif /* _M_CEE_PURE */
+ #endif /* !MRTDLL || !_CRTBLD */</div>
+<div class="expanded">}</div></div>
+
+<div class="disabled"> #pragma pop_macro(&quot;new&quot;)</div>
+<div class="disabled"> _STL_RESTORE_CLANG_WARNINGS</div>
+<div class="expandable"><div class="disabled"> #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+<div class="expandable"><div class="disabled"> #pragma pack(pop)
+#endif /* RC_INVOKED */
+#endif /* _YMATH */</div>
+<div class="expanded">#pragma pack(pop)</div></div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) by P.J. Plauger. All rights reserved.
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_Dconst': {
+        'displayNameInHtml': '<span class="cpp_type">_Dconst</span>',
+        'impls': [
+            'NI$_Dconst'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$_Dconst': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

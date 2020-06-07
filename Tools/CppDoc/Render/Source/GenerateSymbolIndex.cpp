@@ -424,7 +424,7 @@ void RenderSymbolGroup(
 						{
 							auto filePath = global->declToFiles.Values()[index];
 							auto htmlFileName = global->fileLines[filePath]->htmlFileName;
-							writer.WriteString(L"<a class=\"symbolIndex\" href=\"./");
+							writer.WriteString(L"<a class=\"symbolIndex\" href=\"./SourceFiles/");
 							WriteHtmlAttribute(htmlFileName, writer);
 							writer.WriteString(L".html#");
 							WriteHtmlAttribute(declId, writer);

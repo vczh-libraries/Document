@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>prsht.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="expandable"><div class="disabled">/*****************************************************************************\
+*                                                                             *
+* prsht.h - - Interface for the Windows Property Sheet Pages                  *
+*                                                                             *
+* Version 1.0                                                                 *
+*                                                                             *
+* Copyright (c) Microsoft Corporation. All rights reserved.                   *
+*                                                                             *
+\*****************************************************************************/</div>
+<div class="expanded"><div class="token cpp_comment ">/****************************************************************************
+**                                                                             *
+* prsht.h - - Interface for the Windows Property Sheet Pages                  *
+*                                                                             *
+* Version 1.0                                                                 *
+*                                                                             *
+* Copyright (c) Microsoft Corporation. All rights reserved.                   *
+*                                                                             *
+\*****************************************************************************/</div></div></div>
+
+<div class="disabled">#if defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4001) /* nonstandard extension &apos;single line comment&apos; was used */</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4001</div>) </div></div>
+<div class="expandable"><div class="disabled">#pragma warning(disable:4201) /* nonstandard extension used : nameless struct/union */</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4201</div>) </div></div>
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) /* padding added after data member */
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+<div class="disabled">#ifndef _PRSHT_H_</div>
+<div class="disabled">#define _PRSHT_H_</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Define API decoration for direct importing of DLL references.</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#ifndef WINCOMMCTRLAPI</div>
+<div class="disabled">#if !defined(_COMCTL32_) &amp;&amp; defined(_WIN32)</div>
+<div class="disabled">#define WINCOMMCTRLAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WINCOMMCTRLAPI</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif // WINCOMMCTRLAPI</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// For compilers that don&apos;t support nameless unions</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#ifndef DUMMYUNIONNAME</div>
+<div class="disabled">#ifdef NONAMELESSUNION</div>
+<div class="disabled">#define DUMMYUNIONNAME   u</div>
+<div class="disabled">#define DUMMYUNIONNAME2  u2</div>
+<div class="disabled">#define DUMMYUNIONNAME3  u3</div>
+<div class="disabled">#define DUMMYUNIONNAME4  u4</div>
+<div class="disabled">#define DUMMYUNIONNAME5  u5</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DUMMYUNIONNAME</div>
+<div class="disabled">#define DUMMYUNIONNAME2</div>
+<div class="disabled">#define DUMMYUNIONNAME3</div>
+<div class="disabled">#define DUMMYUNIONNAME4</div>
+<div class="disabled">#define DUMMYUNIONNAME5</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif // DUMMYUNIONNAME</div>
+
+
+<div class="disabled">#ifdef _WIN64</div>
+<div class="disabled">#include &lt;pshpack8.h&gt;</div>
+<div class="disabled">#else</div>
+<div class="disabled">#include &lt;pshpack4.h&gt;</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+
+<div class="disabled">#ifndef SNDMSG</div>
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled">#ifndef _MAC</div>
+<div class="disabled">#define SNDMSG ::SendMessage</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define SNDMSG ::AfxSendMessage</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#else</div>
+<div class="disabled">#ifndef _MAC</div>
+<div class="disabled">#define SNDMSG SendMessage</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define SNDMSG AfxSendMessage</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif // ifndef SNDMSG</div>
+
+<div class="disabled">#ifndef PSTMSG</div>
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled">#define PSTMSG ::PostMessage</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PSTMSG PostMessage</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif // ifndef PSTMSG</div>
+
+<div class="disabled">#define MAXPROPPAGES            100</div>
+
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$_PSP"><div><div class="token cpp_type">_PSP</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_PSP'], [], [])"><div class="token cpp_type">_PSP</div></div> * <div class="def" id="NI$HPROPSHEETPAGE"><div><div class="token cpp_type">HPROPSHEETPAGE</div></div></div>;
+
+<div class="disabled">#ifndef MIDL_PASS</div>
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$_PROPSHEETPAGEA"><div class="ref" onclick="jumpToSymbol([], ['_PROPSHEETPAGEA'], [], [])"><div class="token cpp_type">_PROPSHEETPAGEA</div></div></div>;
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$_PROPSHEETPAGEW"><div class="ref" onclick="jumpToSymbol([], ['_PROPSHEETPAGEW'], [], [])"><div class="token cpp_type">_PROPSHEETPAGEW</div></div></div>;
+<div class="disabled">#endif</div>
+
+<div class="expandable"><div class="disabled">typedef UINT (CALLBACK *LPFNPSPCALLBACKA)(HWND hwnd, UINT uMsg, struct _PROPSHEETPAGEA *ppsp);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> (<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$LPFNPSPCALLBACKA"><div><div class="token cpp_type">LPFNPSPCALLBACKA</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> hwnd, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> uMsg, <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_PROPSHEETPAGEA'], [], [])"><div class="token cpp_type">_PROPSHEETPAGEA</div></div> *ppsp);</div></div>
+<div class="expandable"><div class="disabled">typedef UINT (CALLBACK *LPFNPSPCALLBACKW)(HWND hwnd, UINT uMsg, struct _PROPSHEETPAGEW *ppsp);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> (<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$LPFNPSPCALLBACKW"><div><div class="token cpp_type">LPFNPSPCALLBACKW</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> hwnd, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> uMsg, <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_PROPSHEETPAGEW'], [], [])"><div class="token cpp_type">_PROPSHEETPAGEW</div></div> *ppsp);</div></div>
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define LPFNPSPCALLBACK         LPFNPSPCALLBACKW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define LPFNPSPCALLBACK         LPFNPSPCALLBACKA</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define PSP_DEFAULT                0x00000000</div>
+<div class="disabled">#define PSP_DLGINDIRECT            0x00000001</div>
+<div class="disabled">#define PSP_USEHICON               0x00000002</div>
+<div class="disabled">#define PSP_USEICONID              0x00000004</div>
+<div class="disabled">#define PSP_USETITLE               0x00000008</div>
+<div class="disabled">#define PSP_RTLREADING             0x00000010</div>
+
+<div class="disabled">#define PSP_HASHELP                0x00000020</div>
+<div class="disabled">#define PSP_USEREFPARENT           0x00000040</div>
+<div class="disabled">#define PSP_USECALLBACK            0x00000080</div>
+<div class="disabled">#define PSP_PREMATURE              0x00000400</div>
+
+<div class="token cpp_comment ">//----- New flags for wizard97 --------------</div>
+<div class="disabled">#define PSP_HIDEHEADER             0x00000800</div>
+<div class="disabled">#define PSP_USEHEADERTITLE         0x00001000</div>
+<div class="disabled">#define PSP_USEHEADERSUBTITLE      0x00002000</div>
+<div class="token cpp_comment ">//-------------------------------------------</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP) || ISOLATION_AWARE_ENABLED</div>
+<div class="disabled">#define PSP_USEFUSIONCONTEXT       0x00004000</div>
+<div class="disabled">#endif</div>
+
+
+<div class="disabled">#define PSPCB_ADDREF            0</div>
+<div class="disabled">#define PSPCB_RELEASE           1</div>
+<div class="disabled">#define PSPCB_CREATE            2</div>
+
+<div class="disabled">#ifdef _WIN32</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPCDLGTEMPLATE'], [], [])"><div class="token cpp_type">LPCDLGTEMPLATE</div></div> <div class="def" id="NI$PROPSHEETPAGE_RESOURCE"><div><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div></div>;
+<div class="disabled">#else</div>
+<div class="disabled">typedef const VOID* PROPSHEETPAGE_RESOURCE;</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define PROPSHEETPAGEA_V1_FIELDS   \</div>
+<div class="disabled">    DWORD           dwSize;        \</div>
+<div class="disabled">    DWORD           dwFlags;       \</div>
+<div class="disabled">    HINSTANCE       hInstance;     \</div>
+<div class="disabled">    union                          \</div>
+<div class="disabled">    {                              \</div>
+<div class="disabled">        LPCSTR      pszTemplate;   \</div>
+<div class="disabled">        PROPSHEETPAGE_RESOURCE pResource; \</div>
+<div class="disabled">    } DUMMYUNIONNAME;              \</div>
+<div class="disabled">    union                          \</div>
+<div class="disabled">    {                              \</div>
+<div class="disabled">        HICON        hIcon;        \</div>
+<div class="disabled">        LPCSTR       pszIcon;      \</div>
+<div class="disabled">    } DUMMYUNIONNAME2;             \</div>
+<div class="disabled">    LPCSTR           pszTitle;     \</div>
+<div class="disabled">    DLGPROC          pfnDlgProc;   \</div>
+<div class="disabled">    LPARAM           lParam;       \</div>
+<div class="disabled">    LPFNPSPCALLBACKA pfnCallback;  \</div>
+<div class="disabled">    UINT             *pcRefParent; \</div>
+
+<div class="disabled">#define PROPSHEETPAGEW_V1_FIELDS   \</div>
+<div class="disabled">    DWORD           dwSize;        \</div>
+<div class="disabled">    DWORD           dwFlags;       \</div>
+<div class="disabled">    HINSTANCE       hInstance;     \</div>
+<div class="disabled">    union                          \</div>
+<div class="disabled">    {                              \</div>
+<div class="disabled">        LPCWSTR     pszTemplate;   \</div>
+<div class="disabled">        PROPSHEETPAGE_RESOURCE pResource; \</div>
+<div class="disabled">    } DUMMYUNIONNAME;              \</div>
+<div class="disabled">    union                          \</div>
+<div class="disabled">    {                              \</div>
+<div class="disabled">        HICON        hIcon;        \</div>
+<div class="disabled">        LPCWSTR      pszIcon;      \</div>
+<div class="disabled">    } DUMMYUNIONNAME2;             \</div>
+<div class="disabled">    LPCWSTR          pszTitle;     \</div>
+<div class="disabled">    DLGPROC          pfnDlgProc;   \</div>
+<div class="disabled">    LPARAM           lParam;       \</div>
+<div class="disabled">    LPFNPSPCALLBACKW pfnCallback;  \</div>
+<div class="disabled">    UINT             *pcRefParent; \</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define  _PROPSHEETPAGEA_V4 _PROPSHEETPAGEA</div>
+<div class="disabled">#define  _PROPSHEETPAGEW_V4 _PROPSHEETPAGEW</div>
+<div class="disabled">#elif (NTDDI_VERSION &gt;= NTDDI_WINXP) || ISOLATION_AWARE_ENABLED</div>
+<div class="disabled">#define  _PROPSHEETPAGEA_V3 _PROPSHEETPAGEA</div>
+<div class="disabled">#define  _PROPSHEETPAGEW_V3 _PROPSHEETPAGEW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define  _PROPSHEETPAGEA_V2 _PROPSHEETPAGEA</div>
+<div class="disabled">#define  _PROPSHEETPAGEW_V2 _PROPSHEETPAGEW</div>
+<div class="disabled">#endif</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETPAGEA_V1"><div><div class="token cpp_type">_PROPSHEETPAGEA_V1</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETPAGEA_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::pszTemplate"><div><div class="token cpp_field">pszTemplate</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGE_RESOURCE'], [], [])"><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::pResource"><div><div class="token cpp_field">pResource</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::pszTitle"><div><div class="token cpp_field">pszTitle</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DLGPROC'], [], [])"><div class="token cpp_type">DLGPROC</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::pfnDlgProc"><div><div class="token cpp_field">pfnDlgProc</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::lParam"><div><div class="token cpp_field">lParam</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPFNPSPCALLBACKA'], [], [])"><div class="token cpp_type">LPFNPSPCALLBACKA</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V1::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$_PROPSHEETPAGEA_V1::pcRefParent"><div><div class="token cpp_field">pcRefParent</div></div></div>;</div></div>
+} <div class="def" id="NI$PROPSHEETPAGEA_V1"><div><div class="token cpp_type">PROPSHEETPAGEA_V1</div></div></div>, *<div class="def" id="NI$LPPROPSHEETPAGEA_V1"><div><div class="token cpp_type">LPPROPSHEETPAGEA_V1</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEA_V1'], [], [])"><div class="token cpp_type">PROPSHEETPAGEA_V1</div></div> *<div class="def" id="NI$LPCPROPSHEETPAGEA_V1"><div><div class="token cpp_type">LPCPROPSHEETPAGEA_V1</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETPAGEA_V2"><div><div class="token cpp_type">_PROPSHEETPAGEA_V2</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETPAGEA_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::pszTemplate"><div><div class="token cpp_field">pszTemplate</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGE_RESOURCE'], [], [])"><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::pResource"><div><div class="token cpp_field">pResource</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::pszTitle"><div><div class="token cpp_field">pszTitle</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DLGPROC'], [], [])"><div class="token cpp_type">DLGPROC</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::pfnDlgProc"><div><div class="token cpp_field">pfnDlgProc</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::lParam"><div><div class="token cpp_field">lParam</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPFNPSPCALLBACKA'], [], [])"><div class="token cpp_type">LPFNPSPCALLBACKA</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V2::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$_PROPSHEETPAGEA_V2::pcRefParent"><div><div class="token cpp_field">pcRefParent</div></div></div>;</div></div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEA_V2::pszHeaderTitle"><div><div class="token cpp_field">pszHeaderTitle</div></div></div>;    <div class="token cpp_comment ">// this is displayed in the header</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEA_V2::pszHeaderSubTitle"><div><div class="token cpp_field">pszHeaderSubTitle</div></div></div>; <div class="token cpp_comment ">//</div>
+} <div class="def" id="NI$PROPSHEETPAGEA_V2"><div><div class="token cpp_type">PROPSHEETPAGEA_V2</div></div></div>, *<div class="def" id="NI$LPPROPSHEETPAGEA_V2"><div><div class="token cpp_type">LPPROPSHEETPAGEA_V2</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEA_V2'], [], [])"><div class="token cpp_type">PROPSHEETPAGEA_V2</div></div> *<div class="def" id="NI$LPCPROPSHEETPAGEA_V2"><div><div class="token cpp_type">LPCPROPSHEETPAGEA_V2</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETPAGEA_V3"><div><div class="token cpp_type">_PROPSHEETPAGEA_V3</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETPAGEA_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::pszTemplate"><div><div class="token cpp_field">pszTemplate</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGE_RESOURCE'], [], [])"><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::pResource"><div><div class="token cpp_field">pResource</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::pszTitle"><div><div class="token cpp_field">pszTitle</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DLGPROC'], [], [])"><div class="token cpp_type">DLGPROC</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::pfnDlgProc"><div><div class="token cpp_field">pfnDlgProc</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::lParam"><div><div class="token cpp_field">lParam</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPFNPSPCALLBACKA'], [], [])"><div class="token cpp_type">LPFNPSPCALLBACKA</div></div> <div class="def" id="NI$_PROPSHEETPAGEA_V3::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$_PROPSHEETPAGEA_V3::pcRefParent"><div><div class="token cpp_field">pcRefParent</div></div></div>;</div></div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEA_V3::pszHeaderTitle"><div><div class="token cpp_field">pszHeaderTitle</div></div></div>;    <div class="token cpp_comment ">// this is displayed in the header</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEA_V3::pszHeaderSubTitle"><div><div class="token cpp_field">pszHeaderSubTitle</div></div></div>; <div class="token cpp_comment ">//</div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>           <div class="def" id="NI$_PROPSHEETPAGEA_V3::hActCtx"><div><div class="token cpp_field">hActCtx</div></div></div>;
+} <div class="def" id="NI$PROPSHEETPAGEA_V3"><div><div class="token cpp_type">PROPSHEETPAGEA_V3</div></div></div>, *<div class="def" id="NI$LPPROPSHEETPAGEA_V3"><div><div class="token cpp_type">LPPROPSHEETPAGEA_V3</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEA_V3'], [], [])"><div class="token cpp_type">PROPSHEETPAGEA_V3</div></div> *<div class="def" id="NI$LPCPROPSHEETPAGEA_V3"><div><div class="token cpp_type">LPCPROPSHEETPAGEA_V3</div></div></div>;
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="expandable"><div class="disabled">typedef struct _PROPSHEETPAGEA_V4</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETPAGEA"><div class="ref" onclick="jumpToSymbol([], ['_PROPSHEETPAGEA'], [], [])"><div class="token cpp_type">_PROPSHEETPAGEA</div></div></div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETPAGEA_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::pszTemplate"><div><div class="token cpp_field">pszTemplate</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGE_RESOURCE'], [], [])"><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::pResource"><div><div class="token cpp_field">pResource</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::pszTitle"><div><div class="token cpp_field">pszTitle</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DLGPROC'], [], [])"><div class="token cpp_type">DLGPROC</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::pfnDlgProc"><div><div class="token cpp_field">pfnDlgProc</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::lParam"><div><div class="token cpp_field">lParam</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPFNPSPCALLBACKA'], [], [])"><div class="token cpp_type">LPFNPSPCALLBACKA</div></div> <div class="def" id="NI$_PROPSHEETPAGEA::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$_PROPSHEETPAGEA::pcRefParent"><div><div class="token cpp_field">pcRefParent</div></div></div>;</div></div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEA::pszHeaderTitle"><div><div class="token cpp_field">pszHeaderTitle</div></div></div>;    <div class="token cpp_comment ">// this is displayed in the header</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEA::pszHeaderSubTitle"><div><div class="token cpp_field">pszHeaderSubTitle</div></div></div>; <div class="token cpp_comment ">//</div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>           <div class="def" id="NI$_PROPSHEETPAGEA::hActCtx"><div><div class="token cpp_field">hActCtx</div></div></div>;
+
+    <div class="token cpp_keyword ">union</div> 
+    {
+        <div class="ref" onclick="jumpToSymbol([], ['HBITMAP'], [], [])"><div class="token cpp_type">HBITMAP</div></div>     <div class="def" id="NI$_PROPSHEETPAGEA::hbmHeader"><div><div class="token cpp_field">hbmHeader</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div>      <div class="def" id="NI$_PROPSHEETPAGEA::pszbmHeader"><div><div class="token cpp_field">pszbmHeader</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME3;</div>
+<div class="expanded">    } ;</div></div>
+
+} <div class="def" id="NI$PROPSHEETPAGEA_V4"><div><div class="token cpp_type">PROPSHEETPAGEA_V4</div></div></div>, *<div class="def" id="NI$LPPROPSHEETPAGEA_V4"><div><div class="token cpp_type">LPPROPSHEETPAGEA_V4</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEA_V4'], [], [])"><div class="token cpp_type">PROPSHEETPAGEA_V4</div></div> *<div class="def" id="NI$LPCPROPSHEETPAGEA_V4"><div><div class="token cpp_type">LPCPROPSHEETPAGEA_V4</div></div></div>;
+<div class="disabled">#endif</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETPAGEW_V1"><div><div class="token cpp_type">_PROPSHEETPAGEW_V1</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETPAGEW_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::pszTemplate"><div><div class="token cpp_field">pszTemplate</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGE_RESOURCE'], [], [])"><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::pResource"><div><div class="token cpp_field">pResource</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::pszTitle"><div><div class="token cpp_field">pszTitle</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DLGPROC'], [], [])"><div class="token cpp_type">DLGPROC</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::pfnDlgProc"><div><div class="token cpp_field">pfnDlgProc</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::lParam"><div><div class="token cpp_field">lParam</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPFNPSPCALLBACKW'], [], [])"><div class="token cpp_type">LPFNPSPCALLBACKW</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V1::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$_PROPSHEETPAGEW_V1::pcRefParent"><div><div class="token cpp_field">pcRefParent</div></div></div>;</div></div>
+} <div class="def" id="NI$PROPSHEETPAGEW_V1"><div><div class="token cpp_type">PROPSHEETPAGEW_V1</div></div></div>, *<div class="def" id="NI$LPPROPSHEETPAGEW_V1"><div><div class="token cpp_type">LPPROPSHEETPAGEW_V1</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEW_V1'], [], [])"><div class="token cpp_type">PROPSHEETPAGEW_V1</div></div> *<div class="def" id="NI$LPCPROPSHEETPAGEW_V1"><div><div class="token cpp_type">LPCPROPSHEETPAGEW_V1</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETPAGEW_V2"><div><div class="token cpp_type">_PROPSHEETPAGEW_V2</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETPAGEW_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::pszTemplate"><div><div class="token cpp_field">pszTemplate</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGE_RESOURCE'], [], [])"><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::pResource"><div><div class="token cpp_field">pResource</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::pszTitle"><div><div class="token cpp_field">pszTitle</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DLGPROC'], [], [])"><div class="token cpp_type">DLGPROC</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::pfnDlgProc"><div><div class="token cpp_field">pfnDlgProc</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::lParam"><div><div class="token cpp_field">lParam</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPFNPSPCALLBACKW'], [], [])"><div class="token cpp_type">LPFNPSPCALLBACKW</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V2::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$_PROPSHEETPAGEW_V2::pcRefParent"><div><div class="token cpp_field">pcRefParent</div></div></div>;</div></div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEW_V2::pszHeaderTitle"><div><div class="token cpp_field">pszHeaderTitle</div></div></div>;    <div class="token cpp_comment ">// this is displayed in the header</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEW_V2::pszHeaderSubTitle"><div><div class="token cpp_field">pszHeaderSubTitle</div></div></div>; <div class="token cpp_comment ">//</div>
+} <div class="def" id="NI$PROPSHEETPAGEW_V2"><div><div class="token cpp_type">PROPSHEETPAGEW_V2</div></div></div>, *<div class="def" id="NI$LPPROPSHEETPAGEW_V2"><div><div class="token cpp_type">LPPROPSHEETPAGEW_V2</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEW_V2'], [], [])"><div class="token cpp_type">PROPSHEETPAGEW_V2</div></div> *<div class="def" id="NI$LPCPROPSHEETPAGEW_V2"><div><div class="token cpp_type">LPCPROPSHEETPAGEW_V2</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETPAGEW_V3"><div><div class="token cpp_type">_PROPSHEETPAGEW_V3</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETPAGEW_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::pszTemplate"><div><div class="token cpp_field">pszTemplate</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGE_RESOURCE'], [], [])"><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::pResource"><div><div class="token cpp_field">pResource</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::pszTitle"><div><div class="token cpp_field">pszTitle</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DLGPROC'], [], [])"><div class="token cpp_type">DLGPROC</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::pfnDlgProc"><div><div class="token cpp_field">pfnDlgProc</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::lParam"><div><div class="token cpp_field">lParam</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPFNPSPCALLBACKW'], [], [])"><div class="token cpp_type">LPFNPSPCALLBACKW</div></div> <div class="def" id="NI$_PROPSHEETPAGEW_V3::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$_PROPSHEETPAGEW_V3::pcRefParent"><div><div class="token cpp_field">pcRefParent</div></div></div>;</div></div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEW_V3::pszHeaderTitle"><div><div class="token cpp_field">pszHeaderTitle</div></div></div>;    <div class="token cpp_comment ">// this is displayed in the header</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEW_V3::pszHeaderSubTitle"><div><div class="token cpp_field">pszHeaderSubTitle</div></div></div>; <div class="token cpp_comment ">//</div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>           <div class="def" id="NI$_PROPSHEETPAGEW_V3::hActCtx"><div><div class="token cpp_field">hActCtx</div></div></div>;
+} <div class="def" id="NI$PROPSHEETPAGEW_V3"><div><div class="token cpp_type">PROPSHEETPAGEW_V3</div></div></div>, *<div class="def" id="NI$LPPROPSHEETPAGEW_V3"><div><div class="token cpp_type">LPPROPSHEETPAGEW_V3</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEW_V3'], [], [])"><div class="token cpp_type">PROPSHEETPAGEW_V3</div></div> *<div class="def" id="NI$LPCPROPSHEETPAGEW_V3"><div><div class="token cpp_type">LPCPROPSHEETPAGEW_V3</div></div></div>;
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="expandable"><div class="disabled">typedef struct _PROPSHEETPAGEW_V4</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETPAGEW"><div class="ref" onclick="jumpToSymbol([], ['_PROPSHEETPAGEW'], [], [])"><div class="token cpp_type">_PROPSHEETPAGEW</div></div></div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETPAGEW_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::pszTemplate"><div><div class="token cpp_field">pszTemplate</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGE_RESOURCE'], [], [])"><div class="token cpp_type">PROPSHEETPAGE_RESOURCE</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::pResource"><div><div class="token cpp_field">pResource</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::pszTitle"><div><div class="token cpp_field">pszTitle</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DLGPROC'], [], [])"><div class="token cpp_type">DLGPROC</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::pfnDlgProc"><div><div class="token cpp_field">pfnDlgProc</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::lParam"><div><div class="token cpp_field">lParam</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPFNPSPCALLBACKW'], [], [])"><div class="token cpp_type">LPFNPSPCALLBACKW</div></div> <div class="def" id="NI$_PROPSHEETPAGEW::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$_PROPSHEETPAGEW::pcRefParent"><div><div class="token cpp_field">pcRefParent</div></div></div>;</div></div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEW::pszHeaderTitle"><div><div class="token cpp_field">pszHeaderTitle</div></div></div>;    <div class="token cpp_comment ">// this is displayed in the header</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>           <div class="def" id="NI$_PROPSHEETPAGEW::pszHeaderSubTitle"><div><div class="token cpp_field">pszHeaderSubTitle</div></div></div>; <div class="token cpp_comment ">//</div>
+
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>            <div class="def" id="NI$_PROPSHEETPAGEW::hActCtx"><div><div class="token cpp_field">hActCtx</div></div></div>;
+
+    <div class="token cpp_keyword ">union</div> 
+    {
+        <div class="ref" onclick="jumpToSymbol([], ['HBITMAP'], [], [])"><div class="token cpp_type">HBITMAP</div></div>     <div class="def" id="NI$_PROPSHEETPAGEW::hbmHeader"><div><div class="token cpp_field">hbmHeader</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>     <div class="def" id="NI$_PROPSHEETPAGEW::pszbmHeader"><div><div class="token cpp_field">pszbmHeader</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME3;</div>
+<div class="expanded">    } ;</div></div>
+
+} <div class="def" id="NI$PROPSHEETPAGEW_V4"><div><div class="token cpp_type">PROPSHEETPAGEW_V4</div></div></div>, *<div class="def" id="NI$LPPROPSHEETPAGEW_V4"><div><div class="token cpp_type">LPPROPSHEETPAGEW_V4</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEW_V4'], [], [])"><div class="token cpp_type">PROPSHEETPAGEW_V4</div></div> *<div class="def" id="NI$LPCPROPSHEETPAGEW_V4"><div><div class="token cpp_type">LPCPROPSHEETPAGEW_V4</div></div></div>;
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define PROPSHEETPAGEA_V1_SIZE sizeof(PROPSHEETPAGEA_V1)</div>
+<div class="disabled">#define PROPSHEETPAGEW_V1_SIZE sizeof(PROPSHEETPAGEW_V1)</div>
+
+<div class="disabled">#define PROPSHEETPAGEA_V2_SIZE sizeof(PROPSHEETPAGEA_V2)</div>
+<div class="disabled">#define PROPSHEETPAGEW_V2_SIZE sizeof(PROPSHEETPAGEW_V2)</div>
+
+<div class="disabled">#define PROPSHEETPAGEA_V3_SIZE sizeof(PROPSHEETPAGEA_V3)</div>
+<div class="disabled">#define PROPSHEETPAGEW_V3_SIZE sizeof(PROPSHEETPAGEW_V3)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define PROPSHEETPAGEA_V4_SIZE sizeof(PROPSHEETPAGEA_V4)</div>
+<div class="disabled">#define PROPSHEETPAGEW_V4_SIZE sizeof(PROPSHEETPAGEW_V4)</div>
+<div class="disabled">#endif</div>
+
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_keyword ">typedef</div>    <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEA_V4'], [], [])"><div class="token cpp_type">PROPSHEETPAGEA_V4</div></div>    <div class="def" id="NI$PROPSHEETPAGEA_LATEST"><div><div class="token cpp_type">PROPSHEETPAGEA_LATEST</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>    <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEW_V4'], [], [])"><div class="token cpp_type">PROPSHEETPAGEW_V4</div></div>    <div class="def" id="NI$PROPSHEETPAGEW_LATEST"><div><div class="token cpp_type">PROPSHEETPAGEW_LATEST</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>  <div class="ref" onclick="jumpToSymbol([], ['LPPROPSHEETPAGEA_V4'], [], [])"><div class="token cpp_type">LPPROPSHEETPAGEA_V4</div></div>  <div class="def" id="NI$LPPROPSHEETPAGEA_LATEST"><div><div class="token cpp_type">LPPROPSHEETPAGEA_LATEST</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>  <div class="ref" onclick="jumpToSymbol([], ['LPPROPSHEETPAGEW_V4'], [], [])"><div class="token cpp_type">LPPROPSHEETPAGEW_V4</div></div>  <div class="def" id="NI$LPPROPSHEETPAGEW_LATEST"><div><div class="token cpp_type">LPPROPSHEETPAGEW_LATEST</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEA_V4'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEA_V4</div></div> <div class="def" id="NI$LPCPROPSHEETPAGEA_LATEST"><div><div class="token cpp_type">LPCPROPSHEETPAGEA_LATEST</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEW_V4'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEW_V4</div></div> <div class="def" id="NI$LPCPROPSHEETPAGEW_LATEST"><div><div class="token cpp_type">LPCPROPSHEETPAGEW_LATEST</div></div></div>;
+<div class="disabled">#else</div>
+<div class="disabled">typedef    PROPSHEETPAGEA_V3    PROPSHEETPAGEA_LATEST;</div>
+<div class="disabled">typedef    PROPSHEETPAGEW_V3    PROPSHEETPAGEW_LATEST;</div>
+<div class="disabled">typedef  LPPROPSHEETPAGEA_V3  LPPROPSHEETPAGEA_LATEST;</div>
+<div class="disabled">typedef  LPPROPSHEETPAGEW_V3  LPPROPSHEETPAGEW_LATEST;</div>
+<div class="disabled">typedef LPCPROPSHEETPAGEA_V3 LPCPROPSHEETPAGEA_LATEST;</div>
+<div class="disabled">typedef LPCPROPSHEETPAGEW_V3 LPCPROPSHEETPAGEW_LATEST;</div>
+<div class="disabled">#endif</div>
+
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_keyword ">typedef</div>    <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEA_V4'], [], [])"><div class="token cpp_type">PROPSHEETPAGEA_V4</div></div>    <div class="def" id="NI$PROPSHEETPAGEA"><div><div class="token cpp_type">PROPSHEETPAGEA</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>    <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETPAGEW_V4'], [], [])"><div class="token cpp_type">PROPSHEETPAGEW_V4</div></div>    <div class="def" id="NI$PROPSHEETPAGEW"><div><div class="token cpp_type">PROPSHEETPAGEW</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>  <div class="ref" onclick="jumpToSymbol([], ['LPPROPSHEETPAGEA_V4'], [], [])"><div class="token cpp_type">LPPROPSHEETPAGEA_V4</div></div>  <div class="def" id="NI$LPPROPSHEETPAGEA"><div><div class="token cpp_type">LPPROPSHEETPAGEA</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>  <div class="ref" onclick="jumpToSymbol([], ['LPPROPSHEETPAGEW_V4'], [], [])"><div class="token cpp_type">LPPROPSHEETPAGEW_V4</div></div>  <div class="def" id="NI$LPPROPSHEETPAGEW"><div><div class="token cpp_type">LPPROPSHEETPAGEW</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEA_V4'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEA_V4</div></div> <div class="def" id="NI$LPCPROPSHEETPAGEA"><div><div class="token cpp_type">LPCPROPSHEETPAGEA</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEW_V4'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEW_V4</div></div> <div class="def" id="NI$LPCPROPSHEETPAGEW"><div><div class="token cpp_type">LPCPROPSHEETPAGEW</div></div></div>;
+<div class="disabled">#elif (NTDDI_VERSION &gt;= NTDDI_WINXP) || ISOLATION_AWARE_ENABLED</div>
+<div class="disabled">typedef    PROPSHEETPAGEA_V3    PROPSHEETPAGEA;</div>
+<div class="disabled">typedef    PROPSHEETPAGEW_V3    PROPSHEETPAGEW;</div>
+<div class="disabled">typedef  LPPROPSHEETPAGEA_V3  LPPROPSHEETPAGEA;</div>
+<div class="disabled">typedef  LPPROPSHEETPAGEW_V3  LPPROPSHEETPAGEW;</div>
+<div class="disabled">typedef LPCPROPSHEETPAGEA_V3 LPCPROPSHEETPAGEA;</div>
+<div class="disabled">typedef LPCPROPSHEETPAGEW_V3 LPCPROPSHEETPAGEW;</div>
+<div class="disabled">#else</div>
+<div class="disabled">typedef    PROPSHEETPAGEA_V2    PROPSHEETPAGEA;</div>
+<div class="disabled">typedef    PROPSHEETPAGEW_V2    PROPSHEETPAGEW;</div>
+<div class="disabled">typedef  LPPROPSHEETPAGEA_V2  LPPROPSHEETPAGEA;</div>
+<div class="disabled">typedef  LPPROPSHEETPAGEW_V2  LPPROPSHEETPAGEW;</div>
+<div class="disabled">typedef LPCPROPSHEETPAGEA_V2 LPCPROPSHEETPAGEA;</div>
+<div class="disabled">typedef LPCPROPSHEETPAGEW_V2 LPCPROPSHEETPAGEW;</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define    PROPSHEETPAGE           PROPSHEETPAGEW</div>
+<div class="disabled">#define  LPPROPSHEETPAGE         LPPROPSHEETPAGEW</div>
+<div class="disabled">#define LPCPROPSHEETPAGE        LPCPROPSHEETPAGEW</div>
+<div class="disabled">#define    PROPSHEETPAGE_V1_SIZE   PROPSHEETPAGEW_V1_SIZE</div>
+<div class="disabled">#define    PROPSHEETPAGE_V2_SIZE   PROPSHEETPAGEW_V2_SIZE</div>
+<div class="disabled">#define    PROPSHEETPAGE_V1        PROPSHEETPAGEW_V1</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_V1      LPPROPSHEETPAGEW_V1</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_V1     LPCPROPSHEETPAGEW_V1</div>
+<div class="disabled">#define    PROPSHEETPAGE_V2        PROPSHEETPAGEW_V2</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_V2      LPPROPSHEETPAGEW_V2</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_V2     LPCPROPSHEETPAGEW_V2</div>
+<div class="disabled">#define    PROPSHEETPAGE_V3        PROPSHEETPAGEW_V3</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_V3      LPPROPSHEETPAGEW_V3</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_V3     LPCPROPSHEETPAGEW_V3</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define    PROPSHEETPAGE_V4        PROPSHEETPAGEW_V4</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_V4      LPPROPSHEETPAGEW_V4</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_V4     LPCPROPSHEETPAGEW_V4</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define    PROPSHEETPAGE_LATEST    PROPSHEETPAGEW_LATEST</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_LATEST  LPPROPSHEETPAGEW_LATEST</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_LATEST LPCPROPSHEETPAGEW_LATEST</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define    PROPSHEETPAGE           PROPSHEETPAGEA</div>
+<div class="disabled">#define  LPPROPSHEETPAGE         LPPROPSHEETPAGEA</div>
+<div class="disabled">#define LPCPROPSHEETPAGE        LPCPROPSHEETPAGEA</div>
+<div class="disabled">#define    PROPSHEETPAGE_V1_SIZE   PROPSHEETPAGEA_V1_SIZE</div>
+<div class="disabled">#define    PROPSHEETPAGE_V2_SIZE   PROPSHEETPAGEA_V2_SIZE</div>
+<div class="disabled">#define    PROPSHEETPAGE_V1        PROPSHEETPAGEA_V1</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_V1      LPPROPSHEETPAGEA_V1</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_V1     LPCPROPSHEETPAGEA_V1</div>
+<div class="disabled">#define    PROPSHEETPAGE_V2        PROPSHEETPAGEA_V2</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_V2      LPPROPSHEETPAGEA_V2</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_V2     LPCPROPSHEETPAGEA_V2</div>
+<div class="disabled">#define    PROPSHEETPAGE_V3        PROPSHEETPAGEA_V3</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_V3      LPPROPSHEETPAGEA_V3</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_V3     LPCPROPSHEETPAGEA_V3</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define    PROPSHEETPAGE_V4        PROPSHEETPAGEA_V4</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_V4      LPPROPSHEETPAGEA_V4</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_V4     LPCPROPSHEETPAGEA_V4</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define    PROPSHEETPAGE_LATEST    PROPSHEETPAGEA_LATEST</div>
+<div class="disabled">#define  LPPROPSHEETPAGE_LATEST  LPPROPSHEETPAGEA_LATEST</div>
+<div class="disabled">#define LPCPROPSHEETPAGE_LATEST LPCPROPSHEETPAGEA_LATEST</div>
+<div class="disabled">#endif</div>
+
+
+<div class="token cpp_comment ">//----- PropSheet Header related ---------</div>
+
+<div class="disabled">#define PSH_DEFAULT             0x00000000</div>
+<div class="disabled">#define PSH_PROPTITLE           0x00000001</div>
+<div class="disabled">#define PSH_USEHICON            0x00000002</div>
+<div class="disabled">#define PSH_USEICONID           0x00000004</div>
+<div class="disabled">#define PSH_PROPSHEETPAGE       0x00000008</div>
+
+<div class="disabled">#define PSH_WIZARDHASFINISH     0x00000010</div>
+<div class="disabled">#define PSH_WIZARD              0x00000020</div>
+<div class="disabled">#define PSH_USEPSTARTPAGE       0x00000040</div>
+<div class="disabled">#define PSH_NOAPPLYNOW          0x00000080</div>
+
+<div class="disabled">#define PSH_USECALLBACK         0x00000100</div>
+<div class="disabled">#define PSH_HASHELP             0x00000200</div>
+<div class="disabled">#define PSH_MODELESS            0x00000400</div>
+<div class="disabled">#define PSH_RTLREADING          0x00000800</div>
+
+<div class="disabled">#define PSH_WIZARDCONTEXTHELP   0x00001000</div>
+
+<div class="token cpp_comment ">//----- New flags for wizard97 -----------</div>
+<div class="disabled">#if (_WIN32_IE &lt; 0x0500)</div>
+<div class="disabled">#define PSH_WIZARD97            0x00002000</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PSH_WIZARD97            0x01000000</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define PSH_WATERMARK           0x00008000</div>
+
+<div class="disabled">#define PSH_USEHBMWATERMARK     0x00010000  // user pass in a hbmWatermark instead of pszbmWatermark</div>
+<div class="disabled">#define PSH_USEHPLWATERMARK     0x00020000  //</div>
+<div class="disabled">#define PSH_STRETCHWATERMARK    0x00040000  // stretchwatermark also applies for the header</div>
+<div class="disabled">#define PSH_HEADER              0x00080000</div>
+
+<div class="disabled">#define PSH_USEHBMHEADER        0x00100000</div>
+<div class="disabled">#define PSH_USEPAGELANG         0x00200000  // use frame dialog template matched to page</div>
+<div class="token cpp_comment ">//----------------------------------------</div>
+
+<div class="token cpp_comment ">//----- New flags for wizard-lite --------</div>
+<div class="disabled">#define PSH_WIZARD_LITE         0x00400000</div>
+<div class="disabled">#define PSH_NOCONTEXTHELP       0x02000000</div>
+<div class="token cpp_comment ">//----------------------------------------</div>
+
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define PSH_AEROWIZARD                          0x00004000</div>
+
+<div class="disabled">#define PSH_RESIZABLE                           0x04000000</div>
+<div class="disabled">#define PSH_HEADERBITMAP                        0x08000000</div>
+<div class="disabled">#define PSH_NOMARGIN                            0x10000000</div>
+<div class="disabled">#endif</div>
+
+
+
+<div class="expandable"><div class="disabled">typedef int (CALLBACK *PFNPROPSHEETCALLBACK)(HWND, UINT, LPARAM);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div> (<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$PFNPROPSHEETCALLBACK"><div><div class="token cpp_type">PFNPROPSHEETCALLBACK</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div>, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div>);</div></div>
+
+<div class="disabled">#define PROPSHEETHEADERA_V1_FIELDS      \</div>
+<div class="disabled">        DWORD           dwSize;         \</div>
+<div class="disabled">        DWORD           dwFlags;        \</div>
+<div class="disabled">        HWND            hwndParent;     \</div>
+<div class="disabled">        HINSTANCE       hInstance;      \</div>
+<div class="disabled">        union                           \</div>
+<div class="disabled">        {                               \</div>
+<div class="disabled">            HICON       hIcon;          \</div>
+<div class="disabled">            LPCSTR      pszIcon;        \</div>
+<div class="disabled">        } DUMMYUNIONNAME;               \</div>
+<div class="disabled">        LPCSTR          pszCaption;     \</div>
+<div class="disabled">        UINT            nPages;         \</div>
+<div class="disabled">        union                           \</div>
+<div class="disabled">        {                               \</div>
+<div class="disabled">            UINT        nStartPage;     \</div>
+<div class="disabled">            LPCSTR      pStartPage;     \</div>
+<div class="disabled">        } DUMMYUNIONNAME2;              \</div>
+<div class="disabled">        union                           \</div>
+<div class="disabled">        {                               \</div>
+<div class="disabled">            LPCPROPSHEETPAGEA ppsp;     \</div>
+<div class="disabled">            HPROPSHEETPAGE *phpage;     \</div>
+<div class="disabled">        } DUMMYUNIONNAME3;              \</div>
+<div class="disabled">        PFNPROPSHEETCALLBACK pfnCallback;   </div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETHEADERA_V1"><div><div class="token cpp_type">_PROPSHEETHEADERA_V1</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETHEADERA_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::hwndParent"><div><div class="token cpp_field">hwndParent</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::pszCaption"><div><div class="token cpp_field">pszCaption</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::nPages"><div><div class="token cpp_field">nPages</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::nStartPage"><div><div class="token cpp_field">nStartPage</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::pStartPage"><div><div class="token cpp_field">pStartPage</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEA'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEA</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::ppsp"><div><div class="token cpp_field">ppsp</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HPROPSHEETPAGE'], [], [])"><div class="token cpp_type">HPROPSHEETPAGE</div></div> *<div class="def" id="NI$_PROPSHEETHEADERA_V1::phpage"><div><div class="token cpp_field">phpage</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['PFNPROPSHEETCALLBACK'], [], [])"><div class="token cpp_type">PFNPROPSHEETCALLBACK</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V1::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>;</div></div>
+} <div class="def" id="NI$PROPSHEETHEADERA_V1"><div><div class="token cpp_type">PROPSHEETHEADERA_V1</div></div></div>, *<div class="def" id="NI$LPPROPSHEETHEADERA_V1"><div><div class="token cpp_type">LPPROPSHEETHEADERA_V1</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETHEADERA_V1'], [], [])"><div class="token cpp_type">PROPSHEETHEADERA_V1</div></div> *<div class="def" id="NI$LPCPROPSHEETHEADERA_V1"><div><div class="token cpp_type">LPCPROPSHEETHEADERA_V1</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETHEADERA_V2"><div><div class="token cpp_type">_PROPSHEETHEADERA_V2</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETHEADERA_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::hwndParent"><div><div class="token cpp_field">hwndParent</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::pszCaption"><div><div class="token cpp_field">pszCaption</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::nPages"><div><div class="token cpp_field">nPages</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::nStartPage"><div><div class="token cpp_field">nStartPage</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::pStartPage"><div><div class="token cpp_field">pStartPage</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEA'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEA</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::ppsp"><div><div class="token cpp_field">ppsp</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HPROPSHEETPAGE'], [], [])"><div class="token cpp_type">HPROPSHEETPAGE</div></div> *<div class="def" id="NI$_PROPSHEETHEADERA_V2::phpage"><div><div class="token cpp_field">phpage</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['PFNPROPSHEETCALLBACK'], [], [])"><div class="token cpp_type">PFNPROPSHEETCALLBACK</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>;</div></div>
+    <div class="token cpp_keyword ">union</div> 
+    {
+        <div class="ref" onclick="jumpToSymbol([], ['HBITMAP'], [], [])"><div class="token cpp_type">HBITMAP</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::hbmWatermark"><div><div class="token cpp_field">hbmWatermark</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::pszbmWatermark"><div><div class="token cpp_field">pszbmWatermark</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME4;</div>
+<div class="expanded">    } ;</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['HPALETTE'], [], [])"><div class="token cpp_type">HPALETTE</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::hplWatermark"><div><div class="token cpp_field">hplWatermark</div></div></div>;
+    <div class="token cpp_keyword ">union</div> 
+    {
+        <div class="ref" onclick="jumpToSymbol([], ['HBITMAP'], [], [])"><div class="token cpp_type">HBITMAP</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::hbmHeader"><div><div class="token cpp_field">hbmHeader</div></div></div>;     <div class="token cpp_comment ">// Header  bitmap shares the palette with watermark</div>
+        <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERA_V2::pszbmHeader"><div><div class="token cpp_field">pszbmHeader</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME5;</div>
+<div class="expanded">    } ;</div></div>
+} <div class="def" id="NI$PROPSHEETHEADERA_V2"><div><div class="token cpp_type">PROPSHEETHEADERA_V2</div></div></div>, *<div class="def" id="NI$LPPROPSHEETHEADERA_V2"><div><div class="token cpp_type">LPPROPSHEETHEADERA_V2</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETHEADERA_V2'], [], [])"><div class="token cpp_type">PROPSHEETHEADERA_V2</div></div> *<div class="def" id="NI$LPCPROPSHEETHEADERA_V2"><div><div class="token cpp_type">LPCPROPSHEETHEADERA_V2</div></div></div>;
+
+<div class="disabled">#define PROPSHEETHEADERW_V1_FIELDS      \</div>
+<div class="disabled">        DWORD           dwSize;         \</div>
+<div class="disabled">        DWORD           dwFlags;        \</div>
+<div class="disabled">        HWND            hwndParent;     \</div>
+<div class="disabled">        HINSTANCE       hInstance;      \</div>
+<div class="disabled">        union                           \</div>
+<div class="disabled">        {                               \</div>
+<div class="disabled">            HICON       hIcon;          \</div>
+<div class="disabled">            LPCWSTR     pszIcon;        \</div>
+<div class="disabled">        } DUMMYUNIONNAME;               \</div>
+<div class="disabled">        LPCWSTR         pszCaption;     \</div>
+<div class="disabled">        UINT            nPages;         \</div>
+<div class="disabled">        union                           \</div>
+<div class="disabled">        {                               \</div>
+<div class="disabled">            UINT        nStartPage;     \</div>
+<div class="disabled">            LPCWSTR     pStartPage;     \</div>
+<div class="disabled">        } DUMMYUNIONNAME2;              \</div>
+<div class="disabled">        union                           \</div>
+<div class="disabled">        {                               \</div>
+<div class="disabled">            LPCPROPSHEETPAGEW ppsp;     \</div>
+<div class="disabled">            HPROPSHEETPAGE *phpage;     \</div>
+<div class="disabled">        } DUMMYUNIONNAME3;              \</div>
+<div class="disabled">        PFNPROPSHEETCALLBACK pfnCallback;  </div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETHEADERW_V1"><div><div class="token cpp_type">_PROPSHEETHEADERW_V1</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETHEADERW_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::hwndParent"><div><div class="token cpp_field">hwndParent</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::pszCaption"><div><div class="token cpp_field">pszCaption</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::nPages"><div><div class="token cpp_field">nPages</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::nStartPage"><div><div class="token cpp_field">nStartPage</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::pStartPage"><div><div class="token cpp_field">pStartPage</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEW'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEW</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::ppsp"><div><div class="token cpp_field">ppsp</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HPROPSHEETPAGE'], [], [])"><div class="token cpp_type">HPROPSHEETPAGE</div></div> *<div class="def" id="NI$_PROPSHEETHEADERW_V1::phpage"><div><div class="token cpp_field">phpage</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['PFNPROPSHEETCALLBACK'], [], [])"><div class="token cpp_type">PFNPROPSHEETCALLBACK</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V1::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>;</div></div>
+} <div class="def" id="NI$PROPSHEETHEADERW_V1"><div><div class="token cpp_type">PROPSHEETHEADERW_V1</div></div></div>, *<div class="def" id="NI$LPPROPSHEETHEADERW_V1"><div><div class="token cpp_type">LPPROPSHEETHEADERW_V1</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETHEADERW_V1'], [], [])"><div class="token cpp_type">PROPSHEETHEADERW_V1</div></div> *<div class="def" id="NI$LPCPROPSHEETHEADERW_V1"><div><div class="token cpp_type">LPCPROPSHEETHEADERW_V1</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PROPSHEETHEADERW_V2"><div><div class="token cpp_type">_PROPSHEETHEADERW_V2</div></div></div>
+{
+<div class="expandable"><div class="disabled">    PROPSHEETHEADERW_V1_FIELDS</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::dwSize"><div><div class="token cpp_field">dwSize</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::hwndParent"><div><div class="token cpp_field">hwndParent</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::hInstance"><div><div class="token cpp_field">hInstance</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::hIcon"><div><div class="token cpp_field">hIcon</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::pszIcon"><div><div class="token cpp_field">pszIcon</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::pszCaption"><div><div class="token cpp_field">pszCaption</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::nPages"><div><div class="token cpp_field">nPages</div></div></div>; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::nStartPage"><div><div class="token cpp_field">nStartPage</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::pStartPage"><div><div class="token cpp_field">pStartPage</div></div></div>; } ; <div class="token cpp_keyword ">union</div> { <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEW'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEW</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::ppsp"><div><div class="token cpp_field">ppsp</div></div></div>; <div class="ref" onclick="jumpToSymbol([], ['HPROPSHEETPAGE'], [], [])"><div class="token cpp_type">HPROPSHEETPAGE</div></div> *<div class="def" id="NI$_PROPSHEETHEADERW_V2::phpage"><div><div class="token cpp_field">phpage</div></div></div>; } ; <div class="ref" onclick="jumpToSymbol([], ['PFNPROPSHEETCALLBACK'], [], [])"><div class="token cpp_type">PFNPROPSHEETCALLBACK</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::pfnCallback"><div><div class="token cpp_field">pfnCallback</div></div></div>;</div></div>
+    <div class="token cpp_keyword ">union</div> 
+    {
+        <div class="ref" onclick="jumpToSymbol([], ['HBITMAP'], [], [])"><div class="token cpp_type">HBITMAP</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::hbmWatermark"><div><div class="token cpp_field">hbmWatermark</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::pszbmWatermark"><div><div class="token cpp_field">pszbmWatermark</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME4;</div>
+<div class="expanded">    } ;</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['HPALETTE'], [], [])"><div class="token cpp_type">HPALETTE</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::hplWatermark"><div><div class="token cpp_field">hplWatermark</div></div></div>;
+    <div class="token cpp_keyword ">union</div> 
+    {
+        <div class="ref" onclick="jumpToSymbol([], ['HBITMAP'], [], [])"><div class="token cpp_type">HBITMAP</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::hbmHeader"><div><div class="token cpp_field">hbmHeader</div></div></div>;     <div class="token cpp_comment ">// Header  bitmap shares the palette with watermark</div>
+        <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_PROPSHEETHEADERW_V2::pszbmHeader"><div><div class="token cpp_field">pszbmHeader</div></div></div>;
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME5;</div>
+<div class="expanded">    } ;</div></div>
+} <div class="def" id="NI$PROPSHEETHEADERW_V2"><div><div class="token cpp_type">PROPSHEETHEADERW_V2</div></div></div>, *<div class="def" id="NI$LPPROPSHEETHEADERW_V2"><div><div class="token cpp_type">LPPROPSHEETHEADERW_V2</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETHEADERW_V2'], [], [])"><div class="token cpp_type">PROPSHEETHEADERW_V2</div></div> *<div class="def" id="NI$LPCPROPSHEETHEADERW_V2"><div><div class="token cpp_type">LPCPROPSHEETHEADERW_V2</div></div></div>;
+
+<div class="disabled">#define PROPSHEETHEADERA_V1_SIZE sizeof(PROPSHEETHEADERA_V1)</div>
+<div class="disabled">#define PROPSHEETHEADERW_V1_SIZE sizeof(PROPSHEETHEADERW_V1)</div>
+
+<div class="disabled">#define PROPSHEETHEADERA_V2_SIZE sizeof(PROPSHEETHEADERA_V2)</div>
+<div class="disabled">#define PROPSHEETHEADERW_V2_SIZE sizeof(PROPSHEETHEADERW_V2)</div>
+
+<div class="disabled">#define    _PROPSHEETHEADERA        PROPSHEETHEADERA_V2;</div>
+<div class="disabled">#define    _PROPSHEETHEADERW        PROPSHEETHEADERW_V2;</div>
+<div class="token cpp_keyword ">typedef</div>    <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETHEADERA_V2'], [], [])"><div class="token cpp_type">PROPSHEETHEADERA_V2</div></div>      <div class="def" id="NI$PROPSHEETHEADERA"><div><div class="token cpp_type">PROPSHEETHEADERA</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>    <div class="ref" onclick="jumpToSymbol([], ['PROPSHEETHEADERW_V2'], [], [])"><div class="token cpp_type">PROPSHEETHEADERW_V2</div></div>      <div class="def" id="NI$PROPSHEETHEADERW"><div><div class="token cpp_type">PROPSHEETHEADERW</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>  <div class="ref" onclick="jumpToSymbol([], ['LPPROPSHEETHEADERA_V2'], [], [])"><div class="token cpp_type">LPPROPSHEETHEADERA_V2</div></div>      <div class="def" id="NI$LPPROPSHEETHEADERA"><div><div class="token cpp_type">LPPROPSHEETHEADERA</div></div></div>;
+<div class="token cpp_keyword ">typedef</div>  <div class="ref" onclick="jumpToSymbol([], ['LPPROPSHEETHEADERW_V2'], [], [])"><div class="token cpp_type">LPPROPSHEETHEADERW_V2</div></div>      <div class="def" id="NI$LPPROPSHEETHEADERW"><div><div class="token cpp_type">LPPROPSHEETHEADERW</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETHEADERA_V2'], [], [])"><div class="token cpp_type">LPCPROPSHEETHEADERA_V2</div></div>      <div class="def" id="NI$LPCPROPSHEETHEADERA"><div><div class="token cpp_type">LPCPROPSHEETHEADERA</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETHEADERW_V2'], [], [])"><div class="token cpp_type">LPCPROPSHEETHEADERW_V2</div></div>      <div class="def" id="NI$LPCPROPSHEETHEADERW"><div><div class="token cpp_type">LPCPROPSHEETHEADERW</div></div></div>;
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define PROPSHEETHEADER         PROPSHEETHEADERW</div>
+<div class="disabled">#define LPPROPSHEETHEADER       LPPROPSHEETHEADERW</div>
+<div class="disabled">#define LPCPROPSHEETHEADER      LPCPROPSHEETHEADERW</div>
+<div class="disabled">#define PROPSHEETHEADER_V1_SIZE PROPSHEETHEADERW_V1_SIZE</div>
+<div class="disabled">#define PROPSHEETHEADER_V2_SIZE PROPSHEETHEADERW_V2_SIZE</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PROPSHEETHEADER         PROPSHEETHEADERA</div>
+<div class="disabled">#define LPPROPSHEETHEADER       LPPROPSHEETHEADERA</div>
+<div class="disabled">#define LPCPROPSHEETHEADER      LPCPROPSHEETHEADERA</div>
+<div class="disabled">#define PROPSHEETHEADER_V1_SIZE PROPSHEETHEADERA_V1_SIZE</div>
+<div class="disabled">#define PROPSHEETHEADER_V2_SIZE PROPSHEETHEADERA_V2_SIZE</div>
+<div class="disabled">#endif</div>
+
+
+<div class="disabled">#define PSCB_INITIALIZED  1</div>
+<div class="disabled">#define PSCB_PRECREATE    2</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="token cpp_comment ">// PSCB_BUTTONPRESSED will be sent when the user clicks a button in the</div>
+<div class="token cpp_comment ">// property dialog (OK, Cancel, Apply, or Close).  The message will be sent</div>
+<div class="token cpp_comment ">// to PROPSHEETHEADER&apos;s pfnCallback if the PSH_USECALLBACK flag was specified.</div>
+<div class="token cpp_comment ">// The LPARAM will be equal to one of the following based on the button pressed:</div>
+<div class="token cpp_comment ">// This message is only supported on comctl32 v6.</div>
+<div class="token cpp_comment ">// PSBTN_FINISH (Close), PSBTN_OK, PSBTN_APPLYNOW, or PSBTN_CANCEL</div>
+
+<div class="disabled">#define PSCB_BUTTONPRESSED 3</div>
+<div class="disabled">#endif  // NTDDI_VERSION &gt;= NTDDI_WINXP</div>
+
+<div class="expandable"><div class="disabled">WINCOMMCTRLAPI HPROPSHEETPAGE WINAPI CreatePropertySheetPageA(LPCPROPSHEETPAGEA constPropSheetPagePointer);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HPROPSHEETPAGE'], [], [])"><div class="token cpp_type">HPROPSHEETPAGE</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$CreatePropertySheetPageA@::HPROPSHEETPAGE(::LPCPROPSHEETPAGEA)[decl0]"><div><div class="token cpp_function">CreatePropertySheetPageA</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEA'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEA</div></div> <div class="def" id="NI$CreatePropertySheetPageA@::HPROPSHEETPAGE(::LPCPROPSHEETPAGEA)[decl0]::constPropSheetPagePointer"><div>constPropSheetPagePointer</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINCOMMCTRLAPI HPROPSHEETPAGE WINAPI CreatePropertySheetPageW(LPCPROPSHEETPAGEW constPropSheetPagePointer);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HPROPSHEETPAGE'], [], [])"><div class="token cpp_type">HPROPSHEETPAGE</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$CreatePropertySheetPageW@::HPROPSHEETPAGE(::LPCPROPSHEETPAGEW)[decl0]"><div><div class="token cpp_function">CreatePropertySheetPageW</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETPAGEW'], [], [])"><div class="token cpp_type">LPCPROPSHEETPAGEW</div></div> <div class="def" id="NI$CreatePropertySheetPageW@::HPROPSHEETPAGE(::LPCPROPSHEETPAGEW)[decl0]::constPropSheetPagePointer"><div>constPropSheetPagePointer</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINCOMMCTRLAPI BOOL           WINAPI DestroyPropertySheetPage(HPROPSHEETPAGE);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>           <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$DestroyPropertySheetPage@::BOOL(::HPROPSHEETPAGE)[decl0]"><div><div class="token cpp_function">DestroyPropertySheetPage</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['HPROPSHEETPAGE'], [], [])"><div class="token cpp_type">HPROPSHEETPAGE</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINCOMMCTRLAPI INT_PTR        WINAPI PropertySheetA(LPCPROPSHEETHEADERA);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['INT_PTR'], [], [])"><div class="token cpp_type">INT_PTR</div></div>        <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$PropertySheetA@::INT_PTR(::LPCPROPSHEETHEADERA)[decl0]"><div><div class="token cpp_function">PropertySheetA</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETHEADERA'], [], [])"><div class="token cpp_type">LPCPROPSHEETHEADERA</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINCOMMCTRLAPI INT_PTR        WINAPI PropertySheetW(LPCPROPSHEETHEADERW);</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['INT_PTR'], [], [])"><div class="token cpp_type">INT_PTR</div></div>        <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$PropertySheetW@::INT_PTR(::LPCPROPSHEETHEADERW)[decl0]"><div><div class="token cpp_function">PropertySheetW</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['LPCPROPSHEETHEADERW'], [], [])"><div class="token cpp_type">LPCPROPSHEETHEADERW</div></div>);</div></div>
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define CreatePropertySheetPage  CreatePropertySheetPageW</div>
+<div class="disabled">#define PropertySheet            PropertySheetW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define CreatePropertySheetPage  CreatePropertySheetPageA</div>
+<div class="disabled">#define PropertySheet            PropertySheetA</div>
+<div class="disabled">#endif</div>
+
+
+
+<div class="expandable"><div class="disabled">typedef BOOL (CALLBACK *LPFNADDPROPSHEETPAGE)(HPROPSHEETPAGE, LPARAM);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> (<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$LPFNADDPROPSHEETPAGE"><div><div class="token cpp_type">LPFNADDPROPSHEETPAGE</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['HPROPSHEETPAGE'], [], [])"><div class="token cpp_type">HPROPSHEETPAGE</div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div>);</div></div>
+<div class="expandable"><div class="disabled">typedef BOOL (CALLBACK *LPFNADDPROPSHEETPAGES)(LPVOID, LPFNADDPROPSHEETPAGE, LPARAM);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> (<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$LPFNADDPROPSHEETPAGES"><div><div class="token cpp_type">LPFNADDPROPSHEETPAGES</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPFNADDPROPSHEETPAGE'], [], [])"><div class="token cpp_type">LPFNADDPROPSHEETPAGE</div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div>);</div></div>
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_PSHNOTIFY"><div><div class="token cpp_type">_PSHNOTIFY</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$_PSHNOTIFY::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$_PSHNOTIFY::lParam"><div><div class="token cpp_field">lParam</div></div></div>;
+} <div class="def" id="NI$PSHNOTIFY"><div><div class="token cpp_type">PSHNOTIFY</div></div></div>, *<div class="def" id="NI$LPPSHNOTIFY"><div><div class="token cpp_type">LPPSHNOTIFY</div></div></div>;
+
+<div class="disabled">#define PSN_FIRST               (0U-200U)</div>
+<div class="disabled">#define PSN_LAST                (0U-299U)</div>
+
+
+<div class="disabled">#define PSN_SETACTIVE           (PSN_FIRST-0)</div>
+<div class="disabled">#define PSN_KILLACTIVE          (PSN_FIRST-1)</div>
+<div class="token cpp_comment ">// #define PSN_VALIDATE            (PSN_FIRST-1)</div>
+<div class="disabled">#define PSN_APPLY               (PSN_FIRST-2)</div>
+<div class="disabled">#define PSN_RESET               (PSN_FIRST-3)</div>
+<div class="token cpp_comment ">// #define PSN_CANCEL              (PSN_FIRST-3)</div>
+<div class="disabled">#define PSN_HELP                (PSN_FIRST-5)</div>
+<div class="disabled">#define PSN_WIZBACK             (PSN_FIRST-6)</div>
+<div class="disabled">#define PSN_WIZNEXT             (PSN_FIRST-7)</div>
+<div class="disabled">#define PSN_WIZFINISH           (PSN_FIRST-8)</div>
+<div class="disabled">#define PSN_QUERYCANCEL         (PSN_FIRST-9)</div>
+<div class="disabled">#define PSN_GETOBJECT           (PSN_FIRST-10)</div>
+<div class="disabled">#define PSN_TRANSLATEACCELERATOR (PSN_FIRST-12)</div>
+<div class="disabled">#define PSN_QUERYINITIALFOCUS   (PSN_FIRST-13)</div>
+<div class="disabled">#define PSNRET_NOERROR              0</div>
+<div class="disabled">#define PSNRET_INVALID              1</div>
+<div class="disabled">#define PSNRET_INVALID_NOCHANGEPAGE 2</div>
+<div class="disabled">#define PSNRET_MESSAGEHANDLED       3</div>
+
+<div class="disabled">#define PSM_SETCURSEL           (WM_USER + 101)</div>
+<div class="disabled">#define PropSheet_SetCurSel(hDlg, hpage, index) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_SETCURSEL, (WPARAM)(index), (LPARAM)(hpage))</div>
+
+
+<div class="disabled">#define PSM_REMOVEPAGE          (WM_USER + 102)</div>
+<div class="disabled">#define PropSheet_RemovePage(hDlg, index, hpage) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_REMOVEPAGE, index, (LPARAM)(hpage))</div>
+
+
+<div class="disabled">#define PSM_ADDPAGE             (WM_USER + 103)</div>
+<div class="disabled">#define PropSheet_AddPage(hDlg, hpage) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_ADDPAGE, 0, (LPARAM)(hpage))</div>
+
+
+<div class="disabled">#define PSM_CHANGED             (WM_USER + 104)</div>
+<div class="disabled">#define PropSheet_Changed(hDlg, hwnd) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_CHANGED, (WPARAM)(hwnd), 0L)</div>
+
+
+<div class="disabled">#define PSM_RESTARTWINDOWS      (WM_USER + 105)</div>
+<div class="disabled">#define PropSheet_RestartWindows(hDlg) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_RESTARTWINDOWS, 0, 0L)</div>
+
+
+<div class="disabled">#define PSM_REBOOTSYSTEM        (WM_USER + 106)</div>
+<div class="disabled">#define PropSheet_RebootSystem(hDlg) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_REBOOTSYSTEM, 0, 0L)</div>
+
+
+<div class="disabled">#define PSM_CANCELTOCLOSE       (WM_USER + 107)</div>
+<div class="disabled">#define PropSheet_CancelToClose(hDlg) \</div>
+<div class="disabled">        PostMessage(hDlg, PSM_CANCELTOCLOSE, 0, 0L)</div>
+
+
+<div class="disabled">#define PSM_QUERYSIBLINGS       (WM_USER + 108)</div>
+<div class="disabled">#define PropSheet_QuerySiblings(hDlg, wParam, lParam) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_QUERYSIBLINGS, wParam, lParam)</div>
+
+
+<div class="disabled">#define PSM_UNCHANGED           (WM_USER + 109)</div>
+<div class="disabled">#define PropSheet_UnChanged(hDlg, hwnd) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_UNCHANGED, (WPARAM)(hwnd), 0L)</div>
+
+
+<div class="disabled">#define PSM_APPLY               (WM_USER + 110)</div>
+<div class="disabled">#define PropSheet_Apply(hDlg) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_APPLY, 0, 0L)</div>
+
+
+<div class="disabled">#define PSM_SETTITLEA           (WM_USER + 111)</div>
+<div class="disabled">#define PSM_SETTITLEW           (WM_USER + 120)</div>
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define PSM_SETTITLE            PSM_SETTITLEW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PSM_SETTITLE            PSM_SETTITLEA</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define PropSheet_SetTitle(hDlg, wStyle, lpszText)\</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_SETTITLE, wStyle, (LPARAM)(LPCTSTR)(lpszText))</div>
+
+
+<div class="disabled">#define PSM_SETWIZBUTTONS       (WM_USER + 112)</div>
+<div class="disabled">#define PropSheet_SetWizButtons(hDlg, dwFlags) \</div>
+<div class="disabled">        PostMessage(hDlg, PSM_SETWIZBUTTONS, 0, (LPARAM)(dwFlags))</div>
+
+
+<div class="disabled">#define PSWIZB_BACK             0x00000001</div>
+<div class="disabled">#define PSWIZB_NEXT             0x00000002</div>
+<div class="disabled">#define PSWIZB_FINISH           0x00000004</div>
+<div class="disabled">#define PSWIZB_DISABLEDFINISH   0x00000008</div>
+
+<div class="disabled">#define PSWIZBF_ELEVATIONREQUIRED   0x00000001</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_comment ">// Only for PSH_AEROWIZARD - used in PSM_SHOWWIZBUTTONS</div>
+<div class="disabled">#define PSWIZB_CANCEL           0x00000010</div>
+<div class="disabled">#endif // 0x0605</div>
+
+
+<div class="disabled">#define PSM_PRESSBUTTON         (WM_USER + 113)</div>
+<div class="disabled">#define PropSheet_PressButton(hDlg, iButton) \</div>
+<div class="disabled">        PostMessage(hDlg, PSM_PRESSBUTTON, (WPARAM)(iButton), 0)</div>
+
+
+<div class="disabled">#define PSBTN_BACK              0</div>
+<div class="disabled">#define PSBTN_NEXT              1</div>
+<div class="disabled">#define PSBTN_FINISH            2</div>
+<div class="disabled">#define PSBTN_OK                3</div>
+<div class="disabled">#define PSBTN_APPLYNOW          4</div>
+<div class="disabled">#define PSBTN_CANCEL            5</div>
+<div class="disabled">#define PSBTN_HELP              6</div>
+<div class="disabled">#define PSBTN_MAX               6</div>
+
+
+
+<div class="disabled">#define PSM_SETCURSELID         (WM_USER + 114)</div>
+<div class="disabled">#define PropSheet_SetCurSelByID(hDlg, id) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_SETCURSELID, 0, (LPARAM)(id))</div>
+
+
+<div class="disabled">#define PSM_SETFINISHTEXTA      (WM_USER + 115)</div>
+<div class="disabled">#define PSM_SETFINISHTEXTW      (WM_USER + 121)</div>
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define PSM_SETFINISHTEXT       PSM_SETFINISHTEXTW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PSM_SETFINISHTEXT       PSM_SETFINISHTEXTA</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define PropSheet_SetFinishText(hDlg, lpszText) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_SETFINISHTEXT, 0, (LPARAM)(lpszText))</div>
+
+
+<div class="disabled">#define PSM_GETTABCONTROL       (WM_USER + 116)</div>
+<div class="disabled">#define PropSheet_GetTabControl(hDlg) \</div>
+<div class="disabled">        (HWND)SNDMSG(hDlg, PSM_GETTABCONTROL, 0, 0)</div>
+
+<div class="disabled">#define PSM_ISDIALOGMESSAGE     (WM_USER + 117)</div>
+<div class="disabled">#define PropSheet_IsDialogMessage(hDlg, pMsg) \</div>
+<div class="disabled">        (BOOL)SNDMSG(hDlg, PSM_ISDIALOGMESSAGE, 0, (LPARAM)(pMsg))</div>
+
+<div class="disabled">#define PSM_GETCURRENTPAGEHWND  (WM_USER + 118)</div>
+<div class="disabled">#define PropSheet_GetCurrentPageHwnd(hDlg) \</div>
+<div class="disabled">        (HWND)SNDMSG(hDlg, PSM_GETCURRENTPAGEHWND, 0, 0L)</div>
+
+<div class="disabled">#define PSM_INSERTPAGE          (WM_USER + 119)</div>
+<div class="disabled">#define PropSheet_InsertPage(hDlg, index, hpage) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_INSERTPAGE, (WPARAM)(index), (LPARAM)(hpage))</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_comment ">// Only for PSH_AEROWIZARD - used in PSM_SETHEADERTITLE</div>
+<div class="disabled">#define PSWIZF_SETCOLOR         ((UINT)(-1))</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define PSM_SETHEADERTITLEA     (WM_USER + 125)</div>
+<div class="disabled">#define PSM_SETHEADERTITLEW     (WM_USER + 126)</div>
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define PSM_SETHEADERTITLE      PSM_SETHEADERTITLEW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PSM_SETHEADERTITLE      PSM_SETHEADERTITLEA</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define PropSheet_SetHeaderTitle(hDlg, index, lpszText) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_SETHEADERTITLE, (WPARAM)(index), (LPARAM)(lpszText))</div>
+
+
+<div class="disabled">#define PSM_SETHEADERSUBTITLEA     (WM_USER + 127)</div>
+<div class="disabled">#define PSM_SETHEADERSUBTITLEW     (WM_USER + 128)</div>
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define PSM_SETHEADERSUBTITLE      PSM_SETHEADERSUBTITLEW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PSM_SETHEADERSUBTITLE      PSM_SETHEADERSUBTITLEA</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define PropSheet_SetHeaderSubTitle(hDlg, index, lpszText) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_SETHEADERSUBTITLE, (WPARAM)(index), (LPARAM)(lpszText))</div>
+
+<div class="disabled">#define PSM_HWNDTOINDEX            (WM_USER + 129)</div>
+<div class="disabled">#define PropSheet_HwndToIndex(hDlg, hwnd) \</div>
+<div class="disabled">        (int)SNDMSG(hDlg, PSM_HWNDTOINDEX, (WPARAM)(hwnd), 0)</div>
+
+<div class="disabled">#define PSM_INDEXTOHWND            (WM_USER + 130)</div>
+<div class="disabled">#define PropSheet_IndexToHwnd(hDlg, i) \</div>
+<div class="disabled">        (HWND)SNDMSG(hDlg, PSM_INDEXTOHWND, (WPARAM)(i), 0)</div>
+
+<div class="disabled">#define PSM_PAGETOINDEX            (WM_USER + 131)</div>
+<div class="disabled">#define PropSheet_PageToIndex(hDlg, hpage) \</div>
+<div class="disabled">        (int)SNDMSG(hDlg, PSM_PAGETOINDEX, 0, (LPARAM)(hpage))</div>
+
+<div class="disabled">#define PSM_INDEXTOPAGE            (WM_USER + 132)</div>
+<div class="disabled">#define PropSheet_IndexToPage(hDlg, i) \</div>
+<div class="disabled">        (HPROPSHEETPAGE)SNDMSG(hDlg, PSM_INDEXTOPAGE, (WPARAM)(i), 0)</div>
+
+<div class="disabled">#define PSM_IDTOINDEX              (WM_USER + 133)</div>
+<div class="disabled">#define PropSheet_IdToIndex(hDlg, id) \</div>
+<div class="disabled">        (int)SNDMSG(hDlg, PSM_IDTOINDEX, 0, (LPARAM)(id))</div>
+
+<div class="disabled">#define PSM_INDEXTOID              (WM_USER + 134)</div>
+<div class="disabled">#define PropSheet_IndexToId(hDlg, i) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_INDEXTOID, (WPARAM)(i), 0)</div>
+
+<div class="disabled">#define PSM_GETRESULT              (WM_USER + 135)</div>
+<div class="disabled">#define PropSheet_GetResult(hDlg) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_GETRESULT, 0, 0)</div>
+
+<div class="disabled">#define PSM_RECALCPAGESIZES        (WM_USER + 136)</div>
+<div class="disabled">#define PropSheet_RecalcPageSizes(hDlg) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_RECALCPAGESIZES, 0, 0)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_comment ">// Only UNICODE</div>
+<div class="token cpp_comment ">// These messages are only for Aero Wizard style wizards. The Wizard author</div>
+<div class="token cpp_comment ">// needs to specify the PSH_AEROWIZARD flag in the dwFlags member of the PROPSHEETHEADER</div>
+<div class="token cpp_comment ">// structure to get this behavior.</div>
+
+<div class="disabled">#define PSM_SETNEXTTEXTW          (WM_USER + 137)</div>
+<div class="disabled">#define PSM_SETNEXTTEXT           PSM_SETNEXTTEXTW</div>
+
+<div class="disabled">#define PropSheet_SetNextText(hDlg, lpszText) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_SETNEXTTEXT, 0, (LPARAM)(lpszText))</div>
+
+<div class="disabled">#define PSWIZB_SHOW                     0</div>
+<div class="disabled">#define PSWIZB_RESTORE                  1</div>
+
+
+<div class="disabled">#define PSM_SHOWWIZBUTTONS              (WM_USER + 138)</div>
+<div class="disabled">#define PropSheet_ShowWizButtons(hDlg, dwFlag, dwButton) \</div>
+<div class="disabled">        PSTMSG(hDlg, PSM_SHOWWIZBUTTONS, (WPARAM)(dwFlag), (LPARAM)(dwButton))</div>
+
+
+<div class="disabled">#define PSM_ENABLEWIZBUTTONS            (WM_USER + 139)</div>
+<div class="disabled">#define PropSheet_EnableWizButtons(hDlg, dwState, dwMask) \</div>
+<div class="disabled">        PSTMSG(hDlg, PSM_ENABLEWIZBUTTONS, (WPARAM)(dwState), (LPARAM)(dwMask))</div>
+
+
+<div class="disabled">#define PSM_SETBUTTONTEXTW         (WM_USER + 140)</div>
+<div class="disabled">#define PSM_SETBUTTONTEXT          PSM_SETBUTTONTEXTW</div>
+<div class="disabled">#define PropSheet_SetButtonText(hDlg, dwButton, lpszText) \</div>
+<div class="disabled">        SNDMSG(hDlg, PSM_SETBUTTONTEXT, (WPARAM)(dwButton), (LPARAM)(lpszText))</div>
+
+
+<div class="disabled">#endif // 0x0600</div>
+
+
+<div class="disabled">#define ID_PSRESTARTWINDOWS     0x2</div>
+<div class="disabled">#define ID_PSREBOOTSYSTEM       (ID_PSRESTARTWINDOWS | 0x1)</div>
+
+
+<div class="disabled">#define WIZ_CXDLG               276</div>
+<div class="disabled">#define WIZ_CYDLG               140</div>
+
+<div class="disabled">#define WIZ_CXBMP               80</div>
+
+<div class="disabled">#define WIZ_BODYX               92</div>
+<div class="disabled">#define WIZ_BODYCX              184</div>
+
+<div class="disabled">#define PROP_SM_CXDLG           212</div>
+<div class="disabled">#define PROP_SM_CYDLG           188</div>
+
+<div class="disabled">#define PROP_MED_CXDLG          227</div>
+<div class="disabled">#define PROP_MED_CYDLG          215</div>
+
+<div class="disabled">#define PROP_LG_CXDLG           252</div>
+<div class="disabled">#define PROP_LG_CYDLG           218</div>
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+
+
+<div class="disabled">#if !defined(RC_INVOKED) /* RC complains about long symbols in #ifs */</div>
+<div class="disabled">#if defined(ISOLATION_AWARE_ENABLED) &amp;&amp; (ISOLATION_AWARE_ENABLED != 0)</div>
+<div class="disabled">#include &quot;prsht.inl&quot;</div>
+<div class="disabled">#endif /* ISOLATION_AWARE_ENABLED */</div>
+<div class="disabled">#endif /* RC */</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#include &lt;poppack.h&gt;</div>
+
+
+<div class="disabled">#endif  /* _PRSHT_H_ */</div>
+
+
+<div class="disabled">#if defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DLGPROC': {
+        'displayNameInHtml': '<span class="cpp_type">DLGPROC</span>',
+        'impls': [
+            'NI$DLGPROC'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'HBITMAP': {
+        'displayNameInHtml': '<span class="cpp_type">HBITMAP</span>',
+        'impls': [
+            'NI$HBITMAP'
+        ],
+        'decls': []
+    },
+    'HICON': {
+        'displayNameInHtml': '<span class="cpp_type">HICON</span>',
+        'impls': [
+            'NI$HICON'
+        ],
+        'decls': []
+    },
+    'HINSTANCE': {
+        'displayNameInHtml': '<span class="cpp_type">HINSTANCE</span>',
+        'impls': [
+            'NI$HINSTANCE'
+        ],
+        'decls': []
+    },
+    'HPALETTE': {
+        'displayNameInHtml': '<span class="cpp_type">HPALETTE</span>',
+        'impls': [
+            'NI$HPALETTE'
+        ],
+        'decls': []
+    },
+    'HPROPSHEETPAGE': {
+        'displayNameInHtml': '<span class="cpp_type">HPROPSHEETPAGE</span>',
+        'impls': [
+            'NI$HPROPSHEETPAGE'
+        ],
+        'decls': []
+    },
+    'HWND': {
+        'displayNameInHtml': '<span class="cpp_type">HWND</span>',
+        'impls': [
+            'NI$HWND'
+        ],
+        'decls': []
+    },
+    'INT_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">INT_PTR</span>',
+        'impls': [
+            'NI$INT_PTR'
+        ],
+        'decls': []
+    },
+    'LPARAM': {
+        'displayNameInHtml': '<span class="cpp_type">LPARAM</span>',
+        'impls': [
+            'NI$LPARAM'
+        ],
+        'decls': []
+    },
+    'LPCDLGTEMPLATE': {
+        'displayNameInHtml': '<span class="cpp_type">LPCDLGTEMPLATE</span>',
+        'impls': [
+            'NI$LPCDLGTEMPLATE'
+        ],
+        'decls': []
+    },
+    'LPCPROPSHEETHEADERA': {
+        'displayNameInHtml': '<span class="cpp_type">LPCPROPSHEETHEADERA</span>',
+        'impls': [
+            'NI$LPCPROPSHEETHEADERA'
+        ],
+        'decls': []
+    },
+    'LPCPROPSHEETHEADERA_V2': {
+        'displayNameInHtml': '<span class="cpp_type">LPCPROPSHEETHEADERA_V2</span>',
+        'impls': [
+            'NI$LPCPROPSHEETHEADERA_V2'
+        ],
+        'decls': []
+    },
+    'LPCPROPSHEETHEADERW': {
+        'displayNameInHtml': '<span class="cpp_type">LPCPROPSHEETHEADERW</span>',
+        'impls': [
+            'NI$LPCPROPSHEETHEADERW'
+        ],
+        'decls': []
+    },
+    'LPCPROPSHEETHEADERW_V2': {
+        'displayNameInHtml': '<span class="cpp_type">LPCPROPSHEETHEADERW_V2</span>',
+        'impls': [
+            'NI$LPCPROPSHEETHEADERW_V2'
+        ],
+        'decls': []
+    },
+    'LPCPROPSHEETPAGEA': {
+        'displayNameInHtml': '<span class="cpp_type">LPCPROPSHEETPAGEA</span>',
+        'impls': [
+            'NI$LPCPROPSHEETPAGEA'
+        ],
+        'decls': []
+    },
+    'LPCPROPSHEETPAGEA_V4': {
+        'displayNameInHtml': '<span class="cpp_type">LPCPROPSHEETPAGEA_V4</span>',
+        'impls': [
+            'NI$LPCPROPSHEETPAGEA_V4'
+        ],
+        'decls': []
+    },
+    'LPCPROPSHEETPAGEW': {
+        'displayNameInHtml': '<span class="cpp_type">LPCPROPSHEETPAGEW</span>',
+        'impls': [
+            'NI$LPCPROPSHEETPAGEW'
+        ],
+        'decls': []
+    },
+    'LPCPROPSHEETPAGEW_V4': {
+        'displayNameInHtml': '<span class="cpp_type">LPCPROPSHEETPAGEW_V4</span>',
+        'impls': [
+            'NI$LPCPROPSHEETPAGEW_V4'
+        ],
+        'decls': []
+    },
+    'LPCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCSTR</span>',
+        'impls': [
+            'NI$LPCSTR'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPFNADDPROPSHEETPAGE': {
+        'displayNameInHtml': '<span class="cpp_type">LPFNADDPROPSHEETPAGE</span>',
+        'impls': [
+            'NI$LPFNADDPROPSHEETPAGE'
+        ],
+        'decls': []
+    },
+    'LPFNPSPCALLBACKA': {
+        'displayNameInHtml': '<span class="cpp_type">LPFNPSPCALLBACKA</span>',
+        'impls': [
+            'NI$LPFNPSPCALLBACKA'
+        ],
+        'decls': []
+    },
+    'LPFNPSPCALLBACKW': {
+        'displayNameInHtml': '<span class="cpp_type">LPFNPSPCALLBACKW</span>',
+        'impls': [
+            'NI$LPFNPSPCALLBACKW'
+        ],
+        'decls': []
+    },
+    'LPPROPSHEETHEADERA_V2': {
+        'displayNameInHtml': '<span class="cpp_type">LPPROPSHEETHEADERA_V2</span>',
+        'impls': [
+            'NI$LPPROPSHEETHEADERA_V2'
+        ],
+        'decls': []
+    },
+    'LPPROPSHEETHEADERW_V2': {
+        'displayNameInHtml': '<span class="cpp_type">LPPROPSHEETHEADERW_V2</span>',
+        'impls': [
+            'NI$LPPROPSHEETHEADERW_V2'
+        ],
+        'decls': []
+    },
+    'LPPROPSHEETPAGEA_V4': {
+        'displayNameInHtml': '<span class="cpp_type">LPPROPSHEETPAGEA_V4</span>',
+        'impls': [
+            'NI$LPPROPSHEETPAGEA_V4'
+        ],
+        'decls': []
+    },
+    'LPPROPSHEETPAGEW_V4': {
+        'displayNameInHtml': '<span class="cpp_type">LPPROPSHEETPAGEW_V4</span>',
+        'impls': [
+            'NI$LPPROPSHEETPAGEW_V4'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'NMHDR': {
+        'displayNameInHtml': '<span class="cpp_type">NMHDR</span>',
+        'impls': [
+            'NI$NMHDR'
+        ],
+        'decls': []
+    },
+    'PFNPROPSHEETCALLBACK': {
+        'displayNameInHtml': '<span class="cpp_type">PFNPROPSHEETCALLBACK</span>',
+        'impls': [
+            'NI$PFNPROPSHEETCALLBACK'
+        ],
+        'decls': []
+    },
+    'PROPSHEETHEADERA_V1': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETHEADERA_V1</span>',
+        'impls': [
+            'NI$PROPSHEETHEADERA_V1'
+        ],
+        'decls': []
+    },
+    'PROPSHEETHEADERA_V2': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETHEADERA_V2</span>',
+        'impls': [
+            'NI$PROPSHEETHEADERA_V2'
+        ],
+        'decls': []
+    },
+    'PROPSHEETHEADERW_V1': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETHEADERW_V1</span>',
+        'impls': [
+            'NI$PROPSHEETHEADERW_V1'
+        ],
+        'decls': []
+    },
+    'PROPSHEETHEADERW_V2': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETHEADERW_V2</span>',
+        'impls': [
+            'NI$PROPSHEETHEADERW_V2'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGEA_V1': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGEA_V1</span>',
+        'impls': [
+            'NI$PROPSHEETPAGEA_V1'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGEA_V2': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGEA_V2</span>',
+        'impls': [
+            'NI$PROPSHEETPAGEA_V2'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGEA_V3': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGEA_V3</span>',
+        'impls': [
+            'NI$PROPSHEETPAGEA_V3'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGEA_V4': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGEA_V4</span>',
+        'impls': [
+            'NI$PROPSHEETPAGEA_V4'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGEW_V1': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGEW_V1</span>',
+        'impls': [
+            'NI$PROPSHEETPAGEW_V1'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGEW_V2': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGEW_V2</span>',
+        'impls': [
+            'NI$PROPSHEETPAGEW_V2'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGEW_V3': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGEW_V3</span>',
+        'impls': [
+            'NI$PROPSHEETPAGEW_V3'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGEW_V4': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGEW_V4</span>',
+        'impls': [
+            'NI$PROPSHEETPAGEW_V4'
+        ],
+        'decls': []
+    },
+    'PROPSHEETPAGE_RESOURCE': {
+        'displayNameInHtml': '<span class="cpp_type">PROPSHEETPAGE_RESOURCE</span>',
+        'impls': [
+            'NI$PROPSHEETPAGE_RESOURCE'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    '_PROPSHEETPAGEA': {
+        'displayNameInHtml': '<span class="cpp_type">_PROPSHEETPAGEA</span>',
+        'impls': [
+            'NI$_PROPSHEETPAGEA'
+        ],
+        'decls': [
+            'NF[0]$_PROPSHEETPAGEA'
+        ]
+    },
+    '_PROPSHEETPAGEW': {
+        'displayNameInHtml': '<span class="cpp_type">_PROPSHEETPAGEW</span>',
+        'impls': [
+            'NI$_PROPSHEETPAGEW'
+        ],
+        'decls': [
+            'NF[0]$_PROPSHEETPAGEW'
+        ]
+    },
+    '_PSP': {
+        'displayNameInHtml': '<span class="cpp_type">_PSP</span>',
+        'impls': [],
+        'decls': [
+            'NF[0]$_PSP'
+        ]
+    }
+};
+symbolToFiles = {
+    'NF[0]$_PROPSHEETPAGEA': null,
+    'NF[0]$_PROPSHEETPAGEW': null,
+    'NF[0]$_PSP': null,
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DLGPROC': { 'htmlFileName': 'WinUser.h', 'displayName': 'WinUser.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HBITMAP': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$HICON': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$HINSTANCE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HPALETTE': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$HPROPSHEETPAGE': null,
+    'NI$HWND': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$INT_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$LPARAM': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPCDLGTEMPLATE': { 'htmlFileName': 'WinUser.h', 'displayName': 'WinUser.h' },
+    'NI$LPCPROPSHEETHEADERA': null,
+    'NI$LPCPROPSHEETHEADERA_V2': null,
+    'NI$LPCPROPSHEETHEADERW': null,
+    'NI$LPCPROPSHEETHEADERW_V2': null,
+    'NI$LPCPROPSHEETPAGEA': null,
+    'NI$LPCPROPSHEETPAGEA_V4': null,
+    'NI$LPCPROPSHEETPAGEW': null,
+    'NI$LPCPROPSHEETPAGEW_V4': null,
+    'NI$LPCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPFNADDPROPSHEETPAGE': null,
+    'NI$LPFNPSPCALLBACKA': null,
+    'NI$LPFNPSPCALLBACKW': null,
+    'NI$LPPROPSHEETHEADERA_V2': null,
+    'NI$LPPROPSHEETHEADERW_V2': null,
+    'NI$LPPROPSHEETPAGEA_V4': null,
+    'NI$LPPROPSHEETPAGEW_V4': null,
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$NMHDR': { 'htmlFileName': 'WinUser.h', 'displayName': 'WinUser.h' },
+    'NI$PFNPROPSHEETCALLBACK': null,
+    'NI$PROPSHEETHEADERA_V1': null,
+    'NI$PROPSHEETHEADERA_V2': null,
+    'NI$PROPSHEETHEADERW_V1': null,
+    'NI$PROPSHEETHEADERW_V2': null,
+    'NI$PROPSHEETPAGEA_V1': null,
+    'NI$PROPSHEETPAGEA_V2': null,
+    'NI$PROPSHEETPAGEA_V3': null,
+    'NI$PROPSHEETPAGEA_V4': null,
+    'NI$PROPSHEETPAGEW_V1': null,
+    'NI$PROPSHEETPAGEW_V2': null,
+    'NI$PROPSHEETPAGEW_V3': null,
+    'NI$PROPSHEETPAGEW_V4': null,
+    'NI$PROPSHEETPAGE_RESOURCE': null,
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$_PROPSHEETPAGEA': null,
+    'NI$_PROPSHEETPAGEW': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

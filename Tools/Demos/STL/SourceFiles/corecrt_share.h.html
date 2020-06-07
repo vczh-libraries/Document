@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt_share.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt_share.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Defines the file sharing modes for the sopen() family of functions.  These</div>
+<div class="token cpp_comment ">// declarations are split out to support the Windows build.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+
+
+<div class="disabled">#define _SH_DENYRW      0x10    // deny read/write mode</div>
+<div class="disabled">#define _SH_DENYWR      0x20    // deny write mode</div>
+<div class="disabled">#define _SH_DENYRD      0x30    // deny read mode</div>
+<div class="disabled">#define _SH_DENYNO      0x40    // deny none mode</div>
+<div class="disabled">#define _SH_SECURE      0x80    // secure mode</div>
+
+
+
+<div class="disabled">#if (defined _CRT_DECLARE_NONSTDC_NAMES &amp;&amp; _CRT_DECLARE_NONSTDC_NAMES) || (!defined _CRT_DECLARE_NONSTDC_NAMES &amp;&amp; !__STDC__)</div>
+<div class="disabled">    #define SH_DENYRW _SH_DENYRW</div>
+<div class="disabled">    #define SH_DENYWR _SH_DENYWR</div>
+<div class="disabled">    #define SH_DENYRD _SH_DENYRD</div>
+<div class="disabled">    #define SH_DENYNO _SH_DENYNO
+#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

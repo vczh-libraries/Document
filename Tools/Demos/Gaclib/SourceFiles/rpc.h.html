@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rpc.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/*++
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Module Name:
+
+    rpc.h
+
+Abstract:
+
+    Master include file for RPC applications.
+
+--*/</div>
+
+<div class="disabled">#if !defined( RPC_NO_WINDOWS_H ) &amp;&amp; !defined( MAC ) &amp;&amp; !defined( _MAC ) &amp;&amp; !defined(_KRPCENV_)</div>
+<div class="token cpp_comment ">/*
+ * Pull in WINDOWS.H if necessary
+ */</div>
+<div class="disabled">#ifndef _INC_WINDOWS</div>
+<div class="disabled">#include &lt;windows.h&gt;</div>
+<div class="disabled">#endif /* _INC_WINDOWS */
+#endif // RPC_NO_WINDOWS_H</div>
+
+<div class="disabled">#ifndef __RPC_H__</div>
+<div class="disabled">#define __RPC_H__</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">//-------------------------------------------------------------</div>
+<div class="token cpp_comment ">// platform specific defines</div>
+<div class="token cpp_comment ">//-------------------------------------------------------------</div>
+
+<div class="token cpp_comment ">//-------------------  MAC ---------------------------</div>
+<div class="disabled">#if defined( MAC ) || defined( _MAC )</div>
+
+<div class="disabled">#define __RPC_MAC__</div>
+<div class="disabled">// Set the packing level for RPC structures.</div>
+
+<div class="disabled">#include &lt;pshpack2.h&gt;</div>
+
+<div class="disabled">//-------------------  WIN32 ---------------------------
+#else // win32 platforms</div>
+
+<div class="disabled">#include &lt;basetsd.h&gt;</div>
+
+<div class="disabled">#if defined(_M_ARM64)</div>
+<div class="disabled">#define __RPC_ARM64__
+#elif defined(_M_IA64) || defined(_M_AMD64)</div>
+<div class="disabled">#define __RPC_WIN64__
+#elif defined(_ARM_)</div>
+<div class="disabled">#define __RPC_ARM32__
+#else</div>
+<div class="disabled">#define __RPC_WIN32__
+#endif // defined(_M_ARM64)</div>
+
+<div class="disabled">#endif // defined( MAC ) || defined( _MAC )</div>
+
+<div class="disabled">#if defined(__RPC_WIN64__) || defined(__RPC_ARM64__)</div>
+<div class="disabled">#include &lt;pshpack8.h&gt;
+#endif</div>
+
+<div class="disabled">#ifndef __MIDL_USER_DEFINED</div>
+<div class="disabled">#define midl_user_allocate MIDL_user_allocate</div>
+<div class="disabled">#define midl_user_free     MIDL_user_free</div>
+<div class="disabled">#define __MIDL_USER_DEFINED
+#endif</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RPC_HANDLE"><div><div class="token cpp_type">I_RPC_HANDLE</div></div></div>;
+
+<div class="token cpp_comment ">// NTSTATUS is also long, so this definition is valid</div>
+<div class="token cpp_comment ">// for both user mode and kernel mode</div>
+<div class="disabled">#if defined(__specstrings)</div>
+<div class="expandable"><div class="disabled">typedef _Return_type_success_(return == 0) long RPC_STATUS;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div>   <div class="token cpp_keyword ">long</div> <div class="def" id="NI$RPC_STATUS"><div><div class="token cpp_type">RPC_STATUS</div></div></div>;</div></div>
+<div class="disabled">#else</div>
+<div class="disabled">typedef long RPC_STATUS;
+#endif</div>
+
+<div class="disabled">#if defined(__RPC_WIN32__) || defined(__RPC_WIN64__) || defined(__RPC_ARM32__) || defined(__RPC_ARM64__)</div>
+<div class="disabled">#define RPC_UNICODE_SUPPORTED
+#endif</div>
+
+<div class="disabled">#if !defined(__RPC_MAC__) &amp;&amp; ( (_MSC_VER &gt;= 800) || defined(_STDCALL_SUPPORTED) )</div>
+<div class="disabled">#	define __RPC_API  __stdcall</div>
+<div class="disabled">#	define __RPC_USER __stdcall</div>
+<div class="disabled">#	define __RPC_STUB __stdcall</div>
+<div class="disabled">#	define  RPC_ENTRY __stdcall</div>
+<div class="disabled">#else // Not Win32/Win64</div>
+<div class="disabled">#	define __RPC_API</div>
+<div class="disabled">#	define __RPC_USER</div>
+<div class="disabled">#	define __RPC_STUB</div>
+<div class="disabled">#	define RPC_ENTRY
+#endif</div>
+
+<div class="disabled">#define __RPC_FAR</div>
+
+<div class="token cpp_comment ">// Some RPC platforms don&apos;t define DECLSPEC_IMPORT</div>
+<div class="disabled">#if !defined(DECLSPEC_IMPORT)</div>
+<div class="disabled">#if (defined(_M_MRX000) || defined(_M_IX86) || defined(_M_IA64) || defined(_M_AMD64) || defined(_M_ARM) || defined(_M_ARM64)) &amp;&amp; !defined(MIDL_PASS)</div>
+<div class="disabled">#define DECLSPEC_IMPORT __declspec(dllimport)</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DECLSPEC_IMPORT</div>
+<div class="disabled">#endif
+#endif</div>
+
+<div class="disabled">#if !defined(_RPCRT4_) &amp;&amp; !defined(_KRPCENV_)</div>
+<div class="disabled">#define RPCRTAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define RPCRTAPI
+#endif</div>
+
+<div class="disabled">#if !defined(_RPCNS4_)</div>
+<div class="disabled">#define RPCNSAPI DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define RPCNSAPI
+#endif</div>
+
+<div class="disabled">#ifdef __RPC_MAC__</div>
+
+<div class="disabled">#include &lt;setjmp.h&gt;</div>
+
+<div class="disabled">#define RPCXCWORD (sizeof(jmp_buf)/sizeof(int))</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+<div class="disabled">#pragma warning(push)</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#pragma warning( disable: 4005 )</div>
+<div class="disabled">#include &lt;rpcdce.h&gt;</div>
+<div class="disabled">#include &lt;rpcnsi.h&gt;</div>
+<div class="disabled">#include &lt;rpcerr.h&gt;</div>
+<div class="disabled">#include &lt;rpcmac.h&gt;</div>
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+<div class="disabled">#pragma warning(pop)</div>
+<div class="disabled">#else</div>
+<div class="disabled">#pragma warning( default :  4005 )</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">typedef void  (RPC_ENTRY *MACYIELDCALLBACK)(/*OSErr*/ short *) ;</div>
+<div class="disabled">RPC_STATUS RPC_ENTRY</div>
+<div class="disabled">RpcMacSetYieldInfo(</div>
+<div class="disabled">	MACYIELDCALLBACK pfnCallback) ;</div>
+
+<div class="disabled">#if !defined(UNALIGNED)</div>
+<div class="disabled">#define UNALIGNED</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#include &lt;poppack.h&gt;</div>
+
+<div class="disabled">#else // __RPC_MAC__</div>
+
+<div class="disabled">#include &lt;rpcdce.h&gt;</div>
+<div class="disabled">#if !defined(_KRPCENV_)
+#include &lt;rpcnsi.h&gt;
+#endif // _KRPCENV_
+#include &lt;rpcnterr.h&gt;</div>
+<div class="disabled">#include &lt;excpt.h&gt;</div>
+<div class="disabled">#if !defined(_KRPCENV_)</div>
+<div class="disabled">#include &lt;winerror.h&gt;
+#endif // _KRPCENV_</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#define RpcTryExcept \</div>
+<div class="disabled">    __try \</div>
+<div class="disabled">        {</div>
+
+<div class="token cpp_comment ">// trystmts</div>
+
+<div class="disabled">#define RpcExcept(expr) \</div>
+<div class="disabled">        } \</div>
+<div class="disabled">    __except (expr) \</div>
+<div class="disabled">        {</div>
+
+<div class="token cpp_comment ">// exceptstmts</div>
+
+<div class="disabled">#define RpcEndExcept \</div>
+<div class="disabled">        }</div>
+
+<div class="disabled">#define RpcTryFinally \</div>
+<div class="disabled">    __try \</div>
+<div class="disabled">        {</div>
+
+<div class="token cpp_comment ">// trystmts</div>
+
+<div class="disabled">#define RpcFinally \</div>
+<div class="disabled">        } \</div>
+<div class="disabled">    __finally \</div>
+<div class="disabled">        {</div>
+
+<div class="token cpp_comment ">// finallystmts</div>
+
+<div class="disabled">#define RpcEndFinally \</div>
+<div class="disabled">        }</div>
+
+<div class="disabled">#define RpcExceptionCode() GetExceptionCode()</div>
+<div class="disabled">#define RpcAbnormalTermination() AbnormalTermination()</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#endif // __RPC_MAC__</div>
+
+<div class="token cpp_comment ">// rpcasync.h is now RPC_NO_WINDOWS_H aware, but we can&apos;t start including it always</div>
+<div class="token cpp_comment ">// as it does still require windef.h which could clash with another header.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Parsing of the below test:</div>
+<div class="token cpp_comment ">// don&apos;t include rpcasync.h if either RPC_NO_WINDOWS_H or __RPC_MAC__ is set, except that setting</div>
+<div class="token cpp_comment ">// RPC_NEED_RPCASYNC_H overrides RPC_NO_WINDOWS_H.</div>
+<div class="token cpp_comment ">// In any case, if _KRPCENV_ is set, include rpcasync.h regardless of any of the above being set.</div>
+<div class="disabled">#if ((!defined( RPC_NO_WINDOWS_H ) || defined(RPC_NEED_RPCASYNC_H)) &amp;&amp; !defined(__RPC_MAC__)) || defined(_KRPCENV_)</div>
+
+<div class="disabled">#include &lt;rpcasync.h&gt;</div>
+
+<div class="disabled">#endif // RPC_NO_WINDOWS_H et al.</div>
+
+<div class="disabled">#if defined(__RPC_WIN64__) || defined(__RPC_ARM64__)</div>
+<div class="disabled">#include &lt;poppack.h&gt;
+#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // __RPC_H__</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

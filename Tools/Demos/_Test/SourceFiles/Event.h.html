@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Framework::Event
+
+Classes:
+	Event&lt;function-type&gt;									: Event object, which is a functor with no return value, executing multiple functors stored inside
+***********************************************************************/</div>
+<div class="disabled">#ifndef VCZH_EVENT</div>
+<div class="disabled">#define VCZH_EVENT</div>
+
+<div class="disabled">#include &quot;Function.h&quot;</div>
+<div class="disabled">#include &quot;Collections/List.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[24]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Event::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Event"><div class="ref" onclick="jumpToSymbol([], [], ['vl::Event@<void([TArgs]...)>'], [])"><div class="token cpp_type">Event</div></div></div>
+	{
+	};
+ 
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::EventHandler"><div><div class="token cpp_type">EventHandler</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+	{
+	<div class="token cpp_keyword ">public</div>:
+		<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::EventHandler::IsAttached@bool()[decl0]"><div><div class="token cpp_function">IsAttached</div></div></div>() = <div class="token cpp_number ">0</div>;
+	};
+
+	<div class="token cpp_comment ">/// &lt;summary&gt;Event.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TArgs&quot;&gt;Types of callback parameters.&lt;/typeparam&gt;</div>
+	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> ...<div class="def" id="TA$vl::Event@<void([TArgs]...)>::TArgs"><div><div class="token cpp_type">TArgs</div></div></div>&gt;
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Event@<void([TArgs]...)>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::Event'])"><div class="token cpp_type">Event</div></div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt; : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">private</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
+	{
+	<div class="token cpp_keyword ">protected</div>:
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl"><div><div class="token cpp_type">EventHandlerImpl</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::EventHandler'], [], [])"><div class="token cpp_type">EventHandler</div></div>
+		{
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_keyword ">bool</div>								<div class="def" id="NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::attached"><div><div class="token cpp_field">attached</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;				<div class="def" id="NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::function"><div><div class="token cpp_field">function</div></div></div>;
+
+			<div class="def" id="FB$vl::Event@<void([TArgs]...)>::EventHandlerImpl::$__ctor@(::vl::Func<void([TArgs]...)> const &)[impl0]"><div><div class="token cpp_function">EventHandlerImpl</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;&amp; <div class="def" id="NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::$__ctor@(::vl::Func<void([TArgs]...)> const &)[impl0]::_function"><div><div class="token cpp_argument">_function</div></div></div>)
+				:attached(<div class="token cpp_keyword ">true</div>)
+				, function(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl::$__ctor@(::vl::Func<void([TArgs]...)> const &)[impl0]::_function'], [], [])"><div class="token cpp_argument">_function</div></div>)
+			{
+			}
+ 
+			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Event@<void([TArgs]...)>::EventHandlerImpl::IsAttached@bool()[impl0]"><div><div class="token cpp_function">IsAttached</div></div></div>()<div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl::attached'], [], [])"><div class="token cpp_field">attached</div></div>;
+			}
+		};
+ 
+		<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList'], [], [])"><div class="token cpp_type">SortedList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl'], [], [])"><div class="token cpp_type">EventHandlerImpl</div></div>&gt;&gt;	<div class="def" id="NI$vl::Event@<void([TArgs]...)>::handlers"><div><div class="token cpp_field">handlers</div></div></div>;
+	<div class="token cpp_keyword ">public</div>:
+		<div class="token cpp_comment ">/// &lt;summary&gt;Add a callback to the event.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The event handler representing the callback.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The callback.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::EventHandler'], [], [])"><div class="token cpp_type">EventHandler</div></div>&gt; <div class="def" id="FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;&amp; <div class="def" id="NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl'], [], [])"><div class="token cpp_type">EventHandlerImpl</div></div>&gt; <div class="def" id="NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::handler"><div>handler</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl'], [], [])"><div class="token cpp_type">EventHandlerImpl</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::handlers'], [], [])"><div class="token cpp_field">handlers</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::Add@::vl::vint([T] const &)'], ['vl::collections::SortedList::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::handler'], [], [])">handler</div>);
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::handler'], [], [])">handler</div>;
+		}
+ 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Add a callback to the event.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The event handler representing the callback.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The callback.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::EventHandler'], [], [])"><div class="token cpp_type">EventHandler</div></div>&gt; <div class="def" id="FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">void</div>(*<div class="def" id="NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...))
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)', 'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)'], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)', 'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)', 'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>));
+		}
+ 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Add a method callback to the event.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;Type of the class that has the method callback.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The event handler representing the callback.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;sender&quot;&gt;The object that has the method callback.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The method callback.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::C"><div><div class="token cpp_type">C</div></div></div>&gt;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::EventHandler'], [], [])"><div class="token cpp_type">EventHandler</div></div>&gt; <div class="def" id="FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>* <div class="def" id="NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::sender"><div><div class="token cpp_argument">sender</div></div></div>, <div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>::*<div class="def" id="NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...))
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)', 'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)'], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)', 'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)', 'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::sender'], [], [])"><div class="token cpp_argument">sender</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>));
+		}
+ 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Remove a callback.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;handler&quot;&gt;The event handler representing the callback.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::EventHandler'], [], [])"><div class="token cpp_type">EventHandler</div></div>&gt; <div class="def" id="NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::handler"><div><div class="token cpp_argument">handler</div></div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl'], [], [])"><div class="token cpp_type">EventHandlerImpl</div></div>&gt; <div class="def" id="NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::impl"><div>impl</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::handler'], [], [])"><div class="token cpp_argument">handler</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Cast@::vl::Ptr<[C]>()'], ['vl::Ptr::Cast@::vl::Ptr<[C]>()'], [], [])"><div class="token cpp_function">Cast</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl'], [], [])"><div class="token cpp_type">EventHandlerImpl</div></div>&gt;();
+			<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::impl'], [], [])">impl</div>) <div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::index"><div>index</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::handlers'], [], [])"><div class="token cpp_field">handlers</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::impl'], [], [])">impl</div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>());
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::index'], [], [])">index</div> == -<div class="token cpp_number ">1</div>) <div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::impl'], [], [])">impl</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl::attached'], [], [])"><div class="token cpp_field">attached</div></div> = <div class="token cpp_keyword ">false</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::handlers'], [], [])"><div class="token cpp_field">handlers</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ListBase::RemoveAt@bool(::vl::vint)'], ['vl::collections::ListBase::RemoveAt@bool(::vl::vint)'], [], [])"><div class="token cpp_function">RemoveAt</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::index'], [], [])">index</div>);
+			<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+		}
+ 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Invoke all callbacks in the event.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;args&quot;&gt;Arguments to invoke all callbacks.&lt;/param&gt;</div>
+		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">(</div><div class="token cpp_function">)</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div> ...<div class="def" id="NI$vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::args"><div><div class="token cpp_argument">args</div></div></div>)<div class="token cpp_keyword ">const</div>
+		{
+			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::handlers'], [], [])"><div class="token cpp_field">handlers</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::i'], [], [])">i</div>++)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::handlers'], [], [])"><div class="token cpp_field">handlers</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::i'], [], [])">i</div>]<div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::EventHandlerImpl::function'], [], [])"><div class="token cpp_field">function</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::args'], [], [])"><div class="token cpp_argument">args</div></div>...);
+			}
+		}
+	};
+}
+<div class="disabled">#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::Event': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Event'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">Func</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::function': {
+        'displayNameInHtml': 'function',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::function'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::handler': {
+        'displayNameInHtml': 'handler',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::handler'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_function">Add</span>&lt;<span class="cpp_type">C</span>&gt;(<span class="cpp_type">C</span> *, <span class="cpp_keyword">void</span>( <span class="cpp_type">C</span>:: *)(<span class="cpp_type">TArgs</span>...))',
+        'impls': [
+            'FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::C': {
+        'displayNameInHtml': '<span class="cpp_type">C</span>',
+        'impls': [
+            'TA$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::C'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::function': {
+        'displayNameInHtml': 'function',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::function'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::sender': {
+        'displayNameInHtml': 'sender',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::sender'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_function">Add</span>(<span class="cpp_keyword">void</span>( *)(<span class="cpp_type">TArgs</span>...))',
+        'impls': [
+            'FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)[impl0]::function': {
+        'displayNameInHtml': 'function',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)[impl0]::function'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::EventHandlerImpl': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_type">EventHandlerImpl</span>',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::EventHandlerImpl::$__ctor@(::vl::Func<void([TArgs]...)> const &)[impl0]::_function': {
+        'displayNameInHtml': '_function',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::$__ctor@(::vl::Func<void([TArgs]...)> const &)[impl0]::_function'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::EventHandlerImpl::attached': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_type">EventHandlerImpl</span>::<span class="cpp_field">attached</span>',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::attached'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::EventHandlerImpl::function': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_type">EventHandlerImpl</span>::<span class="cpp_field">function</span>',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::function'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::handler': {
+        'displayNameInHtml': 'handler',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::handler'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::impl': {
+        'displayNameInHtml': 'impl',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::impl'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::TArgs': {
+        'displayNameInHtml': '<span class="cpp_type">TArgs</span>',
+        'impls': [
+            'TA$vl::Event@<void([TArgs]...)>::TArgs'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::handlers': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_field">handlers</span>',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::handlers'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::args': {
+        'displayNameInHtml': 'args',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::args'
+        ],
+        'decls': []
+    },
+    'vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::EventHandler': {
+        'displayNameInHtml': '<span class="cpp_type">EventHandler</span>',
+        'impls': [
+            'NI$vl::EventHandler'
+        ],
+        'decls': []
+    },
+    'vl::Func': {
+        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Func'
+        ],
+        'decls': []
+    },
+    'vl::Func@<[R]([TArgs]...)>': {
+        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;',
+        'impls': [
+            'NI$vl::Func@<[R]([TArgs]...)>'
+        ],
+        'decls': []
+    },
+    'vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)': {
+        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_function">operator ()</span>(<span class="cpp_type">TArgs</span>...)',
+        'impls': [
+            'FB$vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::NotCopyable': {
+        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>',
+        'impls': [
+            'NI$vl::NotCopyable'
+        ],
+        'decls': []
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::Cast@::vl::Ptr<[C]>()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Cast</span>&lt;<span class="cpp_type">C</span>&gt;()',
+        'impls': [
+            'FB$vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::Obj@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Obj</span>()',
+        'impls': [
+            'FB$vl::Ptr::Obj@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator ->@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator -&gt;</span>()',
+        'impls': [
+            'FB$vl::Ptr::operator ->@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::ArrayBase::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::ListBase::RemoveAt@bool(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ListBase</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">RemoveAt</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::ListBase::RemoveAt@bool(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedList': {
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::SortedList'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedList::Add@::vl::vint([T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::SortedList::Add@::vl::vint([T] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedList::IndexOf@::vl::vint([K] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]': null,
+    'FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]': null,
+    'FB$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)[impl0]': null,
+    'FB$vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)[impl0]': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'FB$vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::Ptr::Obj@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ListBase::RemoveAt@bool(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::SortedList::Add@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': null,
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NI$vl::Event': null,
+    'NI$vl::Event@<void([TArgs]...)>': null,
+    'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::function': null,
+    'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(::vl::Func<void([TArgs]...)> const &)[impl0]::handler': null,
+    'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::function': null,
+    'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::sender': null,
+    'NI$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>(void([TArgs]...) *)[impl0]::function': null,
+    'NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl': null,
+    'NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::$__ctor@(::vl::Func<void([TArgs]...)> const &)[impl0]::_function': null,
+    'NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::attached': null,
+    'NI$vl::Event@<void([TArgs]...)>::EventHandlerImpl::function': null,
+    'NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::handler': null,
+    'NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::impl': null,
+    'NI$vl::Event@<void([TArgs]...)>::Remove@bool(::vl::Ptr<::vl::EventHandler>)[impl0]::index': null,
+    'NI$vl::Event@<void([TArgs]...)>::handlers': null,
+    'NI$vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::args': null,
+    'NI$vl::Event@<void([TArgs]...)>::operator ()@void([TArgs]...)[impl0]::i': null,
+    'NI$vl::EventHandler': null,
+    'NI$vl::Func': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NI$vl::Func@<[R]([TArgs]...)>': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NI$vl::NotCopyable': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::collections::SortedList': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'TA$vl::Event@<void([TArgs]...)>::Add@::vl::Ptr<::vl::EventHandler>([C] *, void([TArgs]...) ([C] ::) *)[impl0]::C': null,
+    'TA$vl::Event@<void([TArgs]...)>::TArgs': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

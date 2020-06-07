@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rpcnterr.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/*++
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Module Name:
+
+    rpcnterr.h
+
+Abstract:
+
+    Rpc Error Codes from the compiler and runtime
+
+--*/</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef __RPCNTERR_H__</div>
+<div class="disabled">#define __RPCNTERR_H__</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4668) // #if not_defined treated as #if 0
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4668</div>) </div></div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if !defined(_KRPCENV_)</div>
+
+<div class="disabled">#define RPC_S_OK                          ERROR_SUCCESS</div>
+<div class="disabled">#define RPC_S_INVALID_ARG                 ERROR_INVALID_PARAMETER</div>
+<div class="disabled">#define RPC_S_OUT_OF_MEMORY               ERROR_OUTOFMEMORY</div>
+<div class="disabled">#define RPC_S_OUT_OF_THREADS              ERROR_MAX_THRDS_REACHED</div>
+<div class="disabled">#define RPC_S_INVALID_LEVEL               ERROR_INVALID_PARAMETER</div>
+<div class="disabled">#define RPC_S_BUFFER_TOO_SMALL            ERROR_INSUFFICIENT_BUFFER</div>
+<div class="disabled">#define RPC_S_INVALID_SECURITY_DESC       ERROR_INVALID_SECURITY_DESCR</div>
+<div class="disabled">#define RPC_S_ACCESS_DENIED               ERROR_ACCESS_DENIED</div>
+<div class="disabled">#define RPC_S_SERVER_OUT_OF_MEMORY        ERROR_NOT_ENOUGH_SERVER_MEMORY</div>
+<div class="disabled">#define RPC_S_ASYNC_CALL_PENDING          ERROR_IO_PENDING</div>
+<div class="disabled">#define RPC_S_UNKNOWN_PRINCIPAL           ERROR_NONE_MAPPED</div>
+<div class="disabled">#define RPC_S_TIMEOUT                     ERROR_TIMEOUT</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define RPC_S_NOT_ENOUGH_QUOTA            ERROR_NOT_ENOUGH_QUOTA
+#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="disabled">#define RPC_X_NO_MEMORY                   RPC_S_OUT_OF_MEMORY</div>
+<div class="disabled">#define RPC_X_INVALID_BOUND               RPC_S_INVALID_BOUND</div>
+<div class="disabled">#define RPC_X_INVALID_TAG                 RPC_S_INVALID_TAG</div>
+<div class="disabled">#define RPC_X_ENUM_VALUE_TOO_LARGE        RPC_X_ENUM_VALUE_OUT_OF_RANGE</div>
+<div class="disabled">#define RPC_X_SS_CONTEXT_MISMATCH         ERROR_INVALID_HANDLE</div>
+<div class="disabled">#define RPC_X_INVALID_BUFFER              ERROR_INVALID_USER_BUFFER</div>
+<div class="disabled">#define RPC_X_PIPE_APP_MEMORY             ERROR_OUTOFMEMORY</div>
+<div class="disabled">#define RPC_X_INVALID_PIPE_OPERATION      RPC_X_WRONG_PIPE_ORDER</div>
+
+<div class="disabled">#else   // _KRPCENV_</div>
+
+<div class="disabled">#define RPC_S_OK                            STATUS_SUCCESS</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_STRING_BINDING)</div>
+<div class="disabled">#undef RPC_S_INVALID_STRING_BINDING</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_STRING_BINDING        RPC_NT_INVALID_STRING_BINDING</div>
+
+<div class="disabled">#if defined(RPC_S_WRONG_KIND_OF_BINDING)</div>
+<div class="disabled">#undef RPC_S_WRONG_KIND_OF_BINDING</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_WRONG_KIND_OF_BINDING         RPC_NT_WRONG_KIND_OF_BINDING</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_BINDING)</div>
+<div class="disabled">#undef RPC_S_INVALID_BINDING</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_BINDING               RPC_NT_INVALID_BINDING</div>
+
+<div class="disabled">#if defined(RPC_S_PROTSEQ_NOT_SUPPORTED)</div>
+<div class="disabled">#undef RPC_S_PROTSEQ_NOT_SUPPORTED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_PROTSEQ_NOT_SUPPORTED         RPC_NT_PROTSEQ_NOT_SUPPORTED</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_RPC_PROTSEQ)</div>
+<div class="disabled">#undef RPC_S_INVALID_RPC_PROTSEQ</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_RPC_PROTSEQ           RPC_NT_INVALID_RPC_PROTSEQ</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_STRING_UUID)</div>
+<div class="disabled">#undef RPC_S_INVALID_STRING_UUID</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_STRING_UUID           RPC_NT_INVALID_STRING_UUID</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_ENDPOINT_FORMAT)</div>
+<div class="disabled">#undef RPC_S_INVALID_ENDPOINT_FORMAT</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_ENDPOINT_FORMAT       RPC_NT_INVALID_ENDPOINT_FORMAT</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_NET_ADDR)</div>
+<div class="disabled">#undef RPC_S_INVALID_NET_ADDR</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_NET_ADDR              RPC_NT_INVALID_NET_ADDR</div>
+
+<div class="disabled">#if defined(RPC_S_NO_ENDPOINT_FOUND)</div>
+<div class="disabled">#undef RPC_S_NO_ENDPOINT_FOUND</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_ENDPOINT_FOUND             RPC_NT_NO_ENDPOINT_FOUND</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_TIMEOUT)</div>
+<div class="disabled">#undef RPC_S_INVALID_TIMEOUT</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_TIMEOUT               RPC_NT_INVALID_TIMEOUT</div>
+
+<div class="disabled">#if defined(RPC_S_OBJECT_NOT_FOUND)</div>
+<div class="disabled">#undef RPC_S_OBJECT_NOT_FOUND</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_OBJECT_NOT_FOUND              RPC_NT_OBJECT_NOT_FOUND</div>
+
+<div class="disabled">#if defined(RPC_S_ALREADY_REGISTERED)</div>
+<div class="disabled">#undef RPC_S_ALREADY_REGISTERED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_ALREADY_REGISTERED            RPC_NT_ALREADY_REGISTERED</div>
+
+<div class="disabled">#if defined(RPC_S_TYPE_ALREADY_REGISTERED)</div>
+<div class="disabled">#undef RPC_S_TYPE_ALREADY_REGISTERED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_TYPE_ALREADY_REGISTERED       RPC_NT_TYPE_ALREADY_REGISTERED</div>
+
+<div class="disabled">#if defined(RPC_S_ALREADY_LISTENING)</div>
+<div class="disabled">#undef RPC_S_ALREADY_LISTENING</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_ALREADY_LISTENING             RPC_NT_ALREADY_LISTENING</div>
+
+<div class="disabled">#if defined(RPC_S_NO_PROTSEQS_REGISTERED)</div>
+<div class="disabled">#undef RPC_S_NO_PROTSEQS_REGISTERED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_PROTSEQS_REGISTERED        RPC_NT_NO_PROTSEQS_REGISTERED</div>
+
+<div class="disabled">#if defined(RPC_S_NOT_LISTENING)</div>
+<div class="disabled">#undef RPC_S_NOT_LISTENING</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NOT_LISTENING                 RPC_NT_NOT_LISTENING</div>
+
+<div class="disabled">#if defined(RPC_S_UNKNOWN_MGR_TYPE)</div>
+<div class="disabled">#undef RPC_S_UNKNOWN_MGR_TYPE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNKNOWN_MGR_TYPE              RPC_NT_UNKNOWN_MGR_TYPE</div>
+
+<div class="disabled">#if defined(RPC_S_UNKNOWN_IF)</div>
+<div class="disabled">#undef RPC_S_UNKNOWN_IF</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNKNOWN_IF                    RPC_NT_UNKNOWN_IF</div>
+
+<div class="disabled">#if defined(RPC_S_NO_BINDINGS)</div>
+<div class="disabled">#undef RPC_S_NO_BINDINGS</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_BINDINGS                   RPC_NT_NO_BINDINGS</div>
+
+<div class="disabled">#if defined(RPC_S_NO_MORE_BINDINGS)</div>
+<div class="disabled">#undef RPC_S_NO_MORE_BINDINGS</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_MORE_BINDINGS              RPC_NT_NO_MORE_BINDINGS</div>
+
+<div class="disabled">#if defined(RPC_S_NO_PROTSEQS)</div>
+<div class="disabled">#undef RPC_S_NO_PROTSEQS</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_PROTSEQS                   RPC_NT_NO_PROTSEQS</div>
+
+<div class="disabled">#if defined(RPC_S_CANT_CREATE_ENDPOINT)</div>
+<div class="disabled">#undef RPC_S_CANT_CREATE_ENDPOINT</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_CANT_CREATE_ENDPOINT          RPC_NT_CANT_CREATE_ENDPOINT</div>
+
+<div class="disabled">#if defined(RPC_S_OUT_OF_RESOURCES)</div>
+<div class="disabled">#undef RPC_S_OUT_OF_RESOURCES</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_OUT_OF_RESOURCES              RPC_NT_OUT_OF_RESOURCES</div>
+
+<div class="disabled">#if defined(RPC_S_SERVER_UNAVAILABLE)</div>
+<div class="disabled">#undef RPC_S_SERVER_UNAVAILABLE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_SERVER_UNAVAILABLE            RPC_NT_SERVER_UNAVAILABLE</div>
+
+<div class="disabled">#if defined(RPC_S_SERVER_TOO_BUSY)</div>
+<div class="disabled">#undef RPC_S_SERVER_TOO_BUSY</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_SERVER_TOO_BUSY               RPC_NT_SERVER_TOO_BUSY</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_NETWORK_OPTIONS)</div>
+<div class="disabled">#undef RPC_S_INVALID_NETWORK_OPTIONS</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_NETWORK_OPTIONS       RPC_NT_INVALID_NETWORK_OPTIONS</div>
+
+<div class="disabled">#if defined(RPC_S_NO_CALL_ACTIVE)</div>
+<div class="disabled">#undef RPC_S_NO_CALL_ACTIVE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_CALL_ACTIVE                RPC_NT_NO_CALL_ACTIVE</div>
+
+<div class="disabled">#if defined(RPC_S_CALL_FAILED)</div>
+<div class="disabled">#undef RPC_S_CALL_FAILED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_CALL_FAILED                   RPC_NT_CALL_FAILED</div>
+
+<div class="disabled">#if defined(RPC_S_CALL_CANCELLED)</div>
+<div class="disabled">#undef RPC_S_CALL_CANCELLED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_CALL_CANCELLED                RPC_NT_CALL_CANCELLED</div>
+
+<div class="disabled">#if defined(RPC_S_CALL_FAILED_DNE)</div>
+<div class="disabled">#undef RPC_S_CALL_FAILED_DNE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_CALL_FAILED_DNE               RPC_NT_CALL_FAILED_DNE</div>
+
+<div class="disabled">#if defined(RPC_S_PROTOCOL_ERROR)</div>
+<div class="disabled">#undef RPC_S_PROTOCOL_ERROR</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_PROTOCOL_ERROR                RPC_NT_PROTOCOL_ERROR</div>
+
+<div class="disabled">#if defined(RPC_S_UNSUPPORTED_TRANS_SYN)</div>
+<div class="disabled">#undef RPC_S_UNSUPPORTED_TRANS_SYN</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNSUPPORTED_TRANS_SYN         RPC_NT_UNSUPPORTED_TRANS_SYN</div>
+
+<div class="disabled">#if defined(RPC_S_SERVER_OUT_OF_MEMORY)</div>
+<div class="disabled">#undef RPC_S_SERVER_OUT_OF_MEMORY</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_SERVER_OUT_OF_MEMORY          STATUS_INSUFF_SERVER_RESOURCES</div>
+
+<div class="disabled">#if defined(RPC_S_UNSUPPORTED_TYPE)</div>
+<div class="disabled">#undef RPC_S_UNSUPPORTED_TYPE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNSUPPORTED_TYPE              RPC_NT_UNSUPPORTED_TYPE</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_TAG)</div>
+<div class="disabled">#undef RPC_S_INVALID_TAG</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_TAG                   RPC_NT_INVALID_TAG</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_BOUND)</div>
+<div class="disabled">#undef RPC_S_INVALID_BOUND</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_BOUND                 RPC_NT_INVALID_BOUND</div>
+
+<div class="disabled">#if defined(RPC_S_NO_ENTRY_NAME)</div>
+<div class="disabled">#undef RPC_S_NO_ENTRY_NAME</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_ENTRY_NAME                 RPC_NT_NO_ENTRY_NAME</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_NAME_SYNTAX)</div>
+<div class="disabled">#undef RPC_S_INVALID_NAME_SYNTAX</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_NAME_SYNTAX           RPC_NT_INVALID_NAME_SYNTAX</div>
+
+<div class="disabled">#if defined(RPC_S_UNSUPPORTED_NAME_SYNTAX)</div>
+<div class="disabled">#undef RPC_S_UNSUPPORTED_NAME_SYNTAX</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNSUPPORTED_NAME_SYNTAX       RPC_NT_UNSUPPORTED_NAME_SYNTAX</div>
+
+<div class="disabled">#if defined(RPC_S_UUID_NO_ADDRESS)</div>
+<div class="disabled">#undef RPC_S_UUID_NO_ADDRESS</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UUID_NO_ADDRESS               RPC_NT_UUID_NO_ADDRESS</div>
+
+<div class="disabled">#if defined(RPC_S_DUPLICATE_ENDPOINT)</div>
+<div class="disabled">#undef RPC_S_DUPLICATE_ENDPOINT</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_DUPLICATE_ENDPOINT            RPC_NT_DUPLICATE_ENDPOINT</div>
+
+<div class="disabled">#if defined(RPC_S_UNKNOWN_AUTHN_TYPE)</div>
+<div class="disabled">#undef RPC_S_UNKNOWN_AUTHN_TYPE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNKNOWN_AUTHN_TYPE            RPC_NT_UNKNOWN_AUTHN_TYPE</div>
+
+<div class="disabled">#if defined(RPC_S_MAX_CALLS_TOO_SMALL)</div>
+<div class="disabled">#undef RPC_S_MAX_CALLS_TOO_SMALL</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_MAX_CALLS_TOO_SMALL           RPC_NT_MAX_CALLS_TOO_SMALL</div>
+
+<div class="disabled">#if defined(RPC_S_STRING_TOO_LONG)</div>
+<div class="disabled">#undef RPC_S_STRING_TOO_LONG</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_STRING_TOO_LONG               RPC_NT_STRING_TOO_LONG</div>
+
+<div class="disabled">#if defined(RPC_S_PROTSEQ_NOT_FOUND)</div>
+<div class="disabled">#undef RPC_S_PROTSEQ_NOT_FOUND</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_PROTSEQ_NOT_FOUND             RPC_NT_PROTSEQ_NOT_FOUND</div>
+
+<div class="disabled">#if defined(RPC_S_PROCNUM_OUT_OF_RANGE)</div>
+<div class="disabled">#undef RPC_S_PROCNUM_OUT_OF_RANGE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_PROCNUM_OUT_OF_RANGE          RPC_NT_PROCNUM_OUT_OF_RANGE</div>
+
+<div class="disabled">#if defined(RPC_S_BINDING_HAS_NO_AUTH)</div>
+<div class="disabled">#undef RPC_S_BINDING_HAS_NO_AUTH</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_BINDING_HAS_NO_AUTH           RPC_NT_BINDING_HAS_NO_AUTH</div>
+
+<div class="disabled">#if defined(RPC_S_UNKNOWN_AUTHN_SERVICE)</div>
+<div class="disabled">#undef RPC_S_UNKNOWN_AUTHN_SERVICE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNKNOWN_AUTHN_SERVICE         RPC_NT_UNKNOWN_AUTHN_SERVICE</div>
+
+<div class="disabled">#if defined(RPC_S_UNKNOWN_AUTHN_LEVEL)</div>
+<div class="disabled">#undef RPC_S_UNKNOWN_AUTHN_LEVEL</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNKNOWN_AUTHN_LEVEL           RPC_NT_UNKNOWN_AUTHN_LEVEL</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_AUTH_IDENTITY)</div>
+<div class="disabled">#undef RPC_S_INVALID_AUTH_IDENTITY</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_AUTH_IDENTITY         RPC_NT_INVALID_AUTH_IDENTITY</div>
+
+<div class="disabled">#if defined(RPC_S_UNKNOWN_AUTHZ_SERVICE)</div>
+<div class="disabled">#undef RPC_S_UNKNOWN_AUTHZ_SERVICE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_UNKNOWN_AUTHZ_SERVICE         RPC_NT_UNKNOWN_AUTHZ_SERVICE</div>
+
+<div class="disabled">#if defined(EPT_S_INVALID_ENTRY)</div>
+<div class="disabled">#undef EPT_S_INVALID_ENTRY</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define EPT_S_INVALID_ENTRY                 EPT_NT_INVALID_ENTRY</div>
+
+<div class="disabled">#if defined(EPT_S_CANT_PERFORM_OP)</div>
+<div class="disabled">#undef EPT_S_CANT_PERFORM_OP</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define EPT_S_CANT_PERFORM_OP               EPT_NT_CANT_PERFORM_OP</div>
+
+<div class="disabled">#if defined(EPT_S_NOT_REGISTERED)</div>
+<div class="disabled">#undef EPT_S_NOT_REGISTERED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define EPT_S_NOT_REGISTERED                EPT_NT_NOT_REGISTERED</div>
+
+<div class="disabled">#if defined(RPC_S_NOTHING_TO_EXPORT)</div>
+<div class="disabled">#undef RPC_S_NOTHING_TO_EXPORT</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NOTHING_TO_EXPORT             RPC_NT_NOTHING_TO_EXPORT</div>
+
+<div class="disabled">#if defined(RPC_S_INCOMPLETE_NAME)</div>
+<div class="disabled">#undef RPC_S_INCOMPLETE_NAME</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INCOMPLETE_NAME               RPC_NT_INCOMPLETE_NAME</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_VERS_OPTION)</div>
+<div class="disabled">#undef RPC_S_INVALID_VERS_OPTION</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_VERS_OPTION           RPC_NT_INVALID_VERS_OPTION</div>
+
+<div class="disabled">#if defined(RPC_S_NO_MORE_MEMBERS)</div>
+<div class="disabled">#undef RPC_S_NO_MORE_MEMBERS</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_MORE_MEMBERS               RPC_NT_NO_MORE_MEMBERS</div>
+
+<div class="disabled">#if defined(RPC_S_NOT_ALL_OBJS_UNEXPORTED)</div>
+<div class="disabled">#undef RPC_S_NOT_ALL_OBJS_UNEXPORTED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NOT_ALL_OBJS_UNEXPORTED       RPC_NT_NOT_ALL_OBJS_UNEXPORTED</div>
+
+<div class="disabled">#if defined(RPC_S_INTERFACE_NOT_FOUND)</div>
+<div class="disabled">#undef RPC_S_INTERFACE_NOT_FOUND</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INTERFACE_NOT_FOUND           RPC_NT_INTERFACE_NOT_FOUND</div>
+
+<div class="disabled">#if defined(RPC_S_ENTRY_ALREADY_EXISTS)</div>
+<div class="disabled">#undef RPC_S_ENTRY_ALREADY_EXISTS</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_ENTRY_ALREADY_EXISTS          RPC_NT_ENTRY_ALREADY_EXISTS</div>
+
+<div class="disabled">#if defined(RPC_S_ENTRY_NOT_FOUND)</div>
+<div class="disabled">#undef RPC_S_ENTRY_NOT_FOUND</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_ENTRY_NOT_FOUND               RPC_NT_ENTRY_NOT_FOUND</div>
+
+<div class="disabled">#if defined(RPC_S_NAME_SERVICE_UNAVAILABLE)</div>
+<div class="disabled">#undef RPC_S_NAME_SERVICE_UNAVAILABLE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NAME_SERVICE_UNAVAILABLE      RPC_NT_NAME_SERVICE_UNAVAILABLE</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_NAF_ID)</div>
+<div class="disabled">#undef RPC_S_INVALID_NAF_ID</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_NAF_ID                RPC_NT_INVALID_NAF_ID</div>
+
+<div class="disabled">#if defined(RPC_S_CANNOT_SUPPORT)</div>
+<div class="disabled">#undef RPC_S_CANNOT_SUPPORT</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_CANNOT_SUPPORT                RPC_NT_CANNOT_SUPPORT</div>
+
+<div class="disabled">#if defined(RPC_S_NO_CONTEXT_AVAILABLE)</div>
+<div class="disabled">#undef RPC_S_NO_CONTEXT_AVAILABLE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_NO_CONTEXT_AVAILABLE          RPC_NT_NO_CONTEXT_AVAILABLE</div>
+
+<div class="disabled">#if defined(RPC_S_INTERNAL_ERROR)</div>
+<div class="disabled">#undef RPC_S_INTERNAL_ERROR</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INTERNAL_ERROR                RPC_NT_INTERNAL_ERROR</div>
+
+<div class="disabled">#if defined(RPC_S_ZERO_DIVIDE)</div>
+<div class="disabled">#undef RPC_S_ZERO_DIVIDE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_ZERO_DIVIDE                   RPC_NT_ZERO_DIVIDE</div>
+
+<div class="disabled">#if defined(RPC_S_ADDRESS_ERROR)</div>
+<div class="disabled">#undef RPC_S_ADDRESS_ERROR</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_ADDRESS_ERROR                 RPC_NT_ADDRESS_ERROR</div>
+
+<div class="disabled">#if defined(RPC_S_FP_DIV_ZERO)</div>
+<div class="disabled">#undef RPC_S_FP_DIV_ZERO</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_FP_DIV_ZERO                   RPC_NT_FP_DIV_ZERO</div>
+
+<div class="disabled">#if defined(RPC_S_FP_UNDERFLOW)</div>
+<div class="disabled">#undef RPC_S_FP_UNDERFLOW</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_FP_UNDERFLOW                  RPC_NT_FP_UNDERFLOW</div>
+
+<div class="disabled">#if defined(RPC_S_FP_OVERFLOW)</div>
+<div class="disabled">#undef RPC_S_FP_OVERFLOW</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_FP_OVERFLOW                   RPC_NT_FP_OVERFLOW</div>
+
+<div class="disabled">#if defined(RPC_S_PROXY_ACCESS_DENIED)</div>
+<div class="disabled">#undef RPC_S_PROXY_ACCESS_DENIED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_PROXY_ACCESS_DENIED           RPC_NT_PROXY_ACCESS_DENIED</div>
+
+<div class="disabled">#if defined(RPC_X_NO_MORE_ENTRIES)</div>
+<div class="disabled">#undef RPC_X_NO_MORE_ENTRIES</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_NO_MORE_ENTRIES               RPC_NT_NO_MORE_ENTRIES</div>
+
+<div class="disabled">#if defined(RPC_X_SS_CHAR_TRANS_OPEN_FAIL)</div>
+<div class="disabled">#undef RPC_X_SS_CHAR_TRANS_OPEN_FAIL</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_SS_CHAR_TRANS_OPEN_FAIL       RPC_NT_SS_CHAR_TRANS_OPEN_FAIL</div>
+
+<div class="disabled">#if defined(RPC_X_SS_CHAR_TRANS_SHORT_FILE)</div>
+<div class="disabled">#undef RPC_X_SS_CHAR_TRANS_SHORT_FILE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_SS_CHAR_TRANS_SHORT_FILE      RPC_NT_SS_CHAR_TRANS_SHORT_FILE</div>
+
+<div class="disabled">#if defined(RPC_X_SS_IN_NULL_CONTEXT)</div>
+<div class="disabled">#undef RPC_X_SS_IN_NULL_CONTEXT</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_SS_IN_NULL_CONTEXT            RPC_NT_SS_IN_NULL_CONTEXT</div>
+
+<div class="disabled">#if defined(RPC_X_SS_CONTEXT_MISMATCH)</div>
+<div class="disabled">#undef RPC_X_SS_CONTEXT_MISMATCH</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_SS_CONTEXT_MISMATCH           RPC_NT_SS_CONTEXT_MISMATCH</div>
+
+<div class="disabled">#if defined(RPC_X_SS_CONTEXT_DAMAGED)</div>
+<div class="disabled">#undef RPC_X_SS_CONTEXT_DAMAGED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_SS_CONTEXT_DAMAGED            RPC_NT_SS_CONTEXT_DAMAGED</div>
+
+<div class="disabled">#if defined(RPC_X_SS_HANDLES_MISMATCH)</div>
+<div class="disabled">#undef RPC_X_SS_HANDLES_MISMATCH</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_SS_HANDLES_MISMATCH           RPC_NT_SS_HANDLES_MISMATCH</div>
+
+<div class="disabled">#if defined(RPC_X_SS_CANNOT_GET_CALL_HANDLE)</div>
+<div class="disabled">#undef RPC_X_SS_CANNOT_GET_CALL_HANDLE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_SS_CANNOT_GET_CALL_HANDLE     RPC_NT_SS_CANNOT_GET_CALL_HANDLE</div>
+
+<div class="disabled">#if defined(RPC_X_NULL_REF_POINTER)</div>
+<div class="disabled">#undef RPC_X_NULL_REF_POINTER</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_NULL_REF_POINTER              RPC_NT_NULL_REF_POINTER</div>
+
+<div class="disabled">#if defined(RPC_X_ENUM_VALUE_OUT_OF_RANGE)</div>
+<div class="disabled">#undef RPC_X_ENUM_VALUE_OUT_OF_RANGE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_ENUM_VALUE_OUT_OF_RANGE       RPC_NT_ENUM_VALUE_OUT_OF_RANGE</div>
+
+<div class="disabled">#if defined(RPC_X_BYTE_COUNT_TOO_SMALL)</div>
+<div class="disabled">#undef RPC_X_BYTE_COUNT_TOO_SMALL</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_BYTE_COUNT_TOO_SMALL          RPC_NT_BYTE_COUNT_TOO_SMALL</div>
+
+<div class="disabled">#if defined(RPC_X_BAD_STUB_DATA)</div>
+<div class="disabled">#undef RPC_X_BAD_STUB_DATA</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_BAD_STUB_DATA                 RPC_NT_BAD_STUB_DATA</div>
+
+<div class="disabled">#if defined(RPC_S_CALL_IN_PROGRESS)</div>
+<div class="disabled">#undef RPC_S_CALL_IN_PROGRESS</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_CALL_IN_PROGRESS              RPC_NT_CALL_IN_PROGRESS</div>
+
+<div class="disabled">#if defined(RPC_S_GROUP_MEMBER_NOT_FOUND)</div>
+<div class="disabled">#undef RPC_S_GROUP_MEMBER_NOT_FOUND</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_GROUP_MEMBER_NOT_FOUND        RPC_NT_GROUP_MEMBER_NOT_FOUND</div>
+
+<div class="disabled">#if defined(EPT_S_CANT_CREATE)</div>
+<div class="disabled">#undef EPT_S_CANT_CREATE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define EPT_S_CANT_CREATE                   EPT_NT_CANT_CREATE</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_OBJECT)</div>
+<div class="disabled">#undef RPC_S_INVALID_OBJECT</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_OBJECT                RPC_NT_INVALID_OBJECT</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_ASYNC_HANDLE)</div>
+<div class="disabled">#undef RPC_S_INVALID_ASYNC_HANDLE</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_ASYNC_HANDLE          RPC_NT_INVALID_ASYNC_HANDLE</div>
+
+<div class="disabled">#if defined(RPC_S_INVALID_ASYNC_CALL)</div>
+<div class="disabled">#undef RPC_S_INVALID_ASYNC_CALL</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_S_INVALID_ASYNC_CALL            RPC_NT_INVALID_ASYNC_CALL</div>
+
+<div class="disabled">#if defined(RPC_X_PIPE_CLOSED)</div>
+<div class="disabled">#undef RPC_X_PIPE_CLOSED</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_PIPE_CLOSED                   RPC_NT_PIPE_CLOSED</div>
+
+<div class="disabled">#if defined(RPC_X_PIPE_EMPTY)</div>
+<div class="disabled">#undef RPC_X_PIPE_EMPTY</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_PIPE_EMPTY                    RPC_NT_PIPE_EMPTY</div>
+
+<div class="disabled">#if defined(RPC_X_PIPE_DISCIPLINE_ERROR)</div>
+<div class="disabled">#undef RPC_X_PIPE_DISCIPLINE_ERROR</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#define RPC_X_PIPE_DISCIPLINE_ERROR         RPC_NT_PIPE_DISCIPLINE_ERROR</div>
+
+<div class="disabled">#define RPC_S_INVALID_ARG                   STATUS_INVALID_PARAMETER</div>
+<div class="disabled">#define RPC_S_OUT_OF_MEMORY                 STATUS_NO_MEMORY</div>
+<div class="disabled">#define RPC_S_OUT_OF_THREADS                STATUS_NO_MEMORY</div>
+<div class="disabled">#define RPC_S_INVALID_LEVEL                 STATUS_INVALID_PARAMETER</div>
+<div class="disabled">#define RPC_S_BUFFER_TOO_SMALL              STATUS_BUFFER_TOO_SMALL</div>
+<div class="disabled">#define RPC_S_INVALID_SECURITY_DESC         STATUS_INVALID_SECURITY_DESCR</div>
+<div class="disabled">#define RPC_S_ACCESS_DENIED                 STATUS_ACCESS_DENIED</div>
+<div class="disabled">#define RPC_S_ASYNC_CALL_PENDING            STATUS_PENDING</div>
+<div class="disabled">#define RPC_S_UNKNOWN_PRINCIPAL             STATUS_NONE_MAPPED</div>
+<div class="disabled">#define RPC_S_NOT_ENOUGH_QUOTA              STATUS_QUOTA_EXCEEDED</div>
+<div class="disabled">#define RPC_X_NO_MEMORY                     STATUS_NO_MEMORY</div>
+<div class="disabled">#define RPC_X_INVALID_BOUND                 RPC_NT_INVALID_BOUND</div>
+<div class="disabled">#define RPC_X_INVALID_TAG                   RPC_NT_INVALID_TAG</div>
+<div class="disabled">#define RPC_X_ENUM_VALUE_TOO_LARGE          RPC_NT_ENUM_VALUE_OUT_OF_RANGE</div>
+<div class="disabled">#define RPC_X_SS_CONTEXT_MISMATCH           RPC_NT_SS_CONTEXT_MISMATCH</div>
+<div class="disabled">#define RPC_X_INVALID_BUFFER                STATUS_INVALID_BUFFER_SIZE</div>
+<div class="disabled">#define RPC_X_PIPE_APP_MEMORY               STATUS_NO_MEMORY</div>
+
+<div class="disabled">#endif  // _KRPCENV_</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* __RPCNTERR_H__ */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

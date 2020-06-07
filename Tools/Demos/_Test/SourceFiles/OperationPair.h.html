@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OperationPair.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Data Structure::Operations
+
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_COLLECTIONS_OPERATIONPAIR</div>
+<div class="disabled">#define VCZH_COLLECTIONS_OPERATIONPAIR</div>
+
+<div class="disabled">#include &quot;OperationEnumerable.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[17]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[8]$vl::collections"><div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div></div>
+	{
+
+<div class="token cpp_comment ">/***********************************************************************
+Pairwise
+***********************************************************************/</div>
+
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::PairwiseEnumerator::S"><div><div class="token cpp_type">S</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::PairwiseEnumerator::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::PairwiseEnumerator"><div><div class="token cpp_type">PairwiseEnumerator</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt;
+		{
+		<div class="token cpp_keyword ">protected</div>:
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>&gt;*					<div class="def" id="NI$vl::collections::PairwiseEnumerator::enumerator1"><div><div class="token cpp_field">enumerator1</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;*					<div class="def" id="NI$vl::collections::PairwiseEnumerator::enumerator2"><div><div class="token cpp_field">enumerator2</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;						<div class="def" id="NI$vl::collections::PairwiseEnumerator::current"><div><div class="token cpp_field">current</div></div></div>;
+		<div class="token cpp_keyword ">public</div>:
+			<div class="def" id="FB$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]"><div><div class="token cpp_function">PairwiseEnumerator</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>&gt;* <div class="def" id="NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator1"><div><div class="token cpp_argument">_enumerator1</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;* <div class="def" id="NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator2"><div><div class="token cpp_argument">_enumerator2</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_current"><div><div class="token cpp_argument">_current</div></div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;())
+				:enumerator1(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator1'], [], [])"><div class="token cpp_argument">_enumerator1</div></div>)
+				,enumerator2(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator2'], [], [])"><div class="token cpp_argument">_enumerator2</div></div>)
+				,current(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_current'], [], [])"><div class="token cpp_argument">_current</div></div>)
+			{
+			}
+
+			<div class="def" id="FB$vl::collections::PairwiseEnumerator::~PairwiseEnumerator@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">PairwiseEnumerator</div></div></div>()
+			{
+				<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator1'], [], [])"><div class="token cpp_field">enumerator1</div></div>;
+				<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator2'], [], [])"><div class="token cpp_field">enumerator2</div></div>;
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt;* <div class="def" id="FB$vl::collections::PairwiseEnumerator::Clone@::vl::collections::IEnumerator<::vl::collections::Pair<[S], [T]>> *()[impl0]"><div><div class="token cpp_function">Clone</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator'], [], [])"><div class="token cpp_type">PairwiseEnumerator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator1'], [], [])"><div class="token cpp_field">enumerator1</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">Clone</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator2'], [], [])"><div class="token cpp_field">enumerator2</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">Clone</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::current'], [], [])"><div class="token cpp_field">current</div></div>);
+			}
+
+			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::collections::PairwiseEnumerator::Current@::vl::collections::Pair<[S], [T]> const &()[impl0]"><div><div class="token cpp_function">Current</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::current'], [], [])"><div class="token cpp_field">current</div></div>;
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::PairwiseEnumerator::Index@::vl::vint()[impl0]"><div><div class="token cpp_function">Index</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator1'], [], [])"><div class="token cpp_field">enumerator1</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Index@::vl::vint()'], ['vl::collections::IEnumerator::Index@::vl::vint()'], [], [])"><div class="token cpp_function">Index</div></div>();
+			}
+
+			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::PairwiseEnumerator::Next@bool()[impl0]"><div><div class="token cpp_function">Next</div></div></div>()<div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator1'], [], [])"><div class="token cpp_field">enumerator1</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Next@bool()'], ['vl::collections::IEnumerator::Next@bool()'], [], [])"><div class="token cpp_function">Next</div></div>() &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator2'], [], [])"><div class="token cpp_field">enumerator2</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Next@bool()'], ['vl::collections::IEnumerator::Next@bool()'], [], [])"><div class="token cpp_function">Next</div></div>())
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::current'], [], [])"><div class="token cpp_field">current</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Pair::operator =@::vl::collections::Pair &(::vl::collections::Pair const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::S'], [], [])"><div class="token cpp_type">S</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator1'], [], [])"><div class="token cpp_field">enumerator1</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Current@[T] const &()'], ['vl::collections::IEnumerator::Current@[T] const &()'], [], [])"><div class="token cpp_function">Current</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator2'], [], [])"><div class="token cpp_field">enumerator2</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Current@[T] const &()'], ['vl::collections::IEnumerator::Current@[T] const &()'], [], [])"><div class="token cpp_function">Current</div></div>());
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+				}
+				<div class="token cpp_keyword ">else</div>
+				{
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+				}
+			}
+
+			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::PairwiseEnumerator::Reset@void()[impl0]"><div><div class="token cpp_function">Reset</div></div></div>()<div class="token cpp_keyword ">override</div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator1'], [], [])"><div class="token cpp_field">enumerator1</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Reset@void()'], ['vl::collections::IEnumerator::Reset@void()'], [], [])"><div class="token cpp_function">Reset</div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator2'], [], [])"><div class="token cpp_field">enumerator2</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Reset@void()'], ['vl::collections::IEnumerator::Reset@void()'], [], [])"><div class="token cpp_function">Reset</div></div>();
+			}
+
+			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::PairwiseEnumerator::Evaluated@bool()[impl0]"><div><div class="token cpp_function">Evaluated</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator1'], [], [])"><div class="token cpp_field">enumerator1</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Evaluated@bool()'], ['vl::collections::IEnumerator::Evaluated@bool()'], [], [])"><div class="token cpp_function">Evaluated</div></div>() &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator::enumerator2'], [], [])"><div class="token cpp_field">enumerator2</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Evaluated@bool()'], ['vl::collections::IEnumerator::Evaluated@bool()'], [], [])"><div class="token cpp_function">Evaluated</div></div>();
+			}
+		};
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::IEnumerator': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::IEnumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Clone</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Current@[T] const &()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Current</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Evaluated@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Evaluated</span>()',
+        'impls': [
+            'FB$vl::collections::IEnumerator::Evaluated@bool()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerator::Index@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Index</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Index@::vl::vint()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Next@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Next</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Next@bool()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Reset@void()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Reset</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Reset@void()[decl0]'
+        ]
+    },
+    'vl::collections::Pair': {
+        'displayNameInHtml': '<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">K</span>, <span class="cpp_type">V</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Pair'
+        ],
+        'decls': []
+    },
+    'vl::collections::Pair::operator =@::vl::collections::Pair &(::vl::collections::Pair const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">K</span>, <span class="cpp_type">V</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">K</span>, <span class="cpp_type">V</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::Pair::operator =@::vl::collections::Pair &(::vl::collections::Pair const &)[decl0]'
+        ]
+    },
+    'vl::collections::PairwiseEnumerator': {
+        'displayNameInHtml': '<span class="cpp_type">PairwiseEnumerator</span>&lt;<span class="cpp_type">S</span>, <span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::PairwiseEnumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_current': {
+        'displayNameInHtml': '_current',
+        'impls': [
+            'NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_current'
+        ],
+        'decls': []
+    },
+    'vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator1': {
+        'displayNameInHtml': '_enumerator1',
+        'impls': [
+            'NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator1'
+        ],
+        'decls': []
+    },
+    'vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator2': {
+        'displayNameInHtml': '_enumerator2',
+        'impls': [
+            'NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator2'
+        ],
+        'decls': []
+    },
+    'vl::collections::PairwiseEnumerator::S': {
+        'displayNameInHtml': '<span class="cpp_type">S</span>',
+        'impls': [
+            'TA$vl::collections::PairwiseEnumerator::S'
+        ],
+        'decls': []
+    },
+    'vl::collections::PairwiseEnumerator::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::collections::PairwiseEnumerator::T'
+        ],
+        'decls': []
+    },
+    'vl::collections::PairwiseEnumerator::current': {
+        'displayNameInHtml': '<span class="cpp_type">PairwiseEnumerator</span>&lt;<span class="cpp_type">S</span>, <span class="cpp_type">T</span>&gt;::<span class="cpp_field">current</span>',
+        'impls': [
+            'NI$vl::collections::PairwiseEnumerator::current'
+        ],
+        'decls': []
+    },
+    'vl::collections::PairwiseEnumerator::enumerator1': {
+        'displayNameInHtml': '<span class="cpp_type">PairwiseEnumerator</span>&lt;<span class="cpp_type">S</span>, <span class="cpp_type">T</span>&gt;::<span class="cpp_field">enumerator1</span>',
+        'impls': [
+            'NI$vl::collections::PairwiseEnumerator::enumerator1'
+        ],
+        'decls': []
+    },
+    'vl::collections::PairwiseEnumerator::enumerator2': {
+        'displayNameInHtml': '<span class="cpp_type">PairwiseEnumerator</span>&lt;<span class="cpp_type">S</span>, <span class="cpp_type">T</span>&gt;::<span class="cpp_field">enumerator2</span>',
+        'impls': [
+            'NI$vl::collections::PairwiseEnumerator::enumerator2'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Evaluated@bool()[impl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Index@::vl::vint()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Next@bool()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Reset@void()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[17]$vl': null,
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': null,
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NI$vl::collections::IEnumerator': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::Pair': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NI$vl::collections::PairwiseEnumerator': null,
+    'NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_current': null,
+    'NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator1': null,
+    'NI$vl::collections::PairwiseEnumerator::$__ctor@(::vl::collections::IEnumerator<[S]> *, ::vl::collections::IEnumerator<[T]> *, ::vl::collections::Pair<[S], [T]>)[impl0]::_enumerator2': null,
+    'NI$vl::collections::PairwiseEnumerator::current': null,
+    'NI$vl::collections::PairwiseEnumerator::enumerator1': null,
+    'NI$vl::collections::PairwiseEnumerator::enumerator2': null,
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'TA$vl::collections::PairwiseEnumerator::S': null,
+    'TA$vl::collections::PairwiseEnumerator::T': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt_wdirect.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt_wdirect.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This file declares the wide character (wchar_t) directory functionality, shared</div>
+<div class="token cpp_comment ">// by &lt;direct.h&gt; and &lt;wchar.h&gt;.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+<div class="disabled">#pragma push_macro(&quot;_wgetcwd&quot;)</div>
+<div class="disabled">#pragma push_macro(&quot;_wgetdcwd&quot;)</div>
+<div class="disabled">#undef _wgetcwd</div>
+<div class="disabled">#undef _wgetdcwd</div>
+
+<div class="disabled">_Success_(return != 0)</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_z_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR wchar_t* __cdecl _wgetcwd(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wgetcwd@wchar_t *(wchar_t *, int)[decl0]"><div><div class="token cpp_function">_wgetcwd</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_opt_z_(_SizeInWords) wchar_t* _DstBuf,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$_wgetcwd@wchar_t *(wchar_t *, int)[decl0]::_DstBuf"><div>_DstBuf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                             int      _SizeInWords</div>
+<div class="expanded">                                  <div class="token cpp_keyword ">int</div>      <div class="def" id="NI$_wgetcwd@wchar_t *(wchar_t *, int)[decl0]::_SizeInWords"><div>_SizeInWords</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != 0)</div>
+<div class="disabled">_Check_return_ _Ret_maybenull_z_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP _CRTALLOCATOR wchar_t* __cdecl _wgetdcwd(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wgetdcwd@wchar_t *(int, wchar_t *, int)[decl0]"><div><div class="token cpp_function">_wgetdcwd</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_                             int      _Drive,</div>
+<div class="expanded">                                  <div class="token cpp_keyword ">int</div>      <div class="def" id="NI$_wgetdcwd@wchar_t *(int, wchar_t *, int)[decl0]::_Drive"><div>_Drive</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_opt_z_(_SizeInWords) wchar_t* _DstBuf,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$_wgetdcwd@wchar_t *(int, wchar_t *, int)[decl0]::_DstBuf"><div>_DstBuf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                             int      _SizeInWords</div>
+<div class="expanded">                                  <div class="token cpp_keyword ">int</div>      <div class="def" id="NI$_wgetdcwd@wchar_t *(int, wchar_t *, int)[decl0]::_SizeInWords"><div>_SizeInWords</div></div></div></div>
+    );
+
+<div class="disabled">#define _wgetdcwd_nolock  _wgetdcwd</div>
+
+<div class="disabled">#pragma pop_macro(&quot;_wgetcwd&quot;)</div>
+<div class="disabled">#pragma pop_macro(&quot;_wgetdcwd&quot;)</div>
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wchdir(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wchdir@int(wchar_t const *)[decl0]"><div><div class="token cpp_function">_wchdir</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _Path</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wchdir@int(wchar_t const *)[decl0]::_Path"><div>_Path</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wmkdir(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wmkdir@int(wchar_t const *)[decl0]"><div><div class="token cpp_function">_wmkdir</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _Path</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wmkdir@int(wchar_t const *)[decl0]::_Path"><div>_Path</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wrmdir(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wrmdir@int(wchar_t const *)[decl0]"><div><div class="token cpp_function">_wrmdir</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _Path</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wrmdir@int(wchar_t const *)[decl0]::_Path"><div>_Path</div></div></div></div>
+    );
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>threadpoollegacyapiset.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* threadpoolapi.h -- ApiSet Contract for api-ms-win-core-threadpool-l1          *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _THREADPOOLLEGACYAPISET_H_</div>
+<div class="disabled">#define _THREADPOOLLEGACYAPISET_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Thread pool API&apos;s</div>
+<div class="token cpp_comment ">//</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueueUserWorkItem@::BOOL(::LPTHREAD_START_ROUTINE, ::PVOID, ::ULONG)[decl0]"><div><div class="token cpp_function">QueueUserWorkItem</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPTHREAD_START_ROUTINE Function,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPTHREAD_START_ROUTINE'], [], [])"><div class="token cpp_type">LPTHREAD_START_ROUTINE</div></div> <div class="def" id="NI$QueueUserWorkItem@::BOOL(::LPTHREAD_START_ROUTINE, ::PVOID, ::ULONG)[decl0]::Function"><div>Function</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PVOID Context,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$QueueUserWorkItem@::BOOL(::LPTHREAD_START_ROUTINE, ::PVOID, ::ULONG)[decl0]::Context"><div>Context</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG Flags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$QueueUserWorkItem@::BOOL(::LPTHREAD_START_ROUTINE, ::PVOID, ::ULONG)[decl0]::Flags"><div>Flags</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$UnregisterWaitEx@::BOOL(::HANDLE, ::HANDLE)[decl0]"><div><div class="token cpp_function">UnregisterWaitEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE WaitHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$UnregisterWaitEx@::BOOL(::HANDLE, ::HANDLE)[decl0]::WaitHandle"><div>WaitHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HANDLE CompletionEvent</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$UnregisterWaitEx@::BOOL(::HANDLE, ::HANDLE)[decl0]::CompletionEvent"><div>CompletionEvent</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CreateTimerQueue@::HANDLE()[decl0]"><div><div class="token cpp_function">CreateTimerQueue</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CreateTimerQueueTimer@::BOOL(::PHANDLE, ::HANDLE, ::WAITORTIMERCALLBACK, ::PVOID, ::DWORD, ::DWORD, ::ULONG)[decl0]"><div><div class="token cpp_function">CreateTimerQueueTimer</div></div></div>(
+<div class="expandable"><div class="disabled">    _Outptr_ PHANDLE phNewTimer,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['PHANDLE'], [], [])"><div class="token cpp_type">PHANDLE</div></div> <div class="def" id="NI$CreateTimerQueueTimer@::BOOL(::PHANDLE, ::HANDLE, ::WAITORTIMERCALLBACK, ::PVOID, ::DWORD, ::DWORD, ::ULONG)[decl0]::phNewTimer"><div>phNewTimer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HANDLE TimerQueue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$CreateTimerQueueTimer@::BOOL(::PHANDLE, ::HANDLE, ::WAITORTIMERCALLBACK, ::PVOID, ::DWORD, ::DWORD, ::ULONG)[decl0]::TimerQueue"><div>TimerQueue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ WAITORTIMERCALLBACK Callback,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['WAITORTIMERCALLBACK'], [], [])"><div class="token cpp_type">WAITORTIMERCALLBACK</div></div> <div class="def" id="NI$CreateTimerQueueTimer@::BOOL(::PHANDLE, ::HANDLE, ::WAITORTIMERCALLBACK, ::PVOID, ::DWORD, ::DWORD, ::ULONG)[decl0]::Callback"><div>Callback</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PVOID Parameter,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$CreateTimerQueueTimer@::BOOL(::PHANDLE, ::HANDLE, ::WAITORTIMERCALLBACK, ::PVOID, ::DWORD, ::DWORD, ::ULONG)[decl0]::Parameter"><div>Parameter</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD DueTime,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreateTimerQueueTimer@::BOOL(::PHANDLE, ::HANDLE, ::WAITORTIMERCALLBACK, ::PVOID, ::DWORD, ::DWORD, ::ULONG)[decl0]::DueTime"><div>DueTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD Period,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreateTimerQueueTimer@::BOOL(::PHANDLE, ::HANDLE, ::WAITORTIMERCALLBACK, ::PVOID, ::DWORD, ::DWORD, ::ULONG)[decl0]::Period"><div>Period</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG Flags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$CreateTimerQueueTimer@::BOOL(::PHANDLE, ::HANDLE, ::WAITORTIMERCALLBACK, ::PVOID, ::DWORD, ::DWORD, ::ULONG)[decl0]::Flags"><div>Flags</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ChangeTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::ULONG, ::ULONG)[decl0]"><div><div class="token cpp_function">ChangeTimerQueueTimer</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HANDLE TimerQueue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$ChangeTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::ULONG, ::ULONG)[decl0]::TimerQueue"><div>TimerQueue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ HANDLE Timer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$ChangeTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::ULONG, ::ULONG)[decl0]::Timer"><div>Timer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG DueTime,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$ChangeTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::ULONG, ::ULONG)[decl0]::DueTime"><div>DueTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG Period</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$ChangeTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::ULONG, ::ULONG)[decl0]::Period"><div>Period</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DeleteTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::HANDLE)[decl0]"><div><div class="token cpp_function">DeleteTimerQueueTimer</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HANDLE TimerQueue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DeleteTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::HANDLE)[decl0]::TimerQueue"><div>TimerQueue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HANDLE Timer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DeleteTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::HANDLE)[decl0]::Timer"><div>Timer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HANDLE CompletionEvent</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DeleteTimerQueueTimer@::BOOL(::HANDLE, ::HANDLE, ::HANDLE)[decl0]::CompletionEvent"><div>CompletionEvent</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DeleteTimerQueueEx@::BOOL(::HANDLE, ::HANDLE)[decl0]"><div><div class="token cpp_function">DeleteTimerQueueEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE TimerQueue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DeleteTimerQueueEx@::BOOL(::HANDLE, ::HANDLE)[decl0]::TimerQueue"><div>TimerQueue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HANDLE CompletionEvent</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DeleteTimerQueueEx@::BOOL(::HANDLE, ::HANDLE)[decl0]::CompletionEvent"><div>CompletionEvent</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _THREADPOOLLEGACYAPISET_H_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'LPTHREAD_START_ROUTINE': {
+        'displayNameInHtml': '<span class="cpp_type">LPTHREAD_START_ROUTINE</span>',
+        'impls': [
+            'NI$LPTHREAD_START_ROUTINE'
+        ],
+        'decls': []
+    },
+    'PHANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">PHANDLE</span>',
+        'impls': [
+            'NI$PHANDLE'
+        ],
+        'decls': []
+    },
+    'PVOID': {
+        'displayNameInHtml': '<span class="cpp_type">PVOID</span>',
+        'impls': [
+            'NI$PVOID'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'WAITORTIMERCALLBACK': {
+        'displayNameInHtml': '<span class="cpp_type">WAITORTIMERCALLBACK</span>',
+        'impls': [
+            'NI$WAITORTIMERCALLBACK'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPTHREAD_START_ROUTINE': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$PHANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PVOID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WAITORTIMERCALLBACK': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

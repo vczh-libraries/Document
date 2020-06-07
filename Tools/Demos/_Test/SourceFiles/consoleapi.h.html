@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>consoleapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// begin_consoleapi_h</div>
+<div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* consoleapi.h -- ApiSet Contract for api-ms-win-core-console-l1                *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _APISETCONSOLE_</div>
+<div class="disabled">#define _APISETCONSOLE_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#include &lt;wincontypes.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$AllocConsole@::BOOL()[decl0]"><div><div class="token cpp_function">AllocConsole</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FreeConsole@::BOOL()[decl0]"><div><div class="token cpp_function">FreeConsole</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0500)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$AttachConsole@::BOOL(::DWORD)[decl0]"><div><div class="token cpp_function">AttachConsole</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwProcessId</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$AttachConsole@::BOOL(::DWORD)[decl0]::dwProcessId"><div>dwProcessId</div></div></div></div>
+    );
+
+
+<div class="disabled">#define ATTACH_PARENT_PROCESS ((DWORD)-1)</div>
+
+<div class="disabled">#endif /* _WIN32_WINNT &gt;= 0x0500 */</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetConsoleCP@::UINT()[decl0]"><div><div class="token cpp_function">GetConsoleCP</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetConsoleOutputCP@::UINT()[decl0]"><div><div class="token cpp_function">GetConsoleOutputCP</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Input Mode flags:</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define ENABLE_PROCESSED_INPUT              0x0001</div>
+<div class="disabled">#define ENABLE_LINE_INPUT                   0x0002</div>
+<div class="disabled">#define ENABLE_ECHO_INPUT                   0x0004</div>
+<div class="disabled">#define ENABLE_WINDOW_INPUT                 0x0008</div>
+<div class="disabled">#define ENABLE_MOUSE_INPUT                  0x0010</div>
+<div class="disabled">#define ENABLE_INSERT_MODE                  0x0020</div>
+<div class="disabled">#define ENABLE_QUICK_EDIT_MODE              0x0040</div>
+<div class="disabled">#define ENABLE_EXTENDED_FLAGS               0x0080</div>
+<div class="disabled">#define ENABLE_AUTO_POSITION                0x0100</div>
+<div class="disabled">#define ENABLE_VIRTUAL_TERMINAL_INPUT       0x0200</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Output Mode flags:</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define ENABLE_PROCESSED_OUTPUT             0x0001</div>
+<div class="disabled">#define ENABLE_WRAP_AT_EOL_OUTPUT           0x0002</div>
+<div class="disabled">#define ENABLE_VIRTUAL_TERMINAL_PROCESSING  0x0004</div>
+<div class="disabled">#define DISABLE_NEWLINE_AUTO_RETURN         0x0008</div>
+<div class="disabled">#define ENABLE_LVB_GRID_WORLDWIDE           0x0010</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetConsoleMode@::BOOL(::HANDLE, ::LPDWORD)[decl0]"><div><div class="token cpp_function">GetConsoleMode</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetConsoleMode@::BOOL(::HANDLE, ::LPDWORD)[decl0]::hConsoleHandle"><div>hConsoleHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD lpMode</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetConsoleMode@::BOOL(::HANDLE, ::LPDWORD)[decl0]::lpMode"><div>lpMode</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetConsoleMode@::BOOL(::HANDLE, ::DWORD)[decl0]"><div><div class="token cpp_function">SetConsoleMode</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$SetConsoleMode@::BOOL(::HANDLE, ::DWORD)[decl0]::hConsoleHandle"><div>hConsoleHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwMode</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetConsoleMode@::BOOL(::HANDLE, ::DWORD)[decl0]::dwMode"><div>dwMode</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetNumberOfConsoleInputEvents@::BOOL(::HANDLE, ::LPDWORD)[decl0]"><div><div class="token cpp_function">GetNumberOfConsoleInputEvents</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleInput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetNumberOfConsoleInputEvents@::BOOL(::HANDLE, ::LPDWORD)[decl0]::hConsoleInput"><div>hConsoleInput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD lpNumberOfEvents</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNumberOfConsoleInputEvents@::BOOL(::HANDLE, ::LPDWORD)[decl0]::lpNumberOfEvents"><div>lpNumberOfEvents</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ReadConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">ReadConsoleInputA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleInput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$ReadConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::hConsoleInput"><div>hConsoleInput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_(nLength,*lpNumberOfEventsRead) PINPUT_RECORD lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PINPUT_RECORD'], [], [])"><div class="token cpp_type">PINPUT_RECORD</div></div> <div class="def" id="NI$ReadConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ReadConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::nLength"><div>nLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ _Deref_out_range_(&lt;=,nLength) LPDWORD lpNumberOfEventsRead</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$ReadConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::lpNumberOfEventsRead"><div>lpNumberOfEventsRead</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ReadConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">ReadConsoleInputW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleInput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$ReadConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::hConsoleInput"><div>hConsoleInput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_(nLength,*lpNumberOfEventsRead) PINPUT_RECORD lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PINPUT_RECORD'], [], [])"><div class="token cpp_type">PINPUT_RECORD</div></div> <div class="def" id="NI$ReadConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ReadConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::nLength"><div>nLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ _Deref_out_range_(&lt;=,nLength) LPDWORD lpNumberOfEventsRead</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$ReadConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::lpNumberOfEventsRead"><div>lpNumberOfEventsRead</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define ReadConsoleInput  ReadConsoleInputW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define ReadConsoleInput  ReadConsoleInputA
+#endif // !UNICODE</div>
+
+<div class="token cpp_comment ">// end_consoleapi_h</div>
+
+
+
+<div class="disabled">#ifndef UNICODE</div>
+<div class="disabled">#define PeekConsoleInput  PeekConsoleInputA</div>
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">// begin_consoleapi_h</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$PeekConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">PeekConsoleInputA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleInput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$PeekConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::hConsoleInput"><div>hConsoleInput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_(nLength) PINPUT_RECORD lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PINPUT_RECORD'], [], [])"><div class="token cpp_type">PINPUT_RECORD</div></div> <div class="def" id="NI$PeekConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$PeekConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::nLength"><div>nLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD lpNumberOfEventsRead</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$PeekConsoleInputA@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::lpNumberOfEventsRead"><div>lpNumberOfEventsRead</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$PeekConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">PeekConsoleInputW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleInput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$PeekConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::hConsoleInput"><div>hConsoleInput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_(nLength) PINPUT_RECORD lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PINPUT_RECORD'], [], [])"><div class="token cpp_type">PINPUT_RECORD</div></div> <div class="def" id="NI$PeekConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$PeekConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::nLength"><div>nLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD lpNumberOfEventsRead</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$PeekConsoleInputW@::BOOL(::HANDLE, ::PINPUT_RECORD, ::DWORD, ::LPDWORD)[decl0]::lpNumberOfEventsRead"><div>lpNumberOfEventsRead</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define PeekConsoleInput  PeekConsoleInputW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define PeekConsoleInput  PeekConsoleInputA
+#endif // !UNICODE</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_CONSOLE_READCONSOLE_CONTROL"><div><div class="token cpp_type">_CONSOLE_READCONSOLE_CONTROL</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_CONSOLE_READCONSOLE_CONTROL::nLength"><div><div class="token cpp_field">nLength</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_CONSOLE_READCONSOLE_CONTROL::nInitialChars"><div><div class="token cpp_field">nInitialChars</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_CONSOLE_READCONSOLE_CONTROL::dwCtrlWakeupMask"><div><div class="token cpp_field">dwCtrlWakeupMask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$_CONSOLE_READCONSOLE_CONTROL::dwControlKeyState"><div><div class="token cpp_field">dwControlKeyState</div></div></div>;
+} <div class="def" id="NI$CONSOLE_READCONSOLE_CONTROL"><div><div class="token cpp_type">CONSOLE_READCONSOLE_CONTROL</div></div></div>, *<div class="def" id="NI$PCONSOLE_READCONSOLE_CONTROL"><div><div class="token cpp_type">PCONSOLE_READCONSOLE_CONTROL</div></div></div>;
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ReadConsoleA@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]"><div><div class="token cpp_function">ReadConsoleA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleInput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$ReadConsoleA@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::hConsoleInput"><div>hConsoleInput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_(nNumberOfCharsToRead * sizeof(TCHAR%),*lpNumberOfCharsRead * sizeof(TCHAR%)) LPVOID lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$ReadConsoleA@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nNumberOfCharsToRead,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ReadConsoleA@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::nNumberOfCharsToRead"><div>nNumberOfCharsToRead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ _Deref_out_range_(&lt;=,nNumberOfCharsToRead) LPDWORD lpNumberOfCharsRead,</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$ReadConsoleA@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::lpNumberOfCharsRead"><div>lpNumberOfCharsRead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PCONSOLE_READCONSOLE_CONTROL pInputControl</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PCONSOLE_READCONSOLE_CONTROL'], [], [])"><div class="token cpp_type">PCONSOLE_READCONSOLE_CONTROL</div></div> <div class="def" id="NI$ReadConsoleA@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::pInputControl"><div>pInputControl</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ReadConsoleW@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]"><div><div class="token cpp_function">ReadConsoleW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleInput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$ReadConsoleW@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::hConsoleInput"><div>hConsoleInput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_(nNumberOfCharsToRead * sizeof(TCHAR%),*lpNumberOfCharsRead * sizeof(TCHAR%)) LPVOID lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$ReadConsoleW@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nNumberOfCharsToRead,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ReadConsoleW@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::nNumberOfCharsToRead"><div>nNumberOfCharsToRead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ _Deref_out_range_(&lt;=,nNumberOfCharsToRead) LPDWORD lpNumberOfCharsRead,</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$ReadConsoleW@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::lpNumberOfCharsRead"><div>lpNumberOfCharsRead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PCONSOLE_READCONSOLE_CONTROL pInputControl</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PCONSOLE_READCONSOLE_CONTROL'], [], [])"><div class="token cpp_type">PCONSOLE_READCONSOLE_CONTROL</div></div> <div class="def" id="NI$ReadConsoleW@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::PCONSOLE_READCONSOLE_CONTROL)[decl0]::pInputControl"><div>pInputControl</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define ReadConsole  ReadConsoleW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define ReadConsole  ReadConsoleA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$WriteConsoleA@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]"><div><div class="token cpp_function">WriteConsoleA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleOutput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$WriteConsoleA@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::hConsoleOutput"><div>hConsoleOutput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_(nNumberOfCharsToWrite) CONST VOID* lpBuffer,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$WriteConsoleA@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nNumberOfCharsToWrite,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$WriteConsoleA@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::nNumberOfCharsToWrite"><div>nNumberOfCharsToWrite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpNumberOfCharsWritten,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$WriteConsoleA@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::lpNumberOfCharsWritten"><div>lpNumberOfCharsWritten</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ LPVOID lpReserved</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$WriteConsoleA@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::lpReserved"><div>lpReserved</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$WriteConsoleW@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]"><div><div class="token cpp_function">WriteConsoleW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hConsoleOutput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$WriteConsoleW@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::hConsoleOutput"><div>hConsoleOutput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_(nNumberOfCharsToWrite) CONST VOID* lpBuffer,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$WriteConsoleW@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nNumberOfCharsToWrite,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$WriteConsoleW@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::nNumberOfCharsToWrite"><div>nNumberOfCharsToWrite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpNumberOfCharsWritten,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$WriteConsoleW@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::lpNumberOfCharsWritten"><div>lpNumberOfCharsWritten</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ LPVOID lpReserved</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$WriteConsoleW@::BOOL(::HANDLE, void const *, ::DWORD, ::LPDWORD, ::LPVOID)[decl0]::lpReserved"><div>lpReserved</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define WriteConsole  WriteConsoleW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define WriteConsole  WriteConsoleA
+#endif // !UNICODE</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Ctrl Event flags</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define CTRL_C_EVENT        0</div>
+<div class="disabled">#define CTRL_BREAK_EVENT    1</div>
+<div class="disabled">#define CTRL_CLOSE_EVENT    2</div>
+<div class="token cpp_comment ">// 3 is reserved!</div>
+<div class="token cpp_comment ">// 4 is reserved!</div>
+<div class="disabled">#define CTRL_LOGOFF_EVENT   5</div>
+<div class="disabled">#define CTRL_SHUTDOWN_EVENT 6</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// typedef for ctrl-c handler routines</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="token cpp_keyword ">typedef</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">(WINAPI *PHANDLER_ROUTINE)(</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$PHANDLER_ROUTINE"><div><div class="token cpp_type">PHANDLER_ROUTINE</div></div></div>)(</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD CtrlType</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> CtrlType</div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetConsoleCtrlHandler@::BOOL(::PHANDLER_ROUTINE, ::BOOL)[decl0]"><div><div class="token cpp_function">SetConsoleCtrlHandler</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ PHANDLER_ROUTINE HandlerRoutine,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PHANDLER_ROUTINE'], [], [])"><div class="token cpp_type">PHANDLER_ROUTINE</div></div> <div class="def" id="NI$SetConsoleCtrlHandler@::BOOL(::PHANDLER_ROUTINE, ::BOOL)[decl0]::HandlerRoutine"><div>HandlerRoutine</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ BOOL Add</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$SetConsoleCtrlHandler@::BOOL(::PHANDLER_ROUTINE, ::BOOL)[decl0]::Add"><div>Add</div></div></div></div>
+    );
+
+
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN10_RS5)</div>
+
+<div class="token cpp_comment ">// CreatePseudoConsole Flags</div>
+<div class="disabled">#define PSEUDOCONSOLE_INHERIT_CURSOR (0x1)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CreatePseudoConsole@::HRESULT(::COORD, ::HANDLE, ::HANDLE, ::DWORD, ::HPCON *)[decl0]"><div><div class="token cpp_function">CreatePseudoConsole</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ COORD size,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['COORD'], [], [])"><div class="token cpp_type">COORD</div></div> <div class="def" id="NI$CreatePseudoConsole@::HRESULT(::COORD, ::HANDLE, ::HANDLE, ::DWORD, ::HPCON *)[decl0]::size"><div>size</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HANDLE hInput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$CreatePseudoConsole@::HRESULT(::COORD, ::HANDLE, ::HANDLE, ::DWORD, ::HPCON *)[decl0]::hInput"><div>hInput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HANDLE hOutput,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$CreatePseudoConsole@::HRESULT(::COORD, ::HANDLE, ::HANDLE, ::DWORD, ::HPCON *)[decl0]::hOutput"><div>hOutput</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreatePseudoConsole@::HRESULT(::COORD, ::HANDLE, ::HANDLE, ::DWORD, ::HPCON *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ HPCON* phPC</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HPCON'], [], [])"><div class="token cpp_type">HPCON</div></div>* <div class="def" id="NI$CreatePseudoConsole@::HRESULT(::COORD, ::HANDLE, ::HANDLE, ::DWORD, ::HPCON *)[decl0]::phPC"><div>phPC</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ResizePseudoConsole@::HRESULT(::HPCON, ::COORD)[decl0]"><div><div class="token cpp_function">ResizePseudoConsole</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HPCON hPC,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HPCON'], [], [])"><div class="token cpp_type">HPCON</div></div> <div class="def" id="NI$ResizePseudoConsole@::HRESULT(::HPCON, ::COORD)[decl0]::hPC"><div>hPC</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ COORD size</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['COORD'], [], [])"><div class="token cpp_type">COORD</div></div> <div class="def" id="NI$ResizePseudoConsole@::HRESULT(::HPCON, ::COORD)[decl0]::size"><div>size</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ClosePseudoConsole@void(::HPCON)[decl0]"><div><div class="token cpp_function">ClosePseudoConsole</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HPCON hPC</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HPCON'], [], [])"><div class="token cpp_type">HPCON</div></div> <div class="def" id="NI$ClosePseudoConsole@void(::HPCON)[decl0]::hPC"><div>hPC</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _APISETCONSOLE_</div>
+<div class="token cpp_comment ">// end_consoleapi_h</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'COORD': {
+        'displayNameInHtml': '<span class="cpp_type">COORD</span>',
+        'impls': [
+            'NI$COORD'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'HPCON': {
+        'displayNameInHtml': '<span class="cpp_type">HPCON</span>',
+        'impls': [
+            'NI$HPCON'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'PCONSOLE_READCONSOLE_CONTROL': {
+        'displayNameInHtml': '<span class="cpp_type">PCONSOLE_READCONSOLE_CONTROL</span>',
+        'impls': [
+            'NI$PCONSOLE_READCONSOLE_CONTROL'
+        ],
+        'decls': []
+    },
+    'PHANDLER_ROUTINE': {
+        'displayNameInHtml': '<span class="cpp_type">PHANDLER_ROUTINE</span>',
+        'impls': [
+            'NI$PHANDLER_ROUTINE'
+        ],
+        'decls': []
+    },
+    'PINPUT_RECORD': {
+        'displayNameInHtml': '<span class="cpp_type">PINPUT_RECORD</span>',
+        'impls': [
+            'NI$PINPUT_RECORD'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$COORD': { 'htmlFileName': 'wincontypes.h', 'displayName': 'wincontypes.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HPCON': { 'htmlFileName': 'wincontypes.h', 'displayName': 'wincontypes.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$PCONSOLE_READCONSOLE_CONTROL': null,
+    'NI$PHANDLER_ROUTINE': null,
+    'NI$PINPUT_RECORD': { 'htmlFileName': 'wincontypes.h', 'displayName': 'wincontypes.h' },
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

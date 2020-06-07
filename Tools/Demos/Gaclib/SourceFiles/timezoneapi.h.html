@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>timezoneapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// begin_1_0</div>
+<div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* timezoneapi.h -- ApiSet Contract for api-ms-win-core-timezone-l1              *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _TIMEZONEAPI_H_</div>
+<div class="disabled">#define _TIMEZONEAPI_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">// end_1_0</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_comment ">// begin_1_0</div>
+
+<div class="disabled">#define TIME_ZONE_ID_INVALID ((DWORD)0xFFFFFFFF)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_TIME_ZONE_INFORMATION"><div><div class="token cpp_type">_TIME_ZONE_INFORMATION</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_TIME_ZONE_INFORMATION::Bias"><div><div class="token cpp_field">Bias</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$_TIME_ZONE_INFORMATION::StandardName"><div><div class="token cpp_field">StandardName</div></div></div>[ <div class="token cpp_number ">32</div> ];
+    <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$_TIME_ZONE_INFORMATION::StandardDate"><div><div class="token cpp_field">StandardDate</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_TIME_ZONE_INFORMATION::StandardBias"><div><div class="token cpp_field">StandardBias</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$_TIME_ZONE_INFORMATION::DaylightName"><div><div class="token cpp_field">DaylightName</div></div></div>[ <div class="token cpp_number ">32</div> ];
+    <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$_TIME_ZONE_INFORMATION::DaylightDate"><div><div class="token cpp_field">DaylightDate</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_TIME_ZONE_INFORMATION::DaylightBias"><div><div class="token cpp_field">DaylightBias</div></div></div>;
+} <div class="def" id="NI$TIME_ZONE_INFORMATION"><div><div class="token cpp_type">TIME_ZONE_INFORMATION</div></div></div>, *<div class="def" id="NI$PTIME_ZONE_INFORMATION"><div><div class="token cpp_type">PTIME_ZONE_INFORMATION</div></div></div>, *<div class="def" id="NI$LPTIME_ZONE_INFORMATION"><div><div class="token cpp_type">LPTIME_ZONE_INFORMATION</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION"><div><div class="token cpp_type">_TIME_DYNAMIC_ZONE_INFORMATION</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::Bias"><div><div class="token cpp_field">Bias</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::StandardName"><div><div class="token cpp_field">StandardName</div></div></div>[ <div class="token cpp_number ">32</div> ];
+    <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::StandardDate"><div><div class="token cpp_field">StandardDate</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::StandardBias"><div><div class="token cpp_field">StandardBias</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::DaylightName"><div><div class="token cpp_field">DaylightName</div></div></div>[ <div class="token cpp_number ">32</div> ];
+    <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::DaylightDate"><div><div class="token cpp_field">DaylightDate</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::DaylightBias"><div><div class="token cpp_field">DaylightBias</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::TimeZoneKeyName"><div><div class="token cpp_field">TimeZoneKeyName</div></div></div>[ <div class="token cpp_number ">128</div> ];
+    <div class="ref" onclick="jumpToSymbol([], ['BOOLEAN'], [], [])"><div class="token cpp_type">BOOLEAN</div></div> <div class="def" id="NI$_TIME_DYNAMIC_ZONE_INFORMATION::DynamicDaylightTimeDisabled"><div><div class="token cpp_field">DynamicDaylightTimeDisabled</div></div></div>;
+} <div class="def" id="NI$DYNAMIC_TIME_ZONE_INFORMATION"><div><div class="token cpp_type">DYNAMIC_TIME_ZONE_INFORMATION</div></div></div>, *<div class="def" id="NI$PDYNAMIC_TIME_ZONE_INFORMATION"><div><div class="token cpp_type">PDYNAMIC_TIME_ZONE_INFORMATION</div></div></div>;
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]"><div><div class="token cpp_function">SystemTimeToTzSpecificLocalTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ CONST TIME_ZONE_INFORMATION* lpTimeZoneInformation,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">TIME_ZONE_INFORMATION</div></div>* <div class="def" id="NI$SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ CONST SYSTEMTIME* lpUniversalTime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpUniversalTime"><div>lpUniversalTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEMTIME lpLocalTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEMTIME'], [], [])"><div class="token cpp_type">LPSYSTEMTIME</div></div> <div class="def" id="NI$SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpLocalTime"><div>lpLocalTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]"><div><div class="token cpp_function">TzSpecificLocalTimeToSystemTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ CONST TIME_ZONE_INFORMATION* lpTimeZoneInformation,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">TIME_ZONE_INFORMATION</div></div>* <div class="def" id="NI$TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ CONST SYSTEMTIME* lpLocalTime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpLocalTime"><div>lpLocalTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEMTIME lpUniversalTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEMTIME'], [], [])"><div class="token cpp_type">LPSYSTEMTIME</div></div> <div class="def" id="NI$TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpUniversalTime"><div>lpUniversalTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)[decl0]"><div><div class="token cpp_function">FileTimeToSystemTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ CONST FILETIME* lpFileTime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div>* <div class="def" id="NI$FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)[decl0]::lpFileTime"><div>lpFileTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEMTIME lpSystemTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEMTIME'], [], [])"><div class="token cpp_type">LPSYSTEMTIME</div></div> <div class="def" id="NI$FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)[decl0]::lpSystemTime"><div>lpSystemTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)[decl0]"><div><div class="token cpp_function">SystemTimeToFileTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ CONST SYSTEMTIME* lpSystemTime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)[decl0]::lpSystemTime"><div>lpSystemTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPFILETIME lpFileTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPFILETIME'], [], [])"><div class="token cpp_type">LPFILETIME</div></div> <div class="def" id="NI$SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)[decl0]::lpFileTime"><div>lpFileTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != TIME_ZONE_ID_INVALID)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetTimeZoneInformation@::DWORD(::LPTIME_ZONE_INFORMATION)[decl0]"><div><div class="token cpp_function">GetTimeZoneInformation</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPTIME_ZONE_INFORMATION lpTimeZoneInformation</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPTIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">LPTIME_ZONE_INFORMATION</div></div> <div class="def" id="NI$GetTimeZoneInformation@::DWORD(::LPTIME_ZONE_INFORMATION)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetTimeZoneInformation@::BOOL(::TIME_ZONE_INFORMATION const *)[decl0]"><div><div class="token cpp_function">SetTimeZoneInformation</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ CONST TIME_ZONE_INFORMATION* lpTimeZoneInformation</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">TIME_ZONE_INFORMATION</div></div>* <div class="def" id="NI$SetTimeZoneInformation@::BOOL(::TIME_ZONE_INFORMATION const *)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div></div></div>
+    );
+
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetDynamicTimeZoneInformation@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *)[decl0]"><div><div class="token cpp_function">SetDynamicTimeZoneInformation</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ CONST DYNAMIC_TIME_ZONE_INFORMATION* lpTimeZoneInformation</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['DYNAMIC_TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">DYNAMIC_TIME_ZONE_INFORMATION</div></div>* <div class="def" id="NI$SetDynamicTimeZoneInformation@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // _WIN32_WINNT &gt;= 0x0600</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != TIME_ZONE_ID_INVALID)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetDynamicTimeZoneInformation@::DWORD(::PDYNAMIC_TIME_ZONE_INFORMATION)[decl0]"><div><div class="token cpp_function">GetDynamicTimeZoneInformation</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PDYNAMIC_TIME_ZONE_INFORMATION pTimeZoneInformation</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDYNAMIC_TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">PDYNAMIC_TIME_ZONE_INFORMATION</div></div> <div class="def" id="NI$GetDynamicTimeZoneInformation@::DWORD(::PDYNAMIC_TIME_ZONE_INFORMATION)[decl0]::pTimeZoneInformation"><div>pTimeZoneInformation</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // _WIN32_WINNT &gt;= 0x0600</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetTimeZoneInformationForYear@::BOOL(::USHORT, ::PDYNAMIC_TIME_ZONE_INFORMATION, ::LPTIME_ZONE_INFORMATION)[decl0]"><div><div class="token cpp_function">GetTimeZoneInformationForYear</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ USHORT wYear,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="def" id="NI$GetTimeZoneInformationForYear@::BOOL(::USHORT, ::PDYNAMIC_TIME_ZONE_INFORMATION, ::LPTIME_ZONE_INFORMATION)[decl0]::wYear"><div>wYear</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PDYNAMIC_TIME_ZONE_INFORMATION pdtzi,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDYNAMIC_TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">PDYNAMIC_TIME_ZONE_INFORMATION</div></div> <div class="def" id="NI$GetTimeZoneInformationForYear@::BOOL(::USHORT, ::PDYNAMIC_TIME_ZONE_INFORMATION, ::LPTIME_ZONE_INFORMATION)[decl0]::pdtzi"><div>pdtzi</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPTIME_ZONE_INFORMATION ptzi</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPTIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">LPTIME_ZONE_INFORMATION</div></div> <div class="def" id="NI$GetTimeZoneInformationForYear@::BOOL(::USHORT, ::PDYNAMIC_TIME_ZONE_INFORMATION, ::LPTIME_ZONE_INFORMATION)[decl0]::ptzi"><div>ptzi</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // _WIN32_WINNT &gt;= 0x0601</div>
+
+<div class="token cpp_comment ">// end_1_0</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN8)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return == ERROR_SUCCESS)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumDynamicTimeZoneInformation@::DWORD(::DWORD const, ::PDYNAMIC_TIME_ZONE_INFORMATION)[decl0]"><div><div class="token cpp_function">EnumDynamicTimeZoneInformation</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ CONST DWORD dwIndex,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumDynamicTimeZoneInformation@::DWORD(::DWORD const, ::PDYNAMIC_TIME_ZONE_INFORMATION)[decl0]::dwIndex"><div>dwIndex</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PDYNAMIC_TIME_ZONE_INFORMATION lpTimeZoneInformation</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDYNAMIC_TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">PDYNAMIC_TIME_ZONE_INFORMATION</div></div> <div class="def" id="NI$EnumDynamicTimeZoneInformation@::DWORD(::DWORD const, ::PDYNAMIC_TIME_ZONE_INFORMATION)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return == ERROR_SUCCESS)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetDynamicTimeZoneInformationEffectiveYears@::DWORD(::PDYNAMIC_TIME_ZONE_INFORMATION const, ::LPDWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">GetDynamicTimeZoneInformationEffectiveYears</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ CONST PDYNAMIC_TIME_ZONE_INFORMATION lpTimeZoneInformation,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['PDYNAMIC_TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">PDYNAMIC_TIME_ZONE_INFORMATION</div></div> <div class="def" id="NI$GetDynamicTimeZoneInformationEffectiveYears@::DWORD(::PDYNAMIC_TIME_ZONE_INFORMATION const, ::LPDWORD, ::LPDWORD)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD FirstYear,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetDynamicTimeZoneInformationEffectiveYears@::DWORD(::PDYNAMIC_TIME_ZONE_INFORMATION const, ::LPDWORD, ::LPDWORD)[decl0]::FirstYear"><div>FirstYear</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD LastYear</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetDynamicTimeZoneInformationEffectiveYears@::DWORD(::PDYNAMIC_TIME_ZONE_INFORMATION const, ::LPDWORD, ::LPDWORD)[decl0]::LastYear"><div>LastYear</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SystemTimeToTzSpecificLocalTimeEx@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]"><div><div class="token cpp_function">SystemTimeToTzSpecificLocalTimeEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ CONST DYNAMIC_TIME_ZONE_INFORMATION* lpTimeZoneInformation,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['DYNAMIC_TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">DYNAMIC_TIME_ZONE_INFORMATION</div></div>* <div class="def" id="NI$SystemTimeToTzSpecificLocalTimeEx@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ CONST SYSTEMTIME* lpUniversalTime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$SystemTimeToTzSpecificLocalTimeEx@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpUniversalTime"><div>lpUniversalTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEMTIME lpLocalTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEMTIME'], [], [])"><div class="token cpp_type">LPSYSTEMTIME</div></div> <div class="def" id="NI$SystemTimeToTzSpecificLocalTimeEx@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpLocalTime"><div>lpLocalTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$TzSpecificLocalTimeToSystemTimeEx@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]"><div><div class="token cpp_function">TzSpecificLocalTimeToSystemTimeEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ CONST DYNAMIC_TIME_ZONE_INFORMATION* lpTimeZoneInformation,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['DYNAMIC_TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">DYNAMIC_TIME_ZONE_INFORMATION</div></div>* <div class="def" id="NI$TzSpecificLocalTimeToSystemTimeEx@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpTimeZoneInformation"><div>lpTimeZoneInformation</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ CONST SYSTEMTIME* lpLocalTime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$TzSpecificLocalTimeToSystemTimeEx@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpLocalTime"><div>lpLocalTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEMTIME lpUniversalTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEMTIME'], [], [])"><div class="token cpp_type">LPSYSTEMTIME</div></div> <div class="def" id="NI$TzSpecificLocalTimeToSystemTimeEx@::BOOL(::DYNAMIC_TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]::lpUniversalTime"><div>lpUniversalTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN8) */</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN10_RS5)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LocalFileTimeToLocalSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::FILETIME const *, ::SYSTEMTIME *)[decl0]"><div><div class="token cpp_function">LocalFileTimeToLocalSystemTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ CONST TIME_ZONE_INFORMATION* timeZoneInformation,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">TIME_ZONE_INFORMATION</div></div>* <div class="def" id="NI$LocalFileTimeToLocalSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::FILETIME const *, ::SYSTEMTIME *)[decl0]::timeZoneInformation"><div>timeZoneInformation</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ CONST FILETIME* localFileTime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div>* <div class="def" id="NI$LocalFileTimeToLocalSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::FILETIME const *, ::SYSTEMTIME *)[decl0]::localFileTime"><div>localFileTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ SYSTEMTIME* localSystemTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$LocalFileTimeToLocalSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::FILETIME const *, ::SYSTEMTIME *)[decl0]::localSystemTime"><div>localSystemTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LocalSystemTimeToLocalFileTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::FILETIME *)[decl0]"><div><div class="token cpp_function">LocalSystemTimeToLocalFileTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ CONST TIME_ZONE_INFORMATION* timeZoneInformation,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['TIME_ZONE_INFORMATION'], [], [])"><div class="token cpp_type">TIME_ZONE_INFORMATION</div></div>* <div class="def" id="NI$LocalSystemTimeToLocalFileTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::FILETIME *)[decl0]::timeZoneInformation"><div>timeZoneInformation</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ CONST SYSTEMTIME* localSystemTime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$LocalSystemTimeToLocalFileTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::FILETIME *)[decl0]::localSystemTime"><div>localSystemTime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ FILETIME* localFileTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div>* <div class="def" id="NI$LocalSystemTimeToLocalFileTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::FILETIME *)[decl0]::localFileTime"><div>localFileTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* (NTDDI_VERSION &gt;= NTDDI_WIN10_RS5) */</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="token cpp_comment ">// begin_1_0</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _TIMEZONEAPI_H_</div>
+<div class="token cpp_comment ">// end_1_0</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'BOOLEAN': {
+        'displayNameInHtml': '<span class="cpp_type">BOOLEAN</span>',
+        'impls': [
+            'NI$BOOLEAN'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'DYNAMIC_TIME_ZONE_INFORMATION': {
+        'displayNameInHtml': '<span class="cpp_type">DYNAMIC_TIME_ZONE_INFORMATION</span>',
+        'impls': [
+            'NI$DYNAMIC_TIME_ZONE_INFORMATION'
+        ],
+        'decls': []
+    },
+    'FILETIME': {
+        'displayNameInHtml': '<span class="cpp_type">FILETIME</span>',
+        'impls': [
+            'NI$FILETIME'
+        ],
+        'decls': []
+    },
+    'LONG': {
+        'displayNameInHtml': '<span class="cpp_type">LONG</span>',
+        'impls': [
+            'NI$LONG'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPFILETIME': {
+        'displayNameInHtml': '<span class="cpp_type">LPFILETIME</span>',
+        'impls': [
+            'NI$LPFILETIME'
+        ],
+        'decls': []
+    },
+    'LPSYSTEMTIME': {
+        'displayNameInHtml': '<span class="cpp_type">LPSYSTEMTIME</span>',
+        'impls': [
+            'NI$LPSYSTEMTIME'
+        ],
+        'decls': []
+    },
+    'LPTIME_ZONE_INFORMATION': {
+        'displayNameInHtml': '<span class="cpp_type">LPTIME_ZONE_INFORMATION</span>',
+        'impls': [
+            'NI$LPTIME_ZONE_INFORMATION'
+        ],
+        'decls': []
+    },
+    'PDYNAMIC_TIME_ZONE_INFORMATION': {
+        'displayNameInHtml': '<span class="cpp_type">PDYNAMIC_TIME_ZONE_INFORMATION</span>',
+        'impls': [
+            'NI$PDYNAMIC_TIME_ZONE_INFORMATION'
+        ],
+        'decls': []
+    },
+    'SYSTEMTIME': {
+        'displayNameInHtml': '<span class="cpp_type">SYSTEMTIME</span>',
+        'impls': [
+            'NI$SYSTEMTIME'
+        ],
+        'decls': []
+    },
+    'TIME_ZONE_INFORMATION': {
+        'displayNameInHtml': '<span class="cpp_type">TIME_ZONE_INFORMATION</span>',
+        'impls': [
+            'NI$TIME_ZONE_INFORMATION'
+        ],
+        'decls': []
+    },
+    'USHORT': {
+        'displayNameInHtml': '<span class="cpp_type">USHORT</span>',
+        'impls': [
+            'NI$USHORT'
+        ],
+        'decls': []
+    },
+    'WCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">WCHAR</span>',
+        'impls': [
+            'NI$WCHAR'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$BOOLEAN': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DYNAMIC_TIME_ZONE_INFORMATION': null,
+    'NI$FILETIME': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPFILETIME': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPSYSTEMTIME': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$LPTIME_ZONE_INFORMATION': null,
+    'NI$PDYNAMIC_TIME_ZONE_INFORMATION': null,
+    'NI$SYSTEMTIME': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$TIME_ZONE_INFORMATION': null,
+    'NI$USHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WCHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

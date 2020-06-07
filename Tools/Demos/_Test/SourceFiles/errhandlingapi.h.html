@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>errhandlingapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* errhandlingapi.h - ApiSet Contract for api-ms-win-core-errorhandling-l1       *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _ERRHANDLING_H_</div>
+<div class="disabled">#define _ERRHANDLING_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Typedefs</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="expandable"><div class="disabled">typedef LONG (WINAPI *PTOP_LEVEL_EXCEPTION_FILTER)(</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> (<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$PTOP_LEVEL_EXCEPTION_FILTER"><div><div class="token cpp_type">PTOP_LEVEL_EXCEPTION_FILTER</div></div></div>)(</div></div>
+<div class="expandable"><div class="disabled">    _In_ struct _EXCEPTION_POINTERS *ExceptionInfo</div>
+<div class="expanded">      <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_EXCEPTION_POINTERS'], [], [])"><div class="token cpp_type">_EXCEPTION_POINTERS</div></div> *ExceptionInfo</div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['PTOP_LEVEL_EXCEPTION_FILTER'], [], [])"><div class="token cpp_type">PTOP_LEVEL_EXCEPTION_FILTER</div></div> <div class="def" id="NI$LPTOP_LEVEL_EXCEPTION_FILTER"><div><div class="token cpp_type">LPTOP_LEVEL_EXCEPTION_FILTER</div></div></div>;
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Prototypes</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">__analysis_noreturn</div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$RaiseException@void(::DWORD, ::DWORD, ::DWORD, ::ULONG_PTR const *)[decl0]"><div><div class="token cpp_function">RaiseException</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwExceptionCode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$RaiseException@void(::DWORD, ::DWORD, ::DWORD, ::ULONG_PTR const *)[decl0]::dwExceptionCode"><div>dwExceptionCode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwExceptionFlags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$RaiseException@void(::DWORD, ::DWORD, ::DWORD, ::ULONG_PTR const *)[decl0]::dwExceptionFlags"><div>dwExceptionFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nNumberOfArguments,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$RaiseException@void(::DWORD, ::DWORD, ::DWORD, ::ULONG_PTR const *)[decl0]::nNumberOfArguments"><div>nNumberOfArguments</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_opt_(nNumberOfArguments) CONST ULONG_PTR* lpArguments</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div>* <div class="def" id="NI$RaiseException@void(::DWORD, ::DWORD, ::DWORD, ::ULONG_PTR const *)[decl0]::lpArguments"><div>lpArguments</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">__callback</div>
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$UnhandledExceptionFilter@::LONG(::_EXCEPTION_POINTERS *)[decl0]"><div><div class="token cpp_function">UnhandledExceptionFilter</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ struct _EXCEPTION_POINTERS* ExceptionInfo</div>
+<div class="expanded">      <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_EXCEPTION_POINTERS'], [], [])"><div class="token cpp_type">_EXCEPTION_POINTERS</div></div>* <div class="def" id="NI$UnhandledExceptionFilter@::LONG(::_EXCEPTION_POINTERS *)[decl0]::ExceptionInfo"><div>ExceptionInfo</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['LPTOP_LEVEL_EXCEPTION_FILTER'], [], [])"><div class="token cpp_type">LPTOP_LEVEL_EXCEPTION_FILTER</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetUnhandledExceptionFilter@::LPTOP_LEVEL_EXCEPTION_FILTER(::LPTOP_LEVEL_EXCEPTION_FILTER)[decl0]"><div><div class="token cpp_function">SetUnhandledExceptionFilter</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPTOP_LEVEL_EXCEPTION_FILTER'], [], [])"><div class="token cpp_type">LPTOP_LEVEL_EXCEPTION_FILTER</div></div> <div class="def" id="NI$SetUnhandledExceptionFilter@::LPTOP_LEVEL_EXCEPTION_FILTER(::LPTOP_LEVEL_EXCEPTION_FILTER)[decl0]::lpTopLevelExceptionFilter"><div>lpTopLevelExceptionFilter</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifndef _M_CEE_PURE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Check_return_</div>
+<div class="disabled">_Post_equals_last_error_</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetLastError@::DWORD()[decl0]"><div><div class="token cpp_function">GetLastError</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="disabled">#endif</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetLastError@void(::DWORD)[decl0]"><div><div class="token cpp_function">SetLastError</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwErrCode</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetLastError@void(::DWORD)[decl0]::dwErrCode"><div>dwErrCode</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetErrorMode@::UINT()[decl0]"><div><div class="token cpp_function">GetErrorMode</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetErrorMode@::UINT(::UINT)[decl0]"><div><div class="token cpp_function">SetErrorMode</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT uMode</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$SetErrorMode@::UINT(::UINT)[decl0]::uMode"><div>uMode</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0501)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$AddVectoredExceptionHandler@::PVOID(::ULONG, ::PVECTORED_EXCEPTION_HANDLER)[decl0]"><div><div class="token cpp_function">AddVectoredExceptionHandler</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ULONG First,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$AddVectoredExceptionHandler@::PVOID(::ULONG, ::PVECTORED_EXCEPTION_HANDLER)[decl0]::First"><div>First</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ PVECTORED_EXCEPTION_HANDLER Handler</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVECTORED_EXCEPTION_HANDLER'], [], [])"><div class="token cpp_type">PVECTORED_EXCEPTION_HANDLER</div></div> <div class="def" id="NI$AddVectoredExceptionHandler@::PVOID(::ULONG, ::PVECTORED_EXCEPTION_HANDLER)[decl0]::Handler"><div>Handler</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$RemoveVectoredExceptionHandler@::ULONG(::PVOID)[decl0]"><div><div class="token cpp_function">RemoveVectoredExceptionHandler</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ PVOID Handle</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$RemoveVectoredExceptionHandler@::ULONG(::PVOID)[decl0]::Handle"><div>Handle</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Ret_maybenull_</div>
+<div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$AddVectoredContinueHandler@::PVOID(::ULONG, ::PVECTORED_EXCEPTION_HANDLER)[decl0]"><div><div class="token cpp_function">AddVectoredContinueHandler</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ULONG First,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$AddVectoredContinueHandler@::PVOID(::ULONG, ::PVECTORED_EXCEPTION_HANDLER)[decl0]::First"><div>First</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ PVECTORED_EXCEPTION_HANDLER Handler</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVECTORED_EXCEPTION_HANDLER'], [], [])"><div class="token cpp_type">PVECTORED_EXCEPTION_HANDLER</div></div> <div class="def" id="NI$AddVectoredContinueHandler@::PVOID(::ULONG, ::PVECTORED_EXCEPTION_HANDLER)[decl0]::Handler"><div>Handler</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$RemoveVectoredContinueHandler@::ULONG(::PVOID)[decl0]"><div><div class="token cpp_function">RemoveVectoredContinueHandler</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ PVOID Handle</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$RemoveVectoredContinueHandler@::ULONG(::PVOID)[decl0]::Handle"><div>Handle</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0501)</div>
+
+<div class="token cpp_comment ">// RC warns because &quot;WINBASE_DECLARE_RESTORE_LAST_ERROR&quot; is a bit long.</div>
+<div class="disabled">#if !defined(RC_INVOKED)</div>
+<div class="token cpp_comment ">//#if _WIN32_WINNT &gt;= 0x0501 || defined(WINBASE_DECLARE_RESTORE_LAST_ERROR)</div>
+<div class="disabled">#if defined(WINBASE_DECLARE_RESTORE_LAST_ERROR)</div>
+
+<div class="disabled">WINBASEAPI</div>
+<div class="disabled">VOID</div>
+<div class="disabled">WINAPI</div>
+<div class="disabled">RestoreLastError(</div>
+<div class="disabled">    _In_ DWORD dwErrCode</div>
+<div class="disabled">    );</div>
+
+
+<div class="disabled">typedef VOID (WINAPI* PRESTORE_LAST_ERROR)(DWORD);</div>
+<div class="disabled">#define RESTORE_LAST_ERROR_NAME_A      &quot;RestoreLastError&quot;</div>
+<div class="disabled">#define RESTORE_LAST_ERROR_NAME_W     L&quot;RestoreLastError&quot;</div>
+<div class="disabled">#define RESTORE_LAST_ERROR_NAME   TEXT(&quot;RestoreLastError&quot;)</div>
+
+<div class="disabled">#endif 
+#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$RaiseFailFastException@void(::PEXCEPTION_RECORD, ::PCONTEXT, ::DWORD)[decl0]"><div><div class="token cpp_function">RaiseFailFastException</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ PEXCEPTION_RECORD pExceptionRecord,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PEXCEPTION_RECORD'], [], [])"><div class="token cpp_type">PEXCEPTION_RECORD</div></div> <div class="def" id="NI$RaiseFailFastException@void(::PEXCEPTION_RECORD, ::PCONTEXT, ::DWORD)[decl0]::pExceptionRecord"><div>pExceptionRecord</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PCONTEXT pContextRecord,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PCONTEXT'], [], [])"><div class="token cpp_type">PCONTEXT</div></div> <div class="def" id="NI$RaiseFailFastException@void(::PEXCEPTION_RECORD, ::PCONTEXT, ::DWORD)[decl0]::pContextRecord"><div>pContextRecord</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$RaiseFailFastException@void(::PEXCEPTION_RECORD, ::PCONTEXT, ::DWORD)[decl0]::dwFlags"><div>dwFlags</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FatalAppExitA@void(::UINT, ::LPCSTR)[decl0]"><div><div class="token cpp_function">FatalAppExitA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT uAction,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$FatalAppExitA@void(::UINT, ::LPCSTR)[decl0]::uAction"><div>uAction</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpMessageText</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$FatalAppExitA@void(::UINT, ::LPCSTR)[decl0]::lpMessageText"><div>lpMessageText</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FatalAppExitW@void(::UINT, ::LPCWSTR)[decl0]"><div><div class="token cpp_function">FatalAppExitW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ UINT uAction,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$FatalAppExitW@void(::UINT, ::LPCWSTR)[decl0]::uAction"><div>uAction</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpMessageText</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$FatalAppExitW@void(::UINT, ::LPCWSTR)[decl0]::lpMessageText"><div>lpMessageText</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define FatalAppExit  FatalAppExitW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define FatalAppExit  FatalAppExitA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetThreadErrorMode@::DWORD()[decl0]"><div><div class="token cpp_function">GetThreadErrorMode</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetThreadErrorMode@::BOOL(::DWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">SetThreadErrorMode</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwNewMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetThreadErrorMode@::BOOL(::DWORD, ::LPDWORD)[decl0]::dwNewMode"><div>dwNewMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPDWORD lpOldMode</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$SetThreadErrorMode@::BOOL(::DWORD, ::LPDWORD)[decl0]::lpOldMode"><div>lpOldMode</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$TerminateProcessOnMemoryExhaustion@void(::SIZE_T)[decl0]"><div><div class="token cpp_function">TerminateProcessOnMemoryExhaustion</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ SIZE_T FailedAllocationSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['SIZE_T'], [], [])"><div class="token cpp_type">SIZE_T</div></div> <div class="def" id="NI$TerminateProcessOnMemoryExhaustion@void(::SIZE_T)[decl0]::FailedAllocationSize"><div>FailedAllocationSize</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _ERRHANDLING_H_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'LONG': {
+        'displayNameInHtml': '<span class="cpp_type">LONG</span>',
+        'impls': [
+            'NI$LONG'
+        ],
+        'decls': []
+    },
+    'LPCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCSTR</span>',
+        'impls': [
+            'NI$LPCSTR'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPTOP_LEVEL_EXCEPTION_FILTER': {
+        'displayNameInHtml': '<span class="cpp_type">LPTOP_LEVEL_EXCEPTION_FILTER</span>',
+        'impls': [
+            'NI$LPTOP_LEVEL_EXCEPTION_FILTER'
+        ],
+        'decls': []
+    },
+    'PCONTEXT': {
+        'displayNameInHtml': '<span class="cpp_type">PCONTEXT</span>',
+        'impls': [
+            'NI$PCONTEXT'
+        ],
+        'decls': []
+    },
+    'PEXCEPTION_RECORD': {
+        'displayNameInHtml': '<span class="cpp_type">PEXCEPTION_RECORD</span>',
+        'impls': [
+            'NI$PEXCEPTION_RECORD'
+        ],
+        'decls': []
+    },
+    'PTOP_LEVEL_EXCEPTION_FILTER': {
+        'displayNameInHtml': '<span class="cpp_type">PTOP_LEVEL_EXCEPTION_FILTER</span>',
+        'impls': [
+            'NI$PTOP_LEVEL_EXCEPTION_FILTER'
+        ],
+        'decls': []
+    },
+    'PVECTORED_EXCEPTION_HANDLER': {
+        'displayNameInHtml': '<span class="cpp_type">PVECTORED_EXCEPTION_HANDLER</span>',
+        'impls': [
+            'NI$PVECTORED_EXCEPTION_HANDLER'
+        ],
+        'decls': []
+    },
+    'PVOID': {
+        'displayNameInHtml': '<span class="cpp_type">PVOID</span>',
+        'impls': [
+            'NI$PVOID'
+        ],
+        'decls': []
+    },
+    'SIZE_T': {
+        'displayNameInHtml': '<span class="cpp_type">SIZE_T</span>',
+        'impls': [
+            'NI$SIZE_T'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'ULONG_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG_PTR</span>',
+        'impls': [
+            'NI$ULONG_PTR'
+        ],
+        'decls': []
+    },
+    '_EXCEPTION_POINTERS': {
+        'displayNameInHtml': '<span class="cpp_type">_EXCEPTION_POINTERS</span>',
+        'impls': [
+            'NI$_EXCEPTION_POINTERS'
+        ],
+        'decls': [
+            'NF[0]$_EXCEPTION_POINTERS'
+        ]
+    }
+};
+symbolToFiles = {
+    'NF[0]$_EXCEPTION_POINTERS': { 'htmlFileName': 'eh.h', 'displayName': 'eh.h' },
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPTOP_LEVEL_EXCEPTION_FILTER': null,
+    'NI$PCONTEXT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PEXCEPTION_RECORD': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PTOP_LEVEL_EXCEPTION_FILTER': null,
+    'NI$PVECTORED_EXCEPTION_HANDLER': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PVOID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$SIZE_T': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$_EXCEPTION_POINTERS': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

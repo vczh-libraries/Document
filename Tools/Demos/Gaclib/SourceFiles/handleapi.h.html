@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>handleapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* handleapi.h -- ApiSet Contract for api-ms-win-core-handle-l1-1-0              *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _APISETHANDLE_</div>
+<div class="disabled">#define _APISETHANDLE_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Constants</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define INVALID_HANDLE_VALUE ((HANDLE)(LONG_PTR)-1)</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Prototypes</div>
+<div class="token cpp_comment ">//</div>
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CloseHandle@::BOOL(::HANDLE)[decl0]"><div><div class="token cpp_function">CloseHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ _Post_ptr_invalid_ HANDLE hObject</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$CloseHandle@::BOOL(::HANDLE)[decl0]::hObject"><div>hObject</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DuplicateHandle@::BOOL(::HANDLE, ::HANDLE, ::HANDLE, ::LPHANDLE, ::DWORD, ::BOOL, ::DWORD)[decl0]"><div><div class="token cpp_function">DuplicateHandle</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hSourceProcessHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DuplicateHandle@::BOOL(::HANDLE, ::HANDLE, ::HANDLE, ::LPHANDLE, ::DWORD, ::BOOL, ::DWORD)[decl0]::hSourceProcessHandle"><div>hSourceProcessHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HANDLE hSourceHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DuplicateHandle@::BOOL(::HANDLE, ::HANDLE, ::HANDLE, ::LPHANDLE, ::DWORD, ::BOOL, ::DWORD)[decl0]::hSourceHandle"><div>hSourceHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HANDLE hTargetProcessHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DuplicateHandle@::BOOL(::HANDLE, ::HANDLE, ::HANDLE, ::LPHANDLE, ::DWORD, ::BOOL, ::DWORD)[decl0]::hTargetProcessHandle"><div>hTargetProcessHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ LPHANDLE lpTargetHandle,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['LPHANDLE'], [], [])"><div class="token cpp_type">LPHANDLE</div></div> <div class="def" id="NI$DuplicateHandle@::BOOL(::HANDLE, ::HANDLE, ::HANDLE, ::LPHANDLE, ::DWORD, ::BOOL, ::DWORD)[decl0]::lpTargetHandle"><div>lpTargetHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwDesiredAccess,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DuplicateHandle@::BOOL(::HANDLE, ::HANDLE, ::HANDLE, ::LPHANDLE, ::DWORD, ::BOOL, ::DWORD)[decl0]::dwDesiredAccess"><div>dwDesiredAccess</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ BOOL bInheritHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$DuplicateHandle@::BOOL(::HANDLE, ::HANDLE, ::HANDLE, ::LPHANDLE, ::DWORD, ::BOOL, ::DWORD)[decl0]::bInheritHandle"><div>bInheritHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwOptions</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DuplicateHandle@::BOOL(::HANDLE, ::HANDLE, ::HANDLE, ::LPHANDLE, ::DWORD, ::BOOL, ::DWORD)[decl0]::dwOptions"><div>dwOptions</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CompareObjectHandles@::BOOL(::HANDLE, ::HANDLE)[decl0]"><div><div class="token cpp_function">CompareObjectHandles</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hFirstObjectHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$CompareObjectHandles@::BOOL(::HANDLE, ::HANDLE)[decl0]::hFirstObjectHandle"><div>hFirstObjectHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ HANDLE hSecondObjectHandle</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$CompareObjectHandles@::BOOL(::HANDLE, ::HANDLE)[decl0]::hSecondObjectHandle"><div>hSecondObjectHandle</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetHandleInformation@::BOOL(::HANDLE, ::LPDWORD)[decl0]"><div><div class="token cpp_function">GetHandleInformation</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hObject,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetHandleInformation@::BOOL(::HANDLE, ::LPDWORD)[decl0]::hObject"><div>hObject</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD lpdwFlags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetHandleInformation@::BOOL(::HANDLE, ::LPDWORD)[decl0]::lpdwFlags"><div>lpdwFlags</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetHandleInformation@::BOOL(::HANDLE, ::DWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">SetHandleInformation</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hObject,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$SetHandleInformation@::BOOL(::HANDLE, ::DWORD, ::DWORD)[decl0]::hObject"><div>hObject</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwMask,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetHandleInformation@::BOOL(::HANDLE, ::DWORD, ::DWORD)[decl0]::dwMask"><div>dwMask</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetHandleInformation@::BOOL(::HANDLE, ::DWORD, ::DWORD)[decl0]::dwFlags"><div>dwFlags</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _APISETHANDLE_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPHANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">LPHANDLE</span>',
+        'impls': [
+            'NI$LPHANDLE'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPHANDLE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

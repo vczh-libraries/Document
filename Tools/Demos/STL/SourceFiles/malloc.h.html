@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>malloc.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// malloc.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The memory allocation library.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="disabled">#ifndef _INC_MALLOC // include guard for 3rd party interop</div>
+<div class="disabled">#define _INC_MALLOC</div>
+
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+<div class="disabled">#include &lt;corecrt_malloc.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="token cpp_comment ">// Maximum heap request the heap manager will attempt</div>
+<div class="disabled">#ifdef _WIN64</div>
+<div class="disabled">    #define _HEAP_MAXREQ 0xFFFFFFFFFFFFFFE0</div>
+<div class="disabled">#else</div>
+<div class="disabled">    #define _HEAP_MAXREQ 0xFFFFFFE0
+#endif</div>
+
+
+
+<div class="token cpp_comment ">// Constants for _heapchk and _heapwalk routines</div>
+<div class="disabled">#define _HEAPEMPTY    (-1)</div>
+<div class="disabled">#define _HEAPOK       (-2)</div>
+<div class="disabled">#define _HEAPBADBEGIN (-3)</div>
+<div class="disabled">#define _HEAPBADNODE  (-4)</div>
+<div class="disabled">#define _HEAPEND      (-5)</div>
+<div class="disabled">#define _HEAPBADPTR   (-6)</div>
+<div class="disabled">#define _FREEENTRY      0</div>
+<div class="disabled">#define _USEDENTRY      1</div>
+
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_heapinfo"><div><div class="token cpp_type">_heapinfo</div></div></div>
+{
+    <div class="token cpp_keyword ">int</div>* <div class="def" id="NI$_heapinfo::_pentry"><div><div class="token cpp_field">_pentry</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_heapinfo::_size"><div><div class="token cpp_field">_size</div></div></div>;
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_heapinfo::_useflag"><div><div class="token cpp_field">_useflag</div></div></div>;
+} <div class="def" id="NI$_HEAPINFO"><div><div class="token cpp_type">_HEAPINFO</div></div></div>;
+
+
+
+<div class="disabled">#define _mm_free(a)      _aligned_free(a)</div>
+<div class="disabled">#define _mm_malloc(a, b) _aligned_malloc(a, b)</div>
+
+
+
+<div class="disabled">_Ret_notnull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">void* __cdecl _alloca(_In_ size_t _Size);</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_alloca@void *(::size_t)[decl0]"><div><div class="token cpp_function">_alloca</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_alloca@void *(::size_t)[decl0]::_Size"><div>_Size</div></div>);</div></div>
+
+
+
+<div class="disabled">#if !defined __midl &amp;&amp; !defined RC_INVOKED</div>
+
+<div class="expandable"><div class="disabled">    _ACRTIMP intptr_t __cdecl _get_heap_handle(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_heap_handle@::intptr_t()[decl0]"><div><div class="token cpp_function">_get_heap_handle</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="expandable"><div class="disabled">    _DCRTIMP int __cdecl _heapmin(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_heapmin@int()[decl0]"><div><div class="token cpp_function">_heapmin</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    #if defined _DEBUG || defined _CRT_USE_WINAPI_FAMILY_DESKTOP_APP || defined _CORECRT_BUILD</div>
+<div class="expandable"><div class="disabled">        _ACRTIMP int __cdecl _heapwalk(_Inout_ _HEAPINFO* _EntryInfo);
+    #endif</div>
+<div class="expanded">        <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_heapwalk@int(::_HEAPINFO *)[decl0]"><div><div class="token cpp_function">_heapwalk</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['_HEAPINFO'], [], [])"><div class="token cpp_type">_HEAPINFO</div></div>* <div class="def" id="NI$_heapwalk@int(::_HEAPINFO *)[decl0]::_EntryInfo"><div>_EntryInfo</div></div>);</div></div>
+
+<div class="disabled">    #ifdef _CRT_USE_WINAPI_FAMILY_DESKTOP_APP</div>
+<div class="expandable"><div class="disabled">        _Check_return_ _DCRTIMP int __cdecl _heapchk(void);
+    #endif</div>
+<div class="expanded">          <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_heapchk@int()[decl0]"><div><div class="token cpp_function">_heapchk</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="expandable"><div class="disabled">    _DCRTIMP int __cdecl _resetstkoflw(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_resetstkoflw@int()[decl0]"><div><div class="token cpp_function">_resetstkoflw</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    #define _ALLOCA_S_THRESHOLD     1024</div>
+<div class="disabled">    #define _ALLOCA_S_STACK_MARKER  0xCCCC</div>
+<div class="disabled">    #define _ALLOCA_S_HEAP_MARKER   0xDDDD</div>
+
+<div class="disabled">    #ifdef _WIN64</div>
+<div class="disabled">        #define _ALLOCA_S_MARKER_SIZE 16</div>
+<div class="disabled">    #else</div>
+<div class="disabled">        #define _ALLOCA_S_MARKER_SIZE 8
+    #endif</div>
+
+<div class="expandable"><div class="disabled">    _STATIC_ASSERT(sizeof(unsigned int) &lt;= _ALLOCA_S_MARKER_SIZE);</div>
+<div class="expanded">    <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$__static_assert_t"><div><div class="token cpp_type">__static_assert_t</div></div></div>[(<div class="token cpp_keyword ">sizeof</div>(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>) &lt;= <div class="token cpp_number ">8</div>) != <div class="token cpp_number ">0</div>];</div></div>
+
+
+<div class="expandable"><div class="disabled">    #pragma warning(push)</div>
+<div class="expanded">#pragma warning(push)</div></div>
+<div class="expandable"><div class="disabled">    #pragma warning(disable:6540)</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">6540</div>)</div></div>
+
+<div class="expandable"><div class="disabled">    __inline void* _MarkAllocaS(_Out_opt_ __crt_typefix(unsigned int*) void* _Ptr, unsigned int _Marker)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">void</div>* <div class="def" id="FB$_MarkAllocaS@void *(void *, unsigned int)[impl0]"><div><div class="token cpp_function">_MarkAllocaS</div></div></div>(   <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr"><div><div class="token cpp_argument">_Ptr</div></div></div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Marker"><div><div class="token cpp_argument">_Marker</div></div></div>)</div></div>
+    {
+        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>)
+        {
+            *((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>*)<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>) = <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Marker'], [], [])"><div class="token cpp_argument">_Marker</div></div>;
+<div class="expandable"><div class="disabled">            _Ptr = (char*)_Ptr + _ALLOCA_S_MARKER_SIZE;</div>
+<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div> = (<div class="token cpp_keyword ">char</div>*)<div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div> + <div class="token cpp_number ">8</div>;</div></div>
+        }
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'], [], [])"><div class="token cpp_argument">_Ptr</div></div>;
+    }
+
+    <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="FB$_MallocaComputeSize@::size_t(::size_t)[impl0]"><div><div class="token cpp_function">_MallocaComputeSize</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size"><div><div class="token cpp_argument">_Size</div></div></div>)
+    {
+<div class="expandable"><div class="disabled">        size_t _MarkedSize = _Size + _ALLOCA_S_MARKER_SIZE;</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize"><div>_MarkedSize</div></div> = <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size'], [], [])"><div class="token cpp_argument">_Size</div></div> + <div class="token cpp_number ">8</div>;</div></div>
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize'], [], [])">_MarkedSize</div> &gt; <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size'], [], [])"><div class="token cpp_argument">_Size</div></div> ? <div class="ref" onclick="jumpToSymbol([], ['_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize'], [], [])">_MarkedSize</div> : <div class="token cpp_number ">0</div>;
+    }
+
+<div class="expandable"><div class="disabled">    #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+
+<div class="disabled">#endif</div>
+
+
+
+<div class="disabled">#ifdef _DEBUG</div>
+
+<div class="disabled">    #ifndef _CRTDBG_MAP_ALLOC</div>
+<div class="disabled">        #undef _malloca</div>
+<div class="disabled">        #define _malloca(size)                                                           \</div>
+<div class="disabled">            __pragma(warning(suppress: 6255 6386))                                       \</div>
+<div class="disabled">            (_MallocaComputeSize(size) != 0                                              \</div>
+<div class="disabled">                ? _MarkAllocaS(malloc(_MallocaComputeSize(size)), _ALLOCA_S_HEAP_MARKER) \</div>
+<div class="disabled">                : NULL)</div>
+<div class="disabled">    #endif</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">    #undef _malloca</div>
+<div class="disabled">    #define _malloca(size)                                                                 \</div>
+<div class="disabled">        __pragma(warning(suppress: 6255 6386))                                             \</div>
+<div class="disabled">        (_MallocaComputeSize(size) != 0                                                    \</div>
+<div class="disabled">            ? (((_MallocaComputeSize(size) &lt;= _ALLOCA_S_THRESHOLD)                         \</div>
+<div class="disabled">                ? _MarkAllocaS(_alloca(_MallocaComputeSize(size)), _ALLOCA_S_STACK_MARKER) \</div>
+<div class="disabled">                : _MarkAllocaS(malloc(_MallocaComputeSize(size)), _ALLOCA_S_HEAP_MARKER))) \</div>
+<div class="disabled">            : NULL)</div>
+
+<div class="disabled">#endif</div>
+
+
+
+<div class="disabled">#if defined __midl &amp;&amp; !defined RC_INVOKED
+#elif defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC
+#else</div>
+
+<div class="disabled">    #undef _freea</div>
+
+<div class="expandable"><div class="disabled">    #pragma warning(push)</div>
+<div class="expanded">#pragma warning(push)</div></div>
+<div class="expandable"><div class="disabled">    #pragma warning(disable: 6014)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">6014</div>)</div></div>
+<div class="expandable"><div class="disabled">    __inline void __CRTDECL _freea(_Pre_maybenull_ _Post_invalid_ void* _Memory)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_freea@void(void *)[impl0]"><div><div class="token cpp_function">_freea</div></div></div>(    <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$_freea@void(void *)[impl0]::_Memory"><div><div class="token cpp_argument">_Memory</div></div></div>)</div></div>
+    {
+        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_freea@void(void *)[impl0]::_Marker"><div>_Marker</div></div>;
+        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div>)
+        {
+<div class="expandable"><div class="disabled">            _Memory = (char*)_Memory - _ALLOCA_S_MARKER_SIZE;</div>
+<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div> = (<div class="token cpp_keyword ">char</div>*)<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div> - <div class="token cpp_number ">8</div>;</div></div>
+            <div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Marker'], [], [])">_Marker</div> = *(<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>*)<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div>;
+<div class="expandable"><div class="disabled">            if (_Marker == _ALLOCA_S_HEAP_MARKER)</div>
+<div class="expanded">            <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Marker'], [], [])">_Marker</div> == <div class="token cpp_number ">0xDDDD</div>)</div></div>
+            {
+                <div class="ref" onclick="jumpToSymbol(['free@void(void *)'], ['free@void(void *)'], [], [])"><div class="token cpp_function">free</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Memory'], [], [])"><div class="token cpp_argument">_Memory</div></div>);
+            }
+<div class="disabled">            #ifdef _ASSERTE</div>
+<div class="expandable"><div class="disabled">            else if (_Marker != _ALLOCA_S_STACK_MARKER)</div>
+<div class="expanded">            <div class="token cpp_keyword ">else</div> <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_freea@void(void *)[impl0]::_Marker'], [], [])">_Marker</div> != <div class="token cpp_number ">0xCCCC</div>)</div></div>
+            {
+<div class="expandable"><div class="disabled">                _ASSERTE((&quot;Corrupted pointer passed to _freea&quot; &amp;&amp; 0));</div>
+<div class="expanded">                ((<div class="token cpp_keyword ">void</div>)<div class="token cpp_number ">0</div>);</div></div>
+            }
+<div class="disabled">            #endif</div>
+        }
+    }
+<div class="expandable"><div class="disabled">    #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+
+<div class="disabled">#endif</div>
+
+
+
+<div class="disabled">#if _CRT_INTERNAL_NONSTDC_NAMES</div>
+<div class="disabled">    #define alloca _alloca
+#endif</div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+#endif // _INC_MALLOC
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_HEAPINFO': {
+        'displayNameInHtml': '<span class="cpp_type">_HEAPINFO</span>',
+        'impls': [
+            'NI$_HEAPINFO'
+        ],
+        'decls': []
+    },
+    '_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize': {
+        'displayNameInHtml': '_MarkedSize',
+        'impls': [
+            'NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize'
+        ],
+        'decls': []
+    },
+    '_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    '_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Marker': {
+        'displayNameInHtml': '_Marker',
+        'impls': [
+            'NI$_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Marker'
+        ],
+        'decls': []
+    },
+    '_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr': {
+        'displayNameInHtml': '_Ptr',
+        'impls': [
+            'NI$_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr'
+        ],
+        'decls': []
+    },
+    '_freea@void(void *)[impl0]::_Marker': {
+        'displayNameInHtml': '_Marker',
+        'impls': [
+            'NI$_freea@void(void *)[impl0]::_Marker'
+        ],
+        'decls': []
+    },
+    '_freea@void(void *)[impl0]::_Memory': {
+        'displayNameInHtml': '_Memory',
+        'impls': [
+            'NI$_freea@void(void *)[impl0]::_Memory'
+        ],
+        'decls': []
+    },
+    'free@void(void *)': {
+        'displayNameInHtml': '<span class="cpp_function">free</span>(<span class="cpp_keyword">void</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$free@void(void *)[decl0]'
+        ]
+    },
+    'intptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">intptr_t</span>',
+        'impls': [
+            'NI$intptr_t'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$free@void(void *)[decl0]': { 'htmlFileName': 'corecrt_malloc.h', 'displayName': 'corecrt_malloc.h' },
+    'NI$_HEAPINFO': null,
+    'NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_MarkedSize': null,
+    'NI$_MallocaComputeSize@::size_t(::size_t)[impl0]::_Size': null,
+    'NI$_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Marker': null,
+    'NI$_MarkAllocaS@void *(void *, unsigned int)[impl0]::_Ptr': null,
+    'NI$_freea@void(void *)[impl0]::_Marker': null,
+    'NI$_freea@void(void *)[impl0]::_Memory': null,
+    'NI$intptr_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

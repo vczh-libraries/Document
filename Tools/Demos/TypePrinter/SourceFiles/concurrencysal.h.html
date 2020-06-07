@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>concurrencysal.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***
+*concurrencysal.h - markers for documenting the concurrent semantics of APIs
+*
+*       Copyright (c) Microsoft Corporation. All rights reserved.
+*
+*Purpose:
+*       This file contains macros for Concurrency SAL annotations. Definitions
+*       starting with _Internal are low level macros that are subject to change.
+*       Users should not use those low level macros directly.
+*       [ANSI]
+*
+*       [Public]
+*
+****/</div>
+
+<div class="disabled">#ifndef CONCURRENCYSAL_H</div>
+<div class="disabled">#define CONCURRENCYSAL_H</div>
+
+#pragma once
+
+<div class="disabled">#ifdef  __cplusplus // [</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif  // ]</div>
+
+<div class="disabled">#if !defined(__midl) &amp;&amp; defined(_PREFAST_) &amp;&amp; !defined(_SDV_)</div>
+
+<div class="disabled">__ANNOTATION(SAL_guarded_by(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_write_guarded_by(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_requires_lock_held(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_requires_exclusive_lock_held(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_requires_shared_lock_held(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_requires_lock_not_held(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_requires_no_locks_held(void));</div>
+<div class="disabled">__ANNOTATION(SAL_set_lock_count_to_zero(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_set_lock_count_to_one(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_acquires_lock(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_acquires_exclusive_lock(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_acquires_shared_lock(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_releases_lock(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_releases_exclusive_lock(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_releases_shared_lock(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_ignore_lock_match(__deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_has_lock_property(__AuToQuOtE __In_impl_ char *));</div>
+<div class="disabled">__ANNOTATION(SAL_has_lock_level(__AuToQuOtE __In_impl_ char *));</div>
+<div class="disabled">__ANNOTATION(SAL_lock_level_order(__deferTypecheck void *, __deferTypecheck void *));</div>
+<div class="disabled">__ANNOTATION(SAL_no_competing_thread(void));</div>
+<div class="disabled">__ANNOTATION(SAL_set_same_lock(__deferTypecheck void *, __deferTypecheck void *));</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * pre-defined global system locks</div>
+<div class="disabled"> */</div>
+<div class="disabled">extern int _Global_interlock_;</div>
+<div class="disabled">extern int _Global_cancel_spin_lock_;</div>
+<div class="disabled">extern int _Global_critical_region_;</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * Annotation identifiers</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Internal_create_CSAL_identifier_(id) const char id[] = &quot;&quot;;</div>
+
+<div class="disabled">_Internal_create_CSAL_identifier_(_Lock_kind_mutex_)</div>
+<div class="disabled">_Internal_create_CSAL_identifier_(_Lock_kind_event_)</div>
+<div class="disabled">_Internal_create_CSAL_identifier_(_Lock_kind_semaphore_)</div>
+<div class="disabled">_Internal_create_CSAL_identifier_(_Lock_kind_spin_lock_)</div>
+<div class="disabled">_Internal_create_CSAL_identifier_(_Lock_kind_critical_section_)</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * data protection</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Guarded_by_(lock) _SAL2_Source_(_Guarded_by_, (lock), _SA_annotes1(SAL_guarded_by,lock))</div>
+<div class="disabled">#define _Write_guarded_by_(lock) _SAL2_Source_(_Write_guarded_by_, (lock), _SA_annotes1(SAL_write_guarded_by,lock))</div>
+<div class="disabled">#define _Interlocked_ _Guarded_by_(_Global_interlock_)</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * interlocked operand used in interlocked instructions</div>
+<div class="disabled"> */</div>
+<div class="disabled">#ifndef _Interlocked_operand_</div>
+<div class="disabled">#define _Interlocked_operand_ _SAL2_Source_(_Interlocked_operand_, (), _Pre_ _SA_annotes0(SAL_interlocked))</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * caller/callee locking contracts</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Requires_lock_held_(lock)  _SAL2_Source_(_Requires_lock_held_, (lock), _Pre_ _SA_annotes1(SAL_requires_lock_held,lock))</div>
+<div class="disabled">#define _Requires_exclusive_lock_held_(lock)  _SAL2_Source_(_Requires_exclusive_lock_held_, (lock), _Pre_ _SA_annotes1(SAL_requires_exclusive_lock_held,lock))</div>
+<div class="disabled">#define _Requires_shared_lock_held_(lock)  _SAL2_Source_(_Requires_shared_lock_held_, (lock), _Pre_ _SA_annotes1(SAL_requires_shared_lock_held,lock))</div>
+
+<div class="disabled">#define _Requires_lock_not_held_(lock)  _SAL2_Source_(_Requires_lock_not_held_, (lock), _Pre_ _SA_annotes1(SAL_requires_lock_not_held,lock))</div>
+<div class="disabled">#define _Requires_no_locks_held_  _SAL2_Source_(_Requires_no_locks_held_, (), _Pre_ _SA_annotes0(SAL_requires_no_locks_held))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * acquire/release locking side effects</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Acquires_lock_(lock)  _SAL2_Source_(_Acquires_lock_, (lock), _Post_ _SA_annotes1(SAL_acquires_lock,lock))</div>
+<div class="disabled">#define _Acquires_exclusive_lock_(lock)  _SAL2_Source_(_Acquires_exclusive_lock_, (lock), _Post_ _SA_annotes1(SAL_acquires_exclusive_lock,lock))</div>
+<div class="disabled">#define _Acquires_shared_lock_(lock)  _SAL2_Source_(_Acquires_shared_lock_, (lock), _Post_ _SA_annotes1(SAL_acquires_shared_lock,lock))</div>
+
+<div class="disabled">#define _Releases_lock_(lock)  _SAL2_Source_(_Releases_lock_, (lock), _Post_ _SA_annotes1(SAL_releases_lock,lock))</div>
+<div class="disabled">#define _Releases_exclusive_lock_(lock)  _SAL2_Source_(_Releases_exclusive_lock_, (lock), _Post_ _SA_annotes1(SAL_releases_exclusive_lock,lock))</div>
+<div class="disabled">#define _Releases_shared_lock_(lock)  _SAL2_Source_(_Releases_shared_lock_, (lock), _Post_ _SA_annotes1(SAL_releases_shared_lock,lock))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * acquire/release locking side effects for non-reentrant locks</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Acquires_nonreentrant_lock_(lock) \</div>
+<div class="disabled">     _SAL2_Source_(_Acquires_nonreentrant_lock_, (lock), \</div>
+<div class="disabled">    _Requires_lock_not_held_(lock) \</div>
+<div class="disabled">    _Acquires_lock_(lock))</div>
+
+<div class="disabled">#define _Releases_nonreentrant_lock_(lock) \</div>
+<div class="disabled">     _SAL2_Source_(_Releases_nonreentrant_lock_, (lock), \</div>
+<div class="disabled">    _Requires_lock_held_(lock) \</div>
+<div class="disabled">    _Releases_lock_(lock))</div>
+
+<div class="disabled">#define _Post_same_lock_(a,b)  _SAL2_Source_(_Post_same_lock_, (a,b), _Post_ _SA_annotes2(SAL_set_same_lock,a,b))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * lock level</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Create_lock_level_(level) _Internal_create_CSAL_identifier_(level)</div>
+
+<div class="disabled">#define _Has_lock_level_(level)  _SAL2_Source_(_Has_lock_level_, (level), _SA_annotes1(SAL_has_lock_level,#level))</div>
+
+<div class="disabled">#define _Internal_lock_level_order_(a,b)  _SAL2_Source_(_Internal_lock_level_order_, (a,b), _SA_annotes2(SAL_lock_level_order,a,b))</div>
+<div class="disabled">#define _Csalcat1_(x,y) x##y</div>
+<div class="disabled">#define _Csalcat2_(x,y) _Csalcat1_(x,y)</div>
+
+<div class="disabled">#define _Lock_level_order_(a,b) \</div>
+<div class="disabled">    extern _Internal_lock_level_order_(a,b) void _Sal_order_##a##_##b(_In_z_ const char*a, _In_z_ const char*b); \</div>
+<div class="disabled">    static __inline void CSALCAT2(CSAL_LockOrder,__COUNTER__)(void){_Sal_order_##a##_##b(#a,#b);}</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * threading context</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _No_competing_thread_  _SAL2_Source_(_No_competing_thread_, (), _Pre_ _SA_annotes0(SAL_no_competing_thread))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * refinement and suppression</div>
+<div class="disabled"> */</div>
+<div class="disabled">extern _Acquires_lock_(*plock) void _Internal_acquires_lock_(void* plock);</div>
+<div class="disabled">extern _Releases_lock_(*plock) void _Internal_releases_lock_(void* plock);</div>
+
+<div class="disabled">#define _Internal_set_lock_count_to_zero_(lock)  _SAL2_Source_(Internal_set_lock_count_to_zero_, (lock), _Post_ _SA_annotes1(SAL_set_lock_count_to_zero,lock))</div>
+<div class="disabled">#define _Internal_set_lock_count_to_one_(lock)  _SAL2_Source_(_Internal_set_lock_count_to_one_, (lock), _Post_ _SA_annotes1(SAL_set_lock_count_to_one,lock))</div>
+
+<div class="disabled">extern _Internal_set_lock_count_to_one_(*plock) void _Internal_lock_held_(void* plock);</div>
+<div class="disabled">extern _Internal_set_lock_count_to_zero_(*plock) void _Internal_lock_not_held_(void* plock);</div>
+<div class="disabled">extern _Post_same_lock_(*plock1, *plock2) void _Internal_same_lock_(void* plock1, void* plock2);</div>
+
+<div class="disabled">#define _Analysis_assume_lock_acquired_(lock)  _Internal_acquires_lock_((void*)(&amp;(lock)))</div>
+<div class="disabled">#define _Analysis_assume_lock_released_(lock)  _Internal_releases_lock_((void*)(&amp;(lock)))</div>
+
+<div class="disabled">#define _Analysis_assume_lock_held_(lock) _Internal_lock_held_((void*)(&amp;(lock)))</div>
+<div class="disabled">#define _Analysis_assume_lock_not_held_(lock) _Internal_lock_not_held_((void*)(&amp;(lock)))</div>
+<div class="disabled">#define _Analysis_assume_same_lock_(lock1, lock2) _Internal_same_lock_((void*)(&amp;(lock1)), (void*)(&amp;(lock2)))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * _Function_ignore_lock_checking_ may be deprecated in future versions of SAL</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Function_ignore_lock_checking_(lock)  _SAL2_Source_(_Function_ignore_lock_checking_, (lock), _Pre_ _SA_annotes1(SAL_ignore_lock_match,lock))</div>
+<div class="disabled">extern _Function_ignore_lock_checking_(*plock) void _Internal_suppress_lock_checking_(void* plock);</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * _Analysis_suppress_lock_checking_ may be deprecated in future versions of SAL</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Analysis_suppress_lock_checking_(lock) _Internal_suppress_lock_checking_((void*)(&amp;(lock)));</div>
+
+<div class="disabled">#define _Benign_race_begin_ __pragma(warning(push)) __pragma(warning(disable:26100 26101 26150 26130 26180 26131 26181 28112))</div>
+<div class="disabled">#define _Benign_race_end_ __pragma(warning(pop))</div>
+
+<div class="disabled">#define _No_competing_thread_begin_ __pragma(warning(push)) __pragma(warning(disable:26100 26101 26150 26101 26151 26110 26160 26130 26180 26131 26181 28112))</div>
+<div class="disabled">#define _No_competing_thread_end_ __pragma(warning(pop))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * lock kinds</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define _Has_lock_kind_(kind)  _SAL2_Source_(_Has_lock_kind_, (kind), _SA_annotes1(SAL_has_lock_property,#kind))</div>
+
+
+<div class="disabled">/*</div>
+<div class="disabled"> * Old spelling</div>
+<div class="disabled"> * Note: the old version may be deprecated in the future!!!</div>
+<div class="disabled"> */</div>
+<div class="disabled">extern int __system_interlock;</div>
+<div class="disabled">extern int __system_cancel_spinlock;</div>
+<div class="disabled">extern int __system_critical_region;</div>
+
+<div class="disabled">#define __guarded_by(lock) _SAL1_1_Source_(__guarded_by, (lock), _SA_annotes1(SAL_guarded_by,lock))</div>
+<div class="disabled">#define __write_guarded_by(lock) _SAL1_1_Source_(__write_guarded_by, (lock), _SA_annotes1(SAL_write_guarded_by,lock))</div>
+<div class="disabled">#define __interlocked __guarded_by(_Global_interlock_)</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * caller/callee locking contracts</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define __requires_lock_held(lock) _SAL1_1_Source_(__requires_lock_held, (lock), __pre _SA_annotes1(SAL_requires_lock_held,lock))</div>
+<div class="disabled">#define __requires_exclusive_lock_held(lock) _SAL1_1_Source_(__requires_exclusive_lock_held, (lock), __pre _SA_annotes1(SAL_requires_exclusive_lock_held,lock))</div>
+<div class="disabled">#define __requires_shared_lock_held(lock) _SAL1_1_Source_(__requires_shared_lock_held, (lock), __pre _SA_annotes1(SAL_requires_shared_lock_held,lock))</div>
+
+<div class="disabled">#define __requires_lock_not_held(lock) _SAL1_1_Source_(__requires_lock_not_held, (lock), __pre _SA_annotes1(SAL_requires_lock_not_held,lock))</div>
+<div class="disabled">#define __requires_no_locks_held _SAL1_1_Source_(__requires_no_locks_held, (), __pre _SA_annotes0(SAL_requires_no_locks_held))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * acquire/release locking side effects</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define __acquires_lock(lock) _SAL1_1_Source_(__acquires_lock, (lock), __post _SA_annotes1(SAL_acquires_lock,lock))</div>
+<div class="disabled">#define __acquires_exclusive_lock(lock) _SAL1_1_Source_(__acquires_exclusive_lock, (lock), __post _SA_annotes1(SAL_acquires_exclusive_lock,lock))</div>
+<div class="disabled">#define __acquires_shared_lock(lock) _SAL1_1_Source_(__acquires_shared_lock, (lock), __post _SA_annotes1(SAL_acquires_shared_lock,lock))</div>
+
+<div class="disabled">#define __releases_lock(lock) _SAL1_1_Source_(__releases_lock, (lock), __post _SA_annotes1(SAL_releases_lock,lock))</div>
+<div class="disabled">#define __releases_exclusive_lock(lock) _SAL1_1_Source_(__releases_exclusive_lock, (lock),__post _SA_annotes1(SAL_releases_exclusive_lock,lock))</div>
+<div class="disabled">#define __releases_shared_lock(lock) _SAL1_1_Source_(__releases_shared_lock, (lock), __post _SA_annotes1(SAL_releases_shared_lock,lock))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * lock properties</div>
+<div class="disabled"> * The following kind options are supported:</div>
+<div class="disabled"> * __has_lock_property(MUTEX)</div>
+<div class="disabled"> * __has_lock_property(EVENT)</div>
+<div class="disabled"> * __has_lock_property(SEMAPHORE)</div>
+<div class="disabled"> * __has_lock_property(OTHER_HANDLE)</div>
+<div class="disabled"> * __has_lock_property(REENTRANT)</div>
+<div class="disabled"> * __has_lock_property(NON_REENTRANT)</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define __has_lock_property(kind) _SAL1_1_Source_(__has_lock_property, (kind), _SA_annotes1(SAL_has_lock_property,#kind))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * lock level</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define __declare_lock_level(level) _Internal_create_CSAL_identifier_(level)</div>
+<div class="disabled">#define __has_lock_level(level) _SAL1_1_Source_(__has_lock_level, (level), _SA_annotes1(SAL_has_lock_level,#level))</div>
+
+<div class="disabled">#define __internal_lock_level_order(a,b) _SAL1_1_Source_(__internal_lock_level_order, (a,b), _SA_annotes2(SAL_lock_level_order,#a,#b))</div>
+<div class="disabled">#define CSALCAT1(x,y) x##y</div>
+<div class="disabled">#define CSALCAT2(x,y) CSALCAT1(x,y)</div>
+
+<div class="disabled">#define __lock_level_order(a,b) \</div>
+<div class="disabled">    extern __internal_lock_level_order(a,b) void __sal_order_##a##_##b(__in_z char*a, __in_z char*b); \</div>
+<div class="disabled">    static __inline void CSALCAT2(CSAL_LockOrder,__COUNTER__)(void){__sal_order_##a##_##b(#a,#b);}</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * threading context</div>
+<div class="disabled"> */</div>
+<div class="disabled">#define __no_competing_thread _SAL1_1_Source_(__no_competing_thread, (), __pre _SA_annotes0(SAL_no_competing_thread))</div>
+
+<div class="disabled">/*</div>
+<div class="disabled"> * refinement and suppression</div>
+<div class="disabled"> */</div>
+<div class="disabled">extern __acquires_lock(*plock) void __internal_acquires_lock(void* plock);</div>
+<div class="disabled">extern __releases_lock(*plock) void __internal_releases_lock(void* plock);</div>
+
+<div class="disabled">#define __analysis_assume_lock_acquired(lock) __internal_acquires_lock((void*)(&amp;(lock)))</div>
+<div class="disabled">#define __analysis_assume_lock_released(lock) __internal_releases_lock((void*)(&amp;(lock)))</div>
+
+<div class="disabled">#define __function_ignore_lock_checking(lock) _SAL1_1_Source_(__function_ignore_lock_cleanup, (lock), __pre _SA_annotes1(SAL_ignore_lock_match,lock))</div>
+<div class="disabled">extern __function_ignore_lock_checking(*plock) void __internal_suppress_lock_checking(void* plock);</div>
+
+<div class="disabled">#define __analysis_suppress_lock_checking(lock) __internal_suppress_lock_checking((void*)(&amp;(lock)));</div>
+
+<div class="disabled">#define BENIGN_RACE_BEGIN __pragma(warning(push)) __pragma(warning(disable:26100 26150 26130 26180 26131 26181))</div>
+<div class="disabled">#define BENIGN_RACE_END __pragma(warning(pop))</div>
+
+<div class="disabled">#define NO_COMPETING_THREAD_BEGIN __pragma(warning(push)) __pragma(warning(disable:26100 26150 26101 26151 26110 26160 26130 26180 26131 26181))</div>
+<div class="disabled">#define NO_COMPETING_THREAD_END __pragma(warning(pop))</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">#ifndef _Interlocked_operand_</div>
+<div class="disabled">#define _Interlocked_operand_
+#endif</div>
+
+<div class="disabled">#define _Guarded_by_(lock)</div>
+<div class="disabled">#define _Write_guarded_by_(lock)</div>
+<div class="disabled">#define _Interlocked_</div>
+<div class="disabled">#define _Requires_lock_held_(lock)</div>
+<div class="disabled">#define _Requires_exclusive_lock_held_(lock)</div>
+<div class="disabled">#define _Requires_shared_lock_held_(lock)</div>
+<div class="disabled">#define _Requires_lock_not_held_(lock)</div>
+<div class="disabled">#define _Requires_no_locks_held_</div>
+<div class="disabled">#define _Acquires_lock_(lock)</div>
+<div class="disabled">#define _Acquires_exclusive_lock_(lock)</div>
+<div class="disabled">#define _Acquires_shared_lock_(lock)</div>
+<div class="disabled">#define _Releases_lock_(lock)</div>
+<div class="disabled">#define _Releases_exclusive_lock_(lock)</div>
+<div class="disabled">#define _Releases_shared_lock_(lock)</div>
+<div class="disabled">#define _Acquires_nonreentrant_lock_(lock)</div>
+<div class="disabled">#define _Releases_nonreentrant_lock_(lock)</div>
+
+<div class="disabled">#define _Post_same_lock_(lock1,lock2)</div>
+
+<div class="disabled">#define _Internal_set_lock_count_(lock, count)</div>
+
+<div class="disabled">#define _Create_lock_level_(level)</div>
+<div class="disabled">#define _Has_lock_level_(level)</div>
+<div class="disabled">#define _Internal_lock_level_order_(a,b)</div>
+<div class="disabled">#define _Csalcat1_(x,y)</div>
+<div class="disabled">#define _Csalcat2_(x,y)</div>
+<div class="disabled">#define _Lock_level_order_(a,b)</div>
+<div class="disabled">#define _No_competing_thread_</div>
+<div class="disabled">#define _Analysis_assume_lock_acquired_(lock)</div>
+<div class="disabled">#define _Analysis_assume_lock_released_(lock)</div>
+<div class="disabled">#define _Analysis_assume_lock_held_(lock)</div>
+<div class="disabled">#define _Analysis_assume_lock_not_held_(lock)</div>
+<div class="disabled">#define _Analysis_assume_same_lock_(lock1, lock2)</div>
+<div class="disabled">#define _Function_ignore_lock_checking_(lock)</div>
+<div class="disabled">#define _Analysis_suppress_lock_checking_(lock)</div>
+
+<div class="disabled">#define _Benign_race_begin_ __pragma(warning(push))</div>
+<div class="disabled">#define _Benign_race_end_ __pragma(warning(pop))</div>
+
+<div class="disabled">#define _No_competing_thread_begin_ __pragma(warning(push))</div>
+<div class="disabled">#define _No_competing_thread_end_ __pragma(warning(pop))</div>
+
+<div class="disabled">#define _Has_lock_kind_(kind)</div>
+
+<div class="token cpp_comment ">/*
+ * Old spelling: will be deprecated
+ */</div>
+<div class="disabled">#define __guarded_by(lock)</div>
+<div class="disabled">#define __write_guarded_by(lock)</div>
+<div class="disabled">#define __interlocked</div>
+<div class="disabled">#define __requires_lock_held(lock)</div>
+<div class="disabled">#define __requires_exclusive_lock_held(lock)</div>
+<div class="disabled">#define __requires_shared_lock_held(lock)</div>
+<div class="disabled">#define __requires_lock_not_held(lock)</div>
+<div class="disabled">#define __requires_no_locks_held</div>
+<div class="disabled">#define __acquires_lock(lock)</div>
+<div class="disabled">#define __acquires_exclusive_lock(lock)</div>
+<div class="disabled">#define __acquires_shared_lock(lock)</div>
+<div class="disabled">#define __releases_lock(lock)</div>
+<div class="disabled">#define __releases_exclusive_lock(lock)</div>
+<div class="disabled">#define __releases_shared_lock(lock)</div>
+
+<div class="disabled">#define __has_lock_property(kind)</div>
+<div class="disabled">#define __declare_lock_level(level)</div>
+<div class="disabled">#define __has_lock_level(level)</div>
+<div class="disabled">#define __internal_lock_level_order(a,b)</div>
+<div class="disabled">#define CSALCAT1(x,y)</div>
+<div class="disabled">#define CSALCAT2(x,y)</div>
+<div class="disabled">#define __lock_level_order(a,b)</div>
+<div class="disabled">#define __no_competing_thread</div>
+<div class="disabled">#define __analysis_assume_lock_acquired(lock)</div>
+<div class="disabled">#define __analysis_assume_lock_released(lock)</div>
+<div class="disabled">#define __function_ignore_lock_checking(lock)</div>
+<div class="disabled">#define __analysis_suppress_lock_checking(lock)</div>
+
+<div class="disabled">#define BENIGN_RACE_BEGIN __pragma(warning(push))</div>
+<div class="disabled">#define BENIGN_RACE_END __pragma(warning(pop))</div>
+
+<div class="disabled">#define NO_COMPETING_THREAD_BEGIN __pragma(warning(push))</div>
+<div class="disabled">#define NO_COMPETING_THREAD_END __pragma(warning(pop))</div>
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // CONCURRENCYSAL_H
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

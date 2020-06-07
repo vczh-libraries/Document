@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>xlocmes</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">// xlocmes internal header (from &lt;locale&gt;)</div>
+#pragma once
+<div class="disabled">#ifndef _XLOCMES_</div>
+<div class="disabled">#define _XLOCMES_</div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+<div class="disabled">#include &lt;xiosbase&gt;</div>
+
+<div class="expandable"><div class="disabled"> #pragma pack(push,_CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push,<div class="token cpp_number ">8</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(push,_STL_WARNING_LEVEL)</div>
+<div class="expanded">#pragma warning(push,<div class="token cpp_number ">3</div>)</div></div>
+<div class="expandable"><div class="disabled"> #pragma warning(disable: _STL_DISABLED_WARNINGS)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4455</div> <div class="token cpp_number ">4494</div>  <div class="token cpp_number ">4619</div> <div class="token cpp_number ">4643</div> <div class="token cpp_number ">4702</div> <div class="token cpp_number ">4984</div> <div class="token cpp_number ">4988</div> )</div></div>
+<div class="disabled"> _STL_DISABLE_CLANG_WARNINGS</div>
+<div class="disabled"> #pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled"> #undef new</div>
+
+<div class="expandable"><div class="disabled">_STD_BEGIN</div>
+<div class="expanded"><div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[54]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {</div></div>
+		<div class="token cpp_comment ">// STRUCT messages_base</div>
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$std::messages_base"><div><div class="token cpp_type">messages_base</div></div></div>
+	: <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::locale::facet'], [], [])"><div class="token cpp_type">facet</div></div>
+	{	<div class="token cpp_comment ">// base class for messages</div>
+	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$std::messages_base::catalog"><div><div class="token cpp_type">catalog</div></div></div>;
+
+	<div class="token cpp_keyword ">explicit</div> <div class="def" id="FB$std::messages_base::$__ctor@(::size_t)[impl0]"><div><div class="token cpp_function">messages_base</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$std::messages_base::$__ctor@(::size_t)[impl0]::_Refs"><div><div class="token cpp_argument">_Refs</div></div></div> = <div class="token cpp_number ">0</div>)
+		: <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::locale::facet'], [], [])"><div class="token cpp_type">facet</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages_base::$__ctor@(::size_t)[impl0]::_Refs'], [], [])"><div class="token cpp_argument">_Refs</div></div>)
+		{	<div class="token cpp_comment ">// default constructor</div>
+		}
+	};
+
+		<div class="token cpp_comment ">// CLASS TEMPLATE messages</div>
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::messages::_Elem"><div><div class="token cpp_type">_Elem</div></div></div>&gt;
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::messages"><div><div class="token cpp_type">messages</div></div></div>
+		: <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['std::messages_base'], [], [])"><div class="token cpp_type">messages_base</div></div>
+	{	<div class="token cpp_comment ">// facet for obtaining messages from a catalog</div>
+<div class="token cpp_keyword ">public</div>:
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::messages::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div> <div class="def" id="NI$std::messages::char_type"><div><div class="token cpp_type">char_type</div></div></div>;
+	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['std::basic_string'], [], [])"><div class="token cpp_type">basic_string</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::messages::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>, <div class="ref" onclick="jumpToSymbol(['std::char_traits', 'std::char_traits@<char16_t>', 'std::char_traits@<char32_t>', 'std::char_traits@<char>', 'std::char_traits@<unsigned short>', 'std::char_traits@<wchar_t>'], ['std::char_traits'], [], [])"><div class="token cpp_type">char_traits</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::messages::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;, <div class="ref" onclick="jumpToSymbol(['std::allocator', 'std::allocator@<void>'], ['std::allocator'], [], [])"><div class="token cpp_type">allocator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::messages::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt; &gt;
+		<div class="def" id="NI$std::messages::string_type"><div><div class="token cpp_type">string_type</div></div></div>;
+
+	<div class="ref" onclick="jumpToSymbol([], ['std::messages_base::catalog'], [], [])"><div class="token cpp_type">catalog</div></div> <div class="def" id="FB$std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]"><div><div class="token cpp_function">open</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::string'], [], [])"><div class="token cpp_type">string</div></div>&amp; <div class="def" id="NI$std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Catname"><div><div class="token cpp_argument">_Catname</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>&amp; <div class="def" id="NI$std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Loc"><div><div class="token cpp_argument">_Loc</div></div></div>) <div class="token cpp_keyword ">const</div>
+		{	<div class="token cpp_comment ">// open catalog</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['std::messages::do_open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)'], ['std::messages::do_open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)'], [], [])"><div class="token cpp_function">do_open</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Catname'], [], [])"><div class="token cpp_argument">_Catname</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Loc'], [], [])"><div class="token cpp_argument">_Loc</div></div>));
+		}
+
+	<div class="ref" onclick="jumpToSymbol([], ['std::messages::string_type'], [], [])"><div class="token cpp_type">string_type</div></div> <div class="def" id="FB$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]"><div><div class="token cpp_function">get</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages_base::catalog'], [], [])"><div class="token cpp_type">catalog</div></div> <div class="def" id="NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Catval"><div><div class="token cpp_argument">_Catval</div></div></div>, <div class="token cpp_keyword ">int</div> <div class="def" id="NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Set"><div><div class="token cpp_argument">_Set</div></div></div>, <div class="token cpp_keyword ">int</div> <div class="def" id="NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Message"><div><div class="token cpp_argument">_Message</div></div></div>,
+		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::messages::string_type'], [], [])"><div class="token cpp_type">string_type</div></div>&amp; <div class="def" id="NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt"><div><div class="token cpp_argument">_Dflt</div></div></div>) <div class="token cpp_keyword ">const</div>
+		{	<div class="token cpp_comment ">// get message from set in catalog</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)'], ['std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)'], [], [])"><div class="token cpp_function">do_get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Catval'], [], [])"><div class="token cpp_argument">_Catval</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Set'], [], [])"><div class="token cpp_argument">_Set</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Message'], [], [])"><div class="token cpp_argument">_Message</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt'], [], [])"><div class="token cpp_argument">_Dflt</div></div>));
+		}
+
+	<div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::messages::close@void(::std::messages_base::catalog)[impl0]"><div><div class="token cpp_function">close</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages_base::catalog'], [], [])"><div class="token cpp_type">catalog</div></div> <div class="def" id="NI$std::messages::close@void(::std::messages_base::catalog)[impl0]::_Catval"><div><div class="token cpp_argument">_Catval</div></div></div>) <div class="token cpp_keyword ">const</div>
+		{	<div class="token cpp_comment ">// close catalog</div>
+		<div class="ref" onclick="jumpToSymbol(['std::messages::do_close@void(::std::messages_base::catalog)'], ['std::messages::do_close@void(::std::messages_base::catalog)'], [], [])"><div class="token cpp_function">do_close</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::close@void(::std::messages_base::catalog)[impl0]::_Catval'], [], [])"><div class="token cpp_argument">_Catval</div></div>);
+		}
+
+<div class="expandable"><div class="disabled">	__PURE_APPDOMAIN_GLOBAL _CRTIMP2_PURE_IMPORT static locale::id id;	// unique facet id</div>
+<div class="expanded">	 <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::locale::id'], [], [])"><div class="token cpp_type">id</div></div> <div class="def" id="NF[0]$std::messages::id"><div class="ref" onclick="jumpToSymbol([], ['std::messages::id'], [], [])"><div class="token cpp_field">id</div></div></div>;	<div class="token cpp_comment ">// unique facet id</div></div></div>
+
+	<div class="token cpp_keyword ">explicit</div> <div class="def" id="FB$std::messages::$__ctor@(::size_t)[impl0]"><div><div class="token cpp_function">messages</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$std::messages::$__ctor@(::size_t)[impl0]::_Refs"><div><div class="token cpp_argument">_Refs</div></div></div> = <div class="token cpp_number ">0</div>)
+		: <div class="ref" onclick="jumpToSymbol([], ['std::messages_base'], [], [])"><div class="token cpp_type">messages_base</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::$__ctor@(::size_t)[impl0]::_Refs'], [], [])"><div class="token cpp_argument">_Refs</div></div>)
+		{	<div class="token cpp_comment ">// construct from current locale</div>
+<div class="expandable"><div class="disabled">		_BEGIN_LOCINFO(_Lobj)</div>
+<div class="expanded">		{ <div class="ref" onclick="jumpToSymbol([], ['std::_Locinfo'], [], [])"><div class="token cpp_type">_Locinfo</div></div> <div class="def" id="NI$std::messages::$__ctor@(::size_t)[impl0]::_Lobj"><div>_Lobj</div></div>;</div></div>
+			<div class="ref" onclick="jumpToSymbol(['std::messages::_Init@void(::std::_Locinfo const &)'], ['std::messages::_Init@void(::std::_Locinfo const &)'], [], [])"><div class="token cpp_function">_Init</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::$__ctor@(::size_t)[impl0]::_Lobj'], [], [])">_Lobj</div>);
+<div class="expandable"><div class="disabled">		_END_LOCINFO()</div>
+<div class="expanded">		}</div></div>
+		}
+
+	<div class="def" id="FB$std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]"><div><div class="token cpp_function">messages</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::_Locinfo'], [], [])"><div class="token cpp_type">_Locinfo</div></div>&amp; <div class="def" id="NI$std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Lobj"><div><div class="token cpp_argument">_Lobj</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Refs"><div><div class="token cpp_argument">_Refs</div></div></div> = <div class="token cpp_number ">0</div>)
+		: <div class="ref" onclick="jumpToSymbol([], ['std::messages_base'], [], [])"><div class="token cpp_type">messages_base</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Refs'], [], [])"><div class="token cpp_argument">_Refs</div></div>)
+		{	<div class="token cpp_comment ">// construct from specified locale</div>
+		<div class="ref" onclick="jumpToSymbol(['std::messages::_Init@void(::std::_Locinfo const &)'], ['std::messages::_Init@void(::std::_Locinfo const &)'], [], [])"><div class="token cpp_function">_Init</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Lobj'], [], [])"><div class="token cpp_argument">_Lobj</div></div>);
+		}
+
+	<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="FB$std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]"><div><div class="token cpp_function">_Getcat</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::locale::facet'], [], [])"><div class="token cpp_type">facet</div></div> **<div class="def" id="NI$std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ppf"><div><div class="token cpp_argument">_Ppf</div></div></div> = <div class="token cpp_keyword ">nullptr</div>,
+		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div> *<div class="def" id="NI$std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ploc"><div><div class="token cpp_argument">_Ploc</div></div></div> = <div class="token cpp_keyword ">nullptr</div>)
+		{	<div class="token cpp_comment ">// return locale category mask and construct standard facet</div>
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ppf'], [], [])"><div class="token cpp_argument">_Ppf</div></div> != <div class="token cpp_keyword ">nullptr</div> &amp;&amp; *<div class="ref" onclick="jumpToSymbol([], ['std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ppf'], [], [])"><div class="token cpp_argument">_Ppf</div></div> == <div class="token cpp_keyword ">nullptr</div>)
+			*<div class="ref" onclick="jumpToSymbol([], ['std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ppf'], [], [])"><div class="token cpp_argument">_Ppf</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['std::messages'], [], [])"><div class="token cpp_type">messages</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::messages::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;(
+				<div class="ref" onclick="jumpToSymbol([], ['std::_Locinfo'], [], [])"><div class="token cpp_type">_Locinfo</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ploc'], [], [])"><div class="token cpp_argument">_Ploc</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['std::locale::c_str@char const *()'], ['std::locale::c_str@char const *()'], [], [])"><div class="token cpp_function">c_str</div></div>()));
+<div class="expandable"><div class="disabled">		return (_X_MESSAGES);</div>
+<div class="expanded">		<div class="token cpp_keyword ">return</div> (<div class="token cpp_number ">6</div>);</div></div>
+		}
+
+<div class="token cpp_keyword ">protected</div>:
+	<div class="def" id="FB$std::messages::$__ctor@(char const *, ::size_t)[impl0]"><div><div class="token cpp_function">messages</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div> *<div class="def" id="NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Locname"><div><div class="token cpp_argument">_Locname</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Refs"><div><div class="token cpp_argument">_Refs</div></div></div> = <div class="token cpp_number ">0</div>)
+		: <div class="ref" onclick="jumpToSymbol([], ['std::messages_base'], [], [])"><div class="token cpp_type">messages_base</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Refs'], [], [])"><div class="token cpp_argument">_Refs</div></div>)
+		{	<div class="token cpp_comment ">// construct from specified locale</div>
+<div class="expandable"><div class="disabled">		_BEGIN_LOCINFO(_Lobj(_Locname))</div>
+<div class="expanded">		{ <div class="ref" onclick="jumpToSymbol([], ['std::_Locinfo'], [], [])"><div class="token cpp_type">_Locinfo</div></div> <div class="def" id="NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Lobj"><div>_Lobj</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Locname'], [], [])"><div class="token cpp_argument">_Locname</div></div>);</div></div>
+			<div class="ref" onclick="jumpToSymbol(['std::messages::_Init@void(::std::_Locinfo const &)'], ['std::messages::_Init@void(::std::_Locinfo const &)'], [], [])"><div class="token cpp_function">_Init</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Lobj'], [], [])">_Lobj</div>);
+<div class="expandable"><div class="disabled">		_END_LOCINFO()</div>
+<div class="expanded">		}</div></div>
+		}
+
+<div class="expandable"><div class="disabled">	virtual __CLR_OR_THIS_CALL ~messages() noexcept</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div>  <div class="def" id="FB$std::messages::~messages@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">messages</div></div></div>() <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// destroy the object</div>
+		}
+
+	<div class="token cpp_keyword ">void</div> <div class="def" id="FB$std::messages::_Init@void(::std::_Locinfo const &)[impl0]"><div><div class="token cpp_function">_Init</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::_Locinfo'], [], [])"><div class="token cpp_type">_Locinfo</div></div>&amp;)
+		{	<div class="token cpp_comment ">// initialize from _Locinfo object (do nothing)</div>
+		}
+
+<div class="expandable"><div class="disabled">	virtual catalog __CLR_OR_THIS_CALL do_open(const string&amp;, const locale&amp;) const</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['std::messages_base::catalog'], [], [])"><div class="token cpp_type">catalog</div></div>  <div class="def" id="FB$std::messages::do_open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]"><div><div class="token cpp_function">do_open</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::string'], [], [])"><div class="token cpp_type">string</div></div>&amp;, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>&amp;) <div class="token cpp_keyword ">const</div></div></div>
+		{	<div class="token cpp_comment ">// open catalog (do nothing)</div>
+		<div class="token cpp_keyword ">return</div> (-<div class="token cpp_number ">1</div>);
+		}
+
+<div class="expandable"><div class="disabled">	virtual string_type __CLR_OR_THIS_CALL do_get(catalog, int, int,</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['std::messages::string_type'], [], [])"><div class="token cpp_type">string_type</div></div>  <div class="def" id="FB$std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]"><div><div class="token cpp_function">do_get</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages_base::catalog'], [], [])"><div class="token cpp_type">catalog</div></div>, <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">int</div>,</div></div>
+		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::messages::string_type'], [], [])"><div class="token cpp_type">string_type</div></div>&amp; <div class="def" id="NI$std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt"><div><div class="token cpp_argument">_Dflt</div></div></div>) <div class="token cpp_keyword ">const</div>
+		{	<div class="token cpp_comment ">// get message from set in catalog (return default)</div>
+		<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt'], [], [])"><div class="token cpp_argument">_Dflt</div></div>);
+		}
+
+<div class="expandable"><div class="disabled">	virtual void __CLR_OR_THIS_CALL do_close(catalog) const</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>  <div class="def" id="FB$std::messages::do_close@void(::std::messages_base::catalog)[impl0]"><div><div class="token cpp_function">do_close</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::messages_base::catalog'], [], [])"><div class="token cpp_type">catalog</div></div>) <div class="token cpp_keyword ">const</div></div></div>
+		{	<div class="token cpp_comment ">// close catalog (do nothing)</div>
+		}
+	};
+
+		<div class="token cpp_comment ">// STATIC messages::id OBJECT</div>
+<div class="disabled">#ifdef __clang__</div>
+<div class="disabled"> #pragma clang diagnostic push</div>
+<div class="disabled"> #pragma clang diagnostic ignored &quot;-Wdllimport-static-field-def&quot;</div>
+<div class="disabled">#endif /* __clang__ */</div>
+
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::messages::id::_Elem"><div><div class="token cpp_type">_Elem</div></div></div>&gt;
+<div class="expandable"><div class="disabled">	__PURE_APPDOMAIN_GLOBAL locale::id messages&lt;_Elem&gt;::id;</div>
+<div class="expanded">	 <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::locale::id'], [], [])"><div class="token cpp_type">id</div></div> <div class="ref" onclick="jumpToSymbol([], ['std::messages'], [], [])"><div class="token cpp_type">messages</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::messages::id::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;::<div class="def" id="NI$std::messages::id"><div class="ref" onclick="jumpToSymbol([], ['std::messages::id'], [], [])"><div class="token cpp_field">id</div></div></div>;</div></div>
+
+<div class="disabled">#ifdef __clang__</div>
+<div class="disabled"> #pragma clang diagnostic pop</div>
+<div class="disabled">#endif /* __clang__ */</div>
+
+		<div class="token cpp_comment ">// CLASS TEMPLATE messages_byname</div>
+<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">class</div> <div class="def" id="TA$std::messages_byname::_Elem"><div><div class="token cpp_type">_Elem</div></div></div>&gt;
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::messages_byname"><div><div class="token cpp_type">messages_byname</div></div></div>
+		: <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['std::messages'], [], [])"><div class="token cpp_type">messages</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::messages_byname::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;
+	{	<div class="token cpp_comment ">// messages for named locale</div>
+<div class="token cpp_keyword ">public</div>:
+	<div class="token cpp_keyword ">explicit</div> <div class="def" id="FB$std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]"><div><div class="token cpp_function">messages_byname</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div> *<div class="def" id="NI$std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Locname"><div><div class="token cpp_argument">_Locname</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Refs"><div><div class="token cpp_argument">_Refs</div></div></div> = <div class="token cpp_number ">0</div>)
+		: <div class="ref" onclick="jumpToSymbol([], ['std::messages'], [], [])"><div class="token cpp_type">messages</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::messages_byname::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Locname'], [], [])"><div class="token cpp_argument">_Locname</div></div>, <div class="ref" onclick="jumpToSymbol([], ['std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Refs'], [], [])"><div class="token cpp_argument">_Refs</div></div>)
+		{	<div class="token cpp_comment ">// construct for named locale</div>
+		}
+
+	<div class="token cpp_keyword ">explicit</div> <div class="def" id="FB$std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]"><div><div class="token cpp_function">messages_byname</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['std::string'], [], [])"><div class="token cpp_type">string</div></div>&amp; <div class="def" id="NI$std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Str"><div><div class="token cpp_argument">_Str</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Refs"><div><div class="token cpp_argument">_Refs</div></div></div> = <div class="token cpp_number ">0</div>)
+		: <div class="ref" onclick="jumpToSymbol([], ['std::messages'], [], [])"><div class="token cpp_type">messages</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['std::messages_byname::_Elem'], [], [])"><div class="token cpp_type">_Elem</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Str'], [], [])"><div class="token cpp_argument">_Str</div></div>.<div class="ref" onclick="jumpToSymbol(['std::basic_string::c_str@[_Elem] const *()'], ['std::basic_string::c_str@[_Elem] const *()'], [], [])"><div class="token cpp_function">c_str</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Refs'], [], [])"><div class="token cpp_argument">_Refs</div></div>)
+		{	<div class="token cpp_comment ">// construct for named locale</div>
+		}
+
+<div class="token cpp_keyword ">protected</div>:
+<div class="expandable"><div class="disabled">	virtual __CLR_OR_THIS_CALL ~messages_byname() noexcept</div>
+<div class="expanded">	<div class="token cpp_keyword ">virtual</div>  <div class="def" id="FB$std::messages_byname::~messages_byname@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">messages_byname</div></div></div>() <div class="token cpp_keyword ">noexcept</div></div></div>
+		{	<div class="token cpp_comment ">// destroy the object</div>
+		}
+	};
+
+<div class="disabled"> #if defined(_DLL_CPPLIB)</div>
+
+<div class="disabled">  #if !defined(_CRTBLD) || defined(__FORCE_INSTANCE)</div>
+<div class="expandable"><div class="disabled">template __PURE_APPDOMAIN_GLOBAL locale::id messages&lt;char&gt;::id;</div>
+<div class="expanded"><div class="token cpp_keyword ">template</div>  <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::locale::id'], [], [])"><div class="token cpp_type">id</div></div> <div class="ref" onclick="jumpToSymbol([], ['std::messages'], [], [])"><div class="token cpp_type">messages</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt;::id;</div></div>
+<div class="expandable"><div class="disabled">template __PURE_APPDOMAIN_GLOBAL locale::id messages&lt;wchar_t&gt;::id;
+  #endif /* !defined(_CRTBLD) || defined(__FORCE_INSTANCE) */</div>
+<div class="expanded"><div class="token cpp_keyword ">template</div>  <div class="ref" onclick="jumpToSymbol([], ['std::locale'], [], [])"><div class="token cpp_type">locale</div></div>::<div class="ref" onclick="jumpToSymbol([], ['std::locale::id'], [], [])"><div class="token cpp_type">id</div></div> <div class="ref" onclick="jumpToSymbol([], ['std::messages'], [], [])"><div class="token cpp_type">messages</div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>&gt;::id;</div></div>
+
+<div class="disabled">  #ifdef __FORCE_INSTANCE</div>
+<div class="disabled">template __PURE_APPDOMAIN_GLOBAL locale::id messages&lt;unsigned short&gt;::id;</div>
+<div class="disabled">  #endif /* __FORCE_INSTANCE */
+ #endif /* defined(_DLL_CPPLIB) */</div>
+<div class="expandable"><div class="disabled">_STD_END</div>
+<div class="expanded">}</div></div>
+<div class="disabled"> #pragma pop_macro(&quot;new&quot;)</div>
+<div class="disabled"> _STL_RESTORE_CLANG_WARNINGS</div>
+<div class="expandable"><div class="disabled"> #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+<div class="expandable"><div class="disabled"> #pragma pack(pop)
+#endif /* RC_INVOKED */
+#endif /* _XLOCMES_ */</div>
+<div class="expanded">#pragma pack(pop)</div></div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) by P.J. Plauger. All rights reserved.
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std',
+            'NF[1]$std',
+            'NF[2]$std',
+            'NF[3]$std',
+            'NF[4]$std',
+            'NF[5]$std',
+            'NF[6]$std',
+            'NF[7]$std',
+            'NF[8]$std',
+            'NF[9]$std',
+            'NF[10]$std',
+            'NF[11]$std',
+            'NF[12]$std',
+            'NF[13]$std',
+            'NF[14]$std',
+            'NF[15]$std',
+            'NF[16]$std',
+            'NF[17]$std',
+            'NF[18]$std',
+            'NF[19]$std',
+            'NF[20]$std',
+            'NF[21]$std',
+            'NF[22]$std',
+            'NF[23]$std',
+            'NF[24]$std',
+            'NF[25]$std',
+            'NF[26]$std',
+            'NF[27]$std',
+            'NF[28]$std',
+            'NF[29]$std',
+            'NF[30]$std',
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std',
+            'NF[37]$std',
+            'NF[38]$std',
+            'NF[39]$std',
+            'NF[40]$std',
+            'NF[41]$std',
+            'NF[42]$std',
+            'NF[43]$std',
+            'NF[44]$std',
+            'NF[45]$std',
+            'NF[46]$std',
+            'NF[47]$std',
+            'NF[48]$std',
+            'NF[49]$std',
+            'NF[50]$std',
+            'NF[51]$std',
+            'NF[52]$std',
+            'NF[53]$std',
+            'NF[54]$std',
+            'NF[55]$std',
+            'NF[56]$std',
+            'NF[57]$std',
+            'NF[58]$std',
+            'NF[59]$std',
+            'NF[60]$std',
+            'NF[61]$std'
+        ]
+    },
+    'std::_Locinfo': {
+        'displayNameInHtml': '<span class="cpp_type">_Locinfo</span>',
+        'impls': [
+            'NI$std::_Locinfo'
+        ],
+        'decls': []
+    },
+    'std::allocator': {
+        'displayNameInHtml': '<span class="cpp_type">allocator</span>&lt;<span class="cpp_type">_Ty</span>&gt;',
+        'impls': [
+            'NI$std::allocator'
+        ],
+        'decls': [
+            'NF[0]$std::allocator',
+            'NF[1]$std::allocator'
+        ]
+    },
+    'std::allocator@<void>': {
+        'displayNameInHtml': '<span class="cpp_type">allocator</span>&lt;<span class="cpp_keyword">void</span>&gt;',
+        'impls': [
+            'NI$std::allocator@<void>'
+        ],
+        'decls': []
+    },
+    'std::basic_string': {
+        'displayNameInHtml': '<span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt;',
+        'impls': [
+            'NI$std::basic_string'
+        ],
+        'decls': []
+    },
+    'std::basic_string::c_str@[_Elem] const *()': {
+        'displayNameInHtml': '<span class="cpp_type">basic_string</span>&lt;<span class="cpp_type">_Elem</span>, <span class="cpp_type">_Traits</span>, <span class="cpp_type">_Alloc</span>&gt;::<span class="cpp_function">c_str</span>()',
+        'impls': [
+            'FB$std::basic_string::c_str@[_Elem] const *()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::char_traits': {
+        'displayNameInHtml': '<span class="cpp_type">char_traits</span>&lt;<span class="cpp_type">_Elem</span>&gt;',
+        'impls': [
+            'NI$std::char_traits'
+        ],
+        'decls': []
+    },
+    'std::char_traits@<char16_t>': {
+        'displayNameInHtml': '<span class="cpp_type">char_traits</span>&lt;<span class="cpp_keyword">char16_t</span>&gt;',
+        'impls': [
+            'NI$std::char_traits@<char16_t>'
+        ],
+        'decls': []
+    },
+    'std::char_traits@<char32_t>': {
+        'displayNameInHtml': '<span class="cpp_type">char_traits</span>&lt;<span class="cpp_keyword">char32_t</span>&gt;',
+        'impls': [
+            'NI$std::char_traits@<char32_t>'
+        ],
+        'decls': []
+    },
+    'std::char_traits@<char>': {
+        'displayNameInHtml': '<span class="cpp_type">char_traits</span>&lt;<span class="cpp_keyword">char</span>&gt;',
+        'impls': [
+            'NI$std::char_traits@<char>'
+        ],
+        'decls': []
+    },
+    'std::char_traits@<unsigned short>': {
+        'displayNameInHtml': '<span class="cpp_type">char_traits</span>&lt;<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span>&gt;',
+        'impls': [
+            'NI$std::char_traits@<unsigned short>'
+        ],
+        'decls': []
+    },
+    'std::char_traits@<wchar_t>': {
+        'displayNameInHtml': '<span class="cpp_type">char_traits</span>&lt;<span class="cpp_keyword">wchar_t</span>&gt;',
+        'impls': [
+            'NI$std::char_traits@<wchar_t>'
+        ],
+        'decls': []
+    },
+    'std::locale': {
+        'displayNameInHtml': '<span class="cpp_type">locale</span>',
+        'impls': [
+            'NI$std::locale'
+        ],
+        'decls': [
+            'NF[0]$std::locale'
+        ]
+    },
+    'std::locale::c_str@char const *()': {
+        'displayNameInHtml': '<span class="cpp_type">locale</span>::<span class="cpp_function">c_str</span>()',
+        'impls': [
+            'FB$std::locale::c_str@char const *()[impl0]'
+        ],
+        'decls': []
+    },
+    'std::locale::facet': {
+        'displayNameInHtml': '<span class="cpp_type">locale</span>::<span class="cpp_type">facet</span>',
+        'impls': [
+            'NI$std::locale::facet'
+        ],
+        'decls': []
+    },
+    'std::locale::id': {
+        'displayNameInHtml': '<span class="cpp_type">locale</span>::<span class="cpp_type">id</span>',
+        'impls': [
+            'NI$std::locale::id'
+        ],
+        'decls': []
+    },
+    'std::messages': {
+        'displayNameInHtml': '<span class="cpp_type">messages</span>&lt;<span class="cpp_type">_Elem</span>&gt;',
+        'impls': [
+            'NI$std::messages'
+        ],
+        'decls': []
+    },
+    'std::messages::$__ctor@(::size_t)[impl0]::_Lobj': {
+        'displayNameInHtml': '_Lobj',
+        'impls': [
+            'NI$std::messages::$__ctor@(::size_t)[impl0]::_Lobj'
+        ],
+        'decls': []
+    },
+    'std::messages::$__ctor@(::size_t)[impl0]::_Refs': {
+        'displayNameInHtml': '_Refs',
+        'impls': [
+            'NI$std::messages::$__ctor@(::size_t)[impl0]::_Refs'
+        ],
+        'decls': []
+    },
+    'std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Lobj': {
+        'displayNameInHtml': '_Lobj',
+        'impls': [
+            'NI$std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Lobj'
+        ],
+        'decls': []
+    },
+    'std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Refs': {
+        'displayNameInHtml': '_Refs',
+        'impls': [
+            'NI$std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Refs'
+        ],
+        'decls': []
+    },
+    'std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Lobj': {
+        'displayNameInHtml': '_Lobj',
+        'impls': [
+            'NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Lobj'
+        ],
+        'decls': []
+    },
+    'std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Locname': {
+        'displayNameInHtml': '_Locname',
+        'impls': [
+            'NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Locname'
+        ],
+        'decls': []
+    },
+    'std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Refs': {
+        'displayNameInHtml': '_Refs',
+        'impls': [
+            'NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Refs'
+        ],
+        'decls': []
+    },
+    'std::messages::_Elem': {
+        'displayNameInHtml': '<span class="cpp_type">_Elem</span>',
+        'impls': [
+            'TA$std::messages::_Elem'
+        ],
+        'decls': []
+    },
+    'std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ploc': {
+        'displayNameInHtml': '_Ploc',
+        'impls': [
+            'NI$std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ploc'
+        ],
+        'decls': []
+    },
+    'std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ppf': {
+        'displayNameInHtml': '_Ppf',
+        'impls': [
+            'NI$std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ppf'
+        ],
+        'decls': []
+    },
+    'std::messages::_Init@void(::std::_Locinfo const &)': {
+        'displayNameInHtml': '<span class="cpp_type">messages</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">_Init</span>(<span class="cpp_type">_Locinfo</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::messages::_Init@void(::std::_Locinfo const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::messages::close@void(::std::messages_base::catalog)[impl0]::_Catval': {
+        'displayNameInHtml': '_Catval',
+        'impls': [
+            'NI$std::messages::close@void(::std::messages_base::catalog)[impl0]::_Catval'
+        ],
+        'decls': []
+    },
+    'std::messages::do_close@void(::std::messages_base::catalog)': {
+        'displayNameInHtml': '<span class="cpp_type">messages</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">do_close</span>(<span class="cpp_type">catalog</span>)',
+        'impls': [
+            'FB$std::messages::do_close@void(::std::messages_base::catalog)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)': {
+        'displayNameInHtml': '<span class="cpp_type">messages</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">do_get</span>(<span class="cpp_type">catalog</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>, <span class="cpp_type">string_type</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt': {
+        'displayNameInHtml': '_Dflt',
+        'impls': [
+            'NI$std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt'
+        ],
+        'decls': []
+    },
+    'std::messages::do_open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)': {
+        'displayNameInHtml': '<span class="cpp_type">messages</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_function">do_open</span>(<span class="cpp_type">string</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">locale</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$std::messages::do_open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Catval': {
+        'displayNameInHtml': '_Catval',
+        'impls': [
+            'NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Catval'
+        ],
+        'decls': []
+    },
+    'std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt': {
+        'displayNameInHtml': '_Dflt',
+        'impls': [
+            'NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt'
+        ],
+        'decls': []
+    },
+    'std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Message': {
+        'displayNameInHtml': '_Message',
+        'impls': [
+            'NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Message'
+        ],
+        'decls': []
+    },
+    'std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Set': {
+        'displayNameInHtml': '_Set',
+        'impls': [
+            'NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Set'
+        ],
+        'decls': []
+    },
+    'std::messages::id': {
+        'displayNameInHtml': '<span class="cpp_type">messages</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_field">id</span>',
+        'impls': [
+            'NI$std::messages::id'
+        ],
+        'decls': [
+            'NF[0]$std::messages::id'
+        ]
+    },
+    'std::messages::id::_Elem': {
+        'displayNameInHtml': '<span class="cpp_type">_Elem</span>',
+        'impls': [
+            'TA$std::messages::id::_Elem'
+        ],
+        'decls': []
+    },
+    'std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Catname': {
+        'displayNameInHtml': '_Catname',
+        'impls': [
+            'NI$std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Catname'
+        ],
+        'decls': []
+    },
+    'std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Loc': {
+        'displayNameInHtml': '_Loc',
+        'impls': [
+            'NI$std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Loc'
+        ],
+        'decls': []
+    },
+    'std::messages::string_type': {
+        'displayNameInHtml': '<span class="cpp_type">messages</span>&lt;<span class="cpp_type">_Elem</span>&gt;::<span class="cpp_type">string_type</span>',
+        'impls': [
+            'NI$std::messages::string_type'
+        ],
+        'decls': []
+    },
+    'std::messages_base': {
+        'displayNameInHtml': '<span class="cpp_type">messages_base</span>',
+        'impls': [
+            'NI$std::messages_base'
+        ],
+        'decls': []
+    },
+    'std::messages_base::$__ctor@(::size_t)[impl0]::_Refs': {
+        'displayNameInHtml': '_Refs',
+        'impls': [
+            'NI$std::messages_base::$__ctor@(::size_t)[impl0]::_Refs'
+        ],
+        'decls': []
+    },
+    'std::messages_base::catalog': {
+        'displayNameInHtml': '<span class="cpp_type">messages_base</span>::<span class="cpp_type">catalog</span>',
+        'impls': [
+            'NI$std::messages_base::catalog'
+        ],
+        'decls': []
+    },
+    'std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Refs': {
+        'displayNameInHtml': '_Refs',
+        'impls': [
+            'NI$std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Refs'
+        ],
+        'decls': []
+    },
+    'std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Str': {
+        'displayNameInHtml': '_Str',
+        'impls': [
+            'NI$std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Str'
+        ],
+        'decls': []
+    },
+    'std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Locname': {
+        'displayNameInHtml': '_Locname',
+        'impls': [
+            'NI$std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Locname'
+        ],
+        'decls': []
+    },
+    'std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Refs': {
+        'displayNameInHtml': '_Refs',
+        'impls': [
+            'NI$std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Refs'
+        ],
+        'decls': []
+    },
+    'std::messages_byname::_Elem': {
+        'displayNameInHtml': '<span class="cpp_type">_Elem</span>',
+        'impls': [
+            'TA$std::messages_byname::_Elem'
+        ],
+        'decls': []
+    },
+    'std::string': {
+        'displayNameInHtml': '<span class="cpp_type">string</span>',
+        'impls': [
+            'NI$std::string'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$std::basic_string::c_str@[_Elem] const *()[impl0]': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'FB$std::locale::c_str@char const *()[impl0]': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'FB$std::messages::_Init@void(::std::_Locinfo const &)[impl0]': null,
+    'FB$std::messages::do_close@void(::std::messages_base::catalog)[impl0]': null,
+    'FB$std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]': null,
+    'FB$std::messages::do_open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]': null,
+    'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
+    'NF[0]$std::allocator': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[0]$std::locale': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NF[0]$std::messages::id': null,
+    'NF[10]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[11]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
+    'NF[1]$std::allocator': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
+    'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
+    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[28]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[29]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
+    'NF[2]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NF[30]$std': { 'htmlFileName': 'vector', 'displayName': 'vector' },
+    'NF[31]$std': { 'htmlFileName': 'xtree', 'displayName': 'xtree' },
+    'NF[32]$std': { 'htmlFileName': 'set', 'displayName': 'set' },
+    'NF[33]$std': { 'htmlFileName': 'tuple', 'displayName': 'tuple' },
+    'NF[34]$std': { 'htmlFileName': 'map', 'displayName': 'map' },
+    'NF[35]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[36]$std': { 'htmlFileName': 'vcruntime_typeinfo.h', 'displayName': 'vcruntime_typeinfo.h' },
+    'NF[37]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[38]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[39]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[3]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[40]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[41]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NF[42]$std': { 'htmlFileName': 'xcall_once.h', 'displayName': 'xcall_once.h' },
+    'NF[43]$std': { 'htmlFileName': 'xerrc.h', 'displayName': 'xerrc.h' },
+    'NF[44]$std': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'NF[45]$std': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[46]$std': { 'htmlFileName': 'streambuf', 'displayName': 'streambuf' },
+    'NF[47]$std': { 'htmlFileName': 'xlocnum', 'displayName': 'xlocnum' },
+    'NF[48]$std': { 'htmlFileName': 'ios', 'displayName': 'ios' },
+    'NF[49]$std': { 'htmlFileName': 'ostream', 'displayName': 'ostream' },
+    'NF[4]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[50]$std': { 'htmlFileName': 'istream', 'displayName': 'istream' },
+    'NF[51]$std': { 'htmlFileName': 'xstring_insert.h', 'displayName': 'xstring_insert.h' },
+    'NF[52]$std': { 'htmlFileName': 'string', 'displayName': 'string' },
+    'NF[53]$std': { 'htmlFileName': 'xlocbuf', 'displayName': 'xlocbuf' },
+    'NF[54]$std': null,
+    'NF[55]$std': { 'htmlFileName': 'xlocmon', 'displayName': 'xlocmon' },
+    'NF[56]$std': { 'htmlFileName': 'ctime', 'displayName': 'ctime' },
+    'NF[57]$std': { 'htmlFileName': 'xloctime', 'displayName': 'xloctime' },
+    'NF[58]$std': { 'htmlFileName': 'locale', 'displayName': 'locale' },
+    'NF[59]$std': { 'htmlFileName': 'codecvt', 'displayName': 'codecvt' },
+    'NF[5]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[60]$std': { 'htmlFileName': 'functional', 'displayName': 'functional' },
+    'NF[61]$std': { 'htmlFileName': 'iostream', 'displayName': 'iostream' },
+    'NF[6]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[7]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[8]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[9]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$std::_Locinfo': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NI$std::allocator': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NI$std::allocator@<void>': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NI$std::basic_string': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NI$std::char_traits': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NI$std::char_traits@<char16_t>': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NI$std::char_traits@<char32_t>': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NI$std::char_traits@<char>': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NI$std::char_traits@<unsigned short>': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NI$std::char_traits@<wchar_t>': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NI$std::locale': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NI$std::locale::facet': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NI$std::locale::id': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NI$std::messages': null,
+    'NI$std::messages::$__ctor@(::size_t)[impl0]::_Lobj': null,
+    'NI$std::messages::$__ctor@(::size_t)[impl0]::_Refs': null,
+    'NI$std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Lobj': null,
+    'NI$std::messages::$__ctor@(::std::_Locinfo const &, ::size_t)[impl0]::_Refs': null,
+    'NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Lobj': null,
+    'NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Locname': null,
+    'NI$std::messages::$__ctor@(char const *, ::size_t)[impl0]::_Refs': null,
+    'NI$std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ploc': null,
+    'NI$std::messages::_Getcat@::size_t(::std::locale::facet const * *, ::std::locale const *)[impl0]::_Ppf': null,
+    'NI$std::messages::close@void(::std::messages_base::catalog)[impl0]::_Catval': null,
+    'NI$std::messages::do_get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt': null,
+    'NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Catval': null,
+    'NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Dflt': null,
+    'NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Message': null,
+    'NI$std::messages::get@::std::messages::string_type(::std::messages_base::catalog, int, int, ::std::messages::string_type const &)[impl0]::_Set': null,
+    'NI$std::messages::id': null,
+    'NI$std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Catname': null,
+    'NI$std::messages::open@::std::messages_base::catalog(::std::string const &, ::std::locale const &)[impl0]::_Loc': null,
+    'NI$std::messages::string_type': null,
+    'NI$std::messages_base': null,
+    'NI$std::messages_base::$__ctor@(::size_t)[impl0]::_Refs': null,
+    'NI$std::messages_base::catalog': null,
+    'NI$std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Refs': null,
+    'NI$std::messages_byname::$__ctor@(::std::string const &, ::size_t)[impl0]::_Str': null,
+    'NI$std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Locname': null,
+    'NI$std::messages_byname::$__ctor@(char const *, ::size_t)[impl0]::_Refs': null,
+    'NI$std::string': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'TA$std::messages::_Elem': null,
+    'TA$std::messages::id::_Elem': null,
+    'TA$std::messages_byname::_Elem': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

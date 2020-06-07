@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>debugapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* DebugApi.h -- ApiSet Contract for api-ms-win-core-debug-l1                    *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _APISETDEBUG_</div>
+<div class="disabled">#define _APISETDEBUG_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0400) || (_WIN32_WINDOWS &gt; 0x0400)</div>
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$IsDebuggerPresent@::BOOL()[decl0]"><div><div class="token cpp_function">IsDebuggerPresent</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DebugBreak@void()[decl0]"><div><div class="token cpp_function">DebugBreak</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$OutputDebugStringA@void(::LPCSTR)[decl0]"><div><div class="token cpp_function">OutputDebugStringA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPCSTR lpOutputString</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$OutputDebugStringA@void(::LPCSTR)[decl0]::lpOutputString"><div>lpOutputString</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$OutputDebugStringW@void(::LPCWSTR)[decl0]"><div><div class="token cpp_function">OutputDebugStringW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ LPCWSTR lpOutputString</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$OutputDebugStringW@void(::LPCWSTR)[decl0]::lpOutputString"><div>lpOutputString</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define OutputDebugString  OutputDebugStringW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define OutputDebugString  OutputDebugStringA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ContinueDebugEvent@::BOOL(::DWORD, ::DWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">ContinueDebugEvent</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwProcessId,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ContinueDebugEvent@::BOOL(::DWORD, ::DWORD, ::DWORD)[decl0]::dwProcessId"><div>dwProcessId</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwThreadId,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ContinueDebugEvent@::BOOL(::DWORD, ::DWORD, ::DWORD)[decl0]::dwThreadId"><div>dwThreadId</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwContinueStatus</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$ContinueDebugEvent@::BOOL(::DWORD, ::DWORD, ::DWORD)[decl0]::dwContinueStatus"><div>dwContinueStatus</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$WaitForDebugEvent@::BOOL(::LPDEBUG_EVENT, ::DWORD)[decl0]"><div><div class="token cpp_function">WaitForDebugEvent</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPDEBUG_EVENT lpDebugEvent,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDEBUG_EVENT'], [], [])"><div class="token cpp_type">LPDEBUG_EVENT</div></div> <div class="def" id="NI$WaitForDebugEvent@::BOOL(::LPDEBUG_EVENT, ::DWORD)[decl0]::lpDebugEvent"><div>lpDebugEvent</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwMilliseconds</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$WaitForDebugEvent@::BOOL(::LPDEBUG_EVENT, ::DWORD)[decl0]::dwMilliseconds"><div>dwMilliseconds</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DebugActiveProcess@::BOOL(::DWORD)[decl0]"><div><div class="token cpp_function">DebugActiveProcess</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwProcessId</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DebugActiveProcess@::BOOL(::DWORD)[decl0]::dwProcessId"><div>dwProcessId</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DebugActiveProcessStop@::BOOL(::DWORD)[decl0]"><div><div class="token cpp_function">DebugActiveProcessStop</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwProcessId</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DebugActiveProcessStop@::BOOL(::DWORD)[decl0]::dwProcessId"><div>dwProcessId</div></div></div></div>
+    );
+
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0501)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CheckRemoteDebuggerPresent@::BOOL(::HANDLE, ::PBOOL)[decl0]"><div><div class="token cpp_function">CheckRemoteDebuggerPresent</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hProcess,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$CheckRemoteDebuggerPresent@::BOOL(::HANDLE, ::PBOOL)[decl0]::hProcess"><div>hProcess</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PBOOL pbDebuggerPresent</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PBOOL'], [], [])"><div class="token cpp_type">PBOOL</div></div> <div class="def" id="NI$CheckRemoteDebuggerPresent@::BOOL(::HANDLE, ::PBOOL)[decl0]::pbDebuggerPresent"><div>pbDebuggerPresent</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0501)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$WaitForDebugEventEx@::BOOL(::LPDEBUG_EVENT, ::DWORD)[decl0]"><div><div class="token cpp_function">WaitForDebugEventEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPDEBUG_EVENT lpDebugEvent,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDEBUG_EVENT'], [], [])"><div class="token cpp_type">LPDEBUG_EVENT</div></div> <div class="def" id="NI$WaitForDebugEventEx@::BOOL(::LPDEBUG_EVENT, ::DWORD)[decl0]::lpDebugEvent"><div>lpDebugEvent</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwMilliseconds</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$WaitForDebugEventEx@::BOOL(::LPDEBUG_EVENT, ::DWORD)[decl0]::dwMilliseconds"><div>dwMilliseconds</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _APISETDEBUG_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'LPCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCSTR</span>',
+        'impls': [
+            'NI$LPCSTR'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPDEBUG_EVENT': {
+        'displayNameInHtml': '<span class="cpp_type">LPDEBUG_EVENT</span>',
+        'impls': [
+            'NI$LPDEBUG_EVENT'
+        ],
+        'decls': []
+    },
+    'PBOOL': {
+        'displayNameInHtml': '<span class="cpp_type">PBOOL</span>',
+        'impls': [
+            'NI$PBOOL'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDEBUG_EVENT': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$PBOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

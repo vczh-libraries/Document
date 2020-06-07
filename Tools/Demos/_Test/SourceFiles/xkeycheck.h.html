@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>xkeycheck.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/* xkeycheck.h internal header */</div>
+#pragma once
+<div class="disabled">#ifndef _XKEYCHECK_H</div>
+<div class="disabled">#define _XKEYCHECK_H</div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+
+<div class="disabled">#ifndef _ALLOW_KEYWORD_MACROS</div>
+
+<div class="disabled"> #if !defined(__cplusplus)</div>
+
+<div class="disabled">  #if defined(auto)	/* check C keywords */  \</div>
+<div class="disabled">	|| defined(break) \</div>
+<div class="disabled">	|| defined(case) \</div>
+<div class="disabled">	|| defined(char) \</div>
+<div class="disabled">	|| defined(const) \</div>
+<div class="disabled">	|| defined(continue) \</div>
+<div class="disabled">	|| defined(default) \</div>
+<div class="disabled">	|| defined(do) \</div>
+<div class="disabled">	|| defined(double) \</div>
+<div class="disabled">	|| defined(else) \</div>
+<div class="disabled">	|| defined(enum) \</div>
+<div class="disabled">	|| defined(extern) \</div>
+<div class="disabled">	|| defined(float) \</div>
+<div class="disabled">	|| defined(for) \</div>
+<div class="disabled">	|| defined(goto) \</div>
+<div class="disabled">	|| defined(if) \</div>
+<div class="disabled">	|| defined(inline) \</div>
+<div class="disabled">	|| defined(int) \</div>
+<div class="disabled">	|| defined(long) \</div>
+<div class="disabled">	|| defined(register) \</div>
+<div class="disabled">	|| defined(restrict) \</div>
+<div class="disabled">	|| defined(return) \</div>
+<div class="disabled">	|| defined(short) \</div>
+<div class="disabled">	|| defined(signed) \</div>
+<div class="disabled">	|| defined(sizeof) \</div>
+<div class="disabled">	|| defined(static) \</div>
+<div class="disabled">	|| defined(struct) \</div>
+<div class="disabled">	|| defined(switch) \</div>
+<div class="disabled">	|| defined(typedef) \</div>
+<div class="disabled">	|| defined(union) \</div>
+<div class="disabled">	|| defined(unsigned) \</div>
+<div class="disabled">	|| defined(void) \</div>
+<div class="disabled">	|| defined(volatile) \</div>
+<div class="disabled">	|| defined(while) \</div>
+<div class="disabled">	|| defined(_Bool) \</div>
+<div class="disabled">	|| defined(_Complex) \</div>
+<div class="disabled">	|| defined(_Imaginary)</div>
+
+<div class="disabled">   #define auto EMIT WARNING C4005</div>
+<div class="disabled">   #define break EMIT WARNING C4005</div>
+<div class="disabled">   #define case EMIT WARNING C4005</div>
+<div class="disabled">   #define char EMIT WARNING C4005</div>
+<div class="disabled">   #define const EMIT WARNING C4005</div>
+<div class="disabled">   #define continue EMIT WARNING C4005</div>
+<div class="disabled">   #define default EMIT WARNING C4005</div>
+<div class="disabled">   #define do EMIT WARNING C4005</div>
+<div class="disabled">   #define double EMIT WARNING C4005</div>
+<div class="disabled">   #define else EMIT WARNING C4005</div>
+<div class="disabled">   #define enum EMIT WARNING C4005</div>
+<div class="disabled">   #define extern EMIT WARNING C4005</div>
+<div class="disabled">   #define float EMIT WARNING C4005</div>
+<div class="disabled">   #define for EMIT WARNING C4005</div>
+<div class="disabled">   #define goto EMIT WARNING C4005</div>
+<div class="disabled">   #define if EMIT WARNING C4005</div>
+<div class="disabled">   #define inline EMIT WARNING C4005</div>
+<div class="disabled">   #define int EMIT WARNING C4005</div>
+<div class="disabled">   #define long EMIT WARNING C4005</div>
+<div class="disabled">   #define register EMIT WARNING C4005</div>
+<div class="disabled">   #define restrict EMIT WARNING C4005</div>
+<div class="disabled">   #define return EMIT WARNING C4005</div>
+<div class="disabled">   #define short EMIT WARNING C4005</div>
+<div class="disabled">   #define signed EMIT WARNING C4005</div>
+<div class="disabled">   #define sizeof EMIT WARNING C4005</div>
+<div class="disabled">   #define static EMIT WARNING C4005</div>
+<div class="disabled">   #define struct EMIT WARNING C4005</div>
+<div class="disabled">   #define switch EMIT WARNING C4005</div>
+<div class="disabled">   #define typedef EMIT WARNING C4005</div>
+<div class="disabled">   #define union EMIT WARNING C4005</div>
+<div class="disabled">   #define unsigned EMIT WARNING C4005</div>
+<div class="disabled">   #define void EMIT WARNING C4005</div>
+<div class="disabled">   #define volatile EMIT WARNING C4005</div>
+<div class="disabled">   #define while EMIT WARNING C4005</div>
+<div class="disabled">   #define _Bool EMIT WARNING C4005</div>
+<div class="disabled">   #define _Complex EMIT WARNING C4005</div>
+<div class="disabled">   #define _Imaginary EMIT WARNING C4005</div>
+
+<div class="disabled">   #error The C Standard Library forbids macroizing keywords. Enable warning C4005 to find the forbidden macro.</div>
+<div class="disabled">  #endif /* defined... */</div>
+
+<div class="disabled"> #else /* __cplusplus is defined */</div>
+
+<div class="disabled">  #if defined(alignas)	/* check C++ keywords */ \</div>
+<div class="disabled">	|| defined(alignof) \</div>
+<div class="disabled">	|| defined(asm) \</div>
+<div class="disabled">	|| defined(auto) \</div>
+<div class="disabled">	|| defined(bool) \</div>
+<div class="disabled">	|| defined(break) \</div>
+<div class="disabled">	|| defined(case) \</div>
+<div class="disabled">	|| defined(catch) \</div>
+<div class="disabled">	|| defined(char) \</div>
+<div class="disabled">	|| defined(char16_t) \</div>
+<div class="disabled">	|| defined(char32_t) \</div>
+<div class="disabled">	|| defined(class) \</div>
+<div class="disabled">	|| defined(const) \</div>
+<div class="disabled">	|| defined(const_cast) \</div>
+<div class="disabled">	|| defined(constexpr) \</div>
+<div class="disabled">	|| defined(continue) \</div>
+<div class="disabled">	|| defined(decltype) \</div>
+<div class="disabled">	|| defined(default) \</div>
+<div class="disabled">	|| defined(delete) \</div>
+<div class="disabled">	|| defined(do) \</div>
+<div class="disabled">	|| defined(double) \</div>
+<div class="disabled">	|| defined(dynamic_cast) \</div>
+<div class="disabled">	|| defined(else) \</div>
+<div class="disabled">	|| defined(enum) \</div>
+<div class="disabled">	|| defined(explicit) \</div>
+<div class="disabled">	|| defined(export) \</div>
+<div class="disabled">	|| defined(extern) \</div>
+<div class="disabled">	|| defined(false) \</div>
+<div class="disabled">	|| defined(float) \</div>
+<div class="disabled">	|| defined(for) \</div>
+<div class="disabled">	|| defined(friend) \</div>
+<div class="disabled">	|| defined(goto) \</div>
+<div class="disabled">	|| defined(if) \</div>
+<div class="disabled">	|| defined(inline) \</div>
+<div class="disabled">	|| defined(int) \</div>
+<div class="disabled">	|| defined(long) \</div>
+<div class="disabled">	|| defined(mutable) \</div>
+<div class="disabled">	|| defined(namespace) \</div>
+<div class="disabled">	|| defined(new) &amp;&amp; defined(_ENFORCE_BAN_OF_MACRO_NEW) \</div>
+<div class="disabled">	|| defined(noexcept) \</div>
+<div class="disabled">	|| defined(nullptr) \</div>
+<div class="disabled">	|| defined(operator) \</div>
+<div class="disabled">	|| defined(private) \</div>
+<div class="disabled">	|| defined(protected) \</div>
+<div class="disabled">	|| defined(public) \</div>
+<div class="disabled">	|| defined(register) \</div>
+<div class="disabled">	|| defined(reinterpret_cast) \</div>
+<div class="disabled">	|| defined(return) \</div>
+<div class="disabled">	|| defined(short) \</div>
+<div class="disabled">	|| defined(signed) \</div>
+<div class="disabled">	|| defined(sizeof) \</div>
+<div class="disabled">	|| defined(static) \</div>
+<div class="disabled">	|| defined(static_assert) \</div>
+<div class="disabled">	|| defined(static_cast) \</div>
+<div class="disabled">	|| defined(struct) \</div>
+<div class="disabled">	|| defined(switch) \</div>
+<div class="disabled">	|| defined(template) \</div>
+<div class="disabled">	|| defined(this) \</div>
+<div class="disabled">	|| defined(thread_local) \</div>
+<div class="disabled">	|| defined(throw) \</div>
+<div class="disabled">	|| defined(true) \</div>
+<div class="disabled">	|| defined(try) \</div>
+<div class="disabled">	|| defined(typedef) \</div>
+<div class="disabled">	|| defined(typeid) \</div>
+<div class="disabled">	|| defined(typename) \</div>
+<div class="disabled">	|| defined(union) \</div>
+<div class="disabled">	|| defined(unsigned) \</div>
+<div class="disabled">	|| defined(using) \</div>
+<div class="disabled">	|| defined(virtual) \</div>
+<div class="disabled">	|| defined(void) \</div>
+<div class="disabled">	|| defined(volatile) \</div>
+<div class="disabled">	|| defined(wchar_t) \</div>
+<div class="disabled">	|| defined(while) \</div>
+<div class="disabled">	|| defined(final)		/* check &quot;identifiers with special meaning&quot; */ \</div>
+<div class="disabled">	|| defined(override)	/* (also known as context-sensitive keywords) */ \</div>
+<div class="disabled">	|| defined(carries_dependency)	/* check attribute-tokens */ \</div>
+<div class="disabled">	|| defined(deprecated) &amp;&amp; _HAS_CXX17 \</div>
+<div class="disabled">	|| defined(fallthrough) &amp;&amp; _HAS_CXX17 \</div>
+<div class="disabled">	|| defined(maybe_unused) &amp;&amp; _HAS_CXX17 \</div>
+<div class="disabled">	|| defined(nodiscard) &amp;&amp; _HAS_CXX17 \</div>
+<div class="disabled">	|| defined(noreturn)</div>
+
+<div class="disabled">   #define alignas EMIT WARNING C4005</div>
+<div class="disabled">   #define alignof EMIT WARNING C4005</div>
+<div class="disabled">   #define asm EMIT WARNING C4005</div>
+<div class="disabled">   #define auto EMIT WARNING C4005</div>
+<div class="disabled">   #define bool EMIT WARNING C4005</div>
+<div class="disabled">   #define break EMIT WARNING C4005</div>
+<div class="disabled">   #define case EMIT WARNING C4005
+   #define catch EMIT WARNING C4005
+   #define char EMIT WARNING C4005
+   #define char16_t EMIT WARNING C4005
+   #define char32_t EMIT WARNING C4005
+   #define class EMIT WARNING C4005
+   #define const EMIT WARNING C4005
+   #define const_cast EMIT WARNING C4005
+   #define constexpr EMIT WARNING C4005
+   #define continue EMIT WARNING C4005
+   #define decltype EMIT WARNING C4005
+   #define default EMIT WARNING C4005
+   #define delete EMIT WARNING C4005
+   #define do EMIT WARNING C4005
+   #define double EMIT WARNING C4005
+   #define dynamic_cast EMIT WARNING C4005
+   #define else EMIT WARNING C4005
+   #define enum EMIT WARNING C4005
+   #define explicit EMIT WARNING C4005
+   #define export EMIT WARNING C4005
+   #define extern EMIT WARNING C4005
+   #define false EMIT WARNING C4005
+   #define float EMIT WARNING C4005
+   #define for EMIT WARNING C4005
+   #define friend EMIT WARNING C4005
+   #define goto EMIT WARNING C4005
+   #define if EMIT WARNING C4005
+   #define inline EMIT WARNING C4005
+   #define int EMIT WARNING C4005
+   #define long EMIT WARNING C4005
+   #define mutable EMIT WARNING C4005
+   #define namespace EMIT WARNING C4005
+   #ifdef _ENFORCE_BAN_OF_MACRO_NEW
+    #define new EMIT WARNING C4005
+   #endif /* _ENFORCE_BAN_OF_MACRO_NEW */
+   #define noexcept EMIT WARNING C4005
+   #define nullptr EMIT WARNING C4005
+   #define operator EMIT WARNING C4005
+   #define private EMIT WARNING C4005
+   #define protected EMIT WARNING C4005
+   #define public EMIT WARNING C4005
+   #define register EMIT WARNING C4005
+   #define reinterpret_cast EMIT WARNING C4005
+   #define return EMIT WARNING C4005
+   #define short EMIT WARNING C4005
+   #define signed EMIT WARNING C4005
+   #define sizeof EMIT WARNING C4005
+   #define static EMIT WARNING C4005
+   #define static_assert EMIT WARNING C4005
+   #define static_cast EMIT WARNING C4005
+   #define struct EMIT WARNING C4005
+   #define switch EMIT WARNING C4005
+   #define template EMIT WARNING C4005
+   #define this EMIT WARNING C4005
+   #define thread_local EMIT WARNING C4005
+   #define throw EMIT WARNING C4005
+   #define true EMIT WARNING C4005
+   #define try EMIT WARNING C4005
+   #define typedef EMIT WARNING C4005
+   #define typeid EMIT WARNING C4005
+   #define typename EMIT WARNING C4005
+   #define union EMIT WARNING C4005
+   #define unsigned EMIT WARNING C4005
+   #define using EMIT WARNING C4005
+   #define virtual EMIT WARNING C4005
+   #define void EMIT WARNING C4005
+   #define volatile EMIT WARNING C4005
+   #define wchar_t EMIT WARNING C4005
+   #define while EMIT WARNING C4005
+   #define final EMIT WARNING C4005
+   #define override EMIT WARNING C4005
+   #define carries_dependency EMIT WARNING C4005
+   #if _HAS_CXX17
+    #define deprecated EMIT WARNING C4005
+    #define fallthrough EMIT WARNING C4005
+    #define maybe_unused EMIT WARNING C4005
+    #define nodiscard EMIT WARNING C4005
+   #endif /* _HAS_CXX17 */
+   #define noreturn EMIT WARNING C4005
+
+   #error The C++ Standard Library forbids macroizing keywords. Enable warning C4005 to find the forbidden macro.
+  #endif /* defined... */
+ #endif /* defined(__cplusplus) */</div>
+
+<div class="disabled">#endif /* _ALLOW_KEYWORD_MACROS */</div>
+
+<div class="disabled">#endif /* RC_INVOKED */
+#endif /* _XKEYCHECK_H */</div>
+
+<div class="token cpp_comment ">/*
+ * Copyright (c) by P.J. Plauger. All rights reserved.
+ * Consult your license regarding permissions and restrictions.
+V6.50:0009 */</div>
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

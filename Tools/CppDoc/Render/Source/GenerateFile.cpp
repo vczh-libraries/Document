@@ -21,13 +21,13 @@ void GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, Index
 	writer.WriteString(L"    <title>");
 	WriteHtmlTextSingleLine(flr->filePath.GetName(), writer);
 	writer.WriteLine(L"</title>");
-	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
-	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
-	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
+	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../../Cpp.css\" />");
+	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../../favicon.ico\" />");
+	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../../Cpp.js\" ></script>");
 	writer.WriteLine(L"</head>");
 	writer.WriteLine(L"<body>");
-	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
-	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
+	writer.WriteLine(L"<a class=\"button\" href=\"../FileIndex.html\">File Index</a>");
+	writer.WriteLine(L"<a class=\"button\" href=\"../SymbolIndex.html\">Symbol Index</a>");
 	writer.WriteLine(L"<br>");
 	writer.WriteLine(L"<br>");
 

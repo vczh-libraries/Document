@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>realtimeapiset.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* realtimeapi.h -- ApiSet Contract for api-ms-win-core-realtime-l1              *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _APISETREALTIME_</div>
+<div class="disabled">#define _APISETREALTIME_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryThreadCycleTime@::BOOL(::HANDLE, ::PULONG64)[decl0]"><div><div class="token cpp_function">QueryThreadCycleTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE ThreadHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$QueryThreadCycleTime@::BOOL(::HANDLE, ::PULONG64)[decl0]::ThreadHandle"><div>ThreadHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PULONG64 CycleTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONG64'], [], [])"><div class="token cpp_type">PULONG64</div></div> <div class="def" id="NI$QueryThreadCycleTime@::BOOL(::HANDLE, ::PULONG64)[decl0]::CycleTime"><div>CycleTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryProcessCycleTime@::BOOL(::HANDLE, ::PULONG64)[decl0]"><div><div class="token cpp_function">QueryProcessCycleTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE ProcessHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$QueryProcessCycleTime@::BOOL(::HANDLE, ::PULONG64)[decl0]::ProcessHandle"><div>ProcessHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PULONG64 CycleTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONG64'], [], [])"><div class="token cpp_type">PULONG64</div></div> <div class="def" id="NI$QueryProcessCycleTime@::BOOL(::HANDLE, ::PULONG64)[decl0]::CycleTime"><div>CycleTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryIdleProcessorCycleTime@::BOOL(::PULONG, ::PULONG64)[decl0]"><div><div class="token cpp_function">QueryIdleProcessorCycleTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ PULONG BufferLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONG'], [], [])"><div class="token cpp_type">PULONG</div></div> <div class="def" id="NI$QueryIdleProcessorCycleTime@::BOOL(::PULONG, ::PULONG64)[decl0]::BufferLength"><div>BufferLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_opt_(*BufferLength) PULONG64 ProcessorIdleCycleTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONG64'], [], [])"><div class="token cpp_type">PULONG64</div></div> <div class="def" id="NI$QueryIdleProcessorCycleTime@::BOOL(::PULONG, ::PULONG64)[decl0]::ProcessorIdleCycleTime"><div>ProcessorIdleCycleTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryIdleProcessorCycleTimeEx@::BOOL(::USHORT, ::PULONG, ::PULONG64)[decl0]"><div><div class="token cpp_function">QueryIdleProcessorCycleTimeEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ USHORT Group,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="def" id="NI$QueryIdleProcessorCycleTimeEx@::BOOL(::USHORT, ::PULONG, ::PULONG64)[decl0]::Group"><div>Group</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ PULONG BufferLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONG'], [], [])"><div class="token cpp_type">PULONG</div></div> <div class="def" id="NI$QueryIdleProcessorCycleTimeEx@::BOOL(::USHORT, ::PULONG, ::PULONG64)[decl0]::BufferLength"><div>BufferLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_opt_(*BufferLength) PULONG64 ProcessorIdleCycleTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONG64'], [], [])"><div class="token cpp_type">PULONG64</div></div> <div class="def" id="NI$QueryIdleProcessorCycleTimeEx@::BOOL(::USHORT, ::PULONG, ::PULONG64)[decl0]::ProcessorIdleCycleTime"><div>ProcessorIdleCycleTime</div></div></div></div>
+    );
+
+    
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryInterruptTimePrecise@void(::PULONGLONG)[decl0]"><div><div class="token cpp_function">QueryInterruptTimePrecise</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PULONGLONG lpInterruptTimePrecise</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$QueryInterruptTimePrecise@void(::PULONGLONG)[decl0]::lpInterruptTimePrecise"><div>lpInterruptTimePrecise</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryUnbiasedInterruptTimePrecise@void(::PULONGLONG)[decl0]"><div><div class="token cpp_function">QueryUnbiasedInterruptTimePrecise</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PULONGLONG lpUnbiasedInterruptTimePrecise</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$QueryUnbiasedInterruptTimePrecise@void(::PULONGLONG)[decl0]::lpUnbiasedInterruptTimePrecise"><div>lpUnbiasedInterruptTimePrecise</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryInterruptTime@void(::PULONGLONG)[decl0]"><div><div class="token cpp_function">QueryInterruptTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PULONGLONG lpInterruptTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$QueryInterruptTime@void(::PULONGLONG)[decl0]::lpInterruptTime"><div>lpInterruptTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryUnbiasedInterruptTime@::BOOL(::PULONGLONG)[decl0]"><div><div class="token cpp_function">QueryUnbiasedInterruptTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PULONGLONG UnbiasedTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$QueryUnbiasedInterruptTime@::BOOL(::PULONGLONG)[decl0]::UnbiasedTime"><div>UnbiasedTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0601)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$QueryAuxiliaryCounterFrequency@::HRESULT(::PULONGLONG)[decl0]"><div><div class="token cpp_function">QueryAuxiliaryCounterFrequency</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PULONGLONG lpAuxiliaryCounterFrequency</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$QueryAuxiliaryCounterFrequency@::HRESULT(::PULONGLONG)[decl0]::lpAuxiliaryCounterFrequency"><div>lpAuxiliaryCounterFrequency</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ConvertAuxiliaryCounterToPerformanceCounter@::HRESULT(::ULONGLONG, ::PULONGLONG, ::PULONGLONG)[decl0]"><div><div class="token cpp_function">ConvertAuxiliaryCounterToPerformanceCounter</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ULONGLONG ullAuxiliaryCounterValue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONGLONG'], [], [])"><div class="token cpp_type">ULONGLONG</div></div> <div class="def" id="NI$ConvertAuxiliaryCounterToPerformanceCounter@::HRESULT(::ULONGLONG, ::PULONGLONG, ::PULONGLONG)[decl0]::ullAuxiliaryCounterValue"><div>ullAuxiliaryCounterValue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PULONGLONG lpPerformanceCounterValue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$ConvertAuxiliaryCounterToPerformanceCounter@::HRESULT(::ULONGLONG, ::PULONGLONG, ::PULONGLONG)[decl0]::lpPerformanceCounterValue"><div>lpPerformanceCounterValue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ PULONGLONG lpConversionError</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$ConvertAuxiliaryCounterToPerformanceCounter@::HRESULT(::ULONGLONG, ::PULONGLONG, ::PULONGLONG)[decl0]::lpConversionError"><div>lpConversionError</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ConvertPerformanceCounterToAuxiliaryCounter@::HRESULT(::ULONGLONG, ::PULONGLONG, ::PULONGLONG)[decl0]"><div><div class="token cpp_function">ConvertPerformanceCounterToAuxiliaryCounter</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ULONGLONG ullPerformanceCounterValue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONGLONG'], [], [])"><div class="token cpp_type">ULONGLONG</div></div> <div class="def" id="NI$ConvertPerformanceCounterToAuxiliaryCounter@::HRESULT(::ULONGLONG, ::PULONGLONG, ::PULONGLONG)[decl0]::ullPerformanceCounterValue"><div>ullPerformanceCounterValue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PULONGLONG lpAuxiliaryCounterValue,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$ConvertPerformanceCounterToAuxiliaryCounter@::HRESULT(::ULONGLONG, ::PULONGLONG, ::PULONGLONG)[decl0]::lpAuxiliaryCounterValue"><div>lpAuxiliaryCounterValue</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ PULONGLONG lpConversionError</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$ConvertPerformanceCounterToAuxiliaryCounter@::HRESULT(::ULONGLONG, ::PULONGLONG, ::PULONGLONG)[decl0]::lpConversionError"><div>lpConversionError</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _APISETREALTIME_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'PULONG': {
+        'displayNameInHtml': '<span class="cpp_type">PULONG</span>',
+        'impls': [
+            'NI$PULONG'
+        ],
+        'decls': []
+    },
+    'PULONG64': {
+        'displayNameInHtml': '<span class="cpp_type">PULONG64</span>',
+        'impls': [
+            'NI$PULONG64'
+        ],
+        'decls': []
+    },
+    'PULONGLONG': {
+        'displayNameInHtml': '<span class="cpp_type">PULONGLONG</span>',
+        'impls': [
+            'NI$PULONGLONG'
+        ],
+        'decls': []
+    },
+    'ULONGLONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONGLONG</span>',
+        'impls': [
+            'NI$ULONGLONG'
+        ],
+        'decls': []
+    },
+    'USHORT': {
+        'displayNameInHtml': '<span class="cpp_type">USHORT</span>',
+        'impls': [
+            'NI$USHORT'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$PULONG64': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$PULONGLONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$ULONGLONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$USHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

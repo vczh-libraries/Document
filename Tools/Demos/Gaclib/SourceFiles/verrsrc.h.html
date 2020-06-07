@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>verrsrc.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="expandable"><div class="disabled">/*****************************************************************************\
+*                                                                             *
+* verrsrc.h -   Version Resource definitions                                  *
+*                                                                             *
+*               Include file declaring version resources in rc files          *
+*                                                                             *
+*               Copyright (c) Microsoft Corporation. All rights reserved.     *
+*                                                                             *
+\*****************************************************************************/</div>
+<div class="expanded"><div class="token cpp_comment ">/****************************************************************************
+**                                                                             *
+* verrsrc.h -   Version Resource definitions                                  *
+*                                                                             *
+*               Include file declaring version resources in rc files          *
+*                                                                             *
+*               Copyright (c) Microsoft Corporation. All rights reserved.     *
+*                                                                             *
+\*****************************************************************************/</div></div></div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_comment ">/* ----- Symbols ----- */</div>
+<div class="disabled">#define VS_FILE_INFO            RT_VERSION</div>
+<div class="disabled">#define VS_VERSION_INFO         1</div>
+<div class="disabled">#define VS_USER_DEFINED         100</div>
+
+<div class="token cpp_comment ">/* ----- VS_VERSION.dwFileFlags ----- */</div>
+<div class="disabled">#ifndef _MAC</div>
+<div class="disabled">#define VS_FFI_SIGNATURE        0xFEEF04BDL</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define VS_FFI_SIGNATURE        0xBD04EFFEL
+#endif</div>
+<div class="disabled">#define VS_FFI_STRUCVERSION     0x00010000L</div>
+<div class="disabled">#define VS_FFI_FILEFLAGSMASK    0x0000003FL</div>
+
+<div class="token cpp_comment ">/* ----- VS_VERSION.dwFileFlags ----- */</div>
+<div class="disabled">#define VS_FF_DEBUG             0x00000001L</div>
+<div class="disabled">#define VS_FF_PRERELEASE        0x00000002L</div>
+<div class="disabled">#define VS_FF_PATCHED           0x00000004L</div>
+<div class="disabled">#define VS_FF_PRIVATEBUILD      0x00000008L</div>
+<div class="disabled">#define VS_FF_INFOINFERRED      0x00000010L</div>
+<div class="disabled">#define VS_FF_SPECIALBUILD      0x00000020L</div>
+
+<div class="token cpp_comment ">/* ----- VS_VERSION.dwFileOS ----- */</div>
+<div class="disabled">#define VOS_UNKNOWN             0x00000000L</div>
+<div class="disabled">#define VOS_DOS                 0x00010000L</div>
+<div class="disabled">#define VOS_OS216               0x00020000L</div>
+<div class="disabled">#define VOS_OS232               0x00030000L</div>
+<div class="disabled">#define VOS_NT                  0x00040000L</div>
+<div class="disabled">#define VOS_WINCE               0x00050000L</div>
+
+<div class="disabled">#define VOS__BASE               0x00000000L</div>
+<div class="disabled">#define VOS__WINDOWS16          0x00000001L</div>
+<div class="disabled">#define VOS__PM16               0x00000002L</div>
+<div class="disabled">#define VOS__PM32               0x00000003L</div>
+<div class="disabled">#define VOS__WINDOWS32          0x00000004L</div>
+
+<div class="disabled">#define VOS_DOS_WINDOWS16       0x00010001L</div>
+<div class="disabled">#define VOS_DOS_WINDOWS32       0x00010004L</div>
+<div class="disabled">#define VOS_OS216_PM16          0x00020002L</div>
+<div class="disabled">#define VOS_OS232_PM32          0x00030003L</div>
+<div class="disabled">#define VOS_NT_WINDOWS32        0x00040004L</div>
+
+<div class="token cpp_comment ">/* ----- VS_VERSION.dwFileType ----- */</div>
+<div class="disabled">#define VFT_UNKNOWN             0x00000000L</div>
+<div class="disabled">#define VFT_APP                 0x00000001L</div>
+<div class="disabled">#define VFT_DLL                 0x00000002L</div>
+<div class="disabled">#define VFT_DRV                 0x00000003L</div>
+<div class="disabled">#define VFT_FONT                0x00000004L</div>
+<div class="disabled">#define VFT_VXD                 0x00000005L</div>
+<div class="disabled">#define VFT_STATIC_LIB          0x00000007L</div>
+
+<div class="token cpp_comment ">/* ----- VS_VERSION.dwFileSubtype for VFT_WINDOWS_DRV ----- */</div>
+<div class="disabled">#define VFT2_UNKNOWN            0x00000000L</div>
+<div class="disabled">#define VFT2_DRV_PRINTER        0x00000001L</div>
+<div class="disabled">#define VFT2_DRV_KEYBOARD       0x00000002L</div>
+<div class="disabled">#define VFT2_DRV_LANGUAGE       0x00000003L</div>
+<div class="disabled">#define VFT2_DRV_DISPLAY        0x00000004L</div>
+<div class="disabled">#define VFT2_DRV_MOUSE          0x00000005L</div>
+<div class="disabled">#define VFT2_DRV_NETWORK        0x00000006L</div>
+<div class="disabled">#define VFT2_DRV_SYSTEM         0x00000007L</div>
+<div class="disabled">#define VFT2_DRV_INSTALLABLE    0x00000008L</div>
+<div class="disabled">#define VFT2_DRV_SOUND          0x00000009L</div>
+<div class="disabled">#define VFT2_DRV_COMM           0x0000000AL</div>
+<div class="disabled">#define VFT2_DRV_INPUTMETHOD    0x0000000BL</div>
+<div class="disabled">#define VFT2_DRV_VERSIONED_PRINTER    0x0000000CL</div>
+
+<div class="token cpp_comment ">/* ----- VS_VERSION.dwFileSubtype for VFT_WINDOWS_FONT ----- */</div>
+<div class="disabled">#define VFT2_FONT_RASTER        0x00000001L</div>
+<div class="disabled">#define VFT2_FONT_VECTOR        0x00000002L</div>
+<div class="disabled">#define VFT2_FONT_TRUETYPE      0x00000003L</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_comment ">/* ----- VerFindFile() flags ----- */</div>
+<div class="disabled">#define VFFF_ISSHAREDFILE       0x0001</div>
+
+<div class="disabled">#define VFF_CURNEDEST           0x0001</div>
+<div class="disabled">#define VFF_FILEINUSE           0x0002</div>
+<div class="disabled">#define VFF_BUFFTOOSMALL        0x0004</div>
+
+<div class="token cpp_comment ">/* ----- VerInstallFile() flags ----- */</div>
+<div class="disabled">#define VIFF_FORCEINSTALL       0x0001</div>
+<div class="disabled">#define VIFF_DONTDELETEOLD      0x0002</div>
+
+<div class="disabled">#define VIF_TEMPFILE            0x00000001L</div>
+<div class="disabled">#define VIF_MISMATCH            0x00000002L</div>
+<div class="disabled">#define VIF_SRCOLD              0x00000004L</div>
+
+<div class="disabled">#define VIF_DIFFLANG            0x00000008L</div>
+<div class="disabled">#define VIF_DIFFCODEPG          0x00000010L</div>
+<div class="disabled">#define VIF_DIFFTYPE            0x00000020L</div>
+
+<div class="disabled">#define VIF_WRITEPROT           0x00000040L</div>
+<div class="disabled">#define VIF_FILEINUSE           0x00000080L</div>
+<div class="disabled">#define VIF_OUTOFSPACE          0x00000100L</div>
+<div class="disabled">#define VIF_ACCESSVIOLATION     0x00000200L</div>
+<div class="disabled">#define VIF_SHARINGVIOLATION    0x00000400L</div>
+<div class="disabled">#define VIF_CANNOTCREATE        0x00000800L</div>
+<div class="disabled">#define VIF_CANNOTDELETE        0x00001000L</div>
+<div class="disabled">#define VIF_CANNOTRENAME        0x00002000L</div>
+<div class="disabled">#define VIF_CANNOTDELETECUR     0x00004000L</div>
+<div class="disabled">#define VIF_OUTOFMEMORY         0x00008000L</div>
+
+<div class="disabled">#define VIF_CANNOTREADSRC       0x00010000L</div>
+<div class="disabled">#define VIF_CANNOTREADDST       0x00020000L</div>
+
+<div class="disabled">#define VIF_BUFFTOOSMALL        0x00040000L</div>
+<div class="disabled">#define VIF_CANNOTLOADLZ32      0x00080000L</div>
+<div class="disabled">#define VIF_CANNOTLOADCABINET   0x00100000L</div>
+
+<div class="disabled">#ifndef RC_INVOKED              /* RC doesn&apos;t need to see the rest of this */</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+    
+<div class="token cpp_comment ">/* 
+    FILE_VER_GET_... flags are for use by 
+    GetFileVersionInfoSizeEx
+    GetFileVersionInfoExW
+*/</div>
+<div class="disabled">#define FILE_VER_GET_LOCALISED  0x01</div>
+<div class="disabled">#define FILE_VER_GET_NEUTRAL    0x02</div>
+<div class="disabled">#define FILE_VER_GET_PREFETCHED 0x04</div>
+
+<div class="token cpp_comment ">/* ----- Types and structures ----- */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagVS_FIXEDFILEINFO"><div><div class="token cpp_type">tagVS_FIXEDFILEINFO</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwSignature"><div><div class="token cpp_field">dwSignature</div></div></div>;            <div class="token cpp_comment ">/* e.g. 0xfeef04bd */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwStrucVersion"><div><div class="token cpp_field">dwStrucVersion</div></div></div>;         <div class="token cpp_comment ">/* e.g. 0x00000042 = &quot;0.42&quot; */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileVersionMS"><div><div class="token cpp_field">dwFileVersionMS</div></div></div>;        <div class="token cpp_comment ">/* e.g. 0x00030075 = &quot;3.75&quot; */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileVersionLS"><div><div class="token cpp_field">dwFileVersionLS</div></div></div>;        <div class="token cpp_comment ">/* e.g. 0x00000031 = &quot;0.31&quot; */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwProductVersionMS"><div><div class="token cpp_field">dwProductVersionMS</div></div></div>;     <div class="token cpp_comment ">/* e.g. 0x00030010 = &quot;3.10&quot; */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwProductVersionLS"><div><div class="token cpp_field">dwProductVersionLS</div></div></div>;     <div class="token cpp_comment ">/* e.g. 0x00000031 = &quot;0.31&quot; */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileFlagsMask"><div><div class="token cpp_field">dwFileFlagsMask</div></div></div>;        <div class="token cpp_comment ">/* = 0x3F for version &quot;0.42&quot; */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileFlags"><div><div class="token cpp_field">dwFileFlags</div></div></div>;            <div class="token cpp_comment ">/* e.g. VFF_DEBUG | VFF_PRERELEASE */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileOS"><div><div class="token cpp_field">dwFileOS</div></div></div>;               <div class="token cpp_comment ">/* e.g. VOS_DOS_WINDOWS16 */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileType"><div><div class="token cpp_field">dwFileType</div></div></div>;             <div class="token cpp_comment ">/* e.g. VFT_DRIVER */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileSubtype"><div><div class="token cpp_field">dwFileSubtype</div></div></div>;          <div class="token cpp_comment ">/* e.g. VFT2_DRV_KEYBOARD */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileDateMS"><div><div class="token cpp_field">dwFileDateMS</div></div></div>;           <div class="token cpp_comment ">/* e.g. 0 */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$tagVS_FIXEDFILEINFO::dwFileDateLS"><div><div class="token cpp_field">dwFileDateLS</div></div></div>;           <div class="token cpp_comment ">/* e.g. 0 */</div>
+} <div class="def" id="NI$VS_FIXEDFILEINFO"><div><div class="token cpp_type">VS_FIXEDFILEINFO</div></div></div>;
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif  /* !RC_INVOKED */</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

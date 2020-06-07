@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>coml2api.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//+---------------------------------------------------------------------------</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Microsoft Windows</div>
+<div class="token cpp_comment ">//  Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  File:       coml2api.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Contents:   Structured storage, property sets, and related APIs.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//----------------------------------------------------------------------------</div>
+
+<div class="disabled">#if !defined(_COML2API_H_)</div>
+<div class="disabled">#define _COML2API_H_</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif  // _MSC_VER</div>
+
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+
+<div class="disabled">#include &lt;combaseapi.h&gt;
+#include &lt;objidl.h&gt;
+#include &lt;propidlbase.h&gt;</div>
+
+#pragma region Application Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Common typedefs for paramaters used in Storage API&apos;s, gleamed from storage.h</div>
+<div class="token cpp_comment ">// Also contains Storage error codes, which should be moved into the storage</div>
+<div class="token cpp_comment ">// idl files.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define CWCSTORAGENAME 32</div>
+
+<div class="token cpp_comment ">/* Storage instantiation modes */</div>
+<div class="disabled">#define STGM_DIRECT             0x00000000L</div>
+<div class="disabled">#define STGM_TRANSACTED         0x00010000L</div>
+<div class="disabled">#define STGM_SIMPLE             0x08000000L</div>
+
+<div class="disabled">#define STGM_READ               0x00000000L</div>
+<div class="disabled">#define STGM_WRITE              0x00000001L</div>
+<div class="disabled">#define STGM_READWRITE          0x00000002L</div>
+
+<div class="disabled">#define STGM_SHARE_DENY_NONE    0x00000040L</div>
+<div class="disabled">#define STGM_SHARE_DENY_READ    0x00000030L</div>
+<div class="disabled">#define STGM_SHARE_DENY_WRITE   0x00000020L</div>
+<div class="disabled">#define STGM_SHARE_EXCLUSIVE    0x00000010L</div>
+
+<div class="disabled">#define STGM_PRIORITY           0x00040000L</div>
+<div class="disabled">#define STGM_DELETEONRELEASE    0x04000000L</div>
+<div class="disabled">#if (WINVER &gt;= 400)</div>
+<div class="disabled">#define STGM_NOSCRATCH          0x00100000L
+#endif /* WINVER */</div>
+
+<div class="disabled">#define STGM_CREATE             0x00001000L</div>
+<div class="disabled">#define STGM_CONVERT            0x00020000L</div>
+<div class="disabled">#define STGM_FAILIFTHERE        0x00000000L</div>
+
+<div class="disabled">#define STGM_NOSNAPSHOT         0x00200000L</div>
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0500)</div>
+<div class="disabled">#define STGM_DIRECT_SWMR        0x00400000L
+#endif</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$STGFMT"><div><div class="token cpp_type">STGFMT</div></div></div>;
+
+<div class="disabled">#define STGFMT_STORAGE          0</div>
+<div class="disabled">#define STGFMT_NATIVE           1</div>
+<div class="disabled">#define STGFMT_FILE             3</div>
+<div class="disabled">#define STGFMT_ANY              4</div>
+<div class="disabled">#define STGFMT_DOCFILE          5</div>
+
+<div class="token cpp_comment ">// This is a legacy define to allow old component to builds</div>
+<div class="disabled">#define STGFMT_DOCUMENT         0</div>
+
+<div class="token cpp_comment ">// Structured storage APIs</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgCreateDocfile@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]"><div><div class="token cpp_function">StgCreateDocfile</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ _Null_terminated_ const WCHAR* pwcsName,</div>
+<div class="expanded">        <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>* <div class="def" id="NI$StgCreateDocfile@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]::pwcsName"><div>pwcsName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreateDocfile@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]::grfMode"><div>grfMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ DWORD reserved,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreateDocfile@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]::reserved"><div>reserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ IStorage** ppstgOpen</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['IStorage'], [], [])"><div class="token cpp_type">IStorage</div></div>** <div class="def" id="NI$StgCreateDocfile@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]::ppstgOpen"><div>ppstgOpen</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgCreateDocfileOnILockBytes@::HRESULT(::ILockBytes *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]"><div><div class="token cpp_function">StgCreateDocfileOnILockBytes</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ILockBytes* plkbyt,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ILockBytes'], [], [])"><div class="token cpp_type">ILockBytes</div></div>* <div class="def" id="NI$StgCreateDocfileOnILockBytes@::HRESULT(::ILockBytes *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]::plkbyt"><div>plkbyt</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreateDocfileOnILockBytes@::HRESULT(::ILockBytes *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]::grfMode"><div>grfMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD reserved,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreateDocfileOnILockBytes@::HRESULT(::ILockBytes *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]::reserved"><div>reserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ IStorage** ppstgOpen</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['IStorage'], [], [])"><div class="token cpp_type">IStorage</div></div>** <div class="def" id="NI$StgCreateDocfileOnILockBytes@::HRESULT(::ILockBytes *, ::DWORD, ::DWORD, ::IStorage * *)[decl0]::ppstgOpen"><div>ppstgOpen</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgOpenStorage@::HRESULT(::WCHAR const *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]"><div><div class="token cpp_function">StgOpenStorage</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ _Null_terminated_ const WCHAR* pwcsName,</div>
+<div class="expanded">        <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>* <div class="def" id="NI$StgOpenStorage@::HRESULT(::WCHAR const *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::pwcsName"><div>pwcsName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ IStorage* pstgPriority,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IStorage'], [], [])"><div class="token cpp_type">IStorage</div></div>* <div class="def" id="NI$StgOpenStorage@::HRESULT(::WCHAR const *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::pstgPriority"><div>pstgPriority</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenStorage@::HRESULT(::WCHAR const *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::grfMode"><div>grfMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_z_ SNB snbExclude,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['SNB'], [], [])"><div class="token cpp_type">SNB</div></div> <div class="def" id="NI$StgOpenStorage@::HRESULT(::WCHAR const *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::snbExclude"><div>snbExclude</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD reserved,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenStorage@::HRESULT(::WCHAR const *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::reserved"><div>reserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ IStorage** ppstgOpen</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['IStorage'], [], [])"><div class="token cpp_type">IStorage</div></div>** <div class="def" id="NI$StgOpenStorage@::HRESULT(::WCHAR const *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::ppstgOpen"><div>ppstgOpen</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgOpenStorageOnILockBytes@::HRESULT(::ILockBytes *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]"><div><div class="token cpp_function">StgOpenStorageOnILockBytes</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ILockBytes* plkbyt,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ILockBytes'], [], [])"><div class="token cpp_type">ILockBytes</div></div>* <div class="def" id="NI$StgOpenStorageOnILockBytes@::HRESULT(::ILockBytes *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::plkbyt"><div>plkbyt</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ IStorage* pstgPriority,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IStorage'], [], [])"><div class="token cpp_type">IStorage</div></div>* <div class="def" id="NI$StgOpenStorageOnILockBytes@::HRESULT(::ILockBytes *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::pstgPriority"><div>pstgPriority</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenStorageOnILockBytes@::HRESULT(::ILockBytes *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::grfMode"><div>grfMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_z_ SNB snbExclude,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['SNB'], [], [])"><div class="token cpp_type">SNB</div></div> <div class="def" id="NI$StgOpenStorageOnILockBytes@::HRESULT(::ILockBytes *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::snbExclude"><div>snbExclude</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ DWORD reserved,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenStorageOnILockBytes@::HRESULT(::ILockBytes *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::reserved"><div>reserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ IStorage** ppstgOpen</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['IStorage'], [], [])"><div class="token cpp_type">IStorage</div></div>** <div class="def" id="NI$StgOpenStorageOnILockBytes@::HRESULT(::ILockBytes *, ::IStorage *, ::DWORD, ::SNB, ::DWORD, ::IStorage * *)[decl0]::ppstgOpen"><div>ppstgOpen</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgIsStorageFile@::HRESULT(::WCHAR const *)[decl0]"><div><div class="token cpp_function">StgIsStorageFile</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ _Null_terminated_ const WCHAR* pwcsName</div>
+<div class="expanded">        <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>* <div class="def" id="NI$StgIsStorageFile@::HRESULT(::WCHAR const *)[decl0]::pwcsName"><div>pwcsName</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgIsStorageILockBytes@::HRESULT(::ILockBytes *)[decl0]"><div><div class="token cpp_function">StgIsStorageILockBytes</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ILockBytes* plkbyt</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ILockBytes'], [], [])"><div class="token cpp_type">ILockBytes</div></div>* <div class="def" id="NI$StgIsStorageILockBytes@::HRESULT(::ILockBytes *)[decl0]::plkbyt"><div>plkbyt</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgSetTimes@::HRESULT(::WCHAR const *, ::FILETIME const *, ::FILETIME const *, ::FILETIME const *)[decl0]"><div><div class="token cpp_function">StgSetTimes</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ _Null_terminated_ const WCHAR* lpszName,</div>
+<div class="expanded">        <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>* <div class="def" id="NI$StgSetTimes@::HRESULT(::WCHAR const *, ::FILETIME const *, ::FILETIME const *, ::FILETIME const *)[decl0]::lpszName"><div>lpszName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ const FILETIME* pctime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div>* <div class="def" id="NI$StgSetTimes@::HRESULT(::WCHAR const *, ::FILETIME const *, ::FILETIME const *, ::FILETIME const *)[decl0]::pctime"><div>pctime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ const FILETIME* patime,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div>* <div class="def" id="NI$StgSetTimes@::HRESULT(::WCHAR const *, ::FILETIME const *, ::FILETIME const *, ::FILETIME const *)[decl0]::patime"><div>patime</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ const FILETIME* pmtime</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['FILETIME'], [], [])"><div class="token cpp_type">FILETIME</div></div>* <div class="def" id="NI$StgSetTimes@::HRESULT(::WCHAR const *, ::FILETIME const *, ::FILETIME const *, ::FILETIME const *)[decl0]::pmtime"><div>pmtime</div></div></div></div>
+    );
+
+
+<div class="token cpp_comment ">// STG initialization options for StgCreateStorageEx and StgOpenStorageEx</div>
+<div class="disabled">#if _WIN32_WINNT == 0x500</div>
+<div class="disabled">#define STGOPTIONS_VERSION 1
+#elif _WIN32_WINNT &gt; 0x500</div>
+<div class="disabled">#define STGOPTIONS_VERSION 2</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define STGOPTIONS_VERSION 0
+#endif</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagSTGOPTIONS"><div><div class="token cpp_type">tagSTGOPTIONS</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="def" id="NI$tagSTGOPTIONS::usVersion"><div><div class="token cpp_field">usVersion</div></div></div>;            <div class="token cpp_comment ">// Versions 1 and 2 supported</div>
+    <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="def" id="NI$tagSTGOPTIONS::reserved"><div><div class="token cpp_field">reserved</div></div></div>;             <div class="token cpp_comment ">// must be 0 for padding</div>
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$tagSTGOPTIONS::ulSectorSize"><div><div class="token cpp_field">ulSectorSize</div></div></div>;          <div class="token cpp_comment ">// docfile header sector size (512)</div>
+<div class="disabled">#if STGOPTIONS_VERSION &gt;= 2</div>
+    <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> *<div class="def" id="NI$tagSTGOPTIONS::pwcsTemplateFile"><div><div class="token cpp_field">pwcsTemplateFile</div></div></div>;  <div class="token cpp_comment ">// version 2 or above</div>
+<div class="disabled">#endif</div>
+} <div class="def" id="NI$STGOPTIONS"><div><div class="token cpp_type">STGOPTIONS</div></div></div>;
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]"><div><div class="token cpp_function">StgCreateStorageEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ _Null_terminated_ const WCHAR* pwcsName,</div>
+<div class="expanded">        <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>* <div class="def" id="NI$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::pwcsName"><div>pwcsName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::grfMode"><div>grfMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD stgfmt,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::stgfmt"><div>stgfmt</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfAttrs,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::grfAttrs"><div>grfAttrs</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_opt_ STGOPTIONS* pStgOptions,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['STGOPTIONS'], [], [])"><div class="token cpp_type">STGOPTIONS</div></div>* <div class="def" id="NI$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::pStgOptions"><div>pStgOptions</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PSECURITY_DESCRIPTOR pSecurityDescriptor,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSECURITY_DESCRIPTOR'], [], [])"><div class="token cpp_type">PSECURITY_DESCRIPTOR</div></div> <div class="def" id="NI$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::pSecurityDescriptor"><div>pSecurityDescriptor</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ REFIID riid,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ void** ppObjectOpen</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div>** <div class="def" id="NI$StgCreateStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::ppObjectOpen"><div>ppObjectOpen</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]"><div><div class="token cpp_function">StgOpenStorageEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ _Null_terminated_ const WCHAR* pwcsName,</div>
+<div class="expanded">        <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div>* <div class="def" id="NI$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::pwcsName"><div>pwcsName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::grfMode"><div>grfMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD stgfmt,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::stgfmt"><div>stgfmt</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfAttrs,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::grfAttrs"><div>grfAttrs</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_opt_ STGOPTIONS* pStgOptions,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['STGOPTIONS'], [], [])"><div class="token cpp_type">STGOPTIONS</div></div>* <div class="def" id="NI$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::pStgOptions"><div>pStgOptions</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PSECURITY_DESCRIPTOR pSecurityDescriptor,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSECURITY_DESCRIPTOR'], [], [])"><div class="token cpp_type">PSECURITY_DESCRIPTOR</div></div> <div class="def" id="NI$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::pSecurityDescriptor"><div>pSecurityDescriptor</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ REFIID riid,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ void** ppObjectOpen</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div>** <div class="def" id="NI$StgOpenStorageEx@::HRESULT(::WCHAR const *, ::DWORD, ::DWORD, ::DWORD, ::STGOPTIONS *, ::PSECURITY_DESCRIPTOR, ::IID const &, void * *)[decl0]::ppObjectOpen"><div>ppObjectOpen</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifndef _STGCREATEPROPSTG_DEFINED_</div>
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgCreatePropStg@::HRESULT(::IUnknown *, ::IID const &, ::CLSID const *, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]"><div><div class="token cpp_function">StgCreatePropStg</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ IUnknown* pUnk,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IUnknown'], [], [])"><div class="token cpp_type">IUnknown</div></div>* <div class="def" id="NI$StgCreatePropStg@::HRESULT(::IUnknown *, ::IID const &, ::CLSID const *, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::pUnk"><div>pUnk</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ REFFMTID fmtid,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$StgCreatePropStg@::HRESULT(::IUnknown *, ::IID const &, ::CLSID const *, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::fmtid"><div>fmtid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ const CLSID* pclsid,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div>* <div class="def" id="NI$StgCreatePropStg@::HRESULT(::IUnknown *, ::IID const &, ::CLSID const *, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::pclsid"><div>pclsid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfFlags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreatePropStg@::HRESULT(::IUnknown *, ::IID const &, ::CLSID const *, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::grfFlags"><div>grfFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ DWORD dwReserved,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreatePropStg@::HRESULT(::IUnknown *, ::IID const &, ::CLSID const *, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::dwReserved"><div>dwReserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ IPropertyStorage** ppPropStg</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['IPropertyStorage'], [], [])"><div class="token cpp_type">IPropertyStorage</div></div>** <div class="def" id="NI$StgCreatePropStg@::HRESULT(::IUnknown *, ::IID const &, ::CLSID const *, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::ppPropStg"><div>ppPropStg</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgOpenPropStg@::HRESULT(::IUnknown *, ::IID const &, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]"><div><div class="token cpp_function">StgOpenPropStg</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ IUnknown* pUnk,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IUnknown'], [], [])"><div class="token cpp_type">IUnknown</div></div>* <div class="def" id="NI$StgOpenPropStg@::HRESULT(::IUnknown *, ::IID const &, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::pUnk"><div>pUnk</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ REFFMTID fmtid,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$StgOpenPropStg@::HRESULT(::IUnknown *, ::IID const &, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::fmtid"><div>fmtid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD grfFlags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenPropStg@::HRESULT(::IUnknown *, ::IID const &, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::grfFlags"><div>grfFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ DWORD dwReserved,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgOpenPropStg@::HRESULT(::IUnknown *, ::IID const &, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::dwReserved"><div>dwReserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ IPropertyStorage** ppPropStg</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['IPropertyStorage'], [], [])"><div class="token cpp_type">IPropertyStorage</div></div>** <div class="def" id="NI$StgOpenPropStg@::HRESULT(::IUnknown *, ::IID const &, ::DWORD, ::DWORD, ::IPropertyStorage * *)[decl0]::ppPropStg"><div>ppPropStg</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$StgCreatePropSetStg@::HRESULT(::IStorage *, ::DWORD, ::IPropertySetStorage * *)[decl0]"><div><div class="token cpp_function">StgCreatePropSetStg</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ IStorage* pStorage,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['IStorage'], [], [])"><div class="token cpp_type">IStorage</div></div>* <div class="def" id="NI$StgCreatePropSetStg@::HRESULT(::IStorage *, ::DWORD, ::IPropertySetStorage * *)[decl0]::pStorage"><div>pStorage</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_ DWORD dwReserved,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$StgCreatePropSetStg@::HRESULT(::IStorage *, ::DWORD, ::IPropertySetStorage * *)[decl0]::dwReserved"><div>dwReserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ IPropertySetStorage** ppPropSetStg</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['IPropertySetStorage'], [], [])"><div class="token cpp_type">IPropertySetStorage</div></div>** <div class="def" id="NI$StgCreatePropSetStg@::HRESULT(::IStorage *, ::DWORD, ::IPropertySetStorage * *)[decl0]::ppPropSetStg"><div>ppPropSetStg</div></div></div></div>
+    );
+
+
+<div class="disabled">#define CCH_MAX_PROPSTG_NAME    31</div>
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FmtIdToPropStgName@::HRESULT(::FMTID const *, ::LPOLESTR)[decl0]"><div><div class="token cpp_function">FmtIdToPropStgName</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ const FMTID* pfmtid,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['FMTID'], [], [])"><div class="token cpp_type">FMTID</div></div>* <div class="def" id="NI$FmtIdToPropStgName@::HRESULT(::FMTID const *, ::LPOLESTR)[decl0]::pfmtid"><div>pfmtid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_(CCH_MAX_PROPSTG_NAME + 1) LPOLESTR oszName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$FmtIdToPropStgName@::HRESULT(::FMTID const *, ::LPOLESTR)[decl0]::oszName"><div>oszName</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$PropStgNameToFmtId@::HRESULT(::LPOLESTR const, ::FMTID *)[decl0]"><div><div class="token cpp_function">PropStgNameToFmtId</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ const LPOLESTR oszName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$PropStgNameToFmtId@::HRESULT(::LPOLESTR const, ::FMTID *)[decl0]::oszName"><div>oszName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ FMTID* pfmtid</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['FMTID'], [], [])"><div class="token cpp_type">FMTID</div></div>* <div class="def" id="NI$PropStgNameToFmtId@::HRESULT(::LPOLESTR const, ::FMTID *)[decl0]::pfmtid"><div>pfmtid</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // _STGCREATEPROPSTG_DEFINED_</div>
+
+<div class="token cpp_comment ">// Helper functions</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ReadClassStg@::HRESULT(::LPSTORAGE, ::CLSID *)[decl0]"><div><div class="token cpp_function">ReadClassStg</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPSTORAGE pStg,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$ReadClassStg@::HRESULT(::LPSTORAGE, ::CLSID *)[decl0]::pStg"><div>pStg</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ CLSID  FAR * pclsid</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div>   * <div class="def" id="NI$ReadClassStg@::HRESULT(::LPSTORAGE, ::CLSID *)[decl0]::pclsid"><div>pclsid</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$WriteClassStg@::HRESULT(::LPSTORAGE, ::IID const &)[decl0]"><div><div class="token cpp_function">WriteClassStg</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPSTORAGE pStg,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$WriteClassStg@::HRESULT(::LPSTORAGE, ::IID const &)[decl0]::pStg"><div>pStg</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ REFCLSID rclsid</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$WriteClassStg@::HRESULT(::LPSTORAGE, ::IID const &)[decl0]::rclsid"><div>rclsid</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ReadClassStm@::HRESULT(::LPSTREAM, ::CLSID *)[decl0]"><div><div class="token cpp_function">ReadClassStm</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPSTREAM pStm,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTREAM'], [], [])"><div class="token cpp_type">LPSTREAM</div></div> <div class="def" id="NI$ReadClassStm@::HRESULT(::LPSTREAM, ::CLSID *)[decl0]::pStm"><div>pStm</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ CLSID  FAR * pclsid</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div>   * <div class="def" id="NI$ReadClassStm@::HRESULT(::LPSTREAM, ::CLSID *)[decl0]::pclsid"><div>pclsid</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$WriteClassStm@::HRESULT(::LPSTREAM, ::IID const &)[decl0]"><div><div class="token cpp_function">WriteClassStm</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPSTREAM pStm,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTREAM'], [], [])"><div class="token cpp_type">LPSTREAM</div></div> <div class="def" id="NI$WriteClassStm@::HRESULT(::LPSTREAM, ::IID const &)[decl0]::pStm"><div>pStm</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ REFCLSID rclsid</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$WriteClassStm@::HRESULT(::LPSTREAM, ::IID const &)[decl0]::rclsid"><div>rclsid</div></div></div></div>
+    );
+ 
+
+<div class="token cpp_comment ">// Storage utility APIs</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetHGlobalFromILockBytes@::HRESULT(::LPLOCKBYTES, ::HGLOBAL *)[decl0]"><div><div class="token cpp_function">GetHGlobalFromILockBytes</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPLOCKBYTES plkbyt,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPLOCKBYTES'], [], [])"><div class="token cpp_type">LPLOCKBYTES</div></div> <div class="def" id="NI$GetHGlobalFromILockBytes@::HRESULT(::LPLOCKBYTES, ::HGLOBAL *)[decl0]::plkbyt"><div>plkbyt</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ HGLOBAL  FAR * phglobal</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HGLOBAL'], [], [])"><div class="token cpp_type">HGLOBAL</div></div>   * <div class="def" id="NI$GetHGlobalFromILockBytes@::HRESULT(::LPLOCKBYTES, ::HGLOBAL *)[decl0]::phglobal"><div>phglobal</div></div></div></div>
+    );
+
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CreateILockBytesOnHGlobal@::HRESULT(::HGLOBAL, ::BOOL, ::LPLOCKBYTES *)[decl0]"><div><div class="token cpp_function">CreateILockBytesOnHGlobal</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HGLOBAL hGlobal,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HGLOBAL'], [], [])"><div class="token cpp_type">HGLOBAL</div></div> <div class="def" id="NI$CreateILockBytesOnHGlobal@::HRESULT(::HGLOBAL, ::BOOL, ::LPLOCKBYTES *)[decl0]::hGlobal"><div>hGlobal</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ BOOL fDeleteOnRelease,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$CreateILockBytesOnHGlobal@::HRESULT(::HGLOBAL, ::BOOL, ::LPLOCKBYTES *)[decl0]::fDeleteOnRelease"><div>fDeleteOnRelease</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ LPLOCKBYTES  FAR * pplkbyt</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['LPLOCKBYTES'], [], [])"><div class="token cpp_type">LPLOCKBYTES</div></div>   * <div class="def" id="NI$CreateILockBytesOnHGlobal@::HRESULT(::HGLOBAL, ::BOOL, ::LPLOCKBYTES *)[decl0]::pplkbyt"><div>pplkbyt</div></div></div></div>
+    );
+
+
+<div class="token cpp_comment ">// ConvertTo APIs</div>
+<div class="expandable"><div class="disabled">WINOLEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetConvertStg@::HRESULT(::LPSTORAGE)[decl0]"><div><div class="token cpp_function">GetConvertStg</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPSTORAGE pStg</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$GetConvertStg@::HRESULT(::LPSTORAGE)[decl0]::pStg"><div>pStg</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */</div>
+#pragma endregion
+
+<div class="disabled">#endif     // __COML2API_H__
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'CLSID': {
+        'displayNameInHtml': '<span class="cpp_type">CLSID</span>',
+        'impls': [
+            'NI$CLSID'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'FILETIME': {
+        'displayNameInHtml': '<span class="cpp_type">FILETIME</span>',
+        'impls': [
+            'NI$FILETIME'
+        ],
+        'decls': []
+    },
+    'FMTID': {
+        'displayNameInHtml': '<span class="cpp_type">FMTID</span>',
+        'impls': [
+            'NI$FMTID'
+        ],
+        'decls': []
+    },
+    'HGLOBAL': {
+        'displayNameInHtml': '<span class="cpp_type">HGLOBAL</span>',
+        'impls': [
+            'NI$HGLOBAL'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'IID': {
+        'displayNameInHtml': '<span class="cpp_type">IID</span>',
+        'impls': [
+            'NI$IID'
+        ],
+        'decls': []
+    },
+    'ILockBytes': {
+        'displayNameInHtml': '<span class="cpp_type">ILockBytes</span>',
+        'impls': [
+            'NI$ILockBytes'
+        ],
+        'decls': [
+            'NF[0]$ILockBytes'
+        ]
+    },
+    'IPropertySetStorage': {
+        'displayNameInHtml': '<span class="cpp_type">IPropertySetStorage</span>',
+        'impls': [
+            'NI$IPropertySetStorage'
+        ],
+        'decls': [
+            'NF[0]$IPropertySetStorage'
+        ]
+    },
+    'IPropertyStorage': {
+        'displayNameInHtml': '<span class="cpp_type">IPropertyStorage</span>',
+        'impls': [
+            'NI$IPropertyStorage'
+        ],
+        'decls': [
+            'NF[0]$IPropertyStorage'
+        ]
+    },
+    'IStorage': {
+        'displayNameInHtml': '<span class="cpp_type">IStorage</span>',
+        'impls': [
+            'NI$IStorage'
+        ],
+        'decls': [
+            'NF[0]$IStorage'
+        ]
+    },
+    'IUnknown': {
+        'displayNameInHtml': '<span class="cpp_type">IUnknown</span>',
+        'impls': [
+            'NI$IUnknown'
+        ],
+        'decls': [
+            'NF[0]$IUnknown'
+        ]
+    },
+    'LPLOCKBYTES': {
+        'displayNameInHtml': '<span class="cpp_type">LPLOCKBYTES</span>',
+        'impls': [
+            'NI$LPLOCKBYTES'
+        ],
+        'decls': []
+    },
+    'LPOLESTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLESTR</span>',
+        'impls': [
+            'NI$LPOLESTR'
+        ],
+        'decls': []
+    },
+    'LPSTORAGE': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTORAGE</span>',
+        'impls': [
+            'NI$LPSTORAGE'
+        ],
+        'decls': []
+    },
+    'LPSTREAM': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTREAM</span>',
+        'impls': [
+            'NI$LPSTREAM'
+        ],
+        'decls': []
+    },
+    'PSECURITY_DESCRIPTOR': {
+        'displayNameInHtml': '<span class="cpp_type">PSECURITY_DESCRIPTOR</span>',
+        'impls': [
+            'NI$PSECURITY_DESCRIPTOR'
+        ],
+        'decls': []
+    },
+    'SNB': {
+        'displayNameInHtml': '<span class="cpp_type">SNB</span>',
+        'impls': [
+            'NI$SNB'
+        ],
+        'decls': []
+    },
+    'STGOPTIONS': {
+        'displayNameInHtml': '<span class="cpp_type">STGOPTIONS</span>',
+        'impls': [
+            'NI$STGOPTIONS'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'USHORT': {
+        'displayNameInHtml': '<span class="cpp_type">USHORT</span>',
+        'impls': [
+            'NI$USHORT'
+        ],
+        'decls': []
+    },
+    'WCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">WCHAR</span>',
+        'impls': [
+            'NI$WCHAR'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$CLSID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$FILETIME': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$FMTID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$HGLOBAL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$IID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$ILockBytes': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$IPropertySetStorage': { 'htmlFileName': 'PropIdlBase.h', 'displayName': 'PropIdlBase.h' },
+    'NI$IPropertyStorage': { 'htmlFileName': 'PropIdlBase.h', 'displayName': 'PropIdlBase.h' },
+    'NI$IStorage': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$IUnknown': { 'htmlFileName': 'Unknwnbase.h', 'displayName': 'Unknwnbase.h' },
+    'NI$LPLOCKBYTES': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPOLESTR': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$LPSTORAGE': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPSTREAM': { 'htmlFileName': 'ObjIdlbase.h', 'displayName': 'ObjIdlbase.h' },
+    'NI$PSECURITY_DESCRIPTOR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$SNB': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$STGOPTIONS': null,
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$USHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WCHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

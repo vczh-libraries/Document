@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShellScalingApi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default">
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+<div class="disabled">#include &lt;shtypes.h&gt;</div>
+
+<div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+
+
+<div class="disabled">#ifndef SCALING_ENUMS_DECLARED</div>
+
+<div class="token cpp_comment ">// The scaling API only operates over the primary display and the immersive display.  Scaling information</div>
+<div class="token cpp_comment ">// is not provided for displays other than those.</div>
+<div class="token cpp_comment ">// This enum matches #defines in IETouch.h.  Don&apos;t update this without keeping that in sync.</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div>
+{
+    <div class="def" id="NI$<anonymous>606::DEVICE_PRIMARY"><div><div class="token cpp_enum">DEVICE_PRIMARY</div></div></div> = <div class="token cpp_number ">0</div>,
+    <div class="def" id="NI$<anonymous>606::DEVICE_IMMERSIVE"><div><div class="token cpp_enum">DEVICE_IMMERSIVE</div></div></div> = <div class="token cpp_number ">1</div>,
+} <div class="def" id="NI$DISPLAY_DEVICE_TYPE"><div><div class="token cpp_type">DISPLAY_DEVICE_TYPE</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div>
+{
+    <div class="def" id="NI$<anonymous>607::SCF_VALUE_NONE"><div><div class="token cpp_enum">SCF_VALUE_NONE</div></div></div> = <div class="token cpp_number ">0x00</div>,
+    <div class="def" id="NI$<anonymous>607::SCF_SCALE"><div><div class="token cpp_enum">SCF_SCALE</div></div></div> = <div class="token cpp_number ">0x01</div>,
+    <div class="def" id="NI$<anonymous>607::SCF_PHYSICAL"><div><div class="token cpp_enum">SCF_PHYSICAL</div></div></div> = <div class="token cpp_number ">0x02</div>,
+} <div class="def" id="NI$SCALE_CHANGE_FLAGS"><div><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div></div>;
+<div class="expandable"><div class="disabled">DEFINE_ENUM_FLAG_OPERATORS(SCALE_CHANGE_FLAGS);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">constexpr</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="FB$operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">|</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>(((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>) | ((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>)); } <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;<div class="def" id="FB$operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">|</div><div class="token cpp_function">=</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;<div class="def" id="NI$operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;)(((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div> &amp;)<div class="ref" onclick="jumpToSymbol([], ['operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>) |= ((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>)); } <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">constexpr</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="FB$operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">&amp;</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>(((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>) &amp; ((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>)); } <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;<div class="def" id="FB$operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">&amp;</div><div class="token cpp_function">=</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;<div class="def" id="NI$operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;)(((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div> &amp;)<div class="ref" onclick="jumpToSymbol([], ['operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>) &amp;= ((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>)); } <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">constexpr</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="FB$operator ~@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">~</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator ~@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>(~((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator ~@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>)); } <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">constexpr</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="FB$operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">^</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>(((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>) ^ ((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>)); } <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;<div class="def" id="FB$operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_function">^</div><div class="token cpp_function">=</div></div></div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;<div class="def" id="NI$operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> <div class="def" id="NI$operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div> &amp;)(((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div> &amp;)<div class="ref" onclick="jumpToSymbol([], ['operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>) ^= ((<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER'], [], [])"><div class="token cpp_type">_ENUM_FLAG_SIZED_INTEGER</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['SCALE_CHANGE_FLAGS'], [], [])"><div class="token cpp_type">SCALE_CHANGE_FLAGS</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['_ENUM_FLAG_SIZED_INTEGER::type'], [], [])"><div class="token cpp_type">type</div></div>)<div class="ref" onclick="jumpToSymbol([], ['operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>)); } };</div></div>
+
+<div class="disabled">#define SCALING_ENUMS_DECLARED
+#endif</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+
+<div class="token cpp_comment ">// Given a display device, return the preferred DEVICE_SCALE_FACTOR to be used for scaling values.</div>
+<div class="token cpp_comment ">// Default is SCALE_100_PERCENT</div>
+<div class="expandable"><div class="disabled">STDAPI_(DEVICE_SCALE_FACTOR) GetScaleFactorForDevice(_In_ DISPLAY_DEVICE_TYPE deviceType);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['DEVICE_SCALE_FACTOR'], [], [])"><div class="token cpp_type">DEVICE_SCALE_FACTOR</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$GetScaleFactorForDevice@::DEVICE_SCALE_FACTOR(::DISPLAY_DEVICE_TYPE)[decl0]"><div><div class="token cpp_function">GetScaleFactorForDevice</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['DISPLAY_DEVICE_TYPE'], [], [])"><div class="token cpp_type">DISPLAY_DEVICE_TYPE</div></div> <div class="def" id="NI$GetScaleFactorForDevice@::DEVICE_SCALE_FACTOR(::DISPLAY_DEVICE_TYPE)[decl0]::deviceType"><div>deviceType</div></div>);</div></div>
+
+<div class="token cpp_comment ">// Register a window to receive callbacks when scaling information changes.  The uMsgNotify param specifies a message</div>
+<div class="token cpp_comment ">// that will be posted to the requesting window.  The wParam for this message is a combination of SCALE_CHANGE_FLAGS</div>
+<div class="expandable"><div class="disabled">STDAPI RegisterScaleChangeNotifications(_In_ DISPLAY_DEVICE_TYPE displayDevice, _In_ HWND hwndNotify, _In_ UINT uMsgNotify, _Out_ DWORD *pdwCookie);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$RegisterScaleChangeNotifications@::HRESULT(::DISPLAY_DEVICE_TYPE, ::HWND, ::UINT, ::DWORD *)[decl0]"><div><div class="token cpp_function">RegisterScaleChangeNotifications</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['DISPLAY_DEVICE_TYPE'], [], [])"><div class="token cpp_type">DISPLAY_DEVICE_TYPE</div></div> <div class="def" id="NI$RegisterScaleChangeNotifications@::HRESULT(::DISPLAY_DEVICE_TYPE, ::HWND, ::UINT, ::DWORD *)[decl0]::displayDevice"><div>displayDevice</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$RegisterScaleChangeNotifications@::HRESULT(::DISPLAY_DEVICE_TYPE, ::HWND, ::UINT, ::DWORD *)[decl0]::hwndNotify"><div>hwndNotify</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$RegisterScaleChangeNotifications@::HRESULT(::DISPLAY_DEVICE_TYPE, ::HWND, ::UINT, ::DWORD *)[decl0]::uMsgNotify"><div>uMsgNotify</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> *<div class="def" id="NI$RegisterScaleChangeNotifications@::HRESULT(::DISPLAY_DEVICE_TYPE, ::HWND, ::UINT, ::DWORD *)[decl0]::pdwCookie"><div>pdwCookie</div></div>);</div></div>
+<div class="expandable"><div class="disabled">STDAPI RevokeScaleChangeNotifications(_In_ DISPLAY_DEVICE_TYPE displayDevice, _In_ DWORD dwCookie);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$RevokeScaleChangeNotifications@::HRESULT(::DISPLAY_DEVICE_TYPE, ::DWORD)[decl0]"><div><div class="token cpp_function">RevokeScaleChangeNotifications</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['DISPLAY_DEVICE_TYPE'], [], [])"><div class="token cpp_type">DISPLAY_DEVICE_TYPE</div></div> <div class="def" id="NI$RevokeScaleChangeNotifications@::HRESULT(::DISPLAY_DEVICE_TYPE, ::DWORD)[decl0]::displayDevice"><div>displayDevice</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$RevokeScaleChangeNotifications@::HRESULT(::DISPLAY_DEVICE_TYPE, ::DWORD)[decl0]::dwCookie"><div>dwCookie</div></div>);</div></div>
+
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINBLUE)</div>
+
+<div class="expandable"><div class="disabled">STDAPI GetScaleFactorForMonitor(_In_ HMONITOR hMon, _Out_ DEVICE_SCALE_FACTOR *pScale);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$GetScaleFactorForMonitor@::HRESULT(::HMONITOR, ::DEVICE_SCALE_FACTOR *)[decl0]"><div><div class="token cpp_function">GetScaleFactorForMonitor</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['HMONITOR'], [], [])"><div class="token cpp_type">HMONITOR</div></div> <div class="def" id="NI$GetScaleFactorForMonitor@::HRESULT(::HMONITOR, ::DEVICE_SCALE_FACTOR *)[decl0]::hMon"><div>hMon</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['DEVICE_SCALE_FACTOR'], [], [])"><div class="token cpp_type">DEVICE_SCALE_FACTOR</div></div> *<div class="def" id="NI$GetScaleFactorForMonitor@::HRESULT(::HMONITOR, ::DEVICE_SCALE_FACTOR *)[decl0]::pScale"><div>pScale</div></div>);</div></div>
+<div class="expandable"><div class="disabled">STDAPI RegisterScaleChangeEvent(_In_ HANDLE hEvent, _Out_ DWORD_PTR *pdwCookie);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$RegisterScaleChangeEvent@::HRESULT(::HANDLE, ::DWORD_PTR *)[decl0]"><div><div class="token cpp_function">RegisterScaleChangeEvent</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$RegisterScaleChangeEvent@::HRESULT(::HANDLE, ::DWORD_PTR *)[decl0]::hEvent"><div>hEvent</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> *<div class="def" id="NI$RegisterScaleChangeEvent@::HRESULT(::HANDLE, ::DWORD_PTR *)[decl0]::pdwCookie"><div>pdwCookie</div></div>);</div></div>
+<div class="expandable"><div class="disabled">STDAPI UnregisterScaleChangeEvent(_In_ DWORD_PTR dwCookie);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$UnregisterScaleChangeEvent@::HRESULT(::DWORD_PTR)[decl0]"><div><div class="token cpp_function">UnregisterScaleChangeEvent</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$UnregisterScaleChangeEvent@::HRESULT(::DWORD_PTR)[decl0]::dwCookie"><div>dwCookie</div></div>);</div></div>
+
+
+
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINBLUE)</div>
+
+<div class="disabled">#ifndef DPI_ENUMS_DECLARED</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$PROCESS_DPI_AWARENESS"><div><div class="token cpp_type">PROCESS_DPI_AWARENESS</div></div></div> {
+    <div class="def" id="NI$PROCESS_DPI_AWARENESS::PROCESS_DPI_UNAWARE"><div><div class="token cpp_enum">PROCESS_DPI_UNAWARE</div></div></div> = <div class="token cpp_number ">0</div>,
+    <div class="def" id="NI$PROCESS_DPI_AWARENESS::PROCESS_SYSTEM_DPI_AWARE"><div><div class="token cpp_enum">PROCESS_SYSTEM_DPI_AWARE</div></div></div> = <div class="token cpp_number ">1</div>,
+    <div class="def" id="NI$PROCESS_DPI_AWARENESS::PROCESS_PER_MONITOR_DPI_AWARE"><div><div class="token cpp_enum">PROCESS_PER_MONITOR_DPI_AWARE</div></div></div> = <div class="token cpp_number ">2</div>
+} <div class="ref" onclick="jumpToSymbol([], ['PROCESS_DPI_AWARENESS'], [], [])"><div class="token cpp_type">PROCESS_DPI_AWARENESS</div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$MONITOR_DPI_TYPE"><div><div class="token cpp_type">MONITOR_DPI_TYPE</div></div></div> {
+    <div class="def" id="NI$MONITOR_DPI_TYPE::MDT_EFFECTIVE_DPI"><div><div class="token cpp_enum">MDT_EFFECTIVE_DPI</div></div></div> = <div class="token cpp_number ">0</div>,
+    <div class="def" id="NI$MONITOR_DPI_TYPE::MDT_ANGULAR_DPI"><div><div class="token cpp_enum">MDT_ANGULAR_DPI</div></div></div> = <div class="token cpp_number ">1</div>,
+    <div class="def" id="NI$MONITOR_DPI_TYPE::MDT_RAW_DPI"><div><div class="token cpp_enum">MDT_RAW_DPI</div></div></div> = <div class="token cpp_number ">2</div>,
+    <div class="def" id="NI$MONITOR_DPI_TYPE::MDT_DEFAULT"><div><div class="token cpp_enum">MDT_DEFAULT</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['MONITOR_DPI_TYPE::MDT_EFFECTIVE_DPI'], [], [])"><div class="token cpp_enum">MDT_EFFECTIVE_DPI</div></div>
+} <div class="ref" onclick="jumpToSymbol([], ['MONITOR_DPI_TYPE'], [], [])"><div class="token cpp_type">MONITOR_DPI_TYPE</div></div>;
+
+<div class="disabled">#define DPI_ENUMS_DECLARED
+#endif // (DPI_ENUMS_DECLARED)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINBLUE)</div>
+
+<div class="expandable"><div class="disabled">STDAPI SetProcessDpiAwareness(</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$SetProcessDpiAwareness@::HRESULT(::PROCESS_DPI_AWARENESS)[decl0]"><div><div class="token cpp_function">SetProcessDpiAwareness</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_ PROCESS_DPI_AWARENESS value);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PROCESS_DPI_AWARENESS'], [], [])"><div class="token cpp_type">PROCESS_DPI_AWARENESS</div></div> <div class="def" id="NI$SetProcessDpiAwareness@::HRESULT(::PROCESS_DPI_AWARENESS)[decl0]::value"><div>value</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">STDAPI GetProcessDpiAwareness(</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$GetProcessDpiAwareness@::HRESULT(::HANDLE, ::PROCESS_DPI_AWARENESS *)[decl0]"><div><div class="token cpp_function">GetProcessDpiAwareness</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ HANDLE hprocess,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetProcessDpiAwareness@::HRESULT(::HANDLE, ::PROCESS_DPI_AWARENESS *)[decl0]::hprocess"><div>hprocess</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PROCESS_DPI_AWARENESS *value);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PROCESS_DPI_AWARENESS'], [], [])"><div class="token cpp_type">PROCESS_DPI_AWARENESS</div></div> *<div class="def" id="NI$GetProcessDpiAwareness@::HRESULT(::HANDLE, ::PROCESS_DPI_AWARENESS *)[decl0]::value"><div>value</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">STDAPI GetDpiForMonitor(</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$GetDpiForMonitor@::HRESULT(::HMONITOR, ::MONITOR_DPI_TYPE, ::UINT *, ::UINT *)[decl0]"><div><div class="token cpp_function">GetDpiForMonitor</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_ HMONITOR hmonitor,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HMONITOR'], [], [])"><div class="token cpp_type">HMONITOR</div></div> <div class="def" id="NI$GetDpiForMonitor@::HRESULT(::HMONITOR, ::MONITOR_DPI_TYPE, ::UINT *, ::UINT *)[decl0]::hmonitor"><div>hmonitor</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ MONITOR_DPI_TYPE dpiType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['MONITOR_DPI_TYPE'], [], [])"><div class="token cpp_type">MONITOR_DPI_TYPE</div></div> <div class="def" id="NI$GetDpiForMonitor@::HRESULT(::HMONITOR, ::MONITOR_DPI_TYPE, ::UINT *, ::UINT *)[decl0]::dpiType"><div>dpiType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ UINT *dpiX,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$GetDpiForMonitor@::HRESULT(::HMONITOR, ::MONITOR_DPI_TYPE, ::UINT *, ::UINT *)[decl0]::dpiX"><div>dpiX</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ UINT *dpiY);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> *<div class="def" id="NI$GetDpiForMonitor@::HRESULT(::HMONITOR, ::MONITOR_DPI_TYPE, ::UINT *, ::UINT *)[decl0]::dpiY"><div>dpiY</div></div>);</div></div>
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINBLUE)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINTHRESHOLD)</div>
+
+<div class="disabled">#ifndef SHELL_UI_COMPONENT_ENUMS_DECLARED</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div>
+{
+    <div class="def" id="NI$<anonymous>608::SHELL_UI_COMPONENT_TASKBARS"><div><div class="token cpp_enum">SHELL_UI_COMPONENT_TASKBARS</div></div></div>         = <div class="token cpp_number ">0</div>,
+    <div class="def" id="NI$<anonymous>608::SHELL_UI_COMPONENT_NOTIFICATIONAREA"><div><div class="token cpp_enum">SHELL_UI_COMPONENT_NOTIFICATIONAREA</div></div></div> = <div class="token cpp_number ">1</div>,
+    <div class="def" id="NI$<anonymous>608::SHELL_UI_COMPONENT_DESKBAND"><div><div class="token cpp_enum">SHELL_UI_COMPONENT_DESKBAND</div></div></div>         = <div class="token cpp_number ">2</div>,
+} <div class="def" id="NI$SHELL_UI_COMPONENT"><div><div class="token cpp_type">SHELL_UI_COMPONENT</div></div></div>;
+
+<div class="disabled">#define SHELL_UI_COMPONENT_ENUMS_DECLARED
+#endif // (SHELL_UI_COMPONENT_ENUMS_DECLARED)</div>
+
+<div class="expandable"><div class="disabled">STDAPI_(UINT) GetDpiForShellUIComponent(</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$GetDpiForShellUIComponent@::UINT(::SHELL_UI_COMPONENT)[decl0]"><div><div class="token cpp_function">GetDpiForShellUIComponent</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_ SHELL_UI_COMPONENT);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['SHELL_UI_COMPONENT'], [], [])"><div class="token cpp_type">SHELL_UI_COMPONENT</div></div>);</div></div>
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINTHRESHOLD)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'DEVICE_SCALE_FACTOR': {
+        'displayNameInHtml': '<span class="cpp_type">DEVICE_SCALE_FACTOR</span>',
+        'impls': [
+            'NI$DEVICE_SCALE_FACTOR'
+        ],
+        'decls': []
+    },
+    'DISPLAY_DEVICE_TYPE': {
+        'displayNameInHtml': '<span class="cpp_type">DISPLAY_DEVICE_TYPE</span>',
+        'impls': [
+            'NI$DISPLAY_DEVICE_TYPE'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'DWORD_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD_PTR</span>',
+        'impls': [
+            'NI$DWORD_PTR'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'HMONITOR': {
+        'displayNameInHtml': '<span class="cpp_type">HMONITOR</span>',
+        'impls': [
+            'NI$HMONITOR'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'HWND': {
+        'displayNameInHtml': '<span class="cpp_type">HWND</span>',
+        'impls': [
+            'NI$HWND'
+        ],
+        'decls': []
+    },
+    'MONITOR_DPI_TYPE': {
+        'displayNameInHtml': '<span class="cpp_type">MONITOR_DPI_TYPE</span>',
+        'impls': [
+            'NI$MONITOR_DPI_TYPE'
+        ],
+        'decls': []
+    },
+    'MONITOR_DPI_TYPE::MDT_EFFECTIVE_DPI': {
+        'displayNameInHtml': '<span class="cpp_type">MONITOR_DPI_TYPE</span>::<span class="cpp_enum">MDT_EFFECTIVE_DPI</span>',
+        'impls': [
+            'NI$MONITOR_DPI_TYPE::MDT_EFFECTIVE_DPI'
+        ],
+        'decls': []
+    },
+    'PROCESS_DPI_AWARENESS': {
+        'displayNameInHtml': '<span class="cpp_type">PROCESS_DPI_AWARENESS</span>',
+        'impls': [
+            'NI$PROCESS_DPI_AWARENESS'
+        ],
+        'decls': []
+    },
+    'SCALE_CHANGE_FLAGS': {
+        'displayNameInHtml': '<span class="cpp_type">SCALE_CHANGE_FLAGS</span>',
+        'impls': [
+            'NI$SCALE_CHANGE_FLAGS'
+        ],
+        'decls': []
+    },
+    'SHELL_UI_COMPONENT': {
+        'displayNameInHtml': '<span class="cpp_type">SHELL_UI_COMPONENT</span>',
+        'impls': [
+            'NI$SHELL_UI_COMPONENT'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    '_ENUM_FLAG_SIZED_INTEGER': {
+        'displayNameInHtml': '<span class="cpp_type">_ENUM_FLAG_SIZED_INTEGER</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$_ENUM_FLAG_SIZED_INTEGER'
+        ],
+        'decls': []
+    },
+    '_ENUM_FLAG_SIZED_INTEGER::type': {
+        'displayNameInHtml': '<span class="cpp_type">_ENUM_FLAG_SIZED_INTEGER</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_type">type</span>',
+        'impls': [
+            'NI$_ENUM_FLAG_SIZED_INTEGER::type'
+        ],
+        'decls': []
+    },
+    'operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a'
+        ],
+        'decls': []
+    },
+    'operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b': {
+        'displayNameInHtml': 'b',
+        'impls': [
+            'NI$operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b'
+        ],
+        'decls': []
+    },
+    'operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a'
+        ],
+        'decls': []
+    },
+    'operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b': {
+        'displayNameInHtml': 'b',
+        'impls': [
+            'NI$operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b'
+        ],
+        'decls': []
+    },
+    'operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a'
+        ],
+        'decls': []
+    },
+    'operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b': {
+        'displayNameInHtml': 'b',
+        'impls': [
+            'NI$operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b'
+        ],
+        'decls': []
+    },
+    'operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a'
+        ],
+        'decls': []
+    },
+    'operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b': {
+        'displayNameInHtml': 'b',
+        'impls': [
+            'NI$operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b'
+        ],
+        'decls': []
+    },
+    'operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a'
+        ],
+        'decls': []
+    },
+    'operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b': {
+        'displayNameInHtml': 'b',
+        'impls': [
+            'NI$operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b'
+        ],
+        'decls': []
+    },
+    'operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a'
+        ],
+        'decls': []
+    },
+    'operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b': {
+        'displayNameInHtml': 'b',
+        'impls': [
+            'NI$operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b'
+        ],
+        'decls': []
+    },
+    'operator ~@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS)[impl0]::a': {
+        'displayNameInHtml': 'a',
+        'impls': [
+            'NI$operator ~@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS)[impl0]::a'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$DEVICE_SCALE_FACTOR': { 'htmlFileName': 'shtypes.h', 'displayName': 'shtypes.h' },
+    'NI$DISPLAY_DEVICE_TYPE': null,
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HMONITOR': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HWND': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$MONITOR_DPI_TYPE': null,
+    'NI$MONITOR_DPI_TYPE::MDT_EFFECTIVE_DPI': null,
+    'NI$PROCESS_DPI_AWARENESS': null,
+    'NI$SCALE_CHANGE_FLAGS': null,
+    'NI$SHELL_UI_COMPONENT': null,
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$_ENUM_FLAG_SIZED_INTEGER': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$_ENUM_FLAG_SIZED_INTEGER::type': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a': null,
+    'NI$operator &=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b': null,
+    'NI$operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a': null,
+    'NI$operator &@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b': null,
+    'NI$operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a': null,
+    'NI$operator ^=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b': null,
+    'NI$operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a': null,
+    'NI$operator ^@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b': null,
+    'NI$operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::a': null,
+    'NI$operator |=@::SCALE_CHANGE_FLAGS &(::SCALE_CHANGE_FLAGS &, ::SCALE_CHANGE_FLAGS)[impl0]::b': null,
+    'NI$operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::a': null,
+    'NI$operator |@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS, ::SCALE_CHANGE_FLAGS)[impl0]::b': null,
+    'NI$operator ~@::SCALE_CHANGE_FLAGS(::SCALE_CHANGE_FLAGS)[impl0]::a': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -115,7 +115,7 @@ void IndexCppCode(
 	{
 		auto flr = global->fileLines.Values()[i];
 		Console::WriteLine(L"        " + flr->htmlFileName + L".html");
-		GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / (flr->htmlFileName + L".html"));
+		GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / L"SourceFiles" / (flr->htmlFileName + L".html"));
 	}
 
 	{
@@ -244,14 +244,10 @@ int main()
 		auto pathInput = folderInput.GetFilePath() / L"Input.cpp";
 		auto pathMapping = folderInput.GetFilePath() / L"Mapping.bin";
 
-		if (!folderInput.Exists())
-		{
-			folderInput.Create(true);
-		}
-		if (!folderOutput.Exists())
-		{
-			folderOutput.Create(true);
-		}
+		folderInput.Create(true);
+		folderOutput.Create(true);
+		Folder(folderOutput.GetFilePath() / L"SourceFiles").Create(true);
+		Folder(folderOutput.GetFilePath() / L"SymbolIndexFragments").Create(true);
 
 		FileGroupConfig fileGroups;
 		fileGroups.Add({ file.GetFilePath().GetFolder().GetFullPath() + FilePath::Delimiter, L"Source Code of this Project" });

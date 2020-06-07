@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>systemtopologyapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* consoleapi.h -- ApiSet Contract for api-ms-win-core-systemtopology-l1         *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _SYSTEMTOPOLOGY_H_</div>
+<div class="disabled">#define _SYSTEMTOPOLOGY_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetNumaHighestNodeNumber@::BOOL(::PULONG)[decl0]"><div><div class="token cpp_function">GetNumaHighestNodeNumber</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PULONG HighestNodeNumber</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONG'], [], [])"><div class="token cpp_type">PULONG</div></div> <div class="def" id="NI$GetNumaHighestNodeNumber@::BOOL(::PULONG)[decl0]::HighestNodeNumber"><div>HighestNodeNumber</div></div></div></div>
+    );
+
+
+<div class="disabled">#if _WIN32_WINNT &gt;= 0x0601</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetNumaNodeProcessorMaskEx@::BOOL(::USHORT, ::PGROUP_AFFINITY)[decl0]"><div><div class="token cpp_function">GetNumaNodeProcessorMaskEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ USHORT Node,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="def" id="NI$GetNumaNodeProcessorMaskEx@::BOOL(::USHORT, ::PGROUP_AFFINITY)[decl0]::Node"><div>Node</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PGROUP_AFFINITY ProcessorMask</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PGROUP_AFFINITY'], [], [])"><div class="token cpp_type">PGROUP_AFFINITY</div></div> <div class="def" id="NI$GetNumaNodeProcessorMaskEx@::BOOL(::USHORT, ::PGROUP_AFFINITY)[decl0]::ProcessorMask"><div>ProcessorMask</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;=0x0601)</div>
+
+<div class="disabled">#if _WIN32_WINNT &gt;= 0x0601</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetNumaProximityNodeEx@::BOOL(::ULONG, ::PUSHORT)[decl0]"><div><div class="token cpp_function">GetNumaProximityNodeEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ULONG ProximityId,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$GetNumaProximityNodeEx@::BOOL(::ULONG, ::PUSHORT)[decl0]::ProximityId"><div>ProximityId</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PUSHORT NodeNumber</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PUSHORT'], [], [])"><div class="token cpp_type">PUSHORT</div></div> <div class="def" id="NI$GetNumaProximityNodeEx@::BOOL(::ULONG, ::PUSHORT)[decl0]::NodeNumber"><div>NodeNumber</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;=0x0601)</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _SYSTEMTOPOLOGY_H_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'PGROUP_AFFINITY': {
+        'displayNameInHtml': '<span class="cpp_type">PGROUP_AFFINITY</span>',
+        'impls': [
+            'NI$PGROUP_AFFINITY'
+        ],
+        'decls': []
+    },
+    'PULONG': {
+        'displayNameInHtml': '<span class="cpp_type">PULONG</span>',
+        'impls': [
+            'NI$PULONG'
+        ],
+        'decls': []
+    },
+    'PUSHORT': {
+        'displayNameInHtml': '<span class="cpp_type">PUSHORT</span>',
+        'impls': [
+            'NI$PUSHORT'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'USHORT': {
+        'displayNameInHtml': '<span class="cpp_type">USHORT</span>',
+        'impls': [
+            'NI$USHORT'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$PGROUP_AFFINITY': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$PUSHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$USHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

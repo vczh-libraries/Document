@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>dpapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//+---------------------------------------------------------------------------</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Microsoft Windows</div>
+<div class="token cpp_comment ">//  Copyright (C) Microsoft Corporation, 2009.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  File:       dpapi.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Contents:   Data Protection API</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//----------------------------------------------------------------------------</div>
+
+<div class="disabled">#ifndef __DPAPI_H__</div>
+<div class="disabled">#define __DPAPI_H__</div>
+
+<div class="disabled">#if (_MSC_VER &gt; 1020)</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+
+<div class="disabled">#if !defined(DPAPI_IMP)</div>
+<div class="disabled">#define DPAPI_IMP
+#endif</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">#if !defined(_CRYPT32_)</div>
+<div class="disabled">#define DPAPI_IMP DECLSPEC_IMPORT</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DPAPI_IMP</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif //(NTDDI_VERSION &gt;= NTDDI_WIN7)</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region App Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#ifndef CRYPTO_BLOBS_DEFINED</div>
+<div class="disabled">#define CRYPTO_BLOBS_DEFINED</div>
+<div class="disabled">typedef struct _CRYPTOAPI_BLOB {</div>
+<div class="disabled">                            DWORD   cbData;</div>
+<div class="disabled">    _Field_size_bytes_(cbData)  BYTE    *pbData;</div>
+<div class="disabled">} CRYPT_INTEGER_BLOB, *PCRYPT_INTEGER_BLOB,</div>
+<div class="disabled">CRYPT_UINT_BLOB, *PCRYPT_UINT_BLOB,</div>
+<div class="disabled">CRYPT_OBJID_BLOB, *PCRYPT_OBJID_BLOB,</div>
+<div class="disabled">CERT_NAME_BLOB, *PCERT_NAME_BLOB,</div>
+<div class="disabled">CERT_RDN_VALUE_BLOB, *PCERT_RDN_VALUE_BLOB,</div>
+<div class="disabled">CERT_BLOB, *PCERT_BLOB,</div>
+<div class="disabled">CRL_BLOB, *PCRL_BLOB,</div>
+<div class="disabled">DATA_BLOB, *PDATA_BLOB,</div>
+<div class="disabled">CRYPT_DATA_BLOB, *PCRYPT_DATA_BLOB,</div>
+<div class="disabled">CRYPT_HASH_BLOB, *PCRYPT_HASH_BLOB,</div>
+<div class="disabled">CRYPT_DIGEST_BLOB, *PCRYPT_DIGEST_BLOB,</div>
+<div class="disabled">CRYPT_DER_BLOB, *PCRYPT_DER_BLOB,</div>
+<div class="disabled">CRYPT_ATTR_BLOB, *PCRYPT_ATTR_BLOB;</div>
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Registry value for controlling Data Protection API (DPAPI) UI settings.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define szFORCE_KEY_PROTECTION             &quot;ForceKeyProtection&quot;</div>
+
+<div class="disabled">#define dwFORCE_KEY_PROTECTION_DISABLED     0x0</div>
+<div class="disabled">#define dwFORCE_KEY_PROTECTION_USER_SELECT  0x1</div>
+<div class="disabled">#define dwFORCE_KEY_PROTECTION_HIGH         0x2</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Data protection APIs enable applications to easily secure data.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The base provider provides protection based on the users&apos; logon</div>
+<div class="token cpp_comment ">// credentials. The data secured with these APIs follow the same</div>
+<div class="token cpp_comment ">// roaming characteristics as HKCU -- if HKCU roams, the data</div>
+<div class="token cpp_comment ">// protected by the base provider may roam as well. This makes</div>
+<div class="token cpp_comment ">// the API ideal for the munging of data stored in the registry.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Prompt struct -- what to tell users about the access</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div>  <div class="def" id="NI$_CRYPTPROTECT_PROMPTSTRUCT"><div><div class="token cpp_type">_CRYPTPROTECT_PROMPTSTRUCT</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_CRYPTPROTECT_PROMPTSTRUCT::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_CRYPTPROTECT_PROMPTSTRUCT::dwPromptFlags"><div><div class="token cpp_field">dwPromptFlags</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div>  <div class="def" id="NI$_CRYPTPROTECT_PROMPTSTRUCT::hwndApp"><div><div class="token cpp_field">hwndApp</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$_CRYPTPROTECT_PROMPTSTRUCT::szPrompt"><div><div class="token cpp_field">szPrompt</div></div></div>;
+} <div class="def" id="NI$CRYPTPROTECT_PROMPTSTRUCT"><div><div class="token cpp_type">CRYPTPROTECT_PROMPTSTRUCT</div></div></div>, *<div class="def" id="NI$PCRYPTPROTECT_PROMPTSTRUCT"><div><div class="token cpp_type">PCRYPTPROTECT_PROMPTSTRUCT</div></div></div>;
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// base provider action</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define CRYPTPROTECT_DEFAULT_PROVIDER   { 0xdf9d8cd0, 0x1501, 0x11d1, {0x8c, 0x7a, 0x00, 0xc0, 0x4f, 0xc2, 0x97, 0xeb} }</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// CryptProtect PromptStruct dwPromtFlags</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// prompt on unprotect</div>
+<div class="disabled">#define CRYPTPROTECT_PROMPT_ON_UNPROTECT     0x1  // 1&lt;&lt;0</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// prompt on protect</div>
+<div class="disabled">#define CRYPTPROTECT_PROMPT_ON_PROTECT       0x2  // 1&lt;&lt;1</div>
+<div class="disabled">#define CRYPTPROTECT_PROMPT_RESERVED         0x04 // reserved, do not use.</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// default to strong variant UI protection (user supplied password currently).</div>
+<div class="disabled">#define CRYPTPROTECT_PROMPT_STRONG           0x08 // 1&lt;&lt;3</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// require strong variant UI protection (user supplied password currently).</div>
+<div class="disabled">#define CRYPTPROTECT_PROMPT_REQUIRE_STRONG   0x10 // 1&lt;&lt;4</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// CryptProtectData and CryptUnprotectData dwFlags</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// for remote-access situations where ui is not an option</div>
+<div class="token cpp_comment ">// if UI was specified on protect or unprotect operation, the call</div>
+<div class="token cpp_comment ">// will fail and GetLastError() will indicate ERROR_PASSWORD_RESTRICTION</div>
+<div class="disabled">#define CRYPTPROTECT_UI_FORBIDDEN        0x1</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// per machine protected data -- any user on machine where CryptProtectData</div>
+<div class="token cpp_comment ">// took place may CryptUnprotectData</div>
+<div class="disabled">#define CRYPTPROTECT_LOCAL_MACHINE       0x4</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// force credential synchronize during CryptProtectData()</div>
+<div class="token cpp_comment ">// Synchronize is only operation that occurs during this operation</div>
+<div class="disabled">#define CRYPTPROTECT_CRED_SYNC           0x8</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Generate an Audit on protect and unprotect operations</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define CRYPTPROTECT_AUDIT              0x10</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Protect data with a non-recoverable key</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define CRYPTPROTECT_NO_RECOVERY        0x20</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Verify the protection of a protected blob</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define CRYPTPROTECT_VERIFY_PROTECTION  0x40</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Regenerate the local machine protection</div>
+<div class="token cpp_comment ">//</div>
+<div class="disabled">#define CRYPTPROTECT_CRED_REGENERATE    0x80</div>
+
+<div class="token cpp_comment ">// flags reserved for system use</div>
+<div class="disabled">#define CRYPTPROTECT_FIRST_RESERVED_FLAGVAL    0x0FFFFFFF</div>
+<div class="disabled">#define CRYPTPROTECT_LAST_RESERVED_FLAGVAL     0xFFFFFFFF</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// flags specific to base provider</div>
+<div class="token cpp_comment ">//</div>
+
+
+<div class="disabled">DPAPI_IMP</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CryptProtectData@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]"><div><div class="token cpp_function">CryptProtectData</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_            DATA_BLOB*      pDataIn,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptProtectData@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pDataIn"><div>pDataIn</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        LPCWSTR         szDataDescr,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>         <div class="def" id="NI$CryptProtectData@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::szDataDescr"><div>szDataDescr</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        DATA_BLOB*      pOptionalEntropy,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptProtectData@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pOptionalEntropy"><div>pOptionalEntropy</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_      PVOID           pvReserved,</div>
+<div class="expanded">           <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div>           <div class="def" id="NI$CryptProtectData@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pvReserved"><div>pvReserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        CRYPTPROTECT_PROMPTSTRUCT*  pPromptStruct,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['CRYPTPROTECT_PROMPTSTRUCT'], [], [])"><div class="token cpp_type">CRYPTPROTECT_PROMPTSTRUCT</div></div>*  <div class="def" id="NI$CryptProtectData@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pPromptStruct"><div>pPromptStruct</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           dwFlags,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptProtectData@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_           DATA_BLOB*      pDataOut            // out encr blob</div>
+<div class="expanded">                <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptProtectData@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pDataOut"><div>pDataOut</div></div>            <div class="token cpp_comment ">// out encr blob</div></div></div>
+    );
+
+<div class="disabled">DPAPI_IMP</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CryptUnprotectData@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]"><div><div class="token cpp_function">CryptUnprotectData</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_            DATA_BLOB*      pDataIn,             // in encr blob</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptUnprotectData@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pDataIn"><div>pDataIn</div></div>,             <div class="token cpp_comment ">// in encr blob</div></div></div>
+<div class="expandable"><div class="disabled">    _Outptr_opt_result_maybenull_ LPWSTR*     ppszDataDescr,       // out</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>*     <div class="def" id="NI$CryptUnprotectData@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::ppszDataDescr"><div>ppszDataDescr</div></div>,       <div class="token cpp_comment ">// out</div></div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        DATA_BLOB*      pOptionalEntropy,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptUnprotectData@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pOptionalEntropy"><div>pOptionalEntropy</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_      PVOID           pvReserved,</div>
+<div class="expanded">           <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div>           <div class="def" id="NI$CryptUnprotectData@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pvReserved"><div>pvReserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        CRYPTPROTECT_PROMPTSTRUCT*  pPromptStruct,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['CRYPTPROTECT_PROMPTSTRUCT'], [], [])"><div class="token cpp_type">CRYPTPROTECT_PROMPTSTRUCT</div></div>*  <div class="def" id="NI$CryptUnprotectData@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pPromptStruct"><div>pPromptStruct</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           dwFlags,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptUnprotectData@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_           DATA_BLOB*      pDataOut</div>
+<div class="expanded">                <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptUnprotectData@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::DATA_BLOB *)[decl0]::pDataOut"><div>pDataOut</div></div></div></div>
+    );
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]"><div><div class="token cpp_function">CryptProtectDataNoUI</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_            DATA_BLOB*      pDataIn,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pDataIn"><div>pDataIn</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        LPCWSTR         szDataDescr,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>         <div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::szDataDescr"><div>szDataDescr</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        DATA_BLOB*      pOptionalEntropy,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pOptionalEntropy"><div>pOptionalEntropy</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_      PVOID           pvReserved,</div>
+<div class="expanded">           <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div>           <div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pvReserved"><div>pvReserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        CRYPTPROTECT_PROMPTSTRUCT*  pPromptStruct,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['CRYPTPROTECT_PROMPTSTRUCT'], [], [])"><div class="token cpp_type">CRYPTPROTECT_PROMPTSTRUCT</div></div>*  <div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pPromptStruct"><div>pPromptStruct</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           dwFlags,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="disabled">    _In_reads_bytes_opt_(cbOptionalPassword)</div>
+                    <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div>      *<div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pbOptionalPassword"><div>pbOptionalPassword</div></div>,
+                    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::cbOptionalPassword"><div>cbOptionalPassword</div></div>,
+<div class="expandable"><div class="disabled">    _Out_           DATA_BLOB*      pDataOut            // out encr blob</div>
+<div class="expanded">                <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptProtectDataNoUI@::BOOL(::DATA_BLOB *, ::LPCWSTR, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pDataOut"><div>pDataOut</div></div>            <div class="token cpp_comment ">// out encr blob</div></div></div>
+    );
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]"><div><div class="token cpp_function">CryptUnprotectDataNoUI</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_            DATA_BLOB*      pDataIn,             // in encr blob</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pDataIn"><div>pDataIn</div></div>,             <div class="token cpp_comment ">// in encr blob</div></div></div>
+<div class="expandable"><div class="disabled">    _Outptr_opt_result_maybenull_ LPWSTR*     ppszDataDescr,       // out</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div>*     <div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::ppszDataDescr"><div>ppszDataDescr</div></div>,       <div class="token cpp_comment ">// out</div></div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        DATA_BLOB*      pOptionalEntropy,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pOptionalEntropy"><div>pOptionalEntropy</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Reserved_      PVOID           pvReserved,</div>
+<div class="expanded">           <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div>           <div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pvReserved"><div>pvReserved</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        CRYPTPROTECT_PROMPTSTRUCT*  pPromptStruct,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['CRYPTPROTECT_PROMPTSTRUCT'], [], [])"><div class="token cpp_type">CRYPTPROTECT_PROMPTSTRUCT</div></div>*  <div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pPromptStruct"><div>pPromptStruct</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           dwFlags,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="disabled">    _In_reads_bytes_opt_(cbOptionalPassword)</div>
+                    <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div>      *<div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pbOptionalPassword"><div>pbOptionalPassword</div></div>,
+                    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::cbOptionalPassword"><div>cbOptionalPassword</div></div>,
+<div class="expandable"><div class="disabled">    _Out_           DATA_BLOB*      pDataOut</div>
+<div class="expanded">                <div class="ref" onclick="jumpToSymbol([], ['DATA_BLOB'], [], [])"><div class="token cpp_type">DATA_BLOB</div></div>*      <div class="def" id="NI$CryptUnprotectDataNoUI@::BOOL(::DATA_BLOB *, ::LPWSTR *, ::DATA_BLOB *, ::PVOID, ::CRYPTPROTECT_PROMPTSTRUCT *, ::DWORD, ::BYTE const *, ::DWORD, ::DATA_BLOB *)[decl0]::pDataOut"><div>pDataOut</div></div></div></div>
+    );
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="disabled">DPAPI_IMP</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CryptUpdateProtectedState@::BOOL(::PSID, ::LPCWSTR, ::DWORD, ::DWORD *, ::DWORD *)[decl0]"><div><div class="token cpp_function">CryptUpdateProtectedState</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_        PSID            pOldSid,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['PSID'], [], [])"><div class="token cpp_type">PSID</div></div>            <div class="def" id="NI$CryptUpdateProtectedState@::BOOL(::PSID, ::LPCWSTR, ::DWORD, ::DWORD *, ::DWORD *)[decl0]::pOldSid"><div>pOldSid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_        LPCWSTR         pwszOldPassword,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div>         <div class="def" id="NI$CryptUpdateProtectedState@::BOOL(::PSID, ::LPCWSTR, ::DWORD, ::DWORD *, ::DWORD *)[decl0]::pwszOldPassword"><div>pwszOldPassword</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           dwFlags,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptUpdateProtectedState@::BOOL(::PSID, ::LPCWSTR, ::DWORD, ::DWORD *, ::DWORD *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_       DWORD           *pdwSuccessCount,</div>
+<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           *<div class="def" id="NI$CryptUpdateProtectedState@::BOOL(::PSID, ::LPCWSTR, ::DWORD, ::DWORD *, ::DWORD *)[decl0]::pdwSuccessCount"><div>pdwSuccessCount</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_       DWORD           *pdwFailureCount);</div>
+<div class="expanded">            <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           *<div class="def" id="NI$CryptUpdateProtectedState@::BOOL(::PSID, ::LPCWSTR, ::DWORD, ::DWORD *, ::DWORD *)[decl0]::pdwFailureCount"><div>pdwFailureCount</div></div>);</div></div>
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region App Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The buffer length passed into CryptProtectMemory and CryptUnprotectMemory</div>
+<div class="token cpp_comment ">// must be a multiple of this length (or zero).</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define CRYPTPROTECTMEMORY_BLOCK_SIZE           16</div>
+
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// CryptProtectMemory/CryptUnprotectMemory dwFlags</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Encrypt/Decrypt within current process context.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define CRYPTPROTECTMEMORY_SAME_PROCESS         0x00</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Encrypt/Decrypt across process boundaries.</div>
+<div class="token cpp_comment ">// eg: encrypted buffer passed across LPC to another process which calls CryptUnprotectMemory.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define CRYPTPROTECTMEMORY_CROSS_PROCESS        0x01</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Encrypt/Decrypt across callers with same LogonId.</div>
+<div class="token cpp_comment ">// eg: encrypted buffer passed across LPC to another process which calls CryptUnprotectMemory whilst impersonating.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define CRYPTPROTECTMEMORY_SAME_LOGON           0x02</div>
+
+<div class="disabled">DPAPI_IMP</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CryptProtectMemory@::BOOL(::LPVOID, ::DWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">CryptProtectMemory</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_         LPVOID          pDataIn,             // in out data to encrypt</div>
+<div class="expanded">              <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div>          <div class="def" id="NI$CryptProtectMemory@::BOOL(::LPVOID, ::DWORD, ::DWORD)[decl0]::pDataIn"><div>pDataIn</div></div>,             <div class="token cpp_comment ">// in out data to encrypt</div></div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           cbDataIn,            // multiple of CRYPTPROTECTMEMORY_BLOCK_SIZE</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptProtectMemory@::BOOL(::LPVOID, ::DWORD, ::DWORD)[decl0]::cbDataIn"><div>cbDataIn</div></div>,            <div class="token cpp_comment ">// multiple of CRYPTPROTECTMEMORY_BLOCK_SIZE</div></div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           dwFlags</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptProtectMemory@::BOOL(::LPVOID, ::DWORD, ::DWORD)[decl0]::dwFlags"><div>dwFlags</div></div></div></div>
+    );
+
+<div class="disabled">DPAPI_IMP</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CryptUnprotectMemory@::BOOL(::LPVOID, ::DWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">CryptUnprotectMemory</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_         LPVOID          pDataIn,             // in out data to decrypt</div>
+<div class="expanded">              <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div>          <div class="def" id="NI$CryptUnprotectMemory@::BOOL(::LPVOID, ::DWORD, ::DWORD)[decl0]::pDataIn"><div>pDataIn</div></div>,             <div class="token cpp_comment ">// in out data to decrypt</div></div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           cbDataIn,            // multiple of CRYPTPROTECTMEMORY_BLOCK_SIZE</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptUnprotectMemory@::BOOL(::LPVOID, ::DWORD, ::DWORD)[decl0]::cbDataIn"><div>cbDataIn</div></div>,            <div class="token cpp_comment ">// multiple of CRYPTPROTECTMEMORY_BLOCK_SIZE</div></div></div>
+<div class="expandable"><div class="disabled">    _In_            DWORD           dwFlags</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>           <div class="def" id="NI$CryptUnprotectMemory@::BOOL(::LPVOID, ::DWORD, ::DWORD)[decl0]::dwFlags"><div>dwFlags</div></div></div></div>
+    );
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+} <div class="token cpp_comment ">// extern &quot;C&quot;</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // __DPAPI_H__
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'BYTE': {
+        'displayNameInHtml': '<span class="cpp_type">BYTE</span>',
+        'impls': [
+            'NI$BYTE'
+        ],
+        'decls': []
+    },
+    'CRYPTPROTECT_PROMPTSTRUCT': {
+        'displayNameInHtml': '<span class="cpp_type">CRYPTPROTECT_PROMPTSTRUCT</span>',
+        'impls': [
+            'NI$CRYPTPROTECT_PROMPTSTRUCT'
+        ],
+        'decls': []
+    },
+    'DATA_BLOB': {
+        'displayNameInHtml': '<span class="cpp_type">DATA_BLOB</span>',
+        'impls': [
+            'NI$DATA_BLOB'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HWND': {
+        'displayNameInHtml': '<span class="cpp_type">HWND</span>',
+        'impls': [
+            'NI$HWND'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'PSID': {
+        'displayNameInHtml': '<span class="cpp_type">PSID</span>',
+        'impls': [
+            'NI$PSID'
+        ],
+        'decls': []
+    },
+    'PVOID': {
+        'displayNameInHtml': '<span class="cpp_type">PVOID</span>',
+        'impls': [
+            'NI$PVOID'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$BYTE': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$CRYPTPROTECT_PROMPTSTRUCT': null,
+    'NI$DATA_BLOB': { 'htmlFileName': 'wincrypt.h', 'displayName': 'wincrypt.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HWND': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PSID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PVOID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

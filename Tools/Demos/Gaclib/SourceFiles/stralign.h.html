@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>stralign.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/*++
+
+Copyright (c) 2000  Microsoft Corporation
+
+Module Name:
+
+    stralign.h
+
+Abstract:
+
+    This module contains macros and prototypes to expose the unaligned wide
+    character interfaces.
+
+    Public interfaces created or declared here include:
+
+    ua_CharUpper()
+    ua_CharUpperW()
+    ua_lstrcmp()
+    ua_lstrcmpW()
+    ua_lstrcmpi()
+    ua_lstrcmpiW()
+    ua_lstrlen()
+    ua_lstrlenW()
+    ua_tcscpy()
+    ua_tcscpy_s()
+    ua_wcschr()
+    ua_wcscpy()
+    ua_wcscpy_s()
+    ua_wcsicmp()
+    ua_wcslen()
+    ua_wcsrchr()
+
+    STRUC_ALIGNED_STACK_COPY()
+    TSTR_ALIGNED()
+    TSTR_ALIGNED_STACK_COPY()
+    WSTR_ALIGNED()
+    WSTR_ALIGNED_STACK_COPY()
+
+Author:
+
+--*/</div>
+
+<div class="disabled">#if !defined(__STRALIGN_H_) &amp;&amp; !defined(MIDL_PASS)</div>
+<div class="disabled">#define __STRALIGN_H_</div>
+
+<div class="disabled">#ifndef _STRALIGN_USE_SECURE_CRT</div>
+<div class="disabled">#if defined(__GOT_SECURE_LIB__) &amp;&amp; __GOT_SECURE_LIB__ &gt;= 200402L</div>
+<div class="disabled">#define _STRALIGN_USE_SECURE_CRT 1</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define _STRALIGN_USE_SECURE_CRT 0
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(_WINDOWS_INSECURE_DEPRECATE)</div>
+<div class="disabled">#if defined(_WINDOWS_SECURE_NO_DEPRECATE) || !_STRALIGN_USE_SECURE_CRT</div>
+<div class="disabled">#define _WINDOWS_INSECURE_DEPRECATE
+#else</div>
+<div class="disabled">#define _WINDOWS_INSECURE_DEPRECATE __declspec(deprecated)
+#endif
+#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// N.B. On AMD64 platforms the key word __unaligned is enabled, but has no</div>
+<div class="token cpp_comment ">//      effect and strings can be unaligned exactly as they are on the x86.</div>
+<div class="token cpp_comment ">//      Therefore, all AMD64 alignment macros are forced to produce values</div>
+<div class="token cpp_comment ">//      that make the subject arguments appear as it they are aligned.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      On ARM platforms, the operation is similar.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#if defined(_AMD64_) || defined(_ARM_) || defined(_ARM64_)</div>
+<div class="disabled">#pragma warning(push)</div>
+<div class="disabled">#pragma warning(disable:4127)
+#endif</div>
+
+<div class="disabled">#if defined(_X86_)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Alignment of unicode strings is not necessary on X86.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#define WSTR_ALIGNED(s) TRUE</div>
+
+<div class="disabled">#define ua_CharUpperW CharUpperW</div>
+<div class="disabled">#define ua_lstrcmpiW  lstrcmpiW</div>
+<div class="disabled">#define ua_lstrcmpW   lstrcmpW</div>
+<div class="disabled">#define ua_lstrlenW   lstrlenW</div>
+<div class="disabled">#define ua_wcschr     wcschr</div>
+<div class="disabled">#define ua_wcsicmp    wcsicmp</div>
+<div class="disabled">#define ua_wcslen     wcslen</div>
+<div class="disabled">#define ua_wcsrchr    wcsrchr</div>
+<div class="disabled">#if _STRALIGN_USE_SECURE_CRT</div>
+<div class="disabled">#define ua_wcscpy_s   wcscpy_s
+#endif</div>
+
+<div class="token cpp_keyword ">__inline</div>
+<div class="ref" onclick="jumpToSymbol([], ['PUWSTR'], [], [])"><div class="token cpp_type">PUWSTR</div></div>
+<div class="token cpp_keyword ">static</div>
+<div class="expandable"><div class="disabled">_WINDOWS_INSECURE_DEPRECATE</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated)</div></div>
+<div class="def" id="FB$ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]"><div><div class="token cpp_function">ua_wcscpy</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_writes_(_Inexpressible_(&quot;Sufficient length&quot;)) PUWSTR  Destination,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PUWSTR'], [], [])"><div class="token cpp_type">PUWSTR</div></div>  <div class="def" id="NI$ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Destination"><div><div class="token cpp_argument">Destination</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ PCUWSTR Source</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PCUWSTR'], [], [])"><div class="token cpp_type">PCUWSTR</div></div> <div class="def" id="NI$ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Source"><div><div class="token cpp_argument">Source</div></div></div></div></div>
+    )
+{
+#pragma warning(push)
+#pragma warning(disable:<div class="token cpp_number ">4995</div>)
+#pragma warning(disable:<div class="token cpp_number ">4996</div>)
+<div class="disabled">#ifdef _PREFAST_</div>
+<div class="disabled">#pragma warning(disable:28719) // This function (ua_wcscpy) is also tagged as insecure and deprecated</div>
+<div class="disabled">#endif // _PREFAST_</div>
+    <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['wcscpy@wchar_t *(wchar_t *, wchar_t const *)'], ['wcscpy@wchar_t *(wchar_t *, wchar_t const *)'], [], [])"><div class="token cpp_function">wcscpy</div></div>(<div class="ref" onclick="jumpToSymbol([], ['ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Destination'], [], [])"><div class="token cpp_argument">Destination</div></div>, <div class="ref" onclick="jumpToSymbol([], ['ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Source'], [], [])"><div class="token cpp_argument">Source</div></div>);
+#pragma warning(pop)
+}
+
+<div class="disabled">#else</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// The C runtime libraries expect aligned string pointers.  Following are the</div>
+<div class="disabled">// prototypes for our own, slower worker functions that accept unaligned</div>
+<div class="disabled">// UNICODE strings.</div>
+<div class="disabled">//</div>
+<div class="disabled">// Macro to determine whether a pointer to a unicode character is naturally</div>
+<div class="disabled">// aligned.</div>
+<div class="disabled">//</div>
+
+<div class="disabled">#if defined(_AMD64_) || defined(_ARM_) || defined(_ARM64_)</div>
+
+<div class="disabled">#define WSTR_ALIGNED(s) TRUE</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">#define WSTR_ALIGNED(s) (((DWORD_PTR)(s) &amp; (sizeof(WCHAR)-1)) == 0)</div>
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// Platform-specific prototypes for worker functions exported from kernel32.</div>
+<div class="disabled">// Do not call these directly, they do not exist on all platforms.  Instead</div>
+<div class="disabled">// use the equivalent ua_xxx() routines.</div>
+<div class="disabled">//</div>
+
+<div class="disabled">LPUWSTR</div>
+<div class="disabled">WINAPI</div>
+<div class="disabled">uaw_CharUpperW(</div>
+<div class="disabled">    _Inout_ LPUWSTR String</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">int</div>
+<div class="disabled">APIENTRY</div>
+<div class="disabled">uaw_lstrcmpW(</div>
+<div class="disabled">    _In_ PCUWSTR String1,</div>
+<div class="disabled">    _In_ PCUWSTR String2</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">int</div>
+<div class="disabled">APIENTRY</div>
+<div class="disabled">uaw_lstrcmpiW(</div>
+<div class="disabled">    _In_ PCUWSTR String1,</div>
+<div class="disabled">    _In_ PCUWSTR String2</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">int</div>
+<div class="disabled">WINAPI</div>
+<div class="disabled">uaw_lstrlenW(</div>
+<div class="disabled">    _In_ LPCUWSTR String</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">PUWSTR</div>
+<div class="disabled">__cdecl</div>
+<div class="disabled">uaw_wcschr(</div>
+<div class="disabled">    _In_ PCUWSTR String,</div>
+<div class="disabled">    _In_ WCHAR   Character</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">PUWSTR</div>
+<div class="disabled">__cdecl</div>
+<div class="disabled">uaw_wcscpy(</div>
+<div class="disabled">    _Out_writes_(_Inexpressible_(&quot;Sufficient length&quot;)) PUWSTR  Destination,</div>
+<div class="disabled">    _In_  PCUWSTR Source</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">int</div>
+<div class="disabled">__cdecl</div>
+<div class="disabled">uaw_wcsicmp(</div>
+<div class="disabled">    _In_ PCUWSTR String1,</div>
+<div class="disabled">    _In_ PCUWSTR String2</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">size_t</div>
+<div class="disabled">__cdecl</div>
+<div class="disabled">uaw_wcslen(</div>
+<div class="disabled">    _In_ PCUWSTR String</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">PUWSTR</div>
+<div class="disabled">__cdecl</div>
+<div class="disabled">uaw_wcsrchr(</div>
+<div class="disabled">    _In_ PCUWSTR String,</div>
+<div class="disabled">    _In_ WCHAR   Character</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// Following are the inline wrappers that determine the optimal worker function</div>
+<div class="disabled">// to call based on the alignment of the UNICODE string arguments.  Their</div>
+<div class="disabled">// behavior is otherwise identical to the corresponding standard run-time</div>
+<div class="disabled">// routiunes.</div>
+<div class="disabled">//</div>
+
+<div class="disabled">#if defined(CharUpper)</div>
+<div class="disabled">__inline</div>
+<div class="disabled">LPUWSTR</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_CharUpperW(</div>
+<div class="disabled">    _Inout_ LPUWSTR String</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String)) {</div>
+<div class="disabled">        return CharUpperW( (PWSTR)String );</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_CharUpperW( String );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if defined(lstrcmp)</div>
+<div class="disabled">__inline</div>
+<div class="disabled">int</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_lstrcmpW(</div>
+<div class="disabled">    _In_ LPCUWSTR String1,</div>
+<div class="disabled">    _In_ LPCUWSTR String2</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String1) &amp;&amp; WSTR_ALIGNED(String2)) {</div>
+<div class="disabled">        return lstrcmpW( (LPCWSTR)String1, (LPCWSTR)String2);</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_lstrcmpW( String1, String2 );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if defined(lstrcmpi)</div>
+<div class="disabled">__inline</div>
+<div class="disabled">int</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_lstrcmpiW(</div>
+<div class="disabled">    _In_ LPCUWSTR String1,</div>
+<div class="disabled">    _In_ LPCUWSTR String2</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String1) &amp;&amp; WSTR_ALIGNED(String2)) {</div>
+<div class="disabled">        return lstrcmpiW( (LPCWSTR)String1, (LPCWSTR)String2 );</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_lstrcmpiW( String1, String2 );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if defined(lstrlen)</div>
+<div class="disabled">__inline</div>
+<div class="disabled">int</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_lstrlenW(</div>
+<div class="disabled">    _In_ LPCUWSTR String</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String)) {</div>
+<div class="disabled">#pragma warning(suppress: 28750) // use of deprecated API</div>
+<div class="disabled">        return lstrlenW( (PCWSTR)String );</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_lstrlenW( String );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">// _WSTRING_DEFINED is no longer defined in newer versions of STL.</div>
+<div class="disabled">// Check to see if string.h or wchar.h have been included instead.</div>
+<div class="disabled">#if defined(_INC_STRING) || defined(_INC_WCHAR)</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// Certain run-time string functions are overloaded in C++, to avoid</div>
+<div class="disabled">// inadvertent stripping of the const attribute.</div>
+<div class="disabled">//</div>
+<div class="disabled">// The functions of interest here include: wcschr and wcsrchr.</div>
+<div class="disabled">//</div>
+<div class="disabled">// There are three flavors of these functions:</div>
+<div class="disabled">//</div>
+<div class="disabled">// Flavor  Returns    Parameter</div>
+<div class="disabled">//</div>
+<div class="disabled">// 1       PWSTR      PCWSTR</div>
+<div class="disabled">// 2       PCWSTR     PCWSTR</div>
+<div class="disabled">// 3       PWSTR      PWSTR</div>
+<div class="disabled">//</div>
+<div class="disabled">// string.h declares flavor 1 whether for C or C++.  This is the non-ANSI,</div>
+<div class="disabled">// backward compatible mode.</div>
+<div class="disabled">//</div>
+<div class="disabled">// wchar.h declares flavor 1 if C, or flavors 2 and 3 if C++.  This is the</div>
+<div class="disabled">// ANSI method.</div>
+<div class="disabled">//</div>
+<div class="disabled">// Our corresponding functions need to match what was declared.  The way</div>
+<div class="disabled">// we can tell is by looking at _WConst_return... if it is defined then</div>
+<div class="disabled">// we want to match the prototypes in wchar.h, otherwise we&apos;ll match</div>
+<div class="disabled">// the prototypes in string.h.</div>
+<div class="disabled">//</div>
+
+<div class="disabled">#if defined(_WConst_return)</div>
+<div class="disabled">typedef _WConst_return WCHAR UNALIGNED *PUWSTR_C;</div>
+<div class="disabled">#else</div>
+<div class="disabled">typedef WCHAR UNALIGNED *PUWSTR_C;</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// Here is flavor 1 or 2</div>
+<div class="disabled">//</div>
+
+<div class="disabled">__inline</div>
+<div class="disabled">PUWSTR_C</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_wcschr(</div>
+<div class="disabled">    _In_ PCUWSTR String,</div>
+<div class="disabled">    _In_ WCHAR   Character</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String)) {</div>
+<div class="disabled">        return wcschr((PCWSTR)String, Character);</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return (PUWSTR_C)uaw_wcschr(String, Character);</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+
+<div class="disabled">__inline</div>
+<div class="disabled">PUWSTR_C</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_wcsrchr(</div>
+<div class="disabled">    _In_ PCUWSTR String,</div>
+<div class="disabled">    _In_ WCHAR   Character</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String)) {</div>
+<div class="disabled">        return wcsrchr((PCWSTR)String, Character);</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return (PUWSTR_C)uaw_wcsrchr(String, Character);</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+
+<div class="disabled">#if defined(__cplusplus) &amp;&amp; defined(_WConst_Return)</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// Here is flavor 3</div>
+<div class="disabled">//</div>
+
+<div class="disabled">__inline</div>
+<div class="disabled">PUWSTR</div>
+<div class="disabled">static</div>
+<div class="disabled">_WINDOWS_INSECURE_DEPRECATE</div>
+<div class="disabled">ua_wcschr(</div>
+<div class="disabled">    _In_ PUWSTR String,</div>
+<div class="disabled">    _In_ WCHAR  Character</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String)) {</div>
+<div class="disabled">#pragma warning(push)</div>
+<div class="disabled">#pragma warning(disable:4995)</div>
+<div class="disabled">#pragma warning(disable:4996)</div>
+<div class="disabled">        return wcscpy( (PWSTR)Destination, (PCWSTR)Source );</div>
+<div class="disabled">#pragma warning(pop)</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_wcscpy( Destination, Source );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+
+<div class="disabled">__inline</div>
+<div class="disabled">PUWSTR</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_wcscpy_s(</div>
+<div class="disabled">    _Out_writes_(DestinationSize) PUWSTR  Destination,</div>
+<div class="disabled">    _In_ size_t  DestinationSize,</div>
+<div class="disabled">    _In_ PCUWSTR Source</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(Source) &amp;&amp; WSTR_ALIGNED(Destination)) {</div>
+<div class="disabled">        return (wcscpy_s( (PWSTR)Destination, DestinationSize, (PCWSTR)Source ) == 0 ? Destination : NULL);</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        /* TODO : Need to reference uaw_wcscpy_s */</div>
+<div class="disabled">        return uaw_wcscpy((PCUWSTR)String, Character);</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+
+<div class="disabled">__inline</div>
+<div class="disabled">PUWSTR</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_wcsrchr(</div>
+<div class="disabled">    _In_ PUWSTR String,</div>
+<div class="disabled">    _In_ WCHAR  Character</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String)) {</div>
+<div class="disabled">        return wcsrchr(String, Character);</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_wcsrchr((PCUWSTR)String, Character);</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+
+<div class="disabled">#endif  // __cplusplus &amp;&amp; _WConst_Return</div>
+
+<div class="disabled">__inline</div>
+<div class="disabled">PUWSTR</div>
+<div class="disabled">static</div>
+<div class="disabled">_WINDOWS_INSECURE_DEPRECATE</div>
+<div class="disabled">ua_wcscpy(</div>
+<div class="disabled">    _Out_writes_(_Inexpressible_(&quot;Sufficient length&quot;)) PUWSTR  Destination,</div>
+<div class="disabled">    _In_ PCUWSTR Source</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(Source) &amp;&amp; WSTR_ALIGNED(Destination)) {</div>
+<div class="disabled">#pragma warning(push)</div>
+<div class="disabled">#pragma warning(disable:4995)</div>
+<div class="disabled">#pragma warning(disable:4996)</div>
+<div class="disabled">#ifdef _PREFAST_</div>
+<div class="disabled">#pragma warning(disable:28719) // This function (ua_wcscpy) is also tagged as insecure and deprecated</div>
+<div class="disabled">#endif // _PREFAST_</div>
+<div class="disabled">        return wcscpy( (PWSTR)Destination, (PCWSTR)Source );</div>
+<div class="disabled">#pragma warning(pop)</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_wcscpy( Destination, Source );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+
+
+<div class="disabled">#if _STRALIGN_USE_SECURE_CRT</div>
+<div class="disabled">__inline</div>
+<div class="disabled">PUWSTR</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_wcscpy_s(</div>
+<div class="disabled">    _Out_writes_(DestinationSize) PUWSTR Destination,</div>
+<div class="disabled">    _In_ size_t  DestinationSize,</div>
+<div class="disabled">    _In_ PCUWSTR Source</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(Source) &amp;&amp; WSTR_ALIGNED(Destination)) {</div>
+<div class="disabled">        return (wcscpy_s( (PWSTR)Destination, DestinationSize, (PCWSTR)Source ) == 0 ? Destination : NULL);</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        /* TODO: Need to reference uaw_wcscpy_s */</div>
+<div class="disabled">        return uaw_wcscpy( Destination, Source );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">__inline</div>
+<div class="disabled">size_t</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_wcslen(</div>
+<div class="disabled">    _In_ PCUWSTR String</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String)) {</div>
+<div class="disabled">        return wcslen( (PCWSTR)String );</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_wcslen( String );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+
+<div class="disabled">#endif  // defined(_INC_STRING) || defined(_INC_WCHAR)</div>
+
+<div class="disabled">__inline</div>
+<div class="disabled">int</div>
+<div class="disabled">static</div>
+<div class="disabled">ua_wcsicmp(</div>
+<div class="disabled">    _In_ PCUWSTR String1,</div>
+<div class="disabled">    _In_ PCUWSTR String2</div>
+<div class="disabled">    )</div>
+<div class="disabled">{</div>
+<div class="disabled">    if (WSTR_ALIGNED(String1) &amp;&amp; WSTR_ALIGNED(String2)) {</div>
+<div class="disabled">        return _wcsicmp( (LPCWSTR)String1, (LPCWSTR)String2 );</div>
+<div class="disabled">    } else {</div>
+<div class="disabled">        return uaw_wcsicmp( String1, String2 );</div>
+<div class="disabled">    }</div>
+<div class="disabled">}</div>
+
+<div class="disabled">#endif  // _X86_</div>
+
+<div class="token cpp_comment ">//++</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// VOID</div>
+<div class="token cpp_comment ">// WSTR_ALIGNED_STACK_COPY (</div>
+<div class="token cpp_comment ">//    _Out_ PCWSTR *TargetString,</div>
+<div class="token cpp_comment ">//    _In_opt_  PCUWSTR SourceString</div>
+<div class="token cpp_comment ">//    )</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// VOID</div>
+<div class="token cpp_comment ">// TSTR_ALIGNED_STACK_COPY (</div>
+<div class="token cpp_comment ">//    _Out_ PCTSTR *TargetString,</div>
+<div class="token cpp_comment ">//    _In_opt_  PCUTSTR SourceString</div>
+<div class="token cpp_comment ">//    )</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Routine Description:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    These macros set TargetString to an aligned pointer to the string</div>
+<div class="token cpp_comment ">//    represented by SourceString.  If necessary, an aligned copy of</div>
+<div class="token cpp_comment ">//    SourceString is copied onto the stack.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Arguments:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    TargetString - Supplies a pointer to a pointer to the resultant</div>
+<div class="token cpp_comment ">//                   string.  This may be the same as SourceString if</div>
+<div class="token cpp_comment ">//                   that argument is aligned.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    SourceString - Supplies a pointer to the possibly unaligned UNICODE</div>
+<div class="token cpp_comment ">//                   string.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Return Value:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    None.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Note:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    These macros may allocate memory on the stack via the CRT function</div>
+<div class="token cpp_comment ">//    _alloca().  This memory is &quot;freed&quot; when the calling function exits.</div>
+<div class="token cpp_comment ">//    As a result, do not use these macros inside of a loop that may execute</div>
+<div class="token cpp_comment ">//    a large number of times - instead, use a wrapper function, or use</div>
+<div class="token cpp_comment ">//    an explicit buffer like this:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    TCHAR AlignedStringBuffer[ MAX_FOOSTR_CHARS ];</div>
+<div class="token cpp_comment ">//    PTSTR AlignedString;</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    while (a &lt; b) {</div>
+<div class="token cpp_comment ">//        ...</div>
+<div class="token cpp_comment ">//        if (TSTR_ALIGNED(s) {</div>
+<div class="token cpp_comment ">//            AlignedString = s;</div>
+<div class="token cpp_comment ">//        } else {</div>
+<div class="token cpp_comment ">//            AlignedString = (PTSTR)ua_tcscpy(AlignedStringBuffer,s);</div>
+<div class="token cpp_comment ">//        }</div>
+<div class="token cpp_comment ">//        SomeSystemFunction(AlignedString);</div>
+<div class="token cpp_comment ">//        ...</div>
+<div class="token cpp_comment ">//    }</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//--</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// __UA_WSTRSIZE returns the number of bytes required to store the</div>
+<div class="token cpp_comment ">// supplied null-terminated UNICODE string.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// __UA_LOCALCOPY accepts a pointer to unaligned data and a size.  It</div>
+<div class="token cpp_comment ">// allocates an aligned buffer on the stack and copies the data into</div>
+<div class="token cpp_comment ">// it, returning a pointer to the buffer.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#if !defined(__UA_WCSLEN)</div>
+<div class="disabled">#define __UA_WCSLEN ua_wcslen
+#endif</div>
+
+<div class="disabled">#define __UA_WSTRSIZE(s)    ((__UA_WCSLEN(s)+1)*sizeof(WCHAR))</div>
+<div class="disabled">#define __UA_STACKCOPY(p,s) memcpy_s(_alloca(s),s,p,s)</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Note that NULL is aligned.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#if defined(_AMD64_) || defined(_ARM_) || defined(_ARM64_) || defined(_X86_)</div>
+
+<div class="disabled">#define WSTR_ALIGNED_STACK_COPY(d,s) (*(d) = (PCWSTR)(s))</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">//</div>
+<div class="disabled">// Use of an inline function here is not possible, as the results of</div>
+<div class="disabled">// the _alloca() will not be preserved upon return from the function.</div>
+<div class="disabled">//</div>
+
+<div class="disabled">#define WSTR_ALIGNED_STACK_COPY(d,s)                                \</div>
+<div class="disabled">    {                                                               \</div>
+<div class="disabled">        PCUWSTR __ua_src;                                           \</div>
+<div class="disabled">        size_t  __ua_size;                                          \</div>
+<div class="disabled">        PWSTR  __ua_dst;                                            \</div>
+<div class="disabled">                                                                    \</div>
+<div class="disabled">        __ua_src = (s);                                             \</div>
+<div class="disabled">        if (WSTR_ALIGNED(__ua_src)) {                               \</div>
+<div class="disabled">            __ua_dst = (PWSTR)__ua_src;                             \</div>
+<div class="disabled">        } else {                                                    \</div>
+<div class="disabled">            __ua_size = __UA_WSTRSIZE(__ua_src);                    \</div>
+<div class="disabled">            __ua_dst = (PWSTR)_alloca(__ua_size);                   \</div>
+<div class="disabled">            memcpy_s(__ua_dst,__ua_size,__ua_src,__ua_size);          \</div>
+<div class="disabled">        }                                                           \</div>
+<div class="disabled">        *(d) = (PCWSTR)__ua_dst;                                    \</div>
+<div class="disabled">    }</div>
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define ASTR_ALIGNED_STACK_COPY(d,s) (*(d) = (PCSTR)(s))</div>
+
+<div class="token cpp_comment ">//++</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// &lt;type&gt; CONST *</div>
+<div class="token cpp_comment ">// STRUC_ALIGNED_STACK_COPY (</div>
+<div class="token cpp_comment ">//     _In_ &lt;type name&gt;,</div>
+<div class="token cpp_comment ">//     _In_opt_ PVOID Struc</div>
+<div class="token cpp_comment ">//     )</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Routine Description:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    This macro returns an aligned pointer to Struc, creating a local</div>
+<div class="token cpp_comment ">//    copy on the stack if necessary.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    This should be used only for relatively small structures, and efforts</div>
+<div class="token cpp_comment ">//    should be made to align the structure properly in the first place.  Use</div>
+<div class="token cpp_comment ">//    this macro only as a last resort.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Arguments:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    &lt;type&gt; - The type specifier of Struc</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    Struc - Supplies a pointer to the structure in question.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Return Value:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//    Returns a const pointer to Struc if it is properly aligned, or a pointer</div>
+<div class="token cpp_comment ">//    to a stack-allocated copy of Struc if it is not.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//--</div>
+
+<div class="disabled">#if !defined(_AMD64_) &amp;&amp; !defined(_ARM_) &amp;&amp; !defined(_ARM64_) &amp;&amp; !defined(_X86_)</div>
+
+<div class="disabled">#define __UA_STRUC_ALIGNED(t,s) \</div>
+<div class="disabled">    (((DWORD_PTR)(s) &amp; (TYPE_ALIGNMENT(t)-1)) == 0)</div>
+
+<div class="disabled">#define STRUC_ALIGNED_STACK_COPY(t,s) \</div>
+<div class="disabled">    __UA_STRUC_ALIGNED(t,s) ?   \</div>
+<div class="disabled">        ((t const *)(s)) :      \</div>
+<div class="disabled">        ((t const *)__UA_STACKCOPY((s),sizeof(t)))</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">#define STRUC_ALIGNED_STACK_COPY(t,s) ((CONST t *)(s))</div>
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if defined(UNICODE)</div>
+
+<div class="disabled">#define TSTR_ALIGNED_STACK_COPY(d,s)    WSTR_ALIGNED_STACK_COPY(d,s)</div>
+<div class="disabled">#define TSTR_ALIGNED(x)                 WSTR_ALIGNED(x)</div>
+<div class="disabled">#define ua_CharUpper                    ua_CharUpperW</div>
+<div class="disabled">#define ua_lstrcmp                      ua_lstrcmpW</div>
+<div class="disabled">#define ua_lstrcmpi                     ua_lstrcmpiW</div>
+<div class="disabled">#define ua_lstrlen                      ua_lstrlenW</div>
+<div class="disabled">#define ua_tcscpy                       ua_wcscpy</div>
+<div class="disabled">#if _STRALIGN_USE_SECURE_CRT</div>
+<div class="disabled">#define ua_tcscpy_s                     ua_wcscpy_s
+#endif</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">#define TSTR_ALIGNED_STACK_COPY(d,s)    ASTR_ALIGNED_STACK_COPY(d,s)</div>
+<div class="disabled">#define TSTR_ALIGNED(x)                 TRUE</div>
+<div class="disabled">#define ua_CharUpper                    CharUpperA</div>
+<div class="disabled">#define ua_lstrcmp                      lstrcmpA</div>
+<div class="disabled">#define ua_lstrcmpi                     lstrcmpiA</div>
+<div class="disabled">#define ua_lstrlen                      lstrlenA</div>
+<div class="disabled">#define ua_tcscpy                       strcpy</div>
+<div class="disabled">#if _STRALIGN_USE_SECURE_CRT</div>
+<div class="disabled">#define ua_tcscpy_s                     strcpy_s</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif  // UNICODE</div>
+
+<div class="disabled">#if defined(_AMD64_) || defined(_ARM_) || defined(_ARM64_)</div>
+<div class="disabled">#pragma warning(pop)
+#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif  // __STRALIGN_H_</div>
+
+
+
+
+
+
+
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'PCUWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">PCUWSTR</span>',
+        'impls': [
+            'NI$PCUWSTR'
+        ],
+        'decls': []
+    },
+    'PUWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">PUWSTR</span>',
+        'impls': [
+            'NI$PUWSTR'
+        ],
+        'decls': []
+    },
+    'ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Destination': {
+        'displayNameInHtml': 'Destination',
+        'impls': [
+            'NI$ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Destination'
+        ],
+        'decls': []
+    },
+    'ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Source': {
+        'displayNameInHtml': 'Source',
+        'impls': [
+            'NI$ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Source'
+        ],
+        'decls': []
+    },
+    'wcscpy@wchar_t *(wchar_t *, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">wcscpy</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$wcscpy@wchar_t *(wchar_t *, wchar_t const *)[decl0]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$wcscpy@wchar_t *(wchar_t *, wchar_t const *)[decl0]': { 'htmlFileName': 'corecrt_wstring.h', 'displayName': 'corecrt_wstring.h' },
+    'NI$PCUWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PUWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Destination': null,
+    'NI$ua_wcscpy@::PUWSTR(::PUWSTR, ::PCUWSTR)[impl0]::Source': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

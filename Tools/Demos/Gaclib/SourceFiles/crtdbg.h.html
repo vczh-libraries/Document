@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>crtdbg.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// crtdbg.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Public debugging facilities for the CRT</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="disabled">#ifndef _INC_CRTDBG // include guard for 3rd party interop</div>
+<div class="disabled">#define _INC_CRTDBG</div>
+
+<div class="disabled">#include &lt;corecrt.h&gt;
+#include &lt;vcruntime_new_debug.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$_HFILE"><div><div class="token cpp_type">_HFILE</div></div></div>; <div class="token cpp_comment ">// file handle pointer</div>
+
+<div class="disabled">#define _CRT_WARN           0</div>
+<div class="disabled">#define _CRT_ERROR          1</div>
+<div class="disabled">#define _CRT_ASSERT         2</div>
+<div class="disabled">#define _CRT_ERRCNT         3</div>
+
+<div class="disabled">#define _CRTDBG_MODE_FILE      0x1</div>
+<div class="disabled">#define _CRTDBG_MODE_DEBUG     0x2</div>
+<div class="disabled">#define _CRTDBG_MODE_WNDW      0x4</div>
+<div class="disabled">#define _CRTDBG_REPORT_MODE    -1</div>
+
+<div class="disabled">#define _CRTDBG_INVALID_HFILE ((_HFILE)(intptr_t)-1)</div>
+<div class="disabled">#define _CRTDBG_HFILE_ERROR   ((_HFILE)(intptr_t)-2)</div>
+<div class="disabled">#define _CRTDBG_FILE_STDOUT   ((_HFILE)(intptr_t)-4)</div>
+<div class="disabled">#define _CRTDBG_FILE_STDERR   ((_HFILE)(intptr_t)-5)</div>
+<div class="disabled">#define _CRTDBG_REPORT_FILE   ((_HFILE)(intptr_t)-6)</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Client-defined reporting and allocation hooks</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+
+<div class="expandable"><div class="disabled">typedef int (__CRTDECL* _CRT_REPORT_HOOK )(int, char*,    int*);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div> (<div class="token cpp_keyword ">__cdecl</div>* <div class="def" id="NI$_CRT_REPORT_HOOK"><div><div class="token cpp_type">_CRT_REPORT_HOOK</div></div></div> )(<div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">char</div>*,    <div class="token cpp_keyword ">int</div>*);</div></div>
+<div class="expandable"><div class="disabled">typedef int (__CRTDECL* _CRT_REPORT_HOOKW)(int, wchar_t*, int*);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div> (<div class="token cpp_keyword ">__cdecl</div>* <div class="def" id="NI$_CRT_REPORT_HOOKW"><div><div class="token cpp_type">_CRT_REPORT_HOOKW</div></div></div>)(<div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">wchar_t</div>*, <div class="token cpp_keyword ">int</div>*);</div></div>
+
+<div class="disabled">#define _CRT_RPTHOOK_INSTALL  0</div>
+<div class="disabled">#define _CRT_RPTHOOK_REMOVE   1</div>
+
+
+<div class="expandable"><div class="disabled">typedef int (__CRTDECL* _CRT_ALLOC_HOOK)(int, void*, size_t, int, long, unsigned char const*, int);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">int</div> (<div class="token cpp_keyword ">__cdecl</div>* <div class="def" id="NI$_CRT_ALLOC_HOOK"><div><div class="token cpp_type">_CRT_ALLOC_HOOK</div></div></div>)(<div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">void</div>*, <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>, <div class="token cpp_keyword ">int</div>, <div class="token cpp_keyword ">long</div>, <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>*, <div class="token cpp_keyword ">int</div>);</div></div>
+
+<div class="disabled">#ifdef _M_CEE</div>
+<div class="disabled">    typedef int (__clrcall* _CRT_ALLOC_HOOK_M)(int, void*, size_t, int, long, unsigned char const*, int);</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#define _HOOK_ALLOC     1</div>
+<div class="disabled">#define _HOOK_REALLOC   2</div>
+<div class="disabled">#define _HOOK_FREE      3</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Memory Management and State Tracking</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+
+<div class="token cpp_comment ">// Bit values for _crtDbgFlag flag. These bitflags control debug heap behavior.</div>
+<div class="disabled">#define _CRTDBG_ALLOC_MEM_DF        0x01  // Turn on debug allocation</div>
+<div class="disabled">#define _CRTDBG_DELAY_FREE_MEM_DF   0x02  // Don&apos;t actually free memory</div>
+<div class="disabled">#define _CRTDBG_CHECK_ALWAYS_DF     0x04  // Check heap every alloc/dealloc</div>
+<div class="disabled">#define _CRTDBG_RESERVED_DF         0x08  // Reserved - do not use</div>
+<div class="disabled">#define _CRTDBG_CHECK_CRT_DF        0x10  // Leak check/diff CRT blocks</div>
+<div class="disabled">#define _CRTDBG_LEAK_CHECK_DF       0x20  // Leak check at program exit</div>
+
+<div class="token cpp_comment ">// Some bit values for _crtDbgFlag which correspond to frequencies for checking</div>
+<div class="token cpp_comment ">// the heap.</div>
+<div class="disabled">#define _CRTDBG_CHECK_EVERY_16_DF   0x00100000 // Check heap every 16 heap ops</div>
+<div class="disabled">#define _CRTDBG_CHECK_EVERY_128_DF  0x00800000 // Check heap every 128 heap ops</div>
+<div class="disabled">#define _CRTDBG_CHECK_EVERY_1024_DF 0x04000000 // Check heap every 1024 heap ops</div>
+
+<div class="token cpp_comment ">// We do not check the heap by default at this point because the cost was too</div>
+<div class="token cpp_comment ">// high for some applications. You can still turn this feature on manually.</div>
+<div class="disabled">#define _CRTDBG_CHECK_DEFAULT_DF    0</div>
+
+<div class="disabled">#define _CRTDBG_REPORT_FLAG         -1 // Query bitflag status</div>
+
+<div class="disabled">#define _BLOCK_TYPE(block)          (block &amp; 0xFFFF)</div>
+<div class="disabled">#define _BLOCK_SUBTYPE(block)       (block &gt;&gt; 16 &amp; 0xFFFF)</div>
+
+<div class="token cpp_comment ">// Memory block identification</div>
+<div class="disabled">#define _FREE_BLOCK      0</div>
+<div class="disabled">#define _NORMAL_BLOCK    1</div>
+<div class="disabled">#define _CRT_BLOCK       2</div>
+<div class="disabled">#define _IGNORE_BLOCK    3</div>
+<div class="disabled">#define _CLIENT_BLOCK    4</div>
+<div class="disabled">#define _MAX_BLOCKS      5</div>
+
+<div class="token cpp_comment ">// _UNKNOWN_BLOCK is a sentinel value that may be passed to some functions that</div>
+<div class="token cpp_comment ">// expect a block type as an argument.  If this value is passed, those functions</div>
+<div class="token cpp_comment ">// will use the block type specified in the block header instead.  This is used</div>
+<div class="token cpp_comment ">// in cases where the heap lock cannot be acquired to compute the block type</div>
+<div class="token cpp_comment ">// before calling the function (e.g. when the caller is outside of the CoreCRT).</div>
+<div class="disabled">#define _UNKNOWN_BLOCK (-1)</div>
+
+<div class="expandable"><div class="disabled">typedef void (__CRTDECL* _CRT_DUMP_CLIENT)(void*, size_t);</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> (<div class="token cpp_keyword ">__cdecl</div>* <div class="def" id="NI$_CRT_DUMP_CLIENT"><div><div class="token cpp_type">_CRT_DUMP_CLIENT</div></div></div>)(<div class="token cpp_keyword ">void</div>*, <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>);</div></div>
+
+<div class="disabled">#ifdef _M_CEE</div>
+<div class="disabled">    typedef void (__clrcall* _CRT_DUMP_CLIENT_M)(void*, size_t);</div>
+<div class="disabled">#endif</div>
+
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$_CrtMemBlockHeader"><div><div class="token cpp_type">_CrtMemBlockHeader</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_CrtMemState"><div><div class="token cpp_type">_CrtMemState</div></div></div>
+{
+    <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_CrtMemBlockHeader'], [], [])"><div class="token cpp_type">_CrtMemBlockHeader</div></div>* <div class="def" id="NI$_CrtMemState::pBlockHeader"><div><div class="token cpp_field">pBlockHeader</div></div></div>;
+<div class="expandable"><div class="disabled">    size_t lCounts[_MAX_BLOCKS];</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_CrtMemState::lCounts"><div><div class="token cpp_field">lCounts</div></div></div>[<div class="token cpp_number ">5</div>];</div></div>
+<div class="expandable"><div class="disabled">    size_t lSizes[_MAX_BLOCKS];</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_CrtMemState::lSizes"><div><div class="token cpp_field">lSizes</div></div></div>[<div class="token cpp_number ">5</div>];</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_CrtMemState::lHighWaterCount"><div><div class="token cpp_field">lHighWaterCount</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$_CrtMemState::lTotalCount"><div><div class="token cpp_field">lTotalCount</div></div></div>;
+} <div class="ref" onclick="jumpToSymbol([], ['_CrtMemState'], [], [])"><div class="token cpp_type">_CrtMemState</div></div>;
+
+<div class="disabled">#ifndef _DEBUG</div>
+
+<div class="disabled">    #define _CrtGetAllocHook()                  ((_CRT_ALLOC_HOOK)0)</div>
+<div class="disabled">    #define _CrtSetAllocHook(f)                 ((_CRT_ALLOC_HOOK)0)</div>
+
+<div class="disabled">    #define _CrtGetDumpClient()                 ((_CRT_DUMP_CLIENT)0)</div>
+<div class="disabled">    #define _CrtSetDumpClient(f)                ((_CRT_DUMP_CLIENT)0)</div>
+
+<div class="disabled">    #define _CrtCheckMemory()                   ((int)1)</div>
+<div class="disabled">    #define _CrtDoForAllClientObjects(f, c)     ((void)0)</div>
+<div class="disabled">    #define _CrtDumpMemoryLeaks()               ((int)0)</div>
+<div class="disabled">    #define _CrtIsMemoryBlock(p, t, r, f, l)    ((int)1)</div>
+<div class="disabled">    #define _CrtIsValidHeapPointer(p)           ((int)1)</div>
+<div class="disabled">    #define _CrtIsValidPointer(p, n, r)         ((int)1)</div>
+<div class="disabled">    #define _CrtMemCheckpoint(s)                ((void)0)</div>
+<div class="disabled">    #define _CrtMemDifference(s1, s2, s3)       ((int)0)</div>
+<div class="disabled">    #define _CrtMemDumpAllObjectsSince(s)       ((void)0)</div>
+<div class="disabled">    #define _CrtMemDumpStatistics(s)            ((void)0)</div>
+<div class="disabled">    #define _CrtReportBlockType(p)              ((int)-1)</div>
+<div class="disabled">    #define _CrtSetBreakAlloc(a)                ((long)0)</div>
+<div class="disabled">    #define _CrtSetDbgFlag(f)                   ((int)0)</div>
+
+
+<div class="disabled">#else // ^^^ !_DEBUG ^^^ // vvv _DEBUG vvv //</div>
+
+<div class="disabled">    #ifndef _M_CEE_PURE</div>
+
+<div class="disabled">        _ACRTIMP int*  __cdecl __p__crtDbgFlag(void);</div>
+<div class="disabled">        _ACRTIMP long* __cdecl __p__crtBreakAlloc(void);</div>
+
+<div class="disabled">        #define _crtDbgFlag    (*__p__crtDbgFlag())</div>
+<div class="disabled">        #define _crtBreakAlloc (*__p__crtBreakAlloc())</div>
+
+<div class="disabled">        _ACRTIMP _CRT_ALLOC_HOOK __cdecl _CrtGetAllocHook(void);</div>
+
+<div class="disabled">        _ACRTIMP _CRT_ALLOC_HOOK __cdecl _CrtSetAllocHook(</div>
+<div class="disabled">            _In_opt_ _CRT_ALLOC_HOOK _PfnNewHook</div>
+<div class="disabled">            );</div>
+
+<div class="disabled">        _ACRTIMP _CRT_DUMP_CLIENT __cdecl _CrtGetDumpClient(void);</div>
+
+<div class="disabled">        _ACRTIMP _CRT_DUMP_CLIENT __cdecl _CrtSetDumpClient(</div>
+<div class="disabled">            _In_opt_ _CRT_DUMP_CLIENT _PFnNewDump</div>
+<div class="disabled">            );</div>
+
+<div class="disabled">    #endif // _M_CEE_PURE</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _CrtCheckMemory(void);</div>
+
+<div class="disabled">    typedef void (__cdecl* _CrtDoForAllClientObjectsCallback)(void*, void*);</div>
+
+<div class="disabled">    _ACRTIMP void __cdecl _CrtDoForAllClientObjects(</div>
+<div class="disabled">        _In_ _CrtDoForAllClientObjectsCallback _Callback,</div>
+<div class="disabled">        _In_ void*                             _Context</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _CrtDumpMemoryLeaks(void);</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _CrtIsMemoryBlock(</div>
+<div class="disabled">        _In_opt_  void const*  _Block,</div>
+<div class="disabled">        _In_      unsigned int _Size,</div>
+<div class="disabled">        _Out_opt_ long*        _RequestNumber,</div>
+<div class="disabled">        _Out_opt_ char**       _FileName,</div>
+<div class="disabled">        _Out_opt_ int*         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="disabled">    _ACRTIMP int __cdecl _CrtIsValidHeapPointer(</div>
+<div class="disabled">        _In_opt_ void const* _Pointer</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="disabled">    _ACRTIMP int __cdecl _CrtIsValidPointer(</div>
+<div class="disabled">        _In_opt_ void const*  _Pointer,</div>
+<div class="disabled">        _In_     unsigned int _Size,</div>
+<div class="disabled">        _In_     int          _ReadWrite</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP void __cdecl _CrtMemCheckpoint(</div>
+<div class="disabled">        _Out_ _CrtMemState* _State</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _CrtMemDifference(</div>
+<div class="disabled">        _Out_ _CrtMemState*       _State,</div>
+<div class="disabled">        _In_  _CrtMemState const* _OldState,</div>
+<div class="disabled">        _In_  _CrtMemState const* _NewState</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP void __cdecl _CrtMemDumpAllObjectsSince(</div>
+<div class="disabled">        _In_opt_ _CrtMemState const* _State</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP void __cdecl _CrtMemDumpStatistics(</div>
+<div class="disabled">        _In_ _CrtMemState const* _State</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_</div>
+<div class="disabled">    _ACRTIMP int __cdecl _CrtReportBlockType(</div>
+<div class="disabled">        _In_opt_ void const* _Block</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP long __cdecl _CrtSetBreakAlloc(</div>
+<div class="disabled">        _In_ long _NewValue</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _CrtSetDbgFlag(</div>
+<div class="disabled">        _In_ int _NewFlag</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">#endif // _DEBUG</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Debug Heap Routines</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled">#ifndef _DEBUG</div>
+
+<div class="disabled">    #define _calloc_dbg(c, s, t, f, l)      calloc(c, s)</div>
+<div class="disabled">    #define _expand_dbg(p, s, t, f, l)      _expand(p, s)</div>
+<div class="disabled">    #define _free_dbg(p, t)                 free(p)</div>
+<div class="disabled">    #define _malloc_dbg(s, t, f, l)         malloc(s)</div>
+<div class="disabled">    #define _msize_dbg(p, t)                _msize(p)</div>
+<div class="disabled">    #define _realloc_dbg(p, s, t, f, l)     realloc(p, s)</div>
+<div class="disabled">    #define _recalloc_dbg(p, c, s, t, f, l) _recalloc(p, c, s)</div>
+
+<div class="disabled">    #define _aligned_free_dbg(p)                              _aligned_free(p)</div>
+<div class="disabled">    #define _aligned_malloc_dbg(s, a, f, l)                   _aligned_malloc(s, a)</div>
+<div class="disabled">    #define _aligned_msize_dbg(p, a, o)                       _aligned_msize(p, a, o)</div>
+<div class="disabled">    #define _aligned_offset_malloc_dbg(s, a, o, f, l)         _aligned_offset_malloc(s, a, o)</div>
+<div class="disabled">    #define _aligned_offset_realloc_dbg(p, s, a, o, f, l)     _aligned_offset_realloc(p, s, a, o)</div>
+<div class="disabled">    #define _aligned_offset_recalloc_dbg(p, c, s, a, o, f, l) _aligned_offset_recalloc(p, c, s, a, o)</div>
+<div class="disabled">    #define _aligned_realloc_dbg(p, s, a, f, l)               _aligned_realloc(p, s, a)</div>
+<div class="disabled">    #define _aligned_recalloc_dbg(p, c, s, a, f, l)           _aligned_recalloc(p, c, s, a)</div>
+
+<div class="disabled">    #define _freea_dbg(p, t)         _freea(p)</div>
+<div class="disabled">    #define _malloca_dbg(s, t, f, l) _malloca(s)</div>
+
+<div class="disabled">    #define _dupenv_s_dbg(ps1, size, s2, t, f, l)  _dupenv_s(ps1, size, s2)</div>
+<div class="disabled">    #define _fullpath_dbg(s1, s2, le, t, f, l)     _fullpath(s1, s2, le)</div>
+<div class="disabled">    #define _getcwd_dbg(s, le, t, f, l)            _getcwd(s, le)</div>
+<div class="disabled">    #define _getdcwd_dbg(d, s, le, t, f, l)        _getdcwd(d, s, le)</div>
+<div class="disabled">    #define _getdcwd_lk_dbg(d, s, le, t, f, l)     _getdcwd(d, s, le)</div>
+<div class="disabled">    #define _mbsdup_dbg(s, t, f, l)                _mbsdup(s)</div>
+<div class="disabled">    #define _strdup_dbg(s, t, f, l)                _strdup(s)</div>
+<div class="disabled">    #define _tempnam_dbg(s1, s2, t, f, l)          _tempnam(s1, s2)</div>
+<div class="disabled">    #define _wcsdup_dbg(s, t, f, l)                _wcsdup(s)</div>
+<div class="disabled">    #define _wdupenv_s_dbg(ps1, size, s2, t, f, l) _wdupenv_s(ps1, size, s2)</div>
+<div class="disabled">    #define _wfullpath_dbg(s1, s2, le, t, f, l)    _wfullpath(s1, s2, le)</div>
+<div class="disabled">    #define _wgetcwd_dbg(s, le, t, f, l)           _wgetcwd(s, le)</div>
+<div class="disabled">    #define _wgetdcwd_dbg(d, s, le, t, f, l)       _wgetdcwd(d, s, le)</div>
+<div class="disabled">    #define _wgetdcwd_lk_dbg(d, s, le, t, f, l)    _wgetdcwd(d, s, le)</div>
+<div class="disabled">    #define _wtempnam_dbg(s1, s2, t, f, l)         _wtempnam(s1, s2)</div>
+
+<div class="disabled">#else // ^^^ !_DEBUG ^^^ // vvv _DEBUG vvv //</div>
+
+<div class="disabled">    #ifdef _CRTDBG_MAP_ALLOC</div>
+
+<div class="disabled">        #define calloc(c, s)       _calloc_dbg(c, s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _expand(p, s)      _expand_dbg(p, s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define free(p)            _free_dbg(p, _NORMAL_BLOCK)</div>
+<div class="disabled">        #define malloc(s)          _malloc_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _msize(p)          _msize_dbg(p, _NORMAL_BLOCK)</div>
+<div class="disabled">        #define realloc(p, s)      _realloc_dbg(p, s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _recalloc(p, c, s) _recalloc_dbg(p, c, s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+
+<div class="disabled">        #define _aligned_free(p)                        _aligned_free_dbg(p)</div>
+<div class="disabled">        #define _aligned_malloc(s, a)                   _aligned_malloc_dbg(s, a, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _aligned_msize(p, a, o)                 _aligned_msize_dbg(p, a, o)</div>
+<div class="disabled">        #define _aligned_offset_malloc(s, a, o)         _aligned_offset_malloc_dbg(s, a, o, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _aligned_offset_realloc(p, s, a, o)     _aligned_offset_realloc_dbg(p, s, a, o, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _aligned_offset_recalloc(p, c, s, a, o) _aligned_offset_recalloc_dbg(p, c, s, a, o, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _aligned_realloc(p, s, a)               _aligned_realloc_dbg(p, s, a, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _aligned_recalloc(p, c, s, a)           _aligned_recalloc_dbg(p, c, s, a, __FILE__, __LINE__)</div>
+
+<div class="disabled">        #define _freea(p)   _freea_dbg(p, _NORMAL_BLOCK)</div>
+<div class="disabled">        #define _malloca(s) _malloca_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+
+<div class="disabled">        #define _dupenv_s(ps1, size, s2)  _dupenv_s_dbg(ps1, size, s2, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _fullpath(s1, s2, le)     _fullpath_dbg(s1, s2, le, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _getcwd(s, le)            _getcwd_dbg(s, le, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _getdcwd(d, s, le)        _getdcwd_dbg(d, s, le, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _mbsdup(s)                _strdup_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _strdup(s)                _strdup_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _tempnam(s1, s2)          _tempnam_dbg(s1, s2, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _wcsdup(s)                _wcsdup_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _wdupenv_s(ps1, size, s2) _wdupenv_s_dbg(ps1, size, s2, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _wfullpath(s1, s2, le)    _wfullpath_dbg(s1, s2, le, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _wgetcwd(s, le)           _wgetcwd_dbg(s, le, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _wgetdcwd(d, s, le)       _wgetdcwd_dbg(d, s, le, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #define _wtempnam(s1, s2)         _wtempnam_dbg(s1, s2, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+
+<div class="disabled">        #if _CRT_INTERNAL_NONSTDC_NAMES</div>
+<div class="disabled">            #define   strdup(s)          _strdup_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">            #define   wcsdup(s)          _wcsdup_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">            #define   tempnam(s1, s2)    _tempnam_dbg(s1, s2, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">            #define   getcwd(s, le)      _getcwd_dbg(s, le, _NORMAL_BLOCK, __FILE__, __LINE__)</div>
+<div class="disabled">        #endif</div>
+
+<div class="disabled">    #endif // _CRTDBG_MAP_ALLOC</div>
+
+<div class="disabled">    _ACRTIMP void __cdecl _aligned_free_dbg(</div>
+<div class="disabled">        _Pre_maybenull_ _Post_invalid_ void* _Block</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _aligned_malloc_dbg(</div>
+<div class="disabled">        _In_       size_t      _Size,</div>
+<div class="disabled">        _In_       size_t      _Alignment,</div>
+<div class="disabled">        _In_opt_z_ char const* _FileName,</div>
+<div class="disabled">        _In_       int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP size_t __cdecl _aligned_msize_dbg(</div>
+<div class="disabled">        _Pre_notnull_ void*  _Block,</div>
+<div class="disabled">        _In_          size_t _Alignment,</div>
+<div class="disabled">        _In_          size_t _Offset</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _aligned_offset_malloc_dbg(</div>
+<div class="disabled">        _In_       size_t      _Size,</div>
+<div class="disabled">        _In_       size_t      _Alignment,</div>
+<div class="disabled">        _In_       size_t      _Offset,</div>
+<div class="disabled">        _In_opt_z_ char const* _FileName,</div>
+<div class="disabled">        _In_       int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _aligned_offset_realloc_dbg(</div>
+<div class="disabled">        _Pre_maybenull_ _Post_invalid_ void*       _Block,</div>
+<div class="disabled">        _In_                           size_t      _Size,</div>
+<div class="disabled">        _In_                           size_t      _Alignment,</div>
+<div class="disabled">        _In_                           size_t      _Offset,</div>
+<div class="disabled">        _In_opt_z_                     char const* _FileName,</div>
+<div class="disabled">        _In_                           int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _aligned_offset_recalloc_dbg(</div>
+<div class="disabled">        _Pre_maybenull_ _Post_invalid_ void*       _Block,</div>
+<div class="disabled">        _In_                           size_t      _Count,</div>
+<div class="disabled">        _In_                           size_t      _Size,</div>
+<div class="disabled">        _In_                           size_t      _Alignment,</div>
+<div class="disabled">        _In_                           size_t      _Offset,</div>
+<div class="disabled">        _In_opt_z_                     char const* _FileName,</div>
+<div class="disabled">        _In_                           int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _aligned_realloc_dbg(</div>
+<div class="disabled">        _Pre_maybenull_ _Post_invalid_ void*       _Block,</div>
+<div class="disabled">        _In_                           size_t      _Size,</div>
+<div class="disabled">        _In_                           size_t      _Alignment,</div>
+<div class="disabled">        _In_opt_z_                     char const* _FileName,</div>
+<div class="disabled">        _In_                           int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _aligned_recalloc_dbg(</div>
+<div class="disabled">        _Pre_maybenull_ _Post_invalid_ void*       _Block,</div>
+<div class="disabled">        _In_                           size_t      _Count,</div>
+<div class="disabled">        _In_                           size_t      _Size,</div>
+<div class="disabled">        _In_                           size_t      _Alignment,</div>
+<div class="disabled">        _In_opt_z_                     char const* _FileName,</div>
+<div class="disabled">        _In_                           int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _calloc_dbg(</div>
+<div class="disabled">        _In_       size_t      _Count,</div>
+<div class="disabled">        _In_       size_t      _Size,</div>
+<div class="disabled">        _In_       int         _BlockUse,</div>
+<div class="disabled">        _In_opt_z_ char const* _FileName,</div>
+<div class="disabled">        _In_       int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _expand_dbg(</div>
+<div class="disabled">        _Pre_notnull_ void*       _Block,</div>
+<div class="disabled">        _In_          size_t      _Size,</div>
+<div class="disabled">        _In_          int         _BlockUse,</div>
+<div class="disabled">        _In_opt_z_    char const* _FileName,</div>
+<div class="disabled">        _In_          int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP void __cdecl _free_dbg(</div>
+<div class="disabled">        _Pre_maybenull_ _Post_invalid_ void* _Block,</div>
+<div class="disabled">        _In_                           int   _BlockUse</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _malloc_dbg(</div>
+<div class="disabled">        _In_       size_t      _Size,</div>
+<div class="disabled">        _In_       int         _BlockUse,</div>
+<div class="disabled">        _In_opt_z_ char const* _FileName,</div>
+<div class="disabled">        _In_       int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP size_t __cdecl _msize_dbg(</div>
+<div class="disabled">        _Pre_notnull_ void* _Block,</div>
+<div class="disabled">        _In_          int   _BlockUse</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _realloc_dbg(</div>
+<div class="disabled">        _Pre_maybenull_ _Post_invalid_ void*       _Block,</div>
+<div class="disabled">        _In_                           size_t      _Size,</div>
+<div class="disabled">        _In_                           int         _BlockUse,</div>
+<div class="disabled">        _In_opt_z_                     char const* _FileName,</div>
+<div class="disabled">        _In_                           int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0) _Check_return_ _Ret_maybenull_ _Post_writable_byte_size_(_Count * _Size)</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR void* __cdecl _recalloc_dbg(</div>
+<div class="disabled">        _Pre_maybenull_ _Post_invalid_ void*       _Block,</div>
+<div class="disabled">        _In_                           size_t      _Count,</div>
+<div class="disabled">        _In_                           size_t      _Size,</div>
+<div class="disabled">        _In_                           int         _BlockUse,</div>
+<div class="disabled">        _In_opt_z_                     char const* _FileName,</div>
+<div class="disabled">        _In_                           int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return == 0)</div>
+<div class="disabled">    _Check_return_wat_</div>
+<div class="disabled">    _DCRTIMP errno_t __cdecl _dupenv_s_dbg(</div>
+<div class="disabled">        _Outptr_result_buffer_maybenull_(*_PBufferSizeInBytes) char** _PBuffer,</div>
+<div class="disabled">        _Out_opt_                      size_t*     _PBufferSizeInBytes,</div>
+<div class="disabled">        _In_z_                         char const* _VarName,</div>
+<div class="disabled">        _In_                           int          _BlockType,</div>
+<div class="disabled">        _In_opt_z_                     char const* _FileName,</div>
+<div class="disabled">        _In_                           int          _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR char* __cdecl _fullpath_dbg(</div>
+<div class="disabled">        _Out_writes_opt_z_(_SizeInBytes) char*       _FullPath,</div>
+<div class="disabled">        _In_z_                           char const* _Path,</div>
+<div class="disabled">        _In_                             size_t      _SizeInBytes,</div>
+<div class="disabled">        _In_                             int         _BlockType,</div>
+<div class="disabled">        _In_opt_z_                       char const* _FileName,</div>
+<div class="disabled">        _In_                             int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _DCRTIMP _CRTALLOCATOR char* __cdecl _getcwd_dbg(</div>
+<div class="disabled">        _Out_writes_opt_z_(_SizeInBytes) char*       _DstBuf,</div>
+<div class="disabled">        _In_                             int         _SizeInBytes,</div>
+<div class="disabled">        _In_                             int         _BlockType,</div>
+<div class="disabled">        _In_opt_z_                       char const* _FileName,</div>
+<div class="disabled">        _In_                             int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _DCRTIMP _CRTALLOCATOR char* __cdecl _getdcwd_dbg(</div>
+<div class="disabled">        _In_                             int         _Drive,</div>
+<div class="disabled">        _Out_writes_opt_z_(_SizeInBytes) char*       _DstBuf,</div>
+<div class="disabled">        _In_                             int         _SizeInBytes,</div>
+<div class="disabled">        _In_                             int         _BlockType,</div>
+<div class="disabled">        _In_opt_z_                       char const* _FileName,</div>
+<div class="disabled">        _In_                             int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR char* __cdecl _strdup_dbg(</div>
+<div class="disabled">        _In_opt_z_ char const* _String,</div>
+<div class="disabled">        _In_       int         _BlockUse,</div>
+<div class="disabled">        _In_opt_z_ char const* _FileName,</div>
+<div class="disabled">        _In_       int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR char* __cdecl _tempnam_dbg(</div>
+<div class="disabled">        _In_opt_z_ char const* _DirName,</div>
+<div class="disabled">        _In_opt_z_ char const* _FilePrefix,</div>
+<div class="disabled">        _In_       int         _BlockType,</div>
+<div class="disabled">        _In_opt_z_ char const* _FileName,</div>
+<div class="disabled">        _In_       int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR wchar_t* __cdecl _wcsdup_dbg(</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _String,</div>
+<div class="disabled">        _In_       int            _BlockUse,</div>
+<div class="disabled">        _In_opt_z_ char const*    _FileName,</div>
+<div class="disabled">        _In_       int            _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return == 0)</div>
+<div class="disabled">    _Check_return_wat_</div>
+<div class="disabled">    _DCRTIMP errno_t __cdecl _wdupenv_s_dbg(</div>
+<div class="disabled">        _Outptr_result_buffer_maybenull_(*_PBufferSizeInWords) wchar_t** _PBuffer,</div>
+<div class="disabled">        _Out_opt_                        size_t*         _PBufferSizeInWords,</div>
+<div class="disabled">        _In_z_                           wchar_t const* _VarName,</div>
+<div class="disabled">        _In_                             int             _BlockType,</div>
+<div class="disabled">        _In_opt_z_                       char const*    _FileName,</div>
+<div class="disabled">        _In_                             int             _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR wchar_t* __cdecl _wfullpath_dbg(</div>
+<div class="disabled">        _Out_writes_opt_z_(_SizeInWords) wchar_t*       _FullPath,</div>
+<div class="disabled">        _In_z_                           wchar_t const* _Path,</div>
+<div class="disabled">        _In_                             size_t         _SizeInWords,</div>
+<div class="disabled">        _In_                             int            _BlockType,</div>
+<div class="disabled">        _In_opt_z_                       char const*    _FileName,</div>
+<div class="disabled">        _In_                             int            _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _DCRTIMP _CRTALLOCATOR wchar_t* __cdecl _wgetcwd_dbg(</div>
+<div class="disabled">        _Out_writes_opt_z_(_SizeInWords) wchar_t*    _DstBuf,</div>
+<div class="disabled">        _In_                             int         _SizeInWords,</div>
+<div class="disabled">        _In_                             int         _BlockType,</div>
+<div class="disabled">        _In_opt_z_                       char const* _FileName,</div>
+<div class="disabled">        _In_                             int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _DCRTIMP _CRTALLOCATOR wchar_t* __cdecl _wgetdcwd_dbg(</div>
+<div class="disabled">        _In_                             int         _Drive,</div>
+<div class="disabled">        _Out_writes_opt_z_(_SizeInWords) wchar_t*    _DstBuf,</div>
+<div class="disabled">        _In_                             int         _SizeInWords,</div>
+<div class="disabled">        _In_                             int         _BlockType,</div>
+<div class="disabled">        _In_opt_z_                       char const* _FileName,</div>
+<div class="disabled">        _In_                             int         _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _Check_return_ _Ret_maybenull_z_</div>
+<div class="disabled">    _ACRTIMP _CRTALLOCATOR wchar_t* __cdecl _wtempnam_dbg(</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _DirName,</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _FilePrefix,</div>
+<div class="disabled">        _In_       int            _BlockType,</div>
+<div class="disabled">        _In_opt_z_ char const*    _FileName,</div>
+<div class="disabled">        _In_       int            _LineNumber</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    #define _malloca_dbg(s, t, f, l) _malloc_dbg(s, t, f, l)</div>
+<div class="disabled">    #define _freea_dbg(p, t)         _free_dbg(p, t)</div>
+
+<div class="disabled">    #if defined __cplusplus &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
+<div class="disabled">    namespace std</div>
+<div class="disabled">    {</div>
+<div class="disabled">        using ::_calloc_dbg;</div>
+<div class="disabled">        using ::_free_dbg;</div>
+<div class="disabled">        using ::_malloc_dbg;</div>
+<div class="disabled">        using ::_realloc_dbg;</div>
+<div class="disabled">    }</div>
+<div class="disabled">    #endif</div>
+
+<div class="disabled">#endif // _DEBUG</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Debug Reporting</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+
+<div class="disabled">#ifndef _DEBUG</div>
+
+<div class="disabled">    #define _CrtSetDebugFillThreshold(t)        ((size_t)0)</div>
+<div class="disabled">    #define _CrtSetReportFile(t, f)             ((_HFILE)0)</div>
+<div class="disabled">    #define _CrtSetReportMode(t, f)             ((int)0)</div>
+<div class="disabled">    #define _CrtGetReportHook()                 ((_CRT_REPORT_HOOK)0)</div>
+<div class="disabled">    #define _CrtSetReportHook(f)                ((_CRT_REPORT_HOOK)0)</div>
+<div class="disabled">    #define _CrtSetReportHook2(t, f)            ((int)0)</div>
+<div class="disabled">    #define _CrtSetReportHookW2(t, f)           ((int)0)</div>
+
+<div class="disabled">#else // ^^^ !_DEBUG ^^^ // vvv _DEBUG vvv //</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _CrtDbgReport(</div>
+<div class="disabled">        _In_       int         _ReportType,</div>
+<div class="disabled">        _In_opt_z_ char const* _FileName,</div>
+<div class="disabled">        _In_       int         _Linenumber,</div>
+<div class="disabled">        _In_opt_z_ char const* _ModuleName,</div>
+<div class="disabled">        _In_opt_z_ char const* _Format,</div>
+<div class="disabled">        ...);</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _CrtDbgReportW(</div>
+<div class="disabled">        _In_       int            _ReportType,</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _FileName,</div>
+<div class="disabled">        _In_       int            _LineNumber,</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _ModuleName,</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _Format,</div>
+<div class="disabled">        ...);</div>
+
+
+<div class="disabled">    _ACRTIMP int __cdecl _VCrtDbgReportA(</div>
+<div class="disabled">        _In_       int         _ReportType,</div>
+<div class="disabled">        _In_opt_   void*       _ReturnAddress,</div>
+<div class="disabled">        _In_opt_z_ char const* _FileName,</div>
+<div class="disabled">        _In_       int         _LineNumber,</div>
+<div class="disabled">        _In_opt_z_ char const* _ModuleName,</div>
+<div class="disabled">        _In_opt_z_ char const* _Format,</div>
+<div class="disabled">                   va_list     _ArgList</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _VCrtDbgReportW(</div>
+<div class="disabled">        _In_       int            _ReportType,</div>
+<div class="disabled">        _In_opt_   void*          _ReturnAddress,</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _FileName,</div>
+<div class="disabled">        _In_       int            _LineNumber,</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _ModuleName,</div>
+<div class="disabled">        _In_opt_z_ wchar_t const* _Format,</div>
+<div class="disabled">                   va_list        _ArgList</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP size_t __cdecl _CrtSetDebugFillThreshold(</div>
+<div class="disabled">        _In_ size_t _NewDebugFillThreshold</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP size_t __cdecl _CrtGetDebugFillThreshold(void);</div>
+
+<div class="disabled">    _ACRTIMP _HFILE __cdecl _CrtSetReportFile(</div>
+<div class="disabled">        _In_     int    _ReportType,</div>
+<div class="disabled">        _In_opt_ _HFILE _ReportFile</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    _ACRTIMP int __cdecl _CrtSetReportMode(</div>
+<div class="disabled">        _In_ int _ReportType,</div>
+<div class="disabled">        _In_ int _ReportMode</div>
+<div class="disabled">        );</div>
+
+<div class="disabled">    #ifndef _M_CEE_PURE</div>
+
+<div class="disabled">        extern long _crtAssertBusy;</div>
+
+<div class="disabled">        _ACRTIMP _CRT_REPORT_HOOK __cdecl _CrtGetReportHook(void);</div>
+
+<div class="disabled">        // _CrtSetReportHook[[W]2]:</div>
+<div class="disabled">        // For IJW, we need two versions:  one for clrcall and one for cdecl.</div>
+<div class="disabled">        // For pure and native, we just need clrcall and cdecl, respectively.</div>
+<div class="disabled">        _ACRTIMP _CRT_REPORT_HOOK __cdecl _CrtSetReportHook(</div>
+<div class="disabled">            _In_opt_ _CRT_REPORT_HOOK _PFnNewHook</div>
+<div class="disabled">            );</div>
+
+<div class="disabled">        _ACRTIMP int __cdecl _CrtSetReportHook2(</div>
+<div class="disabled">            _In_     int              _Mode,</div>
+<div class="disabled">            _In_opt_ _CRT_REPORT_HOOK _PFnNewHook</div>
+<div class="disabled">            );</div>
+
+<div class="disabled">        _ACRTIMP int __cdecl _CrtSetReportHookW2(</div>
+<div class="disabled">            _In_     int               _Mode,</div>
+<div class="disabled">            _In_opt_ _CRT_REPORT_HOOKW _PFnNewHook</div>
+<div class="disabled">            );</div>
+
+<div class="disabled">    #endif // !_M_CEE_PURE</div>
+
+<div class="disabled">#endif // _DEBUG</div>
+
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Assertions and Error Reporting Macros</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled">#ifndef _DEBUG</div>
+
+<div class="disabled">    #define _CrtDbgBreak() ((void)0)</div>
+
+<div class="disabled">    #ifndef _ASSERT_EXPR</div>
+<div class="disabled">        #define _ASSERT_EXPR(expr, msg) ((void)0)
+    #endif</div>
+
+<div class="disabled">    #ifndef _ASSERT</div>
+<div class="disabled">        #define _ASSERT(expr) ((void)0)
+    #endif</div>
+
+<div class="disabled">    #ifndef _ASSERTE</div>
+<div class="disabled">        #define _ASSERTE(expr) ((void)0)
+    #endif</div>
+
+<div class="disabled">    #define _RPT0(rptno, msg)</div>
+<div class="disabled">    #define _RPTN(rptno, msg, ...)</div>
+
+<div class="disabled">    #define _RPTW0(rptno, msg)</div>
+<div class="disabled">    #define _RPTWN(rptno, msg, ...)</div>
+
+<div class="disabled">    #define _RPTF0(rptno, msg)</div>
+<div class="disabled">    #define _RPTFN(rptno, msg, ...)</div>
+
+<div class="disabled">    #define _RPTFW0(rptno, msg)</div>
+<div class="disabled">    #define _RPTFWN(rptno, msg, ...)</div>
+
+<div class="disabled">#else // ^^^ !_DEBUG ^^^ // vvv _DEBUG vvv //</div>
+
+<div class="disabled">    #define _CrtDbgBreak() __debugbreak()</div>
+
+<div class="disabled">    // !! is used to ensure that any overloaded operators used to evaluate expr</div>
+<div class="disabled">    // do not end up at &amp;&amp;.</div>
+<div class="disabled">    #ifndef _ASSERT_EXPR</div>
+<div class="disabled">        #define _ASSERT_EXPR(expr, msg) \</div>
+<div class="disabled">            (void)(                                                                                     \</div>
+<div class="disabled">                (!!(expr)) ||                                                                           \</div>
+<div class="disabled">                (1 != _CrtDbgReportW(_CRT_ASSERT, _CRT_WIDE(__FILE__), __LINE__, NULL, L&quot;%ls&quot;, msg)) || \</div>
+<div class="disabled">                (_CrtDbgBreak(), 0)                                                                     \</div>
+<div class="disabled">            )</div>
+<div class="disabled">    #endif</div>
+
+<div class="disabled">    #ifndef _ASSERT</div>
+<div class="disabled">        #define _ASSERT(expr) _ASSERT_EXPR((expr), NULL)</div>
+<div class="disabled">    #endif</div>
+
+<div class="disabled">    #ifndef _ASSERTE</div>
+<div class="disabled">        #define _ASSERTE(expr) _ASSERT_EXPR((expr), _CRT_WIDE(#expr))</div>
+<div class="disabled">    #endif</div>
+
+<div class="disabled">    #define _RPT_BASE(...)                           \</div>
+<div class="disabled">        (void) ((1 != _CrtDbgReport(__VA_ARGS__)) || \</div>
+<div class="disabled">                (_CrtDbgBreak(), 0))</div>
+
+<div class="disabled">    #define _RPT_BASE_W(...)                          \</div>
+<div class="disabled">        (void) ((1 != _CrtDbgReportW(__VA_ARGS__)) || \</div>
+<div class="disabled">                (_CrtDbgBreak(), 0))</div>
+
+<div class="disabled">    #define _RPT0(rptno, msg)      _RPT_BASE(rptno, NULL, 0, NULL, &quot;%s&quot;, msg)</div>
+<div class="disabled">    #define _RPTN(rptno, msg, ...) _RPT_BASE(rptno, NULL, 0, NULL, msg, __VA_ARGS__)</div>
+
+<div class="disabled">    #define _RPTW0(rptno, msg)      _RPT_BASE_W(rptno, NULL, 0, NULL, L&quot;%ls&quot;, msg)</div>
+<div class="disabled">    #define _RPTWN(rptno, msg, ...) _RPT_BASE_W(rptno, NULL, 0, NULL, msg, __VA_ARGS__)</div>
+
+<div class="disabled">    #define _RPTF0(rptno, msg)      _RPT_BASE(rptno, __FILE__, __LINE__, NULL, &quot;%s&quot;, msg)</div>
+<div class="disabled">    #define _RPTFN(rptno, msg, ...) _RPT_BASE(rptno, __FILE__, __LINE__, NULL, msg, __VA_ARGS__)</div>
+
+<div class="disabled">    #define _RPTFW0(rptno, msg)      _RPT_BASE_W(rptno, _CRT_WIDE(__FILE__), __LINE__, NULL, L&quot;%ls&quot;, msg)</div>
+<div class="disabled">    #define _RPTFWN(rptno, msg, ...) _RPT_BASE_W(rptno, _CRT_WIDE(__FILE__), __LINE__, NULL, msg, __VA_ARGS__)</div>
+
+<div class="disabled">#endif // _DEBUG</div>
+
+<div class="token cpp_comment ">// Asserts in debug.  Invokes Watson in both debug and release</div>
+<div class="disabled">#define _ASSERT_AND_INVOKE_WATSON(expr)                                              \</div>
+<div class="disabled">    {                                                                                \</div>
+<div class="disabled">        _ASSERTE((expr));                                                            \</div>
+<div class="disabled">        if (!(expr))                                                                 \</div>
+<div class="disabled">        {                                                                            \</div>
+<div class="disabled">            _invoke_watson(_CRT_WIDE(#expr), __FUNCTIONW__, __FILEW__, __LINE__, 0); \</div>
+<div class="disabled">        }                                                                            \</div>
+<div class="disabled">    }</div>
+
+<div class="token cpp_comment ">// _ASSERT_BASE is provided only for backwards compatibility.</div>
+<div class="disabled">#ifndef _ASSERT_BASE</div>
+<div class="disabled">    #define _ASSERT_BASE _ASSERT_EXPR
+#endif</div>
+
+<div class="disabled">#define _RPT1 _RPTN</div>
+<div class="disabled">#define _RPT2 _RPTN</div>
+<div class="disabled">#define _RPT3 _RPTN</div>
+<div class="disabled">#define _RPT4 _RPTN</div>
+<div class="disabled">#define _RPT5 _RPTN</div>
+
+<div class="disabled">#define _RPTW1 _RPTWN</div>
+<div class="disabled">#define _RPTW2 _RPTWN</div>
+<div class="disabled">#define _RPTW3 _RPTWN</div>
+<div class="disabled">#define _RPTW4 _RPTWN</div>
+<div class="disabled">#define _RPTW5 _RPTWN</div>
+
+<div class="disabled">#define _RPTF1 _RPTFN</div>
+<div class="disabled">#define _RPTF2 _RPTFN</div>
+<div class="disabled">#define _RPTF3 _RPTFN</div>
+<div class="disabled">#define _RPTF4 _RPTFN</div>
+<div class="disabled">#define _RPTF5 _RPTFN</div>
+
+<div class="disabled">#define _RPTFW1 _RPTFWN</div>
+<div class="disabled">#define _RPTFW2 _RPTFWN</div>
+<div class="disabled">#define _RPTFW3 _RPTFWN</div>
+<div class="disabled">#define _RPTFW4 _RPTFWN</div>
+<div class="disabled">#define _RPTFW5 _RPTFWN</div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+#endif // _INC_CRTDBG
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_CrtMemBlockHeader': {
+        'displayNameInHtml': '<span class="cpp_type">_CrtMemBlockHeader</span>',
+        'impls': [],
+        'decls': [
+            'NF[0]$_CrtMemBlockHeader'
+        ]
+    },
+    '_CrtMemState': {
+        'displayNameInHtml': '<span class="cpp_type">_CrtMemState</span>',
+        'impls': [
+            'NI$_CrtMemState'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NF[0]$_CrtMemBlockHeader': null,
+    'NI$_CrtMemState': null,
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

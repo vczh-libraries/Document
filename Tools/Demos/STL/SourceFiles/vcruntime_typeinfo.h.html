@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vcruntime_typeinfo.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// vcruntime_typeinfo.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// &lt;typeinfo&gt; functionality that is implemented in the VCRuntime.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled">#include &lt;vcruntime.h&gt;</div>
+<div class="disabled">#include &lt;vcruntime_exception.h&gt;</div>
+
+<div class="expandable"><div class="disabled">#pragma pack(push, _CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push, <div class="token cpp_number ">8</div>)</div></div>
+<div class="disabled">#ifndef RC_INVOKED</div>
+
+<div class="disabled">#if defined _M_CEE_MIXED &amp;&amp; !defined _VCRT_BUILD</div>
+<div class="disabled">    // Provide a fake definition of __type_info_node to suppress linker warning</div>
+<div class="disabled">    // LNK4248: unresolved typeref token for &apos;__type_info_node&apos;; image may not run.</div>
+<div class="disabled">    struct __type_info_node { };
+#else</div>
+    <div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$__type_info_node"><div><div class="token cpp_type">__type_info_node</div></div></div>;
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef _M_CEE_PURE</div>
+<div class="disabled">    extern System::IntPtr __type_info_root_node;</div>
+<div class="disabled">#else</div>
+    <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['__type_info_node'], [], [])"><div class="token cpp_type">__type_info_node</div></div> <div class="def" id="NF[0]$__type_info_root_node"><div>__type_info_root_node</div></div>;
+<div class="disabled">#endif</div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$__std_type_info_data"><div><div class="token cpp_type">__std_type_info_data</div></div></div>
+{
+    <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div> * <div class="def" id="NI$__std_type_info_data::_UndecoratedName"><div><div class="token cpp_field">_UndecoratedName</div></div></div>;
+    <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>   <div class="def" id="NI$__std_type_info_data::_DecoratedName"><div><div class="token cpp_field">_DecoratedName</div></div></div>[<div class="token cpp_number ">1</div>];
+    <div class="def" id="FB$__std_type_info_data::$__ctor@()[decl0]"><div><div class="token cpp_function">__std_type_info_data</div></div></div>() = <div class="token cpp_keyword ">delete</div>;
+    <div class="def" id="FB$__std_type_info_data::$__ctor@(::__std_type_info_data const &)[decl0]"><div><div class="token cpp_function">__std_type_info_data</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>&amp;) = <div class="token cpp_keyword ">delete</div>;
+    <div class="def" id="FB$__std_type_info_data::$__ctor@(::__std_type_info_data &&)[decl0]"><div><div class="token cpp_function">__std_type_info_data</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>&amp;&amp;) = <div class="token cpp_keyword ">delete</div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>&amp; <div class="def" id="FB$__std_type_info_data::operator =@::__std_type_info_data &(::__std_type_info_data const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>&amp;) = <div class="token cpp_keyword ">delete</div>;
+    <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>&amp; <div class="def" id="FB$__std_type_info_data::operator =@::__std_type_info_data &(::__std_type_info_data &&)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>&amp;&amp;) = <div class="token cpp_keyword ">delete</div>;
+};
+
+<div class="expandable"><div class="disabled">_VCRTIMP int __cdecl __std_type_info_compare(</div>
+<div class="expanded"> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)[decl0]"><div><div class="token cpp_function">__std_type_info_compare</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_ const __std_type_info_data* _Lhs,</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>* <div class="def" id="NI$__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)[decl0]::_Lhs"><div>_Lhs</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ const __std_type_info_data* _Rhs</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>* <div class="def" id="NI$__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)[decl0]::_Rhs"><div>_Rhs</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">_VCRTIMP size_t __cdecl __std_type_info_hash(</div>
+<div class="expanded"> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__std_type_info_hash@::size_t(::__std_type_info_data const *)[decl0]"><div><div class="token cpp_function">__std_type_info_hash</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_ const __std_type_info_data* _Data</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>* <div class="def" id="NI$__std_type_info_hash@::size_t(::__std_type_info_data const *)[decl0]::_Data"><div>_Data</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">_VCRTIMP const char* __cdecl __std_type_info_name(</div>
+<div class="expanded"> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$__std_type_info_name@char const *(::__std_type_info_data *, ::__type_info_node *)[decl0]"><div><div class="token cpp_function">__std_type_info_name</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ __std_type_info_data* _Data,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div>* <div class="def" id="NI$__std_type_info_name@char const *(::__std_type_info_data *, ::__type_info_node *)[decl0]::_Data"><div>_Data</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ __type_info_node*     _RootNode</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['__type_info_node'], [], [])"><div class="token cpp_type">__type_info_node</div></div>*     <div class="def" id="NI$__std_type_info_name@char const *(::__std_type_info_data *, ::__type_info_node *)[decl0]::_RootNode"><div>_RootNode</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+
+
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable: 4577) // &apos;noexcept&apos; used with no exception handling mode specified</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4577</div>) </div></div>
+<div class="token cpp_keyword ">class</div> <div class="def" id="NI$type_info"><div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div></div>
+{
+<div class="token cpp_keyword ">public</div>:
+
+    <div class="def" id="FB$type_info::$__ctor@(::type_info const &)[decl0]"><div><div class="token cpp_function">type_info</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div>&amp;) = <div class="token cpp_keyword ">delete</div>;
+    <div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div>&amp; <div class="def" id="FB$type_info::operator =@::type_info &(::type_info const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div>&amp;) = <div class="token cpp_keyword ">delete</div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="FB$type_info::hash_code@::size_t()[impl0]"><div><div class="token cpp_function">hash_code</div></div></div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['__std_type_info_hash@::size_t(::__std_type_info_data const *)'], ['__std_type_info_hash@::size_t(::__std_type_info_data const *)'], [], [])"><div class="token cpp_function">__std_type_info_hash</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>);
+    }
+
+    <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$type_info::operator ==@bool(::type_info const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div>&amp; <div class="def" id="NI$type_info::operator ==@bool(::type_info const &)[impl0]::_Other"><div><div class="token cpp_argument">_Other</div></div></div>) <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)'], ['__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)'], [], [])"><div class="token cpp_function">__std_type_info_compare</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['type_info::operator ==@bool(::type_info const &)[impl0]::_Other'], [], [])"><div class="token cpp_argument">_Other</div></div>.<div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>) == <div class="token cpp_number ">0</div>;
+    }
+
+    <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$type_info::operator !=@bool(::type_info const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div>&amp; <div class="def" id="NI$type_info::operator !=@bool(::type_info const &)[impl0]::_Other"><div><div class="token cpp_argument">_Other</div></div></div>) <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)'], ['__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)'], [], [])"><div class="token cpp_function">__std_type_info_compare</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['type_info::operator !=@bool(::type_info const &)[impl0]::_Other'], [], [])"><div class="token cpp_argument">_Other</div></div>.<div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>) != <div class="token cpp_number ">0</div>;
+    }
+
+    <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$type_info::before@bool(::type_info const &)[impl0]"><div><div class="token cpp_function">before</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div>&amp; <div class="def" id="NI$type_info::before@bool(::type_info const &)[impl0]::_Other"><div><div class="token cpp_argument">_Other</div></div></div>) <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)'], ['__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)'], [], [])"><div class="token cpp_function">__std_type_info_compare</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['type_info::before@bool(::type_info const &)[impl0]::_Other'], [], [])"><div class="token cpp_argument">_Other</div></div>.<div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>) &lt; <div class="token cpp_number ">0</div>;
+    }
+
+    <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="def" id="FB$type_info::name@char const *()[impl0]"><div><div class="token cpp_function">name</div></div></div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div>
+    {
+<div class="disabled">        #ifdef _M_CEE_PURE</div>
+<div class="disabled">        return __std_type_info_name(&amp;_Data, static_cast&lt;__type_info_node*&gt;(__type_info_root_node.ToPointer()));</div>
+<div class="disabled">        #else</div>
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_name@char const *(::__std_type_info_data *, ::__type_info_node *)'], [], [])"><div class="token cpp_function">__std_type_info_name</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['__type_info_root_node'], [], [])">__type_info_root_node</div>);
+<div class="disabled">        #endif</div>
+    }
+
+    <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="def" id="FB$type_info::raw_name@char const *()[impl0]"><div><div class="token cpp_function">raw_name</div></div></div>() <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">noexcept</div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['type_info::_Data'], [], [])"><div class="token cpp_field">_Data</div></div>.<div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data::_DecoratedName'], [], [])"><div class="token cpp_field">_DecoratedName</div></div>;
+    }
+
+    <div class="token cpp_keyword ">virtual</div> <div class="def" id="FB$type_info::~type_info@()[decl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">type_info</div></div></div>() <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="token cpp_keyword ">private</div>:
+
+    <div class="token cpp_keyword ">mutable</div> <div class="ref" onclick="jumpToSymbol([], ['__std_type_info_data'], [], [])"><div class="token cpp_type">__std_type_info_data</div></div> <div class="def" id="NI$type_info::_Data"><div><div class="token cpp_field">_Data</div></div></div>;
+};
+#pragma warning(pop)
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[35]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {
+	<div class="token cpp_keyword ">using</div> ::<div class="ref" onclick="jumpToSymbol([], ['type_info'], [], [])"><div class="token cpp_type">type_info</div></div>;
+}
+
+<div class="disabled">#if _HAS_EXCEPTIONS</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[36]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div> {
+
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable: 4577) // &apos;noexcept&apos; used with no exception handling mode specified</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4577</div>) </div></div>
+<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::bad_cast"><div><div class="token cpp_type">bad_cast</div></div></div>
+    : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception'], [], [])"><div class="token cpp_type">exception</div></div>
+{
+<div class="token cpp_keyword ">public</div>:
+
+    <div class="def" id="FB$std::bad_cast::$__ctor@()[impl0]"><div><div class="token cpp_function">bad_cast</div></div></div>() <div class="token cpp_keyword ">noexcept</div>
+        : <div class="ref" onclick="jumpToSymbol([], ['std::exception'], [], [])"><div class="token cpp_type">exception</div></div>(<div class="token cpp_string ">&quot;bad cast&quot;</div>, <div class="token cpp_number ">1</div>)
+    {
+    }
+
+    <div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['std::bad_cast'], [], [])"><div class="token cpp_type">bad_cast</div></div> <div class="def" id="FB$std::bad_cast::__construct_from_string_literal@::std::bad_cast(char const * const)[impl0]"><div><div class="token cpp_function">__construct_from_string_literal</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$std::bad_cast::__construct_from_string_literal@::std::bad_cast(char const * const)[impl0]::_Message"><div><div class="token cpp_argument">_Message</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['std::bad_cast'], [], [])"><div class="token cpp_type">bad_cast</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::bad_cast::__construct_from_string_literal@::std::bad_cast(char const * const)[impl0]::_Message'], [], [])"><div class="token cpp_argument">_Message</div></div>, <div class="token cpp_number ">1</div>);
+    }
+
+<div class="token cpp_keyword ">private</div>:
+
+    <div class="def" id="FB$std::bad_cast::$__ctor@(char const * const, int)[impl0]"><div><div class="token cpp_function">bad_cast</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$std::bad_cast::$__ctor@(char const * const, int)[impl0]::_Message"><div><div class="token cpp_argument">_Message</div></div></div>, <div class="token cpp_keyword ">int</div>) <div class="token cpp_keyword ">noexcept</div>
+        : <div class="ref" onclick="jumpToSymbol([], ['std::exception'], [], [])"><div class="token cpp_type">exception</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::bad_cast::$__ctor@(char const * const, int)[impl0]::_Message'], [], [])"><div class="token cpp_argument">_Message</div></div>, <div class="token cpp_number ">1</div>)
+    {
+    }
+};
+
+<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::bad_typeid"><div><div class="token cpp_type">bad_typeid</div></div></div>
+    : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['std::exception'], [], [])"><div class="token cpp_type">exception</div></div>
+{
+<div class="token cpp_keyword ">public</div>:
+
+    <div class="def" id="FB$std::bad_typeid::$__ctor@()[impl0]"><div><div class="token cpp_function">bad_typeid</div></div></div>() <div class="token cpp_keyword ">noexcept</div>
+        : <div class="ref" onclick="jumpToSymbol([], ['std::exception'], [], [])"><div class="token cpp_type">exception</div></div>(<div class="token cpp_string ">&quot;bad typeid&quot;</div>, <div class="token cpp_number ">1</div>)
+    {
+    }
+
+    <div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['std::bad_typeid'], [], [])"><div class="token cpp_type">bad_typeid</div></div> <div class="def" id="FB$std::bad_typeid::__construct_from_string_literal@::std::bad_typeid(char const * const)[impl0]"><div><div class="token cpp_function">__construct_from_string_literal</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$std::bad_typeid::__construct_from_string_literal@::std::bad_typeid(char const * const)[impl0]::_Message"><div><div class="token cpp_argument">_Message</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['std::bad_typeid'], [], [])"><div class="token cpp_type">bad_typeid</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::bad_typeid::__construct_from_string_literal@::std::bad_typeid(char const * const)[impl0]::_Message'], [], [])"><div class="token cpp_argument">_Message</div></div>, <div class="token cpp_number ">1</div>);
+    }
+
+<div class="token cpp_keyword ">private</div>:
+
+    <div class="token cpp_keyword ">friend</div> <div class="token cpp_keyword ">class</div> <div class="ref" onclick="jumpToSymbol([], ['std::__non_rtti_object'], [], [])"><div class="token cpp_type">__non_rtti_object</div></div>;
+
+    <div class="def" id="FB$std::bad_typeid::$__ctor@(char const * const, int)[impl0]"><div><div class="token cpp_function">bad_typeid</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$std::bad_typeid::$__ctor@(char const * const, int)[impl0]::_Message"><div><div class="token cpp_argument">_Message</div></div></div>, <div class="token cpp_keyword ">int</div>) <div class="token cpp_keyword ">noexcept</div>
+        : <div class="ref" onclick="jumpToSymbol([], ['std::exception'], [], [])"><div class="token cpp_type">exception</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::bad_typeid::$__ctor@(char const * const, int)[impl0]::_Message'], [], [])"><div class="token cpp_argument">_Message</div></div>, <div class="token cpp_number ">1</div>)
+    {
+    }
+};
+
+<div class="token cpp_keyword ">class</div> <div class="def" id="NI$std::__non_rtti_object"><div><div class="token cpp_type">__non_rtti_object</div></div></div>
+    : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['std::bad_typeid'], [], [])"><div class="token cpp_type">bad_typeid</div></div>
+{
+<div class="token cpp_keyword ">public</div>:
+
+    <div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['std::__non_rtti_object'], [], [])"><div class="token cpp_type">__non_rtti_object</div></div> <div class="def" id="FB$std::__non_rtti_object::__construct_from_string_literal@::std::__non_rtti_object(char const * const)[impl0]"><div><div class="token cpp_function">__construct_from_string_literal</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$std::__non_rtti_object::__construct_from_string_literal@::std::__non_rtti_object(char const * const)[impl0]::_Message"><div><div class="token cpp_argument">_Message</div></div></div>) <div class="token cpp_keyword ">noexcept</div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['std::__non_rtti_object'], [], [])"><div class="token cpp_type">__non_rtti_object</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::__non_rtti_object::__construct_from_string_literal@::std::__non_rtti_object(char const * const)[impl0]::_Message'], [], [])"><div class="token cpp_argument">_Message</div></div>, <div class="token cpp_number ">1</div>);
+    }
+
+<div class="token cpp_keyword ">private</div>:
+
+    <div class="def" id="FB$std::__non_rtti_object::$__ctor@(char const * const, int)[impl0]"><div><div class="token cpp_function">__non_rtti_object</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$std::__non_rtti_object::$__ctor@(char const * const, int)[impl0]::_Message"><div><div class="token cpp_argument">_Message</div></div></div>, <div class="token cpp_keyword ">int</div>) <div class="token cpp_keyword ">noexcept</div>
+        : <div class="ref" onclick="jumpToSymbol([], ['std::bad_typeid'], [], [])"><div class="token cpp_type">bad_typeid</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::__non_rtti_object::$__ctor@(char const * const, int)[impl0]::_Message'], [], [])"><div class="token cpp_argument">_Message</div></div>, <div class="token cpp_number ">1</div>)
+    {
+    }
+};
+
+#pragma warning(pop)
+} <div class="token cpp_comment ">// namespace std</div>
+
+<div class="disabled">#endif // _HAS_EXCEPTIONS
+#endif // !RC_INVOKED</div>
+#pragma pack(pop)
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)': {
+        'displayNameInHtml': '<span class="cpp_function">__std_type_info_compare</span>(<span class="cpp_type">__std_type_info_data</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">__std_type_info_data</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)[decl0]'
+        ]
+    },
+    '__std_type_info_data': {
+        'displayNameInHtml': '<span class="cpp_type">__std_type_info_data</span>',
+        'impls': [
+            'NI$__std_type_info_data'
+        ],
+        'decls': []
+    },
+    '__std_type_info_data::_DecoratedName': {
+        'displayNameInHtml': '<span class="cpp_type">__std_type_info_data</span>::<span class="cpp_field">_DecoratedName</span>',
+        'impls': [
+            'NI$__std_type_info_data::_DecoratedName'
+        ],
+        'decls': []
+    },
+    '__std_type_info_hash@::size_t(::__std_type_info_data const *)': {
+        'displayNameInHtml': '<span class="cpp_function">__std_type_info_hash</span>(<span class="cpp_type">__std_type_info_data</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__std_type_info_hash@::size_t(::__std_type_info_data const *)[decl0]'
+        ]
+    },
+    '__std_type_info_name@char const *(::__std_type_info_data *, ::__type_info_node *)': {
+        'displayNameInHtml': '<span class="cpp_function">__std_type_info_name</span>(<span class="cpp_type">__std_type_info_data</span> *, <span class="cpp_type">__type_info_node</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$__std_type_info_name@char const *(::__std_type_info_data *, ::__type_info_node *)[decl0]'
+        ]
+    },
+    '__type_info_node': {
+        'displayNameInHtml': '<span class="cpp_type">__type_info_node</span>',
+        'impls': [],
+        'decls': [
+            'NF[0]$__type_info_node'
+        ]
+    },
+    '__type_info_root_node': {
+        'displayNameInHtml': '__type_info_root_node',
+        'impls': [],
+        'decls': [
+            'NF[0]$__type_info_root_node'
+        ]
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std',
+            'NF[1]$std',
+            'NF[2]$std',
+            'NF[3]$std',
+            'NF[4]$std',
+            'NF[5]$std',
+            'NF[6]$std',
+            'NF[7]$std',
+            'NF[8]$std',
+            'NF[9]$std',
+            'NF[10]$std',
+            'NF[11]$std',
+            'NF[12]$std',
+            'NF[13]$std',
+            'NF[14]$std',
+            'NF[15]$std',
+            'NF[16]$std',
+            'NF[17]$std',
+            'NF[18]$std',
+            'NF[19]$std',
+            'NF[20]$std',
+            'NF[21]$std',
+            'NF[22]$std',
+            'NF[23]$std',
+            'NF[24]$std',
+            'NF[25]$std',
+            'NF[26]$std',
+            'NF[27]$std',
+            'NF[28]$std',
+            'NF[29]$std',
+            'NF[30]$std',
+            'NF[31]$std',
+            'NF[32]$std',
+            'NF[33]$std',
+            'NF[34]$std',
+            'NF[35]$std',
+            'NF[36]$std',
+            'NF[37]$std',
+            'NF[38]$std',
+            'NF[39]$std',
+            'NF[40]$std',
+            'NF[41]$std',
+            'NF[42]$std',
+            'NF[43]$std',
+            'NF[44]$std',
+            'NF[45]$std',
+            'NF[46]$std',
+            'NF[47]$std',
+            'NF[48]$std',
+            'NF[49]$std',
+            'NF[50]$std',
+            'NF[51]$std',
+            'NF[52]$std',
+            'NF[53]$std',
+            'NF[54]$std',
+            'NF[55]$std',
+            'NF[56]$std',
+            'NF[57]$std',
+            'NF[58]$std',
+            'NF[59]$std',
+            'NF[60]$std',
+            'NF[61]$std'
+        ]
+    },
+    'std::__non_rtti_object': {
+        'displayNameInHtml': '<span class="cpp_type">__non_rtti_object</span>',
+        'impls': [
+            'NI$std::__non_rtti_object'
+        ],
+        'decls': []
+    },
+    'std::__non_rtti_object::$__ctor@(char const * const, int)[impl0]::_Message': {
+        'displayNameInHtml': '_Message',
+        'impls': [
+            'NI$std::__non_rtti_object::$__ctor@(char const * const, int)[impl0]::_Message'
+        ],
+        'decls': []
+    },
+    'std::__non_rtti_object::__construct_from_string_literal@::std::__non_rtti_object(char const * const)[impl0]::_Message': {
+        'displayNameInHtml': '_Message',
+        'impls': [
+            'NI$std::__non_rtti_object::__construct_from_string_literal@::std::__non_rtti_object(char const * const)[impl0]::_Message'
+        ],
+        'decls': []
+    },
+    'std::bad_cast': {
+        'displayNameInHtml': '<span class="cpp_type">bad_cast</span>',
+        'impls': [
+            'NI$std::bad_cast'
+        ],
+        'decls': []
+    },
+    'std::bad_cast::$__ctor@(char const * const, int)[impl0]::_Message': {
+        'displayNameInHtml': '_Message',
+        'impls': [
+            'NI$std::bad_cast::$__ctor@(char const * const, int)[impl0]::_Message'
+        ],
+        'decls': []
+    },
+    'std::bad_cast::__construct_from_string_literal@::std::bad_cast(char const * const)[impl0]::_Message': {
+        'displayNameInHtml': '_Message',
+        'impls': [
+            'NI$std::bad_cast::__construct_from_string_literal@::std::bad_cast(char const * const)[impl0]::_Message'
+        ],
+        'decls': []
+    },
+    'std::bad_typeid': {
+        'displayNameInHtml': '<span class="cpp_type">bad_typeid</span>',
+        'impls': [
+            'NI$std::bad_typeid'
+        ],
+        'decls': []
+    },
+    'std::bad_typeid::$__ctor@(char const * const, int)[impl0]::_Message': {
+        'displayNameInHtml': '_Message',
+        'impls': [
+            'NI$std::bad_typeid::$__ctor@(char const * const, int)[impl0]::_Message'
+        ],
+        'decls': []
+    },
+    'std::bad_typeid::__construct_from_string_literal@::std::bad_typeid(char const * const)[impl0]::_Message': {
+        'displayNameInHtml': '_Message',
+        'impls': [
+            'NI$std::bad_typeid::__construct_from_string_literal@::std::bad_typeid(char const * const)[impl0]::_Message'
+        ],
+        'decls': []
+    },
+    'std::exception': {
+        'displayNameInHtml': '<span class="cpp_type">exception</span>',
+        'impls': [
+            'NI$std::exception'
+        ],
+        'decls': []
+    },
+    'type_info': {
+        'displayNameInHtml': '<span class="cpp_type">type_info</span>',
+        'impls': [
+            'NI$type_info'
+        ],
+        'decls': [
+            'NF[0]$type_info'
+        ]
+    },
+    'type_info::_Data': {
+        'displayNameInHtml': '<span class="cpp_type">type_info</span>::<span class="cpp_field">_Data</span>',
+        'impls': [
+            'NI$type_info::_Data'
+        ],
+        'decls': []
+    },
+    'type_info::before@bool(::type_info const &)[impl0]::_Other': {
+        'displayNameInHtml': '_Other',
+        'impls': [
+            'NI$type_info::before@bool(::type_info const &)[impl0]::_Other'
+        ],
+        'decls': []
+    },
+    'type_info::operator !=@bool(::type_info const &)[impl0]::_Other': {
+        'displayNameInHtml': '_Other',
+        'impls': [
+            'NI$type_info::operator !=@bool(::type_info const &)[impl0]::_Other'
+        ],
+        'decls': []
+    },
+    'type_info::operator ==@bool(::type_info const &)[impl0]::_Other': {
+        'displayNameInHtml': '_Other',
+        'impls': [
+            'NI$type_info::operator ==@bool(::type_info const &)[impl0]::_Other'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$__std_type_info_compare@int(::__std_type_info_data const *, ::__std_type_info_data const *)[decl0]': null,
+    'FB$__std_type_info_hash@::size_t(::__std_type_info_data const *)[decl0]': null,
+    'FB$__std_type_info_name@char const *(::__std_type_info_data *, ::__type_info_node *)[decl0]': null,
+    'NF[0]$__type_info_node': null,
+    'NF[0]$__type_info_root_node': null,
+    'NF[0]$std': { 'htmlFileName': 'vcruntime_new.h', 'displayName': 'vcruntime_new.h' },
+    'NF[0]$type_info': { 'htmlFileName': 'eh.h', 'displayName': 'eh.h' },
+    'NF[10]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[11]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
+    'NF[14]$std': { 'htmlFileName': 'cstdint', 'displayName': 'cstdint' },
+    'NF[15]$std': { 'htmlFileName': 'xtgmath.h', 'displayName': 'xtgmath.h' },
+    'NF[16]$std': { 'htmlFileName': 'cmath', 'displayName': 'cmath' },
+    'NF[17]$std': { 'htmlFileName': 'cwchar', 'displayName': 'cwchar' },
+    'NF[18]$std': { 'htmlFileName': 'limits', 'displayName': 'limits' },
+    'NF[19]$std': { 'htmlFileName': 'cstdio', 'displayName': 'cstdio' },
+    'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
+    'NF[20]$std': { 'htmlFileName': 'cstring', 'displayName': 'cstring' },
+    'NF[21]$std': { 'htmlFileName': 'iosfwd', 'displayName': 'iosfwd' },
+    'NF[22]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[23]$std': { 'htmlFileName': 'utility', 'displayName': 'utility' },
+    'NF[24]$std': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
+    'NF[25]$std': { 'htmlFileName': 'xmemory0', 'displayName': 'xmemory0' },
+    'NF[26]$std': { 'htmlFileName': 'xatomic0.h', 'displayName': 'xatomic0.h' },
+    'NF[27]$std': { 'htmlFileName': 'xmemory', 'displayName': 'xmemory' },
+    'NF[28]$std': { 'htmlFileName': 'xstring', 'displayName': 'xstring' },
+    'NF[29]$std': { 'htmlFileName': 'stdexcept', 'displayName': 'stdexcept' },
+    'NF[2]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NF[30]$std': { 'htmlFileName': 'vector', 'displayName': 'vector' },
+    'NF[31]$std': { 'htmlFileName': 'xtree', 'displayName': 'xtree' },
+    'NF[32]$std': { 'htmlFileName': 'set', 'displayName': 'set' },
+    'NF[33]$std': { 'htmlFileName': 'tuple', 'displayName': 'tuple' },
+    'NF[34]$std': { 'htmlFileName': 'map', 'displayName': 'map' },
+    'NF[35]$std': null,
+    'NF[36]$std': null,
+    'NF[37]$std': { 'htmlFileName': 'typeinfo', 'displayName': 'typeinfo' },
+    'NF[38]$std': { 'htmlFileName': 'xlocinfo', 'displayName': 'xlocinfo' },
+    'NF[39]$std': { 'htmlFileName': 'memory', 'displayName': 'memory' },
+    'NF[3]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[40]$std': { 'htmlFileName': 'xfacet', 'displayName': 'xfacet' },
+    'NF[41]$std': { 'htmlFileName': 'xlocale', 'displayName': 'xlocale' },
+    'NF[42]$std': { 'htmlFileName': 'xcall_once.h', 'displayName': 'xcall_once.h' },
+    'NF[43]$std': { 'htmlFileName': 'xerrc.h', 'displayName': 'xerrc.h' },
+    'NF[44]$std': { 'htmlFileName': 'system_error', 'displayName': 'system_error' },
+    'NF[45]$std': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
+    'NF[46]$std': { 'htmlFileName': 'streambuf', 'displayName': 'streambuf' },
+    'NF[47]$std': { 'htmlFileName': 'xlocnum', 'displayName': 'xlocnum' },
+    'NF[48]$std': { 'htmlFileName': 'ios', 'displayName': 'ios' },
+    'NF[49]$std': { 'htmlFileName': 'ostream', 'displayName': 'ostream' },
+    'NF[4]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[50]$std': { 'htmlFileName': 'istream', 'displayName': 'istream' },
+    'NF[51]$std': { 'htmlFileName': 'xstring_insert.h', 'displayName': 'xstring_insert.h' },
+    'NF[52]$std': { 'htmlFileName': 'string', 'displayName': 'string' },
+    'NF[53]$std': { 'htmlFileName': 'xlocbuf', 'displayName': 'xlocbuf' },
+    'NF[54]$std': { 'htmlFileName': 'xlocmes', 'displayName': 'xlocmes' },
+    'NF[55]$std': { 'htmlFileName': 'xlocmon', 'displayName': 'xlocmon' },
+    'NF[56]$std': { 'htmlFileName': 'ctime', 'displayName': 'ctime' },
+    'NF[57]$std': { 'htmlFileName': 'xloctime', 'displayName': 'xloctime' },
+    'NF[58]$std': { 'htmlFileName': 'locale', 'displayName': 'locale' },
+    'NF[59]$std': { 'htmlFileName': 'codecvt', 'displayName': 'codecvt' },
+    'NF[5]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[60]$std': { 'htmlFileName': 'functional', 'displayName': 'functional' },
+    'NF[61]$std': { 'htmlFileName': 'iostream', 'displayName': 'iostream' },
+    'NF[6]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[7]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[8]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[9]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NI$__std_type_info_data': null,
+    'NI$__std_type_info_data::_DecoratedName': null,
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$std::__non_rtti_object': null,
+    'NI$std::__non_rtti_object::$__ctor@(char const * const, int)[impl0]::_Message': null,
+    'NI$std::__non_rtti_object::__construct_from_string_literal@::std::__non_rtti_object(char const * const)[impl0]::_Message': null,
+    'NI$std::bad_cast': null,
+    'NI$std::bad_cast::$__ctor@(char const * const, int)[impl0]::_Message': null,
+    'NI$std::bad_cast::__construct_from_string_literal@::std::bad_cast(char const * const)[impl0]::_Message': null,
+    'NI$std::bad_typeid': null,
+    'NI$std::bad_typeid::$__ctor@(char const * const, int)[impl0]::_Message': null,
+    'NI$std::bad_typeid::__construct_from_string_literal@::std::bad_typeid(char const * const)[impl0]::_Message': null,
+    'NI$std::exception': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NI$type_info': null,
+    'NI$type_info::_Data': null,
+    'NI$type_info::before@bool(::type_info const &)[impl0]::_Other': null,
+    'NI$type_info::operator !=@bool(::type_info const &)[impl0]::_Other': null,
+    'NI$type_info::operator ==@bool(::type_info const &)[impl0]::_Other': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

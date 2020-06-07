@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt_wtime.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt_wtime.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This file declares the wide character (wchar_t) time functionality, shared</div>
+<div class="token cpp_comment ">// by &lt;time.h&gt; and &lt;wchar.h&gt;.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Types</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tm"><div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div></div>
+{
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_sec"><div><div class="token cpp_field">tm_sec</div></div></div>;   <div class="token cpp_comment ">// seconds after the minute - [0, 60] including leap second</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_min"><div><div class="token cpp_field">tm_min</div></div></div>;   <div class="token cpp_comment ">// minutes after the hour - [0, 59]</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_hour"><div><div class="token cpp_field">tm_hour</div></div></div>;  <div class="token cpp_comment ">// hours since midnight - [0, 23]</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_mday"><div><div class="token cpp_field">tm_mday</div></div></div>;  <div class="token cpp_comment ">// day of the month - [1, 31]</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_mon"><div><div class="token cpp_field">tm_mon</div></div></div>;   <div class="token cpp_comment ">// months since January - [0, 11]</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_year"><div><div class="token cpp_field">tm_year</div></div></div>;  <div class="token cpp_comment ">// years since 1900</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_wday"><div><div class="token cpp_field">tm_wday</div></div></div>;  <div class="token cpp_comment ">// days since Sunday - [0, 6]</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_yday"><div><div class="token cpp_field">tm_yday</div></div></div>;  <div class="token cpp_comment ">// days since January 1 - [0, 365]</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$tm::tm_isdst"><div><div class="token cpp_field">tm_isdst</div></div></div>; <div class="token cpp_comment ">// daylight savings time flag</div>
+};
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Wide String Time Functions</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="expandable"><div class="disabled">_Check_return_ _CRT_INSECURE_DEPRECATE(_wasctime_s)</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wasctime_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="disabled">_Success_(return != 0)</div>
+<div class="disabled">_Ret_writes_z_(26)</div>
+<div class="expandable"><div class="disabled">_ACRTIMP wchar_t* __cdecl _wasctime(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wasctime@wchar_t *(::tm const *)[decl0]"><div><div class="token cpp_function">_wasctime</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_ struct tm const* _Tm</div>
+<div class="expanded">      <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wasctime@wchar_t *(::tm const *)[decl0]::_Tm"><div>_Tm</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return == 0)</div>
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _wasctime_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)[decl0]"><div><div class="token cpp_function">_wasctime_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_z_(_SizeInWords) _Post_readable_size_(26) wchar_t*         _Buffer,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div>*         <div class="def" id="NI$_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_range_(&gt;=,26)                                     size_t           _SizeInWords,</div>
+<div class="expanded">                                          <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>           <div class="def" id="NI$_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)[decl0]::_SizeInWords"><div>_SizeInWords</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                  struct tm const* _Tm</div>
+<div class="expanded">                                                       <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)[decl0]::_Tm"><div>_Tm</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    _Success_(return == 0)
+    errno_t, _wasctime_s,
+    _Post_readable_size_(26) wchar_t,          _Buffer,
+    _In_                     struct tm const*, _Time
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="TA$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Size"><div><div class="token cpp_enum">_Size</div></div></div>&gt; <div class="token cpp_keyword ">inline</div>   <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]"><div><div class="token cpp_function">_wasctime_s</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> (&amp;<div class="def" id="NI$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Buffer"><div><div class="token cpp_argument">_Buffer</div></div></div>)[<div class="ref" onclick="jumpToSymbol([], ['_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>],   <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Time"><div><div class="token cpp_argument">_Time</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)'], ['_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)', '_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)'], [], [])"><div class="token cpp_function">_wasctime_s</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Buffer'], [], [])"><div class="token cpp_argument">_Buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Time'], [], [])"><div class="token cpp_argument">_Time</div></div>); } }</div></div>
+
+<div class="disabled">_Success_(return &gt; 0)</div>
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP size_t __cdecl wcsftime(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)[decl0]"><div><div class="token cpp_function">wcsftime</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_z_(_SizeInWords)  wchar_t*         _Buffer,</div>
+<div class="expanded">       <div class="token cpp_keyword ">wchar_t</div>*         <div class="def" id="NI$wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                          size_t           _SizeInWords,</div>
+<div class="expanded">                               <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>           <div class="def" id="NI$wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)[decl0]::_SizeInWords"><div>_SizeInWords</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_z_                        wchar_t const*   _Format,</div>
+<div class="expanded">                             <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)[decl0]::_Format"><div>_Format</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                          struct tm const* _Tm</div>
+<div class="expanded">                               <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *)[decl0]::_Tm"><div>_Tm</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return &gt; 0)</div>
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP size_t __cdecl _wcsftime_l(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wcsftime_l@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, ::_locale_t)[decl0]"><div><div class="token cpp_function">_wcsftime_l</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_z_(_SizeInWords)  wchar_t*         _Buffer,</div>
+<div class="expanded">       <div class="token cpp_keyword ">wchar_t</div>*         <div class="def" id="NI$_wcsftime_l@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, ::_locale_t)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                          size_t           _SizeInWords,</div>
+<div class="expanded">                               <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>           <div class="def" id="NI$_wcsftime_l@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, ::_locale_t)[decl0]::_SizeInWords"><div>_SizeInWords</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_z_                        wchar_t const*   _Format,</div>
+<div class="expanded">                             <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$_wcsftime_l@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, ::_locale_t)[decl0]::_Format"><div>_Format</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                          struct tm const* _Tm,</div>
+<div class="expanded">                               <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wcsftime_l@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, ::_locale_t)[decl0]::_Tm"><div>_Tm</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_                      _locale_t        _Locale</div>
+<div class="expanded">                           <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [], [])"><div class="token cpp_type">_locale_t</div></div>        <div class="def" id="NI$_wcsftime_l@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, ::_locale_t)[decl0]::_Locale"><div>_Locale</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != 0)</div>
+<div class="expandable"><div class="disabled">_Check_return_ _CRT_INSECURE_DEPRECATE(_wctime32_s)</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wctime32_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"><div class="disabled">_ACRTIMP wchar_t* __cdecl _wctime32(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wctime32@wchar_t *(::__time32_t const *)[decl0]"><div><div class="token cpp_function">_wctime32</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_ __time32_t const* _Time</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wctime32@wchar_t *(::__time32_t const *)[decl0]::_Time"><div>_Time</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _wctime32_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)[decl0]"><div><div class="token cpp_function">_wctime32_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_z_(_SizeInWords) _Post_readable_size_(26) wchar_t*          _Buffer,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div>*          <div class="def" id="NI$_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_  _In_range_(&gt;=, 26)                              size_t            _SizeInWords,</div>
+<div class="expanded">                                      <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>            <div class="def" id="NI$_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)[decl0]::_SizeInWords"><div>_SizeInWords</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                  __time32_t const* _Time</div>
+<div class="expanded">                                                       <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)[decl0]::_Time"><div>_Time</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, _wctime32_s,
+    _Post_readable_size_(26) wchar_t,           _Buffer,
+    _In_                     __time32_t const*, _Time
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="TA$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Size"><div><div class="token cpp_enum">_Size</div></div></div>&gt; <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]"><div><div class="token cpp_function">_wctime32_s</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> (&amp;<div class="def" id="NI$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Buffer"><div><div class="token cpp_argument">_Buffer</div></div></div>)[<div class="ref" onclick="jumpToSymbol([], ['_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>],   <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Time"><div><div class="token cpp_argument">_Time</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)'], ['_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)', '_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)'], [], [])"><div class="token cpp_function">_wctime32_s</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Buffer'], [], [])"><div class="token cpp_argument">_Buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Time'], [], [])"><div class="token cpp_argument">_Time</div></div>); } }</div></div>
+
+<div class="disabled">_Success_(return != 0)</div>
+<div class="disabled">_Ret_writes_z_(26)</div>
+<div class="expandable"><div class="disabled">_Check_return_ _CRT_INSECURE_DEPRECATE(_wctime64_s)</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wctime64_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"><div class="disabled">_ACRTIMP wchar_t* __cdecl _wctime64(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wctime64@wchar_t *(::__time64_t const *)[decl0]"><div><div class="token cpp_function">_wctime64</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_ __time64_t const* _Time</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wctime64@wchar_t *(::__time64_t const *)[decl0]::_Time"><div>_Time</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _wctime64_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)[decl0]"><div><div class="token cpp_function">_wctime64_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_z_(_SizeInWords) _Post_readable_size_(26) wchar_t*          _Buffer,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div>*          <div class="def" id="NI$_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_  _In_range_(&gt;=, 26)                              size_t            _SizeInWords,</div>
+<div class="expanded">                                      <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>            <div class="def" id="NI$_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)[decl0]::_SizeInWords"><div>_SizeInWords</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                  __time64_t const* _Time);</div>
+<div class="expanded">                                                       <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)[decl0]::_Time"><div>_Time</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, _wctime64_s,
+    _Post_readable_size_(26) wchar_t,           _Buffer,
+    _In_                     __time64_t const*, _Time
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="TA$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Size"><div><div class="token cpp_enum">_Size</div></div></div>&gt; <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]"><div><div class="token cpp_function">_wctime64_s</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> (&amp;<div class="def" id="NI$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Buffer"><div><div class="token cpp_argument">_Buffer</div></div></div>)[<div class="ref" onclick="jumpToSymbol([], ['_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>],   <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Time"><div><div class="token cpp_argument">_Time</div></div></div>) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)'], ['_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)', '_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)'], [], [])"><div class="token cpp_function">_wctime64_s</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Buffer'], [], [])"><div class="token cpp_argument">_Buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Time'], [], [])"><div class="token cpp_argument">_Time</div></div>); } }</div></div>
+
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _wstrdate_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wstrdate_s@::errno_t(wchar_t *, ::size_t)[decl0]"><div><div class="token cpp_function">_wstrdate_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_z_(_SizeInWords) _When_(_SizeInWords &gt;=9, _Post_readable_size_(9)) wchar_t* _Buffer,</div>
+<div class="expanded">       <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$_wstrdate_s@::errno_t(wchar_t *, ::size_t)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                                           size_t   _SizeInWords</div>
+<div class="expanded">                                                                                <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>   <div class="def" id="NI$_wstrdate_s@::errno_t(wchar_t *, ::size_t)[decl0]::_SizeInWords"><div>_SizeInWords</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_0(
+    errno_t, _wstrdate_s,
+    _Post_readable_size_(9) wchar_t, _Buffer
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="TA$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Size"><div><div class="token cpp_enum">_Size</div></div></div>&gt; <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]"><div><div class="token cpp_function">_wstrdate_s</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> (&amp;<div class="def" id="NI$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer"><div><div class="token cpp_argument">_Buffer</div></div></div>)[<div class="ref" onclick="jumpToSymbol([], ['_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>]) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_wstrdate_s@::errno_t(wchar_t *, ::size_t)'], ['_wstrdate_s@::errno_t(wchar_t *, ::size_t)', '_wstrdate_s@::errno_t(wchar_t [*] &)'], [], [])"><div class="token cpp_function">_wstrdate_s</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer'], [], [])"><div class="token cpp_argument">_Buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>); } }</div></div>
+
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0(
+    _Success_(return != 0) _Ret_writes_z_(9) wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wstrdate,
+    _Out_writes_z_(9), wchar_t, _Buffer
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wstrdate_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport)  <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wstrdate@wchar_t *(wchar_t *)[decl0]"><div><div class="token cpp_function">_wstrdate</div></div></div>( <div class="token cpp_keyword ">wchar_t</div> *<div class="def" id="NI$_wstrdate@wchar_t *(wchar_t *)[decl0]::_Buffer"><div>_Buffer</div></div>);</div></div>
+
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _wstrtime_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wstrtime_s@::errno_t(wchar_t *, ::size_t)[decl0]"><div><div class="token cpp_function">_wstrtime_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_z_(_SizeInWords) _When_(_SizeInWords &gt;=9, _Post_readable_size_(9)) wchar_t* _Buffer,</div>
+<div class="expanded">       <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$_wstrtime_s@::errno_t(wchar_t *, ::size_t)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                                                                           size_t   _SizeInWords</div>
+<div class="expanded">                                                                                <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>   <div class="def" id="NI$_wstrtime_s@::errno_t(wchar_t *, ::size_t)[decl0]::_SizeInWords"><div>_SizeInWords</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_0(
+    errno_t, _wstrtime_s,
+    _Post_readable_size_(9) wchar_t, _Buffer
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="TA$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Size"><div><div class="token cpp_enum">_Size</div></div></div>&gt; <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]"><div><div class="token cpp_function">_wstrtime_s</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> (&amp;<div class="def" id="NI$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer"><div><div class="token cpp_argument">_Buffer</div></div></div>)[<div class="ref" onclick="jumpToSymbol([], ['_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>]) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_wstrtime_s@::errno_t(wchar_t *, ::size_t)'], ['_wstrtime_s@::errno_t(wchar_t *, ::size_t)', '_wstrtime_s@::errno_t(wchar_t [*] &)'], [], [])"><div class="token cpp_function">_wstrtime_s</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer'], [], [])"><div class="token cpp_argument">_Buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>); } }</div></div>
+
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0(
+    _Success_(return != 0) _Ret_writes_z_(9) wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wstrtime,
+    _Out_writes_z_(9), wchar_t, _Buffer
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wstrtime_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport)  <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wstrtime@wchar_t *(wchar_t *)[decl0]"><div><div class="token cpp_function">_wstrtime</div></div></div>( <div class="token cpp_keyword ">wchar_t</div> *<div class="def" id="NI$_wstrtime@wchar_t *(wchar_t *)[decl0]::_Buffer"><div>_Buffer</div></div>);</div></div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Inline Definitions</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled">#if !defined RC_INVOKED &amp;&amp; !defined __midl &amp;&amp; !defined _INC_WTIME_INL &amp;&amp; !defined _CRT_NO_TIME_T</div>
+<div class="expandable"><div class="disabled">    #pragma warning(push)</div>
+<div class="expanded">#pragma warning(push)</div></div>
+<div class="expandable"><div class="disabled">    #pragma warning(disable: 4996)</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4996</div>)</div></div>
+
+<div class="disabled">    #ifdef _USE_32BIT_TIME_T</div>
+
+<div class="disabled">        _Check_return_</div>
+<div class="disabled">        static __inline wchar_t* __CRTDECL _wctime(</div>
+<div class="disabled">            _In_ time_t const* const _Time</div>
+<div class="disabled">            )</div>
+<div class="disabled">        {</div>
+<div class="disabled">            return _wctime32(_Time);</div>
+<div class="disabled">        }</div>
+
+<div class="disabled">        _Check_return_wat_</div>
+<div class="disabled">        static __inline errno_t __CRTDECL _wctime_s(</div>
+<div class="disabled">            _Pre_notnull_ _Post_z_ _Out_writes_z_(_SizeInWords) wchar_t*      const _Buffer,</div>
+<div class="disabled">            _In_                                                size_t        const _SizeInWords,</div>
+<div class="disabled">            _In_                                                time_t const* const _Time)</div>
+<div class="disabled">        {</div>
+<div class="disabled">            return _wctime32_s(_Buffer, _SizeInWords, _Time);</div>
+<div class="disabled">        }</div>
+
+<div class="disabled">    #else // ^^^ _USE_32BIT_TIME_T ^^^ // vvv !_USE_32BIT_TIME_T vvv //</div>
+
+<div class="disabled">        _Check_return_</div>
+<div class="expandable"><div class="disabled">        static __inline wchar_t * __CRTDECL _wctime(</div>
+<div class="expanded">        <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">wchar_t</div> * <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wctime@wchar_t *(::time_t const * const)[impl0]"><div><div class="token cpp_function">_wctime</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">            _In_ time_t const* const _Time)</div>
+<div class="expanded">              <div class="ref" onclick="jumpToSymbol([], ['time_t'], [], [])"><div class="token cpp_type">time_t</div></div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$_wctime@wchar_t *(::time_t const * const)[impl0]::_Time"><div><div class="token cpp_argument">_Time</div></div></div>)</div></div>
+        {
+            <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_wctime64@wchar_t *(::__time64_t const *)'], ['_wctime64@wchar_t *(::__time64_t const *)'], [], [])"><div class="token cpp_function">_wctime64</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wctime@wchar_t *(::time_t const * const)[impl0]::_Time'], [], [])"><div class="token cpp_argument">_Time</div></div>);
+        }
+
+<div class="disabled">        _Check_return_wat_</div>
+<div class="expandable"><div class="disabled">        static __inline errno_t __CRTDECL _wctime_s(</div>
+<div class="expanded">        <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]"><div><div class="token cpp_function">_wctime_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">            _Pre_notnull_ _Post_z_ _Out_writes_z_(_SizeInWords) wchar_t*      const _Buffer,</div>
+<div class="expanded">                  <div class="token cpp_keyword ">wchar_t</div>*      <div class="token cpp_keyword ">const</div> <div class="def" id="NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Buffer"><div><div class="token cpp_argument">_Buffer</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">            _In_                                                size_t        const _SizeInWords,</div>
+<div class="expanded">                                                             <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>        <div class="token cpp_keyword ">const</div> <div class="def" id="NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_SizeInWords"><div><div class="token cpp_argument">_SizeInWords</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">            _In_                                                time_t const* const _Time</div>
+<div class="expanded">                                                             <div class="ref" onclick="jumpToSymbol([], ['time_t'], [], [])"><div class="token cpp_type">time_t</div></div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Time"><div><div class="token cpp_argument">_Time</div></div></div></div></div>
+            )
+        {
+            <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)'], ['_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)', '_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)'], [], [])"><div class="token cpp_function">_wctime64_s</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Buffer'], [], [])"><div class="token cpp_argument">_Buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_SizeInWords'], [], [])"><div class="token cpp_argument">_SizeInWords</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Time'], [], [])"><div class="token cpp_argument">_Time</div></div>);
+        }
+
+<div class="disabled">    #endif // !_USE_32BIT_TIME_T</div>
+
+<div class="expandable"><div class="disabled">    #pragma warning(pop)
+#endif</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '__time32_t': {
+        'displayNameInHtml': '<span class="cpp_type">__time32_t</span>',
+        'impls': [
+            'NI$__time32_t'
+        ],
+        'decls': []
+    },
+    '__time64_t': {
+        'displayNameInHtml': '<span class="cpp_type">__time64_t</span>',
+        'impls': [
+            'NI$__time64_t'
+        ],
+        'decls': []
+    },
+    '_locale_t': {
+        'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
+        'impls': [
+            'NI$_locale_t'
+        ],
+        'decls': []
+    },
+    '_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wasctime_s</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">tm</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)[decl0]'
+        ]
+    },
+    '_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wasctime_s</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_keyword">wchar_t</span>( &)[<span class="cpp_keyword">(expr)</span>], <span class="cpp_type">tm</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]'
+        ],
+        'decls': []
+    },
+    '_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'TA$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    '_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Time': {
+        'displayNameInHtml': '_Time',
+        'impls': [
+            'NI$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Time'
+        ],
+        'decls': []
+    },
+    '_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wctime32_s</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">__time32_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)[decl0]'
+        ]
+    },
+    '_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wctime32_s</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_keyword">wchar_t</span>( &)[<span class="cpp_keyword">(expr)</span>], <span class="cpp_type">__time32_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]'
+        ],
+        'decls': []
+    },
+    '_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'TA$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    '_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Time': {
+        'displayNameInHtml': '_Time',
+        'impls': [
+            'NI$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Time'
+        ],
+        'decls': []
+    },
+    '_wctime64@wchar_t *(::__time64_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wctime64</span>(<span class="cpp_type">__time64_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wctime64@wchar_t *(::__time64_t const *)[decl0]'
+        ]
+    },
+    '_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wctime64_s</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_type">__time64_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)[decl0]'
+        ]
+    },
+    '_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wctime64_s</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_keyword">wchar_t</span>( &)[<span class="cpp_keyword">(expr)</span>], <span class="cpp_type">__time64_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]'
+        ],
+        'decls': []
+    },
+    '_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'TA$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    '_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Time': {
+        'displayNameInHtml': '_Time',
+        'impls': [
+            'NI$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Time'
+        ],
+        'decls': []
+    },
+    '_wctime@wchar_t *(::time_t const * const)[impl0]::_Time': {
+        'displayNameInHtml': '_Time',
+        'impls': [
+            'NI$_wctime@wchar_t *(::time_t const * const)[impl0]::_Time'
+        ],
+        'decls': []
+    },
+    '_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_SizeInWords': {
+        'displayNameInHtml': '_SizeInWords',
+        'impls': [
+            'NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_SizeInWords'
+        ],
+        'decls': []
+    },
+    '_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Time': {
+        'displayNameInHtml': '_Time',
+        'impls': [
+            'NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Time'
+        ],
+        'decls': []
+    },
+    '_wstrdate_s@::errno_t(wchar_t *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">_wstrdate_s</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wstrdate_s@::errno_t(wchar_t *, ::size_t)[decl0]'
+        ]
+    },
+    '_wstrdate_s@::errno_t(wchar_t [*] &)': {
+        'displayNameInHtml': '<span class="cpp_function">_wstrdate_s</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_keyword">wchar_t</span>( &)[<span class="cpp_keyword">(expr)</span>])',
+        'impls': [
+            'FB$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]'
+        ],
+        'decls': []
+    },
+    '_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'TA$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    '_wstrtime_s@::errno_t(wchar_t *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">_wstrtime_s</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wstrtime_s@::errno_t(wchar_t *, ::size_t)[decl0]'
+        ]
+    },
+    '_wstrtime_s@::errno_t(wchar_t [*] &)': {
+        'displayNameInHtml': '<span class="cpp_function">_wstrtime_s</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_keyword">wchar_t</span>( &)[<span class="cpp_keyword">(expr)</span>])',
+        'impls': [
+            'FB$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]'
+        ],
+        'decls': []
+    },
+    '_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer': {
+        'displayNameInHtml': '_Buffer',
+        'impls': [
+            'NI$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer'
+        ],
+        'decls': []
+    },
+    '_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'TA$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    'errno_t': {
+        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
+        'impls': [
+            'NI$errno_t'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    'time_t': {
+        'displayNameInHtml': '<span class="cpp_type">time_t</span>',
+        'impls': [
+            'NI$time_t'
+        ],
+        'decls': []
+    },
+    'tm': {
+        'displayNameInHtml': '<span class="cpp_type">tm</span>',
+        'impls': [
+            'NI$tm'
+        ],
+        'decls': [
+            'NF[0]$tm'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$_wasctime_s@::errno_t(wchar_t *, ::size_t, ::tm const *)[decl0]': null,
+    'FB$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]': null,
+    'FB$_wctime32_s@::errno_t(wchar_t *, ::size_t, ::__time32_t const *)[decl0]': null,
+    'FB$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]': null,
+    'FB$_wctime64@wchar_t *(::__time64_t const *)[decl0]': null,
+    'FB$_wctime64_s@::errno_t(wchar_t *, ::size_t, ::__time64_t const *)[decl0]': null,
+    'FB$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]': null,
+    'FB$_wstrdate_s@::errno_t(wchar_t *, ::size_t)[decl0]': null,
+    'FB$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]': null,
+    'FB$_wstrtime_s@::errno_t(wchar_t *, ::size_t)[decl0]': null,
+    'FB$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]': null,
+    'NF[0]$tm': { 'htmlFileName': 'locale.h', 'displayName': 'locale.h' },
+    'NI$__time32_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$__time64_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Buffer': null,
+    'NI$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Time': null,
+    'NI$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Buffer': null,
+    'NI$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Time': null,
+    'NI$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Buffer': null,
+    'NI$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Time': null,
+    'NI$_wctime@wchar_t *(::time_t const * const)[impl0]::_Time': null,
+    'NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Buffer': null,
+    'NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_SizeInWords': null,
+    'NI$_wctime_s@::errno_t(wchar_t * const, ::size_t const, ::time_t const * const)[impl0]::_Time': null,
+    'NI$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer': null,
+    'NI$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Buffer': null,
+    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$time_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$tm': null,
+    'TA$_wasctime_s@::errno_t(wchar_t [*] &, ::tm const *)[impl0]::_Size': null,
+    'TA$_wctime32_s@::errno_t(wchar_t [*] &, ::__time32_t const *)[impl0]::_Size': null,
+    'TA$_wctime64_s@::errno_t(wchar_t [*] &, ::__time64_t const *)[impl0]::_Size': null,
+    'TA$_wstrdate_s@::errno_t(wchar_t [*] &)[impl0]::_Size': null,
+    'TA$_wstrtime_s@::errno_t(wchar_t [*] &)[impl0]::_Size': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

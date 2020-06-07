@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>excpt.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// excpt.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The declarations of the compiler-dependent intrinsics, support functions, and</div>
+<div class="token cpp_comment ">// keywords which implement the structured exception handling extensions.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="disabled">#define _INC_EXCPT</div>
+
+<div class="disabled">#include &lt;vcruntime.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="token cpp_comment ">// Exception disposition return values</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$_EXCEPTION_DISPOSITION"><div><div class="token cpp_type">_EXCEPTION_DISPOSITION</div></div></div>
+{
+    <div class="def" id="NI$_EXCEPTION_DISPOSITION::ExceptionContinueExecution"><div><div class="token cpp_enum">ExceptionContinueExecution</div></div></div>,
+    <div class="def" id="NI$_EXCEPTION_DISPOSITION::ExceptionContinueSearch"><div><div class="token cpp_enum">ExceptionContinueSearch</div></div></div>,
+    <div class="def" id="NI$_EXCEPTION_DISPOSITION::ExceptionNestedException"><div><div class="token cpp_enum">ExceptionNestedException</div></div></div>,
+    <div class="def" id="NI$_EXCEPTION_DISPOSITION::ExceptionCollidedUnwind"><div><div class="token cpp_enum">ExceptionCollidedUnwind</div></div></div>
+} <div class="def" id="NI$EXCEPTION_DISPOSITION"><div><div class="token cpp_type">EXCEPTION_DISPOSITION</div></div></div>;
+
+
+
+<div class="token cpp_comment ">// SEH handler</div>
+<div class="disabled">#if defined(_M_IX86) &amp;&amp; !defined(_CHPE_X86_ARM64_EH_)</div>
+
+    <div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$_EXCEPTION_RECORD"><div class="ref" onclick="jumpToSymbol([], ['_EXCEPTION_RECORD'], [], [])"><div class="token cpp_type">_EXCEPTION_RECORD</div></div></div>;
+    <div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$_CONTEXT"><div class="ref" onclick="jumpToSymbol([], ['_CONTEXT'], [], [])"><div class="token cpp_type">_CONTEXT</div></div></div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['EXCEPTION_DISPOSITION'], [], [])"><div class="token cpp_type">EXCEPTION_DISPOSITION</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_except_handler@::EXCEPTION_DISPOSITION(::_EXCEPTION_RECORD *, void *, ::_CONTEXT *, void *)[decl0]"><div><div class="token cpp_function">_except_handler</div></div></div>(
+<div class="expandable"><div class="disabled">        _In_ struct _EXCEPTION_RECORD* _ExceptionRecord,</div>
+<div class="expanded">          <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_EXCEPTION_RECORD'], [], [])"><div class="token cpp_type">_EXCEPTION_RECORD</div></div>* <div class="def" id="NI$_except_handler@::EXCEPTION_DISPOSITION(::_EXCEPTION_RECORD *, void *, ::_CONTEXT *, void *)[decl0]::_ExceptionRecord"><div>_ExceptionRecord</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_ void*                     _EstablisherFrame,</div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div>*                     <div class="def" id="NI$_except_handler@::EXCEPTION_DISPOSITION(::_EXCEPTION_RECORD *, void *, ::_CONTEXT *, void *)[decl0]::_EstablisherFrame"><div>_EstablisherFrame</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _Inout_ struct _CONTEXT*       _ContextRecord,</div>
+<div class="expanded">          <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_CONTEXT'], [], [])"><div class="token cpp_type">_CONTEXT</div></div>*       <div class="def" id="NI$_except_handler@::EXCEPTION_DISPOSITION(::_EXCEPTION_RECORD *, void *, ::_CONTEXT *, void *)[decl0]::_ContextRecord"><div>_ContextRecord</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _Inout_ void*                  _DispatcherContext</div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div>*                  <div class="def" id="NI$_except_handler@::EXCEPTION_DISPOSITION(::_EXCEPTION_RECORD *, void *, ::_CONTEXT *, void *)[decl0]::_DispatcherContext"><div>_DispatcherContext</div></div></div></div>
+        );
+
+<div class="disabled">#elif defined _M_X64 || defined _M_ARM || defined _M_ARM64 || defined _CHPE_X86_ARM64_EH_</div>
+<div class="disabled">    #ifndef _M_CEE_PURE</div>
+
+<div class="disabled">        struct _EXCEPTION_RECORD;</div>
+<div class="disabled">        struct _CONTEXT;</div>
+<div class="disabled">        struct _DISPATCHER_CONTEXT;</div>
+
+<div class="disabled">        _VCRTIMP EXCEPTION_DISPOSITION __cdecl __C_specific_handler(</div>
+<div class="disabled">            _In_    struct _EXCEPTION_RECORD*   ExceptionRecord,</div>
+<div class="disabled">            _In_    void*                       EstablisherFrame,</div>
+<div class="disabled">            _Inout_ struct _CONTEXT*            ContextRecord,</div>
+<div class="disabled">            _Inout_ struct _DISPATCHER_CONTEXT* DispatcherContext</div>
+<div class="disabled">            );</div>
+
+<div class="disabled">    #endif
+#endif</div>
+
+
+
+<div class="token cpp_comment ">// SEH intrinsics</div>
+<div class="disabled">#define GetExceptionCode        _exception_code</div>
+<div class="disabled">#define exception_code          _exception_code</div>
+<div class="disabled">#define GetExceptionInformation (struct _EXCEPTION_POINTERS*)_exception_info</div>
+<div class="disabled">#define exception_info          (struct _EXCEPTION_POINTERS*)_exception_info</div>
+<div class="disabled">#define AbnormalTermination     _abnormal_termination</div>
+<div class="disabled">#define abnormal_termination    _abnormal_termination</div>
+
+<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_exception_code@unsigned long()[decl0]"><div><div class="token cpp_function">_exception_code</div></div></div>(<div class="token cpp_keyword ">void</div>);
+<div class="token cpp_keyword ">void</div> *        <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_exception_info@void *()[decl0]"><div><div class="token cpp_function">_exception_info</div></div></div>(<div class="token cpp_keyword ">void</div>);
+<div class="token cpp_keyword ">int</div>           <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_abnormal_termination@int()[decl0]"><div><div class="token cpp_function">_abnormal_termination</div></div></div>(<div class="token cpp_keyword ">void</div>);
+
+
+
+<div class="token cpp_comment ">// Defined values for the exception filter expression</div>
+<div class="disabled">#define EXCEPTION_EXECUTE_HANDLER      1</div>
+<div class="disabled">#define EXCEPTION_CONTINUE_SEARCH      0</div>
+<div class="disabled">#define EXCEPTION_CONTINUE_EXECUTION (-1)</div>
+
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'EXCEPTION_DISPOSITION': {
+        'displayNameInHtml': '<span class="cpp_type">EXCEPTION_DISPOSITION</span>',
+        'impls': [
+            'NI$EXCEPTION_DISPOSITION'
+        ],
+        'decls': []
+    },
+    '_CONTEXT': {
+        'displayNameInHtml': '<span class="cpp_type">_CONTEXT</span>',
+        'impls': [
+            'NI$_CONTEXT'
+        ],
+        'decls': [
+            'NF[0]$_CONTEXT'
+        ]
+    },
+    '_EXCEPTION_RECORD': {
+        'displayNameInHtml': '<span class="cpp_type">_EXCEPTION_RECORD</span>',
+        'impls': [
+            'NI$_EXCEPTION_RECORD'
+        ],
+        'decls': [
+            'NF[0]$_EXCEPTION_RECORD'
+        ]
+    }
+};
+symbolToFiles = {
+    'NF[0]$_CONTEXT': null,
+    'NF[0]$_EXCEPTION_RECORD': null,
+    'NI$EXCEPTION_DISPOSITION': null,
+    'NI$_CONTEXT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$_EXCEPTION_RECORD': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

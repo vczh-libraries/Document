@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main.cpp</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;</div>
+<div class="disabled">#include &quot;Calculator.h&quot;</div>
+
+<div class="token cpp_keyword ">using</div> <div class="token cpp_keyword ">namespace</div> <div class="ref" onclick="jumpToSymbol([], ['calculator'], [], [])">calculator</div>;
+
+<div class="disabled">#define MAX_BUFFER 1024</div>
+
+<div class="token cpp_comment ">// See if the parameter type is correctly rendered, by clicking the JustForFun call in the main function.</div>
+<div class="token cpp_keyword ">void</div> <div class="def" id="FB$JustForFun@void()[impl0]"><div><div class="token cpp_function">JustForFun</div></div></div>() {}
+<div class="token cpp_keyword ">void</div> <div class="def" id="FB$JustForFun@void(int const * [*] &(::calculator::Expr const volatile &&, int (::calculator::Expr::Ptr ::) *) * const &)[impl0]"><div><div class="token cpp_function">JustForFun</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">int</div>*(&amp;(<div class="token cpp_keyword ">__fastcall</div> * <div class="token cpp_keyword ">const</div>&amp;)(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">volatile</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [], [])"><div class="token cpp_type">Expr</div></div> &amp;&amp;, <div class="token cpp_keyword ">int</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>::*))[<div class="token cpp_number ">10</div>]) {}
+
+<div class="token cpp_keyword ">int</div> <div class="def" id="FB$main@int()[impl0]"><div><div class="token cpp_function">main</div></div></div>()
+{
+<div class="expandable"><div class="disabled">	char input[MAX_BUFFER];</div>
+<div class="expanded">	<div class="token cpp_keyword ">char</div> <div class="def" id="NI$main@int()[impl0]::input"><div>input</div></div>[<div class="token cpp_number ">1024</div>];</div></div>
+	<div class="token cpp_keyword ">while</div> (<div class="token cpp_keyword ">true</div>)
+	{
+<div class="expandable"><div class="disabled">		scanf_s(&quot;%1023s&quot;, input, (unsigned)MAX_BUFFER);</div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol(['scanf_s@int(char const * const ...)'], ['scanf_s@int(char const * const ...)'], [], [])"><div class="token cpp_function">scanf_s</div></div>(<div class="token cpp_string ">&quot;%1023s&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::input'], [], [])">input</div>, (<div class="token cpp_keyword ">unsigned</div>)<div class="token cpp_number ">1024</div>);</div></div>
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol(['strcmp@int(char const *, char const *)'], ['strcmp@int(char const *, char const *)'], [], [])"><div class="token cpp_function">strcmp</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::input'], [], [])">input</div>, <div class="token cpp_string ">&quot;exit&quot;</div>) == <div class="token cpp_number ">0</div>)
+		{
+			<div class="token cpp_keyword ">break</div>;
+		}
+
+		<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$main@int()[impl0]::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::Parse@::calculator::Expr::Ptr(char const *)'], ['calculator::Parse@::calculator::Expr::Ptr(char const *)'], [], [])"><div class="token cpp_function">Parse</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::input'], [], [])">input</div>);
+		<div class="ref" onclick="jumpToSymbol(['calculator::Print@void(::calculator::Expr::Ptr const &)'], ['calculator::Print@void(::calculator::Expr::Ptr const &)'], [], [])"><div class="token cpp_function">Print</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::expr'], [], [])">expr</div>);
+		<div class="ref" onclick="jumpToSymbol(['printf@int(char const * const ...)'], ['printf@int(char const * const ...)'], [], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot; = %g\n&quot;</div>, <div class="ref" onclick="jumpToSymbol(['calculator::Evaluate@double(::calculator::Expr::Ptr const &)'], ['calculator::Evaluate@double(::calculator::Expr::Ptr const &)'], [], [])"><div class="token cpp_function">Evaluate</div></div>(<div class="ref" onclick="jumpToSymbol([], ['main@int()[impl0]::expr'], [], [])">expr</div>));
+	}
+	<div class="ref" onclick="jumpToSymbol(['JustForFun@void(int const * [*] &(::calculator::Expr const volatile &&, int (::calculator::Expr::Ptr ::) *) * const &)'], ['JustForFun@void()', 'JustForFun@void(int const * [*] &(::calculator::Expr const volatile &&, int (::calculator::Expr::Ptr ::) *) * const &)'], [], [])"><div class="token cpp_function">JustForFun</div></div>(<div class="token cpp_keyword ">nullptr</div>);
+	<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'JustForFun@void()': {
+        'displayNameInHtml': '<span class="cpp_function">JustForFun</span>()',
+        'impls': [
+            'FB$JustForFun@void()[impl0]'
+        ],
+        'decls': []
+    },
+    'JustForFun@void(int const * [*] &(::calculator::Expr const volatile &&, int (::calculator::Expr::Ptr ::) *) * const &)': {
+        'displayNameInHtml': '<span class="cpp_function">JustForFun</span>(<span class="cpp_keyword">int</span><span class="cpp_keyword"> const</span> *( &( <span class="cpp_keyword">__fastcall</span> *<span class="cpp_keyword"> const</span> &)(<span class="cpp_type">Expr</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span> &&, <span class="cpp_keyword">int</span> <span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>:: *))[<span class="cpp_keyword">(expr)</span>])',
+        'impls': [
+            'FB$JustForFun@void(int const * [*] &(::calculator::Expr const volatile &&, int (::calculator::Expr::Ptr ::) *) * const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'calculator': {
+        'displayNameInHtml': 'calculator',
+        'impls': [],
+        'decls': [
+            'NF[0]$calculator',
+            'NF[1]$calculator',
+            'NF[2]$calculator',
+            'NF[3]$calculator'
+        ]
+    },
+    'calculator::Evaluate@double(::calculator::Expr::Ptr const &)': {
+        'displayNameInHtml': '<span class="cpp_function">Evaluate</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$calculator::Evaluate@double(::calculator::Expr::Ptr const &)[impl0]'
+        ],
+        'decls': [
+            'FB$calculator::Evaluate@double(::calculator::Expr::Ptr const &)[decl0]'
+        ]
+    },
+    'calculator::Expr': {
+        'displayNameInHtml': '<span class="cpp_type">Expr</span>',
+        'impls': [
+            'NI$calculator::Expr'
+        ],
+        'decls': []
+    },
+    'calculator::Expr::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>',
+        'impls': [
+            'NI$calculator::Expr::Ptr'
+        ],
+        'decls': []
+    },
+    'calculator::Parse@::calculator::Expr::Ptr(char const *)': {
+        'displayNameInHtml': '<span class="cpp_function">Parse</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [
+            'FB$calculator::Parse@::calculator::Expr::Ptr(char const *)[impl0]'
+        ],
+        'decls': [
+            'FB$calculator::Parse@::calculator::Expr::Ptr(char const *)[decl0]'
+        ]
+    },
+    'calculator::Print@void(::calculator::Expr::Ptr const &)': {
+        'displayNameInHtml': '<span class="cpp_function">Print</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$calculator::Print@void(::calculator::Expr::Ptr const &)[impl0]'
+        ],
+        'decls': [
+            'FB$calculator::Print@void(::calculator::Expr::Ptr const &)[decl0]'
+        ]
+    },
+    'main@int()[impl0]::expr': {
+        'displayNameInHtml': 'expr',
+        'impls': [
+            'NI$main@int()[impl0]::expr'
+        ],
+        'decls': []
+    },
+    'main@int()[impl0]::input': {
+        'displayNameInHtml': 'input',
+        'impls': [
+            'NI$main@int()[impl0]::input'
+        ],
+        'decls': []
+    },
+    'printf@int(char const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">printf</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$printf@int(char const * const ...)[impl0]'
+        ],
+        'decls': []
+    },
+    'scanf_s@int(char const * const ...)': {
+        'displayNameInHtml': '<span class="cpp_function">scanf_s</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'impls': [
+            'FB$scanf_s@int(char const * const ...)[impl0]'
+        ],
+        'decls': []
+    },
+    'strcmp@int(char const *, char const *)': {
+        'displayNameInHtml': '<span class="cpp_function">strcmp</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$strcmp@int(char const *, char const *)[decl0]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$JustForFun@void()[impl0]': null,
+    'FB$JustForFun@void(int const * [*] &(::calculator::Expr const volatile &&, int (::calculator::Expr::Ptr ::) *) * const &)[impl0]': null,
+    'FB$calculator::Evaluate@double(::calculator::Expr::Ptr const &)[decl0]': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'FB$calculator::Evaluate@double(::calculator::Expr::Ptr const &)[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
+    'FB$calculator::Parse@::calculator::Expr::Ptr(char const *)[decl0]': { 'htmlFileName': 'Calculator.h', 'displayName': 'Calculator.h' },
+    'FB$calculator::Parse@::calculator::Expr::Ptr(char const *)[impl0]': { 'htmlFileName': 'Calculator.cpp2', 'displayName': 'Calculator.cpp' },
+    'FB$calculator::Print@void(::calculator::Expr::Ptr const &)[decl0]': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'FB$calculator::Print@void(::calculator::Expr::Ptr const &)[impl0]': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
+    'FB$printf@int(char const * const ...)[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
+    'FB$scanf_s@int(char const * const ...)[impl0]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
+    'FB$strcmp@int(char const *, char const *)[decl0]': { 'htmlFileName': 'string.h', 'displayName': 'string.h' },
+    'NF[0]$calculator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'NF[1]$calculator': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
+    'NF[2]$calculator': { 'htmlFileName': 'Calculator.h', 'displayName': 'Calculator.h' },
+    'NF[3]$calculator': { 'htmlFileName': 'Calculator.cpp2', 'displayName': 'Calculator.cpp' },
+    'NI$calculator::Expr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'NI$calculator::Expr::Ptr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'NI$main@int()[impl0]::expr': null,
+    'NI$main@int()[impl0]::input': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

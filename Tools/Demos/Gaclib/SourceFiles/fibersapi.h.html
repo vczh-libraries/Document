@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>fibersapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* fibersapi.h - ApiSet Contract for api-ms-win-core-fibers-l1                   *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _FIBERS_H_</div>
+<div class="disabled">#define _FIBERS_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="disabled">#ifndef FLS_OUT_OF_INDEXES</div>
+<div class="disabled">#define FLS_OUT_OF_INDEXES ((DWORD)0xFFFFFFFF)
+#endif</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FlsAlloc@::DWORD(::PFLS_CALLBACK_FUNCTION)[decl0]"><div><div class="token cpp_function">FlsAlloc</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ PFLS_CALLBACK_FUNCTION lpCallback</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PFLS_CALLBACK_FUNCTION'], [], [])"><div class="token cpp_type">PFLS_CALLBACK_FUNCTION</div></div> <div class="def" id="NI$FlsAlloc@::DWORD(::PFLS_CALLBACK_FUNCTION)[decl0]::lpCallback"><div>lpCallback</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FlsGetValue@::PVOID(::DWORD)[decl0]"><div><div class="token cpp_function">FlsGetValue</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlsIndex</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$FlsGetValue@::PVOID(::DWORD)[decl0]::dwFlsIndex"><div>dwFlsIndex</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FlsSetValue@::BOOL(::DWORD, ::PVOID)[decl0]"><div><div class="token cpp_function">FlsSetValue</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlsIndex,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$FlsSetValue@::BOOL(::DWORD, ::PVOID)[decl0]::dwFlsIndex"><div>dwFlsIndex</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PVOID lpFlsData</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$FlsSetValue@::BOOL(::DWORD, ::PVOID)[decl0]::lpFlsData"><div>lpFlsData</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$FlsFree@::BOOL(::DWORD)[decl0]"><div><div class="token cpp_function">FlsFree</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwFlsIndex</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$FlsFree@::BOOL(::DWORD)[decl0]::dwFlsIndex"><div>dwFlsIndex</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$IsThreadAFiber@::BOOL()[decl0]"><div><div class="token cpp_function">IsThreadAFiber</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _FIBERS_H_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'PFLS_CALLBACK_FUNCTION': {
+        'displayNameInHtml': '<span class="cpp_type">PFLS_CALLBACK_FUNCTION</span>',
+        'impls': [
+            'NI$PFLS_CALLBACK_FUNCTION'
+        ],
+        'decls': []
+    },
+    'PVOID': {
+        'displayNameInHtml': '<span class="cpp_type">PVOID</span>',
+        'impls': [
+            'NI$PVOID'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$PFLS_CALLBACK_FUNCTION': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PVOID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

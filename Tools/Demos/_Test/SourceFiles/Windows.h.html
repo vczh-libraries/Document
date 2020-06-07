@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Windows.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/*++ BUILD Version: 0001    Increment this if a change has global effects
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Module Name:
+
+
+    windows.h
+
+Abstract:
+
+    Master include file for Windows applications.
+
+--*/</div>
+
+<div class="disabled">#ifndef _WINDOWS_</div>
+<div class="disabled">#define _WINDOWS_</div>
+
+
+<div class="disabled">#include &lt;sdkddkver.h&gt;</div>
+
+<div class="disabled">#ifndef _INC_WINDOWS</div>
+<div class="disabled">#define _INC_WINDOWS</div>
+
+<div class="disabled">#if defined (_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1020)</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+
+<div class="token cpp_comment ">/*  If defined, the following flags inhibit definition
+ *     of the indicated items.
+ *
+ *  NOGDICAPMASKS     - CC_*, LC_*, PC_*, CP_*, TC_*, RC_
+ *  NOVIRTUALKEYCODES - VK_*
+ *  NOWINMESSAGES     - WM_*, EM_*, LB_*, CB_*
+ *  NOWINSTYLES       - WS_*, CS_*, ES_*, LBS_*, SBS_*, CBS_*
+ *  NOSYSMETRICS      - SM_*
+ *  NOMENUS           - MF_*
+ *  NOICONS           - IDI_*
+ *  NOKEYSTATES       - MK_*
+ *  NOSYSCOMMANDS     - SC_*
+ *  NORASTEROPS       - Binary and Tertiary raster ops
+ *  NOSHOWWINDOW      - SW_*
+ *  OEMRESOURCE       - OEM Resource values
+ *  NOATOM            - Atom Manager routines
+ *  NOCLIPBOARD       - Clipboard routines
+ *  NOCOLOR           - Screen colors
+ *  NOCTLMGR          - Control and Dialog routines
+ *  NODRAWTEXT        - DrawText() and DT_*
+ *  NOGDI             - All GDI defines and routines
+ *  NOKERNEL          - All KERNEL defines and routines
+ *  NOUSER            - All USER defines and routines
+ *  NONLS             - All NLS defines and routines
+ *  NOMB              - MB_* and MessageBox()
+ *  NOMEMMGR          - GMEM_*, LMEM_*, GHND, LHND, associated routines
+ *  NOMETAFILE        - typedef METAFILEPICT
+ *  NOMINMAX          - Macros min(a,b) and max(a,b)
+ *  NOMSG             - typedef MSG and associated routines
+ *  NOOPENFILE        - OpenFile(), OemToAnsi, AnsiToOem, and OF_*
+ *  NOSCROLL          - SB_* and scrolling routines
+ *  NOSERVICE         - All Service Controller routines, SERVICE_ equates, etc.
+ *  NOSOUND           - Sound driver routines
+ *  NOTEXTMETRIC      - typedef TEXTMETRIC and associated routines
+ *  NOWH              - SetWindowsHook and WH_*
+ *  NOWINOFFSETS      - GWL_*, GCL_*, associated routines
+ *  NOCOMM            - COMM driver routines
+ *  NOKANJI           - Kanji support stuff.
+ *  NOHELP            - Help engine interface.
+ *  NOPROFILER        - Profiler interface.
+ *  NODEFERWINDOWPOS  - DeferWindowPos routines
+ *  NOMCX             - Modem Configuration Extensions
+ */</div>
+
+<div class="disabled">#if defined(RC_INVOKED) &amp;&amp; !defined(NOWINRES)</div>
+
+<div class="disabled">#include &lt;winresrc.h&gt;</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">#if defined(RC_INVOKED)</div>
+<div class="disabled">/* Turn off a bunch of stuff to ensure that RC files compile OK. */</div>
+<div class="disabled">#define NOATOM</div>
+<div class="disabled">#define NOGDI</div>
+<div class="disabled">#define NOGDICAPMASKS</div>
+<div class="disabled">#define NOMETAFILE</div>
+<div class="disabled">#define NOMINMAX</div>
+<div class="disabled">#define NOMSG</div>
+<div class="disabled">#define NOOPENFILE</div>
+<div class="disabled">#define NORASTEROPS</div>
+<div class="disabled">#define NOSCROLL</div>
+<div class="disabled">#define NOSOUND</div>
+<div class="disabled">#define NOSYSMETRICS</div>
+<div class="disabled">#define NOTEXTMETRIC</div>
+<div class="disabled">#define NOWH</div>
+<div class="disabled">#define NOCOMM</div>
+<div class="disabled">#define NOKANJI</div>
+<div class="disabled">#define NOCRYPT</div>
+<div class="disabled">#define NOMCX
+#endif</div>
+
+<div class="disabled">#if !defined(_68K_) &amp;&amp; !defined(_MPPC_) &amp;&amp; !defined(_X86_) &amp;&amp; !defined(_IA64_) &amp;&amp; !defined(_AMD64_) &amp;&amp; !defined(_ARM_) &amp;&amp; !defined(_ARM64_) &amp;&amp; defined(_M_IX86)</div>
+<div class="disabled">#define _X86_</div>
+<div class="disabled">#if !defined(_CHPE_X86_ARM64_) &amp;&amp; defined(_M_HYBRID)</div>
+<div class="disabled">#define _CHPE_X86_ARM64_
+#endif
+#endif</div>
+
+<div class="disabled">#if !defined(_68K_) &amp;&amp; !defined(_MPPC_) &amp;&amp; !defined(_X86_) &amp;&amp; !defined(_IA64_) &amp;&amp; !defined(_AMD64_) &amp;&amp; !defined(_ARM_) &amp;&amp; !defined(_ARM64_) &amp;&amp; defined(_M_AMD64)</div>
+<div class="disabled">#define _AMD64_
+#endif</div>
+
+<div class="disabled">#if !defined(_68K_) &amp;&amp; !defined(_MPPC_) &amp;&amp; !defined(_X86_) &amp;&amp; !defined(_IA64_) &amp;&amp; !defined(_AMD64_) &amp;&amp; !defined(_ARM_) &amp;&amp; !defined(_ARM64_) &amp;&amp; defined(_M_ARM)</div>
+<div class="disabled">#define _ARM_
+#endif</div>
+
+<div class="disabled">#if !defined(_68K_) &amp;&amp; !defined(_MPPC_) &amp;&amp; !defined(_X86_) &amp;&amp; !defined(_IA64_) &amp;&amp; !defined(_AMD64_) &amp;&amp; !defined(_ARM_) &amp;&amp; !defined(_ARM64_) &amp;&amp; defined(_M_ARM64)</div>
+<div class="disabled">#define _ARM64_
+#endif</div>
+
+<div class="disabled">#if !defined(_68K_) &amp;&amp; !defined(_MPPC_) &amp;&amp; !defined(_X86_) &amp;&amp; !defined(_IA64_) &amp;&amp; !defined(_AMD64_) &amp;&amp; !defined(_ARM_) &amp;&amp; !defined(_ARM64_) &amp;&amp; defined(_M_M68K)</div>
+<div class="disabled">#define _68K_
+#endif</div>
+
+<div class="disabled">#if !defined(_68K_) &amp;&amp; !defined(_MPPC_) &amp;&amp; !defined(_X86_) &amp;&amp; !defined(_IA64_) &amp;&amp; !defined(_AMD64_) &amp;&amp; !defined(_ARM_) &amp;&amp; !defined(_ARM64_) &amp;&amp; defined(_M_MPPC)</div>
+<div class="disabled">#define _MPPC_
+#endif</div>
+
+<div class="disabled">#if !defined(_68K_) &amp;&amp; !defined(_MPPC_) &amp;&amp; !defined(_X86_) &amp;&amp; !defined(_M_IX86) &amp;&amp; !defined(_AMD64_) &amp;&amp; !defined(_ARM_) &amp;&amp; !defined(_ARM64_) &amp;&amp; defined(_M_IA64)</div>
+<div class="disabled">#if !defined(_IA64_)</div>
+<div class="disabled">#define _IA64_</div>
+<div class="disabled">#endif /* !_IA64_ */
+#endif</div>
+
+<div class="disabled">#ifndef _MAC</div>
+<div class="disabled">#if defined(_68K_) || defined(_MPPC_)</div>
+<div class="disabled">#define _MAC
+#endif
+#endif</div>
+
+<div class="disabled">#if defined (_MSC_VER)</div>
+<div class="disabled">#if ( _MSC_VER &gt;= 800 )</div>
+<div class="disabled">#ifndef __cplusplus</div>
+<div class="disabled">#pragma warning(disable:4116)       /* TYPE_ALIGNMENT generates this - move it */</div>
+<div class="disabled">                                    /* outside the warning push/pop scope. */</div>
+<div class="disabled">#endif
+#endif
+#endif</div>
+
+<div class="disabled">#ifndef RC_INVOKED</div>
+<div class="disabled">#if     ( _MSC_VER &gt;= 800 )</div>
+#pragma warning(disable:<div class="token cpp_number ">4514</div>)
+<div class="disabled">#ifndef __WINDOWS_DONT_DISABLE_PRAGMA_PACK_WARNING__</div>
+#pragma warning(disable:<div class="token cpp_number ">4103</div>)
+<div class="disabled">#endif</div>
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="disabled">#endif</div>
+#pragma warning(disable:<div class="token cpp_number ">4001</div>)
+#pragma warning(disable:<div class="token cpp_number ">4201</div>)
+#pragma warning(disable:<div class="token cpp_number ">4214</div>)
+<div class="disabled">#endif
+#include &lt;excpt.h&gt;
+#include &lt;stdarg.h&gt;
+#endif /* RC_INVOKED */</div>
+
+<div class="disabled">#include &lt;windef.h&gt;
+#include &lt;winbase.h&gt;
+#include &lt;wingdi.h&gt;
+#include &lt;winuser.h&gt;</div>
+<div class="disabled">#if !defined(_MAC) || defined(_WIN32NLS)
+#include &lt;winnls.h&gt;
+#endif</div>
+<div class="disabled">#ifndef _MAC
+#include &lt;wincon.h&gt;
+#include &lt;winver.h&gt;
+#endif</div>
+<div class="disabled">#if !defined(_MAC) || defined(_WIN32REG)
+#include &lt;winreg.h&gt;
+#endif</div>
+<div class="disabled">#ifndef _MAC
+#include &lt;winnetwk.h&gt;
+#endif</div>
+
+<div class="disabled">#ifndef WIN32_LEAN_AND_MEAN
+#include &lt;cderr.h&gt;
+#include &lt;dde.h&gt;
+#include &lt;ddeml.h&gt;
+#include &lt;dlgs.h&gt;</div>
+<div class="disabled">#ifndef _MAC
+#include &lt;lzexpand.h&gt;
+#include &lt;mmsystem.h&gt;
+#include &lt;nb30.h&gt;
+#include &lt;rpc.h&gt;
+#endif
+#include &lt;shellapi.h&gt;</div>
+<div class="disabled">#ifndef _MAC
+#include &lt;winperf.h&gt;
+#include &lt;winsock.h&gt;
+#endif</div>
+<div class="disabled">#ifndef NOCRYPT
+#include &lt;wincrypt.h&gt;
+#include &lt;winefs.h&gt;
+#include &lt;winscard.h&gt;
+#endif</div>
+
+<div class="disabled">#ifndef NOGDI</div>
+<div class="disabled">#ifndef _MAC
+#include &lt;winspool.h&gt;</div>
+<div class="disabled">#ifdef INC_OLE1</div>
+<div class="disabled">#include &lt;ole.h&gt;</div>
+<div class="disabled">#else
+#include &lt;ole2.h&gt;
+#endif /* !INC_OLE1 */
+#endif /* !MAC */
+#include &lt;commdlg.h&gt;
+#endif /* !NOGDI */
+#endif /* WIN32_LEAN_AND_MEAN */</div>
+
+<div class="disabled">#include &lt;stralign.h&gt;</div>
+
+<div class="disabled">#ifdef _MAC</div>
+<div class="disabled">#include &lt;winwlm.h&gt;</div>
+<div class="disabled">#endif</div>
+
+
+<div class="disabled">#ifdef INC_OLE2</div>
+<div class="disabled">#include &lt;ole2.h&gt;</div>
+<div class="disabled">#endif /* INC_OLE2 */</div>
+
+<div class="disabled">#ifndef _MAC</div>
+<div class="disabled">#ifndef NOSERVICE
+#include &lt;winsvc.h&gt;
+#endif</div>
+
+<div class="disabled">#if(WINVER &gt;= 0x0400)</div>
+<div class="disabled">#ifndef NOMCX
+#include &lt;mcx.h&gt;
+#endif /* NOMCX */</div>
+
+<div class="disabled">#ifndef NOIME
+#include &lt;imm.h&gt;
+#endif
+#endif /* WINVER &gt;= 0x0400 */
+#endif</div>
+
+<div class="disabled">#ifndef RC_INVOKED</div>
+<div class="disabled">#if     ( _MSC_VER &gt;= 800 )</div>
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#else</div>
+<div class="disabled">#pragma warning(default:4001)</div>
+<div class="disabled">#pragma warning(default:4201)</div>
+<div class="disabled">#pragma warning(default:4214)</div>
+<div class="disabled">/* Leave 4514 disabled.  It&apos;s an unneeded warning anyway. */
+#endif
+#endif
+#endif /* RC_INVOKED */</div>
+
+<div class="disabled">#endif /* RC_INVOKED */</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#endif /* _INC_WINDOWS */</div>
+
+<div class="disabled">#endif /* _WINDOWS_ */</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

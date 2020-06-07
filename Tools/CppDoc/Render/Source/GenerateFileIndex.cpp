@@ -7,7 +7,7 @@ GenerateFileIndex
 void GenerateFileIndexRecord(WString prefix, WString indentation, Ptr<FileLinesRecord> flr, StreamWriter& writer)
 {
 	writer.WriteString(indentation);
-	writer.WriteString(L"<a class=\"fileIndex\" href=\"./");
+	writer.WriteString(L"<a class=\"fileIndex\" href=\"./SourceFiles/");
 	WriteHtmlAttribute(flr->htmlFileName, writer);
 	writer.WriteString(L".html\">");
 	WriteHtmlTextSingleLine(flr->filePath.GetFullPath().Right(flr->filePath.GetFullPath().Length() - prefix.Length()), writer);

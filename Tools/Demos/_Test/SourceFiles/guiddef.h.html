@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>guiddef.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//+---------------------------------------------------------------------------</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Microsoft Windows</div>
+<div class="token cpp_comment ">//  Copyright (c) Microsoft Corporation.  All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  File:       guiddef.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Contents:   GUID definition</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//----------------------------------------------------------------------------</div>
+
+<div class="disabled">#ifndef GUID_DEFINED</div>
+<div class="disabled">#define GUID_DEFINED</div>
+<div class="disabled">#if defined(__midl)</div>
+<div class="disabled">typedef struct {</div>
+<div class="disabled">    unsigned long  Data1;</div>
+<div class="disabled">    unsigned short Data2;</div>
+<div class="disabled">    unsigned short Data3;</div>
+<div class="disabled">    byte           Data4[ 8 ];</div>
+<div class="disabled">} GUID;</div>
+<div class="disabled">#else</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_GUID"><div><div class="token cpp_type">_GUID</div></div></div> {
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div>  <div class="def" id="NI$_GUID::Data1"><div><div class="token cpp_field">Data1</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$_GUID::Data2"><div><div class="token cpp_field">Data2</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$_GUID::Data3"><div><div class="token cpp_field">Data3</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>  <div class="def" id="NI$_GUID::Data4"><div><div class="token cpp_field">Data4</div></div></div>[ <div class="token cpp_number ">8</div> ];
+} <div class="def" id="NI$GUID"><div><div class="token cpp_type">GUID</div></div></div>;
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef FAR</div>
+<div class="disabled">#ifdef _WIN32</div>
+<div class="disabled">#define FAR</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define FAR _far</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef DECLSPEC_SELECTANY</div>
+<div class="disabled">#if (_MSC_VER &gt;= 1100)</div>
+<div class="disabled">#define DECLSPEC_SELECTANY  __declspec(selectany)</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DECLSPEC_SELECTANY</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef EXTERN_C</div>
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled">#define EXTERN_C    extern &quot;C&quot;</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define EXTERN_C    extern</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef DEFINE_GUID</div>
+<div class="disabled">#undef DEFINE_GUID</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef INITGUID</div>
+<div class="disabled">#define DEFINE_GUID(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \</div>
+<div class="disabled">        EXTERN_C const GUID DECLSPEC_SELECTANY name \</div>
+<div class="disabled">                = { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define DEFINE_GUID(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \</div>
+<div class="disabled">    EXTERN_C const GUID FAR name
+#endif // INITGUID</div>
+
+<div class="disabled">#define DEFINE_OLEGUID(name, l, w1, w2) DEFINE_GUID(name, l, w1, w2, 0xC0,0,0,0,0,0,0,0x46)</div>
+
+<div class="disabled">#ifndef _GUIDDEF_H_</div>
+<div class="disabled">#define _GUIDDEF_H_</div>
+
+<div class="disabled">#ifndef __LPGUID_DEFINED__</div>
+<div class="disabled">#define __LPGUID_DEFINED__</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> *<div class="def" id="NI$LPGUID"><div><div class="token cpp_type">LPGUID</div></div></div>;
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef __LPCGUID_DEFINED__</div>
+<div class="disabled">#define __LPCGUID_DEFINED__</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> *<div class="def" id="NI$LPCGUID"><div><div class="token cpp_type">LPCGUID</div></div></div>;
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef __IID_DEFINED__</div>
+<div class="disabled">#define __IID_DEFINED__</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$IID"><div><div class="token cpp_type">IID</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> *<div class="def" id="NI$LPIID"><div><div class="token cpp_type">LPIID</div></div></div>;
+<div class="disabled">#define IID_NULL            GUID_NULL</div>
+<div class="disabled">#define IsEqualIID(riid1, riid2) IsEqualGUID(riid1, riid2)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$CLSID"><div><div class="token cpp_type">CLSID</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['CLSID'], [], [])"><div class="token cpp_type">CLSID</div></div> *<div class="def" id="NI$LPCLSID"><div><div class="token cpp_type">LPCLSID</div></div></div>;
+<div class="disabled">#define CLSID_NULL          GUID_NULL</div>
+<div class="disabled">#define IsEqualCLSID(rclsid1, rclsid2) IsEqualGUID(rclsid1, rclsid2)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$FMTID"><div><div class="token cpp_type">FMTID</div></div></div>;
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['FMTID'], [], [])"><div class="token cpp_type">FMTID</div></div> *<div class="def" id="NI$LPFMTID"><div><div class="token cpp_type">LPFMTID</div></div></div>;
+<div class="disabled">#define FMTID_NULL          GUID_NULL</div>
+<div class="disabled">#define IsEqualFMTID(rfmtid1, rfmtid2) IsEqualGUID(rfmtid1, rfmtid2)</div>
+
+<div class="disabled">#ifdef __midl_proxy</div>
+<div class="disabled">#define __MIDL_CONST</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define __MIDL_CONST const</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef _REFGUID_DEFINED</div>
+<div class="disabled">#define _REFGUID_DEFINED</div>
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled">#define REFGUID const GUID &amp;</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define REFGUID const GUID * __MIDL_CONST</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef _REFIID_DEFINED</div>
+<div class="disabled">#define _REFIID_DEFINED</div>
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled">#define REFIID const IID &amp;</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define REFIID const IID * __MIDL_CONST</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef _REFCLSID_DEFINED</div>
+<div class="disabled">#define _REFCLSID_DEFINED</div>
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled">#define REFCLSID const IID &amp;</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define REFCLSID const IID * __MIDL_CONST</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef _REFFMTID_DEFINED</div>
+<div class="disabled">#define _REFFMTID_DEFINED</div>
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="disabled">#define REFFMTID const IID &amp;</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define REFFMTID const IID * __MIDL_CONST</div>
+<div class="disabled">#endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // !__IID_DEFINED__</div>
+
+<div class="disabled">#if !defined (__midl)</div>
+<div class="disabled">#if !defined (_SYS_GUID_OPERATORS_)</div>
+<div class="disabled">#define _SYS_GUID_OPERATORS_</div>
+<div class="disabled">#include &lt;string.h&gt;</div>
+
+<div class="token cpp_comment ">// Faster (but makes code fatter) inline version...use sparingly</div>
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="expandable"><div class="disabled">__inline int InlineIsEqualGUID(REFGUID rguid1, REFGUID rguid2)</div>
+<div class="expanded"><div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]"><div><div class="token cpp_function">InlineIsEqualGUID</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1"><div><div class="token cpp_argument">rguid1</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2"><div><div class="token cpp_argument">rguid2</div></div></div>)</div></div>
+{
+   <div class="token cpp_keyword ">return</div> (
+      ((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *) &amp;<div class="ref" onclick="jumpToSymbol([], ['InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1'], [], [])"><div class="token cpp_argument">rguid1</div></div>)[<div class="token cpp_number ">0</div>] == ((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *) &amp;<div class="ref" onclick="jumpToSymbol([], ['InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2'], [], [])"><div class="token cpp_argument">rguid2</div></div>)[<div class="token cpp_number ">0</div>] &amp;&amp;
+      ((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *) &amp;<div class="ref" onclick="jumpToSymbol([], ['InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1'], [], [])"><div class="token cpp_argument">rguid1</div></div>)[<div class="token cpp_number ">1</div>] == ((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *) &amp;<div class="ref" onclick="jumpToSymbol([], ['InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2'], [], [])"><div class="token cpp_argument">rguid2</div></div>)[<div class="token cpp_number ">1</div>] &amp;&amp;
+      ((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *) &amp;<div class="ref" onclick="jumpToSymbol([], ['InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1'], [], [])"><div class="token cpp_argument">rguid1</div></div>)[<div class="token cpp_number ">2</div>] == ((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *) &amp;<div class="ref" onclick="jumpToSymbol([], ['InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2'], [], [])"><div class="token cpp_argument">rguid2</div></div>)[<div class="token cpp_number ">2</div>] &amp;&amp;
+      ((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *) &amp;<div class="ref" onclick="jumpToSymbol([], ['InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1'], [], [])"><div class="token cpp_argument">rguid1</div></div>)[<div class="token cpp_number ">3</div>] == ((<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *) &amp;<div class="ref" onclick="jumpToSymbol([], ['InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2'], [], [])"><div class="token cpp_argument">rguid2</div></div>)[<div class="token cpp_number ">3</div>]);
+}
+
+<div class="expandable"><div class="disabled">__inline int IsEqualGUID(REFGUID rguid1, REFGUID rguid2)</div>
+<div class="expanded"><div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">int</div> <div class="def" id="FB$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]"><div><div class="token cpp_function">IsEqualGUID</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1"><div><div class="token cpp_argument">rguid1</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2"><div><div class="token cpp_argument">rguid2</div></div></div>)</div></div>
+{
+    <div class="token cpp_keyword ">return</div> !<div class="ref" onclick="jumpToSymbol(['memcmp@int(void const *, void const *, ::size_t)'], ['memcmp@int(void const *, void const *, ::size_t)'], [], [])"><div class="token cpp_function">memcmp</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1'], [], [])"><div class="token cpp_argument">rguid1</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2'], [], [])"><div class="token cpp_argument">rguid2</div></div>, <div class="token cpp_keyword ">sizeof</div>(<div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div>));
+}
+
+<div class="disabled">#else   // ! __cplusplus</div>
+
+<div class="disabled">#define InlineIsEqualGUID(rguid1, rguid2)  \</div>
+<div class="disabled">        (((unsigned long *) rguid1)[0] == ((unsigned long *) rguid2)[0] &amp;&amp;   \</div>
+<div class="disabled">        ((unsigned long *) rguid1)[1] == ((unsigned long *) rguid2)[1] &amp;&amp;    \</div>
+<div class="disabled">        ((unsigned long *) rguid1)[2] == ((unsigned long *) rguid2)[2] &amp;&amp;    \</div>
+<div class="disabled">        ((unsigned long *) rguid1)[3] == ((unsigned long *) rguid2)[3])</div>
+
+<div class="disabled">#define IsEqualGUID(rguid1, rguid2) (!memcmp(rguid1, rguid2, sizeof(GUID)))</div>
+
+<div class="disabled">#endif  // __cplusplus</div>
+
+<div class="disabled">#ifdef __INLINE_ISEQUAL_GUID</div>
+<div class="disabled">#undef IsEqualGUID</div>
+<div class="disabled">#define IsEqualGUID(rguid1, rguid2) InlineIsEqualGUID(rguid1, rguid2)</div>
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">// Same type, different name</div>
+
+<div class="disabled">#define IsEqualIID(riid1, riid2) IsEqualGUID(riid1, riid2)</div>
+<div class="disabled">#define IsEqualCLSID(rclsid1, rclsid2) IsEqualGUID(rclsid1, rclsid2)</div>
+
+
+<div class="disabled">#if !defined _SYS_GUID_OPERATOR_EQ_ &amp;&amp; !defined _NO_SYS_GUID_OPERATOR_EQ_</div>
+<div class="disabled">#define _SYS_GUID_OPERATOR_EQ_</div>
+<div class="token cpp_comment ">// A couple of C++ helpers</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="expandable"><div class="disabled">__inline bool operator==(REFGUID guidOne, REFGUID guidOther)</div>
+<div class="expanded"><div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$operator ==@bool(::GUID const &, ::GUID const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOne"><div><div class="token cpp_argument">guidOne</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOther"><div><div class="token cpp_argument">guidOther</div></div></div>)</div></div>
+{
+    <div class="token cpp_keyword ">return</div> !!<div class="ref" onclick="jumpToSymbol(['IsEqualGUID@int(::GUID const &, ::GUID const &)'], ['IsEqualGUID@int(::GUID const &, ::GUID const &)'], [], [])"><div class="token cpp_function">IsEqualGUID</div></div>(<div class="ref" onclick="jumpToSymbol([], ['operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOne'], [], [])"><div class="token cpp_argument">guidOne</div></div>,<div class="ref" onclick="jumpToSymbol([], ['operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOther'], [], [])"><div class="token cpp_argument">guidOther</div></div>);
+}
+
+<div class="expandable"><div class="disabled">__inline bool operator!=(REFGUID guidOne, REFGUID guidOther)</div>
+<div class="expanded"><div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$operator !=@bool(::GUID const &, ::GUID const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOne"><div><div class="token cpp_argument">guidOne</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> &amp; <div class="def" id="NI$operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOther"><div><div class="token cpp_argument">guidOther</div></div></div>)</div></div>
+{
+    <div class="token cpp_keyword ">return</div> !(<div class="ref" onclick="jumpToSymbol([], ['operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOne'], [], [])"><div class="token cpp_argument">guidOne</div></div> <div class="ref" onclick="jumpToSymbol(['operator ==@bool(::GUID const &, ::GUID const &)'], [], [], [])"><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOther'], [], [])"><div class="token cpp_argument">guidOther</div></div>);
+}
+<div class="disabled">#endif</div>
+<div class="disabled">#endif  // _SYS_GUID_OPERATOR_EQ_</div>
+<div class="disabled">#endif  // _SYS_GUID_OPERATORS_</div>
+<div class="disabled">#endif  // __midl</div>
+<div class="disabled">#endif  // _GUIDDEF_H_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'CLSID': {
+        'displayNameInHtml': '<span class="cpp_type">CLSID</span>',
+        'impls': [
+            'NI$CLSID'
+        ],
+        'decls': []
+    },
+    'FMTID': {
+        'displayNameInHtml': '<span class="cpp_type">FMTID</span>',
+        'impls': [
+            'NI$FMTID'
+        ],
+        'decls': []
+    },
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'IID': {
+        'displayNameInHtml': '<span class="cpp_type">IID</span>',
+        'impls': [
+            'NI$IID'
+        ],
+        'decls': []
+    },
+    'InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1': {
+        'displayNameInHtml': 'rguid1',
+        'impls': [
+            'NI$InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1'
+        ],
+        'decls': []
+    },
+    'InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2': {
+        'displayNameInHtml': 'rguid2',
+        'impls': [
+            'NI$InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2'
+        ],
+        'decls': []
+    },
+    'IsEqualGUID@int(::GUID const &, ::GUID const &)': {
+        'displayNameInHtml': '<span class="cpp_function">IsEqualGUID</span>(<span class="cpp_type">GUID</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">GUID</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1': {
+        'displayNameInHtml': 'rguid1',
+        'impls': [
+            'NI$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1'
+        ],
+        'decls': []
+    },
+    'IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2': {
+        'displayNameInHtml': 'rguid2',
+        'impls': [
+            'NI$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2'
+        ],
+        'decls': []
+    },
+    'memcmp@int(void const *, void const *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">memcmp</span>(<span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$memcmp@int(void const *, void const *, ::size_t)[decl0]'
+        ]
+    },
+    'operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOne': {
+        'displayNameInHtml': 'guidOne',
+        'impls': [
+            'NI$operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOne'
+        ],
+        'decls': []
+    },
+    'operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOther': {
+        'displayNameInHtml': 'guidOther',
+        'impls': [
+            'NI$operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOther'
+        ],
+        'decls': []
+    },
+    'operator ==@bool(::GUID const &, ::GUID const &)': {
+        'displayNameInHtml': '<span class="cpp_function">operator ==</span>(<span class="cpp_type">GUID</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">GUID</span><span class="cpp_keyword"> const</span> &)',
+        'impls': [
+            'FB$operator ==@bool(::GUID const &, ::GUID const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOne': {
+        'displayNameInHtml': 'guidOne',
+        'impls': [
+            'NI$operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOne'
+        ],
+        'decls': []
+    },
+    'operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOther': {
+        'displayNameInHtml': 'guidOther',
+        'impls': [
+            'NI$operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOther'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]': null,
+    'FB$memcmp@int(void const *, void const *, ::size_t)[decl0]': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'FB$operator ==@bool(::GUID const &, ::GUID const &)[impl0]': null,
+    'NI$CLSID': null,
+    'NI$FMTID': null,
+    'NI$GUID': null,
+    'NI$IID': null,
+    'NI$InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1': null,
+    'NI$InlineIsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2': null,
+    'NI$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid1': null,
+    'NI$IsEqualGUID@int(::GUID const &, ::GUID const &)[impl0]::rguid2': null,
+    'NI$operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOne': null,
+    'NI$operator !=@bool(::GUID const &, ::GUID const &)[impl0]::guidOther': null,
+    'NI$operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOne': null,
+    'NI$operator ==@bool(::GUID const &, ::GUID const &)[impl0]::guidOther': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

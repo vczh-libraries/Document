@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt_wio.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt_wio.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This file declares the wide character (wchar_t) I/O functionality, shared by</div>
+<div class="token cpp_comment ">// &lt;io.h&gt; and &lt;wchar.h&gt;.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled">#include &lt;corecrt.h&gt;
+#include &lt;corecrt_share.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) /* padding added after data member */</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Types</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled">#ifdef _USE_32BIT_TIME_T</div>
+<div class="disabled">    #define _wfinddata_t    _wfinddata32_t</div>
+<div class="disabled">    #define _wfinddatai64_t _wfinddata32i64_t</div>
+<div class="disabled">#else</div>
+<div class="disabled">    #define _wfinddata_t    _wfinddata64i32_t</div>
+<div class="disabled">    #define _wfinddatai64_t _wfinddata64_t
+#endif</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_fsize_t"><div><div class="token cpp_type">_fsize_t</div></div></div>;
+
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_wfinddata32_t"><div><div class="token cpp_type">_wfinddata32_t</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div>   <div class="def" id="NI$_wfinddata32_t::attrib"><div><div class="token cpp_field">attrib</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="def" id="NI$_wfinddata32_t::time_create"><div><div class="token cpp_field">time_create</div></div></div>;    <div class="token cpp_comment ">// -1 for FAT file systems</div>
+    <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="def" id="NI$_wfinddata32_t::time_access"><div><div class="token cpp_field">time_access</div></div></div>;    <div class="token cpp_comment ">// -1 for FAT file systems</div>
+    <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="def" id="NI$_wfinddata32_t::time_write"><div><div class="token cpp_field">time_write</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['_fsize_t'], [], [])"><div class="token cpp_type">_fsize_t</div></div>   <div class="def" id="NI$_wfinddata32_t::size"><div><div class="token cpp_field">size</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>    <div class="def" id="NI$_wfinddata32_t::name"><div><div class="token cpp_field">name</div></div></div>[<div class="token cpp_number ">260</div>];
+};
+
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_wfinddata32i64_t"><div><div class="token cpp_type">_wfinddata32i64_t</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div>   <div class="def" id="NI$_wfinddata32i64_t::attrib"><div><div class="token cpp_field">attrib</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="def" id="NI$_wfinddata32i64_t::time_create"><div><div class="token cpp_field">time_create</div></div></div>;    <div class="token cpp_comment ">// -1 for FAT file systems</div>
+    <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="def" id="NI$_wfinddata32i64_t::time_access"><div><div class="token cpp_field">time_access</div></div></div>;    <div class="token cpp_comment ">// -1 for FAT file systems</div>
+    <div class="ref" onclick="jumpToSymbol([], ['__time32_t'], [], [])"><div class="token cpp_type">__time32_t</div></div> <div class="def" id="NI$_wfinddata32i64_t::time_write"><div><div class="token cpp_field">time_write</div></div></div>;
+    <div class="token cpp_keyword ">__int64</div>    <div class="def" id="NI$_wfinddata32i64_t::size"><div><div class="token cpp_field">size</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>    <div class="def" id="NI$_wfinddata32i64_t::name"><div><div class="token cpp_field">name</div></div></div>[<div class="token cpp_number ">260</div>];
+};
+
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_wfinddata64i32_t"><div><div class="token cpp_type">_wfinddata64i32_t</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div>   <div class="def" id="NI$_wfinddata64i32_t::attrib"><div><div class="token cpp_field">attrib</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="def" id="NI$_wfinddata64i32_t::time_create"><div><div class="token cpp_field">time_create</div></div></div>;    <div class="token cpp_comment ">// -1 for FAT file systems</div>
+    <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="def" id="NI$_wfinddata64i32_t::time_access"><div><div class="token cpp_field">time_access</div></div></div>;    <div class="token cpp_comment ">// -1 for FAT file systems</div>
+    <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="def" id="NI$_wfinddata64i32_t::time_write"><div><div class="token cpp_field">time_write</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['_fsize_t'], [], [])"><div class="token cpp_type">_fsize_t</div></div>   <div class="def" id="NI$_wfinddata64i32_t::size"><div><div class="token cpp_field">size</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>    <div class="def" id="NI$_wfinddata64i32_t::name"><div><div class="token cpp_field">name</div></div></div>[<div class="token cpp_number ">260</div>];
+};
+
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_wfinddata64_t"><div><div class="token cpp_type">_wfinddata64_t</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div>   <div class="def" id="NI$_wfinddata64_t::attrib"><div><div class="token cpp_field">attrib</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="def" id="NI$_wfinddata64_t::time_create"><div><div class="token cpp_field">time_create</div></div></div>;    <div class="token cpp_comment ">// -1 for FAT file systems</div>
+    <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="def" id="NI$_wfinddata64_t::time_access"><div><div class="token cpp_field">time_access</div></div></div>;    <div class="token cpp_comment ">// -1 for FAT file systems</div>
+    <div class="ref" onclick="jumpToSymbol([], ['__time64_t'], [], [])"><div class="token cpp_type">__time64_t</div></div> <div class="def" id="NI$_wfinddata64_t::time_write"><div><div class="token cpp_field">time_write</div></div></div>;
+    <div class="token cpp_keyword ">__int64</div>    <div class="def" id="NI$_wfinddata64_t::size"><div><div class="token cpp_field">size</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>    <div class="def" id="NI$_wfinddata64_t::name"><div><div class="token cpp_field">name</div></div></div>[<div class="token cpp_number ">260</div>];
+};
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Functions</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled">#ifdef _USE_32BIT_TIME_T</div>
+<div class="disabled">    #define _wfindfirst     _wfindfirst32</div>
+<div class="disabled">    #define _wfindnext      _wfindnext32</div>
+<div class="disabled">    #define _wfindfirsti64  _wfindfirst32i64</div>
+<div class="disabled">    #define _wfindnexti64   _wfindnext32i64</div>
+<div class="disabled">#else</div>
+<div class="disabled">    #define _wfindfirst     _wfindfirst64i32</div>
+<div class="disabled">    #define _wfindnext      _wfindnext64i32</div>
+<div class="disabled">    #define _wfindfirsti64  _wfindfirst64</div>
+<div class="disabled">    #define _wfindnexti64   _wfindnext64
+#endif</div>
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _waccess(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_waccess@int(wchar_t const *, int)[decl0]"><div><div class="token cpp_function">_waccess</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_waccess@int(wchar_t const *, int)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _AccessMode</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_waccess@int(wchar_t const *, int)[decl0]::_AccessMode"><div>_AccessMode</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _waccess_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_waccess_s@::errno_t(wchar_t const *, int)[decl0]"><div><div class="token cpp_function">_waccess_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_waccess_s@::errno_t(wchar_t const *, int)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _AccessMode</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_waccess_s@::errno_t(wchar_t const *, int)[decl0]::_AccessMode"><div>_AccessMode</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wchmod(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wchmod@int(wchar_t const *, int)[decl0]"><div><div class="token cpp_function">_wchmod</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wchmod@int(wchar_t const *, int)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _Mode</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wchmod@int(wchar_t const *, int)[decl0]::_Mode"><div>_Mode</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">_Check_return_ _CRT_INSECURE_DEPRECATE(_wsopen_s)</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wsopen_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wcreat(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wcreat@int(wchar_t const *, int)[decl0]"><div><div class="token cpp_function">_wcreat</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wcreat@int(wchar_t const *, int)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _PermissionMode</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wcreat@int(wchar_t const *, int)[decl0]::_PermissionMode"><div>_PermissionMode</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != -1)</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP intptr_t __cdecl _wfindfirst32(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wfindfirst32@::intptr_t(wchar_t const *, ::_wfinddata32_t *)[decl0]"><div><div class="token cpp_function">_wfindfirst32</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const*         _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*         <div class="def" id="NI$_wfindfirst32@::intptr_t(wchar_t const *, ::_wfinddata32_t *)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_  struct _wfinddata32_t* _FindData</div>
+<div class="expanded">       <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_wfinddata32_t'], [], [])"><div class="token cpp_type">_wfinddata32_t</div></div>* <div class="def" id="NI$_wfindfirst32@::intptr_t(wchar_t const *, ::_wfinddata32_t *)[decl0]::_FindData"><div>_FindData</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != -1)</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wfindnext32(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wfindnext32@int(::intptr_t, ::_wfinddata32_t *)[decl0]"><div><div class="token cpp_function">_wfindnext32</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_  intptr_t               _FindHandle,</div>
+<div class="expanded">       <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div>               <div class="def" id="NI$_wfindnext32@int(::intptr_t, ::_wfinddata32_t *)[decl0]::_FindHandle"><div>_FindHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ struct _wfinddata32_t* _FindData</div>
+<div class="expanded">      <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_wfinddata32_t'], [], [])"><div class="token cpp_type">_wfinddata32_t</div></div>* <div class="def" id="NI$_wfindnext32@int(::intptr_t, ::_wfinddata32_t *)[decl0]::_FindData"><div>_FindData</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wunlink(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wunlink@int(wchar_t const *)[decl0]"><div><div class="token cpp_function">_wunlink</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _FileName</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wunlink@int(wchar_t const *)[decl0]::_FileName"><div>_FileName</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wrename(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wrename@int(wchar_t const *, wchar_t const *)[decl0]"><div><div class="token cpp_function">_wrename</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _OldFileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wrename@int(wchar_t const *, wchar_t const *)[decl0]::_OldFileName"><div>_OldFileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _NewFileName</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wrename@int(wchar_t const *, wchar_t const *)[decl0]::_NewFileName"><div>_NewFileName</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _wmktemp_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wmktemp_s@::errno_t(wchar_t *, ::size_t)[decl0]"><div><div class="token cpp_function">_wmktemp_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Inout_updates_z_(_SizeInWords) wchar_t* _TemplateName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$_wmktemp_s@::errno_t(wchar_t *, ::size_t)[decl0]::_TemplateName"><div>_TemplateName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_                            size_t   _SizeInWords</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>   <div class="def" id="NI$_wmktemp_s@::errno_t(wchar_t *, ::size_t)[decl0]::_SizeInWords"><div>_SizeInWords</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_0(
+    errno_t, _wmktemp_s,
+    wchar_t, _TemplateName
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="TA$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_Size"><div><div class="token cpp_enum">_Size</div></div></div>&gt; <div class="token cpp_keyword ">inline</div> <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]"><div><div class="token cpp_function">_wmktemp_s</div></div></div>(<div class="token cpp_keyword ">wchar_t</div> (&amp;<div class="def" id="NI$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_TemplateName"><div><div class="token cpp_argument">_TemplateName</div></div></div>)[<div class="ref" onclick="jumpToSymbol([], ['_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>]) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_wmktemp_s@::errno_t(wchar_t *, ::size_t)'], ['_wmktemp_s@::errno_t(wchar_t *, ::size_t)', '_wmktemp_s@::errno_t(wchar_t [*] &)'], [], [])"><div class="token cpp_function">_wmktemp_s</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_TemplateName'], [], [])"><div class="token cpp_argument">_TemplateName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_Size'], [], [])"><div class="token cpp_enum">_Size</div></div>); } }</div></div>
+
+<div class="disabled">_Success_(return != 0)</div>
+<div class="expandable"><div class="disabled">__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wmktemp,
+    _Inout_z_, wchar_t, _TemplateName
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wmktemp_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wmktemp@wchar_t *(wchar_t *)[decl0]"><div><div class="token cpp_function">_wmktemp</div></div></div>( <div class="token cpp_keyword ">wchar_t</div> *<div class="def" id="NI$_wmktemp@wchar_t *(wchar_t *)[decl0]::_TemplateName"><div>_TemplateName</div></div>);</div></div>
+
+<div class="disabled">_Success_(return != -1)</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP intptr_t __cdecl _wfindfirst32i64(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wfindfirst32i64@::intptr_t(wchar_t const *, ::_wfinddata32i64_t *)[decl0]"><div><div class="token cpp_function">_wfindfirst32i64</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const*            _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*            <div class="def" id="NI$_wfindfirst32i64@::intptr_t(wchar_t const *, ::_wfinddata32i64_t *)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_  struct _wfinddata32i64_t* _FindData</div>
+<div class="expanded">       <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_wfinddata32i64_t'], [], [])"><div class="token cpp_type">_wfinddata32i64_t</div></div>* <div class="def" id="NI$_wfindfirst32i64@::intptr_t(wchar_t const *, ::_wfinddata32i64_t *)[decl0]::_FindData"><div>_FindData</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != -1)</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP intptr_t __cdecl _wfindfirst64i32(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wfindfirst64i32@::intptr_t(wchar_t const *, ::_wfinddata64i32_t *)[decl0]"><div><div class="token cpp_function">_wfindfirst64i32</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const*            _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*            <div class="def" id="NI$_wfindfirst64i32@::intptr_t(wchar_t const *, ::_wfinddata64i32_t *)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_  struct _wfinddata64i32_t* _FindData</div>
+<div class="expanded">       <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_wfinddata64i32_t'], [], [])"><div class="token cpp_type">_wfinddata64i32_t</div></div>* <div class="def" id="NI$_wfindfirst64i32@::intptr_t(wchar_t const *, ::_wfinddata64i32_t *)[decl0]::_FindData"><div>_FindData</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != -1)</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP intptr_t __cdecl _wfindfirst64(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wfindfirst64@::intptr_t(wchar_t const *, ::_wfinddata64_t *)[decl0]"><div><div class="token cpp_function">_wfindfirst64</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const*         _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*         <div class="def" id="NI$_wfindfirst64@::intptr_t(wchar_t const *, ::_wfinddata64_t *)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_  struct _wfinddata64_t* _FindData</div>
+<div class="expanded">       <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_wfinddata64_t'], [], [])"><div class="token cpp_type">_wfinddata64_t</div></div>* <div class="def" id="NI$_wfindfirst64@::intptr_t(wchar_t const *, ::_wfinddata64_t *)[decl0]::_FindData"><div>_FindData</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != -1)</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wfindnext32i64(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wfindnext32i64@int(::intptr_t, ::_wfinddata32i64_t *)[decl0]"><div><div class="token cpp_function">_wfindnext32i64</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_  intptr_t                  _FindHandle,</div>
+<div class="expanded">       <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div>                  <div class="def" id="NI$_wfindnext32i64@int(::intptr_t, ::_wfinddata32i64_t *)[decl0]::_FindHandle"><div>_FindHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ struct _wfinddata32i64_t* _FindData</div>
+<div class="expanded">      <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_wfinddata32i64_t'], [], [])"><div class="token cpp_type">_wfinddata32i64_t</div></div>* <div class="def" id="NI$_wfindnext32i64@int(::intptr_t, ::_wfinddata32i64_t *)[decl0]::_FindData"><div>_FindData</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != -1)</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wfindnext64i32(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wfindnext64i32@int(::intptr_t, ::_wfinddata64i32_t *)[decl0]"><div><div class="token cpp_function">_wfindnext64i32</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_  intptr_t                  _FindHandle,</div>
+<div class="expanded">       <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div>                  <div class="def" id="NI$_wfindnext64i32@int(::intptr_t, ::_wfinddata64i32_t *)[decl0]::_FindHandle"><div>_FindHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ struct _wfinddata64i32_t* _FindData</div>
+<div class="expanded">      <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_wfinddata64i32_t'], [], [])"><div class="token cpp_type">_wfinddata64i32_t</div></div>* <div class="def" id="NI$_wfindnext64i32@int(::intptr_t, ::_wfinddata64i32_t *)[decl0]::_FindData"><div>_FindData</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return != -1)</div>
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP int __cdecl _wfindnext64(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wfindnext64@int(::intptr_t, ::_wfinddata64_t *)[decl0]"><div><div class="token cpp_function">_wfindnext64</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_  intptr_t               _FindHandle,</div>
+<div class="expanded">       <div class="ref" onclick="jumpToSymbol([], ['intptr_t'], [], [])"><div class="token cpp_type">intptr_t</div></div>               <div class="def" id="NI$_wfindnext64@int(::intptr_t, ::_wfinddata64_t *)[decl0]::_FindHandle"><div>_FindHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ struct _wfinddata64_t* _FindData</div>
+<div class="expanded">      <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_wfinddata64_t'], [], [])"><div class="token cpp_type">_wfinddata64_t</div></div>* <div class="def" id="NI$_wfindnext64@int(::intptr_t, ::_wfinddata64_t *)[decl0]::_FindData"><div>_FindData</div></div></div></div>
+    );
+
+<div class="disabled">_Check_return_wat_</div>
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _wsopen_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wsopen_s@::errno_t(int *, wchar_t const *, int, int, int)[decl0]"><div><div class="token cpp_function">_wsopen_s</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _Out_  int*           _FileHandle,</div>
+<div class="expanded">       <div class="token cpp_keyword ">int</div>*           <div class="def" id="NI$_wsopen_s@::errno_t(int *, wchar_t const *, int, int, int)[decl0]::_FileHandle"><div>_FileHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wsopen_s@::errno_t(int *, wchar_t const *, int, int, int)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _OpenFlag,</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen_s@::errno_t(int *, wchar_t const *, int, int, int)[decl0]::_OpenFlag"><div>_OpenFlag</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _ShareFlag,</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen_s@::errno_t(int *, wchar_t const *, int, int, int)[decl0]::_ShareFlag"><div>_ShareFlag</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _PermissionFlag</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen_s@::errno_t(int *, wchar_t const *, int, int, int)[decl0]::_PermissionFlag"><div>_PermissionFlag</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">_ACRTIMP errno_t __cdecl _wsopen_dispatch(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]"><div><div class="token cpp_function">_wsopen_dispatch</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">    _In_z_ wchar_t const* _FileName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]::_FileName"><div>_FileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _OFlag,</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]::_OFlag"><div>_OFlag</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _ShFlag,</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]::_ShFlag"><div>_ShFlag</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _PMode,</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]::_PMode"><div>_PMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_  int*           _PFileHandle,</div>
+<div class="expanded">       <div class="token cpp_keyword ">int</div>*           <div class="def" id="NI$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]::_PFileHandle"><div>_PFileHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_   int            _BSecure</div>
+<div class="expanded">        <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]::_BSecure"><div>_BSecure</div></div></div></div>
+    );
+
+
+
+<div class="disabled">#if defined __cplusplus</div>
+
+    <div class="token cpp_comment ">// These functions do not validate pmode; use _wsopen_s instead.</div>
+<div class="expandable"><div class="disabled">    extern &quot;C++&quot; _Check_return_ _CRT_INSECURE_DEPRECATE(_wsopen_s)</div>
+<div class="expanded">    <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div>   <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wsopen_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"><div class="disabled">    inline int __CRTDECL _wopen(</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wopen@int(wchar_t const *, int, int)[impl0]"><div><div class="token cpp_function">_wopen</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_z_ wchar_t const* _FileName,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wopen@int(wchar_t const *, int, int)[impl0]::_FileName"><div><div class="token cpp_argument">_FileName</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_   int            _OFlag,</div>
+<div class="expanded">            <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wopen@int(wchar_t const *, int, int)[impl0]::_OFlag"><div><div class="token cpp_argument">_OFlag</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_   int            _PMode = 0</div>
+<div class="expanded">            <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wopen@int(wchar_t const *, int, int)[impl0]::_PMode"><div><div class="token cpp_argument">_PMode</div></div></div> = <div class="token cpp_number ">0</div></div></div>
+        )
+    {
+        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_wopen@int(wchar_t const *, int, int)[impl0]::_FileHandle"><div>_FileHandle</div></div>;
+        <div class="token cpp_comment ">// Last parameter passed as 0 because we don&apos;t want to validate pmode from _open</div>
+<div class="expandable"><div class="disabled">        errno_t const _Result = _wsopen_dispatch(_FileName, _OFlag, _SH_DENYNO, _PMode, &amp;_FileHandle, 0);</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">const</div> <div class="def" id="NI$_wopen@int(wchar_t const *, int, int)[impl0]::_Result"><div>_Result</div></div> = <div class="ref" onclick="jumpToSymbol(['_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)'], ['_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)'], [], [])"><div class="token cpp_function">_wsopen_dispatch</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wopen@int(wchar_t const *, int, int)[impl0]::_FileName'], [], [])"><div class="token cpp_argument">_FileName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wopen@int(wchar_t const *, int, int)[impl0]::_OFlag'], [], [])"><div class="token cpp_argument">_OFlag</div></div>, <div class="token cpp_number ">0x40</div>, <div class="ref" onclick="jumpToSymbol([], ['_wopen@int(wchar_t const *, int, int)[impl0]::_PMode'], [], [])"><div class="token cpp_argument">_PMode</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['_wopen@int(wchar_t const *, int, int)[impl0]::_FileHandle'], [], [])">_FileHandle</div>, <div class="token cpp_number ">0</div>);</div></div>
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['_wopen@int(wchar_t const *, int, int)[impl0]::_Result'], [], [])">_Result</div> ? -<div class="token cpp_number ">1</div> : <div class="ref" onclick="jumpToSymbol([], ['_wopen@int(wchar_t const *, int, int)[impl0]::_FileHandle'], [], [])">_FileHandle</div>;
+    }
+
+<div class="expandable"><div class="disabled">    extern &quot;C++&quot; _Check_return_ _CRT_INSECURE_DEPRECATE(_wsopen_s)</div>
+<div class="expanded">    <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div>   <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wsopen_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"><div class="disabled">    inline int __CRTDECL _wsopen(</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wsopen@int(wchar_t const *, int, int, int)[impl0]"><div><div class="token cpp_function">_wsopen</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_z_ wchar_t const* _FileName,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileName"><div><div class="token cpp_argument">_FileName</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_   int            _OFlag,</div>
+<div class="expanded">            <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_OFlag"><div><div class="token cpp_argument">_OFlag</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_   int            _ShFlag,</div>
+<div class="expanded">            <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_ShFlag"><div><div class="token cpp_argument">_ShFlag</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_   int            _PMode = 0</div>
+<div class="expanded">            <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_PMode"><div><div class="token cpp_argument">_PMode</div></div></div> = <div class="token cpp_number ">0</div></div></div>
+        )
+    {
+        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileHandle"><div>_FileHandle</div></div>;
+        <div class="token cpp_comment ">// Last parameter passed as 0 because we don&apos;t want to validate pmode from _sopen</div>
+        <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">const</div> <div class="def" id="NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_Result"><div>_Result</div></div> = <div class="ref" onclick="jumpToSymbol(['_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)'], ['_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)'], [], [])"><div class="token cpp_function">_wsopen_dispatch</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileName'], [], [])"><div class="token cpp_argument">_FileName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wsopen@int(wchar_t const *, int, int, int)[impl0]::_OFlag'], [], [])"><div class="token cpp_argument">_OFlag</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wsopen@int(wchar_t const *, int, int, int)[impl0]::_ShFlag'], [], [])"><div class="token cpp_argument">_ShFlag</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wsopen@int(wchar_t const *, int, int, int)[impl0]::_PMode'], [], [])"><div class="token cpp_argument">_PMode</div></div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileHandle'], [], [])">_FileHandle</div>, <div class="token cpp_number ">0</div>);
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['_wsopen@int(wchar_t const *, int, int, int)[impl0]::_Result'], [], [])">_Result</div> ? -<div class="token cpp_number ">1</div> : <div class="ref" onclick="jumpToSymbol([], ['_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileHandle'], [], [])">_FileHandle</div>;
+    }
+
+
+<div class="disabled">#else</div>
+
+<div class="disabled">    _Check_return_ _CRT_INSECURE_DEPRECATE(_wsopen_s)</div>
+<div class="disabled">    _ACRTIMP int __cdecl _wopen(</div>
+<div class="disabled">        _In_z_ wchar_t const* _FileName,</div>
+<div class="disabled">        _In_   int            _OpenFlag,</div>
+<div class="disabled">        ...);</div>
+
+<div class="disabled">    _Check_return_ _CRT_INSECURE_DEPRECATE(_wsopen_s)</div>
+<div class="disabled">    _ACRTIMP int __cdecl _wsopen(</div>
+<div class="disabled">        _In_z_ wchar_t const* _FileName,</div>
+<div class="disabled">        _In_   int            _OpenFlag,</div>
+<div class="disabled">        _In_   int            _ShareFlag,</div>
+<div class="disabled">        ...);</div>
+
+<div class="disabled">#endif</div>
+
+
+#pragma warning(pop)
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '__time32_t': {
+        'displayNameInHtml': '<span class="cpp_type">__time32_t</span>',
+        'impls': [
+            'NI$__time32_t'
+        ],
+        'decls': []
+    },
+    '__time64_t': {
+        'displayNameInHtml': '<span class="cpp_type">__time64_t</span>',
+        'impls': [
+            'NI$__time64_t'
+        ],
+        'decls': []
+    },
+    '_fsize_t': {
+        'displayNameInHtml': '<span class="cpp_type">_fsize_t</span>',
+        'impls': [
+            'NI$_fsize_t'
+        ],
+        'decls': []
+    },
+    '_wfinddata32_t': {
+        'displayNameInHtml': '<span class="cpp_type">_wfinddata32_t</span>',
+        'impls': [
+            'NI$_wfinddata32_t'
+        ],
+        'decls': []
+    },
+    '_wfinddata32i64_t': {
+        'displayNameInHtml': '<span class="cpp_type">_wfinddata32i64_t</span>',
+        'impls': [
+            'NI$_wfinddata32i64_t'
+        ],
+        'decls': []
+    },
+    '_wfinddata64_t': {
+        'displayNameInHtml': '<span class="cpp_type">_wfinddata64_t</span>',
+        'impls': [
+            'NI$_wfinddata64_t'
+        ],
+        'decls': []
+    },
+    '_wfinddata64i32_t': {
+        'displayNameInHtml': '<span class="cpp_type">_wfinddata64i32_t</span>',
+        'impls': [
+            'NI$_wfinddata64i32_t'
+        ],
+        'decls': []
+    },
+    '_wmktemp_s@::errno_t(wchar_t *, ::size_t)': {
+        'displayNameInHtml': '<span class="cpp_function">_wmktemp_s</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wmktemp_s@::errno_t(wchar_t *, ::size_t)[decl0]'
+        ]
+    },
+    '_wmktemp_s@::errno_t(wchar_t [*] &)': {
+        'displayNameInHtml': '<span class="cpp_function">_wmktemp_s</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;(<span class="cpp_keyword">wchar_t</span>( &)[<span class="cpp_keyword">(expr)</span>])',
+        'impls': [
+            'FB$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]'
+        ],
+        'decls': []
+    },
+    '_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'TA$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    '_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_TemplateName': {
+        'displayNameInHtml': '_TemplateName',
+        'impls': [
+            'NI$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_TemplateName'
+        ],
+        'decls': []
+    },
+    '_wopen@int(wchar_t const *, int, int)[impl0]::_FileHandle': {
+        'displayNameInHtml': '_FileHandle',
+        'impls': [
+            'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_FileHandle'
+        ],
+        'decls': []
+    },
+    '_wopen@int(wchar_t const *, int, int)[impl0]::_FileName': {
+        'displayNameInHtml': '_FileName',
+        'impls': [
+            'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_FileName'
+        ],
+        'decls': []
+    },
+    '_wopen@int(wchar_t const *, int, int)[impl0]::_OFlag': {
+        'displayNameInHtml': '_OFlag',
+        'impls': [
+            'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_OFlag'
+        ],
+        'decls': []
+    },
+    '_wopen@int(wchar_t const *, int, int)[impl0]::_PMode': {
+        'displayNameInHtml': '_PMode',
+        'impls': [
+            'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_PMode'
+        ],
+        'decls': []
+    },
+    '_wopen@int(wchar_t const *, int, int)[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileHandle': {
+        'displayNameInHtml': '_FileHandle',
+        'impls': [
+            'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileHandle'
+        ],
+        'decls': []
+    },
+    '_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileName': {
+        'displayNameInHtml': '_FileName',
+        'impls': [
+            'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileName'
+        ],
+        'decls': []
+    },
+    '_wsopen@int(wchar_t const *, int, int, int)[impl0]::_OFlag': {
+        'displayNameInHtml': '_OFlag',
+        'impls': [
+            'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_OFlag'
+        ],
+        'decls': []
+    },
+    '_wsopen@int(wchar_t const *, int, int, int)[impl0]::_PMode': {
+        'displayNameInHtml': '_PMode',
+        'impls': [
+            'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_PMode'
+        ],
+        'decls': []
+    },
+    '_wsopen@int(wchar_t const *, int, int, int)[impl0]::_Result': {
+        'displayNameInHtml': '_Result',
+        'impls': [
+            'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_Result'
+        ],
+        'decls': []
+    },
+    '_wsopen@int(wchar_t const *, int, int, int)[impl0]::_ShFlag': {
+        'displayNameInHtml': '_ShFlag',
+        'impls': [
+            'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_ShFlag'
+        ],
+        'decls': []
+    },
+    '_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)': {
+        'displayNameInHtml': '<span class="cpp_function">_wsopen_dispatch</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span> *, <span class="cpp_keyword">int</span>)',
+        'impls': [],
+        'decls': [
+            'FB$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]'
+        ]
+    },
+    'errno_t': {
+        'displayNameInHtml': '<span class="cpp_type">errno_t</span>',
+        'impls': [
+            'NI$errno_t'
+        ],
+        'decls': []
+    },
+    'intptr_t': {
+        'displayNameInHtml': '<span class="cpp_type">intptr_t</span>',
+        'impls': [
+            'NI$intptr_t'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$_wmktemp_s@::errno_t(wchar_t *, ::size_t)[decl0]': null,
+    'FB$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]': null,
+    'FB$_wsopen_dispatch@::errno_t(wchar_t const *, int, int, int, int *, int)[decl0]': null,
+    'NI$__time32_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$__time64_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$_fsize_t': null,
+    'NI$_wfinddata32_t': null,
+    'NI$_wfinddata32i64_t': null,
+    'NI$_wfinddata64_t': null,
+    'NI$_wfinddata64i32_t': null,
+    'NI$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_TemplateName': null,
+    'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_FileHandle': null,
+    'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_FileName': null,
+    'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_OFlag': null,
+    'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_PMode': null,
+    'NI$_wopen@int(wchar_t const *, int, int)[impl0]::_Result': null,
+    'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileHandle': null,
+    'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_FileName': null,
+    'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_OFlag': null,
+    'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_PMode': null,
+    'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_Result': null,
+    'NI$_wsopen@int(wchar_t const *, int, int, int)[impl0]::_ShFlag': null,
+    'NI$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$intptr_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'TA$_wmktemp_s@::errno_t(wchar_t [*] &)[impl0]::_Size': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

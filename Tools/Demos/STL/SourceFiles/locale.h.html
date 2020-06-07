@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>locale.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// locale.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// The C locale library.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+<div class="disabled">#ifndef _INC_LOCALE // include guard for 3rd party interop</div>
+<div class="disabled">#define _INC_LOCALE</div>
+
+<div class="disabled">#include &lt;corecrt.h&gt;</div>
+
+<div class="expandable"><div class="disabled">_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="token cpp_comment ">// Locale categories</div>
+<div class="disabled">#define LC_ALL          0</div>
+<div class="disabled">#define LC_COLLATE      1</div>
+<div class="disabled">#define LC_CTYPE        2</div>
+<div class="disabled">#define LC_MONETARY     3</div>
+<div class="disabled">#define LC_NUMERIC      4</div>
+<div class="disabled">#define LC_TIME         5</div>
+
+<div class="disabled">#define LC_MIN          LC_ALL</div>
+<div class="disabled">#define LC_MAX          LC_TIME</div>
+
+<div class="token cpp_comment ">// Locale convention structure</div>
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$lconv"><div><div class="token cpp_type">lconv</div></div></div>
+{
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::decimal_point"><div><div class="token cpp_field">decimal_point</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::thousands_sep"><div><div class="token cpp_field">thousands_sep</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::grouping"><div><div class="token cpp_field">grouping</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::int_curr_symbol"><div><div class="token cpp_field">int_curr_symbol</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::currency_symbol"><div><div class="token cpp_field">currency_symbol</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::mon_decimal_point"><div><div class="token cpp_field">mon_decimal_point</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::mon_thousands_sep"><div><div class="token cpp_field">mon_thousands_sep</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::mon_grouping"><div><div class="token cpp_field">mon_grouping</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::positive_sign"><div><div class="token cpp_field">positive_sign</div></div></div>;
+    <div class="token cpp_keyword ">char</div>*    <div class="def" id="NI$lconv::negative_sign"><div><div class="token cpp_field">negative_sign</div></div></div>;
+    <div class="token cpp_keyword ">char</div>     <div class="def" id="NI$lconv::int_frac_digits"><div><div class="token cpp_field">int_frac_digits</div></div></div>;
+    <div class="token cpp_keyword ">char</div>     <div class="def" id="NI$lconv::frac_digits"><div><div class="token cpp_field">frac_digits</div></div></div>;
+    <div class="token cpp_keyword ">char</div>     <div class="def" id="NI$lconv::p_cs_precedes"><div><div class="token cpp_field">p_cs_precedes</div></div></div>;
+    <div class="token cpp_keyword ">char</div>     <div class="def" id="NI$lconv::p_sep_by_space"><div><div class="token cpp_field">p_sep_by_space</div></div></div>;
+    <div class="token cpp_keyword ">char</div>     <div class="def" id="NI$lconv::n_cs_precedes"><div><div class="token cpp_field">n_cs_precedes</div></div></div>;
+    <div class="token cpp_keyword ">char</div>     <div class="def" id="NI$lconv::n_sep_by_space"><div><div class="token cpp_field">n_sep_by_space</div></div></div>;
+    <div class="token cpp_keyword ">char</div>     <div class="def" id="NI$lconv::p_sign_posn"><div><div class="token cpp_field">p_sign_posn</div></div></div>;
+    <div class="token cpp_keyword ">char</div>     <div class="def" id="NI$lconv::n_sign_posn"><div><div class="token cpp_field">n_sign_posn</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$lconv::_W_decimal_point"><div><div class="token cpp_field">_W_decimal_point</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$lconv::_W_thousands_sep"><div><div class="token cpp_field">_W_thousands_sep</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$lconv::_W_int_curr_symbol"><div><div class="token cpp_field">_W_int_curr_symbol</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$lconv::_W_currency_symbol"><div><div class="token cpp_field">_W_currency_symbol</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$lconv::_W_mon_decimal_point"><div><div class="token cpp_field">_W_mon_decimal_point</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$lconv::_W_mon_thousands_sep"><div><div class="token cpp_field">_W_mon_thousands_sep</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$lconv::_W_positive_sign"><div><div class="token cpp_field">_W_positive_sign</div></div></div>;
+    <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$lconv::_W_negative_sign"><div><div class="token cpp_field">_W_negative_sign</div></div></div>;
+};
+
+<div class="token cpp_keyword ">struct</div> <div class="def" id="NF[0]$tm"><div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div></div>;
+
+<div class="token cpp_comment ">// ANSI: char lconv members default is CHAR_MAX which is compile time dependent.</div>
+<div class="token cpp_comment ">// Defining and using __do_unsigned_char_lconv_initialization here causes CRT</div>
+<div class="token cpp_comment ">// startup code to initialize lconv members properly</div>
+<div class="disabled">#ifdef _CHAR_UNSIGNED</div>
+<div class="disabled">    extern int __do_unsigned_char_lconv_initialization;</div>
+<div class="disabled">    extern __inline int __use_char_max(void)</div>
+<div class="disabled">    {</div>
+<div class="disabled">        return __do_unsigned_char_lconv_initialization;</div>
+<div class="disabled">    }</div>
+<div class="disabled">#endif</div>
+
+
+
+<div class="disabled">#define _ENABLE_PER_THREAD_LOCALE         0x0001</div>
+<div class="disabled">#define _DISABLE_PER_THREAD_LOCALE        0x0002</div>
+<div class="disabled">#define _ENABLE_PER_THREAD_LOCALE_GLOBAL  0x0010</div>
+<div class="disabled">#define _DISABLE_PER_THREAD_LOCALE_GLOBAL 0x0020</div>
+<div class="disabled">#define _ENABLE_PER_THREAD_LOCALE_NEW     0x0100</div>
+<div class="disabled">#define _DISABLE_PER_THREAD_LOCALE_NEW    0x0200</div>
+
+<div class="disabled">#if _CRT_FUNCTIONS_REQUIRED</div>
+
+<div class="expandable"><div class="disabled">    _ACRTIMP void __cdecl _lock_locales(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_lock_locales@void()[decl0]"><div><div class="token cpp_function">_lock_locales</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="expandable"><div class="disabled">    _ACRTIMP void __cdecl _unlock_locales(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_unlock_locales@void()[decl0]"><div><div class="token cpp_function">_unlock_locales</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    _Check_return_opt_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP int __cdecl _configthreadlocale(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_configthreadlocale@int(int)[decl0]"><div><div class="token cpp_function">_configthreadlocale</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_ int _Flag</div>
+<div class="expanded">          <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_configthreadlocale@int(int)[decl0]::_Flag"><div>_Flag</div></div></div></div>
+        );
+
+<div class="disabled">    _Check_return_opt_ _Success_(return != 0) _Ret_z_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP char* __cdecl setlocale(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">char</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$setlocale@char *(int, char const *)[decl0]"><div><div class="token cpp_function">setlocale</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_       int         _Category,</div>
+<div class="expanded">                <div class="token cpp_keyword ">int</div>         <div class="def" id="NI$setlocale@char *(int, char const *)[decl0]::_Category"><div>_Category</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_z_ char const* _Locale</div>
+<div class="expanded">          <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$setlocale@char *(int, char const *)[decl0]::_Locale"><div>_Locale</div></div></div></div>
+        );
+
+<div class="disabled">    _Check_return_opt_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP struct lconv* __cdecl localeconv(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['lconv'], [], [])"><div class="token cpp_type">lconv</div></div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$localeconv@::lconv *()[decl0]"><div><div class="token cpp_function">localeconv</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    _Check_return_opt_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP _locale_t __cdecl _get_current_locale(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [], [])"><div class="token cpp_type">_locale_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_get_current_locale@::_locale_t()[decl0]"><div><div class="token cpp_function">_get_current_locale</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    _Check_return_opt_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP _locale_t __cdecl _create_locale(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [], [])"><div class="token cpp_type">_locale_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_create_locale@::_locale_t(int, char const *)[decl0]"><div><div class="token cpp_function">_create_locale</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_   int         _Category,</div>
+<div class="expanded">            <div class="token cpp_keyword ">int</div>         <div class="def" id="NI$_create_locale@::_locale_t(int, char const *)[decl0]::_Category"><div>_Category</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_z_ char const* _Locale</div>
+<div class="expanded">          <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_create_locale@::_locale_t(int, char const *)[decl0]::_Locale"><div>_Locale</div></div></div></div>
+        );
+
+<div class="expandable"><div class="disabled">    _ACRTIMP void __cdecl _free_locale(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_free_locale@void(::_locale_t)[decl0]"><div><div class="token cpp_function">_free_locale</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_ _locale_t _Locale</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [], [])"><div class="token cpp_type">_locale_t</div></div> <div class="def" id="NI$_free_locale@void(::_locale_t)[decl0]::_Locale"><div>_Locale</div></div></div></div>
+        );
+
+    <div class="token cpp_comment ">// Also declared in &lt;wchar.h&gt;</div>
+<div class="disabled">    _Check_return_opt_ _Success_(return != 0) _Ret_z_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP wchar_t* __cdecl _wsetlocale(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_wsetlocale@wchar_t *(int, wchar_t const *)'], [], [])"><div class="token cpp_function">_wsetlocale</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_       int            _Category,</div>
+<div class="expanded">                <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wsetlocale@wchar_t *(int, wchar_t const *)[decl1]::_Category"><div>_Category</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_z_ wchar_t const* _Locale</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wsetlocale@wchar_t *(int, wchar_t const *)[decl1]::_Locale"><div>_Locale</div></div></div></div>
+        );
+
+<div class="disabled">    _Check_return_opt_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP _locale_t __cdecl _wcreate_locale(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [], [])"><div class="token cpp_type">_locale_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl1]"><div class="ref" onclick="jumpToSymbol([], ['_wcreate_locale@::_locale_t(int, wchar_t const *)'], [], [])"><div class="token cpp_function">_wcreate_locale</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _In_   int            _Category,</div>
+<div class="expanded">            <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl1]::_Category"><div>_Category</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_z_ wchar_t const* _Locale</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl1]::_Locale"><div>_Locale</div></div></div></div>
+        );
+
+
+
+<div class="expandable"><div class="disabled">    _ACRTIMP wchar_t**    __cdecl ___lc_locale_name_func(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>**    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$___lc_locale_name_func@wchar_t * *()[decl0]"><div><div class="token cpp_function">___lc_locale_name_func</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="expandable"><div class="disabled">    _ACRTIMP unsigned int __cdecl ___lc_codepage_func   (void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$___lc_codepage_func@unsigned int()[decl0]"><div><div class="token cpp_function">___lc_codepage_func</div></div></div>   (<div class="token cpp_keyword ">void</div>);</div></div>
+<div class="expandable"><div class="disabled">    _ACRTIMP unsigned int __cdecl ___lc_collate_cp_func (void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$___lc_collate_cp_func@unsigned int()[decl0]"><div><div class="token cpp_function">___lc_collate_cp_func</div></div></div> (<div class="token cpp_keyword ">void</div>);</div></div>
+
+
+
+
+    <div class="token cpp_comment ">// Time-related functions</div>
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Ret_z_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP char*    __cdecl _Getdays(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">char</div>*    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Getdays@char *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_Getdays@char *()'], [], [])"><div class="token cpp_function">_Getdays</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Ret_z_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP char*    __cdecl _Getmonths(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">char</div>*    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Getmonths@char *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_Getmonths@char *()'], [], [])"><div class="token cpp_function">_Getmonths</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="expandable"><div class="disabled">    _ACRTIMP void*    __cdecl _Gettnames(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>*    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Gettnames@void *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_Gettnames@void *()'], [], [])"><div class="token cpp_function">_Gettnames</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Ret_z_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP wchar_t* __cdecl _W_Getdays(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_W_Getdays@wchar_t *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_W_Getdays@wchar_t *()'], [], [])"><div class="token cpp_function">_W_Getdays</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    _Success_(return != 0)</div>
+<div class="disabled">    _Ret_z_</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP wchar_t* __cdecl _W_Getmonths(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_W_Getmonths@wchar_t *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_W_Getmonths@wchar_t *()'], [], [])"><div class="token cpp_function">_W_Getmonths</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="expandable"><div class="disabled">    _ACRTIMP void*    __cdecl _W_Gettnames(void);</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div>*    <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_W_Gettnames@void *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_W_Gettnames@void *()'], [], [])"><div class="token cpp_function">_W_Gettnames</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+<div class="disabled">    _Success_(return &gt; 0)</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP size_t __cdecl _Strftime(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)'], [], [])"><div class="token cpp_function">_Strftime</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _Out_writes_z_(_Max_size) char*           _Buffer,</div>
+<div class="expanded">          <div class="token cpp_keyword ">char</div>*           <div class="def" id="NI$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                     size_t           _Max_size,</div>
+<div class="expanded">                              <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>           <div class="def" id="NI$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl0]::_Max_size"><div>_Max_size</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_z_                   char const*      _Format,</div>
+<div class="expanded">                            <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>*      <div class="def" id="NI$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl0]::_Format"><div>_Format</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                     struct tm const* _Timeptr,</div>
+<div class="expanded">                              <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl0]::_Timeptr"><div>_Timeptr</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_                 void*            _Lc_time_arg);</div>
+<div class="expanded">                          <div class="token cpp_keyword ">void</div>*            <div class="def" id="NI$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl0]::_Lc_time_arg"><div>_Lc_time_arg</div></div>);</div></div>
+
+<div class="disabled">    _Success_(return &gt; 0)</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP size_t __cdecl _Wcsftime(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)'], [], [])"><div class="token cpp_function">_Wcsftime</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">        _Out_writes_z_(_Max_size) wchar_t*        _Buffer,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>*        <div class="def" id="NI$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl0]::_Buffer"><div>_Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                     size_t           _Max_size,</div>
+<div class="expanded">                              <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div>           <div class="def" id="NI$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl0]::_Max_size"><div>_Max_size</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_z_                   wchar_t const*   _Format,</div>
+<div class="expanded">                            <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*   <div class="def" id="NI$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl0]::_Format"><div>_Format</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_                     struct tm const* _Timeptr,</div>
+<div class="expanded">                              <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['tm'], [], [])"><div class="token cpp_type">tm</div></div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl0]::_Timeptr"><div>_Timeptr</div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _In_opt_                 void*            _Lc_time_arg</div>
+<div class="expanded">                          <div class="token cpp_keyword ">void</div>*            <div class="def" id="NI$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl0]::_Lc_time_arg"><div>_Lc_time_arg</div></div></div></div>
+        );
+
+<div class="disabled">#endif // _CRT_FUNCTIONS_REQUIRED</div>
+
+
+<div class="expandable"><div class="disabled">_CRT_END_C_HEADER
+#endif // _INC_LOCALE
+</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_Getdays@char *()': {
+        'displayNameInHtml': '<span class="cpp_function">_Getdays</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_Getdays@char *()[decl0]',
+            'FB$_Getdays@char *()[decl1]'
+        ]
+    },
+    '_Getmonths@char *()': {
+        'displayNameInHtml': '<span class="cpp_function">_Getmonths</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_Getmonths@char *()[decl0]',
+            'FB$_Getmonths@char *()[decl1]'
+        ]
+    },
+    '_Gettnames@void *()': {
+        'displayNameInHtml': '<span class="cpp_function">_Gettnames</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_Gettnames@void *()[decl0]',
+            'FB$_Gettnames@void *()[decl1]'
+        ]
+    },
+    '_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)': {
+        'displayNameInHtml': '<span class="cpp_function">_Strftime</span>(<span class="cpp_keyword">char</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">tm</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">void</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl0]',
+            'FB$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl1]'
+        ]
+    },
+    '_W_Getdays@wchar_t *()': {
+        'displayNameInHtml': '<span class="cpp_function">_W_Getdays</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_W_Getdays@wchar_t *()[decl0]',
+            'FB$_W_Getdays@wchar_t *()[decl1]'
+        ]
+    },
+    '_W_Getmonths@wchar_t *()': {
+        'displayNameInHtml': '<span class="cpp_function">_W_Getmonths</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_W_Getmonths@wchar_t *()[decl0]',
+            'FB$_W_Getmonths@wchar_t *()[decl1]'
+        ]
+    },
+    '_W_Gettnames@void *()': {
+        'displayNameInHtml': '<span class="cpp_function">_W_Gettnames</span>()',
+        'impls': [],
+        'decls': [
+            'FB$_W_Gettnames@void *()[decl0]',
+            'FB$_W_Gettnames@void *()[decl1]'
+        ]
+    },
+    '_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)': {
+        'displayNameInHtml': '<span class="cpp_function">_Wcsftime</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">size_t</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">tm</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">void</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl0]',
+            'FB$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl1]'
+        ]
+    },
+    '_locale_t': {
+        'displayNameInHtml': '<span class="cpp_type">_locale_t</span>',
+        'impls': [
+            'NI$_locale_t'
+        ],
+        'decls': []
+    },
+    '_wcreate_locale@::_locale_t(int, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wcreate_locale</span>(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl0]',
+            'FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl1]'
+        ]
+    },
+    '_wsetlocale@wchar_t *(int, wchar_t const *)': {
+        'displayNameInHtml': '<span class="cpp_function">_wsetlocale</span>(<span class="cpp_keyword">int</span>, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl0]',
+            'FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl1]'
+        ]
+    },
+    'lconv': {
+        'displayNameInHtml': '<span class="cpp_type">lconv</span>',
+        'impls': [
+            'NI$lconv'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    'tm': {
+        'displayNameInHtml': '<span class="cpp_type">tm</span>',
+        'impls': [
+            'NI$tm'
+        ],
+        'decls': [
+            'NF[0]$tm'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$_Getdays@char *()[decl0]': null,
+    'FB$_Getdays@char *()[decl1]': { 'htmlFileName': 'xlocinfo.h', 'displayName': 'xlocinfo.h' },
+    'FB$_Getmonths@char *()[decl0]': null,
+    'FB$_Getmonths@char *()[decl1]': { 'htmlFileName': 'xlocinfo.h', 'displayName': 'xlocinfo.h' },
+    'FB$_Gettnames@void *()[decl0]': null,
+    'FB$_Gettnames@void *()[decl1]': { 'htmlFileName': 'xlocinfo.h', 'displayName': 'xlocinfo.h' },
+    'FB$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl0]': null,
+    'FB$_Strftime@::size_t(char *, ::size_t, char const *, ::tm const *, void *)[decl1]': { 'htmlFileName': 'xlocinfo.h', 'displayName': 'xlocinfo.h' },
+    'FB$_W_Getdays@wchar_t *()[decl0]': null,
+    'FB$_W_Getdays@wchar_t *()[decl1]': { 'htmlFileName': 'xlocinfo.h', 'displayName': 'xlocinfo.h' },
+    'FB$_W_Getmonths@wchar_t *()[decl0]': null,
+    'FB$_W_Getmonths@wchar_t *()[decl1]': { 'htmlFileName': 'xlocinfo.h', 'displayName': 'xlocinfo.h' },
+    'FB$_W_Gettnames@void *()[decl0]': null,
+    'FB$_W_Gettnames@void *()[decl1]': { 'htmlFileName': 'xlocinfo.h', 'displayName': 'xlocinfo.h' },
+    'FB$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl0]': null,
+    'FB$_Wcsftime@::size_t(wchar_t *, ::size_t, wchar_t const *, ::tm const *, void *)[decl1]': { 'htmlFileName': 'xlocinfo.h', 'displayName': 'xlocinfo.h' },
+    'FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$_wcreate_locale@::_locale_t(int, wchar_t const *)[decl1]': null,
+    'FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl0]': { 'htmlFileName': 'wchar.h', 'displayName': 'wchar.h' },
+    'FB$_wsetlocale@wchar_t *(int, wchar_t const *)[decl1]': null,
+    'NF[0]$tm': null,
+    'NI$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'NI$lconv': null,
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$tm': { 'htmlFileName': 'corecrt_wtime.h', 'displayName': 'corecrt_wtime.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

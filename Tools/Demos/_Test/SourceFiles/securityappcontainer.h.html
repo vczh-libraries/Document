@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>securityappcontainer.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* securityappcontainer.h -- ApiSet Contract for api-ms-win-security-appcontainer-l1 *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _APIAPPCONTAINER_</div>
+<div class="disabled">#define _APIAPPCONTAINER_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+
+
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if NTDDI_VERSION &gt;= NTDDI_WIN8</div>
+
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Token Extension APIs</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetAppContainerNamedObjectPath@::BOOL(::HANDLE, ::PSID, ::ULONG, ::LPWSTR, ::PULONG)[decl0]"><div><div class="token cpp_function">GetAppContainerNamedObjectPath</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ HANDLE Token,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetAppContainerNamedObjectPath@::BOOL(::HANDLE, ::PSID, ::ULONG, ::LPWSTR, ::PULONG)[decl0]::Token"><div>Token</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ PSID AppContainerSid,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSID'], [], [])"><div class="token cpp_type">PSID</div></div> <div class="def" id="NI$GetAppContainerNamedObjectPath@::BOOL(::HANDLE, ::PSID, ::ULONG, ::LPWSTR, ::PULONG)[decl0]::AppContainerSid"><div>AppContainerSid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG ObjectPathLength,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$GetAppContainerNamedObjectPath@::BOOL(::HANDLE, ::PSID, ::ULONG, ::LPWSTR, ::PULONG)[decl0]::ObjectPathLength"><div>ObjectPathLength</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_opt_(ObjectPathLength) LPWSTR ObjectPath,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetAppContainerNamedObjectPath@::BOOL(::HANDLE, ::PSID, ::ULONG, ::LPWSTR, ::PULONG)[decl0]::ObjectPath"><div>ObjectPath</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PULONG ReturnLength</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONG'], [], [])"><div class="token cpp_type">PULONG</div></div> <div class="def" id="NI$GetAppContainerNamedObjectPath@::BOOL(::HANDLE, ::PSID, ::ULONG, ::LPWSTR, ::PULONG)[decl0]::ReturnLength"><div>ReturnLength</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#endif // _APIAPPCONTAINER_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'PSID': {
+        'displayNameInHtml': '<span class="cpp_type">PSID</span>',
+        'impls': [
+            'NI$PSID'
+        ],
+        'decls': []
+    },
+    'PULONG': {
+        'displayNameInHtml': '<span class="cpp_type">PULONG</span>',
+        'impls': [
+            'NI$PULONG'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PSID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

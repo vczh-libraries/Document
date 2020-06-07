@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sysinfoapi.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* sysinfoapi.h -- ApiSet Contract for api-ms-win-core-sysinfo-l1                *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _SYSINFOAPI_H_</div>
+<div class="disabled">#define _SYSINFOAPI_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 800)</div>
+#pragma warning(disable:<div class="token cpp_number ">4514</div>)
+<div class="disabled">#ifndef __WINDOWS_DONT_DISABLE_PRAGMA_PACK_WARNING__</div>
+#pragma warning(disable:<div class="token cpp_number ">4103</div>)
+<div class="disabled">#endif</div>
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="disabled">#endif</div>
+#pragma warning(disable:<div class="token cpp_number ">4001</div>)
+#pragma warning(disable:<div class="token cpp_number ">4201</div>)
+#pragma warning(disable:<div class="token cpp_number ">4214</div>)
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if defined(FKG_FORCED_USAGE) || defined(WINPHONE) || defined(BUILD_WINDOWS)</div>
+<div class="disabled"># define NOT_BUILD_WINDOWS_DEPRECATE
+#else</div>
+<div class="disabled"># define NOT_BUILD_WINDOWS_DEPRECATE __declspec(deprecated)
+#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_SYSTEM_INFO"><div><div class="token cpp_type">_SYSTEM_INFO</div></div></div> {
+    <div class="token cpp_keyword ">union</div> {
+        <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::dwOemId"><div><div class="token cpp_field">dwOemId</div></div></div>;          <div class="token cpp_comment ">// Obsolete field...do not use</div>
+        <div class="token cpp_keyword ">struct</div> {
+            <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::wProcessorArchitecture"><div><div class="token cpp_field">wProcessorArchitecture</div></div></div>;
+            <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::wReserved"><div><div class="token cpp_field">wReserved</div></div></div>;
+<div class="expandable"><div class="disabled">        } DUMMYSTRUCTNAME;</div>
+<div class="expanded">        } ;</div></div>
+<div class="expandable"><div class="disabled">    } DUMMYUNIONNAME;</div>
+<div class="expanded">    } ;</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::dwPageSize"><div><div class="token cpp_field">dwPageSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$_SYSTEM_INFO::lpMinimumApplicationAddress"><div><div class="token cpp_field">lpMinimumApplicationAddress</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$_SYSTEM_INFO::lpMaximumApplicationAddress"><div><div class="token cpp_field">lpMaximumApplicationAddress</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$_SYSTEM_INFO::dwActiveProcessorMask"><div><div class="token cpp_field">dwActiveProcessorMask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::dwNumberOfProcessors"><div><div class="token cpp_field">dwNumberOfProcessors</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::dwProcessorType"><div><div class="token cpp_field">dwProcessorType</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::dwAllocationGranularity"><div><div class="token cpp_field">dwAllocationGranularity</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::wProcessorLevel"><div><div class="token cpp_field">wProcessorLevel</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$_SYSTEM_INFO::wProcessorRevision"><div><div class="token cpp_field">wProcessorRevision</div></div></div>;
+} <div class="def" id="NI$SYSTEM_INFO"><div><div class="token cpp_type">SYSTEM_INFO</div></div></div>, *<div class="def" id="NI$LPSYSTEM_INFO"><div><div class="token cpp_type">LPSYSTEM_INFO</div></div></div>;
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_MEMORYSTATUSEX"><div><div class="token cpp_type">_MEMORYSTATUSEX</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::dwLength"><div><div class="token cpp_field">dwLength</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::dwMemoryLoad"><div><div class="token cpp_field">dwMemoryLoad</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORDLONG'], [], [])"><div class="token cpp_type">DWORDLONG</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::ullTotalPhys"><div><div class="token cpp_field">ullTotalPhys</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORDLONG'], [], [])"><div class="token cpp_type">DWORDLONG</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::ullAvailPhys"><div><div class="token cpp_field">ullAvailPhys</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORDLONG'], [], [])"><div class="token cpp_type">DWORDLONG</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::ullTotalPageFile"><div><div class="token cpp_field">ullTotalPageFile</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORDLONG'], [], [])"><div class="token cpp_type">DWORDLONG</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::ullAvailPageFile"><div><div class="token cpp_field">ullAvailPageFile</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORDLONG'], [], [])"><div class="token cpp_type">DWORDLONG</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::ullTotalVirtual"><div><div class="token cpp_field">ullTotalVirtual</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORDLONG'], [], [])"><div class="token cpp_type">DWORDLONG</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::ullAvailVirtual"><div><div class="token cpp_field">ullAvailVirtual</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORDLONG'], [], [])"><div class="token cpp_type">DWORDLONG</div></div> <div class="def" id="NI$_MEMORYSTATUSEX::ullAvailExtendedVirtual"><div><div class="token cpp_field">ullAvailExtendedVirtual</div></div></div>;
+} <div class="def" id="NI$MEMORYSTATUSEX"><div><div class="token cpp_type">MEMORYSTATUSEX</div></div></div>, *<div class="def" id="NI$LPMEMORYSTATUSEX"><div><div class="token cpp_type">LPMEMORYSTATUSEX</div></div></div>;
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GlobalMemoryStatusEx@::BOOL(::LPMEMORYSTATUSEX)[decl0]"><div><div class="token cpp_function">GlobalMemoryStatusEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPMEMORYSTATUSEX lpBuffer</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPMEMORYSTATUSEX'], [], [])"><div class="token cpp_type">LPMEMORYSTATUSEX</div></div> <div class="def" id="NI$GlobalMemoryStatusEx@::BOOL(::LPMEMORYSTATUSEX)[decl0]::lpBuffer"><div>lpBuffer</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemInfo@void(::LPSYSTEM_INFO)[decl0]"><div><div class="token cpp_function">GetSystemInfo</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEM_INFO lpSystemInfo</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEM_INFO'], [], [])"><div class="token cpp_type">LPSYSTEM_INFO</div></div> <div class="def" id="NI$GetSystemInfo@void(::LPSYSTEM_INFO)[decl0]::lpSystemInfo"><div>lpSystemInfo</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemTime@void(::LPSYSTEMTIME)[decl0]"><div><div class="token cpp_function">GetSystemTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEMTIME lpSystemTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEMTIME'], [], [])"><div class="token cpp_type">LPSYSTEMTIME</div></div> <div class="def" id="NI$GetSystemTime@void(::LPSYSTEMTIME)[decl0]::lpSystemTime"><div>lpSystemTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemTimeAsFileTime@void(::LPFILETIME)[decl0]"><div><div class="token cpp_function">GetSystemTimeAsFileTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPFILETIME lpSystemTimeAsFileTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPFILETIME'], [], [])"><div class="token cpp_type">LPFILETIME</div></div> <div class="def" id="NI$GetSystemTimeAsFileTime@void(::LPFILETIME)[decl0]::lpSystemTimeAsFileTime"><div>lpSystemTimeAsFileTime</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetLocalTime@void(::LPSYSTEMTIME)[decl0]"><div><div class="token cpp_function">GetLocalTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEMTIME lpSystemTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEMTIME'], [], [])"><div class="token cpp_type">LPSYSTEMTIME</div></div> <div class="def" id="NI$GetLocalTime@void(::LPSYSTEMTIME)[decl0]::lpSystemTime"><div>lpSystemTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">NOT_BUILD_WINDOWS_DEPRECATE</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated)</div></div>
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">__drv_preferredFunction(&quot;IsWindows*&quot;, &quot;Deprecated. Use VerifyVersionInfo* or IsWindows* macros from VersionHelpers.&quot;)</div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetVersion@::DWORD()[decl0]"><div><div class="token cpp_function">GetVersion</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetLocalTime@::BOOL(::SYSTEMTIME const *)[decl0]"><div><div class="token cpp_function">SetLocalTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ CONST SYSTEMTIME* lpSystemTime</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$SetLocalTime@::BOOL(::SYSTEMTIME const *)[decl0]::lpSystemTime"><div>lpSystemTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">__drv_preferredFunction(&quot;GetTickCount64&quot;, &quot;GetTickCount overflows roughly every 49 days.  Code that does not take that into account can loop indefinitely.  GetTickCount64 operates on 64 bit values and does not have that problem&quot;)</div>
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetTickCount@::DWORD()[decl0]"><div><div class="token cpp_function">GetTickCount</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['ULONGLONG'], [], [])"><div class="token cpp_type">ULONGLONG</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetTickCount64@::ULONGLONG()[decl0]"><div><div class="token cpp_function">GetTickCount64</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemTimeAdjustment@::BOOL(::PDWORD, ::PDWORD, ::PBOOL)[decl0]"><div><div class="token cpp_function">GetSystemTimeAdjustment</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PDWORD lpTimeAdjustment,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD'], [], [])"><div class="token cpp_type">PDWORD</div></div> <div class="def" id="NI$GetSystemTimeAdjustment@::BOOL(::PDWORD, ::PDWORD, ::PBOOL)[decl0]::lpTimeAdjustment"><div>lpTimeAdjustment</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PDWORD lpTimeIncrement,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD'], [], [])"><div class="token cpp_type">PDWORD</div></div> <div class="def" id="NI$GetSystemTimeAdjustment@::BOOL(::PDWORD, ::PDWORD, ::PBOOL)[decl0]::lpTimeIncrement"><div>lpTimeIncrement</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PBOOL lpTimeAdjustmentDisabled</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PBOOL'], [], [])"><div class="token cpp_type">PBOOL</div></div> <div class="def" id="NI$GetSystemTimeAdjustment@::BOOL(::PDWORD, ::PDWORD, ::PBOOL)[decl0]::lpTimeAdjustmentDisabled"><div>lpTimeAdjustmentDisabled</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemTimeAdjustmentPrecise@::BOOL(::PDWORD64, ::PDWORD64, ::PBOOL)[decl0]"><div><div class="token cpp_function">GetSystemTimeAdjustmentPrecise</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PDWORD64 lpTimeAdjustment,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD64'], [], [])"><div class="token cpp_type">PDWORD64</div></div> <div class="def" id="NI$GetSystemTimeAdjustmentPrecise@::BOOL(::PDWORD64, ::PDWORD64, ::PBOOL)[decl0]::lpTimeAdjustment"><div>lpTimeAdjustment</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PDWORD64 lpTimeIncrement,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD64'], [], [])"><div class="token cpp_type">PDWORD64</div></div> <div class="def" id="NI$GetSystemTimeAdjustmentPrecise@::BOOL(::PDWORD64, ::PDWORD64, ::PBOOL)[decl0]::lpTimeIncrement"><div>lpTimeIncrement</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PBOOL lpTimeAdjustmentDisabled</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PBOOL'], [], [])"><div class="token cpp_type">PBOOL</div></div> <div class="def" id="NI$GetSystemTimeAdjustmentPrecise@::BOOL(::PDWORD64, ::PDWORD64, ::PBOOL)[decl0]::lpTimeAdjustmentDisabled"><div>lpTimeAdjustmentDisabled</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; uSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]"><div><div class="token cpp_function">GetSystemDirectoryA</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(uSize,return + 1) LPSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetSystemDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$GetSystemDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]::uSize"><div>uSize</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; uSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]"><div><div class="token cpp_function">GetSystemDirectoryW</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(uSize,return + 1) LPWSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetSystemDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$GetSystemDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]::uSize"><div>uSize</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetSystemDirectory  GetSystemDirectoryW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetSystemDirectory  GetSystemDirectoryA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; uSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetWindowsDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]"><div><div class="token cpp_function">GetWindowsDirectoryA</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(uSize,return + 1) LPSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetWindowsDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$GetWindowsDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]::uSize"><div>uSize</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; uSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetWindowsDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]"><div><div class="token cpp_function">GetWindowsDirectoryW</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(uSize,return + 1) LPWSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetWindowsDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$GetWindowsDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]::uSize"><div>uSize</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetWindowsDirectory  GetWindowsDirectoryW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetWindowsDirectory  GetWindowsDirectoryA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; uSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemWindowsDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]"><div><div class="token cpp_function">GetSystemWindowsDirectoryA</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(uSize,return + 1) LPSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetSystemWindowsDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$GetSystemWindowsDirectoryA@::UINT(::LPSTR, ::UINT)[decl0]::uSize"><div>uSize</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != 0 &amp;&amp; return &lt; uSize)</div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemWindowsDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]"><div><div class="token cpp_function">GetSystemWindowsDirectoryW</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(uSize,return + 1) LPWSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetSystemWindowsDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UINT uSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$GetSystemWindowsDirectoryW@::UINT(::LPWSTR, ::UINT)[decl0]::uSize"><div>uSize</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetSystemWindowsDirectory  GetSystemWindowsDirectoryW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetSystemWindowsDirectory  GetSystemWindowsDirectoryA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$_COMPUTER_NAME_FORMAT"><div><div class="token cpp_type">_COMPUTER_NAME_FORMAT</div></div></div> {
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNameNetBIOS"><div><div class="token cpp_enum">ComputerNameNetBIOS</div></div></div>,
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNameDnsHostname"><div><div class="token cpp_enum">ComputerNameDnsHostname</div></div></div>,
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNameDnsDomain"><div><div class="token cpp_enum">ComputerNameDnsDomain</div></div></div>,
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNameDnsFullyQualified"><div><div class="token cpp_enum">ComputerNameDnsFullyQualified</div></div></div>,
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNamePhysicalNetBIOS"><div><div class="token cpp_enum">ComputerNamePhysicalNetBIOS</div></div></div>,
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNamePhysicalDnsHostname"><div><div class="token cpp_enum">ComputerNamePhysicalDnsHostname</div></div></div>,
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNamePhysicalDnsDomain"><div><div class="token cpp_enum">ComputerNamePhysicalDnsDomain</div></div></div>,
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNamePhysicalDnsFullyQualified"><div><div class="token cpp_enum">ComputerNamePhysicalDnsFullyQualified</div></div></div>,
+    <div class="def" id="NI$_COMPUTER_NAME_FORMAT::ComputerNameMax"><div><div class="token cpp_enum">ComputerNameMax</div></div></div>
+} <div class="def" id="NI$COMPUTER_NAME_FORMAT"><div><div class="token cpp_type">COMPUTER_NAME_FORMAT</div></div></div> ;
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetComputerNameExA@::BOOL(::COMPUTER_NAME_FORMAT, ::LPSTR, ::LPDWORD)[decl0]"><div><div class="token cpp_function">GetComputerNameExA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ COMPUTER_NAME_FORMAT NameType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['COMPUTER_NAME_FORMAT'], [], [])"><div class="token cpp_type">COMPUTER_NAME_FORMAT</div></div> <div class="def" id="NI$GetComputerNameExA@::BOOL(::COMPUTER_NAME_FORMAT, ::LPSTR, ::LPDWORD)[decl0]::NameType"><div>NameType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(*nSize,*nSize + 1) LPSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetComputerNameExA@::BOOL(::COMPUTER_NAME_FORMAT, ::LPSTR, ::LPDWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ LPDWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetComputerNameExA@::BOOL(::COMPUTER_NAME_FORMAT, ::LPSTR, ::LPDWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetComputerNameExW@::BOOL(::COMPUTER_NAME_FORMAT, ::LPWSTR, ::LPDWORD)[decl0]"><div><div class="token cpp_function">GetComputerNameExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ COMPUTER_NAME_FORMAT NameType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['COMPUTER_NAME_FORMAT'], [], [])"><div class="token cpp_type">COMPUTER_NAME_FORMAT</div></div> <div class="def" id="NI$GetComputerNameExW@::BOOL(::COMPUTER_NAME_FORMAT, ::LPWSTR, ::LPDWORD)[decl0]::NameType"><div>NameType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(*nSize,*nSize + 1) LPWSTR lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetComputerNameExW@::BOOL(::COMPUTER_NAME_FORMAT, ::LPWSTR, ::LPDWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ LPDWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetComputerNameExW@::BOOL(::COMPUTER_NAME_FORMAT, ::LPWSTR, ::LPDWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetComputerNameEx  GetComputerNameExW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetComputerNameEx  GetComputerNameExA
+#endif // !UNICODE</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetComputerNameExW@::BOOL(::COMPUTER_NAME_FORMAT, ::LPCWSTR)[decl0]"><div><div class="token cpp_function">SetComputerNameExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ COMPUTER_NAME_FORMAT NameType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['COMPUTER_NAME_FORMAT'], [], [])"><div class="token cpp_type">COMPUTER_NAME_FORMAT</div></div> <div class="def" id="NI$SetComputerNameExW@::BOOL(::COMPUTER_NAME_FORMAT, ::LPCWSTR)[decl0]::NameType"><div>NameType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpBuffer</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SetComputerNameExW@::BOOL(::COMPUTER_NAME_FORMAT, ::LPCWSTR)[decl0]::lpBuffer"><div>lpBuffer</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define SetComputerNameEx SetComputerNameExW
+#endif</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetSystemTime@::BOOL(::SYSTEMTIME const *)[decl0]"><div><div class="token cpp_function">SetSystemTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ CONST SYSTEMTIME* lpSystemTime</div>
+<div class="expanded">      <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div>* <div class="def" id="NI$SetSystemTime@::BOOL(::SYSTEMTIME const *)[decl0]::lpSystemTime"><div>lpSystemTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">NOT_BUILD_WINDOWS_DEPRECATE</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated)</div></div>
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">__drv_preferredFunction(&quot;IsWindows*&quot;, &quot;Deprecated. Use VerifyVersionInfo* or IsWindows* macros from VersionHelpers.&quot;)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetVersionExA@::BOOL(::LPOSVERSIONINFOA)[decl0]"><div><div class="token cpp_function">GetVersionExA</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ LPOSVERSIONINFOA lpVersionInformation</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPOSVERSIONINFOA'], [], [])"><div class="token cpp_type">LPOSVERSIONINFOA</div></div> <div class="def" id="NI$GetVersionExA@::BOOL(::LPOSVERSIONINFOA)[decl0]::lpVersionInformation"><div>lpVersionInformation</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">NOT_BUILD_WINDOWS_DEPRECATE</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated)</div></div>
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">__drv_preferredFunction(&quot;IsWindows*&quot;, &quot;Deprecated. Use VerifyVersionInfo* or IsWindows* macros from VersionHelpers.&quot;)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetVersionExW@::BOOL(::LPOSVERSIONINFOW)[decl0]"><div><div class="token cpp_function">GetVersionExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _Inout_ LPOSVERSIONINFOW lpVersionInformation</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPOSVERSIONINFOW'], [], [])"><div class="token cpp_type">LPOSVERSIONINFOW</div></div> <div class="def" id="NI$GetVersionExW@::BOOL(::LPOSVERSIONINFOW)[decl0]::lpVersionInformation"><div>lpVersionInformation</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetVersionEx  GetVersionExW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetVersionEx  GetVersionExA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetLogicalProcessorInformation@::BOOL(::PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, ::PDWORD)[decl0]"><div><div class="token cpp_function">GetLogicalProcessorInformation</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_opt_(*ReturnedLength,*ReturnedLength) PSYSTEM_LOGICAL_PROCESSOR_INFORMATION Buffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSYSTEM_LOGICAL_PROCESSOR_INFORMATION'], [], [])"><div class="token cpp_type">PSYSTEM_LOGICAL_PROCESSOR_INFORMATION</div></div> <div class="def" id="NI$GetLogicalProcessorInformation@::BOOL(::PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, ::PDWORD)[decl0]::Buffer"><div>Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ PDWORD ReturnedLength</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD'], [], [])"><div class="token cpp_type">PDWORD</div></div> <div class="def" id="NI$GetLogicalProcessorInformation@::BOOL(::PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, ::PDWORD)[decl0]::ReturnedLength"><div>ReturnedLength</div></div></div></div>
+    );
+
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN7)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetLogicalProcessorInformationEx@::BOOL(::LOGICAL_PROCESSOR_RELATIONSHIP, ::PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX, ::PDWORD)[decl0]"><div><div class="token cpp_function">GetLogicalProcessorInformationEx</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LOGICAL_PROCESSOR_RELATIONSHIP RelationshipType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LOGICAL_PROCESSOR_RELATIONSHIP'], [], [])"><div class="token cpp_type">LOGICAL_PROCESSOR_RELATIONSHIP</div></div> <div class="def" id="NI$GetLogicalProcessorInformationEx@::BOOL(::LOGICAL_PROCESSOR_RELATIONSHIP, ::PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX, ::PDWORD)[decl0]::RelationshipType"><div>RelationshipType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_opt_(*ReturnedLength,*ReturnedLength) PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX Buffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX'], [], [])"><div class="token cpp_type">PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX</div></div> <div class="def" id="NI$GetLogicalProcessorInformationEx@::BOOL(::LOGICAL_PROCESSOR_RELATIONSHIP, ::PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX, ::PDWORD)[decl0]::Buffer"><div>Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ PDWORD ReturnedLength</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD'], [], [])"><div class="token cpp_type">PDWORD</div></div> <div class="def" id="NI$GetLogicalProcessorInformationEx@::BOOL(::LOGICAL_PROCESSOR_RELATIONSHIP, ::PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX, ::PDWORD)[decl0]::ReturnedLength"><div>ReturnedLength</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN7)</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WINXP)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetNativeSystemInfo@void(::LPSYSTEM_INFO)[decl0]"><div><div class="token cpp_function">GetNativeSystemInfo</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPSYSTEM_INFO lpSystemInfo</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSYSTEM_INFO'], [], [])"><div class="token cpp_type">LPSYSTEM_INFO</div></div> <div class="def" id="NI$GetNativeSystemInfo@void(::LPSYSTEM_INFO)[decl0]::lpSystemInfo"><div>lpSystemInfo</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_WINXP)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN8)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemTimePreciseAsFileTime@void(::LPFILETIME)[decl0]"><div><div class="token cpp_function">GetSystemTimePreciseAsFileTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ LPFILETIME lpSystemTimeAsFileTime</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPFILETIME'], [], [])"><div class="token cpp_type">LPFILETIME</div></div> <div class="def" id="NI$GetSystemTimePreciseAsFileTime@void(::LPFILETIME)[decl0]::lpSystemTimeAsFileTime"><div>lpSystemTimeAsFileTime</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN8)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_VISTA)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetProductInfo@::BOOL(::DWORD, ::DWORD, ::DWORD, ::DWORD, ::PDWORD)[decl0]"><div><div class="token cpp_function">GetProductInfo</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwOSMajorVersion,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetProductInfo@::BOOL(::DWORD, ::DWORD, ::DWORD, ::DWORD, ::PDWORD)[decl0]::dwOSMajorVersion"><div>dwOSMajorVersion</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwOSMinorVersion,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetProductInfo@::BOOL(::DWORD, ::DWORD, ::DWORD, ::DWORD, ::PDWORD)[decl0]::dwOSMinorVersion"><div>dwOSMinorVersion</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwSpMajorVersion,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetProductInfo@::BOOL(::DWORD, ::DWORD, ::DWORD, ::DWORD, ::PDWORD)[decl0]::dwSpMajorVersion"><div>dwSpMajorVersion</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwSpMinorVersion,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetProductInfo@::BOOL(::DWORD, ::DWORD, ::DWORD, ::DWORD, ::PDWORD)[decl0]::dwSpMinorVersion"><div>dwSpMinorVersion</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PDWORD pdwReturnedProductType</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD'], [], [])"><div class="token cpp_type">PDWORD</div></div> <div class="def" id="NI$GetProductInfo@::BOOL(::DWORD, ::DWORD, ::DWORD, ::DWORD, ::PDWORD)[decl0]::pdwReturnedProductType"><div>pdwReturnedProductType</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_VISTA)</div>
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN2K)</div>
+
+<div class="expandable"><div class="disabled">NTSYSAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['ULONGLONG'], [], [])"><div class="token cpp_type">ULONGLONG</div></div>
+<div class="expandable"><div class="disabled">NTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$VerSetConditionMask@::ULONGLONG(::ULONGLONG, ::ULONG, ::UCHAR)[decl0]"><div><div class="token cpp_function">VerSetConditionMask</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ ULONGLONG ConditionMask,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONGLONG'], [], [])"><div class="token cpp_type">ULONGLONG</div></div> <div class="def" id="NI$VerSetConditionMask@::ULONGLONG(::ULONGLONG, ::ULONG, ::UCHAR)[decl0]::ConditionMask"><div>ConditionMask</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG TypeMask,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$VerSetConditionMask@::ULONGLONG(::ULONGLONG, ::ULONG, ::UCHAR)[decl0]::TypeMask"><div>TypeMask</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UCHAR Condition</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div> <div class="def" id="NI$VerSetConditionMask@::ULONGLONG(::ULONGLONG, ::ULONG, ::UCHAR)[decl0]::Condition"><div>Condition</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WIN2K)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN8)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetOsSafeBootMode@::BOOL(::PDWORD)[decl0]"><div><div class="token cpp_function">GetOsSafeBootMode</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PDWORD Flags</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD'], [], [])"><div class="token cpp_type">PDWORD</div></div> <div class="def" id="NI$GetOsSafeBootMode@::BOOL(::PDWORD)[decl0]::Flags"><div>Flags</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN8)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region OneCore Family or App Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$EnumSystemFirmwareTables@::UINT(::DWORD, ::PVOID, ::DWORD)[decl0]"><div><div class="token cpp_function">EnumSystemFirmwareTables</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD FirmwareTableProviderSignature,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumSystemFirmwareTables@::UINT(::DWORD, ::PVOID, ::DWORD)[decl0]::FirmwareTableProviderSignature"><div>FirmwareTableProviderSignature</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_opt_(BufferSize,return) PVOID pFirmwareTableEnumBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$EnumSystemFirmwareTables@::UINT(::DWORD, ::PVOID, ::DWORD)[decl0]::pFirmwareTableEnumBuffer"><div>pFirmwareTableEnumBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD BufferSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$EnumSystemFirmwareTables@::UINT(::DWORD, ::PVOID, ::DWORD)[decl0]::BufferSize"><div>BufferSize</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetSystemFirmwareTable@::UINT(::DWORD, ::DWORD, ::PVOID, ::DWORD)[decl0]"><div><div class="token cpp_function">GetSystemFirmwareTable</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD FirmwareTableProviderSignature,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetSystemFirmwareTable@::UINT(::DWORD, ::DWORD, ::PVOID, ::DWORD)[decl0]::FirmwareTableProviderSignature"><div>FirmwareTableProviderSignature</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD FirmwareTableID,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetSystemFirmwareTable@::UINT(::DWORD, ::DWORD, ::PVOID, ::DWORD)[decl0]::FirmwareTableID"><div>FirmwareTableID</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_opt_(BufferSize,return) PVOID pFirmwareTableBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PVOID'], [], [])"><div class="token cpp_type">PVOID</div></div> <div class="def" id="NI$GetSystemFirmwareTable@::UINT(::DWORD, ::DWORD, ::PVOID, ::DWORD)[decl0]::pFirmwareTableBuffer"><div>pFirmwareTableBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD BufferSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetSystemFirmwareTable@::UINT(::DWORD, ::DWORD, ::PVOID, ::DWORD)[decl0]::BufferSize"><div>BufferSize</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DnsHostnameToComputerNameExW@::BOOL(::LPCWSTR, ::LPWSTR, ::LPDWORD)[decl0]"><div><div class="token cpp_function">DnsHostnameToComputerNameExW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR Hostname,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$DnsHostnameToComputerNameExW@::BOOL(::LPCWSTR, ::LPWSTR, ::LPDWORD)[decl0]::Hostname"><div>Hostname</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_to_opt_(*nSize,*nSize + 1) LPWSTR ComputerName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$DnsHostnameToComputerNameExW@::BOOL(::LPCWSTR, ::LPWSTR, ::LPDWORD)[decl0]::ComputerName"><div>ComputerName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ LPDWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$DnsHostnameToComputerNameExW@::BOOL(::LPCWSTR, ::LPWSTR, ::LPDWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetPhysicallyInstalledSystemMemory@::BOOL(::PULONGLONG)[decl0]"><div><div class="token cpp_function">GetPhysicallyInstalledSystemMemory</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PULONGLONG TotalMemoryInKilobytes</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PULONGLONG'], [], [])"><div class="token cpp_type">PULONGLONG</div></div> <div class="def" id="NI$GetPhysicallyInstalledSystemMemory@::BOOL(::PULONGLONG)[decl0]::TotalMemoryInKilobytes"><div>TotalMemoryInKilobytes</div></div></div></div>
+    );
+
+
+<div class="disabled">#define SCEX2_ALT_NETBIOS_NAME 0x00000001</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetComputerNameEx2W@::BOOL(::COMPUTER_NAME_FORMAT, ::DWORD, ::LPCWSTR)[decl0]"><div><div class="token cpp_function">SetComputerNameEx2W</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ COMPUTER_NAME_FORMAT NameType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['COMPUTER_NAME_FORMAT'], [], [])"><div class="token cpp_type">COMPUTER_NAME_FORMAT</div></div> <div class="def" id="NI$SetComputerNameEx2W@::BOOL(::COMPUTER_NAME_FORMAT, ::DWORD, ::LPCWSTR)[decl0]::NameType"><div>NameType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD Flags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetComputerNameEx2W@::BOOL(::COMPUTER_NAME_FORMAT, ::DWORD, ::LPCWSTR)[decl0]::Flags"><div>Flags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpBuffer</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SetComputerNameEx2W@::BOOL(::COMPUTER_NAME_FORMAT, ::DWORD, ::LPCWSTR)[decl0]::lpBuffer"><div>lpBuffer</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define SetComputerNameEx2 SetComputerNameEx2W
+#endif</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetSystemTimeAdjustment@::BOOL(::DWORD, ::BOOL)[decl0]"><div><div class="token cpp_function">SetSystemTimeAdjustment</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD dwTimeAdjustment,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$SetSystemTimeAdjustment@::BOOL(::DWORD, ::BOOL)[decl0]::dwTimeAdjustment"><div>dwTimeAdjustment</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ BOOL bTimeAdjustmentDisabled</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$SetSystemTimeAdjustment@::BOOL(::DWORD, ::BOOL)[decl0]::bTimeAdjustmentDisabled"><div>bTimeAdjustmentDisabled</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Success_(return != FALSE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetSystemTimeAdjustmentPrecise@::BOOL(::DWORD64, ::BOOL)[decl0]"><div><div class="token cpp_function">SetSystemTimeAdjustmentPrecise</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ DWORD64 dwTimeAdjustment,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD64'], [], [])"><div class="token cpp_type">DWORD64</div></div> <div class="def" id="NI$SetSystemTimeAdjustmentPrecise@::BOOL(::DWORD64, ::BOOL)[decl0]::dwTimeAdjustment"><div>dwTimeAdjustment</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ BOOL bTimeAdjustmentDisabled</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$SetSystemTimeAdjustmentPrecise@::BOOL(::DWORD64, ::BOOL)[decl0]::bTimeAdjustmentDisabled"><div>bTimeAdjustmentDisabled</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$InstallELAMCertificateInfo@::BOOL(::HANDLE)[decl0]"><div><div class="token cpp_function">InstallELAMCertificateInfo</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE ELAMFile</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$InstallELAMCertificateInfo@::BOOL(::HANDLE)[decl0]::ELAMFile"><div>ELAMFile</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN7)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetProcessorSystemCycleTime@::BOOL(::USHORT, ::PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION, ::PDWORD)[decl0]"><div><div class="token cpp_function">GetProcessorSystemCycleTime</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ USHORT Group,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div> <div class="def" id="NI$GetProcessorSystemCycleTime@::BOOL(::USHORT, ::PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION, ::PDWORD)[decl0]::Group"><div>Group</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_opt_(*ReturnedLength,*ReturnedLength) PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION Buffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION'], [], [])"><div class="token cpp_type">PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION</div></div> <div class="def" id="NI$GetProcessorSystemCycleTime@::BOOL(::USHORT, ::PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION, ::PDWORD)[decl0]::Buffer"><div>Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ PDWORD ReturnedLength</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PDWORD'], [], [])"><div class="token cpp_type">PDWORD</div></div> <div class="def" id="NI$GetProcessorSystemCycleTime@::BOOL(::USHORT, ::PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION, ::PDWORD)[decl0]::ReturnedLength"><div>ReturnedLength</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_WIN7)</div>
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WINTHRESHOLD)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetOsManufacturingMode@::BOOL(::PBOOL)[decl0]"><div><div class="token cpp_function">GetOsManufacturingMode</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PBOOL pbEnabled</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PBOOL'], [], [])"><div class="token cpp_type">PBOOL</div></div> <div class="def" id="NI$GetOsManufacturingMode@::BOOL(::PBOOL)[decl0]::pbEnabled"><div>pbEnabled</div></div></div></div>
+    );
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_WINTHRESHOLD)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region App Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= _WIN32_WINNT_WINTHRESHOLD)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetIntegratedDisplaySize@::HRESULT(double *)[decl0]"><div><div class="token cpp_function">GetIntegratedDisplaySize</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ double* sizeInInches</div>
+<div class="expanded">      <div class="token cpp_keyword ">double</div>* <div class="def" id="NI$GetIntegratedDisplaySize@::HRESULT(double *)[decl0]::sizeInInches"><div>sizeInInches</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= _WIN32_WINNT_WINTHRESHOLD)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetComputerNameA@::BOOL(::LPCSTR)[decl0]"><div><div class="token cpp_function">SetComputerNameA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpComputerName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$SetComputerNameA@::BOOL(::LPCSTR)[decl0]::lpComputerName"><div>lpComputerName</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetComputerNameW@::BOOL(::LPCWSTR)[decl0]"><div><div class="token cpp_function">SetComputerNameW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpComputerName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$SetComputerNameW@::BOOL(::LPCWSTR)[decl0]::lpComputerName"><div>lpComputerName</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define SetComputerName  SetComputerNameW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define SetComputerName  SetComputerNameA
+#endif // !UNICODE</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetComputerNameExA@::BOOL(::COMPUTER_NAME_FORMAT, ::LPCSTR)[decl0]"><div><div class="token cpp_function">SetComputerNameExA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ COMPUTER_NAME_FORMAT NameType,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['COMPUTER_NAME_FORMAT'], [], [])"><div class="token cpp_type">COMPUTER_NAME_FORMAT</div></div> <div class="def" id="NI$SetComputerNameExA@::BOOL(::COMPUTER_NAME_FORMAT, ::LPCSTR)[decl0]::NameType"><div>NameType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LPCSTR lpBuffer</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCSTR'], [], [])"><div class="token cpp_type">LPCSTR</div></div> <div class="def" id="NI$SetComputerNameExA@::BOOL(::COMPUTER_NAME_FORMAT, ::LPCSTR)[decl0]::lpBuffer"><div>lpBuffer</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifndef UNICODE</div>
+<div class="disabled">#define SetComputerNameEx SetComputerNameExA</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 800)</div>
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#else</div>
+<div class="disabled">#pragma warning(default:4001)</div>
+<div class="disabled">#pragma warning(default:4201)</div>
+<div class="disabled">#pragma warning(default:4214)</div>
+<div class="disabled">/* Leave 4514 disabled.  It&apos;s an unneeded warning anyway. */
+#endif
+#endif</div>
+
+<div class="disabled">#endif // _SYSINFOAPI_H_</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'COMPUTER_NAME_FORMAT': {
+        'displayNameInHtml': '<span class="cpp_type">COMPUTER_NAME_FORMAT</span>',
+        'impls': [
+            'NI$COMPUTER_NAME_FORMAT'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'DWORD64': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD64</span>',
+        'impls': [
+            'NI$DWORD64'
+        ],
+        'decls': []
+    },
+    'DWORDLONG': {
+        'displayNameInHtml': '<span class="cpp_type">DWORDLONG</span>',
+        'impls': [
+            'NI$DWORDLONG'
+        ],
+        'decls': []
+    },
+    'DWORD_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD_PTR</span>',
+        'impls': [
+            'NI$DWORD_PTR'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'LOGICAL_PROCESSOR_RELATIONSHIP': {
+        'displayNameInHtml': '<span class="cpp_type">LOGICAL_PROCESSOR_RELATIONSHIP</span>',
+        'impls': [
+            'NI$LOGICAL_PROCESSOR_RELATIONSHIP'
+        ],
+        'decls': []
+    },
+    'LPCSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCSTR</span>',
+        'impls': [
+            'NI$LPCSTR'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPFILETIME': {
+        'displayNameInHtml': '<span class="cpp_type">LPFILETIME</span>',
+        'impls': [
+            'NI$LPFILETIME'
+        ],
+        'decls': []
+    },
+    'LPMEMORYSTATUSEX': {
+        'displayNameInHtml': '<span class="cpp_type">LPMEMORYSTATUSEX</span>',
+        'impls': [
+            'NI$LPMEMORYSTATUSEX'
+        ],
+        'decls': []
+    },
+    'LPOSVERSIONINFOA': {
+        'displayNameInHtml': '<span class="cpp_type">LPOSVERSIONINFOA</span>',
+        'impls': [
+            'NI$LPOSVERSIONINFOA'
+        ],
+        'decls': []
+    },
+    'LPOSVERSIONINFOW': {
+        'displayNameInHtml': '<span class="cpp_type">LPOSVERSIONINFOW</span>',
+        'impls': [
+            'NI$LPOSVERSIONINFOW'
+        ],
+        'decls': []
+    },
+    'LPSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTR</span>',
+        'impls': [
+            'NI$LPSTR'
+        ],
+        'decls': []
+    },
+    'LPSYSTEMTIME': {
+        'displayNameInHtml': '<span class="cpp_type">LPSYSTEMTIME</span>',
+        'impls': [
+            'NI$LPSYSTEMTIME'
+        ],
+        'decls': []
+    },
+    'LPSYSTEM_INFO': {
+        'displayNameInHtml': '<span class="cpp_type">LPSYSTEM_INFO</span>',
+        'impls': [
+            'NI$LPSYSTEM_INFO'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'PBOOL': {
+        'displayNameInHtml': '<span class="cpp_type">PBOOL</span>',
+        'impls': [
+            'NI$PBOOL'
+        ],
+        'decls': []
+    },
+    'PDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">PDWORD</span>',
+        'impls': [
+            'NI$PDWORD'
+        ],
+        'decls': []
+    },
+    'PDWORD64': {
+        'displayNameInHtml': '<span class="cpp_type">PDWORD64</span>',
+        'impls': [
+            'NI$PDWORD64'
+        ],
+        'decls': []
+    },
+    'PSYSTEM_LOGICAL_PROCESSOR_INFORMATION': {
+        'displayNameInHtml': '<span class="cpp_type">PSYSTEM_LOGICAL_PROCESSOR_INFORMATION</span>',
+        'impls': [
+            'NI$PSYSTEM_LOGICAL_PROCESSOR_INFORMATION'
+        ],
+        'decls': []
+    },
+    'PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX': {
+        'displayNameInHtml': '<span class="cpp_type">PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX</span>',
+        'impls': [
+            'NI$PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX'
+        ],
+        'decls': []
+    },
+    'PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION': {
+        'displayNameInHtml': '<span class="cpp_type">PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION</span>',
+        'impls': [
+            'NI$PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION'
+        ],
+        'decls': []
+    },
+    'PULONGLONG': {
+        'displayNameInHtml': '<span class="cpp_type">PULONGLONG</span>',
+        'impls': [
+            'NI$PULONGLONG'
+        ],
+        'decls': []
+    },
+    'PVOID': {
+        'displayNameInHtml': '<span class="cpp_type">PVOID</span>',
+        'impls': [
+            'NI$PVOID'
+        ],
+        'decls': []
+    },
+    'SYSTEMTIME': {
+        'displayNameInHtml': '<span class="cpp_type">SYSTEMTIME</span>',
+        'impls': [
+            'NI$SYSTEMTIME'
+        ],
+        'decls': []
+    },
+    'UCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">UCHAR</span>',
+        'impls': [
+            'NI$UCHAR'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'ULONGLONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONGLONG</span>',
+        'impls': [
+            'NI$ULONGLONG'
+        ],
+        'decls': []
+    },
+    'USHORT': {
+        'displayNameInHtml': '<span class="cpp_type">USHORT</span>',
+        'impls': [
+            'NI$USHORT'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$COMPUTER_NAME_FORMAT': null,
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD64': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$DWORDLONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$DWORD_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LOGICAL_PROCESSOR_RELATIONSHIP': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPFILETIME': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPMEMORYSTATUSEX': null,
+    'NI$LPOSVERSIONINFOA': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPOSVERSIONINFOW': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPSYSTEMTIME': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$LPSYSTEM_INFO': null,
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PBOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$PDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$PDWORD64': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$PSYSTEM_LOGICAL_PROCESSOR_INFORMATION': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PULONGLONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PVOID': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$SYSTEMTIME': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$UCHAR': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONGLONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$USHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

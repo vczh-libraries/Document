@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ole2.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4001) /* nonstandard extension : single line comment */
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4001</div>) </div></div>
+
+<div class="token cpp_comment ">//+---------------------------------------------------------------------------</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  Microsoft Windows</div>
+<div class="token cpp_comment ">//  Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  File:       OLE2.h</div>
+<div class="token cpp_comment ">//  Contents:   Main OLE2 header; Defines Linking and Emmebbeding interfaces, and API&apos;s.</div>
+<div class="token cpp_comment ">//              Also includes .h files for the compobj, and oleauto  subcomponents.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//----------------------------------------------------------------------------</div>
+<div class="disabled">#if !defined( _OLE2_H_ )</div>
+<div class="disabled">#define _OLE2_H_</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">// Set packing to 8</div>
+<div class="disabled">#include &lt;pshpack8.h&gt;</div>
+
+<div class="token cpp_comment ">// Make 100% sure WIN32 is defined</div>
+<div class="disabled">#ifndef WIN32</div>
+<div class="disabled">#define WIN32    100  // 100 == NT version 1.0</div>
+<div class="disabled">#endif</div>
+
+<div class="token cpp_comment ">// SET to remove _export from interface definitions</div>
+
+<div class="disabled">#include &lt;winerror.h&gt;
+#include &lt;objbase.h&gt;
+#include &lt;oleauto.h&gt;</div>
+<div class="disabled">#include &lt;coml2api.h&gt;</div>
+
+<div class="token cpp_comment ">// View OBJECT Error Codes</div>
+
+<div class="disabled">#define E_DRAW                  VIEW_E_DRAW</div>
+
+<div class="token cpp_comment ">// IDataObject Error Codes</div>
+<div class="disabled">#define DATA_E_FORMATETC        DV_E_FORMATETC</div>
+
+
+<div class="token cpp_comment ">// Common stuff gleamed from OLE.2,</div>
+
+<div class="token cpp_comment ">/* verbs */</div>
+<div class="disabled">#define OLEIVERB_PRIMARY            (0L)</div>
+<div class="disabled">#define OLEIVERB_SHOW               (-1L)</div>
+<div class="disabled">#define OLEIVERB_OPEN               (-2L)</div>
+<div class="disabled">#define OLEIVERB_HIDE               (-3L)</div>
+<div class="disabled">#define OLEIVERB_UIACTIVATE         (-4L)</div>
+<div class="disabled">#define OLEIVERB_INPLACEACTIVATE    (-5L)</div>
+<div class="disabled">#define OLEIVERB_DISCARDUNDOSTATE   (-6L)</div>
+
+<div class="token cpp_comment ">// for OleCreateEmbeddingHelper flags; roles in low word; options in high word</div>
+<div class="disabled">#define EMBDHLP_INPROC_HANDLER   0x0000L</div>
+<div class="disabled">#define EMBDHLP_INPROC_SERVER    0x0001L</div>
+<div class="disabled">#define EMBDHLP_CREATENOW    0x00000000L</div>
+<div class="disabled">#define EMBDHLP_DELAYCREATE  0x00010000L</div>
+
+<div class="token cpp_comment ">/* extended create function flags */</div>
+<div class="disabled">#define OLECREATE_LEAVERUNNING	0x00000001</div>
+
+<div class="token cpp_comment ">/* pull in the MIDL generated header */</div>
+
+<div class="disabled">#include &lt;oleidl.h&gt;</div>
+
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="token cpp_comment ">/****** DV APIs ***********************************************************/</div>
+
+
+<div class="token cpp_comment ">/* This function is declared in objbase.h and ole2.h.
+   IsolationAware support is via objbase.h.
+*/</div>
+<div class="disabled">#if    !defined(ISOLATION_AWARE_ENABLED) \</div>
+<div class="expandable"><div class="disabled">    || !ISOLATION_AWARE_ENABLED \
+    || !defined(_OBJBASE_H_) \
+    || !defined(CreateDataAdviseHolder)
+WINOLEAPI CreateDataAdviseHolder(_Outptr_ LPDATAADVISEHOLDER FAR* ppDAHolder);
+#endif</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$CreateDataAdviseHolder@::HRESULT(::LPDATAADVISEHOLDER *)[decl1]"><div class="ref" onclick="jumpToSymbol([], ['CreateDataAdviseHolder@::HRESULT(::LPDATAADVISEHOLDER *)'], [], [])"><div class="token cpp_function">CreateDataAdviseHolder</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAADVISEHOLDER'], [], [])"><div class="token cpp_type">LPDATAADVISEHOLDER</div></div> * <div class="def" id="NI$CreateDataAdviseHolder@::HRESULT(::LPDATAADVISEHOLDER *)[decl1]::ppDAHolder"><div>ppDAHolder</div></div>);</div></div>
+
+<div class="token cpp_comment ">/****** OLE API Prototypes ************************************************/</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI_(DWORD) OleBuildVersion( VOID );</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleBuildVersion@::DWORD()[decl0]"><div><div class="token cpp_function">OleBuildVersion</div></div></div>( <div class="token cpp_keyword ">void</div> );</div></div>
+
+<div class="expandable"><div class="disabled">_Check_return_ WINOLEAPI WriteFmtUserTypeStg (IN LPSTORAGE pstg, IN CLIPFORMAT cf, _In_z_ LPOLESTR lpszUserType);</div>
+<div class="expanded">  <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$WriteFmtUserTypeStg@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LPOLESTR)[decl0]"><div><div class="token cpp_function">WriteFmtUserTypeStg</div></div></div> ( <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$WriteFmtUserTypeStg@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LPOLESTR)[decl0]::pstg"><div>pstg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['CLIPFORMAT'], [], [])"><div class="token cpp_type">CLIPFORMAT</div></div> <div class="def" id="NI$WriteFmtUserTypeStg@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LPOLESTR)[decl0]::cf"><div>cf</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$WriteFmtUserTypeStg@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LPOLESTR)[decl0]::lpszUserType"><div>lpszUserType</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI ReadFmtUserTypeStg (IN LPSTORAGE pstg, OUT CLIPFORMAT FAR* pcf, _Outptr_opt_result_z_ LPOLESTR FAR* lplpszUserType);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$ReadFmtUserTypeStg@::HRESULT(::LPSTORAGE, ::CLIPFORMAT *, ::LPOLESTR *)[decl0]"><div><div class="token cpp_function">ReadFmtUserTypeStg</div></div></div> ( <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$ReadFmtUserTypeStg@::HRESULT(::LPSTORAGE, ::CLIPFORMAT *, ::LPOLESTR *)[decl0]::pstg"><div>pstg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['CLIPFORMAT'], [], [])"><div class="token cpp_type">CLIPFORMAT</div></div> * <div class="def" id="NI$ReadFmtUserTypeStg@::HRESULT(::LPSTORAGE, ::CLIPFORMAT *, ::LPOLESTR *)[decl0]::pcf"><div>pcf</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> * <div class="def" id="NI$ReadFmtUserTypeStg@::HRESULT(::LPSTORAGE, ::CLIPFORMAT *, ::LPOLESTR *)[decl0]::lplpszUserType"><div>lplpszUserType</div></div>);</div></div>
+
+
+<div class="token cpp_comment ">/* init/term */</div>
+
+<div class="expandable"><div class="disabled">_Check_return_ WINOLEAPI OleInitialize(IN LPVOID pvReserved);</div>
+<div class="expanded">  <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleInitialize@::HRESULT(::LPVOID)[decl0]"><div><div class="token cpp_function">OleInitialize</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$OleInitialize@::HRESULT(::LPVOID)[decl0]::pvReserved"><div>pvReserved</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI_(void) OleUninitialize(void);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleUninitialize@void()[decl0]"><div><div class="token cpp_function">OleUninitialize</div></div></div>(<div class="token cpp_keyword ">void</div>);</div></div>
+
+
+<div class="token cpp_comment ">/* APIs to query whether (Embedded/Linked) object can be created from
+   the data object */</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleQueryLinkFromData(IN LPDATAOBJECT pSrcDataObject);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleQueryLinkFromData@::HRESULT(::LPDATAOBJECT)[decl0]"><div><div class="token cpp_function">OleQueryLinkFromData</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleQueryLinkFromData@::HRESULT(::LPDATAOBJECT)[decl0]::pSrcDataObject"><div>pSrcDataObject</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleQueryCreateFromData(IN LPDATAOBJECT pSrcDataObject);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleQueryCreateFromData@::HRESULT(::LPDATAOBJECT)[decl0]"><div><div class="token cpp_function">OleQueryCreateFromData</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleQueryCreateFromData@::HRESULT(::LPDATAOBJECT)[decl0]::pSrcDataObject"><div>pSrcDataObject</div></div>);</div></div>
+
+
+<div class="token cpp_comment ">/* Object creation APIs */</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreate(IN REFCLSID rclsid, IN REFIID riid, IN DWORD renderopt,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreate@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreate</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreate@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rclsid"><div>rclsid</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreate@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreate@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPFORMATETC pFormatEtc, IN LPOLECLIENTSITE pClientSite,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreate@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pFormatEtc"><div>pFormatEtc</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreate@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreate@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreate@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateEx(IN REFCLSID rclsid, IN REFIID riid, IN DWORD dwFlags,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateEx</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rclsid"><div>rclsid</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::dwFlags"><div>dwFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN DWORD renderopt, IN ULONG cFormats, IN DWORD* rgAdvf,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::cFormats"><div>cFormats</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>* <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgAdvf"><div>rgAdvf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPFORMATETC rgFormatEtc, IN IAdviseSink FAR* lpAdviseSink,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgFormatEtc"><div>rgFormatEtc</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['IAdviseSink'], [], [])"><div class="token cpp_type">IAdviseSink</div></div> * <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpAdviseSink"><div>lpAdviseSink</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                OUT DWORD FAR* rgdwConnection, IN LPOLECLIENTSITE pClientSite,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> * <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgdwConnection"><div>rgdwConnection</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateEx@::HRESULT(::IID const &, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateFromData(IN LPDATAOBJECT pSrcDataObj, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateFromData</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleCreateFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pSrcDataObj"><div>pSrcDataObj</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN DWORD renderopt, IN LPFORMATETC pFormatEtc,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pFormatEtc"><div>pFormatEtc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPOLECLIENTSITE pClientSite, IN LPSTORAGE pStg,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateFromDataEx(IN LPDATAOBJECT pSrcDataObj, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateFromDataEx</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pSrcDataObj"><div>pSrcDataObj</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN DWORD dwFlags, IN DWORD renderopt, IN ULONG cFormats, IN DWORD* rgAdvf,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::dwFlags"><div>dwFlags</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::cFormats"><div>cFormats</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>* <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgAdvf"><div>rgAdvf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPFORMATETC rgFormatEtc, IN IAdviseSink FAR* lpAdviseSink,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgFormatEtc"><div>rgFormatEtc</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['IAdviseSink'], [], [])"><div class="token cpp_type">IAdviseSink</div></div> * <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpAdviseSink"><div>lpAdviseSink</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                OUT DWORD FAR* rgdwConnection, IN LPOLECLIENTSITE pClientSite,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> * <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgdwConnection"><div>rgdwConnection</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateLinkFromData(IN LPDATAOBJECT pSrcDataObj, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateLinkFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateLinkFromData</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleCreateLinkFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pSrcDataObj"><div>pSrcDataObj</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateLinkFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN DWORD renderopt, IN LPFORMATETC pFormatEtc,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLinkFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateLinkFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pFormatEtc"><div>pFormatEtc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPOLECLIENTSITE pClientSite, IN LPSTORAGE pStg,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateLinkFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateLinkFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateLinkFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateLinkFromDataEx(IN LPDATAOBJECT pSrcDataObj, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateLinkFromDataEx</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pSrcDataObj"><div>pSrcDataObj</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN DWORD dwFlags, IN DWORD renderopt, IN ULONG cFormats, IN DWORD* rgAdvf,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::dwFlags"><div>dwFlags</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::cFormats"><div>cFormats</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>* <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgAdvf"><div>rgAdvf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPFORMATETC rgFormatEtc, IN IAdviseSink FAR* lpAdviseSink,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgFormatEtc"><div>rgFormatEtc</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['IAdviseSink'], [], [])"><div class="token cpp_type">IAdviseSink</div></div> * <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpAdviseSink"><div>lpAdviseSink</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                OUT IN DWORD FAR* rgdwConnection, IN LPOLECLIENTSITE pClientSite,</div>
+<div class="expanded">                  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> * <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgdwConnection"><div>rgdwConnection</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateLinkFromDataEx@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateStaticFromData(IN LPDATAOBJECT pSrcDataObj, IN REFIID iid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateStaticFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateStaticFromData</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleCreateStaticFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pSrcDataObj"><div>pSrcDataObj</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateStaticFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::iid"><div>iid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN DWORD renderopt, IN LPFORMATETC pFormatEtc,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateStaticFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateStaticFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pFormatEtc"><div>pFormatEtc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                IN LPOLECLIENTSITE pClientSite, IN LPSTORAGE pStg,</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateStaticFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateStaticFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">                 <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateStaticFromData@::HRESULT(::LPDATAOBJECT, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateLink(IN LPMONIKER pmkLinkSrc, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateLink@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateLink</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPMONIKER'], [], [])"><div class="token cpp_type">LPMONIKER</div></div> <div class="def" id="NI$OleCreateLink@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pmkLinkSrc"><div>pmkLinkSrc</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateLink@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN DWORD renderopt, IN LPFORMATETC lpFormatEtc,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLink@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateLink@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpFormatEtc"><div>lpFormatEtc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPOLECLIENTSITE pClientSite, IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateLink@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateLink@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateLink@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateLinkEx(IN LPMONIKER pmkLinkSrc, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateLinkEx</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPMONIKER'], [], [])"><div class="token cpp_type">LPMONIKER</div></div> <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pmkLinkSrc"><div>pmkLinkSrc</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN DWORD dwFlags, IN DWORD renderopt, IN ULONG cFormats, IN DWORD* rgAdvf,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::dwFlags"><div>dwFlags</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::cFormats"><div>cFormats</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>* <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgAdvf"><div>rgAdvf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPFORMATETC rgFormatEtc, IN IAdviseSink FAR* lpAdviseSink,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgFormatEtc"><div>rgFormatEtc</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['IAdviseSink'], [], [])"><div class="token cpp_type">IAdviseSink</div></div> * <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpAdviseSink"><div>lpAdviseSink</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            OUT DWORD FAR* rgdwConnection, IN LPOLECLIENTSITE pClientSite,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> * <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgdwConnection"><div>rgdwConnection</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateLinkEx@::HRESULT(::LPMONIKER, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateLinkToFile(IN LPCOLESTR lpszFileName, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateLinkToFile@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateLinkToFile</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPCOLESTR'], [], [])"><div class="token cpp_type">LPCOLESTR</div></div> <div class="def" id="NI$OleCreateLinkToFile@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpszFileName"><div>lpszFileName</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateLinkToFile@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN DWORD renderopt, IN LPFORMATETC lpFormatEtc,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLinkToFile@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateLinkToFile@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpFormatEtc"><div>lpFormatEtc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPOLECLIENTSITE pClientSite, IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateLinkToFile@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateLinkToFile@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateLinkToFile@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateLinkToFileEx(IN LPCOLESTR lpszFileName, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateLinkToFileEx</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPCOLESTR'], [], [])"><div class="token cpp_type">LPCOLESTR</div></div> <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpszFileName"><div>lpszFileName</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN DWORD dwFlags, IN DWORD renderopt, IN ULONG cFormats, IN DWORD* rgAdvf,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::dwFlags"><div>dwFlags</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::cFormats"><div>cFormats</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>* <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgAdvf"><div>rgAdvf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPFORMATETC rgFormatEtc, IN IAdviseSink FAR* lpAdviseSink,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgFormatEtc"><div>rgFormatEtc</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['IAdviseSink'], [], [])"><div class="token cpp_type">IAdviseSink</div></div> * <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpAdviseSink"><div>lpAdviseSink</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            OUT DWORD FAR* rgdwConnection, IN LPOLECLIENTSITE pClientSite,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> * <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgdwConnection"><div>rgdwConnection</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateLinkToFileEx@::HRESULT(::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateFromFile(IN REFCLSID rclsid, IN LPCOLESTR lpszFileName, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateFromFile</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rclsid"><div>rclsid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPCOLESTR'], [], [])"><div class="token cpp_type">LPCOLESTR</div></div> <div class="def" id="NI$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpszFileName"><div>lpszFileName</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN DWORD renderopt, IN LPFORMATETC lpFormatEtc,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpFormatEtc"><div>lpFormatEtc</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPOLECLIENTSITE pClientSite, IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateFromFile@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::LPFORMATETC, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="disabled">_Check_return_</div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleCreateFromFileEx(IN REFCLSID rclsid, IN LPCOLESTR lpszFileName, IN REFIID riid,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateFromFileEx</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rclsid"><div>rclsid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPCOLESTR'], [], [])"><div class="token cpp_type">LPCOLESTR</div></div> <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpszFileName"><div>lpszFileName</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN DWORD dwFlags, IN DWORD renderopt, IN ULONG cFormats, IN DWORD* rgAdvf,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::dwFlags"><div>dwFlags</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::renderopt"><div>renderopt</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::cFormats"><div>cFormats</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>* <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgAdvf"><div>rgAdvf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPFORMATETC rgFormatEtc, IN IAdviseSink FAR* lpAdviseSink,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPFORMATETC'], [], [])"><div class="token cpp_type">LPFORMATETC</div></div> <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgFormatEtc"><div>rgFormatEtc</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['IAdviseSink'], [], [])"><div class="token cpp_type">IAdviseSink</div></div> * <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::lpAdviseSink"><div>lpAdviseSink</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            OUT DWORD FAR* rgdwConnection, IN LPOLECLIENTSITE pClientSite,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> * <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::rgdwConnection"><div>rgdwConnection</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN LPSTORAGE pStg, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateFromFileEx@::HRESULT(::IID const &, ::LPCOLESTR, ::IID const &, ::DWORD, ::DWORD, ::ULONG, ::DWORD *, ::LPFORMATETC, ::IAdviseSink *, ::DWORD *, ::LPOLECLIENTSITE, ::LPSTORAGE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleLoad(IN LPSTORAGE pStg, IN REFIID riid, IN LPOLECLIENTSITE pClientSite,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleLoad@::HRESULT(::LPSTORAGE, ::IID const &, ::LPOLECLIENTSITE, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleLoad</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleLoad@::HRESULT(::LPSTORAGE, ::IID const &, ::LPOLECLIENTSITE, ::LPVOID *)[decl0]::pStg"><div>pStg</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleLoad@::HRESULT(::LPSTORAGE, ::IID const &, ::LPOLECLIENTSITE, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPOLECLIENTSITE'], [], [])"><div class="token cpp_type">LPOLECLIENTSITE</div></div> <div class="def" id="NI$OleLoad@::HRESULT(::LPSTORAGE, ::IID const &, ::LPOLECLIENTSITE, ::LPVOID *)[decl0]::pClientSite"><div>pClientSite</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleLoad@::HRESULT(::LPSTORAGE, ::IID const &, ::LPOLECLIENTSITE, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleSave(_In_ LPPERSISTSTORAGE pPS, _In_ LPSTORAGE pStg, _In_ BOOL fSameAsLoad);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleSave@::HRESULT(::LPPERSISTSTORAGE, ::LPSTORAGE, ::BOOL)[decl0]"><div><div class="token cpp_function">OleSave</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['LPPERSISTSTORAGE'], [], [])"><div class="token cpp_type">LPPERSISTSTORAGE</div></div> <div class="def" id="NI$OleSave@::HRESULT(::LPPERSISTSTORAGE, ::LPSTORAGE, ::BOOL)[decl0]::pPS"><div>pPS</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleSave@::HRESULT(::LPPERSISTSTORAGE, ::LPSTORAGE, ::BOOL)[decl0]::pStg"><div>pStg</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$OleSave@::HRESULT(::LPPERSISTSTORAGE, ::LPSTORAGE, ::BOOL)[decl0]::fSameAsLoad"><div>fSameAsLoad</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleLoadFromStream( IN LPSTREAM pStm, IN REFIID iidInterface, OUT LPVOID FAR* ppvObj);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleLoadFromStream@::HRESULT(::LPSTREAM, ::IID const &, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleLoadFromStream</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['LPSTREAM'], [], [])"><div class="token cpp_type">LPSTREAM</div></div> <div class="def" id="NI$OleLoadFromStream@::HRESULT(::LPSTREAM, ::IID const &, ::LPVOID *)[decl0]::pStm"><div>pStm</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleLoadFromStream@::HRESULT(::LPSTREAM, ::IID const &, ::LPVOID *)[decl0]::iidInterface"><div>iidInterface</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleLoadFromStream@::HRESULT(::LPSTREAM, ::IID const &, ::LPVOID *)[decl0]::ppvObj"><div>ppvObj</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleSaveToStream( IN LPPERSISTSTREAM pPStm, IN LPSTREAM pStm );</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleSaveToStream@::HRESULT(::LPPERSISTSTREAM, ::LPSTREAM)[decl0]"><div><div class="token cpp_function">OleSaveToStream</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['LPPERSISTSTREAM'], [], [])"><div class="token cpp_type">LPPERSISTSTREAM</div></div> <div class="def" id="NI$OleSaveToStream@::HRESULT(::LPPERSISTSTREAM, ::LPSTREAM)[decl0]::pPStm"><div>pPStm</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPSTREAM'], [], [])"><div class="token cpp_type">LPSTREAM</div></div> <div class="def" id="NI$OleSaveToStream@::HRESULT(::LPPERSISTSTREAM, ::LPSTREAM)[decl0]::pStm"><div>pStm</div></div> );</div></div>
+
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleSetContainedObject(IN LPUNKNOWN pUnknown, IN BOOL fContained);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleSetContainedObject@::HRESULT(::LPUNKNOWN, ::BOOL)[decl0]"><div><div class="token cpp_function">OleSetContainedObject</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPUNKNOWN'], [], [])"><div class="token cpp_type">LPUNKNOWN</div></div> <div class="def" id="NI$OleSetContainedObject@::HRESULT(::LPUNKNOWN, ::BOOL)[decl0]::pUnknown"><div>pUnknown</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$OleSetContainedObject@::HRESULT(::LPUNKNOWN, ::BOOL)[decl0]::fContained"><div>fContained</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleNoteObjectVisible(IN LPUNKNOWN pUnknown, IN BOOL fVisible);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleNoteObjectVisible@::HRESULT(::LPUNKNOWN, ::BOOL)[decl0]"><div><div class="token cpp_function">OleNoteObjectVisible</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPUNKNOWN'], [], [])"><div class="token cpp_type">LPUNKNOWN</div></div> <div class="def" id="NI$OleNoteObjectVisible@::HRESULT(::LPUNKNOWN, ::BOOL)[decl0]::pUnknown"><div>pUnknown</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$OleNoteObjectVisible@::HRESULT(::LPUNKNOWN, ::BOOL)[decl0]::fVisible"><div>fVisible</div></div>);</div></div>
+
+
+<div class="token cpp_comment ">/* Drag/Drop APIs */</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  RegisterDragDrop(IN HWND hwnd, IN LPDROPTARGET pDropTarget);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$RegisterDragDrop@::HRESULT(::HWND, ::LPDROPTARGET)[decl0]"><div><div class="token cpp_function">RegisterDragDrop</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$RegisterDragDrop@::HRESULT(::HWND, ::LPDROPTARGET)[decl0]::hwnd"><div>hwnd</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPDROPTARGET'], [], [])"><div class="token cpp_type">LPDROPTARGET</div></div> <div class="def" id="NI$RegisterDragDrop@::HRESULT(::HWND, ::LPDROPTARGET)[decl0]::pDropTarget"><div>pDropTarget</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI  RevokeDragDrop(IN HWND hwnd);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$RevokeDragDrop@::HRESULT(::HWND)[decl0]"><div><div class="token cpp_function">RevokeDragDrop</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$RevokeDragDrop@::HRESULT(::HWND)[decl0]::hwnd"><div>hwnd</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI  DoDragDrop(IN LPDATAOBJECT pDataObj, IN LPDROPSOURCE pDropSource,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$DoDragDrop@::HRESULT(::LPDATAOBJECT, ::LPDROPSOURCE, ::DWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">DoDragDrop</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$DoDragDrop@::HRESULT(::LPDATAOBJECT, ::LPDROPSOURCE, ::DWORD, ::LPDWORD)[decl0]::pDataObj"><div>pDataObj</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPDROPSOURCE'], [], [])"><div class="token cpp_type">LPDROPSOURCE</div></div> <div class="def" id="NI$DoDragDrop@::HRESULT(::LPDATAOBJECT, ::LPDROPSOURCE, ::DWORD, ::LPDWORD)[decl0]::pDropSource"><div>pDropSource</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            IN DWORD dwOKEffects, OUT LPDWORD pdwEffect);</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$DoDragDrop@::HRESULT(::LPDATAOBJECT, ::LPDROPSOURCE, ::DWORD, ::LPDWORD)[decl0]::dwOKEffects"><div>dwOKEffects</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$DoDragDrop@::HRESULT(::LPDATAOBJECT, ::LPDROPSOURCE, ::DWORD, ::LPDWORD)[decl0]::pdwEffect"><div>pdwEffect</div></div>);</div></div>
+
+<div class="token cpp_comment ">/* Clipboard APIs */</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI  OleSetClipboard(IN LPDATAOBJECT pDataObj);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleSetClipboard@::HRESULT(::LPDATAOBJECT)[decl0]"><div><div class="token cpp_function">OleSetClipboard</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleSetClipboard@::HRESULT(::LPDATAOBJECT)[decl0]::pDataObj"><div>pDataObj</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleGetClipboard(_Outptr_ LPDATAOBJECT FAR* ppDataObj);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleGetClipboard@::HRESULT(::LPDATAOBJECT *)[decl0]"><div><div class="token cpp_function">OleGetClipboard</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> * <div class="def" id="NI$OleGetClipboard@::HRESULT(::LPDATAOBJECT *)[decl0]::ppDataObj"><div>ppDataObj</div></div>);</div></div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN10_RS1)</div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleGetClipboardWithEnterpriseInfo(_Outptr_result_nullonfailure_ IDataObject** dataObject,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleGetClipboardWithEnterpriseInfo@::HRESULT(::IDataObject * *, ::PWSTR *, ::PWSTR *, ::PWSTR *, ::PWSTR *)[decl0]"><div><div class="token cpp_function">OleGetClipboardWithEnterpriseInfo</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['IDataObject'], [], [])"><div class="token cpp_type">IDataObject</div></div>** <div class="def" id="NI$OleGetClipboardWithEnterpriseInfo@::HRESULT(::IDataObject * *, ::PWSTR *, ::PWSTR *, ::PWSTR *, ::PWSTR *)[decl0]::dataObject"><div>dataObject</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            _Outptr_result_nullonfailure_ PWSTR* dataEnterpriseId,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['PWSTR'], [], [])"><div class="token cpp_type">PWSTR</div></div>* <div class="def" id="NI$OleGetClipboardWithEnterpriseInfo@::HRESULT(::IDataObject * *, ::PWSTR *, ::PWSTR *, ::PWSTR *, ::PWSTR *)[decl0]::dataEnterpriseId"><div>dataEnterpriseId</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            _Outptr_result_nullonfailure_ PWSTR* sourceDescription,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['PWSTR'], [], [])"><div class="token cpp_type">PWSTR</div></div>* <div class="def" id="NI$OleGetClipboardWithEnterpriseInfo@::HRESULT(::IDataObject * *, ::PWSTR *, ::PWSTR *, ::PWSTR *, ::PWSTR *)[decl0]::sourceDescription"><div>sourceDescription</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            _Outptr_result_nullonfailure_ PWSTR* targetDescription,</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['PWSTR'], [], [])"><div class="token cpp_type">PWSTR</div></div>* <div class="def" id="NI$OleGetClipboardWithEnterpriseInfo@::HRESULT(::IDataObject * *, ::PWSTR *, ::PWSTR *, ::PWSTR *, ::PWSTR *)[decl0]::targetDescription"><div>targetDescription</div></div>,</div></div>
+<div class="expandable"><div class="disabled">            _Outptr_result_nullonfailure_ PWSTR* dataDescription);
+#endif</div>
+<div class="expanded">             <div class="ref" onclick="jumpToSymbol([], ['PWSTR'], [], [])"><div class="token cpp_type">PWSTR</div></div>* <div class="def" id="NI$OleGetClipboardWithEnterpriseInfo@::HRESULT(::IDataObject * *, ::PWSTR *, ::PWSTR *, ::PWSTR *, ::PWSTR *)[decl0]::dataDescription"><div>dataDescription</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleFlushClipboard(void);   </div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleFlushClipboard@::HRESULT()[decl0]"><div><div class="token cpp_function">OleFlushClipboard</div></div></div>(<div class="token cpp_keyword ">void</div>);   </div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI  OleIsCurrentClipboard(IN LPDATAOBJECT pDataObj);   </div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>  <div class="def" id="FB$OleIsCurrentClipboard@::HRESULT(::LPDATAOBJECT)[decl0]"><div><div class="token cpp_function">OleIsCurrentClipboard</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPDATAOBJECT'], [], [])"><div class="token cpp_type">LPDATAOBJECT</div></div> <div class="def" id="NI$OleIsCurrentClipboard@::HRESULT(::LPDATAOBJECT)[decl0]::pDataObj"><div>pDataObj</div></div>);   </div></div>
+
+<div class="token cpp_comment ">/* InPlace Editing APIs */</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI_(HOLEMENU)   OleCreateMenuDescriptor (IN HMENU hmenuCombined,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HOLEMENU'], [], [])"><div class="token cpp_type">HOLEMENU</div></div> <div class="token cpp_keyword ">__stdcall</div>   <div class="def" id="FB$OleCreateMenuDescriptor@::HOLEMENU(::HMENU, ::LPOLEMENUGROUPWIDTHS)[decl0]"><div><div class="token cpp_function">OleCreateMenuDescriptor</div></div></div> ( <div class="ref" onclick="jumpToSymbol([], ['HMENU'], [], [])"><div class="token cpp_type">HMENU</div></div> <div class="def" id="NI$OleCreateMenuDescriptor@::HOLEMENU(::HMENU, ::LPOLEMENUGROUPWIDTHS)[decl0]::hmenuCombined"><div>hmenuCombined</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                IN LPOLEMENUGROUPWIDTHS lpMenuWidths);</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['LPOLEMENUGROUPWIDTHS'], [], [])"><div class="token cpp_type">LPOLEMENUGROUPWIDTHS</div></div> <div class="def" id="NI$OleCreateMenuDescriptor@::HOLEMENU(::HMENU, ::LPOLEMENUGROUPWIDTHS)[decl0]::lpMenuWidths"><div>lpMenuWidths</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI              OleSetMenuDescriptor (IN HOLEMENU holemenu, IN HWND hwndFrame,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>              <div class="def" id="FB$OleSetMenuDescriptor@::HRESULT(::HOLEMENU, ::HWND, ::HWND, ::LPOLEINPLACEFRAME, ::LPOLEINPLACEACTIVEOBJECT)[decl0]"><div><div class="token cpp_function">OleSetMenuDescriptor</div></div></div> ( <div class="ref" onclick="jumpToSymbol([], ['HOLEMENU'], [], [])"><div class="token cpp_type">HOLEMENU</div></div> <div class="def" id="NI$OleSetMenuDescriptor@::HRESULT(::HOLEMENU, ::HWND, ::HWND, ::LPOLEINPLACEFRAME, ::LPOLEINPLACEACTIVEOBJECT)[decl0]::holemenu"><div>holemenu</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$OleSetMenuDescriptor@::HRESULT(::HOLEMENU, ::HWND, ::HWND, ::LPOLEINPLACEFRAME, ::LPOLEINPLACEACTIVEOBJECT)[decl0]::hwndFrame"><div>hwndFrame</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                IN HWND hwndActiveObject,</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$OleSetMenuDescriptor@::HRESULT(::HOLEMENU, ::HWND, ::HWND, ::LPOLEINPLACEFRAME, ::LPOLEINPLACEACTIVEOBJECT)[decl0]::hwndActiveObject"><div>hwndActiveObject</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                IN LPOLEINPLACEFRAME lpFrame,</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['LPOLEINPLACEFRAME'], [], [])"><div class="token cpp_type">LPOLEINPLACEFRAME</div></div> <div class="def" id="NI$OleSetMenuDescriptor@::HRESULT(::HOLEMENU, ::HWND, ::HWND, ::LPOLEINPLACEFRAME, ::LPOLEINPLACEACTIVEOBJECT)[decl0]::lpFrame"><div>lpFrame</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                IN LPOLEINPLACEACTIVEOBJECT lpActiveObj);</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['LPOLEINPLACEACTIVEOBJECT'], [], [])"><div class="token cpp_type">LPOLEINPLACEACTIVEOBJECT</div></div> <div class="def" id="NI$OleSetMenuDescriptor@::HRESULT(::HOLEMENU, ::HWND, ::HWND, ::LPOLEINPLACEFRAME, ::LPOLEINPLACEACTIVEOBJECT)[decl0]::lpActiveObj"><div>lpActiveObj</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI              OleDestroyMenuDescriptor (IN HOLEMENU holemenu);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>              <div class="def" id="FB$OleDestroyMenuDescriptor@::HRESULT(::HOLEMENU)[decl0]"><div><div class="token cpp_function">OleDestroyMenuDescriptor</div></div></div> ( <div class="ref" onclick="jumpToSymbol([], ['HOLEMENU'], [], [])"><div class="token cpp_type">HOLEMENU</div></div> <div class="def" id="NI$OleDestroyMenuDescriptor@::HRESULT(::HOLEMENU)[decl0]::holemenu"><div>holemenu</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI              OleTranslateAccelerator (IN LPOLEINPLACEFRAME lpFrame,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>              <div class="def" id="FB$OleTranslateAccelerator@::HRESULT(::LPOLEINPLACEFRAME, ::LPOLEINPLACEFRAMEINFO, ::LPMSG)[decl0]"><div><div class="token cpp_function">OleTranslateAccelerator</div></div></div> ( <div class="ref" onclick="jumpToSymbol([], ['LPOLEINPLACEFRAME'], [], [])"><div class="token cpp_type">LPOLEINPLACEFRAME</div></div> <div class="def" id="NI$OleTranslateAccelerator@::HRESULT(::LPOLEINPLACEFRAME, ::LPOLEINPLACEFRAMEINFO, ::LPMSG)[decl0]::lpFrame"><div>lpFrame</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                            IN LPOLEINPLACEFRAMEINFO lpFrameInfo, IN LPMSG lpmsg);</div>
+<div class="expanded">                             <div class="ref" onclick="jumpToSymbol([], ['LPOLEINPLACEFRAMEINFO'], [], [])"><div class="token cpp_type">LPOLEINPLACEFRAMEINFO</div></div> <div class="def" id="NI$OleTranslateAccelerator@::HRESULT(::LPOLEINPLACEFRAME, ::LPOLEINPLACEFRAMEINFO, ::LPMSG)[decl0]::lpFrameInfo"><div>lpFrameInfo</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPMSG'], [], [])"><div class="token cpp_type">LPMSG</div></div> <div class="def" id="NI$OleTranslateAccelerator@::HRESULT(::LPOLEINPLACEFRAME, ::LPOLEINPLACEFRAMEINFO, ::LPMSG)[decl0]::lpmsg"><div>lpmsg</div></div>);</div></div>
+
+
+<div class="token cpp_comment ">/* Helper APIs */</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI_(HANDLE) OleDuplicateData (IN HANDLE hSrc, IN CLIPFORMAT cfFormat,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleDuplicateData@::HANDLE(::HANDLE, ::CLIPFORMAT, ::UINT)[decl0]"><div><div class="token cpp_function">OleDuplicateData</div></div></div> ( <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$OleDuplicateData@::HANDLE(::HANDLE, ::CLIPFORMAT, ::UINT)[decl0]::hSrc"><div>hSrc</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['CLIPFORMAT'], [], [])"><div class="token cpp_type">CLIPFORMAT</div></div> <div class="def" id="NI$OleDuplicateData@::HANDLE(::HANDLE, ::CLIPFORMAT, ::UINT)[decl0]::cfFormat"><div>cfFormat</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                        IN UINT uiFlags);</div>
+<div class="expanded">                         <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$OleDuplicateData@::HANDLE(::HANDLE, ::CLIPFORMAT, ::UINT)[decl0]::uiFlags"><div>uiFlags</div></div>);</div></div>
+
+
+
+<div class="expandable"><div class="disabled">WINOLEAPI          OleDraw (IN LPUNKNOWN pUnknown, IN DWORD dwAspect, IN HDC hdcDraw,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>          <div class="def" id="FB$OleDraw@::HRESULT(::LPUNKNOWN, ::DWORD, ::HDC, ::LPCRECT)[decl0]"><div><div class="token cpp_function">OleDraw</div></div></div> ( <div class="ref" onclick="jumpToSymbol([], ['LPUNKNOWN'], [], [])"><div class="token cpp_type">LPUNKNOWN</div></div> <div class="def" id="NI$OleDraw@::HRESULT(::LPUNKNOWN, ::DWORD, ::HDC, ::LPCRECT)[decl0]::pUnknown"><div>pUnknown</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleDraw@::HRESULT(::LPUNKNOWN, ::DWORD, ::HDC, ::LPCRECT)[decl0]::dwAspect"><div>dwAspect</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['HDC'], [], [])"><div class="token cpp_type">HDC</div></div> <div class="def" id="NI$OleDraw@::HRESULT(::LPUNKNOWN, ::DWORD, ::HDC, ::LPCRECT)[decl0]::hdcDraw"><div>hdcDraw</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                    IN LPCRECT lprcBounds);</div>
+<div class="expanded">                     <div class="ref" onclick="jumpToSymbol([], ['LPCRECT'], [], [])"><div class="token cpp_type">LPCRECT</div></div> <div class="def" id="NI$OleDraw@::HRESULT(::LPUNKNOWN, ::DWORD, ::HDC, ::LPCRECT)[decl0]::lprcBounds"><div>lprcBounds</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">_Check_return_ WINOLEAPI          OleRun(IN LPUNKNOWN pUnknown);</div>
+<div class="expanded">  <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>          <div class="def" id="FB$OleRun@::HRESULT(::LPUNKNOWN)[decl0]"><div><div class="token cpp_function">OleRun</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPUNKNOWN'], [], [])"><div class="token cpp_type">LPUNKNOWN</div></div> <div class="def" id="NI$OleRun@::HRESULT(::LPUNKNOWN)[decl0]::pUnknown"><div>pUnknown</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI_(BOOL)   OleIsRunning(IN LPOLEOBJECT pObject);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="token cpp_keyword ">__stdcall</div>   <div class="def" id="FB$OleIsRunning@::BOOL(::LPOLEOBJECT)[decl0]"><div><div class="token cpp_function">OleIsRunning</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPOLEOBJECT'], [], [])"><div class="token cpp_type">LPOLEOBJECT</div></div> <div class="def" id="NI$OleIsRunning@::BOOL(::LPOLEOBJECT)[decl0]::pObject"><div>pObject</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI          OleLockRunning(IN LPUNKNOWN pUnknown, IN BOOL fLock, IN BOOL fLastUnlockCloses);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>          <div class="def" id="FB$OleLockRunning@::HRESULT(::LPUNKNOWN, ::BOOL, ::BOOL)[decl0]"><div><div class="token cpp_function">OleLockRunning</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPUNKNOWN'], [], [])"><div class="token cpp_type">LPUNKNOWN</div></div> <div class="def" id="NI$OleLockRunning@::HRESULT(::LPUNKNOWN, ::BOOL, ::BOOL)[decl0]::pUnknown"><div>pUnknown</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$OleLockRunning@::HRESULT(::LPUNKNOWN, ::BOOL, ::BOOL)[decl0]::fLock"><div>fLock</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$OleLockRunning@::HRESULT(::LPUNKNOWN, ::BOOL, ::BOOL)[decl0]::fLastUnlockCloses"><div>fLastUnlockCloses</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI_(void)   ReleaseStgMedium(IN LPSTGMEDIUM);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__stdcall</div>   <div class="def" id="FB$ReleaseStgMedium@void(::LPSTGMEDIUM)[decl0]"><div><div class="token cpp_function">ReleaseStgMedium</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPSTGMEDIUM'], [], [])"><div class="token cpp_type">LPSTGMEDIUM</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI          CreateOleAdviseHolder(_Out_ LPOLEADVISEHOLDER FAR* ppOAHolder);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>          <div class="def" id="FB$CreateOleAdviseHolder@::HRESULT(::LPOLEADVISEHOLDER *)[decl0]"><div><div class="token cpp_function">CreateOleAdviseHolder</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['LPOLEADVISEHOLDER'], [], [])"><div class="token cpp_type">LPOLEADVISEHOLDER</div></div> * <div class="def" id="NI$CreateOleAdviseHolder@::HRESULT(::LPOLEADVISEHOLDER *)[decl0]::ppOAHolder"><div>ppOAHolder</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI          OleCreateDefaultHandler(IN REFCLSID clsid, IN LPUNKNOWN pUnkOuter,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>          <div class="def" id="FB$OleCreateDefaultHandler@::HRESULT(::IID const &, ::LPUNKNOWN, ::IID const &, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateDefaultHandler</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateDefaultHandler@::HRESULT(::IID const &, ::LPUNKNOWN, ::IID const &, ::LPVOID *)[decl0]::clsid"><div>clsid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPUNKNOWN'], [], [])"><div class="token cpp_type">LPUNKNOWN</div></div> <div class="def" id="NI$OleCreateDefaultHandler@::HRESULT(::IID const &, ::LPUNKNOWN, ::IID const &, ::LPVOID *)[decl0]::pUnkOuter"><div>pUnkOuter</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                    IN REFIID riid, OUT LPVOID FAR* lplpObj);</div>
+<div class="expanded">                     <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateDefaultHandler@::HRESULT(::IID const &, ::LPUNKNOWN, ::IID const &, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateDefaultHandler@::HRESULT(::IID const &, ::LPUNKNOWN, ::IID const &, ::LPVOID *)[decl0]::lplpObj"><div>lplpObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI          OleCreateEmbeddingHelper(IN REFCLSID clsid, IN LPUNKNOWN pUnkOuter,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>          <div class="def" id="FB$OleCreateEmbeddingHelper@::HRESULT(::IID const &, ::LPUNKNOWN, ::DWORD, ::LPCLASSFACTORY, ::IID const &, ::LPVOID *)[decl0]"><div><div class="token cpp_function">OleCreateEmbeddingHelper</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateEmbeddingHelper@::HRESULT(::IID const &, ::LPUNKNOWN, ::DWORD, ::LPCLASSFACTORY, ::IID const &, ::LPVOID *)[decl0]::clsid"><div>clsid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPUNKNOWN'], [], [])"><div class="token cpp_type">LPUNKNOWN</div></div> <div class="def" id="NI$OleCreateEmbeddingHelper@::HRESULT(::IID const &, ::LPUNKNOWN, ::DWORD, ::LPCLASSFACTORY, ::IID const &, ::LPVOID *)[decl0]::pUnkOuter"><div>pUnkOuter</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                    IN DWORD flags, IN LPCLASSFACTORY pCF,</div>
+<div class="expanded">                     <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleCreateEmbeddingHelper@::HRESULT(::IID const &, ::LPUNKNOWN, ::DWORD, ::LPCLASSFACTORY, ::IID const &, ::LPVOID *)[decl0]::flags"><div>flags</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPCLASSFACTORY'], [], [])"><div class="token cpp_type">LPCLASSFACTORY</div></div> <div class="def" id="NI$OleCreateEmbeddingHelper@::HRESULT(::IID const &, ::LPUNKNOWN, ::DWORD, ::LPCLASSFACTORY, ::IID const &, ::LPVOID *)[decl0]::pCF"><div>pCF</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                    IN REFIID riid, OUT LPVOID FAR* lplpObj);</div>
+<div class="expanded">                     <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleCreateEmbeddingHelper@::HRESULT(::IID const &, ::LPUNKNOWN, ::DWORD, ::LPCLASSFACTORY, ::IID const &, ::LPVOID *)[decl0]::riid"><div>riid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> * <div class="def" id="NI$OleCreateEmbeddingHelper@::HRESULT(::IID const &, ::LPUNKNOWN, ::DWORD, ::LPCLASSFACTORY, ::IID const &, ::LPVOID *)[decl0]::lplpObj"><div>lplpObj</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI_(BOOL)   IsAccelerator(IN HACCEL hAccel, IN int cAccelEntries, IN LPMSG lpMsg,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="token cpp_keyword ">__stdcall</div>   <div class="def" id="FB$IsAccelerator@::BOOL(::HACCEL, int, ::LPMSG, ::WORD *)[decl0]"><div><div class="token cpp_function">IsAccelerator</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['HACCEL'], [], [])"><div class="token cpp_type">HACCEL</div></div> <div class="def" id="NI$IsAccelerator@::BOOL(::HACCEL, int, ::LPMSG, ::WORD *)[decl0]::hAccel"><div>hAccel</div></div>,  <div class="token cpp_keyword ">int</div> <div class="def" id="NI$IsAccelerator@::BOOL(::HACCEL, int, ::LPMSG, ::WORD *)[decl0]::cAccelEntries"><div>cAccelEntries</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPMSG'], [], [])"><div class="token cpp_type">LPMSG</div></div> <div class="def" id="NI$IsAccelerator@::BOOL(::HACCEL, int, ::LPMSG, ::WORD *)[decl0]::lpMsg"><div>lpMsg</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                        OUT WORD FAR* lpwCmd);</div>
+<div class="expanded">                                         <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> * <div class="def" id="NI$IsAccelerator@::BOOL(::HACCEL, int, ::LPMSG, ::WORD *)[decl0]::lpwCmd"><div>lpwCmd</div></div>);</div></div>
+<div class="token cpp_comment ">/* Icon extraction Helper APIs */</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI_(HGLOBAL) OleGetIconOfFile(_In_ LPOLESTR lpszPath, IN BOOL fUseFileAsLabel);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HGLOBAL'], [], [])"><div class="token cpp_type">HGLOBAL</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleGetIconOfFile@::HGLOBAL(::LPOLESTR, ::BOOL)[decl0]"><div><div class="token cpp_function">OleGetIconOfFile</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$OleGetIconOfFile@::HGLOBAL(::LPOLESTR, ::BOOL)[decl0]::lpszPath"><div>lpszPath</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$OleGetIconOfFile@::HGLOBAL(::LPOLESTR, ::BOOL)[decl0]::fUseFileAsLabel"><div>fUseFileAsLabel</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI_(HGLOBAL) OleGetIconOfClass(IN REFCLSID rclsid, _In_opt_ LPOLESTR lpszLabel,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HGLOBAL'], [], [])"><div class="token cpp_type">HGLOBAL</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleGetIconOfClass@::HGLOBAL(::IID const &, ::LPOLESTR, ::BOOL)[decl0]"><div><div class="token cpp_function">OleGetIconOfClass</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleGetIconOfClass@::HGLOBAL(::IID const &, ::LPOLESTR, ::BOOL)[decl0]::rclsid"><div>rclsid</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$OleGetIconOfClass@::HGLOBAL(::IID const &, ::LPOLESTR, ::BOOL)[decl0]::lpszLabel"><div>lpszLabel</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                        IN BOOL fUseTypeAsLabel);</div>
+<div class="expanded">                                         <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$OleGetIconOfClass@::HGLOBAL(::IID const &, ::LPOLESTR, ::BOOL)[decl0]::fUseTypeAsLabel"><div>fUseTypeAsLabel</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI_(HGLOBAL) OleMetafilePictFromIconAndLabel(IN HICON hIcon, _In_ LPOLESTR lpszLabel,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HGLOBAL'], [], [])"><div class="token cpp_type">HGLOBAL</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleMetafilePictFromIconAndLabel@::HGLOBAL(::HICON, ::LPOLESTR, ::LPOLESTR, ::UINT)[decl0]"><div><div class="token cpp_function">OleMetafilePictFromIconAndLabel</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['HICON'], [], [])"><div class="token cpp_type">HICON</div></div> <div class="def" id="NI$OleMetafilePictFromIconAndLabel@::HGLOBAL(::HICON, ::LPOLESTR, ::LPOLESTR, ::UINT)[decl0]::hIcon"><div>hIcon</div></div>,   <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$OleMetafilePictFromIconAndLabel@::HGLOBAL(::HICON, ::LPOLESTR, ::LPOLESTR, ::UINT)[decl0]::lpszLabel"><div>lpszLabel</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                        _In_ LPOLESTR lpszSourceFile, IN UINT iIconIndex);</div>
+<div class="expanded">                                          <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> <div class="def" id="NI$OleMetafilePictFromIconAndLabel@::HGLOBAL(::HICON, ::LPOLESTR, ::LPOLESTR, ::UINT)[decl0]::lpszSourceFile"><div>lpszSourceFile</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$OleMetafilePictFromIconAndLabel@::HGLOBAL(::HICON, ::LPOLESTR, ::LPOLESTR, ::UINT)[decl0]::iIconIndex"><div>iIconIndex</div></div>);</div></div>
+
+
+
+<div class="token cpp_comment ">/* Registration Database Helper APIs */</div>
+
+<div class="expandable"><div class="disabled">_Check_return_ WINOLEAPI                  OleRegGetUserType (IN REFCLSID clsid, IN DWORD dwFormOfType,</div>
+<div class="expanded">  <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>                  <div class="def" id="FB$OleRegGetUserType@::HRESULT(::IID const &, ::DWORD, ::LPOLESTR *)[decl0]"><div><div class="token cpp_function">OleRegGetUserType</div></div></div> ( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleRegGetUserType@::HRESULT(::IID const &, ::DWORD, ::LPOLESTR *)[decl0]::clsid"><div>clsid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleRegGetUserType@::HRESULT(::IID const &, ::DWORD, ::LPOLESTR *)[decl0]::dwFormOfType"><div>dwFormOfType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                        _Outptr_ LPOLESTR FAR* pszUserType);</div>
+<div class="expanded">                                         <div class="ref" onclick="jumpToSymbol([], ['LPOLESTR'], [], [])"><div class="token cpp_type">LPOLESTR</div></div> * <div class="def" id="NI$OleRegGetUserType@::HRESULT(::IID const &, ::DWORD, ::LPOLESTR *)[decl0]::pszUserType"><div>pszUserType</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI                  OleRegGetMiscStatus     (IN REFCLSID clsid, IN DWORD dwAspect,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div>                  <div class="def" id="FB$OleRegGetMiscStatus@::HRESULT(::IID const &, ::DWORD, ::DWORD *)[decl0]"><div><div class="token cpp_function">OleRegGetMiscStatus</div></div></div>     ( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleRegGetMiscStatus@::HRESULT(::IID const &, ::DWORD, ::DWORD *)[decl0]::clsid"><div>clsid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleRegGetMiscStatus@::HRESULT(::IID const &, ::DWORD, ::DWORD *)[decl0]::dwAspect"><div>dwAspect</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                                        OUT DWORD FAR* pdwStatus);</div>
+<div class="expanded">                                         <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> * <div class="def" id="NI$OleRegGetMiscStatus@::HRESULT(::IID const &, ::DWORD, ::DWORD *)[decl0]::pdwStatus"><div>pdwStatus</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI OleRegEnumFormatEtc(IN REFCLSID clsid, IN DWORD dwDirection,</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleRegEnumFormatEtc@::HRESULT(::IID const &, ::DWORD, ::LPENUMFORMATETC *)[decl0]"><div><div class="token cpp_function">OleRegEnumFormatEtc</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleRegEnumFormatEtc@::HRESULT(::IID const &, ::DWORD, ::LPENUMFORMATETC *)[decl0]::clsid"><div>clsid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$OleRegEnumFormatEtc@::HRESULT(::IID const &, ::DWORD, ::LPENUMFORMATETC *)[decl0]::dwDirection"><div>dwDirection</div></div>,</div></div>
+<div class="expandable"><div class="disabled">                              _Outptr_ LPENUMFORMATETC FAR* ppenum);</div>
+<div class="expanded">                               <div class="ref" onclick="jumpToSymbol([], ['LPENUMFORMATETC'], [], [])"><div class="token cpp_type">LPENUMFORMATETC</div></div> * <div class="def" id="NI$OleRegEnumFormatEtc@::HRESULT(::IID const &, ::DWORD, ::LPENUMFORMATETC *)[decl0]::ppenum"><div>ppenum</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI OleRegEnumVerbs (IN REFCLSID clsid, _Outptr_ LPENUMOLEVERB FAR* ppenum);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleRegEnumVerbs@::HRESULT(::IID const &, ::LPENUMOLEVERB *)[decl0]"><div><div class="token cpp_function">OleRegEnumVerbs</div></div></div> ( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleRegEnumVerbs@::HRESULT(::IID const &, ::LPENUMOLEVERB *)[decl0]::clsid"><div>clsid</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPENUMOLEVERB'], [], [])"><div class="token cpp_type">LPENUMOLEVERB</div></div> * <div class="def" id="NI$OleRegEnumVerbs@::HRESULT(::IID const &, ::LPENUMOLEVERB *)[decl0]::ppenum"><div>ppenum</div></div>);</div></div>
+
+
+<div class="token cpp_comment ">/* OLE 1.0 conversion APIS */</div>
+
+<div class="token cpp_comment ">/***** OLE 1.0 OLESTREAM declarations *************************************/</div>
+
+<div class="expandable"><div class="disabled">typedef struct _OLESTREAM FAR*  LPOLESTREAM;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> _OLESTREAM *  <div class="def" id="NI$LPOLESTREAM"><div><div class="token cpp_type">LPOLESTREAM</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_OLESTREAMVTBL"><div><div class="token cpp_type">_OLESTREAMVTBL</div></div></div>
+{
+<div class="expandable"><div class="disabled">    DWORD (CALLBACK* Get)(LPOLESTREAM, void FAR*, DWORD);</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$_OLESTREAMVTBL::Get"><div><div class="token cpp_field">Get</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['LPOLESTREAM'], [], [])"><div class="token cpp_type">LPOLESTREAM</div></div>, <div class="token cpp_keyword ">void</div> *, <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>);</div></div>
+<div class="expandable"><div class="disabled">    DWORD (CALLBACK* Put)(LPOLESTREAM, const void FAR*, DWORD);</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> (<div class="token cpp_keyword ">__stdcall</div>* <div class="def" id="NI$_OLESTREAMVTBL::Put"><div><div class="token cpp_field">Put</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['LPOLESTREAM'], [], [])"><div class="token cpp_type">LPOLESTREAM</div></div>, <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">void</div> *, <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>);</div></div>
+} <div class="def" id="NI$OLESTREAMVTBL"><div><div class="token cpp_type">OLESTREAMVTBL</div></div></div>;
+<div class="expandable"><div class="disabled">typedef  OLESTREAMVTBL FAR*  LPOLESTREAMVTBL;</div>
+<div class="expanded"><div class="token cpp_keyword ">typedef</div>  <div class="ref" onclick="jumpToSymbol([], ['OLESTREAMVTBL'], [], [])"><div class="token cpp_type">OLESTREAMVTBL</div></div> *  <div class="def" id="NI$LPOLESTREAMVTBL"><div><div class="token cpp_type">LPOLESTREAMVTBL</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_OLESTREAM"><div class="ref" onclick="jumpToSymbol([], ['_OLESTREAM'], [], [])"><div class="token cpp_type">_OLESTREAM</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['LPOLESTREAMVTBL'], [], [])"><div class="token cpp_type">LPOLESTREAMVTBL</div></div> <div class="def" id="NI$_OLESTREAM::lpstbl"><div><div class="token cpp_field">lpstbl</div></div></div>;
+} <div class="def" id="NI$OLESTREAM"><div><div class="token cpp_type">OLESTREAM</div></div></div>;
+
+
+<div class="expandable"><div class="disabled">WINOLEAPI OleConvertOLESTREAMToIStorage</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleConvertOLESTREAMToIStorage@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::DVTARGETDEVICE const *)[decl0]"><div><div class="token cpp_function">OleConvertOLESTREAMToIStorage</div></div></div></div></div>
+<div class="expandable"><div class="disabled">    (IN LPOLESTREAM                lpolestream,</div>
+<div class="expanded">    ( <div class="ref" onclick="jumpToSymbol([], ['LPOLESTREAM'], [], [])"><div class="token cpp_type">LPOLESTREAM</div></div>                <div class="def" id="NI$OleConvertOLESTREAMToIStorage@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::DVTARGETDEVICE const *)[decl0]::lpolestream"><div>lpolestream</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT LPSTORAGE                   pstg,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div>                   <div class="def" id="NI$OleConvertOLESTREAMToIStorage@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::DVTARGETDEVICE const *)[decl0]::pstg"><div>pstg</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN const DVTARGETDEVICE FAR*   ptd);</div>
+<div class="expanded">     <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['DVTARGETDEVICE'], [], [])"><div class="token cpp_type">DVTARGETDEVICE</div></div> *   <div class="def" id="NI$OleConvertOLESTREAMToIStorage@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::DVTARGETDEVICE const *)[decl0]::ptd"><div>ptd</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI OleConvertIStorageToOLESTREAM</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleConvertIStorageToOLESTREAM@::HRESULT(::LPSTORAGE, ::LPOLESTREAM)[decl0]"><div><div class="token cpp_function">OleConvertIStorageToOLESTREAM</div></div></div></div></div>
+<div class="expandable"><div class="disabled">    (IN LPSTORAGE      pstg,</div>
+<div class="expanded">    ( <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div>      <div class="def" id="NI$OleConvertIStorageToOLESTREAM@::HRESULT(::LPSTORAGE, ::LPOLESTREAM)[decl0]::pstg"><div>pstg</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT LPOLESTREAM     lpolestream);</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['LPOLESTREAM'], [], [])"><div class="token cpp_type">LPOLESTREAM</div></div>     <div class="def" id="NI$OleConvertIStorageToOLESTREAM@::HRESULT(::LPSTORAGE, ::LPOLESTREAM)[decl0]::lpolestream"><div>lpolestream</div></div>);</div></div>
+
+
+<div class="token cpp_comment ">/* ConvertTo APIS */</div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI OleDoAutoConvert(IN LPSTORAGE pStg, OUT LPCLSID pClsidNew);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleDoAutoConvert@::HRESULT(::LPSTORAGE, ::LPCLSID)[decl0]"><div><div class="token cpp_function">OleDoAutoConvert</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$OleDoAutoConvert@::HRESULT(::LPSTORAGE, ::LPCLSID)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPCLSID'], [], [])"><div class="token cpp_type">LPCLSID</div></div> <div class="def" id="NI$OleDoAutoConvert@::HRESULT(::LPSTORAGE, ::LPCLSID)[decl0]::pClsidNew"><div>pClsidNew</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI OleGetAutoConvert(IN REFCLSID clsidOld, OUT LPCLSID pClsidNew);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleGetAutoConvert@::HRESULT(::IID const &, ::LPCLSID)[decl0]"><div><div class="token cpp_function">OleGetAutoConvert</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleGetAutoConvert@::HRESULT(::IID const &, ::LPCLSID)[decl0]::clsidOld"><div>clsidOld</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['LPCLSID'], [], [])"><div class="token cpp_type">LPCLSID</div></div> <div class="def" id="NI$OleGetAutoConvert@::HRESULT(::IID const &, ::LPCLSID)[decl0]::pClsidNew"><div>pClsidNew</div></div>);</div></div>
+<div class="expandable"><div class="disabled">WINOLEAPI OleSetAutoConvert(IN REFCLSID clsidOld, IN REFCLSID clsidNew);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleSetAutoConvert@::HRESULT(::IID const &, ::IID const &)[decl0]"><div><div class="token cpp_function">OleSetAutoConvert</div></div></div>( <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleSetAutoConvert@::HRESULT(::IID const &, ::IID const &)[decl0]::clsidOld"><div>clsidOld</div></div>,  <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['IID'], [], [])"><div class="token cpp_type">IID</div></div> &amp; <div class="def" id="NI$OleSetAutoConvert@::HRESULT(::IID const &, ::IID const &)[decl0]::clsidNew"><div>clsidNew</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI SetConvertStg(IN LPSTORAGE pStg, IN BOOL fConvert);</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$SetConvertStg@::HRESULT(::LPSTORAGE, ::BOOL)[decl0]"><div><div class="token cpp_function">SetConvertStg</div></div></div>( <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div> <div class="def" id="NI$SetConvertStg@::HRESULT(::LPSTORAGE, ::BOOL)[decl0]::pStg"><div>pStg</div></div>,  <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$SetConvertStg@::HRESULT(::LPSTORAGE, ::BOOL)[decl0]::fConvert"><div>fConvert</div></div>);</div></div>
+
+
+<div class="expandable"><div class="disabled">WINOLEAPI OleConvertIStorageToOLESTREAMEx</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleConvertIStorageToOLESTREAMEx@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LONG, ::LONG, ::DWORD, ::LPSTGMEDIUM, ::LPOLESTREAM)[decl0]"><div><div class="token cpp_function">OleConvertIStorageToOLESTREAMEx</div></div></div></div></div>
+<div class="expandable"><div class="disabled">    (IN LPSTORAGE          pstg,</div>
+<div class="expanded">    ( <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div>          <div class="def" id="NI$OleConvertIStorageToOLESTREAMEx@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LONG, ::LONG, ::DWORD, ::LPSTGMEDIUM, ::LPOLESTREAM)[decl0]::pstg"><div>pstg</div></div>,</div></div>
+                                    <div class="token cpp_comment ">// Presentation data to OLESTREAM</div>
+<div class="expandable"><div class="disabled">     IN CLIPFORMAT         cfFormat,   //      format</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['CLIPFORMAT'], [], [])"><div class="token cpp_type">CLIPFORMAT</div></div>         <div class="def" id="NI$OleConvertIStorageToOLESTREAMEx@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LONG, ::LONG, ::DWORD, ::LPSTGMEDIUM, ::LPOLESTREAM)[decl0]::cfFormat"><div>cfFormat</div></div>,   <div class="token cpp_comment ">//      format</div></div></div>
+<div class="expandable"><div class="disabled">     IN LONG               lWidth,     //      width</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>               <div class="def" id="NI$OleConvertIStorageToOLESTREAMEx@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LONG, ::LONG, ::DWORD, ::LPSTGMEDIUM, ::LPOLESTREAM)[decl0]::lWidth"><div>lWidth</div></div>,     <div class="token cpp_comment ">//      width</div></div></div>
+<div class="expandable"><div class="disabled">     IN LONG               lHeight,    //      height</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>               <div class="def" id="NI$OleConvertIStorageToOLESTREAMEx@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LONG, ::LONG, ::DWORD, ::LPSTGMEDIUM, ::LPOLESTREAM)[decl0]::lHeight"><div>lHeight</div></div>,    <div class="token cpp_comment ">//      height</div></div></div>
+<div class="expandable"><div class="disabled">     IN DWORD              dwSize,     //      size in bytes</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>              <div class="def" id="NI$OleConvertIStorageToOLESTREAMEx@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LONG, ::LONG, ::DWORD, ::LPSTGMEDIUM, ::LPOLESTREAM)[decl0]::dwSize"><div>dwSize</div></div>,     <div class="token cpp_comment ">//      size in bytes</div></div></div>
+<div class="expandable"><div class="disabled">     IN LPSTGMEDIUM        pmedium,    //      bits</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTGMEDIUM'], [], [])"><div class="token cpp_type">LPSTGMEDIUM</div></div>        <div class="def" id="NI$OleConvertIStorageToOLESTREAMEx@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LONG, ::LONG, ::DWORD, ::LPSTGMEDIUM, ::LPOLESTREAM)[decl0]::pmedium"><div>pmedium</div></div>,    <div class="token cpp_comment ">//      bits</div></div></div>
+<div class="expandable"><div class="disabled">     OUT LPOLESTREAM        polestm);</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPOLESTREAM'], [], [])"><div class="token cpp_type">LPOLESTREAM</div></div>        <div class="def" id="NI$OleConvertIStorageToOLESTREAMEx@::HRESULT(::LPSTORAGE, ::CLIPFORMAT, ::LONG, ::LONG, ::DWORD, ::LPSTGMEDIUM, ::LPOLESTREAM)[decl0]::polestm"><div>polestm</div></div>);</div></div>
+
+<div class="expandable"><div class="disabled">WINOLEAPI OleConvertOLESTREAMToIStorageEx</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['HRESULT'], [], [])"><div class="token cpp_type">HRESULT</div></div> <div class="token cpp_keyword ">__stdcall</div> <div class="def" id="FB$OleConvertOLESTREAMToIStorageEx@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::CLIPFORMAT *, ::LONG *, ::LONG *, ::DWORD *, ::LPSTGMEDIUM)[decl0]"><div><div class="token cpp_function">OleConvertOLESTREAMToIStorageEx</div></div></div></div></div>
+<div class="expandable"><div class="disabled">    (IN LPOLESTREAM        polestm,</div>
+<div class="expanded">    ( <div class="ref" onclick="jumpToSymbol([], ['LPOLESTREAM'], [], [])"><div class="token cpp_type">LPOLESTREAM</div></div>        <div class="def" id="NI$OleConvertOLESTREAMToIStorageEx@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::CLIPFORMAT *, ::LONG *, ::LONG *, ::DWORD *, ::LPSTGMEDIUM)[decl0]::polestm"><div>polestm</div></div>,</div></div>
+<div class="expandable"><div class="disabled">     OUT LPSTORAGE          pstg,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTORAGE'], [], [])"><div class="token cpp_type">LPSTORAGE</div></div>          <div class="def" id="NI$OleConvertOLESTREAMToIStorageEx@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::CLIPFORMAT *, ::LONG *, ::LONG *, ::DWORD *, ::LPSTGMEDIUM)[decl0]::pstg"><div>pstg</div></div>,</div></div>
+                                    <div class="token cpp_comment ">// Presentation data from OLESTREAM</div>
+<div class="expandable"><div class="disabled">     OUT CLIPFORMAT FAR*    pcfFormat,  //      format</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['CLIPFORMAT'], [], [])"><div class="token cpp_type">CLIPFORMAT</div></div> *    <div class="def" id="NI$OleConvertOLESTREAMToIStorageEx@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::CLIPFORMAT *, ::LONG *, ::LONG *, ::DWORD *, ::LPSTGMEDIUM)[decl0]::pcfFormat"><div>pcfFormat</div></div>,  <div class="token cpp_comment ">//      format</div></div></div>
+<div class="expandable"><div class="disabled">     OUT LONG FAR*          plwWidth,   //      width</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> *          <div class="def" id="NI$OleConvertOLESTREAMToIStorageEx@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::CLIPFORMAT *, ::LONG *, ::LONG *, ::DWORD *, ::LPSTGMEDIUM)[decl0]::plwWidth"><div>plwWidth</div></div>,   <div class="token cpp_comment ">//      width</div></div></div>
+<div class="expandable"><div class="disabled">     OUT LONG FAR*          plHeight,   //      height</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> *          <div class="def" id="NI$OleConvertOLESTREAMToIStorageEx@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::CLIPFORMAT *, ::LONG *, ::LONG *, ::DWORD *, ::LPSTGMEDIUM)[decl0]::plHeight"><div>plHeight</div></div>,   <div class="token cpp_comment ">//      height</div></div></div>
+<div class="expandable"><div class="disabled">     OUT DWORD FAR*         pdwSize,    //      size in bytes</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> *         <div class="def" id="NI$OleConvertOLESTREAMToIStorageEx@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::CLIPFORMAT *, ::LONG *, ::LONG *, ::DWORD *, ::LPSTGMEDIUM)[decl0]::pdwSize"><div>pdwSize</div></div>,    <div class="token cpp_comment ">//      size in bytes</div></div></div>
+<div class="expandable"><div class="disabled">     OUT LPSTGMEDIUM        pmedium);   //      bits</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTGMEDIUM'], [], [])"><div class="token cpp_type">LPSTGMEDIUM</div></div>        <div class="def" id="NI$OleConvertOLESTREAMToIStorageEx@::HRESULT(::LPOLESTREAM, ::LPSTORAGE, ::CLIPFORMAT *, ::LONG *, ::LONG *, ::DWORD *, ::LPSTGMEDIUM)[decl0]::pmedium"><div>pmedium</div></div>);   <div class="token cpp_comment ">//      bits</div></div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+<div class="disabled">#ifndef RC_INVOKED
+#include &lt;poppack.h&gt;
+#endif // RC_INVOKED</div>
+
+
+<div class="disabled">#endif     // __OLE2_H__</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'CLIPFORMAT': {
+        'displayNameInHtml': '<span class="cpp_type">CLIPFORMAT</span>',
+        'impls': [
+            'NI$CLIPFORMAT'
+        ],
+        'decls': []
+    },
+    'CreateDataAdviseHolder@::HRESULT(::LPDATAADVISEHOLDER *)': {
+        'displayNameInHtml': '<span class="cpp_function">CreateDataAdviseHolder</span>(<span class="cpp_type">LPDATAADVISEHOLDER</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$CreateDataAdviseHolder@::HRESULT(::LPDATAADVISEHOLDER *)[decl0]',
+            'FB$CreateDataAdviseHolder@::HRESULT(::LPDATAADVISEHOLDER *)[decl1]'
+        ]
+    },
+    'DVTARGETDEVICE': {
+        'displayNameInHtml': '<span class="cpp_type">DVTARGETDEVICE</span>',
+        'impls': [
+            'NI$DVTARGETDEVICE'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HACCEL': {
+        'displayNameInHtml': '<span class="cpp_type">HACCEL</span>',
+        'impls': [
+            'NI$HACCEL'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'HDC': {
+        'displayNameInHtml': '<span class="cpp_type">HDC</span>',
+        'impls': [
+            'NI$HDC'
+        ],
+        'decls': []
+    },
+    'HGLOBAL': {
+        'displayNameInHtml': '<span class="cpp_type">HGLOBAL</span>',
+        'impls': [
+            'NI$HGLOBAL'
+        ],
+        'decls': []
+    },
+    'HICON': {
+        'displayNameInHtml': '<span class="cpp_type">HICON</span>',
+        'impls': [
+            'NI$HICON'
+        ],
+        'decls': []
+    },
+    'HMENU': {
+        'displayNameInHtml': '<span class="cpp_type">HMENU</span>',
+        'impls': [
+            'NI$HMENU'
+        ],
+        'decls': []
+    },
+    'HOLEMENU': {
+        'displayNameInHtml': '<span class="cpp_type">HOLEMENU</span>',
+        'impls': [
+            'NI$HOLEMENU'
+        ],
+        'decls': []
+    },
+    'HRESULT': {
+        'displayNameInHtml': '<span class="cpp_type">HRESULT</span>',
+        'impls': [
+            'NI$HRESULT'
+        ],
+        'decls': []
+    },
+    'HWND': {
+        'displayNameInHtml': '<span class="cpp_type">HWND</span>',
+        'impls': [
+            'NI$HWND'
+        ],
+        'decls': []
+    },
+    'IAdviseSink': {
+        'displayNameInHtml': '<span class="cpp_type">IAdviseSink</span>',
+        'impls': [
+            'NI$IAdviseSink'
+        ],
+        'decls': [
+            'NF[0]$IAdviseSink'
+        ]
+    },
+    'IDataObject': {
+        'displayNameInHtml': '<span class="cpp_type">IDataObject</span>',
+        'impls': [
+            'NI$IDataObject'
+        ],
+        'decls': [
+            'NF[0]$IDataObject'
+        ]
+    },
+    'IID': {
+        'displayNameInHtml': '<span class="cpp_type">IID</span>',
+        'impls': [
+            'NI$IID'
+        ],
+        'decls': []
+    },
+    'LONG': {
+        'displayNameInHtml': '<span class="cpp_type">LONG</span>',
+        'impls': [
+            'NI$LONG'
+        ],
+        'decls': []
+    },
+    'LPCLASSFACTORY': {
+        'displayNameInHtml': '<span class="cpp_type">LPCLASSFACTORY</span>',
+        'impls': [
+            'NI$LPCLASSFACTORY'
+        ],
+        'decls': []
+    },
+    'LPCLSID': {
+        'displayNameInHtml': '<span class="cpp_type">LPCLSID</span>',
+        'impls': [
+            'NI$LPCLSID'
+        ],
+        'decls': []
+    },
+    'LPCOLESTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCOLESTR</span>',
+        'impls': [
+            'NI$LPCOLESTR'
+        ],
+        'decls': []
+    },
+    'LPCRECT': {
+        'displayNameInHtml': '<span class="cpp_type">LPCRECT</span>',
+        'impls': [
+            'NI$LPCRECT'
+        ],
+        'decls': []
+    },
+    'LPDATAADVISEHOLDER': {
+        'displayNameInHtml': '<span class="cpp_type">LPDATAADVISEHOLDER</span>',
+        'impls': [
+            'NI$LPDATAADVISEHOLDER'
+        ],
+        'decls': []
+    },
+    'LPDATAOBJECT': {
+        'displayNameInHtml': '<span class="cpp_type">LPDATAOBJECT</span>',
+        'impls': [
+            'NI$LPDATAOBJECT'
+        ],
+        'decls': []
+    },
+    'LPDROPSOURCE': {
+        'displayNameInHtml': '<span class="cpp_type">LPDROPSOURCE</span>',
+        'impls': [
+            'NI$LPDROPSOURCE'
+        ],
+        'decls': []
+    },
+    'LPDROPTARGET': {
+        'displayNameInHtml': '<span class="cpp_type">LPDROPTARGET</span>',
+        'impls': [
+            'NI$LPDROPTARGET'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPENUMFORMATETC': {
+        'displayNameInHtml': '<span class="cpp_type">LPENUMFORMATETC</span>',
+        'impls': [
+            'NI$LPENUMFORMATETC'
+        ],
+        'decls': []
+    },
+    'LPENUMOLEVERB': {
+        'displayNameInHtml': '<span class="cpp_type">LPENUMOLEVERB</span>',
+        'impls': [
+            'NI$LPENUMOLEVERB'
+        ],
+        'decls': []
+    },
+    'LPFORMATETC': {
+        'displayNameInHtml': '<span class="cpp_type">LPFORMATETC</span>',
+        'impls': [
+            'NI$LPFORMATETC'
+        ],
+        'decls': []
+    },
+    'LPMONIKER': {
+        'displayNameInHtml': '<span class="cpp_type">LPMONIKER</span>',
+        'impls': [
+            'NI$LPMONIKER'
+        ],
+        'decls': []
+    },
+    'LPMSG': {
+        'displayNameInHtml': '<span class="cpp_type">LPMSG</span>',
+        'impls': [
+            'NI$LPMSG'
+        ],
+        'decls': []
+    },
+    'LPOLEADVISEHOLDER': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLEADVISEHOLDER</span>',
+        'impls': [
+            'NI$LPOLEADVISEHOLDER'
+        ],
+        'decls': []
+    },
+    'LPOLECLIENTSITE': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLECLIENTSITE</span>',
+        'impls': [
+            'NI$LPOLECLIENTSITE'
+        ],
+        'decls': []
+    },
+    'LPOLEINPLACEACTIVEOBJECT': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLEINPLACEACTIVEOBJECT</span>',
+        'impls': [
+            'NI$LPOLEINPLACEACTIVEOBJECT'
+        ],
+        'decls': []
+    },
+    'LPOLEINPLACEFRAME': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLEINPLACEFRAME</span>',
+        'impls': [
+            'NI$LPOLEINPLACEFRAME'
+        ],
+        'decls': []
+    },
+    'LPOLEINPLACEFRAMEINFO': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLEINPLACEFRAMEINFO</span>',
+        'impls': [
+            'NI$LPOLEINPLACEFRAMEINFO'
+        ],
+        'decls': []
+    },
+    'LPOLEMENUGROUPWIDTHS': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLEMENUGROUPWIDTHS</span>',
+        'impls': [
+            'NI$LPOLEMENUGROUPWIDTHS'
+        ],
+        'decls': []
+    },
+    'LPOLEOBJECT': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLEOBJECT</span>',
+        'impls': [
+            'NI$LPOLEOBJECT'
+        ],
+        'decls': []
+    },
+    'LPOLESTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLESTR</span>',
+        'impls': [
+            'NI$LPOLESTR'
+        ],
+        'decls': []
+    },
+    'LPOLESTREAM': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLESTREAM</span>',
+        'impls': [
+            'NI$LPOLESTREAM'
+        ],
+        'decls': []
+    },
+    'LPOLESTREAMVTBL': {
+        'displayNameInHtml': '<span class="cpp_type">LPOLESTREAMVTBL</span>',
+        'impls': [
+            'NI$LPOLESTREAMVTBL'
+        ],
+        'decls': []
+    },
+    'LPPERSISTSTORAGE': {
+        'displayNameInHtml': '<span class="cpp_type">LPPERSISTSTORAGE</span>',
+        'impls': [
+            'NI$LPPERSISTSTORAGE'
+        ],
+        'decls': []
+    },
+    'LPPERSISTSTREAM': {
+        'displayNameInHtml': '<span class="cpp_type">LPPERSISTSTREAM</span>',
+        'impls': [
+            'NI$LPPERSISTSTREAM'
+        ],
+        'decls': []
+    },
+    'LPSTGMEDIUM': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTGMEDIUM</span>',
+        'impls': [
+            'NI$LPSTGMEDIUM'
+        ],
+        'decls': []
+    },
+    'LPSTORAGE': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTORAGE</span>',
+        'impls': [
+            'NI$LPSTORAGE'
+        ],
+        'decls': []
+    },
+    'LPSTREAM': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTREAM</span>',
+        'impls': [
+            'NI$LPSTREAM'
+        ],
+        'decls': []
+    },
+    'LPUNKNOWN': {
+        'displayNameInHtml': '<span class="cpp_type">LPUNKNOWN</span>',
+        'impls': [
+            'NI$LPUNKNOWN'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'OLESTREAMVTBL': {
+        'displayNameInHtml': '<span class="cpp_type">OLESTREAMVTBL</span>',
+        'impls': [
+            'NI$OLESTREAMVTBL'
+        ],
+        'decls': []
+    },
+    'PWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">PWSTR</span>',
+        'impls': [
+            'NI$PWSTR'
+        ],
+        'decls': []
+    },
+    'UINT': {
+        'displayNameInHtml': '<span class="cpp_type">UINT</span>',
+        'impls': [
+            'NI$UINT'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    },
+    '_OLESTREAM': {
+        'displayNameInHtml': '<span class="cpp_type">_OLESTREAM</span>',
+        'impls': [
+            'NI$_OLESTREAM'
+        ],
+        'decls': [
+            'NF[0]$_OLESTREAM'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$CreateDataAdviseHolder@::HRESULT(::LPDATAADVISEHOLDER *)[decl0]': { 'htmlFileName': 'objbase.h', 'displayName': 'objbase.h' },
+    'FB$CreateDataAdviseHolder@::HRESULT(::LPDATAADVISEHOLDER *)[decl1]': null,
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$CLIPFORMAT': { 'htmlFileName': 'wtypes.h', 'displayName': 'wtypes.h' },
+    'NI$DVTARGETDEVICE': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HACCEL': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HDC': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$HGLOBAL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HICON': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$HMENU': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$HOLEMENU': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$HRESULT': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$HWND': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$IAdviseSink': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$IDataObject': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$IID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$LONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCLASSFACTORY': { 'htmlFileName': 'Unknwnbase.h', 'displayName': 'Unknwnbase.h' },
+    'NI$LPCLSID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$LPCOLESTR': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$LPCRECT': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
+    'NI$LPDATAADVISEHOLDER': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPDATAOBJECT': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPDROPSOURCE': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPDROPTARGET': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPENUMFORMATETC': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPENUMOLEVERB': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPFORMATETC': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPMONIKER': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPMSG': { 'htmlFileName': 'WinUser.h', 'displayName': 'WinUser.h' },
+    'NI$LPOLEADVISEHOLDER': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPOLECLIENTSITE': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPOLEINPLACEACTIVEOBJECT': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPOLEINPLACEFRAME': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPOLEINPLACEFRAMEINFO': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPOLEMENUGROUPWIDTHS': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPOLEOBJECT': { 'htmlFileName': 'oleidl.h', 'displayName': 'oleidl.h' },
+    'NI$LPOLESTR': { 'htmlFileName': 'WTypesbase.h', 'displayName': 'WTypesbase.h' },
+    'NI$LPOLESTREAM': null,
+    'NI$LPOLESTREAMVTBL': null,
+    'NI$LPPERSISTSTORAGE': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPPERSISTSTREAM': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPSTGMEDIUM': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPSTORAGE': { 'htmlFileName': 'ObjIdl.h', 'displayName': 'ObjIdl.h' },
+    'NI$LPSTREAM': { 'htmlFileName': 'ObjIdlbase.h', 'displayName': 'ObjIdlbase.h' },
+    'NI$LPUNKNOWN': { 'htmlFileName': 'Unknwnbase.h', 'displayName': 'Unknwnbase.h' },
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$OLESTREAMVTBL': null,
+    'NI$PWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$UINT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$_OLESTREAM': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>
