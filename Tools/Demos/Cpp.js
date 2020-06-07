@@ -137,17 +137,17 @@ function promptTooltipDropdownData(dropdownData, underElement) {
  * }[]
  *
  * referencedSymbols: {
- *   [key: string]: {
- *     displayNameInHtml: string,
- *     impls: string[],
- *     decls: string[]
+ *   [key: string]: {               // key: SymbolId
+ *     displayNameInHtml: string,   // rendered as HTML
+ *     impls: string[],             // implementation DeclIds
+ *     decls: string[]              // forward declaration DeclIds
  *   }
  * }
  *
  * symbolToFiles: {
- *   [key: string]: null | {
- *     htmlFileName: string,
- *     displayName: string
+ *   [key: string]: null | {        // key: DeclId (element id in the specified HTML file), value: null -> current file
+ *     htmlFileName: string,        // generated HTML file name (without ".html")
+ *     displayName: string          // display name of source file
  *   }
  * }
  */

@@ -27,9 +27,26 @@
 ### Document Generation
 
 - [ ] Generate reference pages
-  - [ ] Copy document comment to a folder with a tree structure
-    - [ ] For enum, enum items store in the same XML file
-  - [ ] Process hyper-links
+  - [ ] In `GenerateHtmlLine`, collect all `Document` token, assigned and clean the token list when a declaration name is found.
+    - [ ] If the declaration name is a template argument, ignore.
+    - [ ] If the declaration name is enum item, take a record on the enum.
+    - [ ] Document commponents are not allowed to be assigned to multiple declaration names of the same symbol.
+    - [ ] Check `<typeparam/>` and `<param/>` and `<enumitem/>`
+    - [ ] XML document on enum item can only have `<summary/>`, when it is found.
+      - [ ] Ensure that there is an XML document assigned to the enum.
+      - [ ] Convert to `<enumitem/>` and append to the document comment of the enum.
+  - [ ] Copy document comment to a folder, with a folder-structured XML file (`ReferenceIndex.xml`), mapping symbol ids to file names.
+    - [ ] using similar file name generation as symbol index fragment files, to prevent from exceeding MAX_PATH.
+    - [ ] Process hyper-links.
+      - [ ] `[T:x]` (type), `[M:x]` (method) and `[F:x]` (field) only use primary symbols.
+      - [ ] Ensure that the hyper link resolves to one single target.
+        - [ ] ```x`` means a symbol with specified number (x) of template arguments.
+        - [ ] Allow overloaded methods.
+      - [ ] `<see cref="SYMBOL">` searches a symbol from the current scope, using `::` and ```x`` for scoping and template argument number.
+    - [ ] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declId="DeclId"/>`.
+    - [ ] For enum, enum items store in the same XML file.
+  - [ ] Temporary `ReferenceIndex.html` for viewing extracted XML content and the folder structure.
+  - [ ] Move all HTML files for source files to a `Source` folder.
 - [ ] Refine document comment
   - [ ] Vlpp
   - [ ] VlppOS
@@ -50,6 +67,8 @@
     - [ ] Syntax
   - [ ] GacUI
     - [ ] XML Syntax
+    - [ ] XML virtual class list
+    - [ ] XML class to C++ class mapping
 
 ### Test Cases
 
