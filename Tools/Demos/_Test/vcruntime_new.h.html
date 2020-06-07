@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vcruntime_new.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// vcruntime_new.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Declarations and definitions of memory management functions in the VCRuntime.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled">#include &lt;vcruntime.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> {
+
+<div class="expandable"><div class="disabled">#pragma pack(push, _CRT_PACKING)</div>
+<div class="expanded">#pragma pack(push, <div class="token cpp_number ">8</div>)</div></div>
+
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable: 4985) // attributes not present on previous declaration</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4985</div>) </div></div>
+
+<div class="disabled">#pragma push_macro(&quot;new&quot;)</div>
+<div class="disabled">#undef new</div>
+
+<div class="token cpp_comment ">// C++17 or greater only</div>
+<div class="disabled">#ifndef _HAS_ALIGNED_NEW</div>
+<div class="disabled"> #ifdef _MSVC_LANG</div>
+<div class="disabled">  #if _MSVC_LANG &gt; 201402</div>
+<div class="disabled">   #define _HAS_ALIGNED_NEW	1</div>
+<div class="disabled">  #else</div>
+<div class="disabled">   #define _HAS_ALIGNED_NEW	0</div>
+<div class="disabled">  #endif</div>
+<div class="disabled"> #else</div>
+<div class="disabled">  #if __cplusplus &gt; 201402</div>
+<div class="disabled">   #define _HAS_ALIGNED_NEW	1</div>
+<div class="disabled">  #else</div>
+<div class="disabled">   #define _HAS_ALIGNED_NEW	0</div>
+<div class="disabled">  #endif</div>
+<div class="disabled"> #endif</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if _HAS_ALIGNED_NEW</div>
+<div class="disabled">namespace std</div>
+<div class="disabled">{</div>
+<div class="disabled">    enum class align_val_t : size_t {};</div>
+<div class="disabled">}
+#endif</div>
+
+<div class="disabled">#ifndef __NOTHROW_T_DEFINED</div>
+<div class="disabled">#define __NOTHROW_T_DEFINED</div>
+    <div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$std"><div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div></div>
+    {
+        <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$std::nothrow_t"><div><div class="token cpp_type">nothrow_t</div></div></div> {
+<div class="disabled">#ifndef _CRTBLD // TRANSITION, VSO#406237</div>
+            <div class="token cpp_keyword ">explicit</div> <div class="def" id="FB$std::nothrow_t::$__ctor@()[decl0]"><div><div class="token cpp_function">nothrow_t</div></div></div>() = <div class="token cpp_keyword ">default</div>;
+<div class="disabled">#endif // _CRTBLD</div>
+        };
+
+<div class="disabled">        #ifdef _CRT_ENABLE_SELECTANY_NOTHROW</div>
+<div class="disabled">            extern __declspec(selectany) nothrow_t const nothrow;</div>
+<div class="disabled">        #else</div>
+            <div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['std::nothrow_t'], [], [])"><div class="token cpp_type">nothrow_t</div></div> <div class="token cpp_keyword ">const</div> <div class="def" id="NF[0]$std::nothrow"><div>nothrow</div></div>;
+<div class="disabled">        #endif</div>
+    }
+<div class="disabled">#endif</div>
+
+<div class="disabled">_Ret_notnull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_VCRT_ALLOCATOR void* __CRTDECL operator new(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator new@void *(::size_t)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">new</div></div></div>(</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$operator new@void *(::size_t)[decl0]::_Size"><div>_Size</div></div>
+    );
+
+<div class="disabled">_Ret_maybenull_ _Success_(return != NULL) _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_VCRT_ALLOCATOR void* __CRTDECL operator new(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator new@void *(::size_t, ::std::nothrow_t const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">new</div></div></div>(</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$operator new@void *(::size_t, ::std::nothrow_t const &)[decl0]::_Size"><div>_Size</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>::<div class="ref" onclick="jumpToSymbol([], ['std::nothrow_t'], [], [])"><div class="token cpp_type">nothrow_t</div></div> <div class="token cpp_keyword ">const</div>&amp;
+    ) <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="disabled">_Ret_notnull_ _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_VCRT_ALLOCATOR void* __CRTDECL operator new[](</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator new[]@void *(::size_t)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">new</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$operator new[]@void *(::size_t)[decl0]::_Size"><div>_Size</div></div>
+    );
+
+<div class="disabled">_Ret_maybenull_ _Success_(return != NULL) _Post_writable_byte_size_(_Size)</div>
+<div class="expandable"><div class="disabled">_VCRT_ALLOCATOR void* __CRTDECL operator new[](</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator new[]@void *(::size_t, ::std::nothrow_t const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">new</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$operator new[]@void *(::size_t, ::std::nothrow_t const &)[decl0]::_Size"><div>_Size</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>::<div class="ref" onclick="jumpToSymbol([], ['std::nothrow_t'], [], [])"><div class="token cpp_type">nothrow_t</div></div> <div class="token cpp_keyword ">const</div>&amp;
+    ) <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="expandable"><div class="disabled">void __CRTDECL operator delete(</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator delete@void(void *)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">delete</div></div></div>(</div></div>
+    <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$operator delete@void(void *)[decl0]::_Block"><div>_Block</div></div>
+    ) <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="expandable"><div class="disabled">void __CRTDECL operator delete(</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator delete@void(void *, ::std::nothrow_t const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">delete</div></div></div>(</div></div>
+    <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$operator delete@void(void *, ::std::nothrow_t const &)[decl0]::_Block"><div>_Block</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>::<div class="ref" onclick="jumpToSymbol([], ['std::nothrow_t'], [], [])"><div class="token cpp_type">nothrow_t</div></div> <div class="token cpp_keyword ">const</div>&amp;
+    ) <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="expandable"><div class="disabled">void __CRTDECL operator delete[](</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator delete[]@void(void *)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">delete</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(</div></div>
+    <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$operator delete[]@void(void *)[decl0]::_Block"><div>_Block</div></div>
+    ) <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="expandable"><div class="disabled">void __CRTDECL operator delete[](</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator delete[]@void(void *, ::std::nothrow_t const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">delete</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(</div></div>
+    <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$operator delete[]@void(void *, ::std::nothrow_t const &)[decl0]::_Block"><div>_Block</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>::<div class="ref" onclick="jumpToSymbol([], ['std::nothrow_t'], [], [])"><div class="token cpp_type">nothrow_t</div></div> <div class="token cpp_keyword ">const</div>&amp;
+    ) <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="expandable"><div class="disabled">void __CRTDECL operator delete(</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator delete@void(void *, ::size_t)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">delete</div></div></div>(</div></div>
+    <div class="token cpp_keyword ">void</div>*  <div class="def" id="NI$operator delete@void(void *, ::size_t)[decl0]::_Block"><div>_Block</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$operator delete@void(void *, ::size_t)[decl0]::_Size"><div>_Size</div></div>
+    ) <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="expandable"><div class="disabled">void __CRTDECL operator delete[](</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator delete[]@void(void *, ::size_t)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">delete</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(</div></div>
+    <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$operator delete[]@void(void *, ::size_t)[decl0]::_Block"><div>_Block</div></div>,
+    <div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$operator delete[]@void(void *, ::size_t)[decl0]::_Size"><div>_Size</div></div>
+    ) <div class="token cpp_keyword ">noexcept</div>;
+
+<div class="disabled">#if _HAS_ALIGNED_NEW</div>
+<div class="disabled">_Ret_notnull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">_VCRT_ALLOCATOR void* __CRTDECL operator new(</div>
+<div class="disabled">    size_t           _Size,</div>
+<div class="disabled">    std::align_val_t _Al</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">_Ret_maybenull_ _Success_(return != NULL) _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">_VCRT_ALLOCATOR void* __CRTDECL operator new(</div>
+<div class="disabled">    size_t                _Size,</div>
+<div class="disabled">    std::align_val_t      _Al,</div>
+<div class="disabled">    std::nothrow_t const&amp;</div>
+<div class="disabled">    ) noexcept;</div>
+
+
+<div class="disabled">_Ret_notnull_ _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">_VCRT_ALLOCATOR void* __CRTDECL operator new[](</div>
+<div class="disabled">    size_t           _Size,</div>
+<div class="disabled">    std::align_val_t _Al</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">_Ret_maybenull_ _Success_(return != NULL) _Post_writable_byte_size_(_Size)</div>
+<div class="disabled">_VCRT_ALLOCATOR void* __CRTDECL operator new[](</div>
+<div class="disabled">    size_t                _Size,</div>
+<div class="disabled">    std::align_val_t      _Al,</div>
+<div class="disabled">    std::nothrow_t const&amp;</div>
+<div class="disabled">    ) noexcept;</div>
+
+<div class="disabled">void __CRTDECL operator delete(</div>
+<div class="disabled">    void*            _Block,</div>
+<div class="disabled">    std::align_val_t _Al</div>
+<div class="disabled">    ) noexcept;</div>
+
+<div class="disabled">void __CRTDECL operator delete(</div>
+<div class="disabled">    void*                 _Block,</div>
+<div class="disabled">    std::align_val_t      _Al,</div>
+<div class="disabled">    std::nothrow_t const&amp;</div>
+<div class="disabled">    ) noexcept;</div>
+
+<div class="disabled">void __CRTDECL operator delete[](</div>
+<div class="disabled">    void*            _Block,</div>
+<div class="disabled">    std::align_val_t _Al</div>
+<div class="disabled">    ) noexcept;</div>
+
+<div class="disabled">void __CRTDECL operator delete[](</div>
+<div class="disabled">    void*                 _Block,</div>
+<div class="disabled">    std::align_val_t      _Al,</div>
+<div class="disabled">    std::nothrow_t const&amp;</div>
+<div class="disabled">    ) noexcept;</div>
+
+<div class="disabled">void __CRTDECL operator delete(</div>
+<div class="disabled">    void*            _Block,</div>
+<div class="disabled">    size_t           _Size,</div>
+<div class="disabled">    std::align_val_t _Al</div>
+<div class="disabled">    ) noexcept;</div>
+
+<div class="disabled">void __CRTDECL operator delete[](</div>
+<div class="disabled">    void*            _Block,</div>
+<div class="disabled">    size_t           _Size,</div>
+<div class="disabled">    std::align_val_t _Al</div>
+<div class="disabled">    ) noexcept;
+#endif</div>
+
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable: 4577) // &apos;noexcept&apos; used with no exception handling mode specified</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4577</div>) </div></div>
+<div class="expandable"><div class="disabled">#pragma warning(disable: 4514) // &apos;operator new&apos;: unreferenced inline function has been removed</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4514</div>) </div></div>
+<div class="disabled">#ifndef __PLACEMENT_NEW_INLINE</div>
+<div class="disabled">    #define __PLACEMENT_NEW_INLINE</div>
+<div class="disabled">    _Ret_notnull_ _Post_writable_byte_size_(_Size) _Post_satisfies_(return == _Where)</div>
+<div class="expandable"><div class="disabled">    inline void* __CRTDECL operator new(size_t _Size, _Writable_bytes_(_Size) void* _Where) noexcept</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator new@void *(::size_t, void *)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">new</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$operator new@void *(::size_t, void *)[impl0]::_Size"><div><div class="token cpp_argument">_Size</div></div></div>,   <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$operator new@void *(::size_t, void *)[impl0]::_Where"><div><div class="token cpp_argument">_Where</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+    {
+        (<div class="token cpp_keyword ">void</div>)<div class="ref" onclick="jumpToSymbol([], ['operator new@void *(::size_t, void *)[impl0]::_Size'], [], [])"><div class="token cpp_argument">_Size</div></div>;
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['operator new@void *(::size_t, void *)[impl0]::_Where'], [], [])"><div class="token cpp_argument">_Where</div></div>;
+    }
+
+<div class="expandable"><div class="disabled">    inline void __CRTDECL operator delete(void*, void*) noexcept</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator delete@void(void *, void *)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">delete</div></div></div>(<div class="token cpp_keyword ">void</div>*, <div class="token cpp_keyword ">void</div>*) <div class="token cpp_keyword ">noexcept</div></div></div>
+    {
+        <div class="token cpp_keyword ">return</div>;
+    }
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifndef __PLACEMENT_VEC_NEW_INLINE</div>
+<div class="disabled">    #define __PLACEMENT_VEC_NEW_INLINE</div>
+<div class="disabled">    _Ret_notnull_ _Post_writable_byte_size_(_Size) _Post_satisfies_(return == _Where)</div>
+<div class="expandable"><div class="disabled">    inline void* __CRTDECL operator new[](size_t _Size,</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator new[]@void *(::size_t, void *)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">new</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['size_t'], [], [])"><div class="token cpp_type">size_t</div></div> <div class="def" id="NI$operator new[]@void *(::size_t, void *)[impl0]::_Size"><div><div class="token cpp_argument">_Size</div></div></div>,</div></div>
+<div class="expandable"><div class="disabled">        _Writable_bytes_(_Size) void* _Where) noexcept</div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$operator new[]@void *(::size_t, void *)[impl0]::_Where"><div><div class="token cpp_argument">_Where</div></div></div>) <div class="token cpp_keyword ">noexcept</div></div></div>
+    {
+        (<div class="token cpp_keyword ">void</div>)<div class="ref" onclick="jumpToSymbol([], ['operator new[]@void *(::size_t, void *)[impl0]::_Size'], [], [])"><div class="token cpp_argument">_Size</div></div>;
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['operator new[]@void *(::size_t, void *)[impl0]::_Where'], [], [])"><div class="token cpp_argument">_Where</div></div>;
+    }
+
+<div class="expandable"><div class="disabled">    inline void __CRTDECL operator delete[](void*, void*) noexcept</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$operator delete[]@void(void *, void *)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function"> </div><div class="token cpp_keyword ">delete</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="token cpp_keyword ">void</div>*, <div class="token cpp_keyword ">void</div>*) <div class="token cpp_keyword ">noexcept</div></div></div>
+    {
+    }
+<div class="disabled">#endif</div>
+#pragma warning(pop)
+
+<div class="disabled">#pragma pop_macro(&quot;new&quot;)</div>
+
+#pragma warning(pop)
+#pragma pack(pop)
+
+} <div class="token cpp_comment ">// extern &quot;C++&quot;</div>
+<div class="disabled">#endif // __cplusplus
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'operator new@void *(::size_t, void *)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'NI$operator new@void *(::size_t, void *)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    'operator new@void *(::size_t, void *)[impl0]::_Where': {
+        'displayNameInHtml': '_Where',
+        'impls': [
+            'NI$operator new@void *(::size_t, void *)[impl0]::_Where'
+        ],
+        'decls': []
+    },
+    'operator new[]@void *(::size_t, void *)[impl0]::_Size': {
+        'displayNameInHtml': '_Size',
+        'impls': [
+            'NI$operator new[]@void *(::size_t, void *)[impl0]::_Size'
+        ],
+        'decls': []
+    },
+    'operator new[]@void *(::size_t, void *)[impl0]::_Where': {
+        'displayNameInHtml': '_Where',
+        'impls': [
+            'NI$operator new[]@void *(::size_t, void *)[impl0]::_Where'
+        ],
+        'decls': []
+    },
+    'size_t': {
+        'displayNameInHtml': '<span class="cpp_type">size_t</span>',
+        'impls': [
+            'NI$size_t'
+        ],
+        'decls': []
+    },
+    'std': {
+        'displayNameInHtml': 'std',
+        'impls': [],
+        'decls': [
+            'NF[0]$std',
+            'NF[1]$std',
+            'NF[2]$std',
+            'NF[3]$std',
+            'NF[4]$std',
+            'NF[5]$std',
+            'NF[6]$std',
+            'NF[7]$std',
+            'NF[8]$std',
+            'NF[9]$std',
+            'NF[10]$std',
+            'NF[11]$std',
+            'NF[12]$std',
+            'NF[13]$std'
+        ]
+    },
+    'std::nothrow_t': {
+        'displayNameInHtml': '<span class="cpp_type">nothrow_t</span>',
+        'impls': [
+            'NI$std::nothrow_t'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NF[0]$std': null,
+    'NF[10]$std': { 'htmlFileName': 'vcruntime_exception.h', 'displayName': 'vcruntime_exception.h' },
+    'NF[11]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[12]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NF[13]$std': { 'htmlFileName': 'new', 'displayName': 'new' },
+    'NF[1]$std': { 'htmlFileName': 'yvals.h', 'displayName': 'yvals.h' },
+    'NF[2]$std': { 'htmlFileName': 'stddef.h', 'displayName': 'stddef.h' },
+    'NF[3]$std': { 'htmlFileName': 'xtr1common', 'displayName': 'xtr1common' },
+    'NF[4]$std': { 'htmlFileName': 'cstddef', 'displayName': 'cstddef' },
+    'NF[5]$std': { 'htmlFileName': 'cstdlib', 'displayName': 'cstdlib' },
+    'NF[6]$std': { 'htmlFileName': 'initializer_list', 'displayName': 'initializer_list' },
+    'NF[7]$std': { 'htmlFileName': 'xstddef', 'displayName': 'xstddef' },
+    'NF[8]$std': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'NF[9]$std': { 'htmlFileName': 'exception', 'displayName': 'exception' },
+    'NI$operator new@void *(::size_t, void *)[impl0]::_Size': null,
+    'NI$operator new@void *(::size_t, void *)[impl0]::_Where': null,
+    'NI$operator new[]@void *(::size_t, void *)[impl0]::_Size': null,
+    'NI$operator new[]@void *(::size_t, void *)[impl0]::_Where': null,
+    'NI$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'NI$std::nothrow_t': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rpcdcep.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="token cpp_comment ">/*++
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Module Name:
+
+    rpcdcep.h
+
+Abstract:
+
+    This module contains the private RPC runtime APIs for use by the
+    stubs and by support libraries.  Applications must not call these
+    routines.
+
+--*/</div>
+
+<div class="token cpp_comment ">//@[contract(&quot;rpcdcep&quot;), comment(&quot;MVI_tracked - https://osgwiki.com/wiki/Microsoft_Virus_Initiative&quot;)]; </div>
+
+<div class="disabled">#ifndef __RPCDCEP_H__</div>
+<div class="disabled">#define __RPCDCEP_H__</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4668) // #if not_defined treated as #if 0</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4668</div>) </div></div>
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) // padding added after data member
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_VERSION"><div><div class="token cpp_type">_RPC_VERSION</div></div></div> {
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$_RPC_VERSION::MajorVersion"><div><div class="token cpp_field">MajorVersion</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$_RPC_VERSION::MinorVersion"><div><div class="token cpp_field">MinorVersion</div></div></div>;
+} <div class="def" id="NI$RPC_VERSION"><div><div class="token cpp_type">RPC_VERSION</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_SYNTAX_IDENTIFIER"><div><div class="token cpp_type">_RPC_SYNTAX_IDENTIFIER</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['GUID'], [], [])"><div class="token cpp_type">GUID</div></div> <div class="def" id="NI$_RPC_SYNTAX_IDENTIFIER::SyntaxGUID"><div><div class="token cpp_field">SyntaxGUID</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_VERSION'], [], [])"><div class="token cpp_type">RPC_VERSION</div></div> <div class="def" id="NI$_RPC_SYNTAX_IDENTIFIER::SyntaxVersion"><div><div class="token cpp_field">SyntaxVersion</div></div></div>;
+<div class="expandable"><div class="disabled">} RPC_SYNTAX_IDENTIFIER, __RPC_FAR * PRPC_SYNTAX_IDENTIFIER;</div>
+<div class="expanded">} <div class="def" id="NI$RPC_SYNTAX_IDENTIFIER"><div><div class="token cpp_type">RPC_SYNTAX_IDENTIFIER</div></div></div>,  * <div class="def" id="NI$PRPC_SYNTAX_IDENTIFIER"><div><div class="token cpp_type">PRPC_SYNTAX_IDENTIFIER</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_MESSAGE"><div><div class="token cpp_type">_RPC_MESSAGE</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$_RPC_MESSAGE::Handle"><div><div class="token cpp_field">Handle</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_RPC_MESSAGE::DataRepresentation"><div><div class="token cpp_field">DataRepresentation</div></div></div>;
+<div class="expandable"><div class="disabled">    void __RPC_FAR * Buffer;</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$_RPC_MESSAGE::Buffer"><div><div class="token cpp_field">Buffer</div></div></div>;</div></div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_RPC_MESSAGE::BufferLength"><div><div class="token cpp_field">BufferLength</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_RPC_MESSAGE::ProcNum"><div><div class="token cpp_field">ProcNum</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['PRPC_SYNTAX_IDENTIFIER'], [], [])"><div class="token cpp_type">PRPC_SYNTAX_IDENTIFIER</div></div> <div class="def" id="NI$_RPC_MESSAGE::TransferSyntax"><div><div class="token cpp_field">TransferSyntax</div></div></div>;
+<div class="expandable"><div class="disabled">    void __RPC_FAR * RpcInterfaceInformation;</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$_RPC_MESSAGE::RpcInterfaceInformation"><div><div class="token cpp_field">RpcInterfaceInformation</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">    void __RPC_FAR * ReservedForRuntime;</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$_RPC_MESSAGE::ReservedForRuntime"><div><div class="token cpp_field">ReservedForRuntime</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">    RPC_MGR_EPV __RPC_FAR * ManagerEpv;</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$_RPC_MESSAGE::ManagerEpv"><div><div class="token cpp_field">ManagerEpv</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">    void __RPC_FAR * ImportContext;</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$_RPC_MESSAGE::ImportContext"><div><div class="token cpp_field">ImportContext</div></div></div>;</div></div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_RPC_MESSAGE::RpcFlags"><div><div class="token cpp_field">RpcFlags</div></div></div>;
+<div class="expandable"><div class="disabled">} RPC_MESSAGE, __RPC_FAR * PRPC_MESSAGE;</div>
+<div class="expanded">} <div class="def" id="NI$RPC_MESSAGE"><div><div class="token cpp_type">RPC_MESSAGE</div></div></div>,  * <div class="def" id="NI$PRPC_MESSAGE"><div><div class="token cpp_type">PRPC_MESSAGE</div></div></div>;</div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY RPC_FORWARD_FUNCTION(</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div> <div class="def" id="NI$RPC_FORWARD_FUNCTION"><div><div class="token cpp_type">RPC_FORWARD_FUNCTION</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">                       IN UUID             __RPC_FAR * InterfaceId,</div>
+<div class="expanded">                        <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div>              * InterfaceId,</div></div>
+<div class="expandable"><div class="disabled">                       IN RPC_VERSION      __RPC_FAR * InterfaceVersion,</div>
+<div class="expanded">                        <div class="ref" onclick="jumpToSymbol([], ['RPC_VERSION'], [], [])"><div class="token cpp_type">RPC_VERSION</div></div>       * InterfaceVersion,</div></div>
+<div class="expandable"><div class="disabled">                       IN UUID             __RPC_FAR * ObjectId,</div>
+<div class="expanded">                        <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div>              * ObjectId,</div></div>
+<div class="expandable"><div class="disabled">                       IN unsigned char         __RPC_FAR * Rpcpro,</div>
+<div class="expanded">                        <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>          * Rpcpro,</div></div>
+<div class="expandable"><div class="disabled">                       IN void __RPC_FAR * __RPC_FAR * ppDestEndpoint);</div>
+<div class="expanded">                        <div class="token cpp_keyword ">void</div>  *  * ppDestEndpoint);</div></div>
+
+<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$RPC_ADDRESS_CHANGE_TYPE"><div><div class="token cpp_type">RPC_ADDRESS_CHANGE_TYPE</div></div></div>
+{
+    <div class="def" id="NI$RPC_ADDRESS_CHANGE_TYPE::PROTOCOL_NOT_LOADED"><div><div class="token cpp_enum">PROTOCOL_NOT_LOADED</div></div></div> = <div class="token cpp_number ">1</div>,
+    <div class="def" id="NI$RPC_ADDRESS_CHANGE_TYPE::PROTOCOL_LOADED"><div><div class="token cpp_enum">PROTOCOL_LOADED</div></div></div>,
+    <div class="def" id="NI$RPC_ADDRESS_CHANGE_TYPE::PROTOCOL_ADDRESS_CHANGE"><div><div class="token cpp_enum">PROTOCOL_ADDRESS_CHANGE</div></div></div>
+};
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY RPC_ADDRESS_CHANGE_FN(</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div> <div class="def" id="NI$RPC_ADDRESS_CHANGE_FN"><div><div class="token cpp_type">RPC_ADDRESS_CHANGE_FN</div></div></div>(</div></div>
+<div class="expandable"><div class="disabled">                        IN void * arg</div>
+<div class="expanded">                         <div class="token cpp_keyword ">void</div> * arg</div></div>
+                        );
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="token cpp_comment ">/*
+*  New context handle flavors.
+*/</div>
+<div class="disabled">#define RPC_CONTEXT_HANDLE_DEFAULT_GUARD    ((void *)(ULONG_PTR)0xFFFFF00D)</div>
+
+<div class="disabled">#define RPC_CONTEXT_HANDLE_DEFAULT_FLAGS    0x00000000UL</div>
+<div class="disabled">#define RPC_CONTEXT_HANDLE_FLAGS            0x30000000UL</div>
+<div class="disabled">#define RPC_CONTEXT_HANDLE_SERIALIZE        0x10000000UL</div>
+<div class="disabled">#define RPC_CONTEXT_HANDLE_DONT_SERIALIZE   0x20000000UL</div>
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define RPC_TYPE_STRICT_CONTEXT_HANDLE      0x40000000UL
+#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="token cpp_comment ">/*
+ * Types of function calls for datagram rpc
+ */</div>
+
+<div class="disabled">#define RPC_NCA_FLAGS_DEFAULT       0x00000000  /* 0b000...000 */</div>
+<div class="disabled">#define RPC_NCA_FLAGS_IDEMPOTENT    0x00000001  /* 0b000...001 */</div>
+<div class="disabled">#define RPC_NCA_FLAGS_BROADCAST     0x00000002  /* 0b000...010 */</div>
+<div class="disabled">#define RPC_NCA_FLAGS_MAYBE         0x00000004  /* 0b000...100 */</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="disabled">#define RPCFLG_HAS_GUARANTEE        0x00000010UL
+#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="disabled">#define RPCFLG_WINRT_REMOTE_ASYNC   0x00000020UL</div>
+
+<div class="token cpp_comment ">/* Flags used in RpcFlag field of RPC_MESSAGE structure */</div>
+
+<div class="disabled">#define RPC_BUFFER_COMPLETE         0x00001000 /* used by pipes */</div>
+<div class="disabled">#define RPC_BUFFER_PARTIAL          0x00002000 /* used by pipes */</div>
+<div class="disabled">#define RPC_BUFFER_EXTRA            0x00004000 /* used by pipes */</div>
+<div class="disabled">#define RPC_BUFFER_ASYNC            0x00008000 /* used by async rpc */</div>
+<div class="disabled">#define RPC_BUFFER_NONOTIFY         0x00010000 /* used by async pipes */</div>
+
+<div class="disabled">#define RPCFLG_MESSAGE              0x01000000UL</div>
+<div class="disabled">#define RPCFLG_AUTO_COMPLETE        0x08000000UL</div>
+<div class="disabled">#define RPCFLG_LOCAL_CALL           0x10000000UL</div>
+<div class="disabled">#define RPCFLG_INPUT_SYNCHRONOUS    0x20000000UL</div>
+<div class="disabled">#define RPCFLG_ASYNCHRONOUS         0x40000000UL</div>
+<div class="disabled">#define RPCFLG_NON_NDR              0x80000000UL</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="disabled">#define RPCFLG_HAS_MULTI_SYNTAXES   0x02000000UL</div>
+<div class="disabled">#define RPCFLG_HAS_CALLBACK         0x04000000UL
+#endif // (NTDDI_VERSION &gt;= NTDDI_WXP)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_comment ">// These two bits will hold the combination of</div>
+<div class="token cpp_comment ">// anonymous/admin/authenticate/mixed mode</div>
+<div class="disabled">#define RPCFLG_ACCESSIBILITY_BIT1   0x00100000UL</div>
+<div class="disabled">#define RPCFLG_ACCESSIBILITY_BIT2   0x00200000UL</div>
+<div class="disabled">#define RPCFLG_ACCESS_LOCAL         0x00400000UL</div>
+
+<div class="token cpp_comment ">// This goes to MIDL_STUB_DESC only</div>
+<div class="disabled">#define NDR_CUSTOM_OR_DEFAULT_ALLOCATOR 0x10000000UL</div>
+<div class="disabled">#define NDR_DEFAULT_ALLOCATOR           0x20000000UL
+#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+<div class="token cpp_comment ">// NDR64 on ARM includes ARM parameter layout info</div>
+<div class="disabled">#define RPCFLG_NDR64_CONTAINS_ARM_LAYOUT 0x04000000UL
+#endif</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINBLUE)</div>
+<div class="token cpp_comment ">/*
+ * Used by COM to inform RPC that even though this is an
+ * async RPC call, there is a thread waiting for the call
+ * to complete. Essentially, from COM perspective, this is a
+ * sync call. This flag will be passed down to ALPC in order
+ * to count the wake charges properly. 
+ */</div>
+
+<div class="disabled">#define RPCFLG_SENDER_WAITING_FOR_REPLY 0x00800000UL </div>
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINBLUE)</div>
+
+<div class="disabled">#define RPC_FLAGS_VALID_BIT 0x00008000</div>
+
+<div class="token cpp_keyword ">typedef</div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">(__RPC_STUB __RPC_FAR * RPC_DISPATCH_FUNCTION) (</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div>  * <div class="def" id="NI$RPC_DISPATCH_FUNCTION"><div><div class="token cpp_type">RPC_DISPATCH_FUNCTION</div></div></div>) (</div></div>
+<div class="expandable"><div class="disabled">    IN OUT PRPC_MESSAGE Message</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PRPC_MESSAGE'], [], [])"><div class="token cpp_type">PRPC_MESSAGE</div></div> Message</div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>306::DispatchTableCount"><div><div class="token cpp_field">DispatchTableCount</div></div></div>;
+<div class="expandable"><div class="disabled">    RPC_DISPATCH_FUNCTION __RPC_FAR * DispatchTable;</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['RPC_DISPATCH_FUNCTION'], [], [])"><div class="token cpp_type">RPC_DISPATCH_FUNCTION</div></div>  * <div class="def" id="NI$<anonymous>306::DispatchTable"><div><div class="token cpp_field">DispatchTable</div></div></div>;</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['LONG_PTR'], [], [])"><div class="token cpp_type">LONG_PTR</div></div>                          <div class="def" id="NI$<anonymous>306::Reserved"><div><div class="token cpp_field">Reserved</div></div></div>;
+<div class="expandable"><div class="disabled">} RPC_DISPATCH_TABLE, __RPC_FAR * PRPC_DISPATCH_TABLE;</div>
+<div class="expanded">} <div class="def" id="NI$RPC_DISPATCH_TABLE"><div><div class="token cpp_type">RPC_DISPATCH_TABLE</div></div></div>,  * <div class="def" id="NI$PRPC_DISPATCH_TABLE"><div><div class="token cpp_type">PRPC_DISPATCH_TABLE</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_PROTSEQ_ENDPOINT"><div><div class="token cpp_type">_RPC_PROTSEQ_ENDPOINT</div></div></div>
+{
+<div class="expandable"><div class="disabled">    unsigned char __RPC_FAR * RpcProtocolSequence;</div>
+<div class="expanded">    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>  * <div class="def" id="NI$_RPC_PROTSEQ_ENDPOINT::RpcProtocolSequence"><div><div class="token cpp_field">RpcProtocolSequence</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">    unsigned char __RPC_FAR * Endpoint;</div>
+<div class="expanded">    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>  * <div class="def" id="NI$_RPC_PROTSEQ_ENDPOINT::Endpoint"><div><div class="token cpp_field">Endpoint</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">} RPC_PROTSEQ_ENDPOINT, __RPC_FAR * PRPC_PROTSEQ_ENDPOINT;</div>
+<div class="expanded">} <div class="def" id="NI$RPC_PROTSEQ_ENDPOINT"><div><div class="token cpp_type">RPC_PROTSEQ_ENDPOINT</div></div></div>,  * <div class="def" id="NI$PRPC_PROTSEQ_ENDPOINT"><div><div class="token cpp_type">PRPC_PROTSEQ_ENDPOINT</div></div></div>;</div></div>
+
+<div class="token cpp_comment ">/*
+Both of these types MUST start with the InterfaceId and TransferSyntax.
+Look at RpcIfInqId and I_RpcIfInqTransferSyntaxes to see why.
+*/</div>
+<div class="disabled">#define NT351_INTERFACE_SIZE 0x40</div>
+<div class="disabled">#define RPC_INTERFACE_HAS_PIPES           0x0001</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_SERVER_INTERFACE"><div><div class="token cpp_type">_RPC_SERVER_INTERFACE</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_RPC_SERVER_INTERFACE::Length"><div><div class="token cpp_field">Length</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_SYNTAX_IDENTIFIER'], [], [])"><div class="token cpp_type">RPC_SYNTAX_IDENTIFIER</div></div> <div class="def" id="NI$_RPC_SERVER_INTERFACE::InterfaceId"><div><div class="token cpp_field">InterfaceId</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_SYNTAX_IDENTIFIER'], [], [])"><div class="token cpp_type">RPC_SYNTAX_IDENTIFIER</div></div> <div class="def" id="NI$_RPC_SERVER_INTERFACE::TransferSyntax"><div><div class="token cpp_field">TransferSyntax</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['PRPC_DISPATCH_TABLE'], [], [])"><div class="token cpp_type">PRPC_DISPATCH_TABLE</div></div> <div class="def" id="NI$_RPC_SERVER_INTERFACE::DispatchTable"><div><div class="token cpp_field">DispatchTable</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_RPC_SERVER_INTERFACE::RpcProtseqEndpointCount"><div><div class="token cpp_field">RpcProtseqEndpointCount</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['PRPC_PROTSEQ_ENDPOINT'], [], [])"><div class="token cpp_type">PRPC_PROTSEQ_ENDPOINT</div></div> <div class="def" id="NI$_RPC_SERVER_INTERFACE::RpcProtseqEndpoint"><div><div class="token cpp_field">RpcProtseqEndpoint</div></div></div>;
+<div class="expandable"><div class="disabled">    RPC_MGR_EPV __RPC_FAR *DefaultManagerEpv;</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div>  *<div class="def" id="NI$_RPC_SERVER_INTERFACE::DefaultManagerEpv"><div><div class="token cpp_field">DefaultManagerEpv</div></div></div>;</div></div>
+<div class="expandable"><div class="disabled">    void const __RPC_FAR *InterpreterInfo;</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>  *<div class="def" id="NI$_RPC_SERVER_INTERFACE::InterpreterInfo"><div><div class="token cpp_field">InterpreterInfo</div></div></div>;</div></div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_RPC_SERVER_INTERFACE::Flags"><div><div class="token cpp_field">Flags</div></div></div> ;
+<div class="expandable"><div class="disabled">} RPC_SERVER_INTERFACE, __RPC_FAR * PRPC_SERVER_INTERFACE;</div>
+<div class="expanded">} <div class="def" id="NI$RPC_SERVER_INTERFACE"><div><div class="token cpp_type">RPC_SERVER_INTERFACE</div></div></div>,  * <div class="def" id="NI$PRPC_SERVER_INTERFACE"><div><div class="token cpp_type">PRPC_SERVER_INTERFACE</div></div></div>;</div></div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_CLIENT_INTERFACE"><div><div class="token cpp_type">_RPC_CLIENT_INTERFACE</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_RPC_CLIENT_INTERFACE::Length"><div><div class="token cpp_field">Length</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_SYNTAX_IDENTIFIER'], [], [])"><div class="token cpp_type">RPC_SYNTAX_IDENTIFIER</div></div>   <div class="def" id="NI$_RPC_CLIENT_INTERFACE::InterfaceId"><div><div class="token cpp_field">InterfaceId</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_SYNTAX_IDENTIFIER'], [], [])"><div class="token cpp_type">RPC_SYNTAX_IDENTIFIER</div></div>   <div class="def" id="NI$_RPC_CLIENT_INTERFACE::TransferSyntax"><div><div class="token cpp_field">TransferSyntax</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['PRPC_DISPATCH_TABLE'], [], [])"><div class="token cpp_type">PRPC_DISPATCH_TABLE</div></div>     <div class="def" id="NI$_RPC_CLIENT_INTERFACE::DispatchTable"><div><div class="token cpp_field">DispatchTable</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>            <div class="def" id="NI$_RPC_CLIENT_INTERFACE::RpcProtseqEndpointCount"><div><div class="token cpp_field">RpcProtseqEndpointCount</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['PRPC_PROTSEQ_ENDPOINT'], [], [])"><div class="token cpp_type">PRPC_PROTSEQ_ENDPOINT</div></div>   <div class="def" id="NI$_RPC_CLIENT_INTERFACE::RpcProtseqEndpoint"><div><div class="token cpp_field">RpcProtseqEndpoint</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div>               <div class="def" id="NI$_RPC_CLIENT_INTERFACE::Reserved"><div><div class="token cpp_field">Reserved</div></div></div>;
+<div class="expandable"><div class="disabled">    void const __RPC_FAR *  InterpreterInfo;</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">const</div>  *  <div class="def" id="NI$_RPC_CLIENT_INTERFACE::InterpreterInfo"><div><div class="token cpp_field">InterpreterInfo</div></div></div>;</div></div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_RPC_CLIENT_INTERFACE::Flags"><div><div class="token cpp_field">Flags</div></div></div> ;
+<div class="expandable"><div class="disabled">} RPC_CLIENT_INTERFACE, __RPC_FAR * PRPC_CLIENT_INTERFACE;</div>
+<div class="expanded">} <div class="def" id="NI$RPC_CLIENT_INTERFACE"><div><div class="token cpp_type">RPC_CLIENT_INTERFACE</div></div></div>,  * <div class="def" id="NI$PRPC_CLIENT_INTERFACE"><div><div class="token cpp_type">PRPC_CLIENT_INTERFACE</div></div></div>;</div></div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Desktop Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcNegotiateTransferSyntax@::RPC_STATUS(::RPC_MESSAGE *)[decl0]"><div><div class="token cpp_function">I_RpcNegotiateTransferSyntax</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT RPC_MESSAGE __RPC_FAR * Message</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_MESSAGE'], [], [])"><div class="token cpp_type">RPC_MESSAGE</div></div>  * <div class="def" id="NI$I_RpcNegotiateTransferSyntax@::RPC_STATUS(::RPC_MESSAGE *)[decl0]::Message"><div>Message</div></div></div></div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcGetBuffer@::RPC_STATUS(::RPC_MESSAGE *)[decl0]"><div><div class="token cpp_function">I_RpcGetBuffer</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT RPC_MESSAGE __RPC_FAR * Message</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_MESSAGE'], [], [])"><div class="token cpp_type">RPC_MESSAGE</div></div>  * <div class="def" id="NI$I_RpcGetBuffer@::RPC_STATUS(::RPC_MESSAGE *)[decl0]::Message"><div>Message</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcGetBufferWithObject@::RPC_STATUS(::RPC_MESSAGE *, ::UUID *)[decl0]"><div><div class="token cpp_function">I_RpcGetBufferWithObject</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT RPC_MESSAGE __RPC_FAR * Message,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_MESSAGE'], [], [])"><div class="token cpp_type">RPC_MESSAGE</div></div>  * <div class="def" id="NI$I_RpcGetBufferWithObject@::RPC_STATUS(::RPC_MESSAGE *, ::UUID *)[decl0]::Message"><div>Message</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN UUID * ObjectUuid</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div> * <div class="def" id="NI$I_RpcGetBufferWithObject@::RPC_STATUS(::RPC_MESSAGE *, ::UUID *)[decl0]::ObjectUuid"><div>ObjectUuid</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcSendReceive@::RPC_STATUS(::RPC_MESSAGE *)[decl0]"><div><div class="token cpp_function">I_RpcSendReceive</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT RPC_MESSAGE __RPC_FAR * Message</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_MESSAGE'], [], [])"><div class="token cpp_type">RPC_MESSAGE</div></div>  * <div class="def" id="NI$I_RpcSendReceive@::RPC_STATUS(::RPC_MESSAGE *)[decl0]::Message"><div>Message</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcFreeBuffer@::RPC_STATUS(::RPC_MESSAGE *)[decl0]"><div><div class="token cpp_function">I_RpcFreeBuffer</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT RPC_MESSAGE __RPC_FAR * Message</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_MESSAGE'], [], [])"><div class="token cpp_type">RPC_MESSAGE</div></div>  * <div class="def" id="NI$I_RpcFreeBuffer@::RPC_STATUS(::RPC_MESSAGE *)[decl0]::Message"><div>Message</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcSend@::RPC_STATUS(::PRPC_MESSAGE)[decl0]"><div><div class="token cpp_function">I_RpcSend</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT PRPC_MESSAGE Message</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PRPC_MESSAGE'], [], [])"><div class="token cpp_type">PRPC_MESSAGE</div></div> <div class="def" id="NI$I_RpcSend@::RPC_STATUS(::PRPC_MESSAGE)[decl0]::Message"><div>Message</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcReceive@::RPC_STATUS(::PRPC_MESSAGE, unsigned int)[decl0]"><div><div class="token cpp_function">I_RpcReceive</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT PRPC_MESSAGE Message,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PRPC_MESSAGE'], [], [])"><div class="token cpp_type">PRPC_MESSAGE</div></div> <div class="def" id="NI$I_RpcReceive@::RPC_STATUS(::PRPC_MESSAGE, unsigned int)[decl0]::Message"><div>Message</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned int Size</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcReceive@::RPC_STATUS(::PRPC_MESSAGE, unsigned int)[decl0]::Size"><div>Size</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcFreePipeBuffer@::RPC_STATUS(::RPC_MESSAGE *)[decl0]"><div><div class="token cpp_function">I_RpcFreePipeBuffer</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT RPC_MESSAGE __RPC_FAR * Message</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_MESSAGE'], [], [])"><div class="token cpp_type">RPC_MESSAGE</div></div>  * <div class="def" id="NI$I_RpcFreePipeBuffer@::RPC_STATUS(::RPC_MESSAGE *)[decl0]::Message"><div>Message</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcReallocPipeBuffer@::RPC_STATUS(::PRPC_MESSAGE, unsigned int)[decl0]"><div><div class="token cpp_function">I_RpcReallocPipeBuffer</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ PRPC_MESSAGE Message,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PRPC_MESSAGE'], [], [])"><div class="token cpp_type">PRPC_MESSAGE</div></div> <div class="def" id="NI$I_RpcReallocPipeBuffer@::RPC_STATUS(::PRPC_MESSAGE, unsigned int)[decl0]::Message"><div>Message</div></div>,</div></div>
+     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcReallocPipeBuffer@::RPC_STATUS(::PRPC_MESSAGE, unsigned int)[decl0]::NewSize"><div>NewSize</div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RPC_MUTEX"><div><div class="token cpp_type">I_RPC_MUTEX</div></div></div>;
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcRequestMutex@void(::I_RPC_MUTEX *)[decl0]"><div><div class="token cpp_function">I_RpcRequestMutex</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OUT I_RPC_MUTEX * Mutex</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['I_RPC_MUTEX'], [], [])"><div class="token cpp_type">I_RPC_MUTEX</div></div> * <div class="def" id="NI$I_RpcRequestMutex@void(::I_RPC_MUTEX *)[decl0]::Mutex"><div>Mutex</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcClearMutex@void(::I_RPC_MUTEX)[decl0]"><div><div class="token cpp_function">I_RpcClearMutex</div></div></div> (
+<div class="expandable"><div class="disabled">    IN I_RPC_MUTEX Mutex</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['I_RPC_MUTEX'], [], [])"><div class="token cpp_type">I_RPC_MUTEX</div></div> <div class="def" id="NI$I_RpcClearMutex@void(::I_RPC_MUTEX)[decl0]::Mutex"><div>Mutex</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcDeleteMutex@void(::I_RPC_MUTEX)[decl0]"><div><div class="token cpp_function">I_RpcDeleteMutex</div></div></div> (
+<div class="expandable"><div class="disabled">    IN I_RPC_MUTEX Mutex</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['I_RPC_MUTEX'], [], [])"><div class="token cpp_type">I_RPC_MUTEX</div></div> <div class="def" id="NI$I_RpcDeleteMutex@void(::I_RPC_MUTEX)[decl0]::Mutex"><div>Mutex</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="expandable"><div class="disabled">void __RPC_FAR *</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div>  *</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcAllocate@void *(unsigned int)[decl0]"><div><div class="token cpp_function">I_RpcAllocate</div></div></div> (
+<div class="expandable"><div class="disabled">    IN unsigned int Size</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcAllocate@void *(unsigned int)[decl0]::Size"><div>Size</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcFree@void(void *)[decl0]"><div><div class="token cpp_function">I_RpcFree</div></div></div> (
+<div class="expandable"><div class="disabled">    IN void __RPC_FAR * Object</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$I_RpcFree@void(void *)[decl0]::Object"><div>Object</div></div></div></div>
+    );
+
+<div class="disabled">#define RPC_SYSTEM_HANDLE_FREE_UNRETRIEVED 1</div>
+<div class="disabled">#define RPC_SYSTEM_HANDLE_FREE_RETRIEVED 2</div>
+<div class="disabled">#define RPC_SYSTEM_HANDLE_FREE_ALL 3</div>
+<div class="disabled">#define RPC_SYSTEM_HANDLE_FREE_ERROR_ON_CLOSE 4</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcFreeSystemHandleCollection@unsigned long(void *, unsigned long)[decl0]"><div><div class="token cpp_function">I_RpcFreeSystemHandleCollection</div></div></div> (
+<div class="expandable"><div class="disabled">    _Inout_ void * CallObj,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcFreeSystemHandleCollection@unsigned long(void *, unsigned long)[decl0]::CallObj"><div>CallObj</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long FreeFlags</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcFreeSystemHandleCollection@unsigned long(void *, unsigned long)[decl0]::FreeFlags"><div>FreeFlags</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcSetSystemHandle@::RPC_STATUS(void *, unsigned char, unsigned long, void *, unsigned long *)[decl0]"><div><div class="token cpp_function">I_RpcSetSystemHandle</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ void * Handle,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcSetSystemHandle@::RPC_STATUS(void *, unsigned char, unsigned long, void *, unsigned long *)[decl0]::Handle"><div>Handle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned char Type,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$I_RpcSetSystemHandle@::RPC_STATUS(void *, unsigned char, unsigned long, void *, unsigned long *)[decl0]::Type"><div>Type</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long AccessMask,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcSetSystemHandle@::RPC_STATUS(void *, unsigned char, unsigned long, void *, unsigned long *)[decl0]::AccessMask"><div>AccessMask</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ void * CallObj,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcSetSystemHandle@::RPC_STATUS(void *, unsigned char, unsigned long, void *, unsigned long *)[decl0]::CallObj"><div>CallObj</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ unsigned long * HandleIndex</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> * <div class="def" id="NI$I_RpcSetSystemHandle@::RPC_STATUS(void *, unsigned char, unsigned long, void *, unsigned long *)[decl0]::HandleIndex"><div>HandleIndex</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcGetSystemHandle@::RPC_STATUS(unsigned char *, unsigned char, unsigned long, unsigned long, void *)[decl0]"><div><div class="token cpp_function">I_RpcGetSystemHandle</div></div></div> (
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_(sizeof(HANDLE)) unsigned char* pMemory,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div>* <div class="def" id="NI$I_RpcGetSystemHandle@::RPC_STATUS(unsigned char *, unsigned char, unsigned long, unsigned long, void *)[decl0]::pMemory"><div>pMemory</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned char Type,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$I_RpcGetSystemHandle@::RPC_STATUS(unsigned char *, unsigned char, unsigned long, unsigned long, void *)[decl0]::Type"><div>Type</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long AccessMask,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcGetSystemHandle@::RPC_STATUS(unsigned char *, unsigned char, unsigned long, unsigned long, void *)[decl0]::AccessMask"><div>AccessMask</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long HandleIndex,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcGetSystemHandle@::RPC_STATUS(unsigned char *, unsigned char, unsigned long, unsigned long, void *)[decl0]::HandleIndex"><div>HandleIndex</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ void * CallObj</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcGetSystemHandle@::RPC_STATUS(unsigned char *, unsigned char, unsigned long, unsigned long, void *)[decl0]::CallObj"><div>CallObj</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcFreeSystemHandle@void(unsigned char, void *)[decl0]"><div><div class="token cpp_function">I_RpcFreeSystemHandle</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ unsigned char Type,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$I_RpcFreeSystemHandle@void(unsigned char, void *)[decl0]::Type"><div>Type</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ void * Handle</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcFreeSystemHandle@void(unsigned char, void *)[decl0]::Handle"><div>Handle</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcPauseExecution@void(unsigned long)[decl0]"><div><div class="token cpp_function">I_RpcPauseExecution</div></div></div> (
+<div class="expandable"><div class="disabled">    IN unsigned long Milliseconds</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcPauseExecution@void(unsigned long)[decl0]::Milliseconds"><div>Milliseconds</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcGetExtendedError@::RPC_STATUS()[decl0]"><div><div class="token cpp_function">I_RpcGetExtendedError</div></div></div> (
+    <div class="token cpp_keyword ">void</div>
+    );
+
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$_LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION"><div><div class="token cpp_type">_LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION</div></div></div>
+{
+    <div class="def" id="NI$_LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION::MarshalDirectionMarshal"><div><div class="token cpp_enum">MarshalDirectionMarshal</div></div></div>,
+    <div class="def" id="NI$_LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION::MarshalDirectionUnmarshal"><div><div class="token cpp_enum">MarshalDirectionUnmarshal</div></div></div>
+}<div class="def" id="NI$LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION"><div><div class="token cpp_type">LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION</div></div></div>;
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcSystemHandleTypeSpecificWork@::RPC_STATUS(void *, unsigned char, unsigned char, ::LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION)[decl0]"><div><div class="token cpp_function">I_RpcSystemHandleTypeSpecificWork</div></div></div> (
+<div class="expandable"><div class="disabled">    _Inout_ void * Handle,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcSystemHandleTypeSpecificWork@::RPC_STATUS(void *, unsigned char, unsigned char, ::LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION)[decl0]::Handle"><div>Handle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned char ActualType,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$I_RpcSystemHandleTypeSpecificWork@::RPC_STATUS(void *, unsigned char, unsigned char, ::LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION)[decl0]::ActualType"><div>ActualType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned char IdlType,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$I_RpcSystemHandleTypeSpecificWork@::RPC_STATUS(void *, unsigned char, unsigned char, ::LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION)[decl0]::IdlType"><div>IdlType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION MarshalDirection</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION'], [], [])"><div class="token cpp_type">LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION</div></div> <div class="def" id="NI$I_RpcSystemHandleTypeSpecificWork@::RPC_STATUS(void *, unsigned char, unsigned char, ::LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION)[decl0]::MarshalDirection"><div>MarshalDirection</div></div></div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">(__RPC_USER __RPC_FAR * PRPC_RUNDOWN) (</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div>  * <div class="def" id="NI$PRPC_RUNDOWN"><div><div class="token cpp_type">PRPC_RUNDOWN</div></div></div>) (</div></div>
+<div class="expandable"><div class="disabled">    void __RPC_FAR * AssociationContext</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div>  * AssociationContext</div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcMonitorAssociation@::RPC_STATUS(::RPC_BINDING_HANDLE, ::PRPC_RUNDOWN, void *)[decl0]"><div><div class="token cpp_function">I_RpcMonitorAssociation</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Handle,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcMonitorAssociation@::RPC_STATUS(::RPC_BINDING_HANDLE, ::PRPC_RUNDOWN, void *)[decl0]::Handle"><div>Handle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN PRPC_RUNDOWN RundownRoutine,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['PRPC_RUNDOWN'], [], [])"><div class="token cpp_type">PRPC_RUNDOWN</div></div> <div class="def" id="NI$I_RpcMonitorAssociation@::RPC_STATUS(::RPC_BINDING_HANDLE, ::PRPC_RUNDOWN, void *)[decl0]::RundownRoutine"><div>RundownRoutine</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN void * Context</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcMonitorAssociation@::RPC_STATUS(::RPC_BINDING_HANDLE, ::PRPC_RUNDOWN, void *)[decl0]::Context"><div>Context</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcStopMonitorAssociation@::RPC_STATUS(::RPC_BINDING_HANDLE)[decl0]"><div><div class="token cpp_function">I_RpcStopMonitorAssociation</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Handle</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcStopMonitorAssociation@::RPC_STATUS(::RPC_BINDING_HANDLE)[decl0]::Handle"><div>Handle</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcGetCurrentCallHandle@::RPC_BINDING_HANDLE()[decl0]"><div><div class="token cpp_function">I_RpcGetCurrentCallHandle</div></div></div>(
+    <div class="token cpp_keyword ">void</div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcGetAssociationContext@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]"><div><div class="token cpp_function">I_RpcGetAssociationContext</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE BindingHandle,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcGetAssociationContext@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]::BindingHandle"><div>BindingHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT void __RPC_FAR * __RPC_FAR * AssociationContext</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div>  *  * <div class="def" id="NI$I_RpcGetAssociationContext@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]::AssociationContext"><div>AssociationContext</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div> *
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcGetServerContextList@void *(::RPC_BINDING_HANDLE)[decl0]"><div><div class="token cpp_function">I_RpcGetServerContextList</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE BindingHandle</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcGetServerContextList@void *(::RPC_BINDING_HANDLE)[decl0]::BindingHandle"><div>BindingHandle</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcSetServerContextList@void(::RPC_BINDING_HANDLE, void *)[decl0]"><div><div class="token cpp_function">I_RpcSetServerContextList</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE BindingHandle,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcSetServerContextList@void(::RPC_BINDING_HANDLE, void *)[decl0]::BindingHandle"><div>BindingHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT void * ServerContextList</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcSetServerContextList@void(::RPC_BINDING_HANDLE, void *)[decl0]::ServerContextList"><div>ServerContextList</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcNsInterfaceExported@::RPC_STATUS(unsigned long, unsigned short *, ::RPC_SERVER_INTERFACE *)[decl0]"><div><div class="token cpp_function">I_RpcNsInterfaceExported</div></div></div> (
+<div class="expandable"><div class="disabled">    IN unsigned long EntryNameSyntax,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcNsInterfaceExported@::RPC_STATUS(unsigned long, unsigned short *, ::RPC_SERVER_INTERFACE *)[decl0]::EntryNameSyntax"><div>EntryNameSyntax</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned short *EntryName,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$I_RpcNsInterfaceExported@::RPC_STATUS(unsigned long, unsigned short *, ::RPC_SERVER_INTERFACE *)[decl0]::EntryName"><div>EntryName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN RPC_SERVER_INTERFACE * RpcInterfaceInformation</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_SERVER_INTERFACE'], [], [])"><div class="token cpp_type">RPC_SERVER_INTERFACE</div></div> * <div class="def" id="NI$I_RpcNsInterfaceExported@::RPC_STATUS(unsigned long, unsigned short *, ::RPC_SERVER_INTERFACE *)[decl0]::RpcInterfaceInformation"><div>RpcInterfaceInformation</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcNsInterfaceUnexported@::RPC_STATUS(unsigned long, unsigned short *, ::RPC_SERVER_INTERFACE *)[decl0]"><div><div class="token cpp_function">I_RpcNsInterfaceUnexported</div></div></div> (
+<div class="expandable"><div class="disabled">    IN unsigned long EntryNameSyntax,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcNsInterfaceUnexported@::RPC_STATUS(unsigned long, unsigned short *, ::RPC_SERVER_INTERFACE *)[decl0]::EntryNameSyntax"><div>EntryNameSyntax</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned short *EntryName,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$I_RpcNsInterfaceUnexported@::RPC_STATUS(unsigned long, unsigned short *, ::RPC_SERVER_INTERFACE *)[decl0]::EntryName"><div>EntryName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN RPC_SERVER_INTERFACE * RpcInterfaceInformation</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_SERVER_INTERFACE'], [], [])"><div class="token cpp_type">RPC_SERVER_INTERFACE</div></div> * <div class="def" id="NI$I_RpcNsInterfaceUnexported@::RPC_STATUS(unsigned long, unsigned short *, ::RPC_SERVER_INTERFACE *)[decl0]::RpcInterfaceInformation"><div>RpcInterfaceInformation</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingToStaticStringBindingW@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned short * *)[decl0]"><div><div class="token cpp_function">I_RpcBindingToStaticStringBindingW</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingToStaticStringBindingW@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned short * *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT unsigned short **StringBinding</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> **<div class="def" id="NI$I_RpcBindingToStaticStringBindingW@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned short * *)[decl0]::StringBinding"><div>StringBinding</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqSecurityContext@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqSecurityContext</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqSecurityContext@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT void **SecurityContextHandle</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> **<div class="def" id="NI$I_RpcBindingInqSecurityContext@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]::SecurityContextHandle"><div>SecurityContextHandle</div></div></div></div>
+    );
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_SEC_CONTEXT_KEY_INFO"><div><div class="token cpp_type">_RPC_SEC_CONTEXT_KEY_INFO</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_RPC_SEC_CONTEXT_KEY_INFO::EncryptAlgorithm"><div><div class="token cpp_field">EncryptAlgorithm</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_RPC_SEC_CONTEXT_KEY_INFO::KeySize"><div><div class="token cpp_field">KeySize</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_RPC_SEC_CONTEXT_KEY_INFO::SignatureAlgorithm"><div><div class="token cpp_field">SignatureAlgorithm</div></div></div>;
+}
+<div class="def" id="NI$RPC_SEC_CONTEXT_KEY_INFO"><div><div class="token cpp_type">RPC_SEC_CONTEXT_KEY_INFO</div></div></div>, *<div class="def" id="NI$PRPC_SEC_CONTEXT_KEY_INFO"><div><div class="token cpp_type">PRPC_SEC_CONTEXT_KEY_INFO</div></div></div>;
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqSecurityContextKeyInfo@::RPC_STATUS(::RPC_BINDING_HANDLE, void *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqSecurityContextKeyInfo</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_opt_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqSecurityContextKeyInfo@::RPC_STATUS(::RPC_BINDING_HANDLE, void *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ void *KeyInfo</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$I_RpcBindingInqSecurityContextKeyInfo@::RPC_STATUS(::RPC_BINDING_HANDLE, void *)[decl0]::KeyInfo"><div>KeyInfo</div></div></div></div>
+    );
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqWireIdForSnego@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned char *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqWireIdForSnego</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqWireIdForSnego@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned char *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ unsigned char * WireId</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> * <div class="def" id="NI$I_RpcBindingInqWireIdForSnego@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned char *)[decl0]::WireId"><div>WireId</div></div></div></div>
+    );
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqMarshalledTargetInfo@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *, ::RPC_CSTR *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqMarshalledTargetInfo</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqMarshalledTargetInfo@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *, ::RPC_CSTR *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ unsigned long * MarshalledTargetInfoSize,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> * <div class="def" id="NI$I_RpcBindingInqMarshalledTargetInfo@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *, ::RPC_CSTR *)[decl0]::MarshalledTargetInfoSize"><div>MarshalledTargetInfoSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_result_bytebuffer_(* MarshalledTargetInfoSize) RPC_CSTR * MarshalledTargetInfo</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> * <div class="def" id="NI$I_RpcBindingInqMarshalledTargetInfo@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *, ::RPC_CSTR *)[decl0]::MarshalledTargetInfo"><div>MarshalledTargetInfo</div></div></div></div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqLocalClientPID@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqLocalClientPID</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqLocalClientPID@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT unsigned long *Pid</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *<div class="def" id="NI$I_RpcBindingInqLocalClientPID@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *)[decl0]::Pid"><div>Pid</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingHandleToAsyncHandle@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]"><div><div class="token cpp_function">I_RpcBindingHandleToAsyncHandle</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingHandleToAsyncHandle@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT void **AsyncHandle</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> **<div class="def" id="NI$I_RpcBindingHandleToAsyncHandle@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *)[decl0]::AsyncHandle"><div>AsyncHandle</div></div></div></div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+
+<div class="disabled">#ifdef RPC_UNICODE_SUPPORTED</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcNsBindingSetEntryNameW@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::RPC_WSTR)[decl0]"><div><div class="token cpp_function">I_RpcNsBindingSetEntryNameW</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcNsBindingSetEntryNameW@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::RPC_WSTR)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long EntryNameSyntax,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcNsBindingSetEntryNameW@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::RPC_WSTR)[decl0]::EntryNameSyntax"><div>EntryNameSyntax</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR EntryName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcNsBindingSetEntryNameW@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::RPC_WSTR)[decl0]::EntryName"><div>EntryName</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcNsBindingSetEntryNameA@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::RPC_CSTR)[decl0]"><div><div class="token cpp_function">I_RpcNsBindingSetEntryNameA</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcNsBindingSetEntryNameA@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::RPC_CSTR)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long EntryNameSyntax,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcNsBindingSetEntryNameA@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::RPC_CSTR)[decl0]::EntryNameSyntax"><div>EntryNameSyntax</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_CSTR EntryName</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> <div class="def" id="NI$I_RpcNsBindingSetEntryNameA@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::RPC_CSTR)[decl0]::EntryName"><div>EntryName</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerUseProtseqEp2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, ::RPC_CSTR, void *, void *)[decl0]"><div><div class="token cpp_function">I_RpcServerUseProtseqEp2A</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_opt_ RPC_CSTR NetworkAddress,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseqEp2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, ::RPC_CSTR, void *, void *)[decl0]::NetworkAddress"><div>NetworkAddress</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_CSTR Protseq,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseqEp2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, ::RPC_CSTR, void *, void *)[decl0]::Protseq"><div>Protseq</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned int MaxCalls,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcServerUseProtseqEp2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, ::RPC_CSTR, void *, void *)[decl0]::MaxCalls"><div>MaxCalls</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_CSTR Endpoint,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseqEp2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, ::RPC_CSTR, void *, void *)[decl0]::Endpoint"><div>Endpoint</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ void __RPC_FAR * SecurityDescriptor,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$I_RpcServerUseProtseqEp2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, ::RPC_CSTR, void *, void *)[decl0]::SecurityDescriptor"><div>SecurityDescriptor</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ void * Policy</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcServerUseProtseqEp2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, ::RPC_CSTR, void *, void *)[decl0]::Policy"><div>Policy</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerUseProtseqEp2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, ::RPC_WSTR, void *, void *)[decl0]"><div><div class="token cpp_function">I_RpcServerUseProtseqEp2W</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_opt_ RPC_WSTR NetworkAddress,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseqEp2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, ::RPC_WSTR, void *, void *)[decl0]::NetworkAddress"><div>NetworkAddress</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR Protseq,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseqEp2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, ::RPC_WSTR, void *, void *)[decl0]::Protseq"><div>Protseq</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned int MaxCalls,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcServerUseProtseqEp2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, ::RPC_WSTR, void *, void *)[decl0]::MaxCalls"><div>MaxCalls</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR Endpoint,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseqEp2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, ::RPC_WSTR, void *, void *)[decl0]::Endpoint"><div>Endpoint</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ void __RPC_FAR * SecurityDescriptor,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$I_RpcServerUseProtseqEp2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, ::RPC_WSTR, void *, void *)[decl0]::SecurityDescriptor"><div>SecurityDescriptor</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ void * Policy</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcServerUseProtseqEp2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, ::RPC_WSTR, void *, void *)[decl0]::Policy"><div>Policy</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerUseProtseq2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, void *, void *)[decl0]"><div><div class="token cpp_function">I_RpcServerUseProtseq2W</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_opt_ RPC_WSTR NetworkAddress,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseq2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, void *, void *)[decl0]::NetworkAddress"><div>NetworkAddress</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR Protseq,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseq2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, void *, void *)[decl0]::Protseq"><div>Protseq</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned int MaxCalls,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcServerUseProtseq2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, void *, void *)[decl0]::MaxCalls"><div>MaxCalls</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ void __RPC_FAR * SecurityDescriptor,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$I_RpcServerUseProtseq2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, void *, void *)[decl0]::SecurityDescriptor"><div>SecurityDescriptor</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ void * Policy</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcServerUseProtseq2W@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, unsigned int, void *, void *)[decl0]::Policy"><div>Policy</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerUseProtseq2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, void *, void *)[decl0]"><div><div class="token cpp_function">I_RpcServerUseProtseq2A</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_opt_ RPC_CSTR NetworkAddress,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseq2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, void *, void *)[decl0]::NetworkAddress"><div>NetworkAddress</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_CSTR Protseq,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> <div class="def" id="NI$I_RpcServerUseProtseq2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, void *, void *)[decl0]::Protseq"><div>Protseq</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned int MaxCalls,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcServerUseProtseq2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, void *, void *)[decl0]::MaxCalls"><div>MaxCalls</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ void __RPC_FAR * SecurityDescriptor,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$I_RpcServerUseProtseq2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, void *, void *)[decl0]::SecurityDescriptor"><div>SecurityDescriptor</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ void * Policy</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcServerUseProtseq2A@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR, unsigned int, void *, void *)[decl0]::Policy"><div>Policy</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define I_RpcNsBindingSetEntryName I_RpcNsBindingSetEntryNameW</div>
+<div class="disabled">#define I_RpcServerUseProtseqEp2 I_RpcServerUseProtseqEp2W</div>
+<div class="disabled">#define I_RpcServerUseProtseq2 I_RpcServerUseProtseq2W</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define I_RpcNsBindingSetEntryName I_RpcNsBindingSetEntryNameA</div>
+<div class="disabled">#define I_RpcServerUseProtseqEp2 I_RpcServerUseProtseqEp2A</div>
+<div class="disabled">#define I_RpcServerUseProtseq2 I_RpcServerUseProtseq2A
+#endif</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">RPCRTAPI</div>
+<div class="disabled">RPC_STATUS</div>
+<div class="disabled">RPC_ENTRY</div>
+<div class="disabled">I_RpcNsBindingSetEntryName (</div>
+<div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="disabled">    _In_ unsigned long EntryNameSyntax,</div>
+<div class="disabled">    _In_ RPC_CSTR EntryName</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">RPCRTAPI</div>
+<div class="disabled">RPC_STATUS</div>
+<div class="disabled">RPC_ENTRY</div>
+<div class="disabled">I_RpcServerUseProtseq2 (</div>
+<div class="disabled">    _In_ RPC_CSTR NetworkAddress,</div>
+<div class="disabled">    _In_ RPC_CSTR Protseq,</div>
+<div class="disabled">    _In_ unsigned int MaxCalls,</div>
+<div class="disabled">    _In_ void __RPC_FAR * SecurityDescriptor,</div>
+<div class="disabled">    _In_ void * Policy</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">RPCRTAPI</div>
+<div class="disabled">RPC_STATUS</div>
+<div class="disabled">RPC_ENTRY</div>
+<div class="disabled">I_RpcServerUseProtseqEp2 (</div>
+<div class="disabled">    _In_ RPC_CSTR NetworkAddress,</div>
+<div class="disabled">    _In_ RPC_CSTR Protseq,</div>
+<div class="disabled">    _In_ unsigned int MaxCalls,</div>
+<div class="disabled">    _In_ RPC_CSTR Endpoint,</div>
+<div class="disabled">    _In_ void __RPC_FAR *SecurityDescriptor,</div>
+<div class="disabled">    _In_ void *Policy</div>
+<div class="disabled">    );
+#endif</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerStartService@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_IF_HANDLE)[decl0]"><div><div class="token cpp_function">I_RpcServerStartService</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR Protseq,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerStartService@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_IF_HANDLE)[decl0]::Protseq"><div>Protseq</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR Endpoint,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerStartService@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_IF_HANDLE)[decl0]::Endpoint"><div>Endpoint</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_IF_HANDLE IfSpec</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NI$I_RpcServerStartService@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_IF_HANDLE)[decl0]::IfSpec"><div>IfSpec</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef RPC_UNICODE_SUPPORTED</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqDynamicEndpointW@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_WSTR *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqDynamicEndpointW</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqDynamicEndpointW@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_WSTR *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_result_maybenull_ RPC_WSTR __RPC_FAR *DynamicEndpoint</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div>  *<div class="def" id="NI$I_RpcBindingInqDynamicEndpointW@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_WSTR *)[decl0]::DynamicEndpoint"><div>DynamicEndpoint</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqDynamicEndpointA@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_CSTR *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqDynamicEndpointA</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqDynamicEndpointA@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_CSTR *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_result_maybenull_ RPC_CSTR __RPC_FAR *DynamicEndpoint</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div>  *<div class="def" id="NI$I_RpcBindingInqDynamicEndpointA@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_CSTR *)[decl0]::DynamicEndpoint"><div>DynamicEndpoint</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define I_RpcBindingInqDynamicEndpoint I_RpcBindingInqDynamicEndpointW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define I_RpcBindingInqDynamicEndpoint I_RpcBindingInqDynamicEndpointA
+#endif</div>
+
+<div class="disabled">#else</div>
+
+<div class="disabled">RPCRTAPI</div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="disabled">RPC_STATUS</div>
+<div class="disabled">RPC_ENTRY</div>
+<div class="disabled">I_RpcBindingInqDynamicEndpoint (</div>
+<div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="disabled">    _Outptr_result_maybenull_ RPC_CSTR __RPC_FAR *DynamicEndpoint</div>
+<div class="disabled">    );</div>
+
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerCheckClientRestriction@::RPC_STATUS(::RPC_BINDING_HANDLE)[decl0]"><div><div class="token cpp_function">I_RpcServerCheckClientRestriction</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Context</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcServerCheckClientRestriction@::RPC_STATUS(::RPC_BINDING_HANDLE)[decl0]::Context"><div>Context</div></div></div></div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+
+<div class="disabled">#define TRANSPORT_TYPE_CN        0x01</div>
+<div class="disabled">#define TRANSPORT_TYPE_DG        0x02</div>
+<div class="disabled">#define TRANSPORT_TYPE_LPC       0x04</div>
+<div class="disabled">#define TRANSPORT_TYPE_WMSG      0x08</div>
+
+<div class="token cpp_comment ">//@[comment(&quot;MVI_tracked&quot;)]</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqTransportType@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqTransportType</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqTransportType@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT unsigned int __RPC_FAR * Type</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>  * <div class="def" id="NI$I_RpcBindingInqTransportType@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]::Type"><div>Type</div></div></div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_TRANSFER_SYNTAX"><div><div class="token cpp_type">_RPC_TRANSFER_SYNTAX</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div> <div class="def" id="NI$_RPC_TRANSFER_SYNTAX::Uuid"><div><div class="token cpp_field">Uuid</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$_RPC_TRANSFER_SYNTAX::VersMajor"><div><div class="token cpp_field">VersMajor</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> <div class="def" id="NI$_RPC_TRANSFER_SYNTAX::VersMinor"><div><div class="token cpp_field">VersMinor</div></div></div>;
+} <div class="def" id="NI$RPC_TRANSFER_SYNTAX"><div><div class="token cpp_type">RPC_TRANSFER_SYNTAX</div></div></div>;
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcIfInqTransferSyntaxes@::RPC_STATUS(::RPC_IF_HANDLE, ::RPC_TRANSFER_SYNTAX *, unsigned int, unsigned int *)[decl0]"><div><div class="token cpp_function">I_RpcIfInqTransferSyntaxes</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_IF_HANDLE RpcIfHandle,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_IF_HANDLE'], [], [])"><div class="token cpp_type">RPC_IF_HANDLE</div></div> <div class="def" id="NI$I_RpcIfInqTransferSyntaxes@::RPC_STATUS(::RPC_IF_HANDLE, ::RPC_TRANSFER_SYNTAX *, unsigned int, unsigned int *)[decl0]::RpcIfHandle"><div>RpcIfHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT RPC_TRANSFER_SYNTAX __RPC_FAR * TransferSyntaxes,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_TRANSFER_SYNTAX'], [], [])"><div class="token cpp_type">RPC_TRANSFER_SYNTAX</div></div>  * <div class="def" id="NI$I_RpcIfInqTransferSyntaxes@::RPC_STATUS(::RPC_IF_HANDLE, ::RPC_TRANSFER_SYNTAX *, unsigned int, unsigned int *)[decl0]::TransferSyntaxes"><div>TransferSyntaxes</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned int TransferSyntaxSize,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcIfInqTransferSyntaxes@::RPC_STATUS(::RPC_IF_HANDLE, ::RPC_TRANSFER_SYNTAX *, unsigned int, unsigned int *)[decl0]::TransferSyntaxSize"><div>TransferSyntaxSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT unsigned int __RPC_FAR * TransferSyntaxCount</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>  * <div class="def" id="NI$I_RpcIfInqTransferSyntaxes@::RPC_STATUS(::RPC_IF_HANDLE, ::RPC_TRANSFER_SYNTAX *, unsigned int, unsigned int *)[decl0]::TransferSyntaxCount"><div>TransferSyntaxCount</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_UuidCreate@::RPC_STATUS(::UUID *)[decl0]"><div><div class="token cpp_function">I_UuidCreate</div></div></div> (
+<div class="expandable"><div class="disabled">    OUT UUID __RPC_FAR * Uuid</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div>  * <div class="def" id="NI$I_UuidCreate@::RPC_STATUS(::UUID *)[decl0]::Uuid"><div>Uuid</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div> 
+<div class="expandable"><div class="disabled">RPC_ENTRY </div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div> </div></div>
+<div class="def" id="FB$I_RpcUninitializeNdrOle@void()[decl0]"><div><div class="token cpp_function">I_RpcUninitializeNdrOle</div></div></div> (
+    <div class="token cpp_keyword ">void</div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingCopy@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_BINDING_HANDLE *)[decl0]"><div><div class="token cpp_function">I_RpcBindingCopy</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE SourceBinding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingCopy@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_BINDING_HANDLE *)[decl0]::SourceBinding"><div>SourceBinding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT RPC_BINDING_HANDLE __RPC_FAR * DestinationBinding</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div>  * <div class="def" id="NI$I_RpcBindingCopy@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_BINDING_HANDLE *)[decl0]::DestinationBinding"><div>DestinationBinding</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingIsClientLocal@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]"><div><div class="token cpp_function">I_RpcBindingIsClientLocal</div></div></div> (
+<div class="expandable"><div class="disabled">    IN OPTIONAL RPC_BINDING_HANDLE BindingHandle,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingIsClientLocal@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]::BindingHandle"><div>BindingHandle</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT unsigned int __RPC_FAR * ClientLocalFlag</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>  * <div class="def" id="NI$I_RpcBindingIsClientLocal@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]::ClientLocalFlag"><div>ClientLocalFlag</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingInqConnId@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *, int *)[decl0]"><div><div class="token cpp_function">I_RpcBindingInqConnId</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingInqConnId@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *, int *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT void **ConnId,</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> **<div class="def" id="NI$I_RpcBindingInqConnId@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *, int *)[decl0]::ConnId"><div>ConnId</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT int *pfFirstCall</div>
+<div class="expanded">     <div class="token cpp_keyword ">int</div> *<div class="def" id="NI$I_RpcBindingInqConnId@::RPC_STATUS(::RPC_BINDING_HANDLE, void * *, int *)[decl0]::pfFirstCall"><div>pfFirstCall</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingCreateNP@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_WSTR, ::RPC_BINDING_HANDLE *)[decl0]"><div><div class="token cpp_function">I_RpcBindingCreateNP</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR ServerName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcBindingCreateNP@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_WSTR, ::RPC_BINDING_HANDLE *)[decl0]::ServerName"><div>ServerName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR ServiceName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcBindingCreateNP@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_WSTR, ::RPC_BINDING_HANDLE *)[decl0]::ServiceName"><div>ServiceName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR NetworkOptions,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcBindingCreateNP@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_WSTR, ::RPC_BINDING_HANDLE *)[decl0]::NetworkOptions"><div>NetworkOptions</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ RPC_BINDING_HANDLE *Binding</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> *<div class="def" id="NI$I_RpcBindingCreateNP@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR, ::RPC_WSTR, ::RPC_BINDING_HANDLE *)[decl0]::Binding"><div>Binding</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcSsDontSerializeContext@void()[decl0]"><div><div class="token cpp_function">I_RpcSsDontSerializeContext</div></div></div> (
+    <div class="token cpp_keyword ">void</div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcLaunchDatagramReceiveThread@::RPC_STATUS(void *)[decl0]"><div><div class="token cpp_function">I_RpcLaunchDatagramReceiveThread</div></div></div>(
+<div class="expandable"><div class="disabled">    void __RPC_FAR * pAddress</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div>  * <div class="def" id="NI$I_RpcLaunchDatagramReceiveThread@::RPC_STATUS(void *)[decl0]::pAddress"><div>pAddress</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerRegisterForwardFunction@::RPC_STATUS(::RPC_FORWARD_FUNCTION *)[decl0]"><div><div class="token cpp_function">I_RpcServerRegisterForwardFunction</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_FORWARD_FUNCTION  * pForwardFunction</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_FORWARD_FUNCTION'], [], [])"><div class="token cpp_type">RPC_FORWARD_FUNCTION</div></div>  * <div class="def" id="NI$I_RpcServerRegisterForwardFunction@::RPC_STATUS(::RPC_FORWARD_FUNCTION *)[decl0]::pForwardFunction"><div>pForwardFunction</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPC_ADDRESS_CHANGE_FN * RPC_ENTRY</div>
+<div class="expanded"><div class="ref" onclick="jumpToSymbol([], ['RPC_ADDRESS_CHANGE_FN'], [], [])"><div class="token cpp_type">RPC_ADDRESS_CHANGE_FN</div></div> * <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerInqAddressChangeFn@::RPC_ADDRESS_CHANGE_FN *()[decl0]"><div><div class="token cpp_function">I_RpcServerInqAddressChangeFn</div></div></div>(
+    <div class="token cpp_keyword ">void</div>
+    );
+
+<div class="expandable"><div class="disabled">RPC_STATUS RPC_ENTRY</div>
+<div class="expanded"><div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerSetAddressChangeFn@::RPC_STATUS(::RPC_ADDRESS_CHANGE_FN *)[decl0]"><div><div class="token cpp_function">I_RpcServerSetAddressChangeFn</div></div></div>(
+<div class="expandable"><div class="disabled">    IN RPC_ADDRESS_CHANGE_FN * pAddressChangeFn</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_ADDRESS_CHANGE_FN'], [], [])"><div class="token cpp_type">RPC_ADDRESS_CHANGE_FN</div></div> * <div class="def" id="NI$I_RpcServerSetAddressChangeFn@::RPC_STATUS(::RPC_ADDRESS_CHANGE_FN *)[decl0]::pAddressChangeFn"><div>pAddressChangeFn</div></div></div></div>
+    );
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="token cpp_comment ">/* The return buffer will contain SOCKADDR_IN for IPv4 */</div>
+<div class="disabled">#define RPC_P_ADDR_FORMAT_TCP_IPV4      1</div>
+
+<div class="token cpp_comment ">/* The return buffer will contain SOCKADDR_STORAGE for IPv6 */</div>
+<div class="disabled">#define RPC_P_ADDR_FORMAT_TCP_IPV6      2</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerInqLocalConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]"><div><div class="token cpp_function">I_RpcServerInqLocalConnAddress</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcServerInqLocalConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN OUT void *Buffer,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$I_RpcServerInqLocalConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]::Buffer"><div>Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN OUT unsigned long *BufferSize,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *<div class="def" id="NI$I_RpcServerInqLocalConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]::BufferSize"><div>BufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT unsigned long *AddressFormat</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *<div class="def" id="NI$I_RpcServerInqLocalConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]::AddressFormat"><div>AddressFormat</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerInqRemoteConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]"><div><div class="token cpp_function">I_RpcServerInqRemoteConnAddress</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcServerInqRemoteConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN OUT void *Buffer,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$I_RpcServerInqRemoteConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]::Buffer"><div>Buffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN OUT unsigned long *BufferSize,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *<div class="def" id="NI$I_RpcServerInqRemoteConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]::BufferSize"><div>BufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    OUT unsigned long *AddressFormat</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *<div class="def" id="NI$I_RpcServerInqRemoteConnAddress@::RPC_STATUS(::RPC_BINDING_HANDLE, void *, unsigned long *, unsigned long *)[decl0]::AddressFormat"><div>AddressFormat</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcSessionStrictContextHandle@void()[decl0]"><div><div class="token cpp_function">I_RpcSessionStrictContextHandle</div></div></div> (
+    <div class="token cpp_keyword ">void</div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcTurnOnEEInfoPropagation@::RPC_STATUS()[decl0]"><div><div class="token cpp_function">I_RpcTurnOnEEInfoPropagation</div></div></div> (
+    <div class="token cpp_keyword ">void</div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcConnectionInqSockBuffSize@::RPC_STATUS(unsigned long *, unsigned long *)[decl0]"><div><div class="token cpp_function">I_RpcConnectionInqSockBuffSize</div></div></div>(
+<div class="expandable"><div class="disabled">  OUT unsigned long __RPC_FAR * RecvBuffSize,</div>
+<div class="expanded">   <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div>  * <div class="def" id="NI$I_RpcConnectionInqSockBuffSize@::RPC_STATUS(unsigned long *, unsigned long *)[decl0]::RecvBuffSize"><div>RecvBuffSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">  OUT unsigned long __RPC_FAR * SendBuffSize</div>
+<div class="expanded">   <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div>  * <div class="def" id="NI$I_RpcConnectionInqSockBuffSize@::RPC_STATUS(unsigned long *, unsigned long *)[decl0]::SendBuffSize"><div>SendBuffSize</div></div></div></div>
+  );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcConnectionSetSockBuffSize@::RPC_STATUS(unsigned long, unsigned long)[decl0]"><div><div class="token cpp_function">I_RpcConnectionSetSockBuffSize</div></div></div>(
+<div class="expandable"><div class="disabled">   IN unsigned long RecvBuffSize,</div>
+<div class="expanded">    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcConnectionSetSockBuffSize@::RPC_STATUS(unsigned long, unsigned long)[decl0]::RecvBuffSize"><div>RecvBuffSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">   IN unsigned long SendBuffSize</div>
+<div class="expanded">    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcConnectionSetSockBuffSize@::RPC_STATUS(unsigned long, unsigned long)[decl0]::SendBuffSize"><div>SendBuffSize</div></div></div></div>
+   );
+
+<div class="token cpp_keyword ">typedef</div>
+<div class="token cpp_keyword ">void</div>
+(*<div class="def" id="NI$RPCLT_PDU_FILTER_FUNC"><div><div class="token cpp_type">RPCLT_PDU_FILTER_FUNC</div></div></div>) (
+<div class="expandable"><div class="disabled">    IN void *Buffer,</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> *Buffer,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned int BufferLength,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> BufferLength,</div></div>
+<div class="expandable"><div class="disabled">    IN int fDatagram</div>
+<div class="expanded">     <div class="token cpp_keyword ">int</div> fDatagram</div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div>
+<div class="token cpp_keyword ">void</div>
+(<div class="token cpp_keyword ">__cdecl</div> *<div class="def" id="NI$RPC_SETFILTER_FUNC"><div><div class="token cpp_type">RPC_SETFILTER_FUNC</div></div></div>) (
+<div class="expandable"><div class="disabled">    IN RPCLT_PDU_FILTER_FUNC pfnFilter</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPCLT_PDU_FILTER_FUNC'], [], [])"><div class="token cpp_type">RPCLT_PDU_FILTER_FUNC</div></div> pfnFilter</div></div>
+    );
+
+<div class="disabled">#ifndef WINNT</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerStartListening@::RPC_STATUS(void *)[decl0]"><div><div class="token cpp_function">I_RpcServerStartListening</div></div></div>(
+    <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcServerStartListening@::RPC_STATUS(void *)[decl0]::hWnd"><div>hWnd</div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerStopListening@::RPC_STATUS()[decl0]"><div><div class="token cpp_function">I_RpcServerStopListening</div></div></div>(
+    <div class="token cpp_keyword ">void</div>
+    );
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div> (*<div class="def" id="NI$RPC_BLOCKING_FN"><div><div class="token cpp_type">RPC_BLOCKING_FN</div></div></div>) (
+<div class="expandable"><div class="disabled">    IN void * hWnd,</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> * hWnd,</div></div>
+<div class="expandable"><div class="disabled">    IN void * Context,</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> * Context,</div></div>
+<div class="expandable"><div class="disabled">    IN OPTIONAL void * hSyncEvent</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * hSyncEvent</div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingSetAsync@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_BLOCKING_FN, unsigned long)[decl0]"><div><div class="token cpp_function">I_RpcBindingSetAsync</div></div></div>(
+<div class="expandable"><div class="disabled">    IN RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingSetAsync@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_BLOCKING_FN, unsigned long)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN RPC_BLOCKING_FN BlockingFn,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_BLOCKING_FN'], [], [])"><div class="token cpp_type">RPC_BLOCKING_FN</div></div> <div class="def" id="NI$I_RpcBindingSetAsync@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_BLOCKING_FN, unsigned long)[decl0]::BlockingFn"><div>BlockingFn</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned long ServerTid</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcBindingSetAsync@::RPC_STATUS(::RPC_BINDING_HANDLE, ::RPC_BLOCKING_FN, unsigned long)[decl0]::ServerTid"><div>ServerTid</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcSetThreadParams@::RPC_STATUS(int, void *, void *)[decl0]"><div><div class="token cpp_function">I_RpcSetThreadParams</div></div></div>(
+<div class="expandable"><div class="disabled">    IN int fClientFree,</div>
+<div class="expanded">     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcSetThreadParams@::RPC_STATUS(int, void *, void *)[decl0]::fClientFree"><div>fClientFree</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN OPTIONAL void *Context,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$I_RpcSetThreadParams@::RPC_STATUS(int, void *, void *)[decl0]::Context"><div>Context</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN OPTIONAL void * hWndClient</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcSetThreadParams@::RPC_STATUS(int, void *, void *)[decl0]::hWndClient"><div>hWndClient</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcWindowProc@unsigned int(void *, unsigned int, unsigned int, unsigned long)[decl0]"><div><div class="token cpp_function">I_RpcWindowProc</div></div></div>(
+<div class="expandable"><div class="disabled">    IN void * hWnd,</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcWindowProc@unsigned int(void *, unsigned int, unsigned int, unsigned long)[decl0]::hWnd"><div>hWnd</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned int Message,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcWindowProc@unsigned int(void *, unsigned int, unsigned int, unsigned long)[decl0]::Message"><div>Message</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned int wParam,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> <div class="def" id="NI$I_RpcWindowProc@unsigned int(void *, unsigned int, unsigned int, unsigned long)[decl0]::wParam"><div>wParam</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned long lParam</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcWindowProc@unsigned int(void *, unsigned int, unsigned int, unsigned long)[decl0]::lParam"><div>lParam</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerUnregisterEndpointA@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR)[decl0]"><div><div class="token cpp_function">I_RpcServerUnregisterEndpointA</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_CSTR Protseq,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> <div class="def" id="NI$I_RpcServerUnregisterEndpointA@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR)[decl0]::Protseq"><div>Protseq</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_CSTR Endpoint</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_CSTR'], [], [])"><div class="token cpp_type">RPC_CSTR</div></div> <div class="def" id="NI$I_RpcServerUnregisterEndpointA@::RPC_STATUS(::RPC_CSTR, ::RPC_CSTR)[decl0]::Endpoint"><div>Endpoint</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerUnregisterEndpointW@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR)[decl0]"><div><div class="token cpp_function">I_RpcServerUnregisterEndpointW</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR Protseq,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerUnregisterEndpointW@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR)[decl0]::Protseq"><div>Protseq</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ RPC_WSTR Endpoint</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> <div class="def" id="NI$I_RpcServerUnregisterEndpointW@::RPC_STATUS(::RPC_WSTR, ::RPC_WSTR)[decl0]::Endpoint"><div>Endpoint</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define I_RpcServerUnregisterEndpoint I_RpcServerUnregisterEndpointW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define I_RpcServerUnregisterEndpoint I_RpcServerUnregisterEndpointA
+#endif
+#endif // WINNT</div>
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerInqTransportType@::RPC_STATUS(unsigned int *)[decl0]"><div><div class="token cpp_function">I_RpcServerInqTransportType</div></div></div>(
+<div class="expandable"><div class="disabled">    OUT unsigned int __RPC_FAR * Type</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div>  * <div class="def" id="NI$I_RpcServerInqTransportType@::RPC_STATUS(unsigned int *)[decl0]::Type"><div>Type</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">long</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcMapWin32Status@long(::RPC_STATUS)[decl0]"><div><div class="token cpp_function">I_RpcMapWin32Status</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_STATUS Status</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div> <div class="def" id="NI$I_RpcMapWin32Status@long(::RPC_STATUS)[decl0]::Status"><div>Status</div></div></div></div>
+    );
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+
+<div class="disabled">#define RPC_C_OPT_SESSION_ID                (6)</div>
+<div class="disabled">#define RPC_C_OPT_COOKIE_AUTH                  (7)</div>
+<div class="disabled">#define RPC_C_OPT_RESOURCE_TYPE_UUID        (8)</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RPC_C_OPT_COOKIE_AUTH_DESCRIPTOR"><div><div class="token cpp_type">_RPC_C_OPT_COOKIE_AUTH_DESCRIPTOR</div></div></div>
+{
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$_RPC_C_OPT_COOKIE_AUTH_DESCRIPTOR::BufferSize"><div><div class="token cpp_field">BufferSize</div></div></div>;   <div class="token cpp_comment ">// Length of the buffer in bytes</div>
+<div class="expandable"><div class="disabled">    _Field_size_bytes_(BufferSize) char *Buffer;               // Zero-terminated string</div>
+<div class="expanded">      <div class="token cpp_keyword ">char</div> *<div class="def" id="NI$_RPC_C_OPT_COOKIE_AUTH_DESCRIPTOR::Buffer"><div><div class="token cpp_field">Buffer</div></div></div>;               <div class="token cpp_comment ">// Zero-terminated string</div></div></div>
+} <div class="def" id="NI$RPC_C_OPT_COOKIE_AUTH_DESCRIPTOR"><div><div class="token cpp_type">RPC_C_OPT_COOKIE_AUTH_DESCRIPTOR</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_RDR_CALLOUT_STATE"><div><div class="token cpp_type">_RDR_CALLOUT_STATE</div></div></div>
+{
+    <div class="token cpp_comment ">// LastError is used for debugging only - don&apos;t use it for processing</div>
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div> <div class="def" id="NI$_RDR_CALLOUT_STATE::LastError"><div><div class="token cpp_field">LastError</div></div></div>;
+    <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$_RDR_CALLOUT_STATE::LastEEInfo"><div><div class="token cpp_field">LastEEInfo</div></div></div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_HTTP_REDIRECTOR_STAGE'], [], [])"><div class="token cpp_type">RPC_HTTP_REDIRECTOR_STAGE</div></div> <div class="def" id="NI$_RDR_CALLOUT_STATE::LastCalledStage"><div><div class="token cpp_field">LastCalledStage</div></div></div>;
+
+    <div class="token cpp_comment ">// the information accumulated throughout the stages</div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$_RDR_CALLOUT_STATE::ServerName"><div><div class="token cpp_field">ServerName</div></div></div>;   <div class="token cpp_comment ">// Allocated with MemAllocate</div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$_RDR_CALLOUT_STATE::ServerPort"><div><div class="token cpp_field">ServerPort</div></div></div>;   <div class="token cpp_comment ">// Allocated with MemAllocate</div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$_RDR_CALLOUT_STATE::RemoteUser"><div><div class="token cpp_field">RemoteUser</div></div></div>;   <div class="token cpp_comment ">// Allocated with MemAllocate</div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$_RDR_CALLOUT_STATE::AuthType"><div><div class="token cpp_field">AuthType</div></div></div>;     <div class="token cpp_comment ">// Allocated with MemAllocate</div>
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$_RDR_CALLOUT_STATE::ResourceTypePresent"><div><div class="token cpp_field">ResourceTypePresent</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$_RDR_CALLOUT_STATE::SessionIdPresent"><div><div class="token cpp_field">SessionIdPresent</div></div></div>;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">char</div> <div class="def" id="NI$_RDR_CALLOUT_STATE::InterfacePresent"><div><div class="token cpp_field">InterfacePresent</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div> <div class="def" id="NI$_RDR_CALLOUT_STATE::ResourceType"><div><div class="token cpp_field">ResourceType</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div> <div class="def" id="NI$_RDR_CALLOUT_STATE::SessionId"><div><div class="token cpp_field">SessionId</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['RPC_SYNTAX_IDENTIFIER'], [], [])"><div class="token cpp_type">RPC_SYNTAX_IDENTIFIER</div></div> <div class="def" id="NI$_RDR_CALLOUT_STATE::Interface"><div><div class="token cpp_field">Interface</div></div></div>;
+    <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$_RDR_CALLOUT_STATE::CertContext"><div><div class="token cpp_field">CertContext</div></div></div>;            <div class="token cpp_comment ">// Contains PCCERT_CONTEXT if cert is used for authentication.</div>
+                                  <div class="token cpp_comment ">// NULL otherwise. If allocated, CertFreeCertificateContext</div>
+                                  <div class="token cpp_comment ">// needs to be called on it when done</div>
+} <div class="def" id="NI$RDR_CALLOUT_STATE"><div><div class="token cpp_type">RDR_CALLOUT_STATE</div></div></div>;
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcProxyIsValidMachineFn)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcProxyIsValidMachineFn"><div><div class="token cpp_type">I_RpcProxyIsValidMachineFn</div></div></div>)</div></div>
+        (
+<div class="expandable"><div class="disabled">        _In_ RPC_WSTR Machine,</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> Machine,</div></div>
+<div class="expandable"><div class="disabled">        _In_ RPC_WSTR DotMachine,</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['RPC_WSTR'], [], [])"><div class="token cpp_type">RPC_WSTR</div></div> DotMachine,</div></div>
+<div class="expandable"><div class="disabled">        _In_ unsigned long PortNumber</div>
+<div class="expanded">          <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> PortNumber</div></div>
+        );
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcProxyGetClientAddressFn)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcProxyGetClientAddressFn"><div><div class="token cpp_type">I_RpcProxyGetClientAddressFn</div></div></div>)</div></div>
+        (
+<div class="expandable"><div class="disabled">        IN void *Context,</div>
+<div class="expanded">         <div class="token cpp_keyword ">void</div> *Context,</div></div>
+<div class="expandable"><div class="disabled">        OUT char *Buffer,</div>
+<div class="expanded">         <div class="token cpp_keyword ">char</div> *Buffer,</div></div>
+<div class="expandable"><div class="disabled">        OUT unsigned long *BufferLength</div>
+<div class="expanded">         <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *BufferLength</div></div>
+        );
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcProxyGetConnectionTimeoutFn)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcProxyGetConnectionTimeoutFn"><div><div class="token cpp_type">I_RpcProxyGetConnectionTimeoutFn</div></div></div>)</div></div>
+        (
+<div class="expandable"><div class="disabled">        OUT unsigned long *ConnectionTimeout</div>
+<div class="expanded">         <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> *ConnectionTimeout</div></div>
+        );
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcPerformCalloutFn)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcPerformCalloutFn"><div><div class="token cpp_type">I_RpcPerformCalloutFn</div></div></div>)</div></div>
+    (
+<div class="expandable"><div class="disabled">    IN void *Context,</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> *Context,</div></div>
+<div class="expandable"><div class="disabled">    IN RDR_CALLOUT_STATE *CallOutState,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RDR_CALLOUT_STATE'], [], [])"><div class="token cpp_type">RDR_CALLOUT_STATE</div></div> *CallOutState,</div></div>
+<div class="expandable"><div class="disabled">    IN RPC_HTTP_REDIRECTOR_STAGE Stage</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_HTTP_REDIRECTOR_STAGE'], [], [])"><div class="token cpp_type">RPC_HTTP_REDIRECTOR_STAGE</div></div> Stage</div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcFreeCalloutStateFn)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcFreeCalloutStateFn"><div><div class="token cpp_type">I_RpcFreeCalloutStateFn</div></div></div>)</div></div>
+    (
+<div class="expandable"><div class="disabled">    IN RDR_CALLOUT_STATE *CallOutState</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RDR_CALLOUT_STATE'], [], [])"><div class="token cpp_type">RDR_CALLOUT_STATE</div></div> *CallOutState</div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcProxyGetClientSessionAndResourceUUID)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcProxyGetClientSessionAndResourceUUID"><div><div class="token cpp_type">I_RpcProxyGetClientSessionAndResourceUUID</div></div></div>)</div></div>
+        (
+<div class="expandable"><div class="disabled">        _In_ void *Context,</div>
+<div class="expanded">          <div class="token cpp_keyword ">void</div> *Context,</div></div>
+<div class="expandable"><div class="disabled">        _Out_opt_ int *SessionIdPresent,</div>
+<div class="expanded">          <div class="token cpp_keyword ">int</div> *SessionIdPresent,</div></div>
+<div class="expandable"><div class="disabled">        _Out_opt_ UUID *SessionId,</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div> *SessionId,</div></div>
+<div class="expandable"><div class="disabled">        _Out_ int *ResourceIdPresent,</div>
+<div class="expanded">          <div class="token cpp_keyword ">int</div> *ResourceIdPresent,</div></div>
+<div class="expandable"><div class="disabled">        _Out_ UUID *ResourceId</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div> *ResourceId</div></div>
+        );
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcProxyFilterIfFn)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcProxyFilterIfFn"><div><div class="token cpp_type">I_RpcProxyFilterIfFn</div></div></div>)</div></div>
+    (
+<div class="expandable"><div class="disabled">    _In_ void *Context,</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> *Context,</div></div>
+<div class="expandable"><div class="disabled">    _In_ UUID *IfUuid,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['UUID'], [], [])"><div class="token cpp_type">UUID</div></div> *IfUuid,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned short IfMajorVersion,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> IfMajorVersion,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ int *fAllow</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> *fAllow</div></div>
+    );
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">enum</div> <div class="def" id="NI$RpcProxyPerfCounters"><div><div class="token cpp_type">RpcProxyPerfCounters</div></div></div>
+{
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcCurrentUniqueUser"><div><div class="token cpp_enum">RpcCurrentUniqueUser</div></div></div> = <div class="token cpp_number ">1</div>,    <div class="token cpp_comment ">//Current Number of Unique Users</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcBackEndConnectionAttempts"><div><div class="token cpp_enum">RpcBackEndConnectionAttempts</div></div></div>, <div class="token cpp_comment ">// Number of Back-End Connection Attempts per Second</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcBackEndConnectionFailed"><div><div class="token cpp_enum">RpcBackEndConnectionFailed</div></div></div>, <div class="token cpp_comment ">// Number of Failed Back-End Connection Attempts per Second</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcRequestsPerSecond"><div><div class="token cpp_enum">RpcRequestsPerSecond</div></div></div>, <div class="token cpp_comment ">//RPC/HTTP Requests per Second</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcIncomingConnections"><div><div class="token cpp_enum">RpcIncomingConnections</div></div></div>, <div class="token cpp_comment ">//Current Number of Incoming RPC over HTTP Connections</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcIncomingBandwidth"><div><div class="token cpp_enum">RpcIncomingBandwidth</div></div></div>, <div class="token cpp_comment ">// Total Incoming Bandwidth from Back-End Servers</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcOutgoingBandwidth"><div><div class="token cpp_enum">RpcOutgoingBandwidth</div></div></div>, <div class="token cpp_comment ">// Total Outgoing Bandwidth to Back-End Servers</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcAttemptedLbsDecisions"><div><div class="token cpp_enum">RpcAttemptedLbsDecisions</div></div></div>, <div class="token cpp_comment ">// Attempted RPC Load Balancing Decisions per Second</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcFailedLbsDecisions"><div><div class="token cpp_enum">RpcFailedLbsDecisions</div></div></div>, <div class="token cpp_comment ">// Failed RPC Load Balancing Decisions per Second</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcAttemptedLbsMessages"><div><div class="token cpp_enum">RpcAttemptedLbsMessages</div></div></div>, <div class="token cpp_comment ">//Attempted RPC Load Balancing Broker Requests per Second</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcFailedLbsMessages"><div><div class="token cpp_enum">RpcFailedLbsMessages</div></div></div>, <div class="token cpp_comment ">// Failed RPC Load Balancing Broker Requests per Second</div>
+    <div class="def" id="NI$RpcProxyPerfCounters::RpcLastCounter"><div><div class="token cpp_enum">RpcLastCounter</div></div></div>
+} <div class="def" id="NI$RpcPerfCounters"><div><div class="token cpp_type">RpcPerfCounters</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcProxyUpdatePerfCounterFn)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcProxyUpdatePerfCounterFn"><div><div class="token cpp_type">I_RpcProxyUpdatePerfCounterFn</div></div></div>)</div></div>
+    (
+<div class="expandable"><div class="disabled">    _In_ RpcPerfCounters Counter,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RpcPerfCounters'], [], [])"><div class="token cpp_type">RpcPerfCounters</div></div> Counter,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int ModifyTrend,</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> ModifyTrend,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long Size</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> Size</div></div>
+    );
+
+ <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">(RPC_ENTRY *I_RpcProxyUpdatePerfCounterBackendServerFn)</div>
+<div class="expanded">(<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$I_RpcProxyUpdatePerfCounterBackendServerFn"><div><div class="token cpp_type">I_RpcProxyUpdatePerfCounterBackendServerFn</div></div></div>)</div></div>
+    (
+<div class="expandable"><div class="disabled">    _In_ unsigned short* MachineName,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div>* MachineName,</div></div>
+<div class="expandable"><div class="disabled">    _In_ int IsConnectEvent</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> IsConnectEvent</div></div>
+    );
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="disabled">#define RPC_PROXY_CONNECTION_TYPE_IN_PROXY    0</div>
+<div class="disabled">#define RPC_PROXY_CONNECTION_TYPE_OUT_PROXY   1</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface"><div><div class="token cpp_type">tagI_RpcProxyCallbackInterface</div></div></div>
+{
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcProxyIsValidMachineFn'], [], [])"><div class="token cpp_type">I_RpcProxyIsValidMachineFn</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::IsValidMachineFn"><div><div class="token cpp_field">IsValidMachineFn</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcProxyGetClientAddressFn'], [], [])"><div class="token cpp_type">I_RpcProxyGetClientAddressFn</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::GetClientAddressFn"><div><div class="token cpp_field">GetClientAddressFn</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcProxyGetConnectionTimeoutFn'], [], [])"><div class="token cpp_type">I_RpcProxyGetConnectionTimeoutFn</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::GetConnectionTimeoutFn"><div><div class="token cpp_field">GetConnectionTimeoutFn</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcPerformCalloutFn'], [], [])"><div class="token cpp_type">I_RpcPerformCalloutFn</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::PerformCalloutFn"><div><div class="token cpp_field">PerformCalloutFn</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcFreeCalloutStateFn'], [], [])"><div class="token cpp_type">I_RpcFreeCalloutStateFn</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::FreeCalloutStateFn"><div><div class="token cpp_field">FreeCalloutStateFn</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcProxyGetClientSessionAndResourceUUID'], [], [])"><div class="token cpp_type">I_RpcProxyGetClientSessionAndResourceUUID</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::GetClientSessionAndResourceUUIDFn"><div><div class="token cpp_field">GetClientSessionAndResourceUUIDFn</div></div></div>;
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcProxyFilterIfFn'], [], [])"><div class="token cpp_type">I_RpcProxyFilterIfFn</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::ProxyFilterIfFn"><div><div class="token cpp_field">ProxyFilterIfFn</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcProxyUpdatePerfCounterFn'], [], [])"><div class="token cpp_type">I_RpcProxyUpdatePerfCounterFn</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::RpcProxyUpdatePerfCounterFn"><div><div class="token cpp_field">RpcProxyUpdatePerfCounterFn</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['I_RpcProxyUpdatePerfCounterBackendServerFn'], [], [])"><div class="token cpp_type">I_RpcProxyUpdatePerfCounterBackendServerFn</div></div> <div class="def" id="NI$tagI_RpcProxyCallbackInterface::RpcProxyUpdatePerfCounterBackendServerFn"><div><div class="token cpp_field">RpcProxyUpdatePerfCounterBackendServerFn</div></div></div>;
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+} <div class="def" id="NI$I_RpcProxyCallbackInterface"><div><div class="token cpp_type">I_RpcProxyCallbackInterface</div></div></div>;
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcProxyNewConnection@::RPC_STATUS(unsigned long, unsigned short *, unsigned short *, unsigned short *, void *, ::RDR_CALLOUT_STATE *, ::I_RpcProxyCallbackInterface *)[decl0]"><div><div class="token cpp_function">I_RpcProxyNewConnection</div></div></div> (
+<div class="expandable"><div class="disabled">    IN unsigned long ConnectionType,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcProxyNewConnection@::RPC_STATUS(unsigned long, unsigned short *, unsigned short *, unsigned short *, void *, ::RDR_CALLOUT_STATE *, ::I_RpcProxyCallbackInterface *)[decl0]::ConnectionType"><div>ConnectionType</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned short *ServerAddress,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$I_RpcProxyNewConnection@::RPC_STATUS(unsigned long, unsigned short *, unsigned short *, unsigned short *, void *, ::RDR_CALLOUT_STATE *, ::I_RpcProxyCallbackInterface *)[decl0]::ServerAddress"><div>ServerAddress</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned short *ServerPort,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$I_RpcProxyNewConnection@::RPC_STATUS(unsigned long, unsigned short *, unsigned short *, unsigned short *, void *, ::RDR_CALLOUT_STATE *, ::I_RpcProxyCallbackInterface *)[decl0]::ServerPort"><div>ServerPort</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned short *MinConnTimeout,</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$I_RpcProxyNewConnection@::RPC_STATUS(unsigned long, unsigned short *, unsigned short *, unsigned short *, void *, ::RDR_CALLOUT_STATE *, ::I_RpcProxyCallbackInterface *)[decl0]::MinConnTimeout"><div>MinConnTimeout</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN void *ConnectionParameter,</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$I_RpcProxyNewConnection@::RPC_STATUS(unsigned long, unsigned short *, unsigned short *, unsigned short *, void *, ::RDR_CALLOUT_STATE *, ::I_RpcProxyCallbackInterface *)[decl0]::ConnectionParameter"><div>ConnectionParameter</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN OPTIONAL RDR_CALLOUT_STATE *CallOutState,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RDR_CALLOUT_STATE'], [], [])"><div class="token cpp_type">RDR_CALLOUT_STATE</div></div> *<div class="def" id="NI$I_RpcProxyNewConnection@::RPC_STATUS(unsigned long, unsigned short *, unsigned short *, unsigned short *, void *, ::RDR_CALLOUT_STATE *, ::I_RpcProxyCallbackInterface *)[decl0]::CallOutState"><div>CallOutState</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN I_RpcProxyCallbackInterface *ProxyCallbackInterface</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['I_RpcProxyCallbackInterface'], [], [])"><div class="token cpp_type">I_RpcProxyCallbackInterface</div></div> *<div class="def" id="NI$I_RpcProxyNewConnection@::RPC_STATUS(unsigned long, unsigned short *, unsigned short *, unsigned short *, void *, ::RDR_CALLOUT_STATE *, ::I_RpcProxyCallbackInterface *)[decl0]::ProxyCallbackInterface"><div>ProxyCallbackInterface</div></div></div></div>
+    );
+
+<div class="disabled">#else</div>
+
+<div class="disabled">typedef struct tagI_RpcProxyCallbackInterface</div>
+<div class="disabled">{</div>
+<div class="disabled">    I_RpcProxyIsValidMachineFn IsValidMachineFn;</div>
+<div class="disabled">    I_RpcProxyGetClientAddressFn GetClientAddressFn;</div>
+<div class="disabled">    I_RpcProxyGetConnectionTimeoutFn GetConnectionTimeoutFn;</div>
+<div class="disabled">} I_RpcProxyCallbackInterface;</div>
+
+<div class="disabled">RPCRTAPI</div>
+<div class="disabled">RPC_STATUS</div>
+<div class="disabled">RPC_ENTRY</div>
+<div class="disabled">I_RpcProxyNewConnection (</div>
+<div class="disabled">    IN unsigned long ConnectionType,</div>
+<div class="disabled">    IN unsigned short *ServerAddress,</div>
+<div class="disabled">    IN unsigned short *ServerPort,</div>
+<div class="disabled">    IN void *ConnectionParameter,</div>
+<div class="disabled">    IN I_RpcProxyCallbackInterface *ProxyCallbackInterface</div>
+<div class="disabled">    );
+#endif // (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINXP)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcReplyToClientWithStatus@::RPC_STATUS(void *, ::RPC_STATUS)[decl0]"><div><div class="token cpp_function">I_RpcReplyToClientWithStatus</div></div></div> (
+<div class="expandable"><div class="disabled">    IN void *ConnectionParameter,</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div> *<div class="def" id="NI$I_RpcReplyToClientWithStatus@::RPC_STATUS(void *, ::RPC_STATUS)[decl0]::ConnectionParameter"><div>ConnectionParameter</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN RPC_STATUS RpcStatus</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div> <div class="def" id="NI$I_RpcReplyToClientWithStatus@::RPC_STATUS(void *, ::RPC_STATUS)[decl0]::RpcStatus"><div>RpcStatus</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">void</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcRecordCalloutFailure@void(::RPC_STATUS, ::RDR_CALLOUT_STATE *, unsigned short *)[decl0]"><div><div class="token cpp_function">I_RpcRecordCalloutFailure</div></div></div> (
+<div class="expandable"><div class="disabled">    IN RPC_STATUS RpcStatus,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div> <div class="def" id="NI$I_RpcRecordCalloutFailure@void(::RPC_STATUS, ::RDR_CALLOUT_STATE *, unsigned short *)[decl0]::RpcStatus"><div>RpcStatus</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN RDR_CALLOUT_STATE *CallOutState,</div>
+<div class="expanded">     <div class="ref" onclick="jumpToSymbol([], ['RDR_CALLOUT_STATE'], [], [])"><div class="token cpp_type">RDR_CALLOUT_STATE</div></div> *<div class="def" id="NI$I_RpcRecordCalloutFailure@void(::RPC_STATUS, ::RDR_CALLOUT_STATE *, unsigned short *)[decl0]::CallOutState"><div>CallOutState</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    IN unsigned short *DllName</div>
+<div class="expanded">     <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">short</div> *<div class="def" id="NI$I_RpcRecordCalloutFailure@void(::RPC_STATUS, ::RDR_CALLOUT_STATE *, unsigned short *)[decl0]::DllName"><div>DllName</div></div></div></div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WS03)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN7)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcMgmtEnableDedicatedThreadPool@::RPC_STATUS()[decl0]"><div><div class="token cpp_function">I_RpcMgmtEnableDedicatedThreadPool</div></div></div> (
+    <div class="token cpp_keyword ">void</div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WIN7)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN7)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcGetDefaultSD@::RPC_STATUS(void * *)[decl0]"><div><div class="token cpp_function">I_RpcGetDefaultSD</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ void __RPC_FAR ** ppSecurityDescriptor</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div>  ** <div class="def" id="NI$I_RpcGetDefaultSD@::RPC_STATUS(void * *)[decl0]::ppSecurityDescriptor"><div>ppSecurityDescriptor</div></div></div></div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WIN7)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcOpenClientProcess@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, void * *)[decl0]"><div><div class="token cpp_function">I_RpcOpenClientProcess</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_opt_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcOpenClientProcess@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, void * *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long DesiredAccess,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$I_RpcOpenClientProcess@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, void * *)[decl0]::DesiredAccess"><div>DesiredAccess</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Outptr_ void** ClientProcess</div>
+<div class="expanded">     <div class="token cpp_keyword ">void</div>** <div class="def" id="NI$I_RpcOpenClientProcess@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, void * *)[decl0]::ClientProcess"><div>ClientProcess</div></div></div></div>
+    );
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingIsServerLocal@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]"><div><div class="token cpp_function">I_RpcBindingIsServerLocal</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingIsServerLocal@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ unsigned int * ServerLocalFlag</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">int</div> * <div class="def" id="NI$I_RpcBindingIsServerLocal@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned int *)[decl0]::ServerLocalFlag"><div>ServerLocalFlag</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPC_STATUS RPC_ENTRY</div>
+<div class="expanded"><div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div> <div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcBindingSetPrivateOption@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::ULONG_PTR)[decl0]"><div><div class="token cpp_function">I_RpcBindingSetPrivateOption</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE hBinding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcBindingSetPrivateOption@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::ULONG_PTR)[decl0]::hBinding"><div>hBinding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ unsigned long      option,</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div>      <div class="def" id="NI$I_RpcBindingSetPrivateOption@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::ULONG_PTR)[decl0]::option"><div>option</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG_PTR          optionValue</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG_PTR'], [], [])"><div class="token cpp_type">ULONG_PTR</div></div>          <div class="def" id="NI$I_RpcBindingSetPrivateOption@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long, ::ULONG_PTR)[decl0]::optionValue"><div>optionValue</div></div></div></div>
+    );
+
+<div class="disabled">#define RPC_C_OPT_PRIVATE_SUPPRESS_WAKE     1</div>
+<div class="disabled">#define RPC_C_OPT_PRIVATE_DO_NOT_DISTURB    2</div>
+<div class="disabled">#define RPC_C_OPT_PRIVATE_BREAK_ON_SUSPEND  3</div>
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WIN8)</div>
+
+<div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_WINBLUE)</div>
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerSubscribeForDisconnectNotification@::RPC_STATUS(::RPC_BINDING_HANDLE, void *)[decl0]"><div><div class="token cpp_function">I_RpcServerSubscribeForDisconnectNotification</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcServerSubscribeForDisconnectNotification@::RPC_STATUS(::RPC_BINDING_HANDLE, void *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ void * hEvent</div>
+<div class="expanded">      <div class="token cpp_keyword ">void</div> * <div class="def" id="NI$I_RpcServerSubscribeForDisconnectNotification@::RPC_STATUS(::RPC_BINDING_HANDLE, void *)[decl0]::hEvent"><div>hEvent</div></div></div></div>
+    );
+
+<div class="ref" onclick="jumpToSymbol([], ['RPC_STATUS'], [], [])"><div class="token cpp_type">RPC_STATUS</div></div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerGetAssociationID@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *)[decl0]"><div><div class="token cpp_function">I_RpcServerGetAssociationID</div></div></div> (
+<div class="expandable"><div class="disabled">    _In_ RPC_BINDING_HANDLE Binding,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['RPC_BINDING_HANDLE'], [], [])"><div class="token cpp_type">RPC_BINDING_HANDLE</div></div> <div class="def" id="NI$I_RpcServerGetAssociationID@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *)[decl0]::Binding"><div>Binding</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ unsigned long * AssociationID</div>
+<div class="expanded">      <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">long</div> * <div class="def" id="NI$I_RpcServerGetAssociationID@::RPC_STATUS(::RPC_BINDING_HANDLE, unsigned long *)[decl0]::AssociationID"><div>AssociationID</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">RPCRTAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="token cpp_keyword ">long</div>
+<div class="expandable"><div class="disabled">RPC_ENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$I_RpcServerDisableExceptionFilter@long()[decl0]"><div><div class="token cpp_function">I_RpcServerDisableExceptionFilter</div></div></div> (
+    <div class="token cpp_keyword ">void</div>
+    );
+
+<div class="disabled">#endif // (NTDDI_VERSION &gt;= NTDDI_WINBLUE)</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if defined(__cplusplus)</div>
+<div class="disabled">#define I_RRPCUNINITIALIZENDROLE_EXPORT_NAME reinterpret_cast&lt;LPCSTR&gt;(static_cast&lt;ULONG_PTR&gt;(1000))</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define I_RRPCUNINITIALIZENDROLE_EXPORT_NAME ((LPCSTR)(ULONG_PTR)1000)
+#endif</div>
+
+<div class="disabled">#endif /* __RPCDCEP_H__ */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'GUID': {
+        'displayNameInHtml': '<span class="cpp_type">GUID</span>',
+        'impls': [
+            'NI$GUID'
+        ],
+        'decls': []
+    },
+    'I_RPC_MUTEX': {
+        'displayNameInHtml': '<span class="cpp_type">I_RPC_MUTEX</span>',
+        'impls': [
+            'NI$I_RPC_MUTEX'
+        ],
+        'decls': []
+    },
+    'I_RpcFreeCalloutStateFn': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcFreeCalloutStateFn</span>',
+        'impls': [
+            'NI$I_RpcFreeCalloutStateFn'
+        ],
+        'decls': []
+    },
+    'I_RpcPerformCalloutFn': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcPerformCalloutFn</span>',
+        'impls': [
+            'NI$I_RpcPerformCalloutFn'
+        ],
+        'decls': []
+    },
+    'I_RpcProxyCallbackInterface': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcProxyCallbackInterface</span>',
+        'impls': [
+            'NI$I_RpcProxyCallbackInterface'
+        ],
+        'decls': []
+    },
+    'I_RpcProxyFilterIfFn': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcProxyFilterIfFn</span>',
+        'impls': [
+            'NI$I_RpcProxyFilterIfFn'
+        ],
+        'decls': []
+    },
+    'I_RpcProxyGetClientAddressFn': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcProxyGetClientAddressFn</span>',
+        'impls': [
+            'NI$I_RpcProxyGetClientAddressFn'
+        ],
+        'decls': []
+    },
+    'I_RpcProxyGetClientSessionAndResourceUUID': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcProxyGetClientSessionAndResourceUUID</span>',
+        'impls': [
+            'NI$I_RpcProxyGetClientSessionAndResourceUUID'
+        ],
+        'decls': []
+    },
+    'I_RpcProxyGetConnectionTimeoutFn': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcProxyGetConnectionTimeoutFn</span>',
+        'impls': [
+            'NI$I_RpcProxyGetConnectionTimeoutFn'
+        ],
+        'decls': []
+    },
+    'I_RpcProxyIsValidMachineFn': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcProxyIsValidMachineFn</span>',
+        'impls': [
+            'NI$I_RpcProxyIsValidMachineFn'
+        ],
+        'decls': []
+    },
+    'I_RpcProxyUpdatePerfCounterBackendServerFn': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcProxyUpdatePerfCounterBackendServerFn</span>',
+        'impls': [
+            'NI$I_RpcProxyUpdatePerfCounterBackendServerFn'
+        ],
+        'decls': []
+    },
+    'I_RpcProxyUpdatePerfCounterFn': {
+        'displayNameInHtml': '<span class="cpp_type">I_RpcProxyUpdatePerfCounterFn</span>',
+        'impls': [
+            'NI$I_RpcProxyUpdatePerfCounterFn'
+        ],
+        'decls': []
+    },
+    'LONG_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">LONG_PTR</span>',
+        'impls': [
+            'NI$LONG_PTR'
+        ],
+        'decls': []
+    },
+    'LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION': {
+        'displayNameInHtml': '<span class="cpp_type">LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION</span>',
+        'impls': [
+            'NI$LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION'
+        ],
+        'decls': []
+    },
+    'PRPC_DISPATCH_TABLE': {
+        'displayNameInHtml': '<span class="cpp_type">PRPC_DISPATCH_TABLE</span>',
+        'impls': [
+            'NI$PRPC_DISPATCH_TABLE'
+        ],
+        'decls': []
+    },
+    'PRPC_MESSAGE': {
+        'displayNameInHtml': '<span class="cpp_type">PRPC_MESSAGE</span>',
+        'impls': [
+            'NI$PRPC_MESSAGE'
+        ],
+        'decls': []
+    },
+    'PRPC_PROTSEQ_ENDPOINT': {
+        'displayNameInHtml': '<span class="cpp_type">PRPC_PROTSEQ_ENDPOINT</span>',
+        'impls': [
+            'NI$PRPC_PROTSEQ_ENDPOINT'
+        ],
+        'decls': []
+    },
+    'PRPC_RUNDOWN': {
+        'displayNameInHtml': '<span class="cpp_type">PRPC_RUNDOWN</span>',
+        'impls': [
+            'NI$PRPC_RUNDOWN'
+        ],
+        'decls': []
+    },
+    'PRPC_SYNTAX_IDENTIFIER': {
+        'displayNameInHtml': '<span class="cpp_type">PRPC_SYNTAX_IDENTIFIER</span>',
+        'impls': [
+            'NI$PRPC_SYNTAX_IDENTIFIER'
+        ],
+        'decls': []
+    },
+    'RDR_CALLOUT_STATE': {
+        'displayNameInHtml': '<span class="cpp_type">RDR_CALLOUT_STATE</span>',
+        'impls': [
+            'NI$RDR_CALLOUT_STATE'
+        ],
+        'decls': []
+    },
+    'RPCLT_PDU_FILTER_FUNC': {
+        'displayNameInHtml': '<span class="cpp_type">RPCLT_PDU_FILTER_FUNC</span>',
+        'impls': [
+            'NI$RPCLT_PDU_FILTER_FUNC'
+        ],
+        'decls': []
+    },
+    'RPC_ADDRESS_CHANGE_FN': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_ADDRESS_CHANGE_FN</span>',
+        'impls': [
+            'NI$RPC_ADDRESS_CHANGE_FN'
+        ],
+        'decls': []
+    },
+    'RPC_BINDING_HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_BINDING_HANDLE</span>',
+        'impls': [
+            'NI$RPC_BINDING_HANDLE'
+        ],
+        'decls': []
+    },
+    'RPC_BLOCKING_FN': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_BLOCKING_FN</span>',
+        'impls': [
+            'NI$RPC_BLOCKING_FN'
+        ],
+        'decls': []
+    },
+    'RPC_CSTR': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_CSTR</span>',
+        'impls': [
+            'NI$RPC_CSTR'
+        ],
+        'decls': []
+    },
+    'RPC_DISPATCH_FUNCTION': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_DISPATCH_FUNCTION</span>',
+        'impls': [
+            'NI$RPC_DISPATCH_FUNCTION'
+        ],
+        'decls': []
+    },
+    'RPC_FORWARD_FUNCTION': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_FORWARD_FUNCTION</span>',
+        'impls': [
+            'NI$RPC_FORWARD_FUNCTION'
+        ],
+        'decls': []
+    },
+    'RPC_HTTP_REDIRECTOR_STAGE': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_HTTP_REDIRECTOR_STAGE</span>',
+        'impls': [
+            'NI$RPC_HTTP_REDIRECTOR_STAGE'
+        ],
+        'decls': []
+    },
+    'RPC_IF_HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_IF_HANDLE</span>',
+        'impls': [
+            'NI$RPC_IF_HANDLE'
+        ],
+        'decls': []
+    },
+    'RPC_MESSAGE': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_MESSAGE</span>',
+        'impls': [
+            'NI$RPC_MESSAGE'
+        ],
+        'decls': []
+    },
+    'RPC_SERVER_INTERFACE': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_SERVER_INTERFACE</span>',
+        'impls': [
+            'NI$RPC_SERVER_INTERFACE'
+        ],
+        'decls': []
+    },
+    'RPC_STATUS': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_STATUS</span>',
+        'impls': [
+            'NI$RPC_STATUS'
+        ],
+        'decls': []
+    },
+    'RPC_SYNTAX_IDENTIFIER': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_SYNTAX_IDENTIFIER</span>',
+        'impls': [
+            'NI$RPC_SYNTAX_IDENTIFIER'
+        ],
+        'decls': []
+    },
+    'RPC_TRANSFER_SYNTAX': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_TRANSFER_SYNTAX</span>',
+        'impls': [
+            'NI$RPC_TRANSFER_SYNTAX'
+        ],
+        'decls': []
+    },
+    'RPC_VERSION': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_VERSION</span>',
+        'impls': [
+            'NI$RPC_VERSION'
+        ],
+        'decls': []
+    },
+    'RPC_WSTR': {
+        'displayNameInHtml': '<span class="cpp_type">RPC_WSTR</span>',
+        'impls': [
+            'NI$RPC_WSTR'
+        ],
+        'decls': []
+    },
+    'RpcPerfCounters': {
+        'displayNameInHtml': '<span class="cpp_type">RpcPerfCounters</span>',
+        'impls': [
+            'NI$RpcPerfCounters'
+        ],
+        'decls': []
+    },
+    'ULONG_PTR': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG_PTR</span>',
+        'impls': [
+            'NI$ULONG_PTR'
+        ],
+        'decls': []
+    },
+    'UUID': {
+        'displayNameInHtml': '<span class="cpp_type">UUID</span>',
+        'impls': [
+            'NI$UUID'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$GUID': { 'htmlFileName': 'guiddef.h', 'displayName': 'guiddef.h' },
+    'NI$I_RPC_MUTEX': null,
+    'NI$I_RpcFreeCalloutStateFn': null,
+    'NI$I_RpcPerformCalloutFn': null,
+    'NI$I_RpcProxyCallbackInterface': null,
+    'NI$I_RpcProxyFilterIfFn': null,
+    'NI$I_RpcProxyGetClientAddressFn': null,
+    'NI$I_RpcProxyGetClientSessionAndResourceUUID': null,
+    'NI$I_RpcProxyGetConnectionTimeoutFn': null,
+    'NI$I_RpcProxyIsValidMachineFn': null,
+    'NI$I_RpcProxyUpdatePerfCounterBackendServerFn': null,
+    'NI$I_RpcProxyUpdatePerfCounterFn': null,
+    'NI$LONG_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$LRPC_SYSTEM_HANDLE_MARSHAL_DIRECTION': null,
+    'NI$PRPC_DISPATCH_TABLE': null,
+    'NI$PRPC_MESSAGE': null,
+    'NI$PRPC_PROTSEQ_ENDPOINT': null,
+    'NI$PRPC_RUNDOWN': null,
+    'NI$PRPC_SYNTAX_IDENTIFIER': null,
+    'NI$RDR_CALLOUT_STATE': null,
+    'NI$RPCLT_PDU_FILTER_FUNC': null,
+    'NI$RPC_ADDRESS_CHANGE_FN': null,
+    'NI$RPC_BINDING_HANDLE': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' },
+    'NI$RPC_BLOCKING_FN': null,
+    'NI$RPC_CSTR': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' },
+    'NI$RPC_DISPATCH_FUNCTION': null,
+    'NI$RPC_FORWARD_FUNCTION': null,
+    'NI$RPC_HTTP_REDIRECTOR_STAGE': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' },
+    'NI$RPC_IF_HANDLE': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' },
+    'NI$RPC_MESSAGE': null,
+    'NI$RPC_SERVER_INTERFACE': null,
+    'NI$RPC_STATUS': { 'htmlFileName': 'rpc.h', 'displayName': 'rpc.h' },
+    'NI$RPC_SYNTAX_IDENTIFIER': null,
+    'NI$RPC_TRANSFER_SYNTAX': null,
+    'NI$RPC_VERSION': null,
+    'NI$RPC_WSTR': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' },
+    'NI$RpcPerfCounters': null,
+    'NI$ULONG_PTR': { 'htmlFileName': 'basetsd.h', 'displayName': 'basetsd.h' },
+    'NI$UUID': { 'htmlFileName': 'rpcdce.h', 'displayName': 'rpcdce.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

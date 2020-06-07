@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>nb30.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Copyright (c) 1991-1999  Microsoft Corporation</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Module Name:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  nb30.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Abstract:</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//  This module contains the definitions for portable NetBIOS 3.0</div>
+<div class="token cpp_comment ">//  support.</div>
+<div class="token cpp_comment ">//</div>
+
+<div class="disabled">#ifndef NCB_INCLUDED</div>
+<div class="disabled">#define NCB_INCLUDED</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000</div>
+#pragma once
+<div class="disabled">#endif</div>
+
+<div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(push)
+<div class="expandable"><div class="disabled">#pragma warning(disable:4820) // padding added after data member
+#endif</div>
+<div class="expanded">#pragma warning(disable:<div class="token cpp_number ">4820</div>) </div></div>
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="token cpp_comment ">/****************************************************************
+ *                                                              *
+ *              Data structure templates                        *
+ *                                                              *
+ ****************************************************************/</div>
+
+<div class="disabled">#define NCBNAMSZ        16    /* absolute length of a net name           */</div>
+<div class="disabled">#define MAX_LANA       254    /* lana&apos;s in range 0 to MAX_LANA inclusive */</div>
+
+<div class="token cpp_comment ">/*
+ * Network Control Block
+ */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_NCB"><div><div class="token cpp_type">_NCB</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_command"><div><div class="token cpp_field">ncb_command</div></div></div>;            <div class="token cpp_comment ">/* command code                   */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_retcode"><div><div class="token cpp_field">ncb_retcode</div></div></div>;            <div class="token cpp_comment ">/* return code                    */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_lsn"><div><div class="token cpp_field">ncb_lsn</div></div></div>;                <div class="token cpp_comment ">/* local session number           */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_num"><div><div class="token cpp_field">ncb_num</div></div></div>;                <div class="token cpp_comment ">/* number of our network name     */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['PUCHAR'], [], [])"><div class="token cpp_type">PUCHAR</div></div>  <div class="def" id="NI$_NCB::ncb_buffer"><div><div class="token cpp_field">ncb_buffer</div></div></div>;             <div class="token cpp_comment ">/* address of message buffer      */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_NCB::ncb_length"><div><div class="token cpp_field">ncb_length</div></div></div>;             <div class="token cpp_comment ">/* size of message buffer         */</div>
+<div class="expandable"><div class="disabled">    UCHAR   ncb_callname[NCBNAMSZ]; /* blank-padded name of remote    */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_callname"><div><div class="token cpp_field">ncb_callname</div></div></div>[<div class="token cpp_number ">16</div>]; <div class="token cpp_comment ">/* blank-padded name of remote    */</div></div></div>
+<div class="expandable"><div class="disabled">    UCHAR   ncb_name[NCBNAMSZ];     /* our blank-padded netname       */</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_name"><div><div class="token cpp_field">ncb_name</div></div></div>[<div class="token cpp_number ">16</div>];     <div class="token cpp_comment ">/* our blank-padded netname       */</div></div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_rto"><div><div class="token cpp_field">ncb_rto</div></div></div>;                <div class="token cpp_comment ">/* rcv timeout/retry count        */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_sto"><div><div class="token cpp_field">ncb_sto</div></div></div>;                <div class="token cpp_comment ">/* send timeout/sys timeout       */</div>
+<div class="expandable"><div class="disabled">    void (CALLBACK *ncb_post)( struct _NCB * ); /* POST routine address        */</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div> (<div class="token cpp_keyword ">__stdcall</div> *<div class="def" id="NI$_NCB::ncb_post"><div><div class="token cpp_field">ncb_post</div></div></div>)( <div class="token cpp_keyword ">struct</div> <div class="ref" onclick="jumpToSymbol([], ['_NCB'], [], [])"><div class="token cpp_type">_NCB</div></div> * ); <div class="token cpp_comment ">/* POST routine address        */</div></div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_lana_num"><div><div class="token cpp_field">ncb_lana_num</div></div></div>;           <div class="token cpp_comment ">/* lana (adapter) number          */</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_cmd_cplt"><div><div class="token cpp_field">ncb_cmd_cplt</div></div></div>;           <div class="token cpp_comment ">/* 0xff =&gt; commmand pending       */</div>
+<div class="disabled">#ifdef _WIN64</div>
+<div class="disabled">    UCHAR   ncb_reserve[18];        /* reserved, used by BIOS         */</div>
+<div class="disabled">#else</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NCB::ncb_reserve"><div><div class="token cpp_field">ncb_reserve</div></div></div>[<div class="token cpp_number ">10</div>];        <div class="token cpp_comment ">/* reserved, used by BIOS         */</div>
+<div class="disabled">#endif</div>
+    <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>  <div class="def" id="NI$_NCB::ncb_event"><div><div class="token cpp_field">ncb_event</div></div></div>;              <div class="token cpp_comment ">/* HANDLE to Win32 event which    */</div>
+                                    <div class="token cpp_comment ">/* will be set to the signalled   */</div>
+                                    <div class="token cpp_comment ">/* state when an ASYNCH command   */</div>
+                                    <div class="token cpp_comment ">/* completes                      */</div>
+} <div class="def" id="NI$NCB"><div><div class="token cpp_type">NCB</div></div></div>, *<div class="def" id="NI$PNCB"><div><div class="token cpp_type">PNCB</div></div></div>;
+
+<div class="token cpp_comment ">/*
+ *  Structure returned to the NCB command NCBASTAT is ADAPTER_STATUS followed
+ *  by an array of NAME_BUFFER structures.
+ */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_ADAPTER_STATUS"><div><div class="token cpp_type">_ADAPTER_STATUS</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_ADAPTER_STATUS::adapter_address"><div><div class="token cpp_field">adapter_address</div></div></div>[<div class="token cpp_number ">6</div>];
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_ADAPTER_STATUS::rev_major"><div><div class="token cpp_field">rev_major</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_ADAPTER_STATUS::reserved0"><div><div class="token cpp_field">reserved0</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_ADAPTER_STATUS::adapter_type"><div><div class="token cpp_field">adapter_type</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_ADAPTER_STATUS::rev_minor"><div><div class="token cpp_field">rev_minor</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::duration"><div><div class="token cpp_field">duration</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::frmr_recv"><div><div class="token cpp_field">frmr_recv</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::frmr_xmit"><div><div class="token cpp_field">frmr_xmit</div></div></div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::iframe_recv_err"><div><div class="token cpp_field">iframe_recv_err</div></div></div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::xmit_aborts"><div><div class="token cpp_field">xmit_aborts</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_ADAPTER_STATUS::xmit_success"><div><div class="token cpp_field">xmit_success</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_ADAPTER_STATUS::recv_success"><div><div class="token cpp_field">recv_success</div></div></div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::iframe_xmit_err"><div><div class="token cpp_field">iframe_xmit_err</div></div></div>;
+
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::recv_buff_unavail"><div><div class="token cpp_field">recv_buff_unavail</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::t1_timeouts"><div><div class="token cpp_field">t1_timeouts</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::ti_timeouts"><div><div class="token cpp_field">ti_timeouts</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$_ADAPTER_STATUS::reserved1"><div><div class="token cpp_field">reserved1</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::free_ncbs"><div><div class="token cpp_field">free_ncbs</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::max_cfg_ncbs"><div><div class="token cpp_field">max_cfg_ncbs</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::max_ncbs"><div><div class="token cpp_field">max_ncbs</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::xmit_buf_unavail"><div><div class="token cpp_field">xmit_buf_unavail</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::max_dgram_size"><div><div class="token cpp_field">max_dgram_size</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::pending_sess"><div><div class="token cpp_field">pending_sess</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::max_cfg_sess"><div><div class="token cpp_field">max_cfg_sess</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::max_sess"><div><div class="token cpp_field">max_sess</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::max_sess_pkt_size"><div><div class="token cpp_field">max_sess_pkt_size</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_ADAPTER_STATUS::name_count"><div><div class="token cpp_field">name_count</div></div></div>;
+} <div class="def" id="NI$ADAPTER_STATUS"><div><div class="token cpp_type">ADAPTER_STATUS</div></div></div>, *<div class="def" id="NI$PADAPTER_STATUS"><div><div class="token cpp_type">PADAPTER_STATUS</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_NAME_BUFFER"><div><div class="token cpp_type">_NAME_BUFFER</div></div></div> {
+<div class="expandable"><div class="disabled">    UCHAR   name[NCBNAMSZ];</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NAME_BUFFER::name"><div><div class="token cpp_field">name</div></div></div>[<div class="token cpp_number ">16</div>];</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NAME_BUFFER::name_num"><div><div class="token cpp_field">name_num</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_NAME_BUFFER::name_flags"><div><div class="token cpp_field">name_flags</div></div></div>;
+} <div class="def" id="NI$NAME_BUFFER"><div><div class="token cpp_type">NAME_BUFFER</div></div></div>, *<div class="def" id="NI$PNAME_BUFFER"><div><div class="token cpp_type">PNAME_BUFFER</div></div></div>;
+
+<div class="token cpp_comment ">//  values for name_flags bits.</div>
+
+<div class="disabled">#define NAME_FLAGS_MASK 0x87</div>
+
+<div class="disabled">#define GROUP_NAME      0x80</div>
+<div class="disabled">#define UNIQUE_NAME     0x00</div>
+
+<div class="disabled">#define REGISTERING     0x00</div>
+<div class="disabled">#define REGISTERED      0x04</div>
+<div class="disabled">#define DEREGISTERED    0x05</div>
+<div class="disabled">#define DUPLICATE       0x06</div>
+<div class="disabled">#define DUPLICATE_DEREG 0x07</div>
+
+<div class="token cpp_comment ">/*
+ *  Structure returned to the NCB command NCBSSTAT is SESSION_HEADER followed
+ *  by an array of SESSION_BUFFER structures. If the NCB_NAME starts with an
+ *  asterisk then an array of these structures is returned containing the
+ *  status for all names.
+ */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_SESSION_HEADER"><div><div class="token cpp_type">_SESSION_HEADER</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_HEADER::sess_name"><div><div class="token cpp_field">sess_name</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_HEADER::num_sess"><div><div class="token cpp_field">num_sess</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_HEADER::rcv_dg_outstanding"><div><div class="token cpp_field">rcv_dg_outstanding</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_HEADER::rcv_any_outstanding"><div><div class="token cpp_field">rcv_any_outstanding</div></div></div>;
+} <div class="def" id="NI$SESSION_HEADER"><div><div class="token cpp_type">SESSION_HEADER</div></div></div>, *<div class="def" id="NI$PSESSION_HEADER"><div><div class="token cpp_type">PSESSION_HEADER</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_SESSION_BUFFER"><div><div class="token cpp_type">_SESSION_BUFFER</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_BUFFER::lsn"><div><div class="token cpp_field">lsn</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_BUFFER::state"><div><div class="token cpp_field">state</div></div></div>;
+<div class="expandable"><div class="disabled">    UCHAR   local_name[NCBNAMSZ];</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_BUFFER::local_name"><div><div class="token cpp_field">local_name</div></div></div>[<div class="token cpp_number ">16</div>];</div></div>
+<div class="expandable"><div class="disabled">    UCHAR   remote_name[NCBNAMSZ];</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_BUFFER::remote_name"><div><div class="token cpp_field">remote_name</div></div></div>[<div class="token cpp_number ">16</div>];</div></div>
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_BUFFER::rcvs_outstanding"><div><div class="token cpp_field">rcvs_outstanding</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_SESSION_BUFFER::sends_outstanding"><div><div class="token cpp_field">sends_outstanding</div></div></div>;
+} <div class="def" id="NI$SESSION_BUFFER"><div><div class="token cpp_type">SESSION_BUFFER</div></div></div>, *<div class="def" id="NI$PSESSION_BUFFER"><div><div class="token cpp_type">PSESSION_BUFFER</div></div></div>;
+
+<div class="token cpp_comment ">//  Values for state</div>
+
+<div class="disabled">#define LISTEN_OUTSTANDING      0x01</div>
+<div class="disabled">#define CALL_PENDING            0x02</div>
+<div class="disabled">#define SESSION_ESTABLISHED     0x03</div>
+<div class="disabled">#define HANGUP_PENDING          0x04</div>
+<div class="disabled">#define HANGUP_COMPLETE         0x05</div>
+<div class="disabled">#define SESSION_ABORTED         0x06</div>
+
+<div class="token cpp_comment ">/*
+ *  Structure returned to the NCB command NCBENUM.
+ *
+ *  On a system containing lana&apos;s 0, 2 and 3, a structure with
+ *  length =3, lana[0]=0, lana[1]=2 and lana[2]=3 will be returned.
+ */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_LANA_ENUM"><div><div class="token cpp_type">_LANA_ENUM</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_LANA_ENUM::length"><div><div class="token cpp_field">length</div></div></div>;         <div class="token cpp_comment ">//  Number of valid entries in lana[]</div>
+<div class="expandable"><div class="disabled">    UCHAR   lana[MAX_LANA+1];</div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_LANA_ENUM::lana"><div><div class="token cpp_field">lana</div></div></div>[<div class="token cpp_number ">254</div>+<div class="token cpp_number ">1</div>];</div></div>
+} <div class="def" id="NI$LANA_ENUM"><div><div class="token cpp_type">LANA_ENUM</div></div></div>, *<div class="def" id="NI$PLANA_ENUM"><div><div class="token cpp_type">PLANA_ENUM</div></div></div>;
+
+<div class="token cpp_comment ">/*
+ *  Structure returned to the NCB command NCBFINDNAME is FIND_NAME_HEADER followed
+ *  by an array of FIND_NAME_BUFFER structures.
+ */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_FIND_NAME_HEADER"><div><div class="token cpp_type">_FIND_NAME_HEADER</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>    <div class="def" id="NI$_FIND_NAME_HEADER::node_count"><div><div class="token cpp_field">node_count</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_FIND_NAME_HEADER::reserved"><div><div class="token cpp_field">reserved</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_FIND_NAME_HEADER::unique_group"><div><div class="token cpp_field">unique_group</div></div></div>;
+} <div class="def" id="NI$FIND_NAME_HEADER"><div><div class="token cpp_type">FIND_NAME_HEADER</div></div></div>, *<div class="def" id="NI$PFIND_NAME_HEADER"><div><div class="token cpp_type">PFIND_NAME_HEADER</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_FIND_NAME_BUFFER"><div><div class="token cpp_type">_FIND_NAME_BUFFER</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_FIND_NAME_BUFFER::length"><div><div class="token cpp_field">length</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_FIND_NAME_BUFFER::access_control"><div><div class="token cpp_field">access_control</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_FIND_NAME_BUFFER::frame_control"><div><div class="token cpp_field">frame_control</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_FIND_NAME_BUFFER::destination_addr"><div><div class="token cpp_field">destination_addr</div></div></div>[<div class="token cpp_number ">6</div>];
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_FIND_NAME_BUFFER::source_addr"><div><div class="token cpp_field">source_addr</div></div></div>[<div class="token cpp_number ">6</div>];
+    <div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>   <div class="def" id="NI$_FIND_NAME_BUFFER::routing_info"><div><div class="token cpp_field">routing_info</div></div></div>[<div class="token cpp_number ">18</div>];
+} <div class="def" id="NI$FIND_NAME_BUFFER"><div><div class="token cpp_type">FIND_NAME_BUFFER</div></div></div>, *<div class="def" id="NI$PFIND_NAME_BUFFER"><div><div class="token cpp_type">PFIND_NAME_BUFFER</div></div></div>;
+
+<div class="token cpp_comment ">/*
+ *  Structure provided with NCBACTION. The purpose of NCBACTION is to provide
+ *  transport specific extensions to netbios.
+ */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$_ACTION_HEADER"><div><div class="token cpp_type">_ACTION_HEADER</div></div></div> {
+    <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div>   <div class="def" id="NI$_ACTION_HEADER::transport_id"><div><div class="token cpp_field">transport_id</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div>  <div class="def" id="NI$_ACTION_HEADER::action_code"><div><div class="token cpp_field">action_code</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['USHORT'], [], [])"><div class="token cpp_type">USHORT</div></div>  <div class="def" id="NI$_ACTION_HEADER::reserved"><div><div class="token cpp_field">reserved</div></div></div>;
+} <div class="def" id="NI$ACTION_HEADER"><div><div class="token cpp_type">ACTION_HEADER</div></div></div>, *<div class="def" id="NI$PACTION_HEADER"><div><div class="token cpp_type">PACTION_HEADER</div></div></div>;
+
+<div class="token cpp_comment ">//  Values for transport_id</div>
+
+<div class="disabled">#define ALL_TRANSPORTS  &quot;M\0\0\0&quot;</div>
+<div class="disabled">#define MS_NBF          &quot;MNBF&quot;</div>
+
+
+<div class="token cpp_comment ">/****************************************************************
+ *                                                              *
+ *              Special values and constants                    *
+ *                                                              *
+ ****************************************************************/</div>
+
+<div class="token cpp_comment ">/*
+ *      NCB Command codes
+ */</div>
+
+<div class="disabled">#define NCBCALL         0x10            /* NCB CALL                           */</div>
+<div class="disabled">#define NCBLISTEN       0x11            /* NCB LISTEN                         */</div>
+<div class="disabled">#define NCBHANGUP       0x12            /* NCB HANG UP                        */</div>
+<div class="disabled">#define NCBSEND         0x14            /* NCB SEND                           */</div>
+<div class="disabled">#define NCBRECV         0x15            /* NCB RECEIVE                        */</div>
+<div class="disabled">#define NCBRECVANY      0x16            /* NCB RECEIVE ANY                    */</div>
+<div class="disabled">#define NCBCHAINSEND    0x17            /* NCB CHAIN SEND                     */</div>
+<div class="disabled">#define NCBDGSEND       0x20            /* NCB SEND DATAGRAM                  */</div>
+<div class="disabled">#define NCBDGRECV       0x21            /* NCB RECEIVE DATAGRAM               */</div>
+<div class="disabled">#define NCBDGSENDBC     0x22            /* NCB SEND BROADCAST DATAGRAM        */</div>
+<div class="disabled">#define NCBDGRECVBC     0x23            /* NCB RECEIVE BROADCAST DATAGRAM     */</div>
+<div class="disabled">#define NCBADDNAME      0x30            /* NCB ADD NAME                       */</div>
+<div class="disabled">#define NCBDELNAME      0x31            /* NCB DELETE NAME                    */</div>
+<div class="disabled">#define NCBRESET        0x32            /* NCB RESET                          */</div>
+<div class="disabled">#define NCBASTAT        0x33            /* NCB ADAPTER STATUS                 */</div>
+<div class="disabled">#define NCBSSTAT        0x34            /* NCB SESSION STATUS                 */</div>
+<div class="disabled">#define NCBCANCEL       0x35            /* NCB CANCEL                         */</div>
+<div class="disabled">#define NCBADDGRNAME    0x36            /* NCB ADD GROUP NAME                 */</div>
+<div class="disabled">#define NCBENUM         0x37            /* NCB ENUMERATE LANA NUMBERS         */</div>
+<div class="disabled">#define NCBUNLINK       0x70            /* NCB UNLINK                         */</div>
+<div class="disabled">#define NCBSENDNA       0x71            /* NCB SEND NO ACK                    */</div>
+<div class="disabled">#define NCBCHAINSENDNA  0x72            /* NCB CHAIN SEND NO ACK              */</div>
+<div class="disabled">#define NCBLANSTALERT   0x73            /* NCB LAN STATUS ALERT               */</div>
+<div class="disabled">#define NCBACTION       0x77            /* NCB ACTION                         */</div>
+<div class="disabled">#define NCBFINDNAME     0x78            /* NCB FIND NAME                      */</div>
+<div class="disabled">#define NCBTRACE        0x79            /* NCB TRACE                          */</div>
+
+
+<div class="disabled">#define ASYNCH          0x80            /* high bit set == asynchronous       */</div>
+
+<div class="token cpp_comment ">/*
+ *      NCB Return codes
+ */</div>
+
+<div class="disabled">#define NRC_GOODRET     0x00    /* good return                                */</div>
+                                <div class="token cpp_comment ">/* also returned when ASYNCH request accepted */</div>
+<div class="disabled">#define NRC_BUFLEN      0x01    /* illegal buffer length                      */</div>
+<div class="disabled">#define NRC_ILLCMD      0x03    /* illegal command                            */</div>
+<div class="disabled">#define NRC_CMDTMO      0x05    /* command timed out                          */</div>
+<div class="disabled">#define NRC_INCOMP      0x06    /* message incomplete, issue another command  */</div>
+<div class="disabled">#define NRC_BADDR       0x07    /* illegal buffer address                     */</div>
+<div class="disabled">#define NRC_SNUMOUT     0x08    /* session number out of range                */</div>
+<div class="disabled">#define NRC_NORES       0x09    /* no resource available                      */</div>
+<div class="disabled">#define NRC_SCLOSED     0x0a    /* session closed                             */</div>
+<div class="disabled">#define NRC_CMDCAN      0x0b    /* command cancelled                          */</div>
+<div class="disabled">#define NRC_DUPNAME     0x0d    /* duplicate name                             */</div>
+<div class="disabled">#define NRC_NAMTFUL     0x0e    /* name table full                            */</div>
+<div class="disabled">#define NRC_ACTSES      0x0f    /* no deletions, name has active sessions     */</div>
+<div class="disabled">#define NRC_LOCTFUL     0x11    /* local session table full                   */</div>
+<div class="disabled">#define NRC_REMTFUL     0x12    /* remote session table full                  */</div>
+<div class="disabled">#define NRC_ILLNN       0x13    /* illegal name number                        */</div>
+<div class="disabled">#define NRC_NOCALL      0x14    /* no callname                                */</div>
+<div class="disabled">#define NRC_NOWILD      0x15    /* cannot put * in NCB_NAME                   */</div>
+<div class="disabled">#define NRC_INUSE       0x16    /* name in use on remote adapter              */</div>
+<div class="disabled">#define NRC_NAMERR      0x17    /* name deleted                               */</div>
+<div class="disabled">#define NRC_SABORT      0x18    /* session ended abnormally                   */</div>
+<div class="disabled">#define NRC_NAMCONF     0x19    /* name conflict detected                     */</div>
+<div class="disabled">#define NRC_IFBUSY      0x21    /* interface busy, IRET before retrying       */</div>
+<div class="disabled">#define NRC_TOOMANY     0x22    /* too many commands outstanding, retry later */</div>
+<div class="disabled">#define NRC_BRIDGE      0x23    /* ncb_lana_num field invalid                 */</div>
+<div class="disabled">#define NRC_CANOCCR     0x24    /* command completed while cancel occurring   */</div>
+<div class="disabled">#define NRC_CANCEL      0x26    /* command not valid to cancel                */</div>
+<div class="disabled">#define NRC_DUPENV      0x30    /* name defined by anther local process       */</div>
+<div class="disabled">#define NRC_ENVNOTDEF   0x34    /* environment undefined. RESET required      */</div>
+<div class="disabled">#define NRC_OSRESNOTAV  0x35    /* required OS resources exhausted            */</div>
+<div class="disabled">#define NRC_MAXAPPS     0x36    /* max number of applications exceeded        */</div>
+<div class="disabled">#define NRC_NOSAPS      0x37    /* no saps available for netbios              */</div>
+<div class="disabled">#define NRC_NORESOURCES 0x38    /* requested resources are not available      */</div>
+<div class="disabled">#define NRC_INVADDRESS  0x39    /* invalid ncb address or length &gt; segment    */</div>
+<div class="disabled">#define NRC_INVDDID     0x3B    /* invalid NCB DDID                           */</div>
+<div class="disabled">#define NRC_LOCKFAIL    0x3C    /* lock of user area failed                   */</div>
+<div class="disabled">#define NRC_OPENERR     0x3f    /* NETBIOS not loaded                         */</div>
+<div class="disabled">#define NRC_SYSTEM      0x40    /* system error                               */</div>
+
+<div class="disabled">#define NRC_PENDING     0xff    /* asynchronous command is not yet finished   */</div>
+
+<div class="token cpp_comment ">/****************************************************************
+ *                                                              *
+ *              main user entry point for NetBIOS 3.0           *
+ *                                                              *
+ * Usage: result = Netbios( pncb );                             *
+ ****************************************************************/</div>
+
+<div class="ref" onclick="jumpToSymbol([], ['UCHAR'], [], [])"><div class="token cpp_type">UCHAR</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$Netbios@::UCHAR(::PNCB)[decl0]"><div><div class="token cpp_function">Netbios</div></div></div>(
+    <div class="ref" onclick="jumpToSymbol([], ['PNCB'], [], [])"><div class="token cpp_type">PNCB</div></div> <div class="def" id="NI$Netbios@::UCHAR(::PNCB)[decl0]::pncb"><div>pncb</div></div>
+    );
+
+<div class="token cpp_comment ">/****************************************************************
+ *                                                              *
+ *              Prefix for callback routines                    *
+ *                                                              *
+ * Usage in a declaration: NCB_POST MyPostRoutine( PNCB pncb ); *
+ ****************************************************************/</div>
+
+<div class="disabled">#define NCB_POST void CALLBACK</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+<div class="disabled">#if _MSC_VER &gt;= 1200</div>
+#pragma warning(pop)
+<div class="disabled">#endif</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif /* NCB_INCLUDED */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'PNCB': {
+        'displayNameInHtml': '<span class="cpp_type">PNCB</span>',
+        'impls': [
+            'NI$PNCB'
+        ],
+        'decls': []
+    },
+    'PUCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">PUCHAR</span>',
+        'impls': [
+            'NI$PUCHAR'
+        ],
+        'decls': []
+    },
+    'UCHAR': {
+        'displayNameInHtml': '<span class="cpp_type">UCHAR</span>',
+        'impls': [
+            'NI$UCHAR'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    },
+    'USHORT': {
+        'displayNameInHtml': '<span class="cpp_type">USHORT</span>',
+        'impls': [
+            'NI$USHORT'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    },
+    '_NCB': {
+        'displayNameInHtml': '<span class="cpp_type">_NCB</span>',
+        'impls': [
+            'NI$_NCB'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PNCB': null,
+    'NI$PUCHAR': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$UCHAR': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$USHORT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$_NCB': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

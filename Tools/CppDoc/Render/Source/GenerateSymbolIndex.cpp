@@ -55,14 +55,29 @@ void SetUniqueId(Ptr<SymbolGroup> symbolGroup, WString id, SortedList<WString>& 
 	}
 }
 
-void GenerateSymbolGroupUniqueId(Ptr<SymbolGroup> symbolGroup, const WString& prefix, SortedList<WString>& ids)
+void GenerateSymbolGroupUniqueId(Ptr<SymbolGroup> symbolGroup, SymbolGroup* parentGroup, const WString& prefix, SortedList<WString>& ids)
 {
 	if (symbolGroup->children.Count() == 0) return;
 
 	Array<wchar_t> buffer(65);
 	memset(&buffer[0], 0, sizeof(wchar_t) * buffer.Count());
 
-	auto reference = symbolGroup->symbol ? symbolGroup->symbol->uniqueId : symbolGroup->name;
+	WString reference;
+	switch (symbolGroup->kind)
+	{
+	case SymbolGroupKind::Symbol:
+		reference = symbolGroup->symbol->uniqueId;
+		break;
+	case SymbolGroupKind::SymbolAndText:
+		reference = symbolGroup->name + L"!" + symbolGroup->symbol->uniqueId;
+		break;
+	case SymbolGroupKind::Text:
+		reference = symbolGroup->name + L"@" + parentGroup->symbol->uniqueId;
+		break;
+	default:
+		throw UnexpectedSymbolCategoryException();
+	}
+
 	for (vint i = 0; i < buffer.Count() - 1; i++)
 	{
 		if (i == reference.Length()) break;
@@ -81,7 +96,7 @@ void GenerateSymbolGroupUniqueId(Ptr<SymbolGroup> symbolGroup, const WString& pr
 
 	for (vint i = 0; i < symbolGroup->children.Count(); i++)
 	{
-		GenerateSymbolGroupUniqueId(symbolGroup->children[i], prefix, ids);
+		GenerateSymbolGroupUniqueId(symbolGroup->children[i], symbolGroup.Obj(), prefix, ids);
 	}
 }
 
@@ -486,39 +501,41 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 
 			for (vint j = 0; j < fileGroup->children.Count(); j++)
 			{
-				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup->uniqueId, ids);
+				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup.Obj(), fileGroup->uniqueId, ids);
 			}
 		}
 	}
 
-	FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
-	Utf8Encoder encoder;
-	EncoderStream encoderStream(fileStream, encoder);
-	StreamWriter writer(encoderStream);
-
-	writer.WriteLine(L"<!DOCTYPE html>");
-	writer.WriteLine(L"<html>");
-	writer.WriteLine(L"<head>");
-	writer.WriteLine(L"    <title>Symbol Index</title>");
-	writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
-	writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
-	writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
-	writer.WriteLine(L"</head>");
-	writer.WriteLine(L"<body>");
-	writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
-	writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
-	writer.WriteLine(L"<br>");
-	writer.WriteLine(L"<br>");
-	writer.WriteString(L"<div class=\"cpp_default\"><div class=\"symbol_root\">");
-
-	FilePath fragmentFolder = pathHtml.GetFolder() / L"SymbolIndexFragments";
-	if (!Folder(fragmentFolder).Exists())
 	{
-		Folder(fragmentFolder).Create(true);
-	}
-	RenderSymbolGroup(global, writer, rootGroup, fragmentFolder);
+		FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
+		Utf8Encoder encoder;
+		EncoderStream encoderStream(fileStream, encoder);
+		StreamWriter writer(encoderStream);
 
-	writer.WriteLine(L"</div></div>");
-	writer.WriteLine(L"</body>");
-	writer.WriteLine(L"</html>");
+		writer.WriteLine(L"<!DOCTYPE html>");
+		writer.WriteLine(L"<html>");
+		writer.WriteLine(L"<head>");
+		writer.WriteLine(L"    <title>Symbol Index</title>");
+		writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
+		writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
+		writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
+		writer.WriteLine(L"</head>");
+		writer.WriteLine(L"<body>");
+		writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
+		writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
+		writer.WriteLine(L"<br>");
+		writer.WriteLine(L"<br>");
+		writer.WriteString(L"<div class=\"cpp_default\"><div class=\"symbol_root\">");
+
+		FilePath fragmentFolder = pathHtml.GetFolder() / L"SymbolIndexFragments";
+		if (!Folder(fragmentFolder).Exists())
+		{
+			Folder(fragmentFolder).Create(true);
+		}
+		RenderSymbolGroup(global, writer, rootGroup, fragmentFolder);
+
+		writer.WriteLine(L"</div></div>");
+		writer.WriteLine(L"</body>");
+		writer.WriteLine(L"</html>");
+	}
 }

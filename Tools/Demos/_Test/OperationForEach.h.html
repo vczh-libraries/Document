@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OperationForEach.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="expandable"><div class="disabled">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Data Structure::Operations
+
+In order to let a container support FOREACH and FOREACH_INDEXER：
+	Implement a global function overloading: IteratorType vl::collections::CreateForEachIterator(const CollectionType&amp; collection);
+	CollectionType is the container type
+	IteratorType should inherit from ForEachIterator&lt;T&gt;
+***********************************************************************/</div>
+<div class="expanded"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Data Structure::Operations
+
+In order to let a container support FOREACH and FOREACH_INDEXER锛?
+	Implement a global function overloading: IteratorType vl::collections::CreateForEachIterator(const CollectionType&amp; collection);
+	CollectionType is the container type
+	IteratorType should inherit from ForEachIterator&lt;T&gt;
+***********************************************************************/</div></div></div>
+
+<div class="disabled">#ifndef VCZH_COLLECTIONS_FOREACH</div>
+<div class="disabled">#define VCZH_COLLECTIONS_FOREACH</div>
+<div class="disabled">#include &quot;../Basic.h&quot;</div>
+<div class="disabled">#include &quot;../Pointer.h&quot;</div>
+<div class="disabled">#include &quot;Interfaces.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[16]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[7]$vl::collections"><div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div></div>
+	{
+
+<div class="token cpp_comment ">/***********************************************************************
+ForEachIterator
+***********************************************************************/</div>
+
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::ForEachIterator::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::ForEachIterator"><div><div class="token cpp_type">ForEachIterator</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+		{
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>				<div class="def" id="FB$vl::collections::ForEachIterator::Next@bool([T] &)[decl0]"><div><div class="token cpp_function">Next</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::collections::ForEachIterator::Next@bool([T] &)[decl0]::variable"><div>variable</div></div>)<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+
+			<div class="def" id="FB$vl::collections::ForEachIterator::$__type@bool()[impl0]"><div><div class="token cpp_keyword ">operator</div></div></div> <div class="token cpp_keyword ">bool</div>()<div class="token cpp_keyword ">const</div>
+			{
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+			}
+		};
+
+<div class="token cpp_comment ">/***********************************************************************
+ForEachIterator for IEnumerable
+***********************************************************************/</div>
+
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::EnumerableForEachIterator::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::EnumerableForEachIterator"><div><div class="token cpp_type">EnumerableForEachIterator</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator'], [], [])"><div class="token cpp_type">ForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;
+		{
+		<div class="token cpp_keyword ">protected</div>:
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt;			<div class="def" id="NI$vl::collections::EnumerableForEachIterator::enumerator"><div><div class="token cpp_field">enumerator</div></div></div>;
+		<div class="token cpp_keyword ">public</div>:
+			<div class="def" id="FB$vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">EnumerableForEachIterator</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable"><div><div class="token cpp_argument">enumerable</div></div></div>)
+				:enumerator(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable'], [], [])"><div class="token cpp_argument">enumerable</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">CreateEnumerator</div></div>())
+			{
+			}
+
+			<div class="def" id="FB$vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::EnumerableForEachIterator<[T]> const &)[impl0]"><div><div class="token cpp_function">EnumerableForEachIterator</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator'], [], [])"><div class="token cpp_type">EnumerableForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::EnumerableForEachIterator<[T]> const &)[impl0]::enumerableIterator"><div><div class="token cpp_argument">enumerableIterator</div></div></div>)
+				:enumerator(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::EnumerableForEachIterator<[T]> const &)[impl0]::enumerableIterator'], [], [])"><div class="token cpp_argument">enumerableIterator</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div>)
+			{
+			}
+
+			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::EnumerableForEachIterator::Next@bool([T] &)[impl0]"><div><div class="token cpp_function">Next</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::collections::EnumerableForEachIterator::Next@bool([T] &)[impl0]::variable"><div><div class="token cpp_argument">variable</div></div></div>)<div class="token cpp_keyword ">const</div>
+			{
+				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Next@bool()'], ['vl::collections::IEnumerator::Next@bool()'], [], [])"><div class="token cpp_function">Next</div></div>())
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::Next@bool([T] &)[impl0]::variable'], [], [])"><div class="token cpp_argument">variable</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator::enumerator'], [], [])"><div class="token cpp_field">enumerator</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Current@[T] const &()'], ['vl::collections::IEnumerator::Current@[T] const &()'], [], [])"><div class="token cpp_function">Current</div></div>();
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+				}
+				<div class="token cpp_keyword ">else</div>
+				{
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+				}
+			}
+		};
+
+		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::EnumerableForEachIterator'], [], [])"><div class="token cpp_type">EnumerableForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">CreateForEachIterator</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable"><div><div class="token cpp_argument">enumerable</div></div></div>)
+		{
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable'], [], [])"><div class="token cpp_argument">enumerable</div></div>;
+		}
+
+<div class="token cpp_comment ">/***********************************************************************
+FOREACH and FOREACH_INDEXER
+***********************************************************************/</div>
+
+<div class="disabled">#define FOREACH(TYPE, VARIABLE, COLLECTION)\</div>
+<div class="disabled">		SCOPE_VARIABLE(const ::vl::collections::ForEachIterator&lt;TYPE&gt;&amp;, __foreach_iterator__, ::vl::collections::CreateForEachIterator(COLLECTION))\</div>
+<div class="disabled">		for(TYPE VARIABLE;__foreach_iterator__.Next(VARIABLE);)</div>
+
+<div class="disabled">#define FOREACH_INDEXER(TYPE, VARIABLE, INDEXER, COLLECTION)\</div>
+<div class="disabled">		SCOPE_VARIABLE(const ::vl::collections::ForEachIterator&lt;TYPE&gt;&amp;, __foreach_iterator__, ::vl::collections::CreateForEachIterator(COLLECTION))\</div>
+<div class="disabled">		SCOPE_VARIABLE(vint, INDEXER, 0)\</div>
+<div class="disabled">		for(TYPE VARIABLE;__foreach_iterator__.Next(VARIABLE);INDEXER++)</div>
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator ->@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator -&gt;</span>()',
+        'impls': [
+            'FB$vl::Ptr::operator ->@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections'
+        ]
+    },
+    'vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T'
+        ],
+        'decls': []
+    },
+    'vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable': {
+        'displayNameInHtml': 'enumerable',
+        'impls': [
+            'NI$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable'
+        ],
+        'decls': []
+    },
+    'vl::collections::EnumerableForEachIterator': {
+        'displayNameInHtml': '<span class="cpp_type">EnumerableForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::EnumerableForEachIterator'
+        ],
+        'decls': []
+    },
+    'vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::EnumerableForEachIterator<[T]> const &)[impl0]::enumerableIterator': {
+        'displayNameInHtml': 'enumerableIterator',
+        'impls': [
+            'NI$vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::EnumerableForEachIterator<[T]> const &)[impl0]::enumerableIterator'
+        ],
+        'decls': []
+    },
+    'vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable': {
+        'displayNameInHtml': 'enumerable',
+        'impls': [
+            'NI$vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable'
+        ],
+        'decls': []
+    },
+    'vl::collections::EnumerableForEachIterator::Next@bool([T] &)[impl0]::variable': {
+        'displayNameInHtml': 'variable',
+        'impls': [
+            'NI$vl::collections::EnumerableForEachIterator::Next@bool([T] &)[impl0]::variable'
+        ],
+        'decls': []
+    },
+    'vl::collections::EnumerableForEachIterator::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::collections::EnumerableForEachIterator::T'
+        ],
+        'decls': []
+    },
+    'vl::collections::EnumerableForEachIterator::enumerator': {
+        'displayNameInHtml': '<span class="cpp_type">EnumerableForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">enumerator</span>',
+        'impls': [
+            'NI$vl::collections::EnumerableForEachIterator::enumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::ForEachIterator': {
+        'displayNameInHtml': '<span class="cpp_type">ForEachIterator</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::ForEachIterator'
+        ],
+        'decls': []
+    },
+    'vl::collections::ForEachIterator::T': {
+        'displayNameInHtml': '<span class="cpp_type">T</span>',
+        'impls': [
+            'TA$vl::collections::ForEachIterator::T'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerable': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerable</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::IEnumerable'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerable</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">CreateEnumerator</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::IEnumerator'
+        ],
+        'decls': []
+    },
+    'vl::collections::IEnumerator::Current@[T] const &()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Current</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]'
+        ]
+    },
+    'vl::collections::IEnumerator::Next@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">IEnumerator</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Next</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::collections::IEnumerator::Next@bool()[decl0]'
+        ]
+    }
+};
+symbolToFiles = {
+    'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'FB$vl::collections::IEnumerator::Next@bool()[decl0]': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': null,
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'Basic.cpp', 'displayName': 'Basic.cpp' },
+    'NF[28]$vl': { 'htmlFileName': 'Console.cpp', 'displayName': 'Console.cpp' },
+    'NF[29]$vl': { 'htmlFileName': 'Exception.cpp', 'displayName': 'Exception.cpp' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[30]$vl': { 'htmlFileName': 'GlobalStorage.cpp', 'displayName': 'GlobalStorage.cpp' },
+    'NF[31]$vl': { 'htmlFileName': 'String.cpp', 'displayName': 'String.cpp' },
+    'NF[32]$vl': { 'htmlFileName': 'PartialOrdering.cpp', 'displayName': 'PartialOrdering.cpp' },
+    'NF[33]$vl': { 'htmlFileName': 'UnitTest.cpp', 'displayName': 'UnitTest.cpp' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': null,
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable': null,
+    'NI$vl::collections::EnumerableForEachIterator': null,
+    'NI$vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::EnumerableForEachIterator<[T]> const &)[impl0]::enumerableIterator': null,
+    'NI$vl::collections::EnumerableForEachIterator::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable': null,
+    'NI$vl::collections::EnumerableForEachIterator::Next@bool([T] &)[impl0]::variable': null,
+    'NI$vl::collections::EnumerableForEachIterator::enumerator': null,
+    'NI$vl::collections::ForEachIterator': null,
+    'NI$vl::collections::IEnumerable': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NI$vl::collections::IEnumerator': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'TA$vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T': null,
+    'TA$vl::collections::EnumerableForEachIterator::T': null,
+    'TA$vl::collections::ForEachIterator::T': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>namedpipeapi.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/********************************************************************************
+*                                                                               *
+* namedpipeapi.h - ApiSet Contract for api-ms-win-core-namedpipe-l1-1-0         *
+*                                                                               *
+* Copyright (c) Microsoft Corporation. All rights reserved.                     *
+*                                                                               *
+********************************************************************************/</div>
+
+<div class="disabled">#ifdef _MSC_VER</div>
+#pragma once
+<div class="disabled">#endif // _MSC_VER</div>
+
+<div class="disabled">#ifndef _NAMEDPIPE_H_</div>
+<div class="disabled">#define _NAMEDPIPE_H_</div>
+
+<div class="disabled">#include &lt;apiset.h&gt;</div>
+<div class="disabled">#include &lt;apisetcconv.h&gt;</div>
+<div class="disabled">#include &lt;minwindef.h&gt;</div>
+<div class="disabled">#include &lt;minwinbase.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CreatePipe@::BOOL(::PHANDLE, ::PHANDLE, ::LPSECURITY_ATTRIBUTES, ::DWORD)[decl0]"><div><div class="token cpp_function">CreatePipe</div></div></div>(
+<div class="expandable"><div class="disabled">    _Out_ PHANDLE hReadPipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PHANDLE'], [], [])"><div class="token cpp_type">PHANDLE</div></div> <div class="def" id="NI$CreatePipe@::BOOL(::PHANDLE, ::PHANDLE, ::LPSECURITY_ATTRIBUTES, ::DWORD)[decl0]::hReadPipe"><div>hReadPipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ PHANDLE hWritePipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['PHANDLE'], [], [])"><div class="token cpp_type">PHANDLE</div></div> <div class="def" id="NI$CreatePipe@::BOOL(::PHANDLE, ::PHANDLE, ::LPSECURITY_ATTRIBUTES, ::DWORD)[decl0]::hWritePipe"><div>hWritePipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPSECURITY_ATTRIBUTES lpPipeAttributes,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSECURITY_ATTRIBUTES'], [], [])"><div class="token cpp_type">LPSECURITY_ATTRIBUTES</div></div> <div class="def" id="NI$CreatePipe@::BOOL(::PHANDLE, ::PHANDLE, ::LPSECURITY_ATTRIBUTES, ::DWORD)[decl0]::lpPipeAttributes"><div>lpPipeAttributes</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreatePipe@::BOOL(::PHANDLE, ::PHANDLE, ::LPSECURITY_ATTRIBUTES, ::DWORD)[decl0]::nSize"><div>nSize</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ConnectNamedPipe@::BOOL(::HANDLE, ::LPOVERLAPPED)[decl0]"><div><div class="token cpp_function">ConnectNamedPipe</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hNamedPipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$ConnectNamedPipe@::BOOL(::HANDLE, ::LPOVERLAPPED)[decl0]::hNamedPipe"><div>hNamedPipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_opt_ LPOVERLAPPED lpOverlapped</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPOVERLAPPED'], [], [])"><div class="token cpp_type">LPOVERLAPPED</div></div> <div class="def" id="NI$ConnectNamedPipe@::BOOL(::HANDLE, ::LPOVERLAPPED)[decl0]::lpOverlapped"><div>lpOverlapped</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$DisconnectNamedPipe@::BOOL(::HANDLE)[decl0]"><div><div class="token cpp_function">DisconnectNamedPipe</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hNamedPipe</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$DisconnectNamedPipe@::BOOL(::HANDLE)[decl0]::hNamedPipe"><div>hNamedPipe</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$SetNamedPipeHandleState@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">SetNamedPipeHandleState</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hNamedPipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$SetNamedPipeHandleState@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::hNamedPipe"><div>hNamedPipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPDWORD lpMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$SetNamedPipeHandleState@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpMode"><div>lpMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPDWORD lpMaxCollectionCount,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$SetNamedPipeHandleState@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpMaxCollectionCount"><div>lpMaxCollectionCount</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPDWORD lpCollectDataTimeout</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$SetNamedPipeHandleState@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpCollectDataTimeout"><div>lpCollectDataTimeout</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$PeekNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">PeekNamedPipe</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hNamedPipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$PeekNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::hNamedPipe"><div>hNamedPipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_opt_(nBufferSize,*lpBytesRead) LPVOID lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$PeekNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$PeekNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::nBufferSize"><div>nBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpBytesRead,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$PeekNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpBytesRead"><div>lpBytesRead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpTotalBytesAvail,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$PeekNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpTotalBytesAvail"><div>lpTotalBytesAvail</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpBytesLeftThisMessage</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$PeekNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpBytesLeftThisMessage"><div>lpBytesLeftThisMessage</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$TransactNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::LPOVERLAPPED)[decl0]"><div><div class="token cpp_function">TransactNamedPipe</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hNamedPipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$TransactNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::LPOVERLAPPED)[decl0]::hNamedPipe"><div>hNamedPipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_opt_(nInBufferSize) LPVOID lpInBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$TransactNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::LPOVERLAPPED)[decl0]::lpInBuffer"><div>lpInBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nInBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$TransactNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::LPOVERLAPPED)[decl0]::nInBufferSize"><div>nInBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_opt_(nOutBufferSize,*lpBytesRead) LPVOID lpOutBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$TransactNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::LPOVERLAPPED)[decl0]::lpOutBuffer"><div>lpOutBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nOutBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$TransactNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::LPOVERLAPPED)[decl0]::nOutBufferSize"><div>nOutBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD lpBytesRead,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$TransactNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::LPOVERLAPPED)[decl0]::lpBytesRead"><div>lpBytesRead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_opt_ LPOVERLAPPED lpOverlapped</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPOVERLAPPED'], [], [])"><div class="token cpp_type">LPOVERLAPPED</div></div> <div class="def" id="NI$TransactNamedPipe@::BOOL(::HANDLE, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::LPOVERLAPPED)[decl0]::lpOverlapped"><div>lpOverlapped</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]"><div><div class="token cpp_function">CreateNamedPipeW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]::lpName"><div>lpName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwOpenMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]::dwOpenMode"><div>dwOpenMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD dwPipeMode,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]::dwPipeMode"><div>dwPipeMode</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nMaxInstances,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]::nMaxInstances"><div>nMaxInstances</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nOutBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]::nOutBufferSize"><div>nOutBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nInBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]::nInBufferSize"><div>nInBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nDefaultTimeOut,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]::nDefaultTimeOut"><div>nDefaultTimeOut</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_opt_ LPSECURITY_ATTRIBUTES lpSecurityAttributes</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSECURITY_ATTRIBUTES'], [], [])"><div class="token cpp_type">LPSECURITY_ATTRIBUTES</div></div> <div class="def" id="NI$CreateNamedPipeW@::HANDLE(::LPCWSTR, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::DWORD, ::LPSECURITY_ATTRIBUTES)[decl0]::lpSecurityAttributes"><div>lpSecurityAttributes</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define CreateNamedPipe  CreateNamedPipeW
+#endif</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$WaitNamedPipeW@::BOOL(::LPCWSTR, ::DWORD)[decl0]"><div><div class="token cpp_function">WaitNamedPipeW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpNamedPipeName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$WaitNamedPipeW@::BOOL(::LPCWSTR, ::DWORD)[decl0]::lpNamedPipeName"><div>lpNamedPipeName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nTimeOut</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$WaitNamedPipeW@::BOOL(::LPCWSTR, ::DWORD)[decl0]::nTimeOut"><div>nTimeOut</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define WaitNamedPipe  WaitNamedPipeW
+#endif</div>
+
+<div class="disabled">#if (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetNamedPipeClientComputerNameW@::BOOL(::HANDLE, ::LPWSTR, ::ULONG)[decl0]"><div><div class="token cpp_function">GetNamedPipeClientComputerNameW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE Pipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetNamedPipeClientComputerNameW@::BOOL(::HANDLE, ::LPWSTR, ::ULONG)[decl0]::Pipe"><div>Pipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_(ClientComputerNameLength) LPWSTR ClientComputerName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetNamedPipeClientComputerNameW@::BOOL(::HANDLE, ::LPWSTR, ::ULONG)[decl0]::ClientComputerName"><div>ClientComputerName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ ULONG ClientComputerNameLength</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['ULONG'], [], [])"><div class="token cpp_type">ULONG</div></div> <div class="def" id="NI$GetNamedPipeClientComputerNameW@::BOOL(::HANDLE, ::LPWSTR, ::ULONG)[decl0]::ClientComputerNameLength"><div>ClientComputerNameLength</div></div></div></div>
+    );
+
+
+<div class="disabled">#endif // (_WIN32_WINNT &gt;= 0x0600)</div>
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetNamedPipeClientComputerName  GetNamedPipeClientComputerNameW
+#endif</div>
+
+<div class="expandable"><div class="disabled">WINADVAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="disabled">_Must_inspect_result_</div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$ImpersonateNamedPipeClient@::BOOL(::HANDLE)[decl0]"><div><div class="token cpp_function">ImpersonateNamedPipeClient</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hNamedPipe</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$ImpersonateNamedPipeClient@::BOOL(::HANDLE)[decl0]::hNamedPipe"><div>hNamedPipe</div></div></div></div>
+    );
+                               
+
+<div class="disabled">#endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetNamedPipeInfo@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]"><div><div class="token cpp_function">GetNamedPipeInfo</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hNamedPipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetNamedPipeInfo@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::hNamedPipe"><div>hNamedPipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpFlags,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNamedPipeInfo@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpFlags"><div>lpFlags</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpOutBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNamedPipeInfo@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpOutBufferSize"><div>lpOutBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpInBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNamedPipeInfo@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpInBufferSize"><div>lpInBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpMaxInstances</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNamedPipeInfo@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD)[decl0]::lpMaxInstances"><div>lpMaxInstances</div></div></div></div>
+    );
+
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetNamedPipeHandleStateW@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPWSTR, ::DWORD)[decl0]"><div><div class="token cpp_function">GetNamedPipeHandleStateW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ HANDLE hNamedPipe,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['HANDLE'], [], [])"><div class="token cpp_type">HANDLE</div></div> <div class="def" id="NI$GetNamedPipeHandleStateW@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPWSTR, ::DWORD)[decl0]::hNamedPipe"><div>hNamedPipe</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpState,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNamedPipeHandleStateW@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPWSTR, ::DWORD)[decl0]::lpState"><div>lpState</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpCurInstances,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNamedPipeHandleStateW@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPWSTR, ::DWORD)[decl0]::lpCurInstances"><div>lpCurInstances</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpMaxCollectionCount,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNamedPipeHandleStateW@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPWSTR, ::DWORD)[decl0]::lpMaxCollectionCount"><div>lpMaxCollectionCount</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_opt_ LPDWORD lpCollectDataTimeout,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$GetNamedPipeHandleStateW@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPWSTR, ::DWORD)[decl0]::lpCollectDataTimeout"><div>lpCollectDataTimeout</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_opt_(nMaxUserNameSize) LPWSTR lpUserName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetNamedPipeHandleStateW@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPWSTR, ::DWORD)[decl0]::lpUserName"><div>lpUserName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nMaxUserNameSize</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$GetNamedPipeHandleStateW@::BOOL(::HANDLE, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPDWORD, ::LPWSTR, ::DWORD)[decl0]::nMaxUserNameSize"><div>nMaxUserNameSize</div></div></div></div>
+    );
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetNamedPipeHandleState  GetNamedPipeHandleStateW
+#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+#pragma region Application Family or OneCore Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)</div>
+
+<div class="expandable"><div class="disabled">WINBASEAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport)</div></div>
+<div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div>
+<div class="expandable"><div class="disabled">WINAPI</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CallNamedPipeW@::BOOL(::LPCWSTR, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::DWORD)[decl0]"><div><div class="token cpp_function">CallNamedPipeW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPCWSTR lpNamedPipeName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPCWSTR'], [], [])"><div class="token cpp_type">LPCWSTR</div></div> <div class="def" id="NI$CallNamedPipeW@::BOOL(::LPCWSTR, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::DWORD)[decl0]::lpNamedPipeName"><div>lpNamedPipeName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_reads_bytes_opt_(nInBufferSize) LPVOID lpInBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$CallNamedPipeW@::BOOL(::LPCWSTR, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::DWORD)[decl0]::lpInBuffer"><div>lpInBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nInBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CallNamedPipeW@::BOOL(::LPCWSTR, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::DWORD)[decl0]::nInBufferSize"><div>nInBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_opt_(nOutBufferSize,*lpBytesRead) LPVOID lpOutBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPVOID'], [], [])"><div class="token cpp_type">LPVOID</div></div> <div class="def" id="NI$CallNamedPipeW@::BOOL(::LPCWSTR, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::DWORD)[decl0]::lpOutBuffer"><div>lpOutBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nOutBufferSize,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CallNamedPipeW@::BOOL(::LPCWSTR, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::DWORD)[decl0]::nOutBufferSize"><div>nOutBufferSize</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_ LPDWORD lpBytesRead,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPDWORD'], [], [])"><div class="token cpp_type">LPDWORD</div></div> <div class="def" id="NI$CallNamedPipeW@::BOOL(::LPCWSTR, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::DWORD)[decl0]::lpBytesRead"><div>lpBytesRead</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ DWORD nTimeOut</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$CallNamedPipeW@::BOOL(::LPCWSTR, ::LPVOID, ::DWORD, ::LPVOID, ::DWORD, ::LPDWORD, ::DWORD)[decl0]::nTimeOut"><div>nTimeOut</div></div></div></div>
+    );
+
+
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define CallNamedPipe  CallNamedPipeW
+#endif</div>
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // _NAMEDPIPE_H_</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'BOOL': {
+        'displayNameInHtml': '<span class="cpp_type">BOOL</span>',
+        'impls': [
+            'NI$BOOL'
+        ],
+        'decls': []
+    },
+    'DWORD': {
+        'displayNameInHtml': '<span class="cpp_type">DWORD</span>',
+        'impls': [
+            'NI$DWORD'
+        ],
+        'decls': []
+    },
+    'HANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">HANDLE</span>',
+        'impls': [
+            'NI$HANDLE'
+        ],
+        'decls': []
+    },
+    'LPCWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPCWSTR</span>',
+        'impls': [
+            'NI$LPCWSTR'
+        ],
+        'decls': []
+    },
+    'LPDWORD': {
+        'displayNameInHtml': '<span class="cpp_type">LPDWORD</span>',
+        'impls': [
+            'NI$LPDWORD'
+        ],
+        'decls': []
+    },
+    'LPOVERLAPPED': {
+        'displayNameInHtml': '<span class="cpp_type">LPOVERLAPPED</span>',
+        'impls': [
+            'NI$LPOVERLAPPED'
+        ],
+        'decls': []
+    },
+    'LPSECURITY_ATTRIBUTES': {
+        'displayNameInHtml': '<span class="cpp_type">LPSECURITY_ATTRIBUTES</span>',
+        'impls': [
+            'NI$LPSECURITY_ATTRIBUTES'
+        ],
+        'decls': []
+    },
+    'LPVOID': {
+        'displayNameInHtml': '<span class="cpp_type">LPVOID</span>',
+        'impls': [
+            'NI$LPVOID'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'PHANDLE': {
+        'displayNameInHtml': '<span class="cpp_type">PHANDLE</span>',
+        'impls': [
+            'NI$PHANDLE'
+        ],
+        'decls': []
+    },
+    'ULONG': {
+        'displayNameInHtml': '<span class="cpp_type">ULONG</span>',
+        'impls': [
+            'NI$ULONG'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$BOOL': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$DWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$HANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPCWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPDWORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPOVERLAPPED': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$LPSECURITY_ATTRIBUTES': { 'htmlFileName': 'minwinbase.h', 'displayName': 'minwinbase.h' },
+    'NI$LPVOID': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$PHANDLE': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$ULONG': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

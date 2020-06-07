@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>lzexpand.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/*++
+
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Module Name:
+
+    lzexpand.h
+
+Abstract:
+
+    Public interface to LZEXP?.LIB.
+
+Author:
+
+
+Revision History:
+
+--*/</div>
+
+<div class="disabled">#ifndef _LZEXPAND_</div>
+<div class="disabled">#define _LZEXPAND_</div>
+
+<div class="disabled">#include &lt;winapifamily.h&gt;</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif</div>
+
+#pragma region Desktop Family
+<div class="disabled">#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)</div>
+
+<div class="token cpp_comment ">/*
+** Error Return Codes
+*/</div>
+
+<div class="disabled">#define LZERROR_BADINHANDLE   (-1)  /* invalid input handle */</div>
+<div class="disabled">#define LZERROR_BADOUTHANDLE  (-2)  /* invalid output handle */</div>
+<div class="disabled">#define LZERROR_READ          (-3)  /* corrupt compressed file format */</div>
+<div class="disabled">#define LZERROR_WRITE         (-4)  /* out of space for output file */</div>
+<div class="disabled">#define LZERROR_GLOBALLOC     (-5)  /* insufficient memory for LZFile struct */</div>
+<div class="disabled">#define LZERROR_GLOBLOCK      (-6)  /* bad global handle */</div>
+<div class="disabled">#define LZERROR_BADVALUE      (-7)  /* input parameter out of acceptable range*/</div>
+<div class="disabled">#define LZERROR_UNKNOWNALG    (-8)  /* compression algorithm not recognized */</div>
+
+
+<div class="token cpp_comment ">/*
+** Prototypes
+*/</div>
+
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZStart@::INT()[decl0]"><div><div class="token cpp_function">LZStart</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZDone@void()[decl0]"><div><div class="token cpp_function">LZDone</div></div></div>(
+<div class="expandable"><div class="disabled">    VOID</div>
+<div class="expanded">    <div class="token cpp_keyword ">void</div></div></div>
+    );
+
+
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$CopyLZFile@::LONG(::INT, ::INT)[decl0]"><div><div class="token cpp_function">CopyLZFile</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ INT hfSource,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$CopyLZFile@::LONG(::INT, ::INT)[decl0]::hfSource"><div>hfSource</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ INT hfDest</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$CopyLZFile@::LONG(::INT, ::INT)[decl0]::hfDest"><div>hfDest</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZCopy@::LONG(::INT, ::INT)[decl0]"><div><div class="token cpp_function">LZCopy</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ INT hfSource,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$LZCopy@::LONG(::INT, ::INT)[decl0]::hfSource"><div>hfSource</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ INT hfDest</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$LZCopy@::LONG(::INT, ::INT)[decl0]::hfDest"><div>hfDest</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZInit@::INT(::INT)[decl0]"><div><div class="token cpp_function">LZInit</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ INT hfSource</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$LZInit@::INT(::INT)[decl0]::hfSource"><div>hfSource</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetExpandedNameA@::INT(::LPSTR, ::LPSTR)[decl0]"><div><div class="token cpp_function">GetExpandedNameA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPSTR lpszSource,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetExpandedNameA@::INT(::LPSTR, ::LPSTR)[decl0]::lpszSource"><div>lpszSource</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_(MAX_PATH) LPSTR lpszBuffer</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$GetExpandedNameA@::INT(::LPSTR, ::LPSTR)[decl0]::lpszBuffer"><div>lpszBuffer</div></div></div></div>
+    );
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$GetExpandedNameW@::INT(::LPWSTR, ::LPWSTR)[decl0]"><div><div class="token cpp_function">GetExpandedNameW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPWSTR lpszSource,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetExpandedNameW@::INT(::LPWSTR, ::LPWSTR)[decl0]::lpszSource"><div>lpszSource</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_(MAX_PATH) LPWSTR lpszBuffer</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$GetExpandedNameW@::INT(::LPWSTR, ::LPWSTR)[decl0]::lpszBuffer"><div>lpszBuffer</div></div></div></div>
+    );
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define GetExpandedName  GetExpandedNameW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define GetExpandedName  GetExpandedNameA
+#endif // !UNICODE</div>
+
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZOpenFileA@::INT(::LPSTR, ::LPOFSTRUCT, ::WORD)[decl0]"><div><div class="token cpp_function">LZOpenFileA</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPSTR lpFileName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$LZOpenFileA@::INT(::LPSTR, ::LPOFSTRUCT, ::WORD)[decl0]::lpFileName"><div>lpFileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ LPOFSTRUCT lpReOpenBuf,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPOFSTRUCT'], [], [])"><div class="token cpp_type">LPOFSTRUCT</div></div> <div class="def" id="NI$LZOpenFileA@::INT(::LPSTR, ::LPOFSTRUCT, ::WORD)[decl0]::lpReOpenBuf"><div>lpReOpenBuf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ WORD wStyle</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$LZOpenFileA@::INT(::LPSTR, ::LPOFSTRUCT, ::WORD)[decl0]::wStyle"><div>wStyle</div></div></div></div>
+    );
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZOpenFileW@::INT(::LPWSTR, ::LPOFSTRUCT, ::WORD)[decl0]"><div><div class="token cpp_function">LZOpenFileW</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ LPWSTR lpFileName,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$LZOpenFileW@::INT(::LPWSTR, ::LPOFSTRUCT, ::WORD)[decl0]::lpFileName"><div>lpFileName</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Inout_ LPOFSTRUCT lpReOpenBuf,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LPOFSTRUCT'], [], [])"><div class="token cpp_type">LPOFSTRUCT</div></div> <div class="def" id="NI$LZOpenFileW@::INT(::LPWSTR, ::LPOFSTRUCT, ::WORD)[decl0]::lpReOpenBuf"><div>lpReOpenBuf</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ WORD wStyle</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$LZOpenFileW@::INT(::LPWSTR, ::LPOFSTRUCT, ::WORD)[decl0]::wStyle"><div>wStyle</div></div></div></div>
+    );
+<div class="disabled">#ifdef UNICODE</div>
+<div class="disabled">#define LZOpenFile  LZOpenFileW</div>
+<div class="disabled">#else</div>
+<div class="disabled">#define LZOpenFile  LZOpenFileA
+#endif // !UNICODE</div>
+
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZSeek@::LONG(::INT, ::LONG, ::INT)[decl0]"><div><div class="token cpp_function">LZSeek</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ INT hFile,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$LZSeek@::LONG(::INT, ::LONG, ::INT)[decl0]::hFile"><div>hFile</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ LONG lOffset,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['LONG'], [], [])"><div class="token cpp_type">LONG</div></div> <div class="def" id="NI$LZSeek@::LONG(::INT, ::LONG, ::INT)[decl0]::lOffset"><div>lOffset</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ INT iOrigin</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$LZSeek@::LONG(::INT, ::LONG, ::INT)[decl0]::iOrigin"><div>iOrigin</div></div></div></div>
+    );
+
+<div class="disabled">_Success_(return &gt;= 0)</div>
+<div class="disabled">_Check_return_</div>
+<div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZRead@::INT(::INT, ::CHAR *, ::INT)[decl0]"><div><div class="token cpp_function">LZRead</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ INT hFile,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$LZRead@::INT(::INT, ::CHAR *, ::INT)[decl0]::hFile"><div>hFile</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _Out_writes_bytes_to_(cbRead, return) CHAR* lpBuffer,</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['CHAR'], [], [])"><div class="token cpp_type">CHAR</div></div>* <div class="def" id="NI$LZRead@::INT(::INT, ::CHAR *, ::INT)[decl0]::lpBuffer"><div>lpBuffer</div></div>,</div></div>
+<div class="expandable"><div class="disabled">    _In_ INT cbRead</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$LZRead@::INT(::INT, ::CHAR *, ::INT)[decl0]::cbRead"><div>cbRead</div></div></div></div>
+    );
+
+<div class="expandable"><div class="disabled">VOID</div>
+<div class="expanded"><div class="token cpp_keyword ">void</div></div></div>
+<div class="expandable"><div class="disabled">APIENTRY</div>
+<div class="expanded"><div class="token cpp_keyword ">__stdcall</div></div></div>
+<div class="def" id="FB$LZClose@void(::INT)[decl0]"><div><div class="token cpp_function">LZClose</div></div></div>(
+<div class="expandable"><div class="disabled">    _In_ INT hFile</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['INT'], [], [])"><div class="token cpp_type">INT</div></div> <div class="def" id="NI$LZClose@void(::INT)[decl0]::hFile"><div>hFile</div></div></div></div>
+    );
+
+<div class="disabled">#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */</div>
+#pragma endregion
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+
+<div class="disabled">#endif // _LZEXPAND_
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'CHAR': {
+        'displayNameInHtml': '<span class="cpp_type">CHAR</span>',
+        'impls': [
+            'NI$CHAR'
+        ],
+        'decls': []
+    },
+    'INT': {
+        'displayNameInHtml': '<span class="cpp_type">INT</span>',
+        'impls': [
+            'NI$INT'
+        ],
+        'decls': []
+    },
+    'LONG': {
+        'displayNameInHtml': '<span class="cpp_type">LONG</span>',
+        'impls': [
+            'NI$LONG'
+        ],
+        'decls': []
+    },
+    'LPOFSTRUCT': {
+        'displayNameInHtml': '<span class="cpp_type">LPOFSTRUCT</span>',
+        'impls': [
+            'NI$LPOFSTRUCT'
+        ],
+        'decls': []
+    },
+    'LPSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPSTR</span>',
+        'impls': [
+            'NI$LPSTR'
+        ],
+        'decls': []
+    },
+    'LPWSTR': {
+        'displayNameInHtml': '<span class="cpp_type">LPWSTR</span>',
+        'impls': [
+            'NI$LPWSTR'
+        ],
+        'decls': []
+    },
+    'WORD': {
+        'displayNameInHtml': '<span class="cpp_type">WORD</span>',
+        'impls': [
+            'NI$WORD'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NI$CHAR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$INT': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
+    'NI$LONG': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPOFSTRUCT': { 'htmlFileName': 'WinBase.h', 'displayName': 'WinBase.h' },
+    'NI$LPSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$LPWSTR': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
+    'NI$WORD': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

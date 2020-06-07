@@ -187,7 +187,7 @@ void IndexCppCode(
 Main
 
 Set root folder to /Tools/Demos
-Open http://127.0.0.1:8080/Debug/FileIndex.html
+Open http://127.0.0.1:8080/_Test/FileIndex.html
 Open http://127.0.0.1:8080/Calculator/FileIndex.html
 Open http://127.0.0.1:8080/TypePrinter/FileIndex.html
 Open http://127.0.0.1:8080/STL/FileIndex.html
@@ -197,11 +197,11 @@ Open http://127.0.0.1:8080/Gaclib/FileIndex.html
 int main()
 {
 	List<File> preprocessedFiles;
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/Debug.i"));
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
-	preprocessedFiles.Add(File(L"../UnitTest_Cases/Gaclib.i"));
+	preprocessedFiles.Add(File(L"../UnitTest_Cases/_Test.i"));
+	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Calculator.i"));
+	//preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
+	//preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
+	//preprocessedFiles.Add(File(L"../UnitTest_Cases/Gaclib.i"));
 	
 	Console::WriteLine(L"Cleaning ...");
 	FOREACH(File, file, preprocessedFiles)

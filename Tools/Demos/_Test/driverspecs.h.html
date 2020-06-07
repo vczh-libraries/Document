@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>driverspecs.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="expandable"><div class="disabled">/*****************************************************************************\
+*                                                                             *
+* DriverSpecs.h - markers for documenting the semantics of driver APIs        *
+*                 See also &lt;SpecStrings.h&gt;                                    *
+*                                                                             *
+* Version 1.2.10                                                              *
+*                                                                             *
+* Copyright (c) Microsoft Corporation. All rights reserved.                   *
+*                                                                             *
+\*****************************************************************************/</div>
+<div class="expanded"><div class="token cpp_comment ">/****************************************************************************
+**                                                                             *
+* DriverSpecs.h - markers for documenting the semantics of driver APIs        *
+*                 See also &lt;SpecStrings.h&gt;                                    *
+*                                                                             *
+* Version 1.2.10                                                              *
+*                                                                             *
+* Copyright (c) Microsoft Corporation. All rights reserved.                   *
+*                                                                             *
+\*****************************************************************************/</div></div></div>
+
+<div class="expandable"><div class="disabled">/*****************************************************************************\
+* NOTE                                                                        *
+* NOTE                                                                        *
+* NOTE                                                                        *
+*   The macro bodies in this file are subject to change without notice.       *
+*   Attempting to use the annotations in the macro bodies directly is not     *
+*   supported.                                                                *
+* NOTE                                                                        *
+* NOTE                                                                        *
+* NOTE                                                                        *
+\*****************************************************************************/</div>
+<div class="expanded"><div class="token cpp_comment ">/****************************************************************************
+** NOTE                                                                        *
+* NOTE                                                                        *
+* NOTE                                                                        *
+*   The macro bodies in this file are subject to change without notice.       *
+*   Attempting to use the annotations in the macro bodies directly is not     *
+*   supported.                                                                *
+* NOTE                                                                        *
+* NOTE                                                                        *
+* NOTE                                                                        *
+\*****************************************************************************/</div></div></div>
+
+<div class="expandable"><div class="disabled">/*****************************************************************************\
+* The annotations described by KernelSpecs.h and DriverSpecs.h, taken together,
+* are used to annotate drivers.  Many of the annotations are applicable to
+* user space code (including subsystems) as well as to drivers.
+*
+* DriverSpecs.h contains those annotations which are appropriate to userspace
+* code, or which might appear in headers that are shared between user space
+* and kernel space.  In the case of annotations which might appear in such a
+* shared header, but which are meaningless in user space, the annotations are
+* #defined to nothing in DriverSpecs.h.
+*
+* KernelSpecs.h contains those annotations which either will only appear in
+* kernel code or headers; or which might appear in shared headers.  In the
+* latter case, it is assumed that DriverSpecs.h has been #included, and
+* the anntoations are re-defined (using #undef) to give them a meaningful
+* value.  In general, documentation for the shared-header annotations appears
+* in DriverSpecs.h.
+*
+* Many annotations are context dependent.  They only apply to certain versions
+* of Windows, or only to certain classes of driver.  These rules can be written
+* using something like _When_(NTDDI_VERSION &gt;= NTDDI_WINXP, ...)
+* which causes the rule only to apply to Windows XP and later.  Many of these
+* symbols are already defined in various Windows headers.
+*
+* To facilitate using this sort of conditional rule, we collect here the
+* various known symbols that are (or reasonably might) be used in such
+* a conditional annotation.  Some are speculative in that the symbol has
+* not yet been defined because there are no known uses of it yet.
+*
+* Where the symbol already exists its relevant header is
+* noted below (excluding the &quot;really well known&quot; ones).
+*
+* Each symbol is listed with the currently known possible values.
+*
+* Some symbols are marked as #define symbols -- they are used with #ifdef
+* operators only.  To use them in _When_, use something like
+* _When_(__drv_defined(NT), ...).
+*
+* WDK Version (copied for convenience from sdkddkver.h)
+*     NTDDI_VERSION: NTDDI_WIN2K NTDDI_WIN2KSP1 NTDDI_WIN2KSP2 NTDDI_WIN2KSP3
+*                    NTDDI_WIN2KSP4 NTDDI_WINXP NTDDI_WINXPSP1 NTDDI_WINXPSP2
+*                    NTDDI_WS03 NTDDI_WS03SP1 NTDDI_VISTA
+*     The WDK version is taken as the WDM version as well.
+*
+* OS Version: (copied for convenience from sdkddkver.h)
+*     _WIN32_WINNT: _WIN32_WINNT_NT4 _WIN32_WINNT_WIN2K _WIN32_WINNT_WINXP
+*                   _WIN32_WINNT_WS03 _WIN32_WINNT_LONGHORN
+*     WINVER: 0x030B 0x0400 0x0500 0x0600
+*     NT (#define symbol)
+* (sdkddkver.h also defines symbols for IE versions should they be needed.)
+*
+* Compiler Version:
+*     _MSC_VER: too many to list.
+*     _MSC_FULL_VER: too many to list.
+*
+* KMDF Version:  (Currently defined/used only in makefiles.)
+*     KMDF_VERSION_MAJOR: 1
+*
+* UMDF Version:  (Currently defined/used only in makefiles.)
+*     UMDF_VERSION_MAJOR: 1
+*
+* Architecture kinds:
+*     __WIN64 (#define symbols)
+*     _X86_
+*     _AMD64_
+*     _IA64_
+*
+* Machine Architectures:
+*     _M_IX86
+*     _M_AMD64
+*     _M_IA64
+*
+* Driver Kind (NYI: &quot;not yet implemented&quot;)
+*   Typically these will be defined in the most-common header for a
+*   particular driver (or in individual source files if appropriate).
+*   These are not intended to necessarily be orthogonal: more than one might
+*   apply to a particular driver.
+*     _DRIVER_TYPE_BUS: 1                // NYI
+*     _DRIVER_TYPE_FUNCTIONAL: 1         // NYI
+*     _DRIVER_TYPE_MINIPORT: 1           // NYI
+*     _DRIVER_TYPE_STORAGE: 1            // NYI
+*     _DRIVER_TYPE_DISPLAY: 1            // NYI
+*     _DRIVER_TYPE_FILESYSTEM: 1
+*     _DRIVER_TYPE_FILESYSTEM_FILTER: 1
+*
+* NDIS driver version: (see ndis.h for much more detail.)
+*   These can be used to both identify an NDIS driver and to check the version.
+*     NDIS40 NDIS50 NDIS51 NDIS60 (#defined symbols)
+*     NDIS_PROTOCOL_MAJOR_VERSION.NDIS_PROTOCOL_MINOR_VERSION: 4.0 5.0 5.1 6.0
+*     And many others in ndis.h (including MINIPORT)
+*
+\*****************************************************************************/</div>
+<div class="expanded"><div class="token cpp_comment ">/****************************************************************************
+** The annotations described by KernelSpecs.h and DriverSpecs.h, taken together,
+* are used to annotate drivers.  Many of the annotations are applicable to
+* user space code (including subsystems) as well as to drivers.
+*
+* DriverSpecs.h contains those annotations which are appropriate to userspace
+* code, or which might appear in headers that are shared between user space
+* and kernel space.  In the case of annotations which might appear in such a
+* shared header, but which are meaningless in user space, the annotations are
+* #defined to nothing in DriverSpecs.h.
+*
+* KernelSpecs.h contains those annotations which either will only appear in
+* kernel code or headers; or which might appear in shared headers.  In the
+* latter case, it is assumed that DriverSpecs.h has been #included, and
+* the anntoations are re-defined (using #undef) to give them a meaningful
+* value.  In general, documentation for the shared-header annotations appears
+* in DriverSpecs.h.
+*
+* Many annotations are context dependent.  They only apply to certain versions
+* of Windows, or only to certain classes of driver.  These rules can be written
+* using something like _When_(NTDDI_VERSION &gt;= NTDDI_WINXP, ...)
+* which causes the rule only to apply to Windows XP and later.  Many of these
+* symbols are already defined in various Windows headers.
+*
+* To facilitate using this sort of conditional rule, we collect here the
+* various known symbols that are (or reasonably might) be used in such
+* a conditional annotation.  Some are speculative in that the symbol has
+* not yet been defined because there are no known uses of it yet.
+*
+* Where the symbol already exists its relevant header is
+* noted below (excluding the &quot;really well known&quot; ones).
+*
+* Each symbol is listed with the currently known possible values.
+*
+* Some symbols are marked as #define symbols -- they are used with #ifdef
+* operators only.  To use them in _When_, use something like
+* _When_(__drv_defined(NT), ...).
+*
+* WDK Version (copied for convenience from sdkddkver.h)
+*     NTDDI_VERSION: NTDDI_WIN2K NTDDI_WIN2KSP1 NTDDI_WIN2KSP2 NTDDI_WIN2KSP3
+*                    NTDDI_WIN2KSP4 NTDDI_WINXP NTDDI_WINXPSP1 NTDDI_WINXPSP2
+*                    NTDDI_WS03 NTDDI_WS03SP1 NTDDI_VISTA
+*     The WDK version is taken as the WDM version as well.
+*
+* OS Version: (copied for convenience from sdkddkver.h)
+*     _WIN32_WINNT: _WIN32_WINNT_NT4 _WIN32_WINNT_WIN2K _WIN32_WINNT_WINXP
+*                   _WIN32_WINNT_WS03 _WIN32_WINNT_LONGHORN
+*     WINVER: 0x030B 0x0400 0x0500 0x0600
+*     NT (#define symbol)
+* (sdkddkver.h also defines symbols for IE versions should they be needed.)
+*
+* Compiler Version:
+*     _MSC_VER: too many to list.
+*     _MSC_FULL_VER: too many to list.
+*
+* KMDF Version:  (Currently defined/used only in makefiles.)
+*     KMDF_VERSION_MAJOR: 1
+*
+* UMDF Version:  (Currently defined/used only in makefiles.)
+*     UMDF_VERSION_MAJOR: 1
+*
+* Architecture kinds:
+*     __WIN64 (#define symbols)
+*     _X86_
+*     _AMD64_
+*     _IA64_
+*
+* Machine Architectures:
+*     _M_IX86
+*     _M_AMD64
+*     _M_IA64
+*
+* Driver Kind (NYI: &quot;not yet implemented&quot;)
+*   Typically these will be defined in the most-common header for a
+*   particular driver (or in individual source files if appropriate).
+*   These are not intended to necessarily be orthogonal: more than one might
+*   apply to a particular driver.
+*     _DRIVER_TYPE_BUS: 1                // NYI
+*     _DRIVER_TYPE_FUNCTIONAL: 1         // NYI
+*     _DRIVER_TYPE_MINIPORT: 1           // NYI
+*     _DRIVER_TYPE_STORAGE: 1            // NYI
+*     _DRIVER_TYPE_DISPLAY: 1            // NYI
+*     _DRIVER_TYPE_FILESYSTEM: 1
+*     _DRIVER_TYPE_FILESYSTEM_FILTER: 1
+*
+* NDIS driver version: (see ndis.h for much more detail.)
+*   These can be used to both identify an NDIS driver and to check the version.
+*     NDIS40 NDIS50 NDIS51 NDIS60 (#defined symbols)
+*     NDIS_PROTOCOL_MAJOR_VERSION.NDIS_PROTOCOL_MINOR_VERSION: 4.0 5.0 5.1 6.0
+*     And many others in ndis.h (including MINIPORT)
+*
+\*****************************************************************************/</div></div></div>
+
+<div class="disabled">#ifndef DRIVERSPECS_H</div>
+<div class="disabled">#define DRIVERSPECS_H</div>
+
+<div class="token cpp_comment ">// In case driverspecs.h is included directly (and w/o specstrings.h)</div>
+<div class="disabled">#ifndef SPECSTRINGS_H</div>
+<div class="disabled">#include &lt;specstrings.h&gt;</div>
+<div class="disabled">#endif</div>
+
+<div class="disabled">#include &quot;sdv_driverspecs.h&quot;</div>
+<div class="disabled">#include &lt;concurrencysal.h&gt;</div>
+
+<div class="disabled">#if _MSC_VER &gt; 1000 // [</div>
+#pragma once
+<div class="disabled">#endif // ]</div>
+
+<div class="disabled">#ifdef __cplusplus // [</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {
+<div class="disabled">#endif // ]</div>
+
+<div class="disabled">#if (_MSC_VER &gt;= 1000) &amp;&amp; !defined(__midl) &amp;&amp; defined(_PREFAST_) &amp;&amp; defined(_MSC_EXTENSIONS)// [</div>
+
+<div class="disabled">    // ---------------------------------------------------------------------</div>
+<div class="disabled">    // Processing mode selection:</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // __internal_kernel_driver</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // Flag for headers that indicates a probable driver.</div>
+<div class="disabled">    // This should only be coded in headers that are normally used</div>
+<div class="disabled">    // as the &quot;primary&quot; header for a class of drivers.  It sets the</div>
+<div class="disabled">    // default to kernel mode driver.</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // &apos;;&apos; inside the parens to keep MIDL happy</div>
+<div class="disabled">    __ANNOTATION(SAL_internal_kernel_driver(void);)</div>
+
+<div class="disabled">    #define __internal_kernel_driver                                          \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_internal_kernel_driver_)					  \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_local_leak_checks_)</div>
+
+<div class="disabled">    //</div>
+<div class="disabled">    // __kernel_code</div>
+<div class="disabled">    // __kernel_driver</div>
+<div class="disabled">    // __user_driver</div>
+<div class="disabled">    // __user_code</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // Flags for compilation units that indicated specifically what kind of</div>
+<div class="disabled">    // code it is.</div>
+<div class="disabled">    // These should be coded as early as possible in any compilation unit</div>
+<div class="disabled">    // (.c/.cpp file) that doesn&apos;t get the correct default.  Whether before</div>
+<div class="disabled">    // or after __internal_kernel_driver</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // Indicate that the code is kernel, but not driver, code.</div>
+
+<div class="disabled">    __ANNOTATION(SAL_kernel(void);)</div>
+<div class="disabled">    __ANNOTATION(SAL_nokernel(void);)</div>
+<div class="disabled">    __ANNOTATION(SAL_driver(void);)</div>
+<div class="disabled">    __ANNOTATION(SAL_nodriver(void);)</div>
+
+<div class="disabled">    #define __kernel_code                                                     \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_code_type_kernel_code_)					  \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_local_leak_checks_)</div>
+
+<div class="disabled">    // Indicate that the code is kernel, driver, code.</div>
+<div class="disabled">    #define __kernel_driver                                                   \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_code_type_kernel_driver_)					  \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_local_leak_checks_)</div>
+
+<div class="disabled">    // Indicate that the code is a user mode driver.</div>
+<div class="disabled">    #define __user_driver                                                     \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_code_type_user_driver_)					  \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_local_leak_checks_)</div>
+
+<div class="disabled">    // Indicate that the code is ordinary user mode code.</div>
+<div class="disabled">    #define __user_code                                                       \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_code_type_user_code_)						  \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_local_leak_checks_)</div>
+
+<div class="disabled">    // &quot;landmark&quot; function definition to pass information to the</div>
+<div class="disabled">    // analysis tools, as needed.</div>
+
+<div class="disabled">    __ANNOTATION(SAL_landmark(__In_impl_ char *);)</div>
+
+<div class="disabled">    #define _Landmark_(name) _SAL_L_Source_(_Landmark_, (name),               \</div>
+<div class="disabled">	_SA_annotes1(SAL_landmark, #name))</div>
+
+<div class="disabled">    #define __drv_Mode_impl(x)                                                \</div>
+<div class="disabled">      _Landmark_(x)                                                           \</div>
+<div class="disabled">      __inline void __GENSYM(__SAL_dummy_)(void){}</div>
+
+<div class="disabled">    // Macros to declare a function to be a particular class</div>
+<div class="disabled">    // of driver.</div>
+
+<div class="disabled">    #define __drv_WDM  __drv_Mode_impl(WDM)</div>
+<div class="disabled">    #define __drv_KMDF __drv_Mode_impl(KMDF)</div>
+<div class="disabled">    #define __drv_NDIS __drv_Mode_impl(NDIS)</div>
+
+<div class="disabled">    // Inform PREfast that operator new does [not] throw.</div>
+<div class="disabled">    // Be sure you really know which is actually in use before using one of</div>
+<div class="disabled">    // these.  The default is throwing (and cannot return NULL) which is</div>
+<div class="disabled">    // standard conformant, but much kernel code links with a non-throwing</div>
+<div class="disabled">    // operator new.</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // Header &lt;new&gt; will set the default to throwing, so be sure to place</div>
+<div class="disabled">    // this after that header is included.</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // Be sure to use these macros for this purpose as the implementation</div>
+<div class="disabled">    // could change.</div>
+
+<div class="disabled">    #define __prefast_operator_new_throws                                 \</div>
+<div class="disabled">        void* __cdecl operator new(size_t size) throw(std::bad_alloc);    \</div>
+<div class="disabled">        void* __cdecl operator new[](size_t size) throw(std::bad_alloc);  \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_operator_new_throw_)</div>
+
+<div class="disabled">    #define __prefast_operator_new_null                                   \</div>
+<div class="disabled">        void* __cdecl operator new(size_t size) throw();                  \</div>
+<div class="disabled">        void* __cdecl operator new[](size_t size) throw();				  \</div>
+<div class="disabled">		_Analysis_mode_(_Analysis_operator_new_null_)</div>
+
+
+<div class="disabled">    // Paging information:</div>
+<div class="disabled">    //    _Analysis_assume_section_locked_(n)</div>
+<div class="disabled">    //    _Analysis_assume_section_unlocked_(n)</div>
+<div class="disabled">    //       A call will be made to &lt;n&gt;, and we should assume it is [not]</div>
+<div class="disabled">    //       locked in memory.</div>
+
+<div class="disabled">    // Past this point, the named section is assumed to be locked in</div>
+<div class="disabled">    // memory, and calls to that section are deemed safe.</div>
+<div class="disabled">    // This is only used when dynamically locked pages are being used.</div>
+<div class="disabled">    __inline __nothrow</div>
+<div class="disabled">    void __AnalysisAssumeLockedSection(__In_impl_ char *p);</div>
+<div class="disabled">    __inline __nothrow</div>
+<div class="disabled">    void __AnalysisAssumeUnlockedSection(__In_impl_ char *p);</div>
+
+<div class="disabled">    #define _Analysis_assume_section_locked_(name)                        \</div>
+<div class="disabled">		__AnalysisAssumeLockedSection(name)</div>
+<div class="disabled">    #define _Analysis_assume_section_unlocked_(name)                      \</div>
+<div class="disabled">		__AnalysisAssumeUnlockedSection(name)</div>
+
+<div class="disabled">#else // ][</div>
+
+<div class="disabled">    #define __internal_kernel_driver</div>
+<div class="disabled">    #define __kernel_code</div>
+<div class="disabled">    #define __kernel_driver</div>
+<div class="disabled">    #define __user_driver</div>
+<div class="disabled">    #define __user_code</div>
+<div class="disabled">    #define __drv_Mode_impl(x)</div>
+<div class="disabled">    #define __drv_WDM</div>
+<div class="disabled">    #define __drv_KMDF</div>
+<div class="disabled">    #define __drv_NDIS</div>
+<div class="disabled">    #define __prefast_operator_new_throws</div>
+<div class="disabled">    #define __prefast_operator_new_null</div>
+
+<div class="disabled">    #define _Analysis_assume_section_locked_(name)</div>
+<div class="disabled">    #define _Analysis_assume_section_unlocked_(name)</div>
+
+<div class="disabled">#endif // ]</div>
+
+    <div class="token cpp_comment ">// Callback with high IRQL level will never actually be called above </div>
+    <div class="token cpp_comment ">// &apos;level&apos;</div>
+<div class="disabled">    #define _IRQL_limited_to_(level)                                      \</div>
+<div class="disabled">        ASSERT(KeGetCurrentIrql() &lt;= level);                              \</div>
+<div class="disabled">        _Analysis_assume_(KeGetCurrentIrql() &lt;= level);</div>
+
+    <div class="token cpp_comment ">// core macros: these provide syntatic wrappers to make other uses</div>
+    <div class="token cpp_comment ">// simpler.</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// For example:</div>
+    <div class="token cpp_comment ">//   __drv_in(__drv_nonconstant __setsIRQL)</div>
+
+<div class="disabled">    #define __drv_deref(annotes) __deref _Group_(annotes _SAL_nop_impl_)</div>
+<div class="disabled">    #define __drv_in(annotes) _Pre_ _Group_(annotes _SAL_nop_impl_)</div>
+<div class="disabled">    #define __drv_in_deref(annotes) _Pre_ __deref _Group_(annotes _SAL_nop_impl_)</div>
+<div class="disabled">    #define __drv_out(annotes) _Post_ _Group_(annotes _SAL_nop_impl_)</div>
+<div class="disabled">    #define __drv_out_deref(annotes) _Post_ __deref _Group_(annotes _SAL_nop_impl_)</div>
+<div class="disabled">    #define __drv_when(cond, annotes) _When_(cond, annotes _SAL_nop_impl_)</div>
+<div class="disabled">    #define __drv_at(expr,annotes) _At_(expr, annotes _SAL_nop_impl_)</div>
+
+<div class="disabled">    #define __drv_fun(annotes) _At_(return,annotes _SAL_nop_impl_)</div>
+<div class="disabled">    #define __drv_ret(annotes) _At_(return,annotes _SAL_nop_impl_)</div>
+<div class="disabled">    #define __drv_arg(expr,annotes) _At_(expr,annotes)</div>
+<div class="disabled">    #define __drv_unit(p)                                                     \</div>
+<div class="disabled">      typedef int ___drv_unit_##p                                             \</div>
+<div class="disabled">                __GENSYM(__prefast_flag_kernel_driver_mode);</div>
+
+    <div class="token cpp_comment ">// Internal macros for convenience</div>
+<div class="disabled">    #define ___drv_unit_internal_kernel_driver                                \</div>
+<div class="disabled">         _SAL_L_Source_(__drv_unit_internal_kernel_driver, (), _SA_annotes0(SAL_internal_kernel_driver))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// __drv_unit</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flags for compilation units that indicated specifically what kind of</div>
+    <div class="token cpp_comment ">// code it is.</div>
+    <div class="token cpp_comment ">// These should be coded as early as possible in any compilation unit</div>
+    <div class="token cpp_comment ">// (.c/.cpp file) that doesn&apos;t get the correct default.     Whether before</div>
+    <div class="token cpp_comment ">// or after __internal_kernel_driver is immaterial as long as it will</div>
+    <div class="token cpp_comment ">// successfully parse.</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Indicate that the code is kernel, but not driver, code.</div>
+<div class="disabled">    #define ___drv_unit_kernel_code                                           \</div>
+<div class="disabled">            _SAL_L_Source_(___drv_unit_kernel_code, (), _SA_annotes0(SAL_kernel) _SA_annotes0(SAL_nodriver))</div>
+
+    <div class="token cpp_comment ">// Indicate that the code is kernel, driver, code.</div>
+<div class="disabled">    #define ___drv_unit_kernel_driver                                         \</div>
+<div class="disabled">            _SAL_L_Source_(___drv_unit_kernel_driver, (), _SA_annotes0(SAL_kernel) _SA_annotes0(SAL_driver))</div>
+
+    <div class="token cpp_comment ">// Indicate that the code is a user mode driver.</div>
+<div class="disabled">    #define ___drv_unit_user_driver                                           \</div>
+<div class="disabled">            _SAL_L_Source_(___drv_unit_user_driver, (), _SA_annotes0(SAL_nokernel) _SA_annotes0(SAL_driver))</div>
+
+    <div class="token cpp_comment ">// Indicate that the code is ordinary user mode code.</div>
+<div class="disabled">    #define ___drv_unit_user_code                                             \</div>
+<div class="disabled">            _SAL_L_Source_(___drv_unit_user_code, (), _SA_annotes0(SAL_nokernel) _SA_annotes0(SAL_nodriver))</div>
+
+
+    <div class="token cpp_comment ">// These are needed for backwards compatability.</div>
+<div class="disabled">    #ifndef __internal_kernel_driver</div>
+
+<div class="disabled">    #define __internal_kernel_driver   __drv_unit(internal_kernel_driver)</div>
+<div class="disabled">    #define __kernel_code              __drv_unit(kernel_code)</div>
+<div class="disabled">    #define __kernel_driver            __drv_unit(kernel_driver)</div>
+<div class="disabled">    #define __user_driver              __drv_unit(user_driver)</div>
+<div class="disabled">    #define __user_code                __drv_unit(user_code)</div>
+
+<div class="disabled">    #endif</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Syntatic utilities:</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Needed to make the annotations convenient to use.</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// So we can use a macro name that might be used in #ifdef context,</div>
+    <div class="token cpp_comment ">// where it&apos;s defined with no value.</div>
+    <div class="token cpp_comment ">// This should only be used inside a _When_ condition.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define __drv_defined(x) _Macro_defined_( #x )</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Callback properties:</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// __drv_functionClass(x)</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the the annotated function</div>
+    <div class="token cpp_comment ">// is a member of that function class. Some class names are recognized</div>
+    <div class="token cpp_comment ">// by PREfast itself for special treatment.</div>
+    <div class="token cpp_comment ">// This can be tested by the condition function _In_function_class_()</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define __drv_functionClass(x) _SAL1_Source_(__drv_functionClass, (x), _Function_class_(x))</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Resources:</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// __drv_acquiresResource(kind)</div>
+    <div class="token cpp_comment ">// __drv_releasesResource(kind)</div>
+    <div class="token cpp_comment ">// __drv_acquiresResourceGlobal(kind,param)</div>
+    <div class="token cpp_comment ">// __drv_releasesResourceGlobal(kind,param)</div>
+    <div class="token cpp_comment ">// __drv_mustHold(kind)</div>
+    <div class="token cpp_comment ">// __drv_neverHold(kind)</div>
+    <div class="token cpp_comment ">// __drv_mustHoldGlobal(kind,param)</div>
+    <div class="token cpp_comment ">// __drv_neverHoldGlobal(kind,param)</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the annotated parameter acquires a resource of type kind.</div>
+    <div class="token cpp_comment ">//</div>
+
+<div class="disabled">    __ANNOTATION(SAL_acquire(__In_impl_ char *);)</div>
+<div class="disabled">    #define _Kernel_acquires_resource_(kind)                                  \</div>
+<div class="disabled">        _SAL2_Source_(_Kernel_acquires_resource_, (#kind), _Post_ _SA_annotes1(SAL_acquire, #kind))</div>
+
+<div class="disabled">    #define __drv_acquiresResource(kind)                                      \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_acquiresResource, (kind), _Acquires_lock_(_Curr_))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the annotated parameter releases a resource of type kind.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_release(__In_impl_ char *);)</div>
+<div class="disabled">    #define _Kernel_releases_resource_(kind)                                  \</div>
+<div class="disabled">        _SAL2_Source_(_Kernel_releases_resource_, (#kind), _Post_ _SA_annotes1(SAL_release, #kind))</div>
+<div class="disabled">    #define __drv_releasesResource(kind)                                      \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_releasesResource, (kind), _Releases_lock_(_Curr_))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the annotated object acquires a global resource named by param</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_acquireGlobal(__In_impl_ char *, ...);)</div>
+<div class="disabled">    #define __drv_innerAcquiresGlobal(kind, param)                            \</div>
+<div class="disabled">        _SAL1_1_Source_(_drv_innerAcquiresGlobal, (#kind, param\t), _Post_ _SA_annotes2(SAL_acquireGlobal, #kind, param\t))</div>
+<div class="disabled">    #define __drv_acquiresResourceGlobal(kind,param)                          \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_acquiresResourceGlobal, (kind, param), _Acquires_lock_(param))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the annotated object releases a global resource named by param</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_releaseGlobal(__In_impl_ char *, ...);)</div>
+<div class="disabled">    #define __drv_innerReleasesGlobal(kind, param)                            \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_InnerReleasesGlobal, (#kind, param\t), _Post_ _SA_annotes2(SAL_releaseGlobal,#kind, param\t))</div>
+<div class="disabled">    #define __drv_releasesResourceGlobal(kind, param)                         \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_releasesResourceGlobal, (kind, param), _Releases_lock_(param))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the annotated parameter must hold a resource of type kind</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_mustHold(__In_impl_ char *);)</div>
+<div class="disabled">    #define _Kernel_requires_resource_held_(kind)                             \</div>
+<div class="disabled">        _SAL2_Source_(_Kernel_requires_resource_held_, (#kind), _Pre_ _SA_annotes1(SAL_mustHold, #kind))</div>
+
+<div class="disabled">    #define __drv_mustHold(kind)                                              \</div>
+<div class="disabled">        _SAL_L_Source_(_drv_mustHold, (kind),                                 \</div>
+<div class="disabled">        _When_(!_Arg_comp_(#kind,&quot;Memory&quot;), _Requires_lock_held_(_Curr_))     \</div>
+<div class="disabled">        _When_(_Arg_comp_(#kind,&quot;Memory&quot;), _Kernel_requires_resource_held_(kind)))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the annotated object must hold a global resource named by param</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_mustHoldGlobal(__In_impl_ char *, ...);)</div>
+<div class="disabled">    #define __drv_innerMustHoldGlobal(kind, param)                            \</div>
+<div class="disabled">        _SAL_L_Source_(__drv_innerMustHoldGlobal, (#kind, param\t), _Pre_ _SA_annotes2(SAL_mustHoldGlobal, #kind, param\t))</div>
+<div class="disabled">    #define __drv_mustHoldGlobal(kind,param)                                  \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_mustHoldGlobal, (kind, param), _Requires_lock_held_(param))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the annotated parameter must never hold a resource of type kind</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_neverHold(__In_impl_ char *);)</div>
+<div class="disabled">    #define _Kernel_requires_resource_not_held_(kind)                         \</div>
+<div class="disabled">        _SAL2_Source_(_Kernel_requires_resource_not_held_, (#kind), _Pre_ _SA_annotes1(SAL_neverHold, #kind))</div>
+
+<div class="disabled">    #define __drv_neverHold(kind)                                             \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_neverHold, (kind), _Requires_lock_not_held_(_Curr_))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Flag that the annotated object must never hold a global resource</div>
+    <div class="token cpp_comment ">// of type kind named by param.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_neverHoldGlobal(__In_impl_ char *, ...);)</div>
+<div class="disabled">    #define __drv_innerNeverHoldGlobal(kind, param)                           \</div>
+<div class="disabled">        _SAL_L_Source_(__drv_innterNeverHoldGlobal, (#kind, param\t), _Pre_ _SA_annotes2(SAL_neverHoldGlobal, #kind, param\t))</div>
+<div class="disabled">    #define __drv_neverHoldGlobal(kind,param)                                 \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_neverHoldGlobal, (kind, param), _Requires_lock_not_held_(param))</div>
+
+    <div class="token cpp_comment ">// Predicates to determine if a resource is held</div>
+<div class="disabled">    __PRIMOP(int, _Holds_resource_(__In_impl_ __deferTypecheck char *,__In_impl_ char *);)</div>
+<div class="disabled">    __PRIMOP(int, _Holds_resource_global_(__In_impl_ char *, ...);)</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// IRQL annotations:</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// _IRQL_raises_(irql)</div>
+    <div class="token cpp_comment ">// _IRQL_requires_(irql)</div>
+    <div class="token cpp_comment ">// _IRQL_requires_max_(irql)</div>
+    <div class="token cpp_comment ">// _IRQL_requires_min_(irql)</div>
+    <div class="token cpp_comment ">// _IRQL_saves_</div>
+    <div class="token cpp_comment ">// _IRQL_saves_global_(kind,param)</div>
+    <div class="token cpp_comment ">// _IRQL_restores_</div>
+    <div class="token cpp_comment ">// _IRQL_restores_global_(kind,param)</div>
+    <div class="token cpp_comment ">// _IRQL_always_function_min_(irql)</div>
+    <div class="token cpp_comment ">// _IRQL_always_function_max_(irql)</div>
+    <div class="token cpp_comment ">// _IRQL_requires_same_</div>
+    <div class="token cpp_comment ">// _IRQL_uses_cancel_</div>
+    <div class="token cpp_comment ">// </div>
+    <div class="token cpp_comment ">// Legacy IRQL annotations:</div>
+    <div class="token cpp_comment ">//   Legacy annotation:        Use instead:</div>
+    <div class="token cpp_comment ">//   __drv_setsIRQL            (Obsolete, use _IRQL_raises_)</div>
+    <div class="token cpp_comment ">//   __drv_raisesIRQL          _IRQL_raises_</div>
+    <div class="token cpp_comment ">//   __drv_requiresIRQL        _IRQL_requires_</div>
+    <div class="token cpp_comment ">//   __drv_maxIRQL             _IRQL_requires_max_</div>
+    <div class="token cpp_comment ">//   __drv_minIRQL             _IRQL_requires_min_</div>
+    <div class="token cpp_comment ">//   __drv_savesIRQL           _IRQL_saves_</div>
+    <div class="token cpp_comment ">//   __drv_savesIRQLGlobal     _IRQL_saves_global_</div>
+    <div class="token cpp_comment ">//   __drv_restoresIRQL        _IRQL_restores_</div>
+    <div class="token cpp_comment ">//   __drv_restoresIRQLGlobal  _IRQL_restores_global_</div>
+    <div class="token cpp_comment ">//   __drv_minFunctionIRQL     _IRQL_always_function_min_</div>
+    <div class="token cpp_comment ">//   __drv_maxFunctionIRQL     _IRQL_always_function_max_</div>
+    <div class="token cpp_comment ">//   __drv_sameIRQL            _IRQL_requires_same_</div>
+    <div class="token cpp_comment ">//   __drv_useCancelIRQL       _IRQL_uses_cancel_</div>
+    <div class="token cpp_comment ">//</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The function exits at IRQL irql (obsolete, use _IRQL_raises_)</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define __drv_setsIRQL(irql)  /* see kernelspecs.h, legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The function exits at IRQL irql, but this may only raise the irql.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_raises_(irql)  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_raisesIRQL _SAL1_1_Source_(__drv_raisesIRQL, (), _IRQL_raises_) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The called function must be entered at IRQL level</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_requires_(irql)  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_requiresIRQL(irql) _SAL1_1_Source_(__drv_requiresIRQL, (irql), _IRQL_requires_(irql)) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The maximum IRQL at which the function may be called.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_requires_max_(irql)  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_maxIRQL(irql) _SAL1_1_Source_(__drv_maxIRQL, (irql), _IRQL_requires_max_(irql)) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The minimum IRQL at which the function may be called.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_requires_min_(irql)  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_minIRQL(irql) _SAL1_1_Source_(__drv_minIRQL, (irql), _IRQL_requires_min_(irql)) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The current IRQL is saved in the annotated parameter</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_saves_  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_savesIRQL _SAL1_1_Source_(__drv_savesIRQL, (), _IRQL_saves_) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The current IRQL is saved in the (otherwise anonymous) global object</div>
+    <div class="token cpp_comment ">// identified by kind and further refined by param.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_saves_global_(kind,param)  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_savesIRQLGlobal(kind,param) _SAL1_1_Source_(__drv_savesIRQLGlobal, (kind,param), _IRQL_saves_global_(kind,param)) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The current IRQL is restored from the annotated parameter</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_restores_  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_restoresIRQL _SAL1_1_Source_(__drv_restoresIRQL, (), _IRQL_restores_) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The current IRQL is restored from the (otherwise anonymous) global</div>
+    <div class="token cpp_comment ">// object identified by kind and further refined by param.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_restores_global_(kind,param)  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_restoresIRQLGlobal(kind,param) _SAL1_1_Source_(__drv_restoresIRQLGlobal, (kind,param), _IRQL_restores_global_(kind,param)) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The minimum IRQL to which the function can lower itself.  The IRQL</div>
+    <div class="token cpp_comment ">// at entry is assumed to be that value unless overridden.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_always_function_min_(irql)  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_minFunctionIRQL(irql) _SAL1_1_Source_(__drv_minFunctionIRQL, (irql), _IRQL_always_function_min_(irql)) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The maximum IRQL to which the function can raise itself.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_always_function_max_(irql)  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_maxFunctionIRQL(irql) _SAL1_1_Source_(__drv_maxFunctionIRQL, (irql), _IRQL_always_function_max_(irql)) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The function must exit with the same IRQL it was entered with.</div>
+    <div class="token cpp_comment ">// (It may change it but it must restore it.)</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_requires_same_  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_sameIRQL _SAL1_1_Source_(__drv_sameIRQL, (), _IRQL_requires_same_) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The annotated parameter contains the cancelIRQL, which will be restored</div>
+    <div class="token cpp_comment ">// by the called function.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define _IRQL_uses_cancel_  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_useCancelIRQL _SAL1_1_Source_(__drv_usesCancelIRQL, (), _IRQL_uses_cancel_) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The annotated parameter is an IRQL that will be restored and a new (probably the same)</div>
+    <div class="token cpp_comment ">// value will be inserted.  (Use this in preference to directly coding it.)</div>
+<div class="disabled">    #undef _IRQL_inout_</div>
+<div class="disabled">    #define _IRQL_inout_                                                      \</div>
+<div class="disabled">        _IRQL_saves_ _IRQL_restores_</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Specific function behaviors</div>
+
+    <div class="token cpp_comment ">// The annotated function clears the requirement that DoInitializeing</div>
+    <div class="token cpp_comment ">// is cleared (or not).</div>
+<div class="disabled">    __ANNOTATION(SAL_clearDoInit(enum __SAL_YesNo);)</div>
+<div class="disabled">    #define _Kernel_clear_do_init_(yesNo)                                     \</div>
+<div class="disabled">        _SAL2_Source_(_Kernel_clear_do_init_, (yesNo), _Post_ _SA_annotes1(SAL_clearDoInit,yesNo))</div>
+<div class="disabled">    #define __drv_clearDoInit(yesNo) _SAL1_1_Source_(__drv_clearDoInit, (yesNo), _Kernel_clear_do_init_(yesNo)) /* legacy */</div>
+
+    <div class="token cpp_comment ">// This is (or is like) IoGetDmaAdapter: look for misuse of DMA pointers</div>
+<div class="disabled">    __ANNOTATION(SAL_IoGetDmaAdapter(void);)</div>
+<div class="disabled">    #define _Kernel_IoGetDmaAdapter_                                          \</div>
+<div class="disabled">        _SAL2_Source_(_Kernel_IoGetDmaAdapter_, (), _Post_ _SA_annotes0(SAL_IoGetDmaAdapter))</div>
+<div class="disabled">    #define __drv_IoGetDmaAdapter _SAL1_1_Source_(__drv_IoGetDmaAdapter, (), _Kernel_IoGetDmaAdapter_) /* legacy */</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Function and out parameter return values.</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// __drv_valueIs(&lt;list&gt;)</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The function being annotated will return each of the specified values</div>
+    <div class="token cpp_comment ">// during simulation.  The items in the list are &lt;relational op&gt;&lt;constant&gt;,</div>
+    <div class="token cpp_comment ">// e.g. ==0 or &lt;0.</div>
+    <div class="token cpp_comment ">// This is a ; separated list of values.  The internal parser will accept</div>
+    <div class="token cpp_comment ">// a comma-separated list.  In the future __VA_ARGS__ could be used.</div>
+    <div class="token cpp_comment ">// See the documentation for use of this.</div>
+    <div class="token cpp_comment ">//</div>
+
+<div class="disabled">    __ANNOTATION(SAL_return(__In_impl_ __AuToQuOtE char *);)</div>
+<div class="disabled">    #define __drv_valueIs(arglist)                                            \</div>
+<div class="disabled">            _SAL1_1_Source_(__drv_valueIs, (arglist), _Post_ _SA_annotes1(SAL_return,arglist))</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Additional parameter checking.</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// __drv_constant</div>
+    <div class="token cpp_comment ">// __drv_nonConstant</div>
+    <div class="token cpp_comment ">// __drv_strictTypeMatch(mode)</div>
+    <div class="token cpp_comment ">// __drv_strictType(type,mode)</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The actual parameter must evaluate to a constant (not a const).</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define __drv_constant _SAL1_1_Source_(__drv_constant, (), _Literal_)</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The actual parameter may never evaluate to a numeric constant</div>
+    <div class="token cpp_comment ">// (exclusive of a const symbol).</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    #define __drv_nonConstant _SAL1_1_Source_(__drv_nonConstant, (), _Notliteral_)</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The actual parameter must match the type of the annotated formal</div>
+    <div class="token cpp_comment ">// within the specifications set by mode.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_strictTypeMatch(__int64);)</div>
+<div class="disabled">    #define __drv_strictTypeMatch(mode)                                       \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_strictTypeMatch, (mode), _Pre_ _SA_annotes1(SAL_strictTypeMatch,mode))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The actual parameter must match the type of typename (below)</div>
+    <div class="token cpp_comment ">// within the specifications set by mode.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="expandable"><div class="disabled">    __ANNOTATION(SAL_strictType(__In_impl_ __AuToQuOtE char *);) // currently 1/2 args</div>
+<div class="expanded">     <div class="token cpp_comment ">// currently 1/2 args</div></div></div>
+<div class="disabled">    #define __drv_strictType(typename,mode)                                   \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_strictType, (typename,mode), _Pre_ _SA_annotes2(SAL_strictType, typename, mode))</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">//    The following modes are defined:</div>
+<div class="disabled">        #define __drv_typeConst   0    // constants of that type</div>
+<div class="disabled">        #define __drv_typeCond    1    // plus ?:</div>
+<div class="disabled">        #define __drv_typeBitset  2    // plus all operators</div>
+<div class="disabled">        #define __drv_typeExpr    3    // plus literal constants</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The actual parameter must be data (not a pointer).  Used to</div>
+    <div class="token cpp_comment ">// prevent passing pointers to pointers when pointers to structures</div>
+    <div class="token cpp_comment ">// are needed (because &amp;pXXX is a common error when pXXX is</div>
+    <div class="token cpp_comment ">// intended).</div>
+<div class="disabled">    #define __drv_notPointer _SAL1_1_Source_(__drv_notPointer, (), _Pre_ _SA_annotes1(SAL_mayBePointer,__no))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Convenience for the most common form of the above.</div>
+<div class="disabled">    #define __drv_isObjectPointer _SAL1_1_Source_(__drv_isObjectPointer, (), _Points_to_data_)</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Memory management</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// __drv_aliasesMem</div>
+    <div class="token cpp_comment ">// __drv_allocatesMem</div>
+    <div class="token cpp_comment ">// __drv_freesMem</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The annotated parameter is &quot;kept&quot; by the function, creating an</div>
+    <div class="token cpp_comment ">// alias, and relieving any obligation to free the object.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_IsAliased(void);)</div>
+<div class="disabled">    #define __drv_aliasesMem _SAL_L_Source_(__drv_aliasesMem, (), _Post_ _SA_annotes0(SAL_IsAliased))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Allocate/release memory-like objects.</div>
+    <div class="token cpp_comment ">// Kind is unused, but should be &quot;mem&quot; for malloc/free</div>
+    <div class="token cpp_comment ">// and &quot;object&quot; for new/delete.</div>
+<div class="disabled">    __ANNOTATION(SAL_NeedsRelease(enum __SAL_YesNo);)</div>
+<div class="disabled">    #define __drv_allocatesMem(kind) _SAL_L_Source_(__drv_allocatesMem, (kind), _Post_ _SA_annotes1(SAL_NeedsRelease,__yes))</div>
+
+<div class="disabled">    #define __drv_freesMem(kind) _SAL_L_Source_(__drv_freesMem, (kind), _Post_ _SA_annotes1(SAL_NeedsRelease,__no))</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Additional diagnostics</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// __drv_preferredFunction</div>
+    <div class="token cpp_comment ">// __drv_reportError</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// Function &apos;func&apos; should be used for reason &apos;why&apos;.  Often used</div>
+    <div class="token cpp_comment ">// conditionally.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_preferredFunction(__In_impl_ __AuToQuOtE char *,
+        __In_impl_ __AuToQuOtE char *);)</div>
+<div class="disabled">    __ANNOTATION(SAL_preferredFunction3(__In_impl_ __AuToQuOtE char *,
+        __In_impl_ __AuToQuOtE char *, __In_impl_ __int64);)</div>
+<div class="disabled">    #define __drv_preferredFunction(func,why)                                 \</div>
+<div class="disabled">        _SAL_L_Source_(__drv_preferredFunction, (func,why), _Pre_ _SA_annotes2(SAL_preferredFunction, func, why))</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The error given by &apos;why&apos; was detected.  Used conditionally.</div>
+    <div class="token cpp_comment ">//</div>
+<div class="disabled">    __ANNOTATION(SAL_error(__In_impl_ __AuToQuOtE char *);)</div>
+<div class="disabled">    __ANNOTATION(SAL_error2(__In_impl_ __AuToQuOtE char *, __In_impl_ __int64);)</div>
+<div class="disabled">    #define __drv_reportError(why)                                            \</div>
+<div class="disabled">        _SAL_L_Source_(__drv_reportError, (why), _Pre_ _SA_annotes1(SAL_error,why))</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Floating point save/restore:</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// _Kernel_float_saved_</div>
+    <div class="token cpp_comment ">// _Kernel_float_restored_</div>
+    <div class="token cpp_comment ">// _Kernel_float_used_</div>
+    <div class="token cpp_comment ">// __drv_floatSaved        (legacy, replaced by _Kernel_float_saved_)</div>
+    <div class="token cpp_comment ">// __drv_floatRestored     (legacy, replaced by _Kernel_float_restored_)</div>
+    <div class="token cpp_comment ">// __drv_floatUsed         (legacy, replaced by _Kernel_float_used_)</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The floating point hardware was saved (available to kernel)</div>
+<div class="disabled">    __ANNOTATION(SAL_floatSaved(void);)</div>
+<div class="disabled">    #define _Kernel_float_saved_ _SAL2_Source_(_Kernel_float_saved_, (), _Post_ _SA_annotes0(SAL_floatSaved))</div>
+<div class="disabled">    #define __drv_floatSaved _SAL1_1_Source_(__drv_floatSaved, (), _Kernel_float_saved_) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The floating point hardware was restored (no longer available)</div>
+<div class="disabled">    __ANNOTATION(SAL_floatRestored(void);)</div>
+<div class="disabled">    #define _Kernel_float_restored_ _SAL2_Source_(_Kernel_float_restored_, (), _Post_ _SA_annotes0(SAL_floatRestored))</div>
+<div class="disabled">    #define __drv_floatRestored _SAL1_1_Source_(__drv_floatRestored, (), _Kernel_float_restored_) /* legacy */</div>
+
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The function uses floating point.  Functions with floating point</div>
+    <div class="token cpp_comment ">// in their type signature get this automatically.</div>
+<div class="disabled">    __ANNOTATION(SAL_floatUsed(void);)</div>
+<div class="disabled">    #define _Kernel_float_used_ _SAL2_Source_(_Kernel_float_used_, (), _Post_ _SA_annotes0(SAL_floatUsed))</div>
+<div class="disabled">    #define __drv_floatUsed _SAL1_1_Source_(__drv_floatUsed, (), _Kernel_float_used_) /* legacy */</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Usage:</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// __drv_interlocked</div>
+    <div class="token cpp_comment ">// __drv_inTry</div>
+    <div class="token cpp_comment ">// __drv_notInTry</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// The parameter is used for interlocked instructions.</div>
+<div class="disabled">    #define __drv_interlocked _SAL1_1_Source_(__drv_interlocked, (), _Interlocked_operand_)</div>
+
+    <div class="token cpp_comment ">// The function must be called inside a try block</div>
+<div class="disabled">    #define __drv_inTry _SAL_L_Source_(__drv_inTry, (), _Pre_ _SA_annotes1(SAL_inTry,__yes))</div>
+
+    <div class="token cpp_comment ">// The function must not be called inside a try block</div>
+<div class="disabled">    #define __drv_notInTry _SAL_L_Source_(__drv_notInTry, (), _Pre_ _SA_annotes1(SAL_inTry,__no))</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// FormatString:</div>
+    <div class="token cpp_comment ">//</div>
+    <div class="token cpp_comment ">// kind can be &quot;printf&quot;, &quot;scanf&quot;, &quot;strftime&quot; or &quot;FormatMessage&quot;.</div>
+<div class="disabled">    __ANNOTATION(SAL_IsFormatString(__In_impl_ char *);)</div>
+<div class="disabled">    #define __drv_formatString(kind)\</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_formatString, (kind), _SA_annotes1(SAL_IsFormatString, #kind))</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Function classes for drivers:</div>
+    <div class="token cpp_comment ">//</div>
+
+    <div class="token cpp_comment ">// Function class for driver dispatch functions:</div>
+<div class="disabled">	#define _Dispatch_type_(x)  _SAL2_Source_(Dispatch_type_, (x), _SA_annotes1(SAL_functionClassNew, #x))</div>
+
+    <div class="token cpp_comment ">// Legacy function class for driver dispatch functions:</div>
+<div class="disabled">    #define __drv_dispatchType(x)                                             \</div>
+<div class="disabled">	    _SAL1_1_Source_(__drv_displatchType, (x), _SA_annotes1(SAL_functionClassNew, #x))</div>
+
+    <div class="token cpp_comment ">// Legacy function class for driver dispatch functions - special case:</div>
+<div class="disabled">    #define __drv_dispatchType_other\</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_dispatchType_other, (), __drv_dispatchType(IRP_MJ_OTHER))</div>
+
+    <div class="token cpp_comment ">// Legacy function class for driver completion functions:</div>
+<div class="disabled">    __ANNOTATION(SAL_completionType(__In_impl_ __AuToQuOtE char *);)</div>
+<div class="disabled">    #define __drv_completionType(kindlist)\</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_completionType, (kindlist), _SA_annotes1(SAL_completionType, #kindlist))</div>
+
+    <div class="token cpp_comment ">// Legacy function class for driver callback functions (FDO or PDO):</div>
+<div class="disabled">    __ANNOTATION(SAL_callbackType(__In_impl_ __AuToQuOtE char *);)</div>
+<div class="disabled">    #define __drv_callbackType(kind)\</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_callbackType, (kind), _SA_annotes1(SAL_callbackType, #kind))</div>
+
+    <div class="token cpp_comment ">// ---------------------------------------------------------------------</div>
+    <div class="token cpp_comment ">// Composite:</div>
+
+<div class="disabled">#ifdef _PREFAST_ // [ expand to nothing immediately to avoid RC problem</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // Exclusive Resources</div>
+<div class="disabled">    //</div>
+<div class="disabled">    #define __drv_acquiresExclusiveResource(kind)                             \</div>
+<div class="disabled">        _SAL1_1_Source_(__drv_acquiresExclusiveResource, (kind), _Acquires_nonreentrant_lock_(_Curr_))</div>
+
+<div class="disabled">    #define __drv_releasesExclusiveResource(kind)                             \</div>
+<div class="disabled">        _SAL1_Source_(__drv_releasesExclusiveResource, (kind), _Releases_nonreentrant_lock_(_Curr_))</div>
+
+<div class="disabled">    #define __drv_acquiresExclusiveResourceGlobal(kind, param)                \</div>
+<div class="disabled">        _SAL1_Source_(__drv_acquiresExclusiveResourceGlobal, (kind), _Acquires_nonreentrant_lock_(param))</div>
+
+<div class="disabled">    #define __drv_releasesExclusiveResourceGlobal(kind, param)                \</div>
+<div class="disabled">        _SAL1_Source_(__drv_releasesExclusiveResourceGlobal, (kind), _Releases_nonreentrant_lock_(param))</div>
+
+<div class="disabled">    //</div>
+<div class="disabled">    // CancelSpinLock</div>
+<div class="disabled">    //</div>
+<div class="disabled">    #define __drv_acquiresCancelSpinLock                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_acquiresCancelSpinLock, (kind), _Acquires_nonreentrant_lock_(_Global_cancel_spin_lock_))</div>
+
+<div class="disabled">    #define __drv_releasesCancelSpinLock                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_releasesCancelSpinLock, (kind), _Releases_nonreentrant_lock_(_Global_cancel_spin_lock_))</div>
+
+<div class="disabled">    #define __drv_mustHoldCancelSpinLock                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_mustHoldCancelSpinLock, (kind), _Requires_lock_held_(_Global_cancel_spin_lock_))</div>
+
+<div class="disabled">    #define __drv_neverHoldCancelSpinLock                                     \</div>
+<div class="disabled">        _SAL1_Source_(__drv_neverHoldCancelSpinLock, (kind), _Requires_lock_not_held_(_Global_cancel_spin_lock_))</div>
+
+<div class="disabled">    #define __drv_holdsCancelSpinLock()                                       \</div>
+<div class="disabled">        _SAL1_Source_(__drv_holdsCanselSpinLock, (kind), _Holds_resource_global_(&quot;CancelSpinLock&quot;,))</div>
+
+<div class="disabled">    //</div>
+<div class="disabled">    // CriticalRegion</div>
+<div class="disabled">    //</div>
+<div class="disabled">    #define __drv_acquiresCriticalRegion                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_acquiresCriticalRegion, (kind), _Acquires_lock_(_Global_critical_region_))</div>
+
+<div class="disabled">    #define __drv_releasesCriticalRegion                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_releasesCriticalRegion, (kind), _Releases_lock_(_Global_critical_region_))</div>
+
+<div class="disabled">    #define __drv_mustHoldCriticalRegion                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_mustHoldCriticalRegion, (kind), _Requires_lock_held_(_Global_critical_region_))</div>
+
+<div class="disabled">    #define __drv_neverHoldCriticalRegion                                     \</div>
+<div class="disabled">        _SAL1_Source_(__drv_neverHoldCriticalRegion, (kind), _Requires_lock_not_held_(_Global_critical_region_))</div>
+
+<div class="disabled">    #define __drv_holdsCriticalRegion()                                       \</div>
+<div class="disabled">        _SAL1_Source_(__drv_holdsCriticalRegion, (kind), _Holds_resource_global_(&quot;CriticalRegion&quot;,))</div>
+
+
+<div class="disabled">extern int _Global_priority_region_;</div>
+<div class="disabled">    //</div>
+<div class="disabled">    // PriorityRegion</div>
+<div class="disabled">    //</div>
+<div class="disabled">    #define __drv_acquiresPriorityRegion                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_acquiresPrioorityRegion, (kind), _Acquires_lock_(_Global_priority_region_))</div>
+
+<div class="disabled">    #define __drv_releasesPriorityRegion                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_releasesPriorityRegion, (kind), _Releases_lock_(_Global_priority_region_))</div>
+
+<div class="disabled">    #define __drv_mustHoldPriorityRegion                                      \</div>
+<div class="disabled">        _SAL1_Source_(__drv_mustHoldPriorityRegion, (kind), _Requires_lock_held_(_Global_priority_region_))</div>
+
+<div class="disabled">    #define __drv_neverHoldPriorityRegion                                     \</div>
+<div class="disabled">        _SAL1_Source_(__drv_neverHoldPriorityRegion, (kind), _Requires_lock_not_held_(_Global_priority_region_))</div>
+
+<div class="disabled">    #define __drv_holdsPriorityRegion()                                       \</div>
+<div class="disabled">        _SAL1_Source_(__drv_holdsPriorityRegion, (kind), _Holds_resource_global_(&quot;PriorityRegion&quot;,))</div>
+
+<div class="disabled">#else // ][</div>
+
+<div class="disabled">    #define __drv_acquiresExclusiveResource(kind)</div>
+<div class="disabled">    #define __drv_releasesExclusiveResource(kind)</div>
+<div class="disabled">    #define __drv_acquiresExclusiveResourceGlobal(kind, param)</div>
+<div class="disabled">    #define __drv_releasesExclusiveResourceGlobal(kind, param)</div>
+<div class="disabled">    #define __drv_acquiresCancelSpinLock</div>
+<div class="disabled">    #define __drv_releasesCancelSpinLock</div>
+<div class="disabled">    #define __drv_mustHoldCancelSpinLock</div>
+<div class="disabled">    #define __drv_holdsCancelSpinLock()</div>
+<div class="disabled">    #define __drv_neverHoldCancelSpinLock</div>
+<div class="disabled">    #define __drv_acquiresCriticalRegion</div>
+<div class="disabled">    #define __drv_releasesCriticalRegion</div>
+<div class="disabled">    #define __drv_mustHoldCriticalRegion</div>
+<div class="disabled">    #define __drv_neverHoldCriticalRegion</div>
+<div class="disabled">    #define __drv_holdsCriticalRegion()</div>
+<div class="disabled">    #define __drv_acquiresPriorityRegion</div>
+<div class="disabled">    #define __drv_releasesPriorityRegion</div>
+<div class="disabled">    #define __drv_mustHoldPriorityRegion</div>
+<div class="disabled">    #define __drv_neverHoldPriorityRegion</div>
+<div class="disabled">    #define __drv_holdsPriorityRegion()</div>
+
+<div class="disabled">#endif // ]</div>
+
+    <div class="token cpp_comment ">// Passing the cancel Irql to a utility function</div>
+<div class="disabled">    #define _IRQL_is_cancel_  /* see kernelspecs.h */</div>
+<div class="disabled">    #define __drv_isCancelIRQL _IRQL_is_cancel_ /* legacy */</div>
+
+    <div class="token cpp_comment ">// Check if this is kernel or driver code</div>
+<div class="disabled">    __PRIMOP(int, _Is_kernel_(void);)</div>
+<div class="disabled">    __PRIMOP(int, _Is_driver_(void);)</div>
+
+<div class="disabled">#ifdef __cplusplus</div>
+}
+<div class="disabled">#endif</div>
+
+<div class="disabled">#endif // DRIVERSPECS_H</div>
+
+<div class="disabled"></div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

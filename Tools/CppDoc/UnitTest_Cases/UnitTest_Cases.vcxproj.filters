@@ -42,10 +42,10 @@
     <ClCompile Include="TypePrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Debug.cpp">
+    <ClCompile Include="Gaclib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gaclib.cpp">
+    <ClCompile Include="_Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
