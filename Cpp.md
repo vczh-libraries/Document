@@ -24,6 +24,33 @@
 
 - [post](https://en.cppreference.com/w/cpp/language/function_template)
 
+### Document Generation
+
+- [ ] Generate reference pages
+  - [ ] Copy document comment to a folder with a tree structure
+    - [ ] For enum, enum items store in the same XML file
+  - [ ] Process hyper-links
+- [ ] Refine document comment
+  - [ ] Vlpp
+  - [ ] VlppOS
+  - [ ] VlppRegex
+  - [ ] VlppReflection
+  - [ ] VlppParser
+  - [ ] Workflow
+  - [ ] GacUI
+- [ ] Connect reflection symbols to C++ symbols
+- [ ] Author document
+  - [ ] Vlpp
+  - [ ] VlppOS
+  - [ ] VlppRegex
+  - [ ] VlppReflection
+  - [ ] VlppParser
+    - [ ] Syntax
+  - [ ] Workflow
+    - [ ] Syntax
+  - [ ] GacUI
+    - [ ] XML Syntax
+
 ### Test Cases
 
 - [ ] `this` used in field initializer.
@@ -57,8 +84,6 @@
     - [ ] Generate `ClassMemberCache` for generated special members.
     - [ ] Generate special members for declarations with `specializationSpec`.
 - [ ] Render
-  - [x] Dynamic loading instead of downloading everything.
-    - [ ] Reduce file number, may choose to merge.
   - [ ] Add link to `#include "File"` and `#include <File>`.
   - [ ] Attach document content to declarations.
   - [ ] Enable markdown inside xml elements in comment.
