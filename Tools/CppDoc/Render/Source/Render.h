@@ -105,6 +105,13 @@ struct IndexResult
 class IProgressReporter : public virtual Interface
 {
 public:
+	enum class ExtraPhases
+	{
+		UniqueId = (vint)IIndexRecorder::Phase::Finished,
+		HTML,
+		SymbolIndex,
+	};
+
 	virtual void									OnProgress(vint phase, vint position, vint length) = 0;
 };
 
@@ -220,6 +227,6 @@ Index Page Generating
 using FileGroupConfig = List<Tuple<WString, WString>>;
 
 extern void											GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGroupConfig& fileGroups);
-extern void											GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FileGroupConfig& fileGroups);
+extern void											GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
 
 #endif

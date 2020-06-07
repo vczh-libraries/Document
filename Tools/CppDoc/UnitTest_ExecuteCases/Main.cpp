@@ -175,10 +175,21 @@ void IndexCppCode(
 	}
 
 	Console::WriteLine(L"        FileIndex.html");
-	GenerateFileIndex(global, folderOutput.GetFilePath() / L"FileIndex.html", fileGroups);
+	GenerateFileIndex(
+		global,
+		folderOutput.GetFilePath() / L"FileIndex.html",
+		fileGroups
+	);
 
 	Console::WriteLine(L"        SymbolIndex.html");
-	GenerateSymbolIndex(global, indexResult, folderOutput.GetFilePath() / L"SymbolIndex.html", fileGroups);
+	GenerateSymbolIndex(
+		global,
+		indexResult,
+		folderOutput.GetFilePath() / L"SymbolIndex.html",
+		fileGroups,
+		&progressReporter
+	);
+	progressReporter.FinishPhase();
 
 	Console::WriteLine(L"    Finished");
 }

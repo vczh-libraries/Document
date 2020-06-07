@@ -37,7 +37,7 @@ void GenerateUniqueId(
 	{
 		if (progressReporter)
 		{
-			progressReporter->OnProgress((vint)IIndexRecorder::Phase::Finished, i, result.ids.Count());
+			progressReporter->OnProgress((vint)IProgressReporter::ExtraPhases::UniqueId, i, result.ids.Count());
 		}
 
 		auto symbol = result.ids.Values()[i];

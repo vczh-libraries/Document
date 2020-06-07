@@ -27,7 +27,11 @@ struct SymbolGroup
 GenerateSymbolGroupUniqueId
 ***********************************************************************/
 
-void SetUniqueId(Ptr<SymbolGroup> symbolGroup, WString id, SortedList<WString>& ids)
+void SetUniqueId(
+	Ptr<SymbolGroup> symbolGroup,
+	WString id,
+	SortedList<WString>& ids
+)
 {
 	id = wupper(id);
 	if (!ids.Contains(id))
@@ -55,7 +59,12 @@ void SetUniqueId(Ptr<SymbolGroup> symbolGroup, WString id, SortedList<WString>& 
 	}
 }
 
-void GenerateSymbolGroupUniqueId(Ptr<SymbolGroup> symbolGroup, SymbolGroup* parentGroup, const WString& prefix, SortedList<WString>& ids)
+void GenerateSymbolGroupUniqueId(
+	Ptr<SymbolGroup> symbolGroup,
+	SymbolGroup* parentGroup,
+	const WString& prefix,
+	SortedList<WString>& ids
+)
 {
 	if (symbolGroup->children.Count() == 0) return;
 
@@ -104,7 +113,11 @@ void GenerateSymbolGroupUniqueId(Ptr<SymbolGroup> symbolGroup, SymbolGroup* pare
 GenerateSymbolGroupForFileGroup
 ***********************************************************************/
 
-bool IsDeclInFileGroup(Ptr<GlobalLinesRecord> global, Ptr<Declaration> decl, const WString& fileGroupPrefix)
+bool IsDeclInFileGroup(
+	Ptr<GlobalLinesRecord> global,
+	Ptr<Declaration> decl,
+	const WString& fileGroupPrefix
+)
 {
 	vint index = global->declToFiles.Keys().IndexOf({ decl,nullptr });
 	if (index != -1)
@@ -117,7 +130,12 @@ bool IsDeclInFileGroup(Ptr<GlobalLinesRecord> global, Ptr<Declaration> decl, con
 	return false;
 }
 
-bool IsSymbolInFileGroup(Ptr<GlobalLinesRecord> global, Symbol* context, const WString& fileGroupPrefix, bool& generateChildSymbols)
+bool IsSymbolInFileGroup(
+	Ptr<GlobalLinesRecord> global,
+	Symbol* context,
+	const WString& fileGroupPrefix,
+	bool& generateChildSymbols
+)
 {
 	generateChildSymbols = false;
 	switch (context->GetCategory())
@@ -194,7 +212,13 @@ bool IsSymbolInFileGroup(Ptr<GlobalLinesRecord> global, Symbol* context, const W
 	return false;
 }
 
-Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, const WString& fileGroupPrefix, Symbol* context, SymbolGroup* parentGroup, Dictionary<Symbol*, Ptr<SymbolGroup>>& psContainers)
+Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(
+	Ptr<GlobalLinesRecord> global,
+	const WString& fileGroupPrefix,
+	Symbol* context,
+	SymbolGroup* parentGroup,
+	Dictionary<Symbol*, Ptr<SymbolGroup>>& psContainers
+)
 {
 	if (psContainers.Keys().Contains(context))
 	{
@@ -300,7 +324,15 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(Ptr<GlobalLinesRecord> global, 
 RenderSymbolGroup
 ***********************************************************************/
 
-void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<SymbolGroup> symbolGroup, const FilePath& fragmentFolder)
+void RenderSymbolGroup(
+	Ptr<GlobalLinesRecord> global,
+	StreamWriter& writer,
+	Ptr<SymbolGroup> symbolGroup,
+	const FilePath& fragmentFolder,
+	IProgressReporter* progressReporter,
+	vint fragmentCount,
+	vint& writtenFragmentCount
+)
 {
 	writer.WriteString(L"<div>");
 	if (symbolGroup->kind != SymbolGroupKind::Root)
@@ -440,7 +472,7 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 			for (vint i = 0; i < symbolGroup->children.Count(); i++)
 			{
 				auto childGroup = symbolGroup->children[i];
-				RenderSymbolGroup(global, writer, childGroup, fragmentFolder);
+				RenderSymbolGroup(global, writer, childGroup, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
 			}
 		}
 		else
@@ -455,7 +487,13 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 				for (vint i = 0; i < symbolGroup->children.Count(); i++)
 				{
 					auto childGroup = symbolGroup->children[i];
-					RenderSymbolGroup(global, fragmentWriter, childGroup, fragmentFolder);
+					RenderSymbolGroup(global, fragmentWriter, childGroup, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
+				}
+
+				writtenFragmentCount++;
+				if (progressReporter)
+				{
+					progressReporter->OnProgress((vint)IProgressReporter::ExtraPhases::UniqueId, writtenFragmentCount, fragmentCount);
 				}
 			}
 		}
@@ -473,9 +511,10 @@ void RenderSymbolGroup(Ptr<GlobalLinesRecord> global, StreamWriter& writer, Ptr<
 GenerateSymbolIndex
 ***********************************************************************/
 
-void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FileGroupConfig& fileGroups)
+void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FileGroupConfig& fileGroups, IProgressReporter* progressReporter)
 {
 	auto rootGroup = MakePtr<SymbolGroup>();
+	vint fragmentCount = 0;
 	{
 		rootGroup->kind = SymbolGroupKind::Root;
 		for (vint i = 0; i < fileGroups.Count(); i++)
@@ -504,6 +543,7 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup.Obj(), fileGroup->uniqueId, ids);
 			}
 		}
+		fragmentCount = ids.Count();
 	}
 
 	{
@@ -532,7 +572,10 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 		{
 			Folder(fragmentFolder).Create(true);
 		}
-		RenderSymbolGroup(global, writer, rootGroup, fragmentFolder);
+		{
+			vint writtenFragmentCount = 0;
+			RenderSymbolGroup(global, writer, rootGroup, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
+		}
 
 		writer.WriteLine(L"</div></div>");
 		writer.WriteLine(L"</body>");
