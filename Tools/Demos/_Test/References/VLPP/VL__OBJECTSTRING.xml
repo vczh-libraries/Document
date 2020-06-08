@@ -1,0 +1,4 @@
+<Document>
+ <summary>A type representing a string.</summary>
+ <typeparam name="T">Type of a character.</typeparam>
+</Document>

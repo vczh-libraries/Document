@@ -1,0 +1,3 @@
+<Document>
+ <summary>Base type of all interfaces. All interface types are encouraged to be virtual inherited.</summary>
+</Document>

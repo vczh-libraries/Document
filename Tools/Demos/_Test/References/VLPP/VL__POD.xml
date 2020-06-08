@@ -1,0 +1,4 @@
+<Document>
+ <summary>Test is a type a Plain-Old-Data type for containers.</summary>
+ <typeparam name="T">The type to test.</typeparam>
+</Document>

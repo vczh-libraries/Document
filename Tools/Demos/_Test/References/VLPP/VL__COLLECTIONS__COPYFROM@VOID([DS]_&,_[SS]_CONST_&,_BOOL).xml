@@ -1,0 +1,8 @@
+<Document>
+ <summary>Copy containers.</summary>
+ <typeparam name="Ds">Type of the destination container.</typeparam>
+ <typeparam name="Ss">Type of the source container.</typeparam>
+ <param name="ds">The destination container.</param>
+ <param name="ss">The source container.</param>
+ <param name="append">Set to false to delete everything in the destination container before copying.</param>
+</Document>

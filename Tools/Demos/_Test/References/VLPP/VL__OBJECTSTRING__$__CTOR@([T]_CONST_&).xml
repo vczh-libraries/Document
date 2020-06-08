@@ -1,0 +1,4 @@
+<Document>
+ <summary>Create a string continaing one character.</summary>
+ <param name="_char">The character.</param>
+</Document>

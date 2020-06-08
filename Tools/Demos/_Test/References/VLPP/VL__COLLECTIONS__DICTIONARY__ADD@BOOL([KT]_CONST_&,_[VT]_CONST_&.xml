@@ -1,0 +1,6 @@
+<Document>
+ <summary>Add a key with an associated value. Exception will raise if the key already exists.</summary>
+ <returns>Returns true if the pair is added.</returns>
+ <param name="key">The key.</param>
+ <param name="value">The value.</param>
+</Document>

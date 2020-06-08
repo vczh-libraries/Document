@@ -1,0 +1,4 @@
+<Document>
+ <summary>Get the reference to the current element in the enumerator.</summary>
+ <returns>The reference to the current element.</returns>
+</Document>

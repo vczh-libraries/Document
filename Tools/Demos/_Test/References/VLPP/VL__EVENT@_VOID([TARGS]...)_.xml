@@ -1,0 +1,4 @@
+<Document>
+ <summary>Event.</summary>
+ <typeparam name="TArgs">Types of callback parameters.</typeparam>
+</Document>

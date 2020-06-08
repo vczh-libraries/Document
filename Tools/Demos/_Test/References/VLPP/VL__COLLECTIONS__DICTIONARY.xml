@@ -1,0 +1,7 @@
+<Document>
+ <summary>Dictionary.</summary>
+ <typeparam name="KT">Type of keys.</typeparam>
+ <typeparam name="VT">Type of values.</typeparam>
+ <typeparam name="KK">Type of the key type of keys.</typeparam>
+ <typeparam name="VK">Type of the key type of values.</typeparam>
+</Document>

@@ -1,0 +1,5 @@
+<Document>
+ <summary>Copy a smart pointer.</summary>
+ <returns>The copied smart pointer.</returns>
+ <param name="pointer">The smart pointer to copy.</param>
+</Document>

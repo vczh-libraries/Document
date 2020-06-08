@@ -1,0 +1,5 @@
+<Document>
+ <summary>Create a new lazy list with elements in two containers. If some elements appear several times, only one will be kept.</summary>
+ <returns>The created lazy list.</returns>
+ <param name="remains">The second container.</param>
+</Document>

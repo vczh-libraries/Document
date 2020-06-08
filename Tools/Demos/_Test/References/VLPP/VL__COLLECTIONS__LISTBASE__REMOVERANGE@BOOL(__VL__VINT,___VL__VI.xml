@@ -1,0 +1,6 @@
+<Document>
+ <summary>Remove elements.</summary>
+ <returns>Returns true if the element is removed.</returns>
+ <param name="index">The index of the first element to remove.</param>
+ <param name="_count">The number of elements to remove.</param>
+</Document>

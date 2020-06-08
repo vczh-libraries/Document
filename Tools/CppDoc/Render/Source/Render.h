@@ -110,6 +110,7 @@ public:
 		UniqueId = (vint)IIndexRecorder::Phase::Finished,
 		HTML,
 		SymbolIndex,
+		ReferenceIndex,
 	};
 
 	virtual void									OnProgress(vint phase, vint position, vint length) = 0;

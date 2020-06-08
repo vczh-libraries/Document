@@ -1,0 +1,5 @@
+<Document>
+ <summary>Create a reference using a function object.</summary>
+ <typeparam name="C">Type of the function object.</typeparam>
+ <param name="function">The function object. It could be a lambda expression.</param>
+</Document>

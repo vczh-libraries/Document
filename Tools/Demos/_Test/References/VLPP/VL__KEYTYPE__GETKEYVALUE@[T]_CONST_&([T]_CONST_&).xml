@@ -1,0 +1,5 @@
+<Document>
+ <summary>Convert a value to its index type.</summary>
+ <returns>The corresponding index value.</returns>
+ <param name="value">The value.</param>
+</Document>

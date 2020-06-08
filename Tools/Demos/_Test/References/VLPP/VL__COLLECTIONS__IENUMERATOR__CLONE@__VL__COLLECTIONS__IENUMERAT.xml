@@ -1,0 +1,4 @@
+<Document>
+ <summary>Copy the enumerator with the current state.</summary>
+ <returns>The copied enumerator.</returns>
+</Document>

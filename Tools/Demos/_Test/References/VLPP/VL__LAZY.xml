@@ -1,0 +1,4 @@
+<Document>
+ <summary>A type representing a lazy evaluation.</summary>
+ <typeparam name="T">The type of the evaluation result.</typeparam>
+</Document>

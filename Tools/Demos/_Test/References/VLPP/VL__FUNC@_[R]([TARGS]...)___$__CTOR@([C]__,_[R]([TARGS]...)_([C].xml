@@ -1,0 +1,6 @@
+<Document>
+ <summary>Create a reference using a method.</summary>
+ <typeparam name="C">Type of the class that has the method.</typeparam>
+ <param name="sender">The object that has the method.</param>
+ <param name="function">The function pointer.</param>
+</Document>

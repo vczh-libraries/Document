@@ -1,0 +1,4 @@
+<Document>
+ <summary>Detach the contained object from this smart pointer.</summary>
+ <returns>The detached object. Returns null if this smart pointer is empty.</returns>
+</Document>

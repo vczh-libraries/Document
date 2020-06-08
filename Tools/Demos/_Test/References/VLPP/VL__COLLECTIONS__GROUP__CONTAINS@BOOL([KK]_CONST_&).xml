@@ -1,0 +1,5 @@
+<Document>
+ <summary>Test if a key exists in the group or not.</summary>
+ <returns>Returns true if the key exists.</returns>
+ <param name="key">The key to find.</param>
+</Document>

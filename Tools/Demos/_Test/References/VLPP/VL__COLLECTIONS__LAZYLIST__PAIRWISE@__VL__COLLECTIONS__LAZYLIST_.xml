@@ -1,0 +1,6 @@
+<Document>
+ <summary>Create a new lazy list of pairs from elements from two containers.</summary>
+ <typeparam name="U">Type of all elements in the second container.</typeparam>
+ <returns>The created lazy list.</returns>
+ <param name="remains">The second container.</param>
+</Document>

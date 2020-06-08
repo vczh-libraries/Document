@@ -1,0 +1,4 @@
+<Document>
+ <summary>Copy a function reference.</summary>
+ <param name="function">The function reference to copy.</param>
+</Document>

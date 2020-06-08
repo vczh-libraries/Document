@@ -1,0 +1,4 @@
+<Document>
+ <summary>Enumerable.</summary>
+ <typeparam name="T">Type of the elements in the enumerator.</typeparam>
+</Document>

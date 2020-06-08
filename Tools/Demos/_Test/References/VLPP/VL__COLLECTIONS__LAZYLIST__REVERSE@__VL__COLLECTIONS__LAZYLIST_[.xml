@@ -1,0 +1,4 @@
+<Document>
+ <summary>Create a new lazy list with all elements in this lazy list in a reverse order.</summary>
+ <returns>The created lazy list.</returns>
+</Document>

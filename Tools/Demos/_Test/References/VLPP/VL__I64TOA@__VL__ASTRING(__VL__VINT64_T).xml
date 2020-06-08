@@ -1,0 +1,5 @@
+<Document>
+ <summary>Convert a 64-bits signed interger to a string.</summary>
+ <returns>The converted string.</returns>
+ <param name="number">The number to convert.</param>
+</Document>

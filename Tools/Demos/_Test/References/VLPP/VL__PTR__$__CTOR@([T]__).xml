@@ -1,0 +1,4 @@
+<Document>
+ <summary>Convert a pointer to an object to a smart pointer.</summary>
+ <param name="pointer">The pointer to the object.</param>
+</Document>

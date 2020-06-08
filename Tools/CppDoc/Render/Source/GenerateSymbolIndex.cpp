@@ -309,7 +309,7 @@ void RenderSymbolGroup(
 	StreamWriter& writer,
 	Ptr<SymbolGroup> symbolGroup,
 	const WString& fileGroupPrefix,
-	const FilePath& fragmentFolder,
+	const FilePath& pathFragment,
 	IProgressReporter* progressReporter,
 	vint fragmentCount,
 	vint& writtenFragmentCount
@@ -457,14 +457,14 @@ void RenderSymbolGroup(
 			for (vint i = 0; i < symbolGroup->children.Count(); i++)
 			{
 				auto childGroup = symbolGroup->children[i];
-				RenderSymbolGroup(global, writer, childGroup, childGroup->uniqueId, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
+				RenderSymbolGroup(global, writer, childGroup, childGroup->uniqueId, pathFragment, progressReporter, fragmentCount, writtenFragmentCount);
 			}
 		}
 		else
 		{
 			writer.WriteString(L"<div class=\"symbol_dropdown\">Loading...</div>");
 			{
-				FileStream fileStream((fragmentFolder / fileGroupPrefix / (symbolGroup->uniqueId + L".html")).GetFullPath(), FileStream::WriteOnly);
+				FileStream fileStream((pathFragment / fileGroupPrefix / (symbolGroup->uniqueId + L".html")).GetFullPath(), FileStream::WriteOnly);
 				Utf8Encoder encoder;
 				EncoderStream encoderStream(fileStream, encoder);
 				StreamWriter fragmentWriter(encoderStream);
@@ -472,7 +472,7 @@ void RenderSymbolGroup(
 				for (vint i = 0; i < symbolGroup->children.Count(); i++)
 				{
 					auto childGroup = symbolGroup->children[i];
-					RenderSymbolGroup(global, fragmentWriter, childGroup, fileGroupPrefix, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
+					RenderSymbolGroup(global, fragmentWriter, childGroup, fileGroupPrefix, pathFragment, progressReporter, fragmentCount, writtenFragmentCount);
 				}
 
 				writtenFragmentCount++;
@@ -558,16 +558,13 @@ Ptr<SymbolGroup> GenerateSymbolIndex(
 		writer.WriteLine(L"<br>");
 		writer.WriteString(L"<div class=\"cpp_default\"><div class=\"symbol_root\">");
 
+		for (vint i = 0; i < rootGroup->children.Count(); i++)
 		{
-			for (vint i = 0; i < rootGroup->children.Count(); i++)
-			{
-				Folder(pathFragment / rootGroup->children[i]->uniqueId).Create(true);
-			}
+			Folder(pathFragment / rootGroup->children[i]->uniqueId).Create(true);
 		}
-		{
-			vint writtenFragmentCount = 0;
-			RenderSymbolGroup(global, writer, rootGroup, L"", pathFragment, progressReporter, fragmentCount, writtenFragmentCount);
-		}
+
+		vint writtenFragmentCount = 0;
+		RenderSymbolGroup(global, writer, rootGroup, L"", pathFragment, progressReporter, fragmentCount, writtenFragmentCount);
 
 		writer.WriteLine(L"</div></div>");
 		writer.WriteLine(L"</body>");

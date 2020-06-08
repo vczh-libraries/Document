@@ -1,0 +1,4 @@
+<Document>
+ <summary>A lazy evaluated readonly container.</summary>
+ <typeparam name="T">The type of elements.</typeparam>
+</Document>

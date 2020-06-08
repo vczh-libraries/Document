@@ -1,0 +1,4 @@
+<Document>
+ <summary>Box a value.</summary>
+ <param name="_object">The value to box.</param>
+</Document>

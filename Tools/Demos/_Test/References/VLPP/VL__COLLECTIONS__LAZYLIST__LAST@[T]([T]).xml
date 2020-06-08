@@ -1,0 +1,5 @@
+<Document>
+ <summary>Get the last value in the lazy list.</summary>
+ <returns>The last value.</returns>
+ <param name="defaultValue">Returns this argument if the lazy list is empty.</param>
+</Document>

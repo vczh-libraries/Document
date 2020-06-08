@@ -1,0 +1,5 @@
+<Document>
+ <summary>Find a character.</summary>
+ <returns>The position of the character. Returns -1 if it doesn not exist.</returns>
+ <param name="c">The character to find.</param>
+</Document>

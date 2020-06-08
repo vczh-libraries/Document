@@ -1,0 +1,4 @@
+<Document>
+ <summary>Get the current local time.</summary>
+ <returns>The current local time.</returns>
+</Document>

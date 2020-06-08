@@ -1,0 +1,4 @@
+<Document>
+ <summary>Move a smart pointer.</summary>
+ <param name="pointer">The smart pointer to Move.</param>
+</Document>

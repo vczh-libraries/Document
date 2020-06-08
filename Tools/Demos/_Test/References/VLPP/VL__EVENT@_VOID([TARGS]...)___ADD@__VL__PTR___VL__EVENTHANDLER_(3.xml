@@ -1,0 +1,7 @@
+<Document>
+ <summary>Add a method callback to the event.</summary>
+ <typeparam name="C">Type of the class that has the method callback.</typeparam>
+ <returns>The event handler representing the callback.</returns>
+ <param name="sender">The object that has the method callback.</param>
+ <param name="function">The method callback.</param>
+</Document>

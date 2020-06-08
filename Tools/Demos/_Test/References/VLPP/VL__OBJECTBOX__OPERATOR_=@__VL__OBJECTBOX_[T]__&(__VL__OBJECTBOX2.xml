@@ -1,0 +1,5 @@
+<Document>
+ <summary>Move a box.</summary>
+ <returns>The boxed value.</returns>
+ <param name="value">The box.</param>
+</Document>

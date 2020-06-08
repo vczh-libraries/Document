@@ -1,0 +1,4 @@
+<Document>
+ <summary>Get the zero-terminated buffer in the string. Copying parts of a string does not necessarily create a new buffer, so in some situation the string will not actually points to a zero-terminated buffer. In this case, this function will copy the content to a new buffer with a zero terminator and return.</summary>
+ <returns>Returns the buffer.</returns>
+</Document>

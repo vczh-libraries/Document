@@ -1,0 +1,4 @@
+<Document>
+ <summary>A smart pointer. It is always safe to convert a pointer to an object to a smart pointer once. If you do it multiple times, it may be wrong due to different implementation of [T:vl.ReferenceCounterOperator`2]. In case of wrong, disposing the smart pointer will cause an access violation.</summary>
+ <typeparam name="T">The type of the object.</typeparam>
+</Document>

@@ -1,0 +1,4 @@
+<Document>
+ <summary>Create a lazy list with an lazy list.</summary>
+ <param name="lazyList">The lazy list.</param>
+</Document>

@@ -1,0 +1,4 @@
+<Document>
+ <summary>Move a string.</summary>
+ <param name="string">The string to move.</param>
+</Document>

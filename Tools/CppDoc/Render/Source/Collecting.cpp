@@ -320,6 +320,19 @@ void GenerateHtmlToken(
 GenerateHtmlLine
 ***********************************************************************/
 
+void PrintDocumentRecordToConsole(Ptr<DocumentRecord> dr)
+{
+	for (vint i = 0; i < dr->comments.Count(); i++)
+	{
+		auto& token = dr->comments[i];
+		Console::Write(itow(token.rowStart));
+		Console::Write(L",");
+		Console::Write(itow(token.columnStart));
+		Console::Write(L":");
+		Console::WriteLine(WString(token.reading, token.length));
+	}
+}
+
 template<typename TCallback>
 void GenerateHtmlLine(
 	Ptr<CppTokenCursor>& cursor,
@@ -351,13 +364,10 @@ void GenerateHtmlLine(
 				{
 					// if documentRecord still exist, it means the last document has not been assigned
 					// it could happen when the previous document is for a macro, but the macro is removed by the preprocessor
+
 					Console::WriteLine(L"");
 					Console::WriteLine(L"UNASSIGNED:");
-					for (vint i = 0; i < documentRecord->comments.Count(); i++)
-					{
-						auto token = documentRecord->comments[i];
-						Console::WriteLine(itow(token.rowStart) + L":" + itow(token.columnStart) + L":" + WString(token.reading, token.length));
-					}
+					PrintDocumentRecordToConsole(documentRecord);
 				}
 
 				// make a new document
@@ -459,29 +469,27 @@ void GenerateHtmlLine(
 
 			if (documentRecord && declOrArg.decl)
 			{
-				// a document will never assign to a template argument
-				// so declOrArg.decl must exist to proceed
-				// here we do not allow multiple document record be assigned to the same symbol
-				// it could happen when we have documents for both forward declaration and implementation
-				// or the previous document is for a macro, but the macro is removed by the preprocessor
-				if (global->declComments.Keys().Contains(declOrArg.decl->symbol))
+				auto documentSymbol = declOrArg.decl->symbol;
+				if (documentSymbol->GetCategory() == symbol_component::SymbolCategory::FunctionBody)
 				{
-					auto overrided = global->declComments[declOrArg.decl->symbol];
+					documentSymbol = documentSymbol->GetFunctionSymbol_Fb();
+				}
+
+				if (global->declComments.Keys().Contains(documentSymbol))
+				{
+					// a document will never assign to a template argument
+					// so declOrArg.decl must exist to proceed
+					// here we do not allow multiple document record be assigned to the same symbol
+					// it could happen when we have documents for both forward declaration and implementation
+					// or the previous document is for a macro, but the macro is removed by the preprocessor
+
 					Console::WriteLine(L"");
 					Console::WriteLine(L"OVERRIDE:");
-					for (vint i = 0; i < overrided->comments.Count(); i++)
-					{
-						auto token = overrided->comments[i];
-						Console::WriteLine(itow(token.rowStart) + L":" + itow(token.columnStart) + L":" + WString(token.reading, token.length));
-					}
+					PrintDocumentRecordToConsole(global->declComments[documentSymbol]);
 					Console::WriteLine(L"BY:");
-					for (vint i = 0; i < documentRecord->comments.Count(); i++)
-					{
-						auto token = documentRecord->comments[i];
-						Console::WriteLine(itow(token.rowStart) + L":" + itow(token.columnStart) + L":" + WString(token.reading, token.length));
-					}
+					PrintDocumentRecordToConsole(documentRecord);
 				}
-				global->declComments.Set(declOrArg.decl->symbol, documentRecord);
+				global->declComments.Set(documentSymbol, documentRecord);
 				documentRecord = nullptr;
 			}
 

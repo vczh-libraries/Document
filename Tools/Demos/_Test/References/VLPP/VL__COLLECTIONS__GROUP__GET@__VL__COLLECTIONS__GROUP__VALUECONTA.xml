@@ -1,0 +1,5 @@
+<Document>
+ <summary>Get all values associated with a key.</summary>
+ <returns>All values.</returns>
+ <param name="key">The key to find.</param>
+</Document>

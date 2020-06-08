@@ -1,0 +1,5 @@
+<Document>
+ <summary>Create an array.</summary>
+ <param name="_buffer">Pointer to an array to copy.</param>
+ <param name="size">The size of the array.</param>
+</Document>

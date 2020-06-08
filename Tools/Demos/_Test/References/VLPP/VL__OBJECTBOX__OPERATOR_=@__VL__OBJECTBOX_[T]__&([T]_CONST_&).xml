@@ -1,0 +1,5 @@
+<Document>
+ <summary>Box a value.</summary>
+ <returns>The boxed value.</returns>
+ <param name="_object">The value to box.</param>
+</Document>

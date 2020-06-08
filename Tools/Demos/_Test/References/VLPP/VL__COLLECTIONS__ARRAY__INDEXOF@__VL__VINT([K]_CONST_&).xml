@@ -1,0 +1,5 @@
+<Document>
+ <summary>Get the position of an item in this array.</summary>
+ <returns>Returns the position. Returns -1 if not exists</returns>
+ <param name="item">The item to find.</param>
+</Document>

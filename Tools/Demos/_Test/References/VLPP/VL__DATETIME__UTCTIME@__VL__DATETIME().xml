@@ -1,0 +1,4 @@
+<Document>
+ <summary>Get the current UTC time.</summary>
+ <returns>The current UTC time.</returns>
+</Document>

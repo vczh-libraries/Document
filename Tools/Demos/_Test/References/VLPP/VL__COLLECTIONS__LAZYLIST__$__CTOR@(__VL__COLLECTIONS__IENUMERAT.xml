@@ -1,0 +1,4 @@
+<Document>
+ <summary>Create a lazy list with an enumerator.</summary>
+ <param name="enumerator">The enumerator.</param>
+</Document>

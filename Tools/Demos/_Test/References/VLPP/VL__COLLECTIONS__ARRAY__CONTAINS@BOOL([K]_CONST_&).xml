@@ -1,0 +1,5 @@
+<Document>
+ <summary>Test does the array contain an item or not.</summary>
+ <returns>Returns true if the array contains the specified item.</returns>
+ <param name="item">The item to test.</param>
+</Document>

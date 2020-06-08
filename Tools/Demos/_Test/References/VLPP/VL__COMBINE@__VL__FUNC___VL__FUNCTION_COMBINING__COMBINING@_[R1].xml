@@ -1,0 +1,10 @@
+<Document>
+ <summary>Combine two functions with a converter function. The two functions to combine should have the same argument types. The converter function will use the return values of the two function to calculate the final value.</summary>
+ <typeparam name="F1">Type of the first function.</typeparam>
+ <typeparam name="F2">Type of the second function.</typeparam>
+ <typeparam name="C">Type of the converter function.</typeparam>
+ <returns>A new function whose argument list are the same of the two functions to provide. Calling this function will call function1, function2 and converter in order to calculate the final value.</returns>
+ <param name="converter">The converter function.</param>
+ <param name="function1">The first function.</param>
+ <param name="function2">The second function.</param>
+</Document>

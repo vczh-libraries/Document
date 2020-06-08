@@ -1,0 +1,6 @@
+<Document>
+ <summary>Add an item at the specified position.</summary>
+ <returns>The index of the added item.</returns>
+ <param name="index">The position of the item to add.</param>
+ <param name="item">The item to add.</param>
+</Document>

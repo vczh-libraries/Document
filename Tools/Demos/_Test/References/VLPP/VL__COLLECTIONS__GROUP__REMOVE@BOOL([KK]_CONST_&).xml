@@ -1,0 +1,5 @@
+<Document>
+ <summary>Remove a key with all associated values.</summary>
+ <returns>Returns true if the key and all associated values are removed.</returns>
+ <param name="key">The key.</param>
+</Document>

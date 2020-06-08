@@ -1,0 +1,4 @@
+<Document>
+ <summary>Get the evaluation result. If it has not been calculated yet, it will run the evaluation and cache the result. You will not need to calculate for the second time.</summary>
+ <returns>The evaluation result.</returns>
+</Document>

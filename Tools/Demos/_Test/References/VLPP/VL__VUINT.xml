@@ -1,0 +1,3 @@
+<Document>
+ <summary>Unsigned interface whose size is equal to sizeof(void*).</summary>
+</Document>

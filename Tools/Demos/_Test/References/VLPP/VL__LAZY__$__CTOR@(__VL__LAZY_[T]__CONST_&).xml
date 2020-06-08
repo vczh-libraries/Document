@@ -1,0 +1,4 @@
+<Document>
+ <summary>Copy an evaluation.</summary>
+ <param name="lazy">The evaluation to copy.</param>
+</Document>

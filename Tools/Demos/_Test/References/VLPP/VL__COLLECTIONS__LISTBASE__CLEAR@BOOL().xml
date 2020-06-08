@@ -1,0 +1,4 @@
+<Document>
+ <summary>Remove all elements.</summary>
+ <returns>Returns true if all elements are removed.</returns>
+</Document>
