@@ -1,5 +1,1 @@
-<Document>
- <summary>Create a non-null value.</summary>
- <returns>The created nullable value.</returns>
- <param name="value">The value to copy.</param>
-</Document>
+<Document><summary>Create a non-null value.</summary><returns>The created nullable value.</returns><param name="value">The value to copy.</param></Document>

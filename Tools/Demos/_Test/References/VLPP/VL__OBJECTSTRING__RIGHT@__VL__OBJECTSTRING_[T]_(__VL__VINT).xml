@@ -1,5 +1,1 @@
-<Document>
- <summary>Copy the ending of the string.</summary>
- <returns>The copied string.</returns>
- <param name="count">Size of characters to copy.</param>
-</Document>
+<Document><summary>Copy the ending of the string.</summary><returns>The copied string.</returns><param name="count">Size of characters to copy.</param></Document>

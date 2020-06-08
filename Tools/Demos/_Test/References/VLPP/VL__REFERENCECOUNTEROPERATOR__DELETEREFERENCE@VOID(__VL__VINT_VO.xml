@@ -1,5 +1,1 @@
-<Document>
- <summary>Destroy a pointer to the reference counter from an object.</summary>
- <param name="counter">The pointer to the reference counter.</param>
- <param name="reference">The object.</param>
-</Document>
+<Document><summary>Destroy a pointer to the reference counter from an object.</summary><param name="counter">The pointer to the reference counter.</param><param name="reference">The object.</param></Document>

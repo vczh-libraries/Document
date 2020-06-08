@@ -1,6 +1,7 @@
 #include "Render.h"
 #include <VlppParser.h>
 
+using namespace vl::parsing::tabling;
 using namespace vl::parsing::xml;
 
 /***********************************************************************
@@ -9,25 +10,40 @@ ValidateAndFixDocumentRecord
 
 void ValidateAndFixDocumentRecord(
 	Ptr<GlobalLinesRecord> global,
+	Ptr<ParsingTable> parsingTable,
 	Symbol* symbol,
 	Ptr<DocumentRecord> documentRecord,
 	StreamWriter& writer
 )
 {
-	writer.WriteLine(L"<Document>");
-	for (vint i = 0; i < documentRecord->comments.Count(); i++)
+	auto xmlText = GenerateToStream([&parsingTable, &documentRecord](StreamWriter& xmlWriter)
 	{
-		auto& token = documentRecord->comments[i];
-		if (token.token == (vint)CppTokens::DOCUMENT)
+		xmlWriter.WriteLine(L"<Document>");
+		for (vint i = 0; i < documentRecord->comments.Count(); i++)
 		{
-			writer.WriteLine(token.reading + 3, token.length - 3);
+			auto& token = documentRecord->comments[i];
+			if (token.token == (vint)CppTokens::DOCUMENT)
+			{
+				xmlWriter.WriteLine(token.reading + 3, token.length - 3);
+			}
+			else
+			{
+				xmlWriter.WriteLine(token.reading + 2, token.length - 2);
+			}
 		}
-		else
-		{
-			writer.WriteLine(token.reading + 2, token.length - 2);
-		}
+		xmlWriter.WriteLine(L"</Document>");
+	});
+
+	auto xmlDocument = XmlParseDocument(xmlText, parsingTable);
+	if (!xmlDocument)
+	{
+		Console::WriteLine(L"");
+		Console::WriteLine(L"FAILED TO PARSE:");
+		Console::WriteLine(xmlText);
+		return;
 	}
-	writer.WriteLine(L"</Document>");
+
+	XmlPrint(xmlDocument, writer);
 }
 
 /***********************************************************************
@@ -36,6 +52,7 @@ RenderDocumentRecord
 
 void RenderDocumentRecord(
 	Ptr<GlobalLinesRecord> global,
+	Ptr<ParsingTable> parsingTable,
 	Ptr<SymbolGroup> symbolGroup,
 	const WString& fileGroupPrefix,
 	const FilePath& pathReference,
@@ -52,14 +69,14 @@ void RenderDocumentRecord(
 			Utf8Encoder encoder;
 			EncoderStream encoderStream(fileStream, encoder);
 			StreamWriter referenceWriter(encoderStream);
-			ValidateAndFixDocumentRecord(global, symbolGroup->symbol, global->declComments.Values()[index], referenceWriter);
+			ValidateAndFixDocumentRecord(global, parsingTable, symbolGroup->symbol, global->declComments.Values()[index], referenceWriter);
 		}
 	}
 
 	for (vint i = 0; i < symbolGroup->children.Count(); i++)
 	{
 		auto childGroup = symbolGroup->children[i];
-		RenderDocumentRecord(global, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
+		RenderDocumentRecord(global, parsingTable, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
 	}
 
 	writtenReferenceCount++;
@@ -84,6 +101,7 @@ void GenerateReferenceIndex(
 	IProgressReporter* progressReporter
 )
 {
+	auto parsingTable = XmlLoadTable();
 	vint writtenReferenceCount = 0;
 	for (vint i = 0; i < rootGroup->children.Count(); i++)
 	{
@@ -91,7 +109,7 @@ void GenerateReferenceIndex(
 		if (predefinedGroups.Contains(fileGroup->name))
 		{
 			Folder(pathReference / fileGroup->uniqueId).Create(true);
-			RenderDocumentRecord(global, fileGroup, fileGroup->uniqueId, pathReference, progressReporter, writtenReferenceCount);
+			RenderDocumentRecord(global, parsingTable, fileGroup, fileGroup->uniqueId, pathReference, progressReporter, writtenReferenceCount);
 		}
 	}
 }

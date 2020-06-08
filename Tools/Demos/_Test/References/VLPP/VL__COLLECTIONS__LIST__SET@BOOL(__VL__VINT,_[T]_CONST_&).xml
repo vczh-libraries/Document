@@ -1,6 +1,1 @@
-<Document>
- <summary>Replace an item.</summary>
- <returns>Returns true if this operation succeeded.</returns>
- <param name="index">The position of the item.</param>
- <param name="item">The new item to put into the array.</param>
-</Document>
+<Document><summary>Replace an item.</summary><returns>Returns true if this operation succeeded.</returns><param name="index">The position of the item.</param><param name="item">The new item to put into the array.</param></Document>

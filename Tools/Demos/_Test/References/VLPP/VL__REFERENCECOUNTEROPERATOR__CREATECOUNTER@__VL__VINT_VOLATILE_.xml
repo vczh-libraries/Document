@@ -1,5 +1,1 @@
-<Document>
- <summary>Create a pointer to the reference counter from an object.</summary>
- <returns>The pointer to the reference counter.</returns>
- <param name="reference">The object.</param>
-</Document>
+<Document><summary>Create a pointer to the reference counter from an object.</summary><returns>The pointer to the reference counter.</returns><param name="reference">The object.</param></Document>

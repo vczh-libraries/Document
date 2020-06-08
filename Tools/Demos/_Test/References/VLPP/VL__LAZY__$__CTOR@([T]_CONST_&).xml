@@ -1,4 +1,2 @@
-<Document>
- <summary>Create an evaluation using the result directly.</summary>
- <param name="value">The result that you have already known.</param>0
+<Document><summary>Create an evaluation using the result directly.</summary><param name="value">The result that you have already known.</param>0
 </Document>

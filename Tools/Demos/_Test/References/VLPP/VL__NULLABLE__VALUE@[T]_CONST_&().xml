@@ -1,4 +1,1 @@
-<Document>
- <summary>Unbox the value. This operation will cause an access violation of it is null.</summary>
- <returns>The original value.</returns>
-</Document>
+<Document><summary>Unbox the value. This operation will cause an access violation of it is null.</summary><returns>The original value.</returns></Document>

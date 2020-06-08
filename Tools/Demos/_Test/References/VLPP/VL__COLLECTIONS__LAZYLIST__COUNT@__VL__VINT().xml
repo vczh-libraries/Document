@@ -1,4 +1,1 @@
-<Document>
- <summary>Get the number of elements in the lazy list.</summary>
- <returns>The number of elements.</returns>
-</Document>
+<Document><summary>Get the number of elements in the lazy list.</summary><returns>The number of elements.</returns></Document>

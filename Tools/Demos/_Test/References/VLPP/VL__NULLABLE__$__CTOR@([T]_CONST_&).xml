@@ -1,4 +1,1 @@
-<Document>
- <summary>Create a non-null value.</summary>
- <param name="value">The value to copy.</param>
-</Document>
+<Document><summary>Create a non-null value.</summary><param name="value">The value to copy.</param></Document>

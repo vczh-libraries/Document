@@ -1,5 +1,1 @@
-<Document>
- <summary>Create a new lazy list with several copies of this lazy list one after another.</summary>
- <returns>The created lazy list.</returns>
- <param name="count">The numbers of copies.</param>
-</Document>
+<Document><summary>Create a new lazy list with several copies of this lazy list one after another.</summary><returns>The created lazy list.</returns><param name="count">The numbers of copies.</param></Document>

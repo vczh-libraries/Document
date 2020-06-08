@@ -1,6 +1,1 @@
-<Document>
- <summary>Copy the beginning and the end of the string.</summary>
- <returns>The copied string.</returns>
- <param name="index">Position of characters NOT to copy.</param>
- <param name="count">Size of characters NOT to copy.</param>
-</Document>
+<Document><summary>Copy the beginning and the end of the string.</summary><returns>The copied string.</returns><param name="index">Position of characters NOT to copy.</param><param name="count">Size of characters NOT to copy.</param></Document>

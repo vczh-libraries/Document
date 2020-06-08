@@ -1,4 +1,1 @@
-<Document>
- <summary>Copy a string.</summary>
- <param name="string">The string to copy.</param>
-</Document>
+<Document><summary>Copy a string.</summary><param name="string">The string to copy.</param></Document>

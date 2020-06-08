@@ -1,5 +1,1 @@
-<Document>
- <summary>List that keeps everything in order.</summary>
- <typeparam name="T">Type of elements.</typeparam>
- <typeparam name="K">Type of the key type of elements.</typeparam>
-</Document>
+<Document><summary>List that keeps everything in order.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam></Document>

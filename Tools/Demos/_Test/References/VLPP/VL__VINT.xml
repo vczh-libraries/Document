@@ -1,3 +1,1 @@
-<Document>
- <summary>Signed interface whose size is equal to sizeof(void*).</summary>
-</Document>
+<Document><summary>Signed interface whose size is equal to sizeof(void*).</summary></Document>

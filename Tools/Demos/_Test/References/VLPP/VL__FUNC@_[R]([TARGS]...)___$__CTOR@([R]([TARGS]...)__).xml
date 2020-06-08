@@ -1,4 +1,1 @@
-<Document>
- <summary>Create a reference using a function pointer.</summary>
- <param name="function">The function pointer.</param>
-</Document>
+<Document><summary>Create a reference using a function pointer.</summary><param name="function">The function pointer.</param></Document>

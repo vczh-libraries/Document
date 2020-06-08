@@ -1,5 +1,1 @@
-<Document>
- <summary>Print a message with specified color.</summary>
- <param name="string">The content.</param>
- <param name="kind">The kind of the content.</param>
-</Document>
+<Document><summary>Print a message with specified color.</summary><param name="string">The content.</param><param name="kind">The kind of the content.</param></Document>

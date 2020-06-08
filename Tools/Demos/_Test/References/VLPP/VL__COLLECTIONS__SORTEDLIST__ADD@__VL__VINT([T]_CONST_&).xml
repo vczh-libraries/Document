@@ -1,5 +1,1 @@
-<Document>
- <summary>Add an item at a correct position to keep everying in order.</summary>
- <returns>The index of the added item.</returns>
- <param name="item">The item to add.</param>
-</Document>
+<Document><summary>Add an item at a correct position to keep everying in order.</summary><returns>The index of the added item.</returns><param name="item">The item to add.</param></Document>

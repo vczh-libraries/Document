@@ -1,5 +1,4 @@
-<Document>
- <summary><![CDATA[
+<Document><summary><![CDATA[
  A static class containing all unit test operations.
  1) Writing test cases:
    TEST_FILE
@@ -22,5 +21,4 @@
    When no argument is provided
      In Windows, it becomes "/D" only when a debugger is attached, in other cases it becomes "/R".
      In other platforms, it becomes "/R"
- ]]></summary>
-</Document>
+ ]]></summary></Document>

@@ -1,4 +1,1 @@
-<Document>
- <summary>Convert the nullable value to a bool value.</summary>
- <returns>Returns true if it is not null.</returns>
-</Document>
+<Document><summary>Convert the nullable value to a bool value.</summary><returns>Returns true if it is not null.</returns></Document>

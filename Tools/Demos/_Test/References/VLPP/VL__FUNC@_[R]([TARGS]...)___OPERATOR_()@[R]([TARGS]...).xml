@@ -1,5 +1,1 @@
-<Document>
- <summary>Invoke the function.</summary>
- <returns>Returns the function result.</returns>
- <param name="args">Arguments to invoke the function.</param>
-</Document>
+<Document><summary>Invoke the function.</summary><returns>Returns the function result.</returns><param name="args">Arguments to invoke the function.</param></Document>

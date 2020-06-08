@@ -1,4 +1,1 @@
-<Document>
- <summary>Test is the lazy list empty.</summary>
- <returns>Returns true if the lazy list is empty.</returns>
-</Document>
+<Document><summary>Test is the lazy list empty.</summary><returns>Returns true if the lazy list is empty.</returns></Document>

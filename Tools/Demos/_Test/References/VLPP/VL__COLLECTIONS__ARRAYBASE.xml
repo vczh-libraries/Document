@@ -1,4 +1,1 @@
-<Document>
- <summary>Base type of all linear container.</summary>
- <typeparam name="T">Type of elements.</typeparam>
-</Document>
+<Document><summary>Base type of all linear container.</summary><typeparam name="T">Type of elements.</typeparam></Document>

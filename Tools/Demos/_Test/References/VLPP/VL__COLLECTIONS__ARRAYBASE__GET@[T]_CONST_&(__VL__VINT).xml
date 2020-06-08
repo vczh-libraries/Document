@@ -1,5 +1,1 @@
-<Document>
- <summary>Get the reference to the specified element.</summary>
- <returns>The reference to the specified element.</returns>
- <param name="index">The index of the element.</param>
-</Document>
+<Document><summary>Get the reference to the specified element.</summary><returns>The reference to the specified element.</returns><param name="index">The index of the element.</param></Document>

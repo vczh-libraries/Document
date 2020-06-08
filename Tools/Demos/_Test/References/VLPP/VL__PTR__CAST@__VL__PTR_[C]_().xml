@@ -1,5 +1,1 @@
-<Document>
- <summary>Cast a smart pointer.</summary>
- <typeparam name="C">The type of the object after casting.</typeparam>
- <returns>The casted smart pointer. Returns null if failed.</returns>
-</Document>
+<Document><summary>Cast a smart pointer.</summary><typeparam name="C">The type of the object after casting.</typeparam><returns>The casted smart pointer. Returns null if failed.</returns></Document>

@@ -1,4 +1,1 @@
-<Document>
- <summary>Create an evaluation using a function.</summary>
- <param name="evaluator">The function.</param>
-</Document>
+<Document><summary>Create an evaluation using a function.</summary><param name="evaluator">The function.</param></Document>

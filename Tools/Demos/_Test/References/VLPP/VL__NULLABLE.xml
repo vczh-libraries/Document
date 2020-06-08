@@ -1,4 +1,1 @@
-<Document>
- <summary>Type for optionally storing a value.</summary>
- <typeparam name="T">Type of the value.</typeparam>
-</Document>
+<Document><summary>Type for optionally storing a value.</summary><typeparam name="T">Type of the value.</typeparam></Document>

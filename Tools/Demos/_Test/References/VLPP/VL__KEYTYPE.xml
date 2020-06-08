@@ -1,4 +1,1 @@
-<Document>
- <summary>Get the index type of a value for containers.</summary>
- <typeparam name="T">Type of the value.</typeparam>
-</Document>
+<Document><summary>Get the index type of a value for containers.</summary><typeparam name="T">Type of the value.</typeparam></Document>

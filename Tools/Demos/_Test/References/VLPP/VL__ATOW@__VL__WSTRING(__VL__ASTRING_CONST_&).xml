@@ -1,5 +1,1 @@
-<Document>
- <summary>Convert an Ansi string to an Unicode string.</summary>
- <returns>The converted string.</returns>
- <param name="string">The string to convert.</param>
-</Document>
+<Document><summary>Convert an Ansi string to an Unicode string.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param></Document>

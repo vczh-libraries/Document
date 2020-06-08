@@ -1,9 +1,1 @@
-<Document>
- <summary>Copy containers.</summary>
- <typeparam name="Ds">Type of the destination container.</typeparam>
- <typeparam name="S">Type of the elements in the source container.</typeparam>
- <param name="ds">The destination container.</param>
- <param name="buffer">Pointer to the source array.</param>
- <param name="count">The number of elements to copy.</param>
- <param name="append">Set to false to delete everything in the destination container before copying.</param>
-</Document>
+<Document><summary>Copy containers.</summary><typeparam name="Ds">Type of the destination container.</typeparam><typeparam name="S">Type of the elements in the source container.</typeparam><param name="ds">The destination container.</param><param name="buffer">Pointer to the source array.</param><param name="count">The number of elements to copy.</param><param name="append">Set to false to delete everything in the destination container before copying.</param></Document>

@@ -1,5 +1,1 @@
-<Document>
- <summary>Remove a callback.</summary>
- <returns>Returns true if this operation succeeded.</returns>
- <param name="handler">The event handler representing the callback.</param>
-</Document>
+<Document><summary>Remove a callback.</summary><returns>Returns true if this operation succeeded.</returns><param name="handler">The event handler representing the callback.</param></Document>

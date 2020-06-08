@@ -1,5 +1,1 @@
-<Document>
- <summary>Convert a string to a 64-bits floating point number.</summary>
- <returns>The converted number. If the convert failed, the result is undefined.</returns>
- <param name="string">The string to convert.</param>
-</Document>
+<Document><summary>Convert a string to a 64-bits floating point number.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param></Document>

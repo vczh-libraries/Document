@@ -1,6 +1,1 @@
-<Document>
- <summary>Create a new lazy list with all elements that satisfy with a condition.</summary>
- <typeparam name="F">Type of the lambda expression.</typeparam>
- <returns>The created lazy list.</returns>
- <param name="f">The lambda expression as a filter.</param>
-</Document>
+<Document><summary>Create a new lazy list with all elements that satisfy with a condition.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a filter.</param></Document>
