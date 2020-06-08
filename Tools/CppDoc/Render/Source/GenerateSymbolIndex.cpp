@@ -1,29 +1,6 @@
 #include "Render.h"
 
 /***********************************************************************
-SymbolGroup
-***********************************************************************/
-
-enum class SymbolGroupKind
-{
-	Root,
-	Group,
-	Text,
-	Symbol,
-	SymbolAndText,
-};
-
-struct SymbolGroup
-{
-	SymbolGroupKind					kind = SymbolGroupKind::Symbol;
-	WString							uniqueId;
-	WString							name;
-	Symbol*							symbol = nullptr;
-	bool							braces = false;
-	List<Ptr<SymbolGroup>>			children;
-};
-
-/***********************************************************************
 GenerateSymbolGroupUniqueId
 ***********************************************************************/
 
@@ -519,7 +496,7 @@ void RenderSymbolGroup(
 GenerateSymbolIndex
 ***********************************************************************/
 
-void GenerateSymbolIndex(
+Ptr<SymbolGroup> GenerateSymbolIndex(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
 	FilePath pathHtml,
@@ -596,4 +573,6 @@ void GenerateSymbolIndex(
 		writer.WriteLine(L"</body>");
 		writer.WriteLine(L"</html>");
 	}
+
+	return rootGroup;
 }

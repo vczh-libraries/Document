@@ -229,10 +229,30 @@ extern void											GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesR
 Index Page Generating
 ***********************************************************************/
 
+enum class SymbolGroupKind
+{
+	Root,
+	Group,
+	Text,
+	Symbol,
+	SymbolAndText,
+};
+
+struct SymbolGroup
+{
+	SymbolGroupKind					kind = SymbolGroupKind::Symbol;
+	WString							uniqueId;
+	WString							name;
+	Symbol*							symbol = nullptr;
+	bool							braces = false;
+	List<Ptr<SymbolGroup>>			children;
+};
+
 // {PathPrefix, Label}
 using FileGroupConfig = List<Tuple<WString, WString>>;
 
 extern void											GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGroupConfig& fileGroups);
-extern void											GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FilePath pathFragment, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
+extern Ptr<SymbolGroup>								GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FilePath pathFragment, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
+extern void											GenerateReferenceIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Ptr<SymbolGroup> rootGroup, FilePath pathHtml, FilePath pathReference, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
 
 #endif

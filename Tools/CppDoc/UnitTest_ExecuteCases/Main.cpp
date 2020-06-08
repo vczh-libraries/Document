@@ -65,9 +65,11 @@ void IndexCppCode(
 	FilePath				pathPreprocessed,			// cache: preprocessed file
 	FilePath				pathInput,					// cache: compacted preprocessed file, removing all empty, space or # lines
 	FilePath				pathMapping,				// cache: line mapping between pathPreprocessed and pathInput
+
 	Folder					folderOutput,				// root output folder
 	Folder					folderSource,				// folder containing generated HTML files
-	Folder					folderFragment				// folder containing symbol index fragments
+	Folder					folderFragment,				// folder containing symbol index fragments
+	Folder					folderReference				// folder containing reference files
 )
 {
 	Console::WriteLine(preprocessedFile.GetFilePath().GetFullPath());
@@ -184,11 +186,23 @@ void IndexCppCode(
 	);
 
 	Console::WriteLine(L"        SymbolIndex.html");
-	GenerateSymbolIndex(
+	auto rootGroup = GenerateSymbolIndex(
 		global,
 		indexResult,
 		folderOutput.GetFilePath() / L"SymbolIndex.html",
 		folderFragment.GetFilePath(),
+		fileGroups,
+		&progressReporter
+	);
+	progressReporter.FinishPhase();
+
+	Console::WriteLine(L"        ReferenceIndex.html");
+	GenerateReferenceIndex(
+		global,
+		indexResult,
+		rootGroup,
+		folderOutput.GetFilePath() / L"ReferenceIndex.html",
+		folderReference.GetFilePath(),
 		fileGroups,
 		&progressReporter
 	);
@@ -244,6 +258,7 @@ int main()
 		Folder folderOutput(file.GetFilePath().GetFolder() / (L"../../Demos/" + projectName));
 		Folder folderSource(folderOutput.GetFilePath() / L"SourceFiles");
 		Folder folderFragment(folderOutput.GetFilePath() / L"SymbolIndexFragments");
+		Folder folderReference(folderOutput.GetFilePath() / L"References");
 
 		auto pathPreprocessed = folderInput.GetFilePath() / L"Preprocessed.cpp";
 		auto pathInput = folderInput.GetFilePath() / L"Input.cpp";
@@ -272,7 +287,8 @@ int main()
 			pathMapping,
 			folderOutput,
 			folderSource,
-			folderFragment
+			folderFragment,
+			folderReference
 		);
 	}
 
