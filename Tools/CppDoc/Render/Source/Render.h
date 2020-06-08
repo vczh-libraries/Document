@@ -165,11 +165,17 @@ struct FileLinesRecord
 	SortedList<Symbol*>								refSymbols;		// symbols of all hyperlink targets in the source file
 };
 
+struct DocumentRecord
+{
+	List<RegexToken>								comments;		// consecutive tokens of CppTokens::DOCUMENT
+};
+
 struct GlobalLinesRecord
 {
 	WString											preprocessed;	// text content of Preprocessed.cpp, ensure that each line ends with a line-break
 	Dictionary<FilePath, Ptr<FileLinesRecord>>		fileLines;		// generated HTML code of all touched source files
 	Dictionary<DeclOrArg, FilePath>					declToFiles;	// declaration to source file mapping
+	Dictionary<Symbol*, Ptr<DocumentRecord>>		declComments;	// declaration to document comments
 	SortedList<WString>								htmlFileNames;	// all fileLines[x]->htmlFileName
 };
 

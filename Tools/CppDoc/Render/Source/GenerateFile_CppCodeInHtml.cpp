@@ -89,7 +89,7 @@ void GenerateCppCodeInHtml(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 			}
 			else
 			{
-				throw Exception(L"Too many lines are processed.");
+				throw L"Too many lines are processed.";
 			}
 		}
 

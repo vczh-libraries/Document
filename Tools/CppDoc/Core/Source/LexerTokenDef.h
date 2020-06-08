@@ -151,7 +151,7 @@ Others
 	F(CHAR,						L"([uUL]|u8)?'([^/\\']|/\\/.)*'")						\
 	F(ID,						L"[a-zA-Z_][a-zA-Z0-9_]*")								\
 	F(SPACE,					L"[ \t\r\n\v\f]+")										\
-	F(DOCUMENT,					L"//////[^\r\n]*")										\
+	F(DOCUMENT,					L"//////([^//][^\r\n]*)?")								\
 	F(COMMENT1,					L"////[^\r\n]*")										\
 	F(COMMENT2,					L"///*([^*]|/*+[^*//])*/*+//")							\
 

@@ -336,9 +336,35 @@ void GenerateHtmlLine(
 	Ptr<StreamHolder> html;
 	vint lineCounter = 0;
 
+	Ptr<DocumentRecord> documentRecord;
 	bool firstToken = true;
+	bool lastTokenIsDocument = false;
+
 	while (cursor)
 	{
+		if (TestToken(cursor, CppTokens::DOCUMENT, false))
+		{
+			if (!lastTokenIsDocument)
+			{
+				// the previous token is not DOCUMENT or SPACE, this is a start of a new documehnt
+				if (documentRecord)
+				{
+					// if documentRecord still exist, it means the last document has not been assigned
+					throw L"The last document comments are not assigned to any symbol.";
+				}
+
+				// make a new document
+				documentRecord = MakePtr<DocumentRecord>();
+				lastTokenIsDocument = true;
+			}
+			documentRecord->comments.Add(cursor->token);
+		}
+		else if (!TestToken(cursor, CppTokens::SPACE, false))
+		{
+			// SPACE between DOCUMENT is ignored
+			lastTokenIsDocument = false;
+		}
+
 		// calculate the surrounding context of the current token
 		AdjustSkippingIndex(cursor, skipping, tracker.indexSkipping, tracker.asr);
 		if (tracker.indexSkipping.inRange)
@@ -401,6 +427,16 @@ void GenerateHtmlLine(
 			if (!global->declToFiles.Keys().Contains(declOrArg))
 			{
 				global->declToFiles.Add(declOrArg, currentFilePath);
+			}
+
+			if (documentRecord && declOrArg.decl)
+			{
+				// a document will never assign to a template argument
+				// so declOrArg.decl must exist to proceed
+				// here we do not allow multiple document record be assigned to the same symbol
+				// it could happen when we have documents for both forward declaration and implementation
+				global->declComments.Add(declOrArg.decl->symbol, documentRecord);
+				documentRecord = nullptr;
 			}
 
 			// generate an id to jump to
@@ -763,7 +799,7 @@ Ptr<GlobalLinesRecord> Collect(
 				// line break is not consumed after #line
 				if (hlr.htmlCode.Length() != 0)
 				{
-					throw Exception(L"An empty line should have been submitted right after #line.");
+					throw L"An empty line should have been submitted right after #line.";
 				}
 				rightAfterSharpLine = false;
 			}
@@ -795,7 +831,7 @@ Ptr<GlobalLinesRecord> Collect(
 						}
 						else
 						{
-							throw Exception(L"Generated different HTML code for same part of a file.");
+							throw L"Generated different HTML code for same part of a file.";
 						}
 					}
 				}

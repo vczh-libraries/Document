@@ -27,9 +27,8 @@
 ### Document Generation
 
 - [ ] Generate reference pages
-  - [ ] In `GenerateHtmlLine`, collect all `Document` token, assigned and clean the token list when a declaration name is found.
-    - [ ] If the declaration name is a template argument, ignore.
-    - [ ] If the declaration name is enum item, take a record on the enum.
+  - [x] In `GenerateHtmlLine`, collect all `Document` token, assigned and clean the token list when a declaration name is found.
+    - [x] If the declaration name is a template argument, ignore.
     - [ ] Document commponents are not allowed to be assigned to multiple declaration names of the same symbol.
     - [ ] Check `<typeparam/>` and `<param/>` and `<enumitem/>`
     - [ ] XML document on enum item can only have `<summary/>`, when it is found.
