@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Import\VlppParser.cpp" />
+    <ClCompile Include="..\..\..\Import\VlppReflection.cpp" />
     <ClCompile Include="Source\Collecting.cpp" />
     <ClCompile Include="Source\Compiling.cpp" />
     <ClCompile Include="Source\DisplayNameInHtml.cpp" />
@@ -34,6 +36,8 @@
     <ClCompile Include="Source\Render.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Import\VlppParser.h" />
+    <ClInclude Include="..\..\..\Import\VlppReflection.h" />
     <ClInclude Include="Source\Render.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

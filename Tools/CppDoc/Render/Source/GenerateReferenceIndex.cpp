@@ -1,7 +1,37 @@
 #include "Render.h"
+#include <VlppParser.h>
+
+using namespace vl::parsing::xml;
 
 /***********************************************************************
-GenerateReferenceIndex
+ValidateAndFixDocumentRecord
+***********************************************************************/
+
+void ValidateAndFixDocumentRecord(
+	Ptr<GlobalLinesRecord> global,
+	Symbol* symbol,
+	Ptr<DocumentRecord> documentRecord,
+	StreamWriter& writer
+)
+{
+	writer.WriteLine(L"<Document>");
+	for (vint i = 0; i < documentRecord->comments.Count(); i++)
+	{
+		auto& token = documentRecord->comments[i];
+		if (token.token == (vint)CppTokens::DOCUMENT)
+		{
+			writer.WriteLine(token.reading + 3, token.length - 3);
+		}
+		else
+		{
+			writer.WriteLine(token.reading + 2, token.length - 2);
+		}
+	}
+	writer.WriteLine(L"</Document>");
+}
+
+/***********************************************************************
+RenderDocumentRecord
 ***********************************************************************/
 
 void RenderDocumentRecord(
@@ -18,27 +48,11 @@ void RenderDocumentRecord(
 		vint index = global->declComments.Keys().IndexOf(symbolGroup->symbol);
 		if (index != -1)
 		{
-			auto dr = global->declComments.Values()[index];
-
 			FileStream fileStream((pathReference / fileGroupPrefix / (symbolGroup->uniqueId + L".xml")).GetFullPath(), FileStream::WriteOnly);
 			Utf8Encoder encoder;
 			EncoderStream encoderStream(fileStream, encoder);
 			StreamWriter referenceWriter(encoderStream);
-
-			referenceWriter.WriteLine(L"<Document>");
-			for (vint i = 0; i < dr->comments.Count(); i++)
-			{
-				auto& token = dr->comments[i];
-				if (token.token == (vint)CppTokens::DOCUMENT)
-				{
-					referenceWriter.WriteLine(token.reading + 3, token.length - 3);
-				}
-				else
-				{
-					referenceWriter.WriteLine(token.reading + 2, token.length - 2);
-				}
-			}
-			referenceWriter.WriteLine(L"</Document>");
+			ValidateAndFixDocumentRecord(global, symbolGroup->symbol, global->declComments.Values()[index], referenceWriter);
 		}
 	}
 
