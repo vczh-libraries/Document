@@ -350,7 +350,14 @@ void GenerateHtmlLine(
 				if (documentRecord)
 				{
 					// if documentRecord still exist, it means the last document has not been assigned
-					throw L"The last document comments are not assigned to any symbol.";
+					// it could happen when the previous document is for a macro, but the macro is removed by the preprocessor
+					Console::WriteLine(L"");
+					Console::WriteLine(L"UNASSIGNED:");
+					for (vint i = 0; i < documentRecord->comments.Count(); i++)
+					{
+						auto token = documentRecord->comments[i];
+						Console::WriteLine(itow(token.rowStart) + L":" + itow(token.columnStart) + L":" + WString(token.reading, token.length));
+					}
 				}
 
 				// make a new document
@@ -359,9 +366,30 @@ void GenerateHtmlLine(
 			}
 			documentRecord->comments.Add(cursor->token);
 		}
-		else if (!TestToken(cursor, CppTokens::SPACE, false))
+		else if (TestToken(cursor, CppTokens::COMMENT1, false))
 		{
-			// SPACE between DOCUMENT is ignored
+			// workaround a mistake in Direct2D header files
+			// having "// xxx" between "/// <summary>" and "/// </summary>"
+			if (lastTokenIsDocument && documentRecord)
+			{
+				documentRecord->comments.Add(cursor->token);
+			}
+			else
+			{
+				lastTokenIsDocument = false;
+			}
+		}
+		else if (TestToken(cursor, CppTokens::SPACE, false))
+		{
+			// SPACE between DOCUMENT is ignored, if it has less than 2 line breaks
+			auto& token = cursor->token;
+			if (token.rowEnd - token.rowStart > 1)
+			{
+				lastTokenIsDocument = false;
+			}
+		}
+		else
+		{
 			lastTokenIsDocument = false;
 		}
 
@@ -435,7 +463,25 @@ void GenerateHtmlLine(
 				// so declOrArg.decl must exist to proceed
 				// here we do not allow multiple document record be assigned to the same symbol
 				// it could happen when we have documents for both forward declaration and implementation
-				global->declComments.Add(declOrArg.decl->symbol, documentRecord);
+				// or the previous document is for a macro, but the macro is removed by the preprocessor
+				if (global->declComments.Keys().Contains(declOrArg.decl->symbol))
+				{
+					auto overrided = global->declComments[declOrArg.decl->symbol];
+					Console::WriteLine(L"");
+					Console::WriteLine(L"OVERRIDE:");
+					for (vint i = 0; i < overrided->comments.Count(); i++)
+					{
+						auto token = overrided->comments[i];
+						Console::WriteLine(itow(token.rowStart) + L":" + itow(token.columnStart) + L":" + WString(token.reading, token.length));
+					}
+					Console::WriteLine(L"BY:");
+					for (vint i = 0; i < documentRecord->comments.Count(); i++)
+					{
+						auto token = documentRecord->comments[i];
+						Console::WriteLine(itow(token.rowStart) + L":" + itow(token.columnStart) + L":" + WString(token.reading, token.length));
+					}
+				}
+				global->declComments.Set(declOrArg.decl->symbol, documentRecord);
 				documentRecord = nullptr;
 			}
 

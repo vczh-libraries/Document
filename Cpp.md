@@ -29,7 +29,7 @@
 - [ ] Generate reference pages
   - [x] In `GenerateHtmlLine`, collect all `Document` token, assigned and clean the token list when a declaration name is found.
     - [x] If the declaration name is a template argument, ignore.
-    - [ ] Document commponents are not allowed to be assigned to multiple declaration names of the same symbol.
+    - [x] Document commponents are not allowed to be assigned to multiple declaration names of the same symbol.
     - [ ] Check `<typeparam/>` and `<param/>` and `<enumitem/>`
     - [ ] XML document on enum item can only have `<summary/>`, when it is found.
       - [ ] Ensure that there is an XML document assigned to the enum.
