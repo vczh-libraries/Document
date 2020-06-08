@@ -62,9 +62,15 @@ void SetUniqueId(
 void GenerateSymbolGroupUniqueId(
 	Ptr<SymbolGroup> symbolGroup,
 	SymbolGroup* parentGroup,
+	vint& fragmentCount,
 	SortedList<WString>& ids
 )
 {
+	if (symbolGroup->children.Count() > 0)
+	{
+		fragmentCount++;
+	}
+
 	Array<wchar_t> buffer(65);
 	memset(&buffer[0], 0, sizeof(wchar_t) * buffer.Count());
 
@@ -102,7 +108,7 @@ void GenerateSymbolGroupUniqueId(
 
 	for (vint i = 0; i < symbolGroup->children.Count(); i++)
 	{
-		GenerateSymbolGroupUniqueId(symbolGroup->children[i], symbolGroup.Obj(), ids);
+		GenerateSymbolGroupUniqueId(symbolGroup->children[i], symbolGroup.Obj(), fragmentCount, ids);
 	}
 }
 
@@ -549,9 +555,8 @@ void GenerateSymbolIndex(
 
 			for (vint j = 0; j < fileGroup->children.Count(); j++)
 			{
-				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup.Obj(), ids);
+				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup.Obj(), fragmentCount, ids);
 			}
-			fragmentCount += ids.Count();
 		}
 	}
 
