@@ -65,7 +65,9 @@ void IndexCppCode(
 	FilePath				pathPreprocessed,			// cache: preprocessed file
 	FilePath				pathInput,					// cache: compacted preprocessed file, removing all empty, space or # lines
 	FilePath				pathMapping,				// cache: line mapping between pathPreprocessed and pathInput
-	Folder					folderOutput				// folder containing generated HTML files
+	Folder					folderOutput,				// root output folder
+	Folder					folderSource,				// folder containing generated HTML files
+	Folder					folderFragment				// folder containing symbol index fragments
 )
 {
 	Console::WriteLine(preprocessedFile.GetFilePath().GetFullPath());
@@ -186,6 +188,7 @@ void IndexCppCode(
 		global,
 		indexResult,
 		folderOutput.GetFilePath() / L"SymbolIndex.html",
+		folderFragment.GetFilePath(),
 		fileGroups,
 		&progressReporter
 	);
@@ -239,6 +242,8 @@ int main()
 		projectName = projectName.Left(projectName.Length() - 1);
 		Folder folderInput(file.GetFilePath().GetFullPath() + L".Input");
 		Folder folderOutput(file.GetFilePath().GetFolder() / (L"../../Demos/" + projectName));
+		Folder folderSource(folderOutput.GetFilePath() / L"SourceFiles");
+		Folder folderFragment(folderOutput.GetFilePath() / L"SymbolIndexFragments");
 
 		auto pathPreprocessed = folderInput.GetFilePath() / L"Preprocessed.cpp";
 		auto pathInput = folderInput.GetFilePath() / L"Input.cpp";
@@ -246,8 +251,8 @@ int main()
 
 		folderInput.Create(true);
 		folderOutput.Create(true);
-		Folder(folderOutput.GetFilePath() / L"SourceFiles").Create(true);
-		Folder(folderOutput.GetFilePath() / L"SymbolIndexFragments").Create(true);
+		folderSource.Create(true);
+		folderFragment.Create(true);
 
 		FileGroupConfig fileGroups;
 		fileGroups.Add({ file.GetFilePath().GetFolder().GetFullPath() + FilePath::Delimiter, L"Source Code of this Project" });
@@ -258,7 +263,17 @@ int main()
 		fileGroups.Add({ FilePath(L"../../../../VlppParser").GetFullPath() + FilePath::Delimiter, L"VlppParser" });
 		fileGroups.Add({ FilePath(L"../../../../Workflow").GetFullPath() + FilePath::Delimiter, L"Workflow" });
 		fileGroups.Add({ FilePath(L"../../../../GacUI").GetFullPath() + FilePath::Delimiter, L"GacUI" });
-		IndexCppCode(fileGroups, file, lexer, pathPreprocessed, pathInput, pathMapping, folderOutput);
+		IndexCppCode(
+			fileGroups,
+			file,
+			lexer,
+			pathPreprocessed,
+			pathInput,
+			pathMapping,
+			folderOutput,
+			folderSource,
+			folderFragment
+		);
 	}
 
 	return 0;

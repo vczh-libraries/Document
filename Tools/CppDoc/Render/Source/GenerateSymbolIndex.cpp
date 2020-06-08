@@ -62,12 +62,9 @@ void SetUniqueId(
 void GenerateSymbolGroupUniqueId(
 	Ptr<SymbolGroup> symbolGroup,
 	SymbolGroup* parentGroup,
-	const WString& prefix,
 	SortedList<WString>& ids
 )
 {
-	if (symbolGroup->children.Count() == 0) return;
-
 	Array<wchar_t> buffer(65);
 	memset(&buffer[0], 0, sizeof(wchar_t) * buffer.Count());
 
@@ -100,12 +97,12 @@ void GenerateSymbolGroupUniqueId(
 		}
 	}
 
-	auto uniqueId = prefix + L"_" + wupper(&buffer[0]);
+	auto uniqueId = wupper(&buffer[0]);
 	SetUniqueId(symbolGroup, uniqueId, ids);
 
 	for (vint i = 0; i < symbolGroup->children.Count(); i++)
 	{
-		GenerateSymbolGroupUniqueId(symbolGroup->children[i], symbolGroup.Obj(), prefix, ids);
+		GenerateSymbolGroupUniqueId(symbolGroup->children[i], symbolGroup.Obj(), ids);
 	}
 }
 
@@ -328,6 +325,7 @@ void RenderSymbolGroup(
 	Ptr<GlobalLinesRecord> global,
 	StreamWriter& writer,
 	Ptr<SymbolGroup> symbolGroup,
+	const WString& fileGroupPrefix,
 	const FilePath& fragmentFolder,
 	IProgressReporter* progressReporter,
 	vint fragmentCount,
@@ -460,7 +458,11 @@ void RenderSymbolGroup(
 		}
 		else
 		{
-			writer.WriteString(L"<div class=\"symbol_dropdown_container\" data-status=\"empty\" data-uniqueId=\"" + symbolGroup->uniqueId + L"\">");
+			writer.WriteString(L"<div class=\"symbol_dropdown_container\" data-status=\"empty\" data-categoryId=\"");
+			writer.WriteString(fileGroupPrefix);
+			writer.WriteString(L"\" data-uniqueId=\"");
+			writer.WriteString(symbolGroup->uniqueId);
+			writer.WriteString(L"\">");
 		}
 		if (symbolGroup->braces)
 		{
@@ -472,14 +474,14 @@ void RenderSymbolGroup(
 			for (vint i = 0; i < symbolGroup->children.Count(); i++)
 			{
 				auto childGroup = symbolGroup->children[i];
-				RenderSymbolGroup(global, writer, childGroup, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
+				RenderSymbolGroup(global, writer, childGroup, childGroup->uniqueId, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
 			}
 		}
 		else
 		{
 			writer.WriteString(L"<div class=\"symbol_dropdown\">Loading...</div>");
 			{
-				FileStream fileStream((fragmentFolder / (symbolGroup->uniqueId + L".html")).GetFullPath(), FileStream::WriteOnly);
+				FileStream fileStream((fragmentFolder / fileGroupPrefix / (symbolGroup->uniqueId + L".html")).GetFullPath(), FileStream::WriteOnly);
 				Utf8Encoder encoder;
 				EncoderStream encoderStream(fileStream, encoder);
 				StreamWriter fragmentWriter(encoderStream);
@@ -487,7 +489,7 @@ void RenderSymbolGroup(
 				for (vint i = 0; i < symbolGroup->children.Count(); i++)
 				{
 					auto childGroup = symbolGroup->children[i];
-					RenderSymbolGroup(global, fragmentWriter, childGroup, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
+					RenderSymbolGroup(global, fragmentWriter, childGroup, fileGroupPrefix, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
 				}
 
 				writtenFragmentCount++;
@@ -511,7 +513,14 @@ void RenderSymbolGroup(
 GenerateSymbolIndex
 ***********************************************************************/
 
-void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FileGroupConfig& fileGroups, IProgressReporter* progressReporter)
+void GenerateSymbolIndex(
+	Ptr<GlobalLinesRecord> global,
+	IndexResult& result,
+	FilePath pathHtml,
+	FilePath pathFragment,
+	FileGroupConfig& fileGroups,
+	IProgressReporter* progressReporter
+)
 {
 	auto rootGroup = MakePtr<SymbolGroup>();
 	vint fragmentCount = 0;
@@ -531,19 +540,19 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 	}
 	{
 		Regex extractLastWord(L"^(/.*/W)?(<word>/w+)/W*$");
-		SortedList<WString> ids;
 		for (vint i = 0; i < rootGroup->children.Count(); i++)
 		{
+			SortedList<WString> ids;
 			auto fileGroup = rootGroup->children[i];
 			auto match = extractLastWord.MatchHead(fileGroup->name);
 			SetUniqueId(fileGroup, match->Groups()[L"word"][0].Value(), ids);
 
 			for (vint j = 0; j < fileGroup->children.Count(); j++)
 			{
-				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup.Obj(), fileGroup->uniqueId, ids);
+				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup.Obj(), ids);
 			}
+			fragmentCount += ids.Count();
 		}
-		fragmentCount = ids.Count();
 	}
 
 	{
@@ -567,14 +576,15 @@ void GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Fil
 		writer.WriteLine(L"<br>");
 		writer.WriteString(L"<div class=\"cpp_default\"><div class=\"symbol_root\">");
 
-		FilePath fragmentFolder = pathHtml.GetFolder() / L"SymbolIndexFragments";
-		if (!Folder(fragmentFolder).Exists())
 		{
-			Folder(fragmentFolder).Create(true);
+			for (vint i = 0; i < rootGroup->children.Count(); i++)
+			{
+				Folder(pathFragment / rootGroup->children[i]->uniqueId).Create(true);
+			}
 		}
 		{
 			vint writtenFragmentCount = 0;
-			RenderSymbolGroup(global, writer, rootGroup, fragmentFolder, progressReporter, fragmentCount, writtenFragmentCount);
+			RenderSymbolGroup(global, writer, rootGroup, L"", pathFragment, progressReporter, fragmentCount, writtenFragmentCount);
 		}
 
 		writer.WriteLine(L"</div></div>");

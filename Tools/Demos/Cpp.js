@@ -252,11 +252,13 @@ function toggleSymbolDropdown(symbolExpanding) {
 
     let status = containerElement.getAttribute('data-status');
     if (status == 'empty' && symbolExpanding.textContent == '-') {
+        let categoryId = containerElement.getAttribute('data-categoryId');
         let uniqueId = containerElement.getAttribute('data-uniqueId');
         let dropdownElement = containerElement.getElementsByClassName('symbol_dropdown')[0];
 
         containerElement.setAttribute('data-status', 'loading');
-        let url = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'SymbolIndexFragments/' + uniqueId + '.html';
+        let baseUrl = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'));
+        let url = `${baseUrl}/SymbolIndexFragments/${categoryId}/${uniqueId}.html`;
 
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
