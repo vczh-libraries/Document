@@ -42,27 +42,16 @@ void RenderDocumentRecord(
 		}
 	}
 
-	if (symbolGroup->kind == SymbolGroupKind::Root)
+	for (vint i = 0; i < symbolGroup->children.Count(); i++)
 	{
-		for (vint i = 0; i < symbolGroup->children.Count(); i++)
-		{
-			auto childGroup = symbolGroup->children[i];
-			RenderDocumentRecord(global, childGroup, childGroup->uniqueId, pathReference, progressReporter, writtenReferenceCount);
-		}
+		auto childGroup = symbolGroup->children[i];
+		RenderDocumentRecord(global, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
 	}
-	else
-	{
-		for (vint i = 0; i < symbolGroup->children.Count(); i++)
-		{
-			auto childGroup = symbolGroup->children[i];
-			RenderDocumentRecord(global, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
-		}
 
-		writtenReferenceCount++;
-		if (progressReporter)
-		{
-			progressReporter->OnProgress((vint)IProgressReporter::ExtraPhases::ReferenceIndex, writtenReferenceCount, global->declComments.Count());
-		}
+	writtenReferenceCount++;
+	if (progressReporter)
+	{
+		progressReporter->OnProgress((vint)IProgressReporter::ExtraPhases::ReferenceIndex, writtenReferenceCount, global->declComments.Count());
 	}
 }
 
@@ -77,14 +66,18 @@ void GenerateReferenceIndex(
 	FilePath pathHtml,
 	FilePath pathReference,
 	FileGroupConfig& fileGroups,
+	SortedList<WString>& predefinedGroups,
 	IProgressReporter* progressReporter
 )
 {
+	vint writtenReferenceCount = 0;
 	for (vint i = 0; i < rootGroup->children.Count(); i++)
 	{
-		Folder(pathReference / rootGroup->children[i]->uniqueId).Create(true);
+		auto fileGroup = rootGroup->children[i];
+		if (predefinedGroups.Contains(fileGroup->name))
+		{
+			Folder(pathReference / fileGroup->uniqueId).Create(true);
+			RenderDocumentRecord(global, fileGroup, fileGroup->uniqueId, pathReference, progressReporter, writtenReferenceCount);
+		}
 	}
-
-	vint writtenReferenceCount = 0;
-	RenderDocumentRecord(global, rootGroup, L"", pathReference, progressReporter, writtenReferenceCount);
 }

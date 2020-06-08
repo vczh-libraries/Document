@@ -122,6 +122,7 @@ void IndexCppCode(
 		GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / L"SourceFiles" / (flr->htmlFileName + L".html"));
 	}
 
+	SortedList<WString> predefinedFileGroups;
 	{
 		// collect all folders of predefined file groups
 		List<WString> sourcePrefixes;
@@ -131,6 +132,14 @@ void IndexCppCode(
 				.Select([](Tuple<WString, WString> fileGroup)
 				{
 					return fileGroup.f0;
+				})
+			);
+		CopyFrom(
+			predefinedFileGroups,
+			From(fileGroups)
+				.Select([](Tuple<WString, WString> fileGroup)
+				{
+					return fileGroup.f1;
 				})
 			);
 
@@ -204,6 +213,7 @@ void IndexCppCode(
 		folderOutput.GetFilePath() / L"ReferenceIndex.html",
 		folderReference.GetFilePath(),
 		fileGroups,
+		predefinedFileGroups,
 		&progressReporter
 	);
 	progressReporter.FinishPhase();
@@ -268,6 +278,7 @@ int main()
 		folderOutput.Create(true);
 		folderSource.Create(true);
 		folderFragment.Create(true);
+		folderReference.Create(true);
 
 		FileGroupConfig fileGroups;
 		fileGroups.Add({ file.GetFilePath().GetFolder().GetFullPath() + FilePath::Delimiter, L"Source Code of this Project" });
