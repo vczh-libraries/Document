@@ -5,6 +5,101 @@ using namespace vl::parsing::tabling;
 using namespace vl::parsing::xml;
 
 /***********************************************************************
+PrintDocumentRecord
+***********************************************************************/
+
+void PrintDocumentRecord(
+	Ptr<DocumentRecord> documentRecord,
+	StreamWriter& writer
+)
+{
+	for (vint i = 0; i < documentRecord->comments.Count(); i++)
+	{
+		auto& token = documentRecord->comments[i];
+		if (token.token == (vint)CppTokens::DOCUMENT)
+		{
+			writer.WriteLine(token.reading + 3, token.length - 3);
+		}
+		else
+		{
+			writer.WriteLine(token.reading + 2, token.length - 2);
+		}
+	}
+}
+
+/***********************************************************************
+FixEnumDocumentRecord
+***********************************************************************/
+
+void FixEnumDocumentRecord(
+	Ptr<GlobalLinesRecord> global,
+	Ptr<ParsingTable> parsingTable,
+	Symbol* symbolEnum,
+	Ptr<XmlDocument> xmlDocument
+)
+{
+	auto& children = symbolEnum->GetChildren_NFb();
+	for (vint i = 0; i < children.Count(); i++)
+	{
+		auto& values = children.GetByIndex(i);
+		if (values.Count() == 1)
+		{
+			auto symbolEnumItem = values[0].childSymbol.Obj();
+			if (symbolEnumItem->kind == symbol_component::SymbolKind::EnumItem)
+			{
+				vint index = global->declComments.Keys().IndexOf(symbolEnumItem);
+				if (index != -1)
+				{
+					auto xmlEnumItemText = GenerateToStream([&](StreamWriter& xmlEnumItemWriter)
+					{
+						PrintDocumentRecord(global->declComments.Values()[index], xmlEnumItemWriter);
+					});
+
+					if (auto xmlEnumItem = XmlParseElement(xmlEnumItemText, parsingTable))
+					{
+						if (xmlEnumItem->name.value == L"summary")
+						{
+							xmlEnumItem->name.value = L"enumitem";
+							xmlEnumItem->closingName.value = L"enumitem";
+
+							auto attr = MakePtr<XmlAttribute>();
+							attr->name.value = L"name";
+							attr->value.value = symbolEnumItem->name;
+							xmlEnumItem->attributes.Add(attr);
+							xmlDocument->rootElement->subNodes.Add(xmlEnumItem);
+						}
+						else
+						{
+							Console::WriteLine(L"");
+							Console::WriteLine(L"FAILED TO PARSE <summary/>:");
+							Console::WriteLine(xmlEnumItemText);
+						}
+					}
+					else
+					{
+						Console::WriteLine(L"");
+						Console::WriteLine(L"FAILED TO PARSE <summary/>:");
+						Console::WriteLine(xmlEnumItemText);
+					}
+				}
+			}
+		}
+	}
+}
+
+/***********************************************************************
+CheckDocumentRecordSubItem
+***********************************************************************/
+
+// TODO: [cpp.md] Check `<typeparam/>` and `<param/>` and `<enumitem/>`
+
+/***********************************************************************
+ProcessDocumentRecordHyperLinks
+***********************************************************************/
+
+// TODO: [cpp.md] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declId="DeclId"/>`
+
+/***********************************************************************
 ValidateAndFixDocumentRecord
 ***********************************************************************/
 
@@ -16,34 +111,29 @@ void ValidateAndFixDocumentRecord(
 	StreamWriter& writer
 )
 {
-	auto xmlText = GenerateToStream([&parsingTable, &documentRecord](StreamWriter& xmlWriter)
+	auto xmlText = GenerateToStream([&](StreamWriter& xmlWriter)
 	{
 		xmlWriter.WriteLine(L"<Document>");
-		for (vint i = 0; i < documentRecord->comments.Count(); i++)
-		{
-			auto& token = documentRecord->comments[i];
-			if (token.token == (vint)CppTokens::DOCUMENT)
-			{
-				xmlWriter.WriteLine(token.reading + 3, token.length - 3);
-			}
-			else
-			{
-				xmlWriter.WriteLine(token.reading + 2, token.length - 2);
-			}
-		}
+		PrintDocumentRecord(documentRecord, xmlWriter);
 		xmlWriter.WriteLine(L"</Document>");
 	});
 
 	auto xmlDocument = XmlParseDocument(xmlText, parsingTable);
-	if (!xmlDocument)
+	if (xmlDocument)
+	{
+		if (symbol->kind == symbol_component::SymbolKind::Enum)
+		{
+			FixEnumDocumentRecord(global, parsingTable, symbol, xmlDocument);
+		}
+
+		XmlPrint(xmlDocument, writer);
+	}
+	else
 	{
 		Console::WriteLine(L"");
 		Console::WriteLine(L"FAILED TO PARSE:");
 		Console::WriteLine(xmlText);
-		return;
 	}
-
-	XmlPrint(xmlDocument, writer);
 }
 
 /***********************************************************************

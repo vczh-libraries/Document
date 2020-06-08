@@ -30,10 +30,9 @@
   - [x] In `GenerateHtmlLine`, collect all `Document` token, assigned and clean the token list when a declaration name is found.
     - [x] If the declaration name is a template argument, ignore.
     - [x] Document commponents are not allowed to be assigned to multiple declaration names of the same symbol.
-    - [ ] Check `<typeparam/>` and `<param/>` and `<enumitem/>`
-    - [ ] XML document on enum item can only have `<summary/>`, when it is found.
-      - [ ] Ensure that there is an XML document assigned to the enum.
-      - [ ] Convert to `<enumitem/>` and append to the document comment of the enum.
+    - [ ] Check `<typeparam/>` and `<param/>` and `<enumitem/>`.
+    - [x] XML document on enum item can only have `<summary/>`, when it is found.
+      - [x] Convert to `<enumitem/>` and append to the document comment of the enum.
   - [ ] Copy document comment to a folder, with a folder-structured XML file (`ReferenceIndex.xml`), mapping symbol ids to file names.
     - [ ] using similar file name generation as symbol index fragment files, to prevent from exceeding MAX_PATH.
     - [ ] Process hyper-links.
