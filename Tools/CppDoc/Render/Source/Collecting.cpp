@@ -489,6 +489,8 @@ void GenerateHtmlLine(
 					Console::WriteLine(L"BY:");
 					PrintDocumentRecordToConsole(documentRecord);
 				}
+
+				documentRecord->decl = declOrArg.decl;
 				global->declComments.Set(documentSymbol, documentRecord);
 				documentRecord = nullptr;
 			}

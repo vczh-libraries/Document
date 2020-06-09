@@ -91,13 +91,28 @@ void FixEnumDocumentRecord(
 CheckDocumentRecordSubItem
 ***********************************************************************/
 
-// TODO: [cpp.md] Check `<typeparam/>` and `<param/>` and `<enumitem/>`
+void CheckDocumentRecordSubItem(
+	Symbol* symbol,
+	Ptr<Declaration> decl,
+	Ptr<XmlDocument> xmlDocument
+)
+{
+	// TODO: [cpp.md] Check `<typeparam/>` and `<returns/>` and `<param/>` and `<enumitem/>`
+}
 
 /***********************************************************************
 ProcessDocumentRecordHyperLinks
 ***********************************************************************/
 
-// TODO: [cpp.md] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declId="DeclId"/>`
+void ProcessDocumentRecordHyperLinks(
+	Ptr<GlobalLinesRecord> global,
+	Symbol* symbol,
+	Ptr<Declaration> decl,
+	Ptr<XmlDocument> xmlDocument
+)
+{
+	// TODO: [cpp.md] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declId="DeclId"/>`
+}
 
 /***********************************************************************
 ValidateAndFixDocumentRecord
@@ -125,6 +140,9 @@ void ValidateAndFixDocumentRecord(
 		{
 			FixEnumDocumentRecord(global, parsingTable, symbol, xmlDocument);
 		}
+
+		CheckDocumentRecordSubItem(symbol, documentRecord->decl, xmlDocument);
+		ProcessDocumentRecordHyperLinks(global, symbol, documentRecord->decl, xmlDocument);
 
 		XmlPrint(xmlDocument, writer);
 	}

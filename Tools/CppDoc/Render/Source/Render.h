@@ -168,6 +168,7 @@ struct FileLinesRecord
 
 struct DocumentRecord
 {
+	Ptr<Declaration>								decl;			// the declaration that the document applies to
 	List<RegexToken>								comments;		// consecutive tokens of CppTokens::DOCUMENT
 };
 
