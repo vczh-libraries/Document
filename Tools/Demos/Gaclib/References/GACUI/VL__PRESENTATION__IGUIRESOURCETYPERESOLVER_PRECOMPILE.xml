@@ -1,0 +1,14 @@
+<Document><summary>
+		Represents a precompiler for resources of a specified type.
+		Current resources that needs precompiling:
+		Workflow:
+			Pass  0: Collect workflow scripts / Compile localized strings / Generate ClassNameRecord
+			Pass  1: Compile workflow scripts
+		Instance:
+			Pass  2: Collect instance types													/ Compile animation types
+			Pass  3: Compile
+			Pass  4: Generate instance types with event handler functions to TemporaryClass	/ Compile animation types
+			Pass  5: Compile
+			Pass  6: Generate instance types with everything to InstanceCtor				/ Compile animation types
+			Pass  7: Compile
+ </summary></Document>

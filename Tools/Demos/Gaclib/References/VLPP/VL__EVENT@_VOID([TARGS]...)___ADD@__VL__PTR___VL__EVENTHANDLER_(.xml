@@ -1,0 +1,1 @@
+<Document><summary>Add a callback to the event.</summary><returns>The event handler representing the callback.</returns><param name="function">The callback.</param></Document>

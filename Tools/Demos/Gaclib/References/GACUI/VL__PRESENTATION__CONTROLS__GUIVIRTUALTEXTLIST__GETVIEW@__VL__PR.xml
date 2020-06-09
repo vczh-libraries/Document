@@ -1,0 +1,1 @@
+<Document><summary>Get the current view.</summary><returns>The current view. After [M:vl.presentation.controls.GuiListControl.SetItemTemplate] is called, the current view is reset to Unknown.</returns></Document>

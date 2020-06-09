@@ -1,0 +1,3 @@
+<Document><summary>
+ Test is the specified key pressing.
+ </summary><returns>Returns true if the specified key is pressing.</returns><param name="code">The key code to test.</param></Document>

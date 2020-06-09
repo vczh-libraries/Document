@@ -1,0 +1,1 @@
+<Document><summary>Create the colorizer with a specified grammar and start rule to create a <see cref="RepeatingParsingExecutor"/>.</summary><param name="_grammarParser">Parser generated from a grammar.</param><param name="_grammarRule"/></Document>

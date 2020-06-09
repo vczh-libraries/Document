@@ -1,0 +1,3 @@
+<Document><summary>
+ Set the font configuration for all characters. <see cref="ICallback::FontChanged"/> will be called.
+ </summary><param name="value">The font configuration.</param></Document>

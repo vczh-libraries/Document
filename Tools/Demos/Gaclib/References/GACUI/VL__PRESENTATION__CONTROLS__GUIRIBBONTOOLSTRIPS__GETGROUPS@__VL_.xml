@@ -1,0 +1,1 @@
+<Document><summary>Get the collection of toolstrip groups. <see cref="GuiRibbonToolstrips"/> will decide the order of these toolstrip groups.</summary><returns>The collection of toolstrip groups.</returns></Document>

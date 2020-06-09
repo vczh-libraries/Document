@@ -1,0 +1,1 @@
+<Document><summary>Delete a specified break point.</summary><returns>Returns true if this operation is succeeded.</returns><param name="index">The index of the break point.</param></Document>

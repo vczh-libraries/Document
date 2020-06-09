@@ -1,0 +1,1 @@
+<Document><summary>Set the resource resolver to connect the current root object to the resource creating it.</summary><param name="resolver">The resource resolver</param></Document>

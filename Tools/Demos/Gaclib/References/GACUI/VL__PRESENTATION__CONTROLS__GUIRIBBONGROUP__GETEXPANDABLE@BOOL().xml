@@ -1,0 +1,1 @@
+<Document><summary>Test if this group is expandable. An expandable group will display an extra small button, which raises <see cref="ExpandButtonClicked"/>.</summary><returns>Returns true if this group is expandable.</returns></Document>

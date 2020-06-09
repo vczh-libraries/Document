@@ -1,0 +1,3 @@
+<Document><summary>
+ Set the current <see cref="GuiGraphicsResourceManager"/>.
+ </summary><param name="resourceManager">The resource manager to set.</param></Document>

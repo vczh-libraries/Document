@@ -1,0 +1,1 @@
+<Document><summary>Clear all storages for the current thread. For threads that are created using [T:vl.Thread], this function will be automatically called when before the thread exit.</summary></Document>

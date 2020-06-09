@@ -1,0 +1,1 @@
+<Document><summary>Get the <see cref="IGuiShortcutKeyManager"/> attached with this graphics host.</summary><returns>The shortcut key manager.</returns></Document>

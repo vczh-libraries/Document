@@ -1,0 +1,1 @@
+<Document><summary>Box an reflectable object. Its type cannot be generic.</summary><returns>The boxed value.</returns><typeparam name="T">Type of the object.</typeparam><param name="object">The object to box.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param></Document>

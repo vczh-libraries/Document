@@ -1,0 +1,1 @@
+<Document><summary>Set a parser by name.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name.</param><param name="parser">The parser.</param></Document>

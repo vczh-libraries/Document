@@ -1,0 +1,4 @@
+<Document><summary>
+ Release the mutex.
+ In the implementation for Linux, calling Release() more than once between two Wait(), or calling Wait() more than once between two Release(), will results in an undefined behavior.
+ </summary><returns>Returns true if this operation succeeded.</returns></Document>

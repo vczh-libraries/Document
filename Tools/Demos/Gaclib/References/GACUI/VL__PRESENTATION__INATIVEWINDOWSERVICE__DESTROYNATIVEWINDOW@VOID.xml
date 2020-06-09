@@ -1,0 +1,3 @@
+<Document><summary>
+ Destroy a window.
+ </summary><param name="window">The window to destroy.</param></Document>

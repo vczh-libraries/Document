@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the prefer side for the caret.
+ </summary><returns>Returns true if the caret is rendered for the front side.</returns></Document>

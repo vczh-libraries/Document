@@ -1,0 +1,3 @@
+<Document><summary>
+ Called when the window is closing.
+ </summary><param name="cancel">Change the value to true to prevent the windows from being closed.</param></Document>

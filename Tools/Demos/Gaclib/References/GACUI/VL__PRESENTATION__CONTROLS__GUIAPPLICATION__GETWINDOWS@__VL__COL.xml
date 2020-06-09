@@ -1,0 +1,1 @@
+<Document><summary>Get all created <see cref="GuiWindow"/> instances. This contains normal windows, popup windows, menus, or other types of windows that inherits from <see cref="GuiWindow"/>.</summary><returns>All created <see cref="GuiWindow"/> instances.</returns></Document>

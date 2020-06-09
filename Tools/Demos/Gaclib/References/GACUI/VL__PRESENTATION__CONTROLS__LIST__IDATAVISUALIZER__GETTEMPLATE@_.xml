@@ -1,0 +1,1 @@
+<Document><summary>Get the template that renders the data. The data visualizer should maintain this template, and delete it when necessary.</summary><returns>The template.</returns></Document>

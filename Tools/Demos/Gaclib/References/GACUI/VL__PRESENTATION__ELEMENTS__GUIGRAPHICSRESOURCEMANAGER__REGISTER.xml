@@ -1,0 +1,3 @@
+<Document><summary>
+ Register a <see cref="IGuiGraphicsElementFactory"/> using the element type from <see cref="IGuiGraphicsElementFactory::GetElementTypeName"/>.
+ </summary><param name="factory">The instance of the graphics element factory to register.</param><returns>Returns true if this operation succeeded.</returns></Document>

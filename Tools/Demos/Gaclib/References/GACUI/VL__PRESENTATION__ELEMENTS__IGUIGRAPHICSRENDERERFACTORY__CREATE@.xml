@@ -1,0 +1,3 @@
+<Document><summary>
+ Create a <see cref="IGuiGraphicsRenderer"/>.
+ </summary><returns>Returns the created graphics renderer.</returns></Document>

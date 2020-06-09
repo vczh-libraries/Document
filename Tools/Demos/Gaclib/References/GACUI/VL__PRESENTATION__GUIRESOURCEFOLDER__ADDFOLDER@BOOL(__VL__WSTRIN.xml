@@ -1,0 +1,1 @@
+<Document><summary>Add a resource folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name of this resource folder.</param><param name="folder">The resource folder.</param></Document>

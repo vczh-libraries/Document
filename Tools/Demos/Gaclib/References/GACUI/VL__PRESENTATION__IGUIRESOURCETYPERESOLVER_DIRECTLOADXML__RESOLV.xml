@@ -1,0 +1,1 @@
+<Document><summary>Load a resource for a type inside an xml element.</summary><returns>The resource.</returns><param name="resource">The resource item containing the resource.</param><param name="element">The xml element.</param><param name="errors">All collected errors during loading a resource.</param></Document>

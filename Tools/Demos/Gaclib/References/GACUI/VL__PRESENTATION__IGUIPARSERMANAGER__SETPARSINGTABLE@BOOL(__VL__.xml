@@ -1,0 +1,1 @@
+<Document><summary>Set a parsing table loader by name.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name.</param><param name="loader">The parsing table loader.</param></Document>

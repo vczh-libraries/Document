@@ -1,0 +1,3 @@
+<Document><summary>
+ Message box default button.
+ </summary><enumitem name="DefaultFirst">First.</enumitem><enumitem name="DefaultSecond">Second.</enumitem><enumitem name="DefaultThird">Third.</enumitem></Document>

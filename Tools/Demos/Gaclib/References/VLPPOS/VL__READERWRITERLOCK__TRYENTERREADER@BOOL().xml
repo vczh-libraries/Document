@@ -1,0 +1,1 @@
+<Document><summary>Try acquire a reader lock. This function will return immediately.</summary><returns>Returns true if the current thread acquired the reader lock.</returns></Document>

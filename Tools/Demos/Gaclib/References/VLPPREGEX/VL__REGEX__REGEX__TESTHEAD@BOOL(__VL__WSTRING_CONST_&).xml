@@ -1,0 +1,1 @@
+<Document><summary>Match a prefix of the text, ignoring all capturing requirements.</summary><returns>Returns true if succeeded.</returns><param name="text">The text to match.</param></Document>

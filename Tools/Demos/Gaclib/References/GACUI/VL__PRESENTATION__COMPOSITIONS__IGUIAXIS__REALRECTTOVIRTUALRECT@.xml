@@ -1,0 +1,1 @@
+<Document><summary>Translate real bounds to virtual bounds.</summary><returns>The virtual bounds.</returns><param name="realFullSize">The real full size.</param><param name="rect">The real bounds.</param></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Binded a <see cref="CharMeasurer"/>.
+ </summary><param name="value">The <see cref="CharMeasurer"/> to bind.</param></Document>

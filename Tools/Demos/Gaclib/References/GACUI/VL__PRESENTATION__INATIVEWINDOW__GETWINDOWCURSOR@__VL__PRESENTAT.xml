@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the mouse cursor of the window. When the mouse is on the window, the mouse cursor will be rendered.
+ </summary><returns>The mouse cursor of the window.</returns></Document>

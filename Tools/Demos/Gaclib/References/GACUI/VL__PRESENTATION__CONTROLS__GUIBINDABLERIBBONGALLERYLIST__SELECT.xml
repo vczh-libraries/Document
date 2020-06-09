@@ -1,0 +1,1 @@
+<Document><summary>Select an item without <see cref="ItemApplied"/> event raised.</summary><param name="index">The index of the item to select. Set to -1 to clear the selection.</param></Document>

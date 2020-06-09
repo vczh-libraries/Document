@@ -1,0 +1,1 @@
+<Document><summary>Get the list to access 16 selected custom colors on the palette. Colors in the list is guaranteed to have exactly 16 items after the dialog is closed.</summary><returns>The list to access custom colors on the palette.</returns></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Execute shortcut key items using a key event info.</summary><returns>Returns true if at least one shortcut key item is executed.</returns><param name="info">The key event info.</param></Document>

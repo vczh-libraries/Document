@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the renderer awared rich text document layout engine provider object.
+ </summary><returns>Returns the layout provider.</returns></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Test does the provider provided an optimized algorithm to get an instance of a node by the index of all visible nodes. If this function returns true, [M:vl.presentation.controls.tree.INodeRootProvider.GetNodeByVisibleIndex] can be used.</summary><returns>Returns true if such an algorithm is provided.</returns></Document>

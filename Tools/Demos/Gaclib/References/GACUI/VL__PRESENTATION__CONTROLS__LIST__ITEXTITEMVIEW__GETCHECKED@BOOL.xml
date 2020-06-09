@@ -1,0 +1,1 @@
+<Document><summary>Get the check state of an item.</summary><returns>The check state of an item.</returns><param name="itemIndex">The index of an item.</param></Document>

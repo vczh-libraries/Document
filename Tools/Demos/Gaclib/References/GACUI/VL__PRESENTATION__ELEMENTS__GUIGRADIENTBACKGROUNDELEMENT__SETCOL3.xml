@@ -1,0 +1,3 @@
+<Document><summary>
+ Set colors of the element.
+ </summary><param name="value1">The new left-top color.</param><param name="value2">The new right bottom color.</param></Document>

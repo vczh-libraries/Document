@@ -1,0 +1,1 @@
+<Document><summary>Set a target writable stream. The <see cref="Write"/> function will transform the content and write to this tream.</summary><param name="_stream">The target writable stream.</param></Document>

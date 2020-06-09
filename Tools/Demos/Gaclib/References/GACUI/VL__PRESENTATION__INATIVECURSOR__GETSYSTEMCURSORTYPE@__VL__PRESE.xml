@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the cursor type if the cursor a system provided cursor.
+ </summary><returns>The cursor type.</returns></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Create a stream.</summary><param name="_stream">The target stream to read.</param><param name="_decoder">The decoder to transform content.</param></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Create an image from memory.
+ </summary><returns>The created image.</returns><param name="buffer">The memory pointer.</param><param name="length">The memory length.</param></Document>

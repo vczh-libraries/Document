@@ -1,0 +1,2 @@
+<Document><summary>
+ Called when the mouse is moving. To receive or not receive this message, use <see cref="INativeInputService::StartHookMouse"/> or <see cref="INativeInputService::StopHookMouse"/></summary><param name="position">The mouse position in the screen space.</param></Document>

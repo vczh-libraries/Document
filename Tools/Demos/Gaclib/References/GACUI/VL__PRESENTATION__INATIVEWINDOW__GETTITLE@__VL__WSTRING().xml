@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the title of the window. A title will be displayed as a name of this window.
+ </summary><returns>The title of the window.</returns></Document>

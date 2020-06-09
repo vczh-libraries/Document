@@ -1,0 +1,1 @@
+<Document><summary>Create a lexical analyzer by a set of regular expressions. [F:vl.regex.RegexToken.token] will be the index of the matched regular expression.</summary><param name="tokens">The regular expressions.</param><param name="_proc">Callback procedures.</param></Document>

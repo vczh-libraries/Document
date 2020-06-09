@@ -1,0 +1,3 @@
+<Document><summary>
+ Defines a direction of the <see cref="Gui3DSplitterElement"/>.
+ </summary><enumitem name="Horizontal">Horizontal direction.</enumitem><enumitem name="Vertical">Vertical direction.</enumitem></Document>

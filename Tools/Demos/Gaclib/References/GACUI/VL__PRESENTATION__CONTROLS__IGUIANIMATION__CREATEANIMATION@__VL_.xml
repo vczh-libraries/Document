@@ -1,0 +1,1 @@
+<Document><summary>Create a finite animation.</summary><returns>Returns the created animation.</returns><param name="run">The animation callback for each frame.</param><param name="milliseconds">The length of the animation.</param></Document>

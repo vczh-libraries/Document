@@ -1,0 +1,3 @@
+<Document><summary>
+ Set the end position of the selection area.
+ </summary><param name="begin">The begin position of the selection area.</param><param name="end">The end position of the selection area.</param></Document>

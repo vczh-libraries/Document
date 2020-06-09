@@ -1,0 +1,3 @@
+<Document><summary>
+ Mouse message information.
+ </summary><typeparam name="T">Type of the coordinate.</typeparam></Document>

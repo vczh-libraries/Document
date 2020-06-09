@@ -1,0 +1,1 @@
+<Document><summary>Remove a document item.</summary><param name="value">The document item.</param><returns>Returns true if this operation succeeded.</returns></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Convert size from GUI coordinate to native coordinate.
+ </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param></Document>

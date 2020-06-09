@@ -1,0 +1,1 @@
+<Document><summary>Get all supported directions. If all directions of a child [T:vl.presentation.compositions.GuiResponsiveCompositionBase] are not supported, its view will not be changed when the parent composition changes its view .</summary><returns>All supported directions.</returns></Document>

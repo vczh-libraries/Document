@@ -1,0 +1,1 @@
+<Document><summary>Get the data visualizer factory that creates data visualizers for visualizing the cell.</summary><returns>The data visualizer factory. The data grid control to use the predefined data visualizer if this function returns null.</returns><param name="row">The row number for the cell.</param><param name="column">The column number for the cell.</param></Document>

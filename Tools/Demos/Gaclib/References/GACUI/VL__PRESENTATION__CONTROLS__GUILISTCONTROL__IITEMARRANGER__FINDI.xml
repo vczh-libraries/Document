@@ -1,0 +1,1 @@
+<Document><summary>Find the item by an base item and a key direction.</summary><returns>The item index that is found. Returns -1 if this operation failed.</returns><param name="itemIndex">The base item index.</param><param name="key">The key direction.</param></Document>

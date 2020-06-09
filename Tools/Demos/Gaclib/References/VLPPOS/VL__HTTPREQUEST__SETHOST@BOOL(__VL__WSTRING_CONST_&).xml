@@ -1,0 +1,1 @@
+<Document><summary>Set <see cref="server"/>, <see cref="port"/>, <see cref="query"/> and <see cref="secure"/> fields for you using an URL.</summary><returns>Returns true if this operation succeeded.</returns><param name="inputQuery">The URL.</param></Document>

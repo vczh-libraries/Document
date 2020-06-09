@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the caret visibility.
+ </summary><returns>Returns true if the caret will be rendered.</returns></Document>

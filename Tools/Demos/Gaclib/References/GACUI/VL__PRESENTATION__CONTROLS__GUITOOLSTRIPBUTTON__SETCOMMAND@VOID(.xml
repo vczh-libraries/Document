@@ -1,0 +1,1 @@
+<Document><summary>Detach from the previous <see cref="GuiToolstripCommand"/> and attach to a new one. If the command is null, this function only do detaching.</summary><param name="value">The new toolstrip command.</param></Document>

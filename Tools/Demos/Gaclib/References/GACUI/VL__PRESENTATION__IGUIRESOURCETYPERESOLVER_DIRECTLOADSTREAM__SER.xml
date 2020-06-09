@@ -1,0 +1,1 @@
+<Document><summary>Serialize a precompiled resource to a stream.</summary><param name="resource">The resource item containing the resource.</param><param name="content">The content to serialize.</param><param name="binaryStream">The stream.</param></Document>

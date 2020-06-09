@@ -1,0 +1,19 @@
+<Document><summary>
+ Represents an image format.
+ </summary><enumitem name="Bmp">
+ [T:vl.presentation.INativeImage.FormatType]Bitmap format.
+ </enumitem><enumitem name="Gif">
+ [T:vl.presentation.INativeImage.FormatType]GIF format.
+ </enumitem><enumitem name="Icon">
+ [T:vl.presentation.INativeImage.FormatType]Icon format.
+ </enumitem><enumitem name="Jpeg">
+ [T:vl.presentation.INativeImage.FormatType]JPEG format.
+ </enumitem><enumitem name="Png">
+ [T:vl.presentation.INativeImage.FormatType]PNG format.
+ </enumitem><enumitem name="Tiff">
+ [T:vl.presentation.INativeImage.FormatType]TIFF format.
+ </enumitem><enumitem name="Unknown">
+ [T:vl.presentation.INativeImage.FormatType]Unknown format.
+ </enumitem><enumitem name="Wmp">
+ [T:vl.presentation.INativeImage.FormatType]WMP format.
+ </enumitem></Document>

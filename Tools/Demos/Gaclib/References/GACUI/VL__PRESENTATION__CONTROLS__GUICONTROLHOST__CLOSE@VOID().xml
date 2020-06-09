@@ -1,0 +1,3 @@
+<Document><summary>
+ Close the window and destroy the internal <see cref="INativeWindow"/> object.
+ </summary></Document>

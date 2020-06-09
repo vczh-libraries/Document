@@ -1,0 +1,1 @@
+<Document><summary>Add a document item. The name of the document item will display in the position of the &lt;object&gt; element with the same name in the document.</summary><param name="value">The document item.</param><returns>Returns true if this operation succeeded.</returns></Document>

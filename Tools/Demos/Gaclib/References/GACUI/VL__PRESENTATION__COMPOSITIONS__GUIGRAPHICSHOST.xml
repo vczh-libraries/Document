@@ -1,0 +1,3 @@
+<Document><summary>
+ GuiGraphicsHost hosts an <see cref="GuiWindowComposition"/> in an <see cref="INativeWindow"/>. The composition will fill the whole window.
+ </summary></Document>

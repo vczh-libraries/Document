@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the instance of a registered <see cref="IGuiGraphicsRendererFactory"/> that is binded to a specified element type.
+ </summary><returns>Returns the renderer factory.</returns><param name="elementTypeName">The element type to get a corresponding graphics renderer factory.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Load a precompiled resource from a stream. This function will hit an assert if there are errors.</summary><returns>The loaded resource.</returns><param name="binaryStream">The stream.</param></Document>

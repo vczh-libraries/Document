@@ -1,0 +1,3 @@
+<Document><summary>
+ Set the string to the text lines. This operation will modified every <see cref="TextLine"/> objects.
+ </summary><param name="value">The string to set into the text lines.</param></Document>

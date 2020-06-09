@@ -1,0 +1,1 @@
+<Document><summary>Get the stored raw pointer if possible.</summary><returns>The stored raw pointer. Returns null if failed.</returns></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Called before sub items of a node are modified.</summary><param name="parentNode">The node containing modified sub items.</param><param name="start">The index of the first sub item.</param><param name="count">The number of sub items to be modified.</param><param name="newCount">The new number of modified sub items.</param></Document>

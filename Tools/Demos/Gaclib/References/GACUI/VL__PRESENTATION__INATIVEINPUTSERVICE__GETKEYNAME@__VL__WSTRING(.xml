@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the name of a key.
+ </summary><returns>The name of a key.</returns><param name="code">The key code.</param></Document>

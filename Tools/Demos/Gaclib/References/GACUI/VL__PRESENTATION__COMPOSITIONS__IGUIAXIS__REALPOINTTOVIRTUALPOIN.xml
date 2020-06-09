@@ -1,0 +1,1 @@
+<Document><summary>Translate real point to virtual point.</summary><returns>The virtual point.</returns><param name="realFullSize">The real full size.</param><param name="point">The real point.</param></Document>

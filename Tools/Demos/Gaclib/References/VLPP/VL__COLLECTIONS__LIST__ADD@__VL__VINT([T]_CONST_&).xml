@@ -1,0 +1,1 @@
+<Document><summary>Add an item at the end of the list.</summary><returns>The index of the added item.</returns><param name="item">The item to add.</param></Document>

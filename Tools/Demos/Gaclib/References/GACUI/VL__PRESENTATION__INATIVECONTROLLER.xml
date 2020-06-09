@@ -1,0 +1,3 @@
+<Document><summary>
+ Global native system service controller. Use [M:vl.presentation.GetCurrentController] to access this controller.
+ </summary></Document>

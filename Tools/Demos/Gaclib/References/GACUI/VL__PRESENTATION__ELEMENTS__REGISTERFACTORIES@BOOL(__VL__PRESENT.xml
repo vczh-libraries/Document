@@ -1,0 +1,3 @@
+<Document><summary>
+ Helper function to register a <see cref="IGuiGraphicsElementFactory"/> with a <see cref="IGuiGraphicsRendererFactory"/> and bind them together.
+ </summary><returns>Returns true if this operation succeeded.</returns><param name="elementFactory">The element factory to register.</param><param name="rendererFactory">The renderer factory to register.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Add a resource item.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name of this resource item.</param><param name="item">The resource item.</param></Document>

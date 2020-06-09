@@ -1,0 +1,1 @@
+<Document><summary>Create an instruction break point.</summary><returns>The created break point.</returns><param name="assembly">The assembly that contains the instruction.</param><param name="instruction">The index of the instruction.</param></Document>

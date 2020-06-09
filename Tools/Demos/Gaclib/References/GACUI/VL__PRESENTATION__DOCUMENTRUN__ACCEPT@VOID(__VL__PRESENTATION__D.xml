@@ -1,0 +1,1 @@
+<Document><summary>Accept a <see cref="IVisitor"/> and trigger the selected visit operation.</summary><param name="visitor">The visitor.</param></Document>

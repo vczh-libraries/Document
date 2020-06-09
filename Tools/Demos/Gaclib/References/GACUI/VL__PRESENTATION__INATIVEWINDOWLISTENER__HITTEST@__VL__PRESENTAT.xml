@@ -1,0 +1,3 @@
+<Document><summary>
+ Perform a hit test.
+ </summary><returns>Returns the hit test result. If &quot;NoDecision&quot; is returned, the native window provider should call the OS window layer to do the hit test.</returns><param name="location">The location to do the hit test. This location is in the window space (not the client space).</param></Document>

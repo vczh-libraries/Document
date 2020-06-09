@@ -1,0 +1,1 @@
+<Document><summary>Initialize the parsing executor.</summary><param name="_grammarParser">Parser generated from a grammar.</param><param name="_grammarRule">The rule name to parse a complete code.</param><param name="_analyzer">The parsing analyzer to create semantic metadatas, it can be null.</param></Document>

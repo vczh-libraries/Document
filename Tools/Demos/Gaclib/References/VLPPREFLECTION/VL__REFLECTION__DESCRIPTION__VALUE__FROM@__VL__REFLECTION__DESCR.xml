@@ -1,0 +1,1 @@
+<Document><summary>Store a raw pointer.</summary><returns>The boxed value.</returns><param name="value">The raw pointer to store.</param></Document>

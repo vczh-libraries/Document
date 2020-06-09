@@ -1,0 +1,49 @@
+<Document><summary><![CDATA[
+ Regular Expression. Here is a brief description of the regular expression grammar:
+	1) Charset:
+		a, [a-z], [^a-z]
+ 2) Functional characters:
+		^: the beginning of the input (DFA incompatible)
+		$: the end of the input (DFA incompatible)
+		regex1|regex2: match either regex1 or regex2
+	3) Escaping (both \ and / mean the next character is escaped)
+		Escaped characters:
+			\r: the CR character
+			\n: the LF character
+			\t: the tab character
+			\s: spacing characters (including space, \r, \n, \t)
+			\S: non-spacing characters
+			\d: [0-9]
+			\D: [^0-9]
+			\l: [a-zA-Z]
+			\L: [^a-zA-Z]
+			\w: [a-zA-Z0-9_]
+			\W: [^a-zA-Z0-9_]
+			\.: any character (this is the main different from other regex, which treat "." as any characters and "\." as the dot character)
+			\\, \/, \(, \), \+, \*, \?, \{, \}, \[, \], \<, \>, \^, \$, \!, \=: represents itself
+		Escaped characters in charset defined in a square bracket:
+			\r: the CR character
+			\n: the LF character
+			\t: the tab character
+			\-, \[, \], \\, \/, \^, \$: represents itself
+	4) Loops:
+		regex{3}: repeats 3 times
+		regex{3,}: repeats 3 or more times
+		regex{1,3}: repeats 1 to 3 times
+		regex?: repeats 0 or 1 times
+		regex*: repeats 0 or more times
+		regex+: repeats 1 or more times
+		if you add a "?" right after a loop, it means repeating as less as possible (DFA incompatible)
+	5) Capturing: (DFA incompatible)
+		(regex): No capturing, just change the operators' association
+		(?regex): Capture matched fragment
+		(<name>regex): Capture matched fragment in a named group called "name"
+		(<$i>): Match the i-th captured fragment, begins from 0
+		(<$name;i>): Match the i-th captured fragment in the named group called "name", begins from 0
+		(<$name>): Match any captured fragment in the named group called "name"
+	6) MISC
+		(=regex): The prefix of the following text should match the regex, but it is not counted in the whole match (DFA incompatible)
+		(!regex): Any prefix of the following text should not match the regex, and it is not counted in the whole match (DFA incompatible)
+		(<#name>regex): Name the regex "name", and it applies here
+		(<&name>): Copy the named regex "name" here and apply
+ ]]></summary></Document>

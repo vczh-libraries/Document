@@ -1,0 +1,1 @@
+<Document><summary>Called when the group controller is deteched to a <see cref="GuiSelectableButton"/>. use [M:vl.presentation.controls.GuiSelectableButton.SetGroupController] to attach or detach a group controller to or from a selectable button.</summary><param name="button">The button to detach.</param></Document>

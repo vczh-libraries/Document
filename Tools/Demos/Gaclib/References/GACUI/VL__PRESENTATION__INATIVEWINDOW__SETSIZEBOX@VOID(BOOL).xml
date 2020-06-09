@@ -1,0 +1,3 @@
+<Document><summary>
+ Make the size box visible or invisible.
+ </summary><param name="visible">True to make the size box visible.</param></Document>

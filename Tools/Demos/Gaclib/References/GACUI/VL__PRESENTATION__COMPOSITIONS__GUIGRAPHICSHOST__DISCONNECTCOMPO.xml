@@ -1,0 +1,1 @@
+<Document><summary>Notify that a composition is going to disconnect from this graphics host. Generally this happens when a composition&apos;s parent line changes.</summary><param name="composition">The composition to disconnect</param></Document>

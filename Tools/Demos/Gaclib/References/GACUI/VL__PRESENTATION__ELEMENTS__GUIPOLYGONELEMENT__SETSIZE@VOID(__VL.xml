@@ -1,0 +1,3 @@
+<Document><summary>
+ Set a suggested size. The polygon element will be layouted to the center of the required bounds using this size.
+ </summary><param name="value">The new size.</param></Document>

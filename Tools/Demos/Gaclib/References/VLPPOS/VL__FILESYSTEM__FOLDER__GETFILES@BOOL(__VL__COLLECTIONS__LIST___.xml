@@ -1,0 +1,1 @@
+<Document><summary>Get all files in this folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="files">All files.</param></Document>

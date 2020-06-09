@@ -1,0 +1,1 @@
+<Document><summary>Get the index of the selected item.</summary><returns>Returns the index of the selected item. If there are multiple selected items, or there is no selected item, -1 will be returned.</returns></Document>

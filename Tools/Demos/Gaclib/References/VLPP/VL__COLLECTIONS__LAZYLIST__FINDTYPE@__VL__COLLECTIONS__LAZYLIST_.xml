@@ -1,0 +1,1 @@
+<Document><summary>Create a new lazy list with only elements that successfully casted to a new type.</summary><typeparam name="U">The new type.</typeparam><returns>The created lazy list.</returns></Document>

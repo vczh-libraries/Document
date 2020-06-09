@@ -1,0 +1,3 @@
+<Document><summary>
+ Measure the width of a character.
+ </summary><returns>The width in pixel.</returns><param name="codePoint">The unicode code point to measure.</param><param name="renderTarget">The render target which the character is going to be rendered. This is a pure virtual member function to be overrided.</param></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Test is the window always pass the focus to its parent window.
+ </summary><returns>Returns true if the window always pass the focus to its parent window.</returns></Document>

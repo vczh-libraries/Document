@@ -1,0 +1,1 @@
+<Document><summary>Add an animation. The animation will be paused if the root object is removed from a window.</summary><returns>Returns true if this operation succeeded.</returns><param name="animation">The animation.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Set the <see cref="IGuiResourceTypeResolver"/> for a resource type.</summary><returns>Returns true if this operation succeeded.</returns><param name="resolver">The resolver.</param></Document>

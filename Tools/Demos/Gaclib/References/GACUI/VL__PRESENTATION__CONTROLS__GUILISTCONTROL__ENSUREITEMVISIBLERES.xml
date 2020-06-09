@@ -1,0 +1,1 @@
+<Document><summary>EnsureItemVisible result for item arranger.</summary><enumitem name="ItemNotExists">The requested item does not exist.</enumitem><enumitem name="Moved">The view location is moved.</enumitem><enumitem name="NotMoved">The view location is not moved.</enumitem></Document>

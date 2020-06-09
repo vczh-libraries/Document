@@ -1,0 +1,1 @@
+<Document><summary>Get the text of a specified item.</summary><param name="index">The index of the item.</param><returns>The text of the item.</returns></Document>

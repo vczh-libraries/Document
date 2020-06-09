@@ -1,0 +1,1 @@
+<Document><summary>Represents the order of tab pages.</summary><enumitem name="BottomToTop">Bottom to top.</enumitem><enumitem name="LeftToRight">Left to right.</enumitem><enumitem name="RightToLeft">Right to left.</enumitem><enumitem name="TopToBottom">Top to bottom.</enumitem><enumitem name="Unknown">Unknown.</enumitem></Document>

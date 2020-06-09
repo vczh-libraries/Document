@@ -1,0 +1,1 @@
+<Document><summary>Release an item control. This function is suggested to call when an item control gets out of the visible area.</summary><param name="style">The item control.</param></Document>

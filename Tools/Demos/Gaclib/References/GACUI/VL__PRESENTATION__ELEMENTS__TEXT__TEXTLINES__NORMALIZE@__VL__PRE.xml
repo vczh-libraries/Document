@@ -1,0 +1,3 @@
+<Document><summary>
+ Normalize a text position to be available.
+ </summary><returns>The normalized text position.</returns><param name="pos">The text position to normalize.</param></Document>

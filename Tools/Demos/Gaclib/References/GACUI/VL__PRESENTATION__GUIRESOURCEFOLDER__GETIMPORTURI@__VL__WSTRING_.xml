@@ -1,0 +1,1 @@
+<Document><summary>Get the import uri for this folder.</summary><returns>The import uri for this folder. Returns an empty string for non-import folders</returns></Document>

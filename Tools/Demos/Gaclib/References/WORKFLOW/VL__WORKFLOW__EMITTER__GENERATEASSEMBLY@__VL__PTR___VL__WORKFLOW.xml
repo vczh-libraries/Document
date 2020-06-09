@@ -1,0 +1,1 @@
+<Document><summary>Generate an assembly from a compiler. [M:vl.workflow.analyzer.WfLexicalScopeManager.Rebuild] should be called before using this function.</summary><returns>The generated assembly.</returns><param name="manager">The Workflow compiler.</param><param name="callback">The callback to receive progress information, could be nullptr.</param></Document>

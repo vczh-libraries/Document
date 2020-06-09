@@ -1,0 +1,1 @@
+<Document><summary>Get a node by the index in all visible nodes. This requires [M:vl.presentation.controls.tree.INodeRootProvider.CanGetNodeByVisibleIndex] returning true.</summary><returns>The node for the index in all visible nodes.</returns><param name="index">The index in all visible nodes.</param></Document>

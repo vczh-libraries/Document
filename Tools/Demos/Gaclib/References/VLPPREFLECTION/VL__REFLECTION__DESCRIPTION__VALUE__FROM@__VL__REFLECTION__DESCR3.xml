@@ -1,0 +1,1 @@
+<Document><summary>Store a text.</summary><returns>The boxed value.</returns><param name="value">The text to store.</param><param name="type">The type that you expect to interpret the text.</param></Document>

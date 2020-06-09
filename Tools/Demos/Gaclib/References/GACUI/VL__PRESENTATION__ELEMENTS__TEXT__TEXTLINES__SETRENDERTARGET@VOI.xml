@@ -1,0 +1,3 @@
+<Document><summary>
+ Binded a <see cref="IGuiGraphicsRenderTarget"/>.
+ </summary><param name="value">The <see cref="IGuiGraphicsRenderTarget"/> to bind.</param></Document>

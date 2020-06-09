@@ -1,0 +1,1 @@
+<Document><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider as a data source.</param><param name="acceptFocus">Set to true if the list control is allowed to have a keyboard focus.</param></Document>

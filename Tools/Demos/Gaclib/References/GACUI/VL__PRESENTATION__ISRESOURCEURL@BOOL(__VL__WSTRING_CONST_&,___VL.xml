@@ -1,0 +1,1 @@
+<Document><summary>Test is a text a resource url and extract the protocol and the path.</summary><returns>Returns true if the text is a resource url.</returns><param name="text">The text.</param><param name="protocol">The extracted protocol.</param><param name="path">The extracted path.</param></Document>

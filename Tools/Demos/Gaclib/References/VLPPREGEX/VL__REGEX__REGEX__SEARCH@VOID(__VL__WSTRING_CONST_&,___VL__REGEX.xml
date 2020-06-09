@@ -1,0 +1,1 @@
+<Document><summary>Find all matched fragments of the text, returning all matched fragments.</summary><param name="text">The text to match.</param><param name="matches">All successful matches.</param></Document>

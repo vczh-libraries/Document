@@ -1,0 +1,1 @@
+<Document><summary>Create the parse using a parsing table.</summary><param name="_table">The parsing table.</param><param name="_maxInsertedTokenCount">The maximum number of tokens that allow to insert to recover an error.</param></Document>

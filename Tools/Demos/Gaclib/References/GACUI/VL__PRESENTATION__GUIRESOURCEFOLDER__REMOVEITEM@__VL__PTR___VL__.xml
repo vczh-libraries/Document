@@ -1,0 +1,1 @@
+<Document><summary>Remove a resource item of a specified name.</summary><returns>Returns the removed resource item if this operation succeeded.</returns><param name="name">The name of this resource item.</param></Document>

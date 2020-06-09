@@ -1,0 +1,1 @@
+<Document><summary>Create a contained resource object using a path like &quot;Packages\Application\Name&quot;.</summary><returns>Returns true if this operation succeeded.</returns><param name="path">The path.</param><param name="typeName">The type name of this contained object.</param><param name="value">The contained object.</param></Document>

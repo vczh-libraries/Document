@@ -1,0 +1,3 @@
+<Document><summary>
+ Test is the global mouse message receiving enabled.
+ </summary><returns>Returns true if the global mouse message receiving is enabled.</returns></Document>

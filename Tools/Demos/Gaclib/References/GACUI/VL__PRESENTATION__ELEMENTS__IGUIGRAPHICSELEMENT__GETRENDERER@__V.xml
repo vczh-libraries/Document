@@ -1,0 +1,3 @@
+<Document><summary>
+ Access the associated <see cref="IGuiGraphicsRenderer"/> for this graphics element.
+ </summary><returns>Returns the related renderer.</returns></Document>

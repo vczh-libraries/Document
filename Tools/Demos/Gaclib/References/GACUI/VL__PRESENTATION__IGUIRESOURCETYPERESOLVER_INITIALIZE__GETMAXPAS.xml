@@ -1,0 +1,1 @@
+<Document><summary>Get the maximum pass index that the initializer needs.</summary><returns>Returns the maximum pass index. The initializer doesn&apos;t not need to response to every pass.</returns></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Get the object for convert the resource between xml and object.</summary><returns>Returns null if the type resolver does not have this ability.</returns></Document>

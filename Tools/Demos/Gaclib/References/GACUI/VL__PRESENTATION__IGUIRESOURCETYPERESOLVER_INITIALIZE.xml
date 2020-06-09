@@ -1,0 +1,7 @@
+<Document><summary>
+		Represents a precompiler for resources of a specified type.
+		Current resources that needs precompiling:
+			Pass 0: Script		(initialize view model scripts)
+			Pass 1: Script		(initialize shared scripts)
+			Pass 2: Script		(initialize instance scripts)
+ </summary></Document>

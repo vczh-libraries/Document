@@ -1,0 +1,1 @@
+<Document><summary>Get the aggregation root object.</summary><returns>The aggregation root object. If this object is not aggregated, or it is the root object of others, than this function return itself.</returns></Document>

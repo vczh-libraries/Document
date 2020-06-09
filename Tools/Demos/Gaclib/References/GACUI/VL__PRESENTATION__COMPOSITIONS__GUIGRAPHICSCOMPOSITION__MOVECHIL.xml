@@ -1,0 +1,1 @@
+<Document><summary>Move a child composition to a new z-order.</summary><returns>Returns true if this operation succeeded.</returns><param name="child">The child composition to move.</param><param name="newIndex">The new z-order. 0 means the lowest position.</param></Document>

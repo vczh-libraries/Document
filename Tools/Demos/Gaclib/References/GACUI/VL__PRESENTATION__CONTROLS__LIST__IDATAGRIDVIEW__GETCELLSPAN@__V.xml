@@ -1,0 +1,1 @@
+<Document><summary>Get the column span for the cell.</summary><returns>The column span for the cell.</returns><param name="row">The row number for the cell.</param><param name="column">The column number for the cell.</param></Document>

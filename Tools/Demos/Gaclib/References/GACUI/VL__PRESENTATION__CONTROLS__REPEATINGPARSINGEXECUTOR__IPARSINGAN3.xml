@@ -1,0 +1,1 @@
+<Document><summary>Called when a new parsing result is produced. A parsing analyzer can create a cache to be attached to the output containing anything necessary. This function does not run in UI thread.</summary><param name="output">The new parsing result.</param><returns>The created cache object, which can be null.</returns></Document>

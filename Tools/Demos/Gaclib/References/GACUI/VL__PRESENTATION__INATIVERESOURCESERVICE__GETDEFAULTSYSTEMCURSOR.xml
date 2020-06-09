@@ -1,0 +1,3 @@
+<Document><summary>
+ Get a cached cursor object using a default system cursor type;
+ </summary><returns>The cached cursor object.</returns></Document>

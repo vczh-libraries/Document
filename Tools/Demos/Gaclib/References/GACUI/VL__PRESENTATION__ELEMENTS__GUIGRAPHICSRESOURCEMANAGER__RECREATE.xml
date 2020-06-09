@@ -1,0 +1,3 @@
+<Document><summary>
+ Recreate the render target for the specified window.
+ </summary><param name="window">The specified window.</param></Document>

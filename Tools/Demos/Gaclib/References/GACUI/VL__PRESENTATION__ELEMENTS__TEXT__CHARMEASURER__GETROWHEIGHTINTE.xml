@@ -1,0 +1,3 @@
+<Document><summary>
+ Measure the height of a character.
+ </summary><returns>The height in pixel.</returns><param name="renderTarget">The render target which the character is going to be rendered.</param></Document>

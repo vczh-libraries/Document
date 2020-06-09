@@ -1,0 +1,1 @@
+<Document><summary>Test if the input is a complete token.</summary><returns>Returns true if the input text is a complete token.</returns><param name="input">The input text.</param></Document>

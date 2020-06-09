@@ -1,0 +1,1 @@
+<Document><summary>Replace the background color within the specified range.</summary><param name="start">The position of the first character of the specified range.</param><param name="length">The length of the specified range by character.</param><param name="value">The background color.</param><returns>Returns true if this operation succeeded.</returns></Document>

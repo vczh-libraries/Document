@@ -1,0 +1,3 @@
+<Document><summary>
+ Require mouse message capturing to this window. If the capture is required, all mouse message will be send to this window.
+ </summary><returns>Returns true if this operation succeeded.</returns></Document>

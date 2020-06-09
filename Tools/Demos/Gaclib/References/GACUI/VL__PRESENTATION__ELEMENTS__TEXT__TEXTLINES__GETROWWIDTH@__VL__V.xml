@@ -1,0 +1,3 @@
+<Document><summary>
+ Returns the width of a specified row.
+ </summary><returns>The width of a specified row, in pixel.</returns><param name="row">The specified row number.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Get the related cursor. A related cursor is from the deepest composition that contains this composition and associated with a cursor.</summary><returns>The related cursor.</returns></Document>

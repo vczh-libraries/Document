@@ -1,0 +1,1 @@
+<Document><summary>Get an internal property of this object. This map is totally for customization.</summary><returns>Value of the internal property of this object.</returns><param name="name">Name of the property.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Cast a smart pointer.</summary><typeparam name="C">The type of the object before casting.</typeparam><param name="pointer">The smart pointer to cast.</param></Document>

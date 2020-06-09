@@ -1,0 +1,1 @@
+<Document><summary>Queue a lambda expression.</summary><typeparam name="T">The type of the lambda expression.</typeparam><param name="proc">The lambda expression.</param></Document>

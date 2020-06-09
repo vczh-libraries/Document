@@ -1,0 +1,1 @@
+<Document><summary>Get the <see cref="compositions::GuiGraphicsComposition"/> that directly contains item controls.</summary><returns>The <see cref="compositions::GuiGraphicsComposition"/> that directly contains item controls.</returns></Document>

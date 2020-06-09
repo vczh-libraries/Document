@@ -1,0 +1,1 @@
+<Document><summary>Create a new lazy list, whose elements are groupd by from elements in this lazy list.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a key retriver to calcuate a key from an element.</param></Document>

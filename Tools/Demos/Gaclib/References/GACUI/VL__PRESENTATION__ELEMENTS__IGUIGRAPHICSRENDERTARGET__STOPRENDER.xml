@@ -1,0 +1,3 @@
+<Document><summary>
+ Notify the target to stop rendering.
+ </summary><returns>Returns false to recreate render target.</returns></Document>

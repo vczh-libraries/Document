@@ -1,0 +1,1 @@
+<Document><summary>A type representing a pair of key and value.</summary><typeparam name="K">Type of the key.</typeparam><typeparam name="V">Type of the value.</typeparam></Document>

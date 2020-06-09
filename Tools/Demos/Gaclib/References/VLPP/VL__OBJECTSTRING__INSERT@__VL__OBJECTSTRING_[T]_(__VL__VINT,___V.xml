@@ -1,0 +1,1 @@
+<Document><summary>Make a new string by inserting a string in this string.</summary><returns>The copied string.</returns><param name="index">Position of characters to insert.</param><param name="string">The string to be inserted in this string.</param></Document>

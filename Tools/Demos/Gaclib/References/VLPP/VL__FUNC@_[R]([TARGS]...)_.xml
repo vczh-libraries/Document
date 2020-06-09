@@ -1,0 +1,1 @@
+<Document><summary>A type representing a function reference.</summary><typeparam name="R">The return type.</typeparam><typeparam name="TArgs">Types of parameters.</typeparam></Document>

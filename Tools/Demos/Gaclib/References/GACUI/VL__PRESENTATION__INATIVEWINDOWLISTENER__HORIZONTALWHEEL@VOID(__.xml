@@ -1,0 +1,3 @@
+<Document><summary>
+ Called when the horizontal mouse wheel scrolls.
+ </summary><param name="info">Detailed information to this message.</param></Document>

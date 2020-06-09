@@ -1,0 +1,1 @@
+<Document><summary>Create a stream.</summary><param name="fileName">File to operate.</param><param name="_accessRight">Operations want to perform on the file.</param></Document>

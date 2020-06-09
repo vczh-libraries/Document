@@ -1,0 +1,1 @@
+<Document><summary>Try enter a critical section. This function will return immediately.</summary><returns>Returns true if the current thread owned the critical section.</returns></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Test is the screen is a primary screen.
+ </summary><returns>Returns true if the screen is a primary screen.</returns></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Set the icon.
+ </summary><param name="icon">The icon. Set to null to use the default icon.</param></Document>

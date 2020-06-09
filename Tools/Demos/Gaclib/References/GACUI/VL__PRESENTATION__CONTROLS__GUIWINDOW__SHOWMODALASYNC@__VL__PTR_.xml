@@ -1,0 +1,3 @@
+<Document><summary>
+ Show a model window as an async operation, which ends when the window is closed.
+ </summary><returns>Returns true if the size box is visible.</returns><param name="owner">The window to disable as a parent window.</param></Document>

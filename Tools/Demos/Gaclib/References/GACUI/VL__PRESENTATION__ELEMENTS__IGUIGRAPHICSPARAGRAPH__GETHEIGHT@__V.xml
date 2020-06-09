@@ -1,0 +1,1 @@
+<Document><summary>Get the layouted height of the text. The result depends on rich styled text and the two important properties that can be set using <see cref="SetWrapLine"/> and <see cref="SetMaxWidth"/>.</summary><returns>The layouted height.</returns></Document>

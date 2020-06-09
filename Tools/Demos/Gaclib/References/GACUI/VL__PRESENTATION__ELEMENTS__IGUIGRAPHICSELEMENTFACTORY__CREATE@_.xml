@@ -1,0 +1,3 @@
+<Document><summary>
+ Create a <see cref="IGuiGraphicsElement"/>.
+ </summary><returns>Returns the created graphics elements.</returns></Document>

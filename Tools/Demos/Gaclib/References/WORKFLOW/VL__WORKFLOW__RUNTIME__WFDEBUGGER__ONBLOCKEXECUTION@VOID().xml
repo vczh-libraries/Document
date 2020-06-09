@@ -1,0 +1,1 @@
+<Document><summary>Called for doing something when a break point is activated. This function will be called multiple times before some one let the debugger to continue.</summary></Document>

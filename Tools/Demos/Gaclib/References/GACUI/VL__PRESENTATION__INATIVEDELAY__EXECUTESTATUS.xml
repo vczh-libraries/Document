@@ -1,0 +1,1 @@
+<Document><summary>Delay execution controller status.</summary><enumitem name="Canceled">Canceled.</enumitem><enumitem name="Executed">Executed.</enumitem><enumitem name="Executing">Executing.</enumitem><enumitem name="Pending">Pending.</enumitem></Document>

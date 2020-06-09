@@ -1,0 +1,1 @@
+<Document><summary>Test does the Regex uses DFA to test a string. Test means ignoring all capturing requirements.</summary><returns>Returns true if DFA is used.</returns></Document>

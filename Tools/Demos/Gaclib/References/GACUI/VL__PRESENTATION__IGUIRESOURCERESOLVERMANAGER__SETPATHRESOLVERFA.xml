@@ -1,0 +1,1 @@
+<Document><summary>Set the <see cref="IGuiResourcePathResolverFactory"/> for a protocol.</summary><returns>Returns true if this operation succeeded.</returns><param name="factory">The factory.</param></Document>

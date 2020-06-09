@@ -1,0 +1,1 @@
+<Document><summary>Get the <see cref="GuiWindow"/> instance that the mouse cursor are directly in.</summary><returns>The <see cref="GuiWindow"/> instance that the mouse cursor are directly in.</returns><param name="location">The mouse cursor.</param></Document>

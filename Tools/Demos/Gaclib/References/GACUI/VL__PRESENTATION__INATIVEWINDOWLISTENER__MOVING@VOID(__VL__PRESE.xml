@@ -1,0 +1,3 @@
+<Document><summary>
+ Called when the window is moving.
+ </summary><param name="bounds">The bounds. Message handler can change the bounds.</param><param name="fixSizeOnly">True if the message raise only want the message handler to change the size.</param></Document>

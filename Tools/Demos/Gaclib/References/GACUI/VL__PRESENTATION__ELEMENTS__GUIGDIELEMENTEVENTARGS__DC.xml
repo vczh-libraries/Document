@@ -1,0 +1,1 @@
+<Document><summary>The device context to draw. The HDC handle can be retrived using dc-&gt;GetHandle(), but it is recommended that using the WinDC class directly.</summary></Document>

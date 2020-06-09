@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the image service that creates this image.
+ </summary><returns>The image service that creates this image.</returns></Document>

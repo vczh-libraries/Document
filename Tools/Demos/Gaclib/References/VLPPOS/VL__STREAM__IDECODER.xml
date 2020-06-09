@@ -1,0 +1,1 @@
+<Document><summary>Decoder interface. This interface defines a readable transformation from one stream to another stream. You can create a [T:vl.stream.DecoderStream] after you have an decoder.</summary></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Access the <see cref="IGuiGraphicsElementFactory"/> that is used to create this graphics elements.
+ </summary><returns>Returns the related factory.</returns></Document>

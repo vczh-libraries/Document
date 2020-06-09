@@ -1,0 +1,3 @@
+<Document><summary>
+ Returns the binded <see cref="IGuiGraphicsRenderTarget"/>.
+ </summary><returns>The binded <see cref="IGuiGraphicsRenderTarget"/>.</returns></Document>

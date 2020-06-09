@@ -1,0 +1,1 @@
+<Document><summary>Delete the folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="recursively">Set to true to delete everything in the folder.</param></Document>

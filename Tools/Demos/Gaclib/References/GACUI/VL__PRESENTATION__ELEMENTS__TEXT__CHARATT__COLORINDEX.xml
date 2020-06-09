@@ -1,0 +1,3 @@
+<Document><summary>
+ The color index of the character. Use [M:vl.presentation.elements.GuiColorizedTextElement.GetColors] and [M:vl.presentation.elements.GuiColorizedTextElement.SetColors] to access the color table.
+ </summary></Document>

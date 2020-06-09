@@ -1,0 +1,1 @@
+<Document><summary>Create the sub menu if necessary. The created sub menu is owned by this menu button.</summary><returns>The created sub menu.</returns><param name="subMenuTemplate">The style controller for the sub menu. Set to null to use the default control template.</param></Document>

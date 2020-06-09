@@ -1,0 +1,3 @@
+<Document><summary>
+ Represents a control that host by a <see cref="INativeWindow"/>.
+ </summary></Document>

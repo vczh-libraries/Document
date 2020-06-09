@@ -1,0 +1,1 @@
+<Document><summary>Run the specified function in the main thread. If the caller is in the main thread, then run the specified function directly.</summary><param name="controlHost">A control host to access the corressponding main thread.</param><param name="proc">The specified function.</param></Document>

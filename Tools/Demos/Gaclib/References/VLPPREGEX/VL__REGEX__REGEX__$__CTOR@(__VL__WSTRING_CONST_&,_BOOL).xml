@@ -1,0 +1,1 @@
+<Document><summary>Create a regular expression.</summary><param name="code">The regular expression in a string.</param><param name="preferPure">Set to true to tell the Regex to use DFA if possible.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Attach or detach the <see cref="IGuiShortcutKeyManager"/> associated with this graphics host. When this graphics host is disposing, the associated shortcut key manager will be deleted if exists.</summary><param name="value">The shortcut key manager. Set to null to detach the previous shortcut key manager from this graphics host.</param></Document>

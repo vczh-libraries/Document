@@ -1,0 +1,2 @@
+<Document><summary>Colorize a text.</summary>	GetCurrentState()const;
+ <returns>An inter token state at the end of this line. It could be the same object which is returned from the previous call.</returns><param name="input">The text to colorize.</param><param name="length">Size of the text in characters.</param></Document>

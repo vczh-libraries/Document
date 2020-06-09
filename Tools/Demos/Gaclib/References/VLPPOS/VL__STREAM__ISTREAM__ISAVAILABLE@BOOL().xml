@@ -1,0 +1,1 @@
+<Document><summary>Test if the stream is available. For example, if you create a readable [T:vl.stream.FileStream] giving a wrong file name, it will be unavailable.</summary><returns>Returns true if the stream is available.</returns></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Get the preload type to load the resource before loading itself.</summary><returns>The preload type. Returns an empty string to indicate that there is no preload type for this resolver.</returns></Document>

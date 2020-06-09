@@ -1,0 +1,3 @@
+<Document><summary>
+ Initialize a character measurer.
+ </summary><param name="_rowHeight">The default character height in pixel before the character measurer is binded to a render target.</param></Document>

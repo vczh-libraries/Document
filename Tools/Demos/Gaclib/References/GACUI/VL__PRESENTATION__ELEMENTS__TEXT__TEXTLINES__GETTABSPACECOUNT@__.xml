@@ -1,0 +1,3 @@
+<Document><summary>
+ Returns the number of spaces to replace a tab character for rendering.
+ </summary><returns>The number of spaces to replace a tab character for rendering.</returns></Document>

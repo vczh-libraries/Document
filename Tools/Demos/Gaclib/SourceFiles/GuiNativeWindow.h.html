@@ -71,12 +71,14 @@ System Object
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the screen is a primary screen.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>				<div class="def" id="FB$vl::presentation::INativeScreen::IsPrimary@bool()[decl0]"><div><div class="token cpp_function">IsPrimary</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Get the scaling for the screen&apos;s horizontal edge. For example, in Windows when you have a 96 DPI, this function returns 1.0.</div>
+			<div class="token cpp_comment ">/// Get the scaling for the screen&apos;s horizontal edge.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">double</div>				<div class="def" id="FB$vl::presentation::INativeScreen::GetScalingX@double()[decl0]"><div><div class="token cpp_function">GetScalingX</div></div></div>() = <div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Get the scaling for the screen&apos;s vertical edge. For example, in Windows when you have a 96 DPI, this function returns 1.0.</div>
+			<div class="token cpp_comment ">/// Get the scaling for the screen&apos;s vertical edge.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">double</div>				<div class="def" id="FB$vl::presentation::INativeScreen::GetScalingY@double()[decl0]"><div><div class="token cpp_function">GetScalingY</div></div></div>() = <div class="token cpp_number ">0</div>;
 		};
 		
@@ -139,6 +141,9 @@ System Object
 				<div class="token cpp_comment ">/// [T:vl.presentation.INativeCursor.SystemCursorType]Sizing W-E cursor.</div>
 				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::presentation::INativeCursor::SystemCursorType::SizeWE"><div><div class="token cpp_enum">SizeWE</div></div></div>,
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// [T:vl.presentation.INativeCursor.SystemCursorType]Number of available cursors, this is not an available cursor by itself.</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::presentation::INativeCursor::SystemCursorType::LastSystemCursor"><div><div class="token cpp_enum">LastSystemCursor</div></div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeCursor::SystemCursorType::SizeWE'], [], [])"><div class="token cpp_enum">SizeWE</div></div>,
 			};
 
@@ -289,7 +294,7 @@ Image Object
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Save the image to a stream.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;stream&quot;&gt;The stream.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;imageStream&quot;&gt;The stream.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;formatType&quot;&gt;The format of the image.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::presentation::INativeImage::SaveToStream@void(::vl::stream::IStream &, ::vl::presentation::INativeImage::FormatType)[decl0]"><div><div class="token cpp_function">SaveToStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::presentation::INativeImage::SaveToStream@void(::vl::stream::IStream &, ::vl::presentation::INativeImage::FormatType)[decl0]::imageStream"><div>imageStream</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeImage::FormatType'], [], [])"><div class="token cpp_type">FormatType</div></div> <div class="def" id="NI$vl::presentation::INativeImage::SaveToStream@void(::vl::stream::IStream &, ::vl::presentation::INativeImage::FormatType)[decl0]::formatType"><div>formatType</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeImage::FormatType'], [], [])"><div class="token cpp_type">FormatType</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeImage::FormatType::Unknown'], [], [])"><div class="token cpp_enum">Unknown</div></div>) = <div class="token cpp_number ">0</div>;
 		};
@@ -319,7 +324,7 @@ Image Object
 			<div class="token cpp_comment ">/// Create an image from stream.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created image.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;stream&quot;&gt;The stream.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;imageStream&quot;&gt;The stream.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeImage'], [], [])"><div class="token cpp_type">INativeImage</div></div>&gt;			<div class="def" id="FB$vl::presentation::INativeImageService::CreateImageFromStream@::vl::Ptr<::vl::presentation::INativeImage>(::vl::stream::IStream &)[decl0]"><div><div class="token cpp_function">CreateImageFromStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::presentation::INativeImageService::CreateImageFromStream@::vl::Ptr<::vl::presentation::INativeImage>(::vl::stream::IStream &)[decl0]::imageStream"><div>imageStream</div></div>)=<div class="token cpp_number ">0</div>;
 		};
 

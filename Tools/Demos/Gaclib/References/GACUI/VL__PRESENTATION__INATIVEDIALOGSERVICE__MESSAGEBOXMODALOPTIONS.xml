@@ -1,0 +1,3 @@
+<Document><summary>
+ Message box model options.
+ </summary><enumitem name="ModalSystem">Top most message box in the whole system.</enumitem><enumitem name="ModalTask">Disable all windows in the application.</enumitem><enumitem name="ModalWindow">Disable the current window.</enumitem></Document>

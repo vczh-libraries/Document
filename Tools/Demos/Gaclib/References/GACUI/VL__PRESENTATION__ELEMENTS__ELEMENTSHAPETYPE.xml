@@ -1,0 +1,3 @@
+<Document><summary>
+ Defines a shape for some <see cref="IGuiGraphicsElement"/>.
+ </summary><enumitem name="Ellipse">Ellipse shape.</enumitem><enumitem name="Rectangle">Rectangle shape.</enumitem><enumitem name="RoundRect">Round rectangle shape.</enumitem></Document>

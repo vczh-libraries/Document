@@ -1,0 +1,2 @@
+<Document><summary>
+ Called when the global timer message raised. To receive or not receive this message, use <see cref="INativeInputService::StartTimer"/> or <see cref="INativeInputService::StopTimer"/></summary></Document>

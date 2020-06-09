@@ -1,0 +1,1 @@
+<Document><summary>Get the index in all visible nodes of a node.</summary><returns>The index in all visible nodes of a node.</returns><param name="node">The node to calculate the index.</param></Document>

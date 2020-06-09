@@ -1,0 +1,1 @@
+<Document><summary>Test if the object has already been created. Some of the synchronization objects should initialize itself after the constructor. This function is only available in Windows.</summary><returns>Returns true if the object has already been created.</returns></Document>

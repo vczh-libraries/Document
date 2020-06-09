@@ -1,0 +1,1 @@
+<Document><summary>Initialize the processor, specifying dependency relationships as a group.</summary><typeparam name="TList">Type of the first parameter.</typeparam><param name="items">Items.</param><param name="depGroup">Dependences. If a depends on b, then depGroups[a].Contains(b) == true.</param></Document>

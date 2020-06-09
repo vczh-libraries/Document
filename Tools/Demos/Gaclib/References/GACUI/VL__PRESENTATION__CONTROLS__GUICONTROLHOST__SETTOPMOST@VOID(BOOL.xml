@@ -1,0 +1,3 @@
+<Document><summary>
+ Make the window always or never on top of the desktop.
+ </summary><param name="topmost">True to make the window always  on top of the desktop.</param></Document>

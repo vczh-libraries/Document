@@ -1,0 +1,3 @@
+<Document><summary>
+ The internal context sensitive state of a colorizer when it parses to the end of this line. -1 means that this state is not available.
+ </summary></Document>

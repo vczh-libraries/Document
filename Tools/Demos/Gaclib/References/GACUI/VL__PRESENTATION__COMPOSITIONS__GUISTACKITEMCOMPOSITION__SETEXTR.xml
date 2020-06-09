@@ -1,0 +1,1 @@
+<Document><summary>Set the extra margin for this stack item. An extra margin is used to enlarge the bounds of the stack item, but only the non-extra part will be used for deciding the stack item layout.</summary><param name="value">The extra margin for this stack item.</param></Document>

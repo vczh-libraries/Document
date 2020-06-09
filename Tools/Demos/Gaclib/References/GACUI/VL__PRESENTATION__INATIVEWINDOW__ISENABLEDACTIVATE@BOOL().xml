@@ -1,0 +1,3 @@
+<Document><summary>
+ Test is the window allowed to be activated.
+ </summary><returns>Returns true if the window is allowed to be activated.</returns></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Set the selected shared control, which should be stored in [M:vl.presentation.compositions.GuiResponsiveViewComposition.GetSharedControls].</summary><param name="value">The selected shared control.</param></Document>

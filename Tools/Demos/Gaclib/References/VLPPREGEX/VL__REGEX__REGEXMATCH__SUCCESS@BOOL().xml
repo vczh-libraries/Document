@@ -1,0 +1,1 @@
+<Document><summary>Test if this match is a success match or a failed match. A failed match will only appear when calling [M:vl.regex.Regex.Split] or [M:vl.regex.Regex.Cut]. In other cases, failed matches are either not included in the result, or become null pointers.</summary><returns>Returns true if this match is a success match.</returns></Document>

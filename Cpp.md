@@ -28,8 +28,8 @@
 
 - [ ] Generate reference pages
   - [ ] Copy document comment to a folder, with a folder-structured XML file (`ReferenceIndex.xml`), mapping symbol ids to file names.
-    - [ ] using similar file name generation as symbol index fragment files, to prevent from exceeding MAX_PATH.
     - [ ] Process hyper-links.
+      - [ ] If the first hyperlink in enum item points to the enum type, ignore.
       - [ ] `[T:x]` (type), `[M:x]` (method) and `[F:x]` (field) only use primary symbols.
       - [ ] Ensure that the hyper link resolves to one single target.
         - [ ] ```x`` means a symbol with specified number (x) of template arguments.

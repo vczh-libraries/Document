@@ -1,0 +1,1 @@
+<Document><summary>Load a text file.</summary><returns>Returns true if the operation succeeded.</returns><param name="filePath">The text file path.</param><param name="text">The text file content, if succeeded.</param></Document>

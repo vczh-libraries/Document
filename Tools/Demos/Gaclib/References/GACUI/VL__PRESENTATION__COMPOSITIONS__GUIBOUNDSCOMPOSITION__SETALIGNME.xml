@@ -1,0 +1,1 @@
+<Document><summary>Set the alignment to its parent. -1 in each alignment component means that the corressponding side is not aligned to its parent.</summary><param name="value">The alignment to its parent.</param></Document>

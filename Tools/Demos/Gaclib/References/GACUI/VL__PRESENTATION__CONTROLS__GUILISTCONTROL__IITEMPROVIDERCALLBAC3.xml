@@ -1,0 +1,1 @@
+<Document><summary>Called when items in the item provider is modified.</summary><param name="start">The index of the first modified item.</param><param name="count">The number of all modified items.</param><param name="newCount">The number of new items. If items are inserted or removed, newCount may not equals to count.</param></Document>

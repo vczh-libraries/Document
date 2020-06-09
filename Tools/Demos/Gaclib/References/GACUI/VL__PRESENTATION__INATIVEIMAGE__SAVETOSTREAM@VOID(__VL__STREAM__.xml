@@ -1,0 +1,3 @@
+<Document><summary>
+ Save the image to a stream.
+ </summary><param name="imageStream">The stream.</param><param name="formatType">The format of the image.</param></Document>

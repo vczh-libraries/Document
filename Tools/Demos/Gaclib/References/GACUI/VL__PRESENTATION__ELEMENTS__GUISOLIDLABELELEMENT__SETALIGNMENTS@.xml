@@ -1,0 +1,3 @@
+<Document><summary>
+ Set alignments in both directions of the text.
+ </summary><param name="horizontal">The new horizontal alignment of the text.</param><param name="vertical">The vertical alignment of the text.</param></Document>

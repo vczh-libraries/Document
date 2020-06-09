@@ -1,0 +1,3 @@
+<Document><summary>
+ Install a global message listener.
+ </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The global message listener to install.</param></Document>

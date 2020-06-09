@@ -1,0 +1,3 @@
+<Document><summary>
+ Returns the binded <see cref="CharMeasurer"/>.
+ </summary><returns>The binded <see cref="CharMeasurer"/>.</returns></Document>

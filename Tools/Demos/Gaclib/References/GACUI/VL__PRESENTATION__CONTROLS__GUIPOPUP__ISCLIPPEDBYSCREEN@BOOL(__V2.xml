@@ -1,0 +1,1 @@
+<Document><summary>Test will the whole popup window be in the screen if the popup&apos;s left-top position is set to a specified value.</summary><returns>Returns true if the whole popup window will be in the screen.</returns><param name="location">The specified left-top position.</param></Document>

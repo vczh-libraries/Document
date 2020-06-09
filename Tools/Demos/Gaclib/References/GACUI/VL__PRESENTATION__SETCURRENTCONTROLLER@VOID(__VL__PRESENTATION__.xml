@@ -1,0 +1,3 @@
+<Document><summary>
+ Set the global native system service controller.
+ </summary><param name="controller">The global native system service controller.</param></Document>

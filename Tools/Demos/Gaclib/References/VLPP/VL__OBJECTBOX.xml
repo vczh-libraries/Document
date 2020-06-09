@@ -1,0 +1,1 @@
+<Document><summary>Type for storing a value to wherever requiring a [T:vl.Ptr`1] to [T:vl.Object].</summary><typeparam name="T">Type of the value.</typeparam></Document>

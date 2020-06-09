@@ -1,0 +1,1 @@
+<Document><summary>Write a string with a CRLF.</summary><param name="string">Buffer to the string to write.</param><param name="charCount">Size of the string in characters not including the zero terminator.</param></Document>

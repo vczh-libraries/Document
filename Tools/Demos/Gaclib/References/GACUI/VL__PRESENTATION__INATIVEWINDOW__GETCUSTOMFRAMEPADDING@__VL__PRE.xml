@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the amount of the border. The window template may need this value to calculate where to put the client area.
+ </summary><returns>Returns the amount of the border.</returns></Document>

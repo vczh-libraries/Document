@@ -1,0 +1,1 @@
+<Document><summary>Delay execute a specified function with an specified argument asynchronisly.</summary><returns>The Delay execution controller for this task.</returns><param name="proc">The specified function.</param><param name="milliseconds">Time to delay.</param></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Bind a color table. Use <see cref="text::CharAtt::colorIndex"/> to use colors in this color table. <see cref="ICallback::ColorChanged"/> will be called.
+ </summary><param name="value">The color table to bind.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Inline object break condition.</summary><enumitem name="Alone">Treat as a single run.</enumitem><enumitem name="StickToNextRun">Stay together with the next run if possible.</enumitem><enumitem name="StickToPreviousRun">Stay together with the previous run if possible.</enumitem></Document>

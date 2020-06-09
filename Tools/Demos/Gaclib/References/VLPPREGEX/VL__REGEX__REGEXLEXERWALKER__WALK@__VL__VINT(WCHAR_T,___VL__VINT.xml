@@ -1,0 +1,1 @@
+<Document><summary>Step forward by one character.</summary><returns>Returns the new current state.</returns><param name="input">The input character.</param><param name="state">The current state.</param></Document>

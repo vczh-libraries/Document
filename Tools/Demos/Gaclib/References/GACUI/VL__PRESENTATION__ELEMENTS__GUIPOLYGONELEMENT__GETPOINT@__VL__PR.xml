@@ -1,0 +1,3 @@
+<Document><summary>
+ Get a point of the polygon element using an index.
+ </summary><param name="index">The index to access a point.</param><returns>The point of the polygon element associated with the index.</returns></Document>

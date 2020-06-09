@@ -1,0 +1,1 @@
+<Document><summary>Test if a control owned by this control.</summary><returns>Returns true if the control is owned by this control.</returns><param name="control">The control to test.</param></Document>

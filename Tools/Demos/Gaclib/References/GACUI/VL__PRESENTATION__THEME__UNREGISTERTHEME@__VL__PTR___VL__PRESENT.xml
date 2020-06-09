@@ -1,0 +1,1 @@
+<Document><summary>Unregister a control template collection object.</summary><returns>The registered object. Returns null if it does not exist.</returns><param name="name">The name of the theme.</param></Document>

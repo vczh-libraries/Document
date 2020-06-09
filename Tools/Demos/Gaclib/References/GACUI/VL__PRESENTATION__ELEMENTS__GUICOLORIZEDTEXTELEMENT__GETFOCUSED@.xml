@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the focused state.
+ </summary><returns>Returns true if the element will be rendered as a focused element.</returns></Document>

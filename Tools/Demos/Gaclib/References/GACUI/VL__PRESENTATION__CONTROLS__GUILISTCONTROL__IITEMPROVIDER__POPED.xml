@@ -1,0 +1,1 @@
+<Document><summary>Decrease the editing counter indicating that an [T:vl.presentation.templates.GuiListItemTemplate] has stopped editing an item.</summary><returns>Returns false if there is no supression before calling this function.</returns></Document>

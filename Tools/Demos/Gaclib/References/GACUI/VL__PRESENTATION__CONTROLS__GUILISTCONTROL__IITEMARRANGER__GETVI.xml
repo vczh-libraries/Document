@@ -1,0 +1,1 @@
+<Document><summary>Get the item index for an visible item style controller. If an item is not visible, it returns -1.</summary><returns>The item index.</returns><param name="style">The item style controller.</param></Document>

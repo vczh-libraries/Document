@@ -1,0 +1,8 @@
+<Document><summary><![CDATA[
+ Spin lock. It is similar to mutex.
+ The macro "SPIN_LOCK" is encouraged to use instead of calling [M:vl.SpinLock.Enter] and [M:vl.SpinLock.Leave] like this:
+ SPIN_LOCK(yourLock)
+ {
+		<code>
+ }
+ ]]></summary></Document>

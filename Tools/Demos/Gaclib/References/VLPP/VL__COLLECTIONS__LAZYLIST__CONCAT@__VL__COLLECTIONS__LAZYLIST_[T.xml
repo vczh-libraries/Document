@@ -1,0 +1,1 @@
+<Document><summary>Create a new lazy list containing elements of the two container one after another.</summary><returns>The created lazy list.</returns><param name="remains">Elements that put after this lazy list.</param></Document>

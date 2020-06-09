@@ -1,0 +1,1 @@
+<Document><summary>Deactivate a callback. See <see cref="ActivateCallback"/> for deatils.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The callback.</param></Document>

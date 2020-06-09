@@ -1,0 +1,3 @@
+<Document><summary>
+ Called when a window is destroying.
+ </summary><param name="window">The destroying window.</param></Document>

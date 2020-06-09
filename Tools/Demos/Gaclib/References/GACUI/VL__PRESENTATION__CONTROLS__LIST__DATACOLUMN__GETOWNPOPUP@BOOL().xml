@@ -1,0 +1,1 @@
+<Document><summary>Test if the column owns the popup. Owned popup will be deleted in the destructor.</summary><returns>Returns true if the column owns the popup.</returns></Document>

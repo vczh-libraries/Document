@@ -1,0 +1,1 @@
+<Document><summary>Create a mutex.</summary><returns>Returns true if this operation succeeded.</returns><param name="owned">Set to true to own the created mutex.</param><param name="name">Name of the mutex. If it is not empty, than it is a global named mutex. This argument is ignored in Linux.</param></Document>

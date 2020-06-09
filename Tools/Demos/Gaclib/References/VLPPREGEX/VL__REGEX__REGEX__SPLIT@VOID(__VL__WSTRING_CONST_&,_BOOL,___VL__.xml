@@ -1,0 +1,1 @@
+<Document><summary>Split the text by matched fragments, returning all unmatched fragments.</summary><param name="text">The text to match.</param><param name="keepEmptyMatch">Set to true to keep all empty matches.</param><param name="matches">All failed matches.</param></Document>

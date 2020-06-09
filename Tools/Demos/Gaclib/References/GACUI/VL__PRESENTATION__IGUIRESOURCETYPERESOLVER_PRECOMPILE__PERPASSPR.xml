@@ -1,0 +1,1 @@
+<Document><summary>Precompile for a pass.</summary><param name="context">The context for precompiling.</param><param name="errors">All collected errors during loading a resource.</param></Document>

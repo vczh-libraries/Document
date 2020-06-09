@@ -1,0 +1,1 @@
+<Document><summary>Set the extra margin for this flow item. An extra margin is used to enlarge the bounds of the flow item, but only the non-extra part will be used for deciding the flow item layout.</summary><param name="value">The extra margin for this flow item.</param></Document>

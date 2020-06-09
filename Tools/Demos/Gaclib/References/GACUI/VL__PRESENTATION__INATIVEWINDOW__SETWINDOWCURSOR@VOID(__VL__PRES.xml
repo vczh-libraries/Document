@@ -1,0 +1,3 @@
+<Document><summary>
+ Set the mouse cursor of the window. When the mouse is on the window, the mouse cursor will be rendered.
+ </summary><param name="cursor">The mouse cursor of the window.</param></Document>

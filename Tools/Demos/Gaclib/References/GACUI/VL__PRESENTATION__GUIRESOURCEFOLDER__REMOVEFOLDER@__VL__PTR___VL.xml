@@ -1,0 +1,1 @@
+<Document><summary>Remove a resource folder of a specified name.</summary><returns>Returns the removed resource folder if this operation succeeded.</returns><param name="name">The name of this resource folder.</param></Document>

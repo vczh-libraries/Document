@@ -1,0 +1,1 @@
+<Document><summary>Add a component. When this control host is disposing, all attached components will be deleted.</summary><returns>Returns true if this operation succeeded.</returns><param name="component">The component to add.</param></Document>

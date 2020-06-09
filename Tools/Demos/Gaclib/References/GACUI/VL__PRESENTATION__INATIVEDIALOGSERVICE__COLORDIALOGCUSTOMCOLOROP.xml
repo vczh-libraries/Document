@@ -1,0 +1,3 @@
+<Document><summary>
+ Color dialog custom color options
+ </summary><enumitem name="CustomColorDisabled">Disable the custom color panel.</enumitem><enumitem name="CustomColorEnabled">Enable the custom color panel.</enumitem><enumitem name="CustomColorOpened">Open the custom color panel at the beginning.</enumitem></Document>

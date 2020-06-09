@@ -1,0 +1,3 @@
+<Document><summary>
+ Returns a string from a specified range of the text lines.
+ </summary><returns>The string.</returns><param name="start">The start position.</param><param name="end">The end position.</param></Document>

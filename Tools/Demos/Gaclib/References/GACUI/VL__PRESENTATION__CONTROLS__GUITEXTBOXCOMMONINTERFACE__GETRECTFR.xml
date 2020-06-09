@@ -1,0 +1,1 @@
+<Document><summary>Get the display bounds of a character from a specified text position.</summary><returns>Get the display bounds of a character.</returns><param name="pos">The specified text position.</param></Document>

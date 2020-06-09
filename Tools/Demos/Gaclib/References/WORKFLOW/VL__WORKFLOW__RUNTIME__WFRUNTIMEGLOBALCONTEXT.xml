@@ -1,0 +1,1 @@
+<Document><summary>Global context for executing a Workflow program. After the context is prepared, use [M:vl.workflow.runtime.LoadFunction] to call any functions inside the assembly. Function &quot;&lt;initialize&gt;&quot; should be the first to execute.</summary></Document>

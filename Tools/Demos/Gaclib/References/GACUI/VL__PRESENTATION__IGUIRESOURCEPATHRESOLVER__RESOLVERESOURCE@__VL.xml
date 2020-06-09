@@ -1,0 +1,1 @@
+<Document><summary>Load a resource when the descriptor is something like a protocol-prefixed uri.</summary><returns>The loaded resource. Returns null if failed to load.</returns><param name="path">The path.</param></Document>

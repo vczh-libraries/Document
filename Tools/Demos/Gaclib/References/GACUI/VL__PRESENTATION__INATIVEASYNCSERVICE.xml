@@ -1,0 +1,3 @@
+<Document><summary>
+ Asynchronized operation service. GacUI is not a thread safe library except for this service. To access this service, use [M:vl.presentation.INativeController.AsyncService].
+ </summary></Document>

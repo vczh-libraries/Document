@@ -1,0 +1,1 @@
+<Document><summary>Create a cache stream using a target stream.</summary><param name="_target">The target stream.</param><param name="_block">Size of the cache.</param></Document>

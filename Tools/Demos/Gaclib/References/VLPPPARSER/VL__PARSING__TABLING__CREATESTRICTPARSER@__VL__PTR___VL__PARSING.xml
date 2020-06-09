@@ -1,0 +1,1 @@
+<Document><summary>Create the correct strict parser from a parsing table.</summary><returns>The created parse.</returns><param name="table">The table to create a parser.</param></Document>

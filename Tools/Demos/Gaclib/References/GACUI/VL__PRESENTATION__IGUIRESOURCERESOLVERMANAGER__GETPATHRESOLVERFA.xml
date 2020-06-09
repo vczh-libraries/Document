@@ -1,0 +1,1 @@
+<Document><summary>Get the <see cref="IGuiResourcePathResolverFactory"/> for a protocol.</summary><returns>The factory.</returns><param name="protocol">The protocol.</param></Document>

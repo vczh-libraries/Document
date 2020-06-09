@@ -1,0 +1,3 @@
+<Document><summary>
+ Test if the window is capturing mouse messages.
+ </summary><returns>Returns true if the window is capturing mouse messages.</returns></Document>

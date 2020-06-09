@@ -1,0 +1,1 @@
+<Document><summary>Get the content of the file as text with encoding testing.</summary><returns>Returns false if this operation succeeded.</returns><param name="text">The content of the file.</param><param name="encoding">The encoding.</param><param name="containsBom">True if there is BOM.</param></Document>

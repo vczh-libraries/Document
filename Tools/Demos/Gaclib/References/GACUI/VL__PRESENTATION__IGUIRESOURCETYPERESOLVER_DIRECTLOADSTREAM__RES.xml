@@ -1,0 +1,1 @@
+<Document><summary>Load a precompiled resource from a stream.</summary><returns>The resource.</returns><param name="resource">The resource item containing the resource.</param><param name="binaryStream">The stream.</param><param name="errors">All collected errors during loading a resource.</param></Document>

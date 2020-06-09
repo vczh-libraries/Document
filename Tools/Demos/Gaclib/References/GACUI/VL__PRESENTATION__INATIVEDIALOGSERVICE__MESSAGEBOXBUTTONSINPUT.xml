@@ -1,0 +1,3 @@
+<Document><summary>
+ Message box button combination for displaying a message box.
+ </summary><enumitem name="DisplayAbortRetryIgnore">Display Abort, Retry, Ignore.</enumitem><enumitem name="DisplayCancelTryAgainContinue">Display Cancel, TryAgain, Continue.</enumitem><enumitem name="DisplayOK">Display OK.</enumitem><enumitem name="DisplayOKCancel">Display OK, Cancel.</enumitem><enumitem name="DisplayRetryCancel">Display Retry, Cancel.</enumitem><enumitem name="DisplayYesNo">Display Yes, No.</enumitem><enumitem name="DisplayYesNoCancel">Display Yes, No, Cancel.</enumitem></Document>

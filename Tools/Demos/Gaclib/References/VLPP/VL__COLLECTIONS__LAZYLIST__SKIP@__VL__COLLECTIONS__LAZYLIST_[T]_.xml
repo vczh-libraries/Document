@@ -1,0 +1,1 @@
+<Document><summary>Create a new lazy list without some prefix elements.</summary><returns>The created lazy list.</returns><param name="count">The size of the prefix.</param></Document>

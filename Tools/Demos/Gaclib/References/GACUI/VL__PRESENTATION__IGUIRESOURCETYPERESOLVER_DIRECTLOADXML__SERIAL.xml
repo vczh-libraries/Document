@@ -1,0 +1,1 @@
+<Document><summary>Serialize a resource to an xml element. This function is called if this type resolver does not have a preload type.</summary><returns>The serialized xml element.</returns><param name="resource">The resource item containing the resource.</param><param name="content">The object to serialize.</param></Document>

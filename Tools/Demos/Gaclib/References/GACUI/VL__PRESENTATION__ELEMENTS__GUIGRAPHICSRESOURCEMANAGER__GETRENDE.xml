@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the instance of a <see cref="IGuiGraphicsRenderTarget"/> that is binded to an <see cref="INativeWindow"/>.
+ </summary><param name="window">The specified window.</param><returns>Returns the render target.</returns></Document>

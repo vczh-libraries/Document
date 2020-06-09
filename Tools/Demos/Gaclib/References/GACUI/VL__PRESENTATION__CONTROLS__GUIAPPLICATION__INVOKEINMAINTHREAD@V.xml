@@ -1,0 +1,1 @@
+<Document><summary>Invoke a specified function in the main thread.</summary><param name="controlHost">A control host to access the corressponding main thread.</param><param name="proc">The specified function.</param></Document>

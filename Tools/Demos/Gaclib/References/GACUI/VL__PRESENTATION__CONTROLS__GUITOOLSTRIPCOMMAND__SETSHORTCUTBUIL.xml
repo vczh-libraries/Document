@@ -1,0 +1,1 @@
+<Document><summary>Set the shortcut builder for this command. When the command is attached to a window as a component without a shortcut, the command will try to convert the shortcut builder to a shortcut key item.</summary><param name="value">The shortcut builder for this command.</param></Document>

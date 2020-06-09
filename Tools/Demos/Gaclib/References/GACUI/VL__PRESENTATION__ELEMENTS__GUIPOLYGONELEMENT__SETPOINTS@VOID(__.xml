@@ -1,0 +1,3 @@
+<Document><summary>
+ Set all points to the polygon element.
+ </summary><param name="p">A pointer to a buffer that stores all points.</param><param name="count">The number of points.</param></Document>

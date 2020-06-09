@@ -1,0 +1,3 @@
+<Document><summary>
+ Override the default font configuration for the current process, only available GacUI library.
+ </summary><param name="value">The font configuration to override.</param></Document>

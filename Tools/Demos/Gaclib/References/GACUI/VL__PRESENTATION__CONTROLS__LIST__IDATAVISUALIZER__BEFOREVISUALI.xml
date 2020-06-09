@@ -1,0 +1,1 @@
+<Document><summary>Called before visualizing a cell.</summary><param name="itemProvider">The item provider.</param><param name="row">The row number of the cell.</param><param name="column">The column number of the cell.</param></Document>

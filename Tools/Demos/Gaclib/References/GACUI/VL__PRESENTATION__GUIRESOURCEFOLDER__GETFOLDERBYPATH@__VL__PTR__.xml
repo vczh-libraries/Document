@@ -1,0 +1,1 @@
+<Document><summary>Get a resource folder using a path like &quot;Packages\Application\Name\&quot;.</summary><returns>The resource folder.</returns><param name="path">The path.</param></Document>

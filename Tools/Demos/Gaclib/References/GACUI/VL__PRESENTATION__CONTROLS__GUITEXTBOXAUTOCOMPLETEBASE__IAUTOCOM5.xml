@@ -1,0 +1,1 @@
+<Document><summary>Get the list control storing candidate items.</summary><returns>The list control. It should be inside the auto complete control, or the auto complete control itself.</returns></Document>

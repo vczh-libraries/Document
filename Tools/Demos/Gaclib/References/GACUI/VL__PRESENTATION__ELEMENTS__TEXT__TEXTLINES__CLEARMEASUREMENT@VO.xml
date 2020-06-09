@@ -1,0 +1,3 @@
+<Document><summary>
+ Clear all cached <see cref="CharAtt::rightOffset"/>.
+ </summary></Document>

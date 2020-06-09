@@ -1,0 +1,1 @@
+<Document><summary>Remove a child composition.</summary><returns>Returns true if this operation succeeded.</returns><param name="child">The child composition to remove.</param></Document>

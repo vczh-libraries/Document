@@ -1,0 +1,3 @@
+<Document><summary>
+ Bind a callback object.
+ </summary><param name="value">The callback object to bind.</param></Document>

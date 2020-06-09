@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the internal <see cref="text::TextLines"/> object that stores all characters and colors.
+ </summary><returns>The internal <see cref="text::TextLines"/> object.</returns></Document>

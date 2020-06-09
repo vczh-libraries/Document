@@ -1,0 +1,1 @@
+<Document><summary>Resolve a resource using the current resource resolver.</summary><returns>The loaded resource. Returns null if failed to load.</returns><param name="protocol">The protocol.</param><param name="path">The path.</param><param name="ensureExist">Set to true and it will throw an exception if the resource doesn&apos;t exist.</param></Document>

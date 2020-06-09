@@ -1,0 +1,1 @@
+<Document><summary>Get the real type of the stored object.</summary><returns>The real type. Returns null if the value is null.</returns></Document>

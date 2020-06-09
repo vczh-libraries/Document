@@ -1,0 +1,1 @@
+<Document><summary>Concat an absolute path and a relative path.</summary><returns>The result absolute path.</returns><param name="relativePath">The relative path to concat.</param></Document>

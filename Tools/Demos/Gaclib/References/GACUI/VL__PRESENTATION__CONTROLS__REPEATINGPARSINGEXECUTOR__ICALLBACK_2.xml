@@ -1,0 +1,1 @@
+<Document><summary>Callback when <see cref="RepeatingParsingExecutor"/> requires enabling or disabling automatically repeating calling to the SubmitTask function.</summary><param name="enabled">Set to true to require an automatically repeating calling to the SubmitTask function</param></Document>

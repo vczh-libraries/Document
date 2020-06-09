@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the window that under a specified position in screen space.
+ </summary><returns>The window that under a specified position in screen space.</returns><param name="location">The specified position in screen space.</param></Document>

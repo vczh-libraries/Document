@@ -1,0 +1,3 @@
+<Document><summary>
+ Set the containing image and the frame index.
+ </summary><param name="_image">The new containing image.</param><param name="_frameIndex">The new frameIndex.</param></Document>

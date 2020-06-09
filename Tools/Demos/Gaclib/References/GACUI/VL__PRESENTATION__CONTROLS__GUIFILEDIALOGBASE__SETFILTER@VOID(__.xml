@@ -1,0 +1,1 @@
+<Document><summary>Set the filter. The filter is formed by pairs of filter name and wildcard concatenated by &quot;|&quot;, like &quot;Text Files (*.txt)|*.txt|All Files (*.*)|*.*&quot;.</summary><param name="value">The filter.</param></Document>

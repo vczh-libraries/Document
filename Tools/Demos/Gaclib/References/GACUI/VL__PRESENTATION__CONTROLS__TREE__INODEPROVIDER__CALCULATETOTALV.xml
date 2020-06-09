@@ -1,0 +1,1 @@
+<Document><summary>Calculate the number of total visible nodes of this node. The number of total visible nodes includes the node itself, and all total visible nodes of all visible sub nodes. If this node is collapsed, this number will be 1.</summary><returns>The number of total visible nodes.</returns></Document>

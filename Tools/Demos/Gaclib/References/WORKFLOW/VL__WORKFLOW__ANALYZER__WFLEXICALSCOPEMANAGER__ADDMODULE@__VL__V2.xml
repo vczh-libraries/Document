@@ -1,0 +1,1 @@
+<Document><summary>Add a Workflow module.</summary><param name="module">The syntax tree of a workflow module.</param><returns>Returns the code index, which is a number representing a module in data structured used in Workflow compiler, runtime and debugger.</returns></Document>

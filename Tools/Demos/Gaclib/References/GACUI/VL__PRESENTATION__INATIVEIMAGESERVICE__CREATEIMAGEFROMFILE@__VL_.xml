@@ -1,0 +1,3 @@
+<Document><summary>
+ Create an image from file.
+ </summary><returns>The created image.</returns><param name="path">The file path.</param></Document>

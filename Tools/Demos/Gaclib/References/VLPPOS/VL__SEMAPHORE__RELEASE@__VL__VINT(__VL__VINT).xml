@@ -1,0 +1,1 @@
+<Document><summary> Release the semaphore multiple times. </summary><returns>Returns true if this operation succeeded.</returns><param name="count">The amout to release.</param></Document>

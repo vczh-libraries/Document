@@ -1,0 +1,1 @@
+<Document><summary>Add a token type. Call [M:vl.presentation.controls.GuiTextBoxRegexColorizer.Setup] after finishing all configuration.</summary><returns>Returns the token index of this token. Returns -1 if this operation failed.</returns><param name="regex">The regular expression for this token type.</param><param name="color">The color for this token type.</param></Document>

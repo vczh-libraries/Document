@@ -1,0 +1,1 @@
+<Document><summary>Callback object for <see cref="INodeProvider"/>. A node will invoke this callback to notify any content modification.</summary></Document>

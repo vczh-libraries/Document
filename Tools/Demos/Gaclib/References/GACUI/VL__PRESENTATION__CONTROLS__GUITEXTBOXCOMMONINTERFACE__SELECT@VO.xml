@@ -1,0 +1,1 @@
+<Document><summary>Select (highlight) a part of text.</summary><param name="begin">The begin position.</param><param name="end">The end position. This is also the caret position.</param></Document>

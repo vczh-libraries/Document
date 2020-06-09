@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the image that owns this frame.
+ </summary><returns>The image that owns this frame.</returns></Document>

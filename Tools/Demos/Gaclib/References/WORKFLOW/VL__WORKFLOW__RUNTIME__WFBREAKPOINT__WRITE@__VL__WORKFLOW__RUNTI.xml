@@ -1,0 +1,1 @@
+<Document><summary>Create an global variable writing break point.</summary><returns>The created break point.</returns><param name="assembly">The assembly that contains the instruction.</param><param name="variable">The index of the global variable.</param></Document>

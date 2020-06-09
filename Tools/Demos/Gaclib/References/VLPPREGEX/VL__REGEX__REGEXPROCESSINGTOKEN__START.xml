@@ -1,0 +1,4 @@
+<Document><summary>
+ The read only start position of the token.
+ This value will be -1 if <see cref="interTokenState"/> is not null.
+ </summary></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Called when this cache object is detached to an image frame.
+ </summary><param name="frame">The image frame that detached from.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Create an decoder and tell it which byte will never appear in the data before compression.</summary><param name="existingBytes">An array to tell the encoder which byte will never appear in the data before compression.</param></Document>

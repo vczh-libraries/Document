@@ -1,0 +1,3 @@
+<Document><summary>
+ Make the title bar visible or invisible.
+ </summary><param name="visible">True to make the title bar visible.</param></Document>

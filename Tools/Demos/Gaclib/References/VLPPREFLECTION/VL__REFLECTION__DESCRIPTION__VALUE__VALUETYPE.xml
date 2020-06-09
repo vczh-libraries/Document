@@ -1,0 +1,1 @@
+<Document><summary>Representing how the value is stored.</summary><enumitem name="BoxedValue">The value stored using a boxed value.</enumitem><enumitem name="Null">The value is null.</enumitem><enumitem name="RawPtr">The value stored using a raw pointer.</enumitem><enumitem name="SharedPtr">The value stored using a smart pointer.</enumitem></Document>

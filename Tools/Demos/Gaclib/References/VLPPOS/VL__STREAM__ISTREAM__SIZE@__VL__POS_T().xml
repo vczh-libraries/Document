@@ -1,0 +1,1 @@
+<Document><summary>Get the size of the content..</summary><returns>The size of the content. Returns -1 if the size is unknown or the stream is not available.</returns></Document>

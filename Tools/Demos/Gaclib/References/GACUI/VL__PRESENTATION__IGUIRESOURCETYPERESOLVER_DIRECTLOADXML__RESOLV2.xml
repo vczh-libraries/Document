@@ -1,0 +1,1 @@
+<Document><summary>Load a resource for a type from a file.</summary><returns>The resource.</returns><param name="resource">The resource item containing the resource.</param><param name="path">The file path.</param><param name="errors">All collected errors during loading a resource.</param></Document>

@@ -1,0 +1,3 @@
+<Document><summary>
+ Show a model window, get a callback when the window is closed.
+ </summary><param name="owner">The window to disable as a parent window.</param><param name="callback">The callback to call after the window is closed.</param></Document>

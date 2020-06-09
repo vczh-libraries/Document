@@ -1,0 +1,3 @@
+<Document><summary>
+ Get the text position near to specified point.
+ </summary><returns>The text position.</returns><param name="point">The specified point, in pixel.</param></Document>

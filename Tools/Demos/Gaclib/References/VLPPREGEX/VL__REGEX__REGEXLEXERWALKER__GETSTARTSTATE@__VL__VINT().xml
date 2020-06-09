@@ -1,0 +1,1 @@
+<Document><summary>Get the start DFA state number, which represents the correct state before parsing any input.</summary><returns>The DFA state number.</returns></Document>

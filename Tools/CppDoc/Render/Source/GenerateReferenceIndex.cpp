@@ -141,6 +141,7 @@ void CheckDocumentRecordSubItem(
 		switch (funcDecl->name.type)
 		{
 		case CppNameType::Normal:
+		case CppNameType::Operator:
 			{
 				if (auto primitiveType = funcType->returnType.Cast<PrimitiveType>())
 				{
@@ -149,13 +150,13 @@ void CheckDocumentRecordSubItem(
 						break;
 					}
 				}
-			}
-		case CppNameType::Operator:
-			if (!XmlGetElement(xmlDocument->rootElement, L"returns"))
-			{
-				Console::WriteLine(L"");
-				Console::WriteLine(L"MISSING <returns/> in " + symbol->uniqueId + L":");
-				Console::WriteLine(xmlText);
+
+				if (!XmlGetElement(xmlDocument->rootElement, L"returns"))
+				{
+					Console::WriteLine(L"");
+					Console::WriteLine(L"MISSING <returns/> in " + symbol->uniqueId + L":");
+					Console::WriteLine(xmlText);
+				}
 			}
 			break;
 		}

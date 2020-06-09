@@ -1,0 +1,1 @@
+<Document><summary>Called after the text is edited and after the caret is changed.</summary><param name="editVersion">The current edit version.</param></Document>

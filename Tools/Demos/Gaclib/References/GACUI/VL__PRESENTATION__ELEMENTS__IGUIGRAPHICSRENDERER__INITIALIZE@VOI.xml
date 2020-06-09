@@ -1,0 +1,3 @@
+<Document><summary>
+ Initialize the grpahics renderer by binding a <see cref="IGuiGraphicsElement"/> to it.
+ </summary><param name="element">The graphics element to bind.</param></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Store a shared pointer.</summary><returns>The boxed value.</returns><param name="value">The shared pointer to store.</param></Document>

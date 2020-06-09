@@ -1,0 +1,1 @@
+<Document><summary>Represents the edit mode.</summary><enumitem name="Editable">The rich text is editable.</enumitem><enumitem name="Selectable">The rich text is selectable.</enumitem><enumitem name="ViewOnly">View the rich text only.</enumitem></Document>

@@ -1,0 +1,1 @@
+<Document><summary>Set a color for a token theme name (@Color or @ContextColor(&quot;theme-name&quot;) in the grammar).</summary><param name="name">The token theme name.</param><param name="color">The color.</param></Document>

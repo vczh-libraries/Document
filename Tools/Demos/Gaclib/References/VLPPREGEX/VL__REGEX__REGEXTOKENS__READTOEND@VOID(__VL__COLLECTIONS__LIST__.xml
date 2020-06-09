@@ -1,0 +1,1 @@
+<Document><summary>Copy all tokens.</summary><param name="tokens">Returns all tokens.</param><param name="discard">A callback to decide which kind of tokens to discard. The input is [F:vl.regex.RegexToken.token]. Returns true to discard this kind of tokens.</param></Document>

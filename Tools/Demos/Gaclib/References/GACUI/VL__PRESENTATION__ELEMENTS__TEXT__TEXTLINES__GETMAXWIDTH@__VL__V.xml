@@ -1,0 +1,3 @@
+<Document><summary>
+ Returns the total width of the text lines.
+ </summary><returns>The width of the text lines, in pixel.</returns></Document>

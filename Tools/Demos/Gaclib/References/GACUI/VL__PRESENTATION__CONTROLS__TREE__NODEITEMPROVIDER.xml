@@ -1,0 +1,1 @@
+<Document><summary>This is a general implementation to convert an <see cref="INodeRootProvider"/> to a <see cref="GuiListControl::IItemProvider"/>.</summary></Document>
