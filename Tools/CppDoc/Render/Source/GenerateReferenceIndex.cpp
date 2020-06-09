@@ -91,13 +91,84 @@ void FixEnumDocumentRecord(
 CheckDocumentRecordSubItem
 ***********************************************************************/
 
+void CheckSubElement(
+	Symbol* symbol,
+	Ptr<XmlDocument> xmlDocument,
+	const WString& xmlText,
+	const WString& elementName,
+	const WString& attributeValue
+)
+{
+	if (XmlGetElements(xmlDocument->rootElement, elementName)
+		.Where([&](Ptr<XmlElement> e)
+		{
+			auto attr = XmlGetAttribute(e, L"name");
+			return attr ? attr->value.value == attributeValue : false;
+		})
+		.IsEmpty())
+	{
+		Console::WriteLine(L"");
+		Console::WriteLine(L"MISSING <" + elementName + L" name=\"" + attributeValue + L"\"/> in " + symbol->uniqueId + L":");
+		Console::WriteLine(xmlText);
+	}
+}
+
 void CheckDocumentRecordSubItem(
 	Symbol* symbol,
 	Ptr<Declaration> decl,
-	Ptr<XmlDocument> xmlDocument
+	Ptr<XmlDocument> xmlDocument,
+	const WString& xmlText
 )
 {
-	// TODO: [cpp.md] Check `<typeparam/>` and `<returns/>` and `<param/>` and `<enumitem/>`
+	if (auto spec = symbol_type_resolving::GetTemplateSpecFromDecl(decl))
+	{
+		for (vint i = 0; i < spec->arguments.Count(); i++)
+		{
+			auto& argument = spec->arguments[i];
+			if (argument.name) CheckSubElement(symbol, xmlDocument, xmlText, L"typeparam", argument.name.name);
+		}
+	}
+
+	if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
+	{
+		auto funcType = GetTypeWithoutMemberAndCC(funcDecl->type).Cast<FunctionType>();
+		for (vint i = 0; i < funcType->parameters.Count(); i++)
+		{
+			auto varDecl = funcType->parameters[i].item;
+			if (varDecl->name) CheckSubElement(symbol, xmlDocument, xmlText, L"param", varDecl->name.name);
+		}
+
+		switch (funcDecl->name.type)
+		{
+		case CppNameType::Normal:
+			{
+				if (auto primitiveType = funcType->returnType.Cast<PrimitiveType>())
+				{
+					if (primitiveType->primitive == CppPrimitiveType::_void)
+					{
+						break;
+					}
+				}
+			}
+		case CppNameType::Operator:
+			if (!XmlGetElement(xmlDocument->rootElement, L"returns"))
+			{
+				Console::WriteLine(L"");
+				Console::WriteLine(L"MISSING <returns/> in " + symbol->uniqueId + L":");
+				Console::WriteLine(xmlText);
+			}
+			break;
+		}
+	}
+
+	if (auto enumDecl = decl.Cast<EnumDeclaration>())
+	{
+		for (vint i = 0; i < enumDecl->items.Count(); i++)
+		{
+			auto enumItem = enumDecl->items[i];
+			CheckSubElement(symbol, xmlDocument, xmlText, L"enumitem", enumItem->name.name);
+		}
+	}
 }
 
 /***********************************************************************
@@ -108,7 +179,8 @@ void ProcessDocumentRecordHyperLinks(
 	Ptr<GlobalLinesRecord> global,
 	Symbol* symbol,
 	Ptr<Declaration> decl,
-	Ptr<XmlDocument> xmlDocument
+	Ptr<XmlDocument> xmlDocument,
+	const WString& xmlText
 )
 {
 	// TODO: [cpp.md] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declId="DeclId"/>`
@@ -141,8 +213,8 @@ void ValidateAndFixDocumentRecord(
 			FixEnumDocumentRecord(global, parsingTable, symbol, xmlDocument);
 		}
 
-		CheckDocumentRecordSubItem(symbol, documentRecord->decl, xmlDocument);
-		ProcessDocumentRecordHyperLinks(global, symbol, documentRecord->decl, xmlDocument);
+		CheckDocumentRecordSubItem(symbol, documentRecord->decl, xmlDocument, xmlText);
+		ProcessDocumentRecordHyperLinks(global, symbol, documentRecord->decl, xmlDocument, xmlText);
 
 		XmlPrint(xmlDocument, writer);
 	}

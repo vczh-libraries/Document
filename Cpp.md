@@ -27,12 +27,6 @@
 ### Document Generation
 
 - [ ] Generate reference pages
-  - [x] In `GenerateHtmlLine`, collect all `Document` token, assigned and clean the token list when a declaration name is found.
-    - [x] If the declaration name is a template argument, ignore.
-    - [x] Document commponents are not allowed to be assigned to multiple declaration names of the same symbol.
-    - [ ] Check `<typeparam/>` and `<returns/>` and `<param/>` and `<enumitem/>`.
-    - [x] XML document on enum item can only have `<summary/>`, when it is found.
-      - [x] Convert to `<enumitem/>` and append to the document comment of the enum.
   - [ ] Copy document comment to a folder, with a folder-structured XML file (`ReferenceIndex.xml`), mapping symbol ids to file names.
     - [ ] using similar file name generation as symbol index fragment files, to prevent from exceeding MAX_PATH.
     - [ ] Process hyper-links.
