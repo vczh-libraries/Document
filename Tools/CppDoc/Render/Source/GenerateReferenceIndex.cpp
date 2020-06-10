@@ -190,7 +190,7 @@ Ptr<XmlElement> BuildHyperlink(
 	
 	Ptr<Declaration> decl;
 	vint index = global->declComments.Keys().IndexOf(symbol);
-	if (index == -1)
+	if (index != -1)
 	{
 		auto attr = MakePtr<XmlAttribute>();
 		attr->name.value = L"docId";
@@ -283,18 +283,17 @@ vint ProcessDocumentRecordHyperLinksInternal(
 					CppName cppName;
 					cppName.type = CppNameType::Normal;
 					cppName.name = contents[j].Value();
-					bool cStyleTypeReference = type == L"T" || j < contents.Count() - 1;
 
 					if (j == 0)
 					{
-						rar = ResolveSymbolInNamespaceContext(result.pa, result.pa.root.Obj(), cppName, cStyleTypeReference);
+						rar = ResolveSymbolInNamespaceContext(result.pa, result.pa.root.Obj(), cppName, false);
 					}
 					else
 					{
 						auto ritem = rar.types->items[0];
 						if (ritem.symbol->kind == symbol_component::SymbolKind::Namespace)
 						{
-							rar = ResolveSymbolInNamespaceContext(result.pa, ritem.symbol, cppName, cStyleTypeReference);
+							rar = ResolveSymbolInNamespaceContext(result.pa, ritem.symbol, cppName, false);
 						}
 						else
 						{
@@ -304,7 +303,7 @@ vint ProcessDocumentRecordHyperLinksInternal(
 						}
 					}
 
-					if (cStyleTypeReference)
+					if (type == L"T" || j < contents.Count() - 1)
 					{
 						if (!rar.types) goto FOUND_ERROR;
 						if (rar.types->items.Count() != 1) goto FOUND_ERROR;
@@ -355,15 +354,15 @@ vint ProcessDocumentRecordHyperLinksInternal(
 		}
 		else if (isCData)
 		{
-			auto node = MakePtr<XmlText>();
+			auto node = MakePtr<XmlCData>();
 			node->content.value = match->Result().Value();
 			subNodes.Add(node);
 		}
 		else
 		{
-			auto node = MakePtr<XmlCData>();
-			node->content.value = match->Result().Value();
-			subNodes.Add(node);
+		auto node = MakePtr<XmlText>();
+		node->content.value = match->Result().Value();
+		subNodes.Add(node);
 		}
 	}
 
