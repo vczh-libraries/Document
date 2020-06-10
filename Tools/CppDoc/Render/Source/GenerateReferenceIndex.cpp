@@ -177,8 +177,6 @@ void CheckDocumentRecordSubItem(
 ProcessDocumentRecordHyperLinks
 ***********************************************************************/
 
-Regex regexHyperLink(L"/[(<type>/w):((<content>[a-zA-Z0-9`]+).)*(<content>[a-zA-Z0-9`]+)/]");
-
 Ptr<XmlElement> BuildHyperlink(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
@@ -248,6 +246,8 @@ vint ProcessDocumentRecordHyperLinksInternal(
 	const WString& xmlText
 )
 {
+	static Regex regexHyperLink(L"/[(<type>/w):((<content>[a-zA-Z0-9`]+).)*(<content>[a-zA-Z0-9`]+)/]");
+
 	RegexMatch::List matches;
 	regexHyperLink.Cut(xmlTextContent, false, matches);
 	if (matches.Count() == 1 && !matches[0]->Success()) return 1;
@@ -284,6 +284,16 @@ vint ProcessDocumentRecordHyperLinksInternal(
 					cppName.type = CppNameType::Normal;
 					cppName.name = contents[j].Value();
 
+					vint templateArgumentCount = 0;
+					{
+						vint index = INVLOC.FindFirst(cppName.name, L"`", Locale::Normalization::None).key;
+						if (index != -1)
+						{
+							templateArgumentCount = wtoi(cppName.name.Right(cppName.name.Length() - index - 1));
+							cppName.name = cppName.name.Left(index);
+						}
+					}
+
 					if (j == 0)
 					{
 						rar = ResolveSymbolInNamespaceContext(result.pa, result.pa.root.Obj(), cppName, false);
@@ -300,6 +310,102 @@ vint ProcessDocumentRecordHyperLinksInternal(
 							auto idType = MakePtr<IdType>();
 							idType->resolving = rar.types;
 							rar = ResolveChildSymbol(result.pa, idType, cppName);
+						}
+					}
+
+					if (rar.types)
+					{
+						for (vint k = rar.types->items.Count() - 1; k >= 0; k--)
+						{
+							auto symbol = rar.types->items[k].symbol;
+							switch (symbol->kind)
+							{
+							case CLASS_SYMBOL_KIND:
+								if (auto spec = symbol->GetAnyForwardDecl<ForwardClassDeclaration>()->templateSpec)
+								{
+									if (templateArgumentCount != spec->arguments.Count())
+									{
+										rar.types->items.RemoveAt(k);
+									}
+								}
+								else if (templateArgumentCount != 0)
+								{
+									rar.types->items.RemoveAt(k);
+								}
+								break;
+							case symbol_component::SymbolKind::TypeAlias:
+								if (auto spec = symbol->GetAnyForwardDecl<TypeAliasDeclaration>()->templateSpec)
+								{
+									if (templateArgumentCount != spec->arguments.Count())
+									{
+										rar.types->items.RemoveAt(k);
+									}
+								}
+								else if (templateArgumentCount != 0)
+								{
+									rar.types->items.RemoveAt(k);
+								}
+								break;
+							case symbol_component::SymbolKind::Enum:
+							case symbol_component::SymbolKind::Namespace:
+								if (templateArgumentCount != 0)
+								{
+									rar.types->items.RemoveAt(k);
+								}
+								break;
+							default:
+								rar.types->items.RemoveAt(k);
+							}
+						}
+						if (rar.types->items.Count() == 0)
+						{
+							rar.types = nullptr;
+						}
+					}
+
+					if (rar.values)
+					{
+						for (vint k = rar.values->items.Count() - 1; k >= 0; k--)
+						{
+							auto symbol = rar.values->items[k].symbol;
+							switch (symbol->kind)
+							{
+							case symbol_component::SymbolKind::FunctionSymbol:
+								if (auto spec = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>()->templateSpec)
+								{
+									if (templateArgumentCount != spec->arguments.Count())
+									{
+										rar.values->items.RemoveAt(k);
+									}
+								}
+								else if (templateArgumentCount != 0)
+								{
+									rar.values->items.RemoveAt(k);
+								}
+								break;
+							case symbol_component::SymbolKind::ValueAlias:
+								{
+									auto spec = symbol->GetAnyForwardDecl<ValueAliasDeclaration>()->templateSpec;
+									if (templateArgumentCount != spec->arguments.Count())
+									{
+										rar.values->items.RemoveAt(k);
+									}
+								}
+								break;
+							case symbol_component::SymbolKind::EnumItem:
+							case symbol_component::SymbolKind::Variable:
+								if (templateArgumentCount != 0)
+								{
+									rar.values->items.RemoveAt(k);
+								}
+								break;
+							default:
+								rar.values->items.RemoveAt(k);
+							}
+						}
+						if (rar.values->items.Count() == 0)
+						{
+							rar.values = nullptr;
 						}
 					}
 
@@ -360,9 +466,9 @@ vint ProcessDocumentRecordHyperLinksInternal(
 		}
 		else
 		{
-		auto node = MakePtr<XmlText>();
-		node->content.value = match->Result().Value();
-		subNodes.Add(node);
+			auto node = MakePtr<XmlText>();
+			node->content.value = match->Result().Value();
+			subNodes.Add(node);
 		}
 	}
 
