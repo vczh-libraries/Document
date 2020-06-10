@@ -1,1 +1,1 @@
-<Document><summary>Call [M:vl.presentation.controls.GuiInstanceRootObject.FinalizeInstance] in all child root objects.</summary><param name="value">The container control to notify.</param></Document>
+<Document><summary>Call <symbol docId="vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()[decl0]"/> in all child root objects.</summary><param name="value">The container control to notify.</param></Document>

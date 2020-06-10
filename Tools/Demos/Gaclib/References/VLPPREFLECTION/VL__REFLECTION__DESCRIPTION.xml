@@ -16,10 +16,10 @@
 
  After you have complete your type, use the following macros and functions to register your class into the global type table. Everything should be defined in vl::reflection::description namespaces.
 	Some of the predefined type has already been registered, if your types depend on these types, you should load those types by calling some or all of them:
-	[F:vl.reflection.description.LoadPredefinedTypes]
-	[F:vl.reflection.description.LoadParsingTypes]
-	[F:vl.reflection.description.JsonLoadTypes]
-	[F:vl.reflection.description.XmlLoadTypes]
+	]]><symbol declFile="GuiTypeDescriptorReflection.cpp" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[impl0]"/><![CDATA[
+	]]><symbol declFile="Parsing.cpp" declId="FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]"/><![CDATA[
+	]]><symbol declFile="ParsingJson_Ast.cpp" declId="FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]"/><![CDATA[
+	]]><symbol declFile="ParsingXml_Ast.cpp" declId="FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]"/><![CDATA[
 
  1) (in header files) Create a macro that contains all types that you want to register. Content in the list will become the registered type names, so it is strongly recommended to use the full name.
 		#define MY_TYPELIST(F)\
@@ -181,8 +181,8 @@
 
 		e) interface:
 			An interface is defined by
-			I) Directly or indirectly inherits [T:vl.reflection.IDescriptable]
-			II) The only registered constructor (if exists) should use Ptr<[T:vl.reflection.description.IValueInterfaceProxy]> as a parameter
+			I) Directly or indirectly inherits ]]><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/><![CDATA[
+			II) The only registered constructor (if exists) should use Ptr<]]><symbol declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueInterfaceProxy"/><![CDATA[> as a parameter
 
 			Suppose you have an interface like this:
 			class IMyInterface : public virtual IDescriptable, public Description<IMyInterface>

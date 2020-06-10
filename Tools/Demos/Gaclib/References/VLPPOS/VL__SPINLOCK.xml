@@ -1,6 +1,6 @@
 <Document><summary><![CDATA[
  Spin lock. It is similar to mutex.
- The macro "SPIN_LOCK" is encouraged to use instead of calling [M:vl.SpinLock.Enter] and [M:vl.SpinLock.Leave] like this:
+ The macro "SPIN_LOCK" is encouraged to use instead of calling ]]><symbol docId="vl::SpinLock::Enter@void()" declFile="Threading.h" declId="FB$vl::SpinLock::Enter@void()[decl0]"/><![CDATA[ and ]]><symbol docId="vl::SpinLock::Leave@void()" declFile="Threading.h" declId="FB$vl::SpinLock::Leave@void()[decl0]"/><![CDATA[ like this:
  SPIN_LOCK(yourLock)
  {
 		<code>

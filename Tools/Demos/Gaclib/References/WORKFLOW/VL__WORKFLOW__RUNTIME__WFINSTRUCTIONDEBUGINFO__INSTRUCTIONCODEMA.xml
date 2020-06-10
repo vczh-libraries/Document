@@ -1,1 +1,1 @@
-<Document><summary>Mapping information from every instruction to code. Use[F:vl.parsing.ParsingTextRange.codeIndex] for accessing <see cref="moduleCodes"/>.</summary></Document>
+<Document><summary>Mapping information from every instruction to code. Use<symbol docId="vl::parsing::ParsingTextRange::codeIndex" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextRange::codeIndex"/> for accessing <see cref="moduleCodes"/>.</summary></Document>

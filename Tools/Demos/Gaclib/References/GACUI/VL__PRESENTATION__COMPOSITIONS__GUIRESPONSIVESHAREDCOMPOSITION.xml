@@ -1,1 +1,1 @@
-<Document><summary>Represents a composition, which will pick up a shared control and install inside it, when it is displayed by a [T:vl.presentation.compositions.GuiResponsiveViewComposition]</summary></Document>
+<Document><summary>Represents a composition, which will pick up a shared control and install inside it, when it is displayed by a <symbol docId="vl::presentation::compositions::GuiResponsiveViewComposition" declFile="GuiGraphicsResponsiveComposition.h" declId="NI$vl::presentation::compositions::GuiResponsiveViewComposition"/></summary></Document>

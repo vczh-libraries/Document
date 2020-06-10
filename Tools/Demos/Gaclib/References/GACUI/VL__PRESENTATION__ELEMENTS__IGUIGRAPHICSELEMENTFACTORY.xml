@@ -1,4 +1,4 @@
 <Document><summary>
  This is the interface for graphics element factories.
- Graphics element factories should be registered using [M:vl.presentation.elements.GuiGraphicsResourceManager.RegisterElementFactory].
+ Graphics element factories should be registered using <symbol docId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[decl0]"/>.
  </summary></Document>

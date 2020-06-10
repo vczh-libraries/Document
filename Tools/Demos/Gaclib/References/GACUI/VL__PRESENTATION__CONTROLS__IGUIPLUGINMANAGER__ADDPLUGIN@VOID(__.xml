@@ -1,1 +1,1 @@
-<Document><summary>Add a plugin before [F:vl.presentation.controls.IGuiPluginManager.Load] is called.</summary><param name="plugin">The plugin.</param></Document>
+<Document><summary>Add a plugin before <symbol docId="vl::presentation::controls::IGuiPluginManager::Load@void()" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::IGuiPluginManager::Load@void()[decl0]"/> is called.</summary><param name="plugin">The plugin.</param></Document>

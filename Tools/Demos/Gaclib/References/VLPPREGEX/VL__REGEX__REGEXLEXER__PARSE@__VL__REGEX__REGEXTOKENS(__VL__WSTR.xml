@@ -1,1 +1,1 @@
-<Document><summary>Tokenize a input text.</summary><returns>The result.</returns><param name="code">The text to tokenize.</param><param name="codeIndex">Extra information that will store in [F:vl.regex.RegexToken.codeIndex].</param></Document>
+<Document><summary>Tokenize a input text.</summary><returns>The result.</returns><param name="code">The text to tokenize.</param><param name="codeIndex">Extra information that will store in <symbol docId="vl::regex::RegexToken::codeIndex" declFile="Regex.h" declId="NI$vl::regex::RegexToken::codeIndex"/>.</param></Document>

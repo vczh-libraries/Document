@@ -1,1 +1,1 @@
-<Document><summary>Encoder stream, a writable stream using an [T:vl.stream.IEncoder] to transform content.</summary></Document>
+<Document><summary>Encoder stream, a writable stream using an <symbol docId="vl::stream::IEncoder" declFile="Interfaces.h2" declId="NI$vl::stream::IEncoder"/> to transform content.</summary></Document>

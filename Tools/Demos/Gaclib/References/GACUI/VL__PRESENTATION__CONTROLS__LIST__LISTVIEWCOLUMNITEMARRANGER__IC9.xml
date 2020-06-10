@@ -1,1 +1,1 @@
-<Document><summary>Callback for [T:vl.presentation.controls.list.ListViewColumnItemArranger.IColumnItemView]. Column item view use this interface to notify column related modification.</summary></Document>
+<Document><summary>Callback for <symbol docId="vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemView" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemView"/>. Column item view use this interface to notify column related modification.</summary></Document>

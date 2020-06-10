@@ -66,9 +66,9 @@
 
 		c) Type references:
 			Types can be defined globally or inside classes. Generic type is not supported. When you want to refer to a specific type, it could be:
-				token: Store a token, which will becomes [T:vl.parsing.ParsingToken].
-				Type[]: Array, which will becomes [T:vl.collections.List`2] to the element type. Token cannot be the element of arrays.
-				ClassName: Instance of a specified type, which will becomes [T:vl.Ptr`1] to that type.
+				token: Store a token, which will becomes ]]><symbol docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/><![CDATA[.
+				Type[]: Array, which will becomes ]]><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><![CDATA[ to the element type. Token cannot be the element of arrays.
+				ClassName: Instance of a specified type, which will becomes ]]><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><![CDATA[ to that type.
 				OuterClass.InnerClass: Refer to the "InnerClass" defined inside the "OuterClass".
 
  2) Token definitions:

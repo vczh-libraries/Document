@@ -1,29 +1,29 @@
 <Document><summary>
  Represents a predefined cursor type.
  </summary><enumitem name="Arrow">
- [T:vl.presentation.INativeCursor.SystemCursorType]Arrow cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Arrow cursor.
  </enumitem><enumitem name="Cross">
- [T:vl.presentation.INativeCursor.SystemCursorType]Cross cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Cross cursor.
  </enumitem><enumitem name="Hand">
- [T:vl.presentation.INativeCursor.SystemCursorType]Hand cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Hand cursor.
  </enumitem><enumitem name="Help">
- [T:vl.presentation.INativeCursor.SystemCursorType]Help cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Help cursor.
  </enumitem><enumitem name="IBeam">
- [T:vl.presentation.INativeCursor.SystemCursorType]I beam cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>I beam cursor.
  </enumitem><enumitem name="LargeWaiting">
- [T:vl.presentation.INativeCursor.SystemCursorType]large waiting cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>large waiting cursor.
  </enumitem><enumitem name="LastSystemCursor">
- [T:vl.presentation.INativeCursor.SystemCursorType]Number of available cursors, this is not an available cursor by itself.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Number of available cursors, this is not an available cursor by itself.
  </enumitem><enumitem name="SizeAll">
- [T:vl.presentation.INativeCursor.SystemCursorType]Sizing in all direction cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Sizing in all direction cursor.
  </enumitem><enumitem name="SizeNESW">
- [T:vl.presentation.INativeCursor.SystemCursorType]Sizing NE-SW cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Sizing NE-SW cursor.
  </enumitem><enumitem name="SizeNS">
- [T:vl.presentation.INativeCursor.SystemCursorType]Sizing N-S cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Sizing N-S cursor.
  </enumitem><enumitem name="SizeNWSE">
- [T:vl.presentation.INativeCursor.SystemCursorType]Sizing NW-SE cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Sizing NW-SE cursor.
  </enumitem><enumitem name="SizeWE">
- [T:vl.presentation.INativeCursor.SystemCursorType]Sizing W-E cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Sizing W-E cursor.
  </enumitem><enumitem name="SmallWaiting">
- [T:vl.presentation.INativeCursor.SystemCursorType]Small waiting cursor.
+ <symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/>Small waiting cursor.
  </enumitem></Document>
