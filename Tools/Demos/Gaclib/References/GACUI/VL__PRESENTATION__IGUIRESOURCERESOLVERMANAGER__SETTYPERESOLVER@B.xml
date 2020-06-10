@@ -1,1 +1,1 @@
-<Document><summary>Set the <see cref="IGuiResourceTypeResolver"/> for a resource type.</summary><returns>Returns true if this operation succeeded.</returns><param name="resolver">The resolver.</param></Document>
+<Document><summary>Set the <symbol docId="vl::presentation::IGuiResourceTypeResolver" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver"/> for a resource type.</summary><returns>Returns true if this operation succeeded.</returns><param name="resolver">The resolver.</param></Document>

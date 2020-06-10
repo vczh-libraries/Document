@@ -1,3 +1,3 @@
 <Document><summary>
- Called when the color table of a <see cref="GuiColorizedTextElement"/> changed.
+ Called when the color table of a <symbol docId="vl::presentation::elements::GuiColorizedTextElement" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement"/> changed.
  </summary></Document>

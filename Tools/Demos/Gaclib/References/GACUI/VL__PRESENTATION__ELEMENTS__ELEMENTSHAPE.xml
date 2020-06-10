@@ -1,3 +1,3 @@
 <Document><summary>
- Defines a shape for some <see cref="IGuiGraphicsElement"/>.
+ Defines a shape for some <symbol docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/>.
  </summary></Document>

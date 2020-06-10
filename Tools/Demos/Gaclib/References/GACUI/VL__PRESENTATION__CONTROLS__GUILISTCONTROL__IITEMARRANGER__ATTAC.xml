@@ -1,1 +1,1 @@
-<Document><summary>Called when an item arranger in installed to a <see cref="GuiListControl"/>.</summary><param name="value">The list control.</param></Document>
+<Document><summary>Called when an item arranger in installed to a <symbol docId="vl::presentation::controls::GuiListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl"/>.</summary><param name="value">The list control.</param></Document>

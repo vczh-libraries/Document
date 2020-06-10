@@ -1,1 +1,1 @@
-<Document><summary>Get the global <see cref="IGuiParserManager"/> object.</summary><returns>The parser manager.</returns></Document>
+<Document><summary>Get the global <symbol docId="vl::presentation::IGuiParserManager" declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiParserManager"/> object.</summary><returns>The parser manager.</returns></Document>

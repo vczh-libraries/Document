@@ -1,3 +1,3 @@
 <Document><summary>
- Get the current <see cref="GuiGraphicsResourceManager"/>.
+ Get the current <symbol docId="vl::presentation::elements::GuiGraphicsResourceManager" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiGraphicsResourceManager"/>.
  </summary><returns>Returns the current resource manager.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>The required <see cref="GuiListControl::IItemProvider"/> view for <see cref="ListViewColumnItemArranger"/>.</summary></Document>
+<Document><summary>The required <symbol docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/> view for <symbol docId="vl::presentation::controls::list::ListViewColumnItemArranger" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewColumnItemArranger"/>.</summary></Document>

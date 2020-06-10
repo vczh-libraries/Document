@@ -1,3 +1,3 @@
 <Document><summary>
- Clear all cached <see cref="CharAtt::rightOffset"/>.
+ Clear all cached <symbol docId="vl::presentation::elements::text::CharAtt::rightOffset" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt::rightOffset"/>.
  </summary></Document>

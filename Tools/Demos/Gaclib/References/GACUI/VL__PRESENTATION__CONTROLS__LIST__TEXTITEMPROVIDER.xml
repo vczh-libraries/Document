@@ -1,1 +1,1 @@
-<Document><summary>Item provider for <see cref="GuiVirtualTextList"/> or <see cref="GuiSelectableListControl"/>.</summary></Document>
+<Document><summary>Item provider for <symbol docId="vl::presentation::controls::GuiVirtualTextList" declFile="GuiTextListControls.h" declId="NI$vl::presentation::controls::GuiVirtualTextList"/> or <symbol docId="vl::presentation::controls::GuiSelectableListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiSelectableListControl"/>.</summary></Document>

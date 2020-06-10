@@ -1,1 +1,1 @@
-<Document><summary>Get the associated <see cref="IGuiGraphicsRenderTarget"/> to this paragraph.</summary><returns>The associated render target.</returns></Document>
+<Document><summary>Get the associated <symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/> to this paragraph.</summary><returns>The associated render target.</returns></Document>

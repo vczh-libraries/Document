@@ -1,1 +1,1 @@
-<Document><summary>Deserialize the parsing table from a stream. <see cref="Initialize"/> should be before using this table.</summary><param name="input">The stream.</param></Document>
+<Document><summary>Deserialize the parsing table from a stream. <symbol docId="vl::parsing::tabling::ParsingTable::Initialize@void()" declFile="ParsingTable.h" declId="FB$vl::parsing::tabling::ParsingTable::Initialize@void()[decl0]"/> should be before using this table.</summary><param name="input">The stream.</param></Document>

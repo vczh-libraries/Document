@@ -1,1 +1,1 @@
-<Document><summary>Get the child nodes. Using this function requires running <see cref="InitializeQueryCache"/> before.</summary><returns>The child nodes.</returns></Document>
+<Document><summary>Get the child nodes. Using this function requires running <symbol docId="vl::parsing::ParsingTreeNode::InitializeQueryCache@void()" declFile="ParsingTree.h" declId="FB$vl::parsing::ParsingTreeNode::InitializeQueryCache@void()[decl0]"/> before.</summary><returns>The child nodes.</returns></Document>

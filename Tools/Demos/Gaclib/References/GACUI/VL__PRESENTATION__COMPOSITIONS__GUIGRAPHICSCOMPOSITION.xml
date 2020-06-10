@@ -1,4 +1,4 @@
 <Document><summary>
- Represents a composition for <see cref="elements::IGuiGraphicsElement"/>. A composition is a way to define the size and the position using the information from graphics elements and sub compositions.
+ Represents a composition for <symbol docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/>. A composition is a way to define the size and the position using the information from graphics elements and sub compositions.
  When a graphics composition is destroyed, all sub composition will be destroyed. The life cycle of the contained graphics element is partially controlled by the smart pointer to the graphics element inside the composition.
  </summary></Document>

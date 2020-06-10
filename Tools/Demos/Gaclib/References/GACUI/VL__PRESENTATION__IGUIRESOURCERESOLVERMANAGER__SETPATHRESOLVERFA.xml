@@ -1,1 +1,1 @@
-<Document><summary>Set the <see cref="IGuiResourcePathResolverFactory"/> for a protocol.</summary><returns>Returns true if this operation succeeded.</returns><param name="factory">The factory.</param></Document>
+<Document><summary>Set the <symbol docId="vl::presentation::IGuiResourcePathResolverFactory" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourcePathResolverFactory"/> for a protocol.</summary><returns>Returns true if this operation succeeded.</returns><param name="factory">The factory.</param></Document>

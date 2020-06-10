@@ -1,1 +1,1 @@
-<Document><summary>Get the collection of buttons. <see cref="GuiToolstripButton"/> is expected.</summary><returns>The collection of buttons.</returns></Document>
+<Document><summary>Get the collection of buttons. <symbol docId="vl::presentation::controls::GuiToolstripButton" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripButton"/> is expected.</summary><returns>The collection of buttons.</returns></Document>

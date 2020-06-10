@@ -1,1 +1,1 @@
-<Document><summary>Select an item with <see cref="ItemApplied"/> event raised.</summary><param name="index">The index of the item to select. Set to -1 to clear the selection.</param></Document>
+<Document><summary>Select an item with <symbol docId="vl::presentation::controls::GuiBindableRibbonGalleryList::ItemApplied" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GuiBindableRibbonGalleryList::ItemApplied"/> event raised.</summary><param name="index">The index of the item to select. Set to -1 to clear the selection.</param></Document>

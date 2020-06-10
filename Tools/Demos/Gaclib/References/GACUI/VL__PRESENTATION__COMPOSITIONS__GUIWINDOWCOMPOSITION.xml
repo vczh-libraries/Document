@@ -1,3 +1,3 @@
 <Document><summary>
- Represents a composition for the client area in an <see cref="INativeWindow"/>.
+ Represents a composition for the client area in an <symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>.
  </summary></Document>

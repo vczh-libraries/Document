@@ -1,3 +1,3 @@
 <Document><summary>
- GuiGraphicsHost hosts an <see cref="GuiWindowComposition"/> in an <see cref="INativeWindow"/>. The composition will fill the whole window.
+ GuiGraphicsHost hosts an <symbol docId="vl::presentation::compositions::GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"/> in an <symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>. The composition will fill the whole window.
  </summary></Document>

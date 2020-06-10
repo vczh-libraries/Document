@@ -1,3 +1,3 @@
 <Document><summary>
- Set a <see cref="IGuiGraphicsRenderTarget"/> to this element.
+ Set a <symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/> to this element.
  </summary><param name="renderTarget">The graphics render target. It can be NULL.</param></Document>

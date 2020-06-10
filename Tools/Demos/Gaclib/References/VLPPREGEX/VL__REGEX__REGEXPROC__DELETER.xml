@@ -1,3 +1,3 @@
 <Document><summary>
- The deleter which deletes inter token state objects created by <see cref="extendProc"/>. This callback is not called automatically.
+ The deleter which deletes inter token state objects created by <symbol docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/>. This callback is not called automatically.
  </summary></Document>

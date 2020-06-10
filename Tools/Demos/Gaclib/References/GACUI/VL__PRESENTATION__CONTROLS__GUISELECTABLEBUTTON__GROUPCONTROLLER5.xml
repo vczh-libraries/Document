@@ -1,1 +1,1 @@
-<Document><summary>Called when the selection state of any <see cref="GuiSelectableButton"/> changed.</summary><param name="button">The button that changed the selection state.</param></Document>
+<Document><summary>Called when the selection state of any <symbol docId="vl::presentation::controls::GuiSelectableButton" declFile="GuiButtonControls.h" declId="NI$vl::presentation::controls::GuiSelectableButton"/> changed.</summary><param name="button">The button that changed the selection state.</param></Document>
