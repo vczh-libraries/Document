@@ -177,7 +177,7 @@ void CheckDocumentRecordSubItem(
 ProcessDocumentRecordHyperLinks
 ***********************************************************************/
 
-Regex regexHyperLink(L"/[(<type>/w):((<content>[a-zA-Z0-9`]+),)*(<content>[a-zA-Z0-9`]+)/]");
+Regex regexHyperLink(L"/[(<type>/w):((<content>[a-zA-Z0-9`]+).)*(<content>[a-zA-Z0-9`]+)/]");
 
 Ptr<XmlElement> BuildHyperlink(
 	Ptr<GlobalLinesRecord> global,
@@ -252,14 +252,6 @@ vint ProcessDocumentRecordHyperLinksInternal(
 	regexHyperLink.Cut(xmlTextContent, false, matches);
 	if (matches.Count() == 1 && !matches[0]->Success()) return 1;
 
-	if (isCData)
-	{
-		Console::WriteLine(L"");
-		Console::WriteLine(L"CDATA CANNOT CONTAIN HYPERLINK:");
-		Console::WriteLine(xmlText);
-		return 1;
-	}
-
 	bool foundError = false;
 	List<Ptr<XmlNode>> subNodes;
 	for (vint i = 0; i < matches.Count(); i++)
@@ -290,7 +282,7 @@ vint ProcessDocumentRecordHyperLinksInternal(
 				{
 					CppName cppName;
 					cppName.type = CppNameType::Normal;
-					cppName.name = contents[i].Value();
+					cppName.name = contents[j].Value();
 					bool cStyleTypeReference = type == L"T" || j < contents.Count() - 1;
 
 					if (j == 0)
@@ -361,9 +353,15 @@ vint ProcessDocumentRecordHyperLinksInternal(
 			}
 		CONVERTED_HYPERLINK:;
 		}
-		else
+		else if (isCData)
 		{
 			auto node = MakePtr<XmlText>();
+			node->content.value = match->Result().Value();
+			subNodes.Add(node);
+		}
+		else
+		{
+			auto node = MakePtr<XmlCData>();
 			node->content.value = match->Result().Value();
 			subNodes.Add(node);
 		}
@@ -506,13 +504,11 @@ void RenderDocumentRecord(
 		}
 	}
 
-	if (symbolGroup->kind != SymbolGroupKind::Symbol || symbolGroup->symbol->kind != symbol_component::SymbolKind::Enum)
+	// enum item does not have a symbol group, just go through all children
+	for (vint i = 0; i < symbolGroup->children.Count(); i++)
 	{
-		for (vint i = 0; i < symbolGroup->children.Count(); i++)
-		{
-			auto childGroup = symbolGroup->children[i];
-			RenderDocumentRecord(global, result, parsingTable, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
-		}
+		auto childGroup = symbolGroup->children[i];
+		RenderDocumentRecord(global, result, parsingTable, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
 	}
 
 	writtenReferenceCount++;

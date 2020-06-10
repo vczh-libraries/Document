@@ -38,7 +38,7 @@
     - [x] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declFile="" declId="DeclId"/>`.
       - [x] for multiple symbols, it is `<symbols><symbol>...</symbols>`.
     - [x] For enum, enum items store in the same XML file.
-  - [ ] Temporary `ReferenceIndex.html` for viewing extracted XML content and the folder structure.
+    - [ ] Temporary `ReferenceIndex.html` for viewing extracted XML content and the folder structure.
 - [ ] Refine document comment
   - [ ] Vlpp
   - [ ] VlppOS
