@@ -176,6 +176,91 @@ void CheckDocumentRecordSubItem(
 ProcessDocumentRecordHyperLinks
 ***********************************************************************/
 
+Regex regexHyperLink(L"/[/w:[a-zA-Z0-9.`]*/]");
+
+vint ProcessDocumentRecordHyperLinksInternal(
+	Ptr<GlobalLinesRecord> global,
+	Symbol* symbol,
+	Ptr<Declaration> decl,
+	Ptr<XmlElement> xmlContainer,
+	bool isCData,
+	vint xmlTextContentIndex,
+	const WString& xmlTextContent,
+	const WString& xmlText
+)
+{
+	RegexMatch::List matches;
+	regexHyperLink.Cut(xmlTextContent, false, matches);
+	if (matches.Count() == 1 && !matches[0]->Success()) return 1;
+
+	if (isCData)
+	{
+		Console::WriteLine(L"");
+		Console::WriteLine(L"CDATA CANNOT CONTAIN HYPERLINK:");
+		Console::WriteLine(xmlText);
+		return 1;
+	}
+
+	bool foundError = false;
+	List<Ptr<XmlNode>> subNodes;
+	for (vint i = 0; i < matches.Count(); i++)
+	{
+		auto match = matches[i];
+		if (match->Success())
+		{
+
+		}
+		else
+		{
+			auto node = MakePtr<XmlText>();
+			node->content.value = match->Result().Value();
+			subNodes.Add(node);
+		}
+	}
+
+	if (foundError) return 1;
+	xmlContainer->subNodes.RemoveAt(xmlTextContentIndex);
+	for (vint i = 0; i < subNodes.Count(); i++)
+	{
+		xmlContainer->subNodes.Insert(i + xmlTextContentIndex, subNodes[i]);
+	}
+	return subNodes.Count();
+}
+
+void ProcessDocumentRecordHyperLinksInternal(
+	Ptr<GlobalLinesRecord> global,
+	Symbol* symbol,
+	Ptr<Declaration> decl,
+	Ptr<XmlElement> xmlElement,
+	const WString& xmlText
+)
+{
+	if (xmlElement->name.value == L"see")
+	{
+	}
+	else
+	{
+		for (vint i = 0; i < xmlElement->subNodes.Count(); i++)
+		{
+			auto subNode = xmlElement->subNodes[i];
+			if (auto subElement = subNode.Cast<XmlElement>())
+			{
+				ProcessDocumentRecordHyperLinksInternal(global, symbol, decl, subElement, xmlText);
+			}
+			else if (auto subText = subNode.Cast<XmlText>())
+			{
+				vint converted = ProcessDocumentRecordHyperLinksInternal(global, symbol, decl, xmlElement, false, i, subText->content.value, xmlText);
+				i += converted - 1;
+			}
+			else if (auto subCData = subNode.Cast<XmlCData>())
+			{
+				vint converted = ProcessDocumentRecordHyperLinksInternal(global, symbol, decl, xmlElement, true, i, subCData->content.value, xmlText);
+				i += converted - 1;
+			}
+		}
+	}
+}
+
 void ProcessDocumentRecordHyperLinks(
 	Ptr<GlobalLinesRecord> global,
 	Symbol* symbol,
@@ -184,7 +269,7 @@ void ProcessDocumentRecordHyperLinks(
 	const WString& xmlText
 )
 {
-	// TODO: [cpp.md] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declId="DeclId"/>`
+	ProcessDocumentRecordHyperLinksInternal(global, symbol, decl, xmlDocument->rootElement, xmlText);
 }
 
 /***********************************************************************
@@ -241,6 +326,12 @@ void RenderDocumentRecord(
 	vint& writtenReferenceCount
 )
 {
+	for (vint i = 0; i < symbolGroup->children.Count(); i++)
+	{
+		auto childGroup = symbolGroup->children[i];
+		RenderDocumentRecord(global, parsingTable, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
+	}
+
 	if (symbolGroup->kind == SymbolGroupKind::Symbol)
 	{
 		vint index = global->declComments.Keys().IndexOf(symbolGroup->symbol);
@@ -252,12 +343,6 @@ void RenderDocumentRecord(
 			StreamWriter referenceWriter(encoderStream);
 			ValidateAndFixDocumentRecord(global, parsingTable, symbolGroup->symbol, global->declComments.Values()[index], referenceWriter);
 		}
-	}
-
-	for (vint i = 0; i < symbolGroup->children.Count(); i++)
-	{
-		auto childGroup = symbolGroup->children[i];
-		RenderDocumentRecord(global, parsingTable, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
 	}
 
 	writtenReferenceCount++;
