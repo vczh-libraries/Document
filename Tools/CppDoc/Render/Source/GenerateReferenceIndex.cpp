@@ -1,4 +1,5 @@
 #include "Render.h"
+#include <Symbol_Resolve.h>
 #include <VlppParser.h>
 
 using namespace vl::parsing::tabling;
@@ -176,10 +177,68 @@ void CheckDocumentRecordSubItem(
 ProcessDocumentRecordHyperLinks
 ***********************************************************************/
 
-Regex regexHyperLink(L"/[/w:[a-zA-Z0-9.`]*/]");
+Regex regexHyperLink(L"/[(<type>/w):((<content>[a-zA-Z0-9`]+),)*(<content>[a-zA-Z0-9`]+)/]");
+
+Ptr<XmlElement> BuildHyperlink(
+	Ptr<GlobalLinesRecord> global,
+	IndexResult& result,
+	Symbol* symbol
+)
+{
+	auto xmlSymbol = MakePtr<XmlElement>();
+	xmlSymbol->name.value = L"symbol";
+	
+	Ptr<Declaration> decl;
+	vint index = global->declComments.Keys().IndexOf(symbol);
+	if (index == -1)
+	{
+		auto attr = MakePtr<XmlAttribute>();
+		attr->name.value = L"docId";
+		attr->value.value = GetSymbolId(symbol);
+		xmlSymbol->attributes.Add(attr);
+		decl = global->declComments.Values()[index]->decl;
+	}
+	else
+	{
+		if (symbol->GetCategory() == symbol_component::SymbolCategory::Normal)
+		{
+			if (!(decl = symbol->GetImplDecl_NFb()))
+			{
+				decl = symbol->GetForwardDecls_N()[0];
+			}
+		}
+		else
+		{
+			if (symbol->GetImplSymbols_F().Count() > 0)
+			{
+				decl = symbol->GetImplSymbols_F()[0]->GetImplDecl_NFb();
+			}
+			else
+			{
+				decl = symbol->GetForwardSymbols_F()[0]->GetForwardDecl_Fb();
+			}
+		}
+	}
+
+	{
+		auto attr = MakePtr<XmlAttribute>();
+		attr->name.value = L"declFile";
+		attr->value.value = global->fileLines[global->declToFiles[{decl, nullptr}]]->htmlFileName;
+		xmlSymbol->attributes.Add(attr);
+	}
+	{
+		auto attr = MakePtr<XmlAttribute>();
+		attr->name.value = L"declId";
+		attr->value.value = GetDeclId({ decl,nullptr });
+		xmlSymbol->attributes.Add(attr);
+	}
+
+	return xmlSymbol;
+}
 
 vint ProcessDocumentRecordHyperLinksInternal(
 	Ptr<GlobalLinesRecord> global,
+	IndexResult& result,
 	Symbol* symbol,
 	Ptr<Declaration> decl,
 	Ptr<XmlElement> xmlContainer,
@@ -208,7 +267,99 @@ vint ProcessDocumentRecordHyperLinksInternal(
 		auto match = matches[i];
 		if (match->Success())
 		{
+			auto type = match->Groups()[L"type"][0].Value();
+			auto& contents = match->Groups()[L"content"];
+			if (type != L"T" && type != L"M" && type != L"F")
+			{
+				foundError = true;
+				Console::WriteLine(L"");
+				Console::WriteLine(L"UNRECONIZABLE HPERLINK: " + match->Result().Value());
+				Console::WriteLine(xmlText);
+			}
+			else
+			{
+				if (decl->symbol->kind == symbol_component::SymbolKind::Enum && xmlContainer->name.value == L"enumitem" && i == 0)
+				{
+					Console::WriteLine(L"");
+					Console::WriteLine(L"<enumitem> CANNOT START WITH A HYPERLINK:");
+					Console::WriteLine(xmlText);
+				}
 
+				ResolveSymbolResult rar;
+				for (vint j = 0; j < contents.Count(); j++)
+				{
+					CppName cppName;
+					cppName.type = CppNameType::Normal;
+					cppName.name = contents[i].Value();
+					bool cStyleTypeReference = type == L"T" || j < contents.Count() - 1;
+
+					if (j == 0)
+					{
+						rar = ResolveSymbolInNamespaceContext(result.pa, result.pa.root.Obj(), cppName, cStyleTypeReference);
+					}
+					else
+					{
+						auto ritem = rar.types->items[0];
+						if (ritem.symbol->kind == symbol_component::SymbolKind::Namespace)
+						{
+							rar = ResolveSymbolInNamespaceContext(result.pa, ritem.symbol, cppName, cStyleTypeReference);
+						}
+						else
+						{
+							auto idType = MakePtr<IdType>();
+							idType->resolving = rar.types;
+							rar = ResolveChildSymbol(result.pa, idType, cppName);
+						}
+					}
+
+					if (cStyleTypeReference)
+					{
+						if (!rar.types) goto FOUND_ERROR;
+						if (rar.types->items.Count() != 1) goto FOUND_ERROR;
+					}
+				}
+
+				if (type == L"T")
+				{
+					if (!rar.types) goto FOUND_ERROR;
+					if (rar.types->items.Count() != 1) goto FOUND_ERROR;
+					subNodes.Add(BuildHyperlink(global, result, rar.types->items[0].symbol));
+					goto CONVERTED_HYPERLINK;
+				}
+				else if (type == L"F")
+				{
+					if (!rar.values) goto FOUND_ERROR;
+					if (rar.values->items.Count() != 1) goto FOUND_ERROR;
+					subNodes.Add(BuildHyperlink(global, result, rar.values->items[0].symbol));
+					goto CONVERTED_HYPERLINK;
+				}
+				else
+				{
+					if (!rar.values) goto FOUND_ERROR;
+					if (rar.values->items.Count() == 1)
+					{
+						subNodes.Add(BuildHyperlink(global, result, rar.values->items[0].symbol));
+					}
+					else
+					{
+						auto xmlSymbols = MakePtr<XmlElement>();
+						xmlSymbols->name.value = L"symbols";
+						for (vint j = 0; j < rar.values->items.Count(); j++)
+						{
+							xmlSymbols->subNodes.Add(BuildHyperlink(global, result, rar.values->items[j].symbol));
+						}
+						subNodes.Add(xmlSymbols);
+					}
+					goto CONVERTED_HYPERLINK;
+				}
+
+			FOUND_ERROR:
+				foundError = true;
+				Console::WriteLine(L"");
+				Console::WriteLine(L"UNRESOLVABLE HPERLINK: " + match->Result().Value());
+				Console::WriteLine(xmlText);
+			}
+		CONVERTED_HYPERLINK:;
 		}
 		else
 		{
@@ -229,6 +380,7 @@ vint ProcessDocumentRecordHyperLinksInternal(
 
 void ProcessDocumentRecordHyperLinksInternal(
 	Ptr<GlobalLinesRecord> global,
+	IndexResult& result,
 	Symbol* symbol,
 	Ptr<Declaration> decl,
 	Ptr<XmlElement> xmlElement,
@@ -237,6 +389,18 @@ void ProcessDocumentRecordHyperLinksInternal(
 {
 	if (xmlElement->name.value == L"see")
 	{
+		if (auto attr = XmlGetAttribute(xmlElement, L"cref"))
+		{
+			Console::WriteLine(L"");
+			Console::WriteLine(L"<see/> NOT SUPPORTED YET:");
+			Console::WriteLine(xmlText);
+		}
+		else
+		{
+			Console::WriteLine(L"");
+			Console::WriteLine(L"MISSING cref IN <see/>:");
+			Console::WriteLine(xmlText);
+		}
 	}
 	else
 	{
@@ -245,16 +409,16 @@ void ProcessDocumentRecordHyperLinksInternal(
 			auto subNode = xmlElement->subNodes[i];
 			if (auto subElement = subNode.Cast<XmlElement>())
 			{
-				ProcessDocumentRecordHyperLinksInternal(global, symbol, decl, subElement, xmlText);
+				ProcessDocumentRecordHyperLinksInternal(global, result, symbol, decl, subElement, xmlText);
 			}
 			else if (auto subText = subNode.Cast<XmlText>())
 			{
-				vint converted = ProcessDocumentRecordHyperLinksInternal(global, symbol, decl, xmlElement, false, i, subText->content.value, xmlText);
+				vint converted = ProcessDocumentRecordHyperLinksInternal(global, result, symbol, decl, xmlElement, false, i, subText->content.value, xmlText);
 				i += converted - 1;
 			}
 			else if (auto subCData = subNode.Cast<XmlCData>())
 			{
-				vint converted = ProcessDocumentRecordHyperLinksInternal(global, symbol, decl, xmlElement, true, i, subCData->content.value, xmlText);
+				vint converted = ProcessDocumentRecordHyperLinksInternal(global, result, symbol, decl, xmlElement, true, i, subCData->content.value, xmlText);
 				i += converted - 1;
 			}
 		}
@@ -263,13 +427,14 @@ void ProcessDocumentRecordHyperLinksInternal(
 
 void ProcessDocumentRecordHyperLinks(
 	Ptr<GlobalLinesRecord> global,
+	IndexResult& result,
 	Symbol* symbol,
 	Ptr<Declaration> decl,
 	Ptr<XmlDocument> xmlDocument,
 	const WString& xmlText
 )
 {
-	ProcessDocumentRecordHyperLinksInternal(global, symbol, decl, xmlDocument->rootElement, xmlText);
+	ProcessDocumentRecordHyperLinksInternal(global, result, symbol, decl, xmlDocument->rootElement, xmlText);
 }
 
 /***********************************************************************
@@ -278,6 +443,7 @@ ValidateAndFixDocumentRecord
 
 void ValidateAndFixDocumentRecord(
 	Ptr<GlobalLinesRecord> global,
+	IndexResult& result,
 	Ptr<ParsingTable> parsingTable,
 	Symbol* symbol,
 	Ptr<DocumentRecord> documentRecord,
@@ -300,7 +466,7 @@ void ValidateAndFixDocumentRecord(
 		}
 
 		CheckDocumentRecordSubItem(symbol, documentRecord->decl, xmlDocument, xmlText);
-		ProcessDocumentRecordHyperLinks(global, symbol, documentRecord->decl, xmlDocument, xmlText);
+		ProcessDocumentRecordHyperLinks(global, result, symbol, documentRecord->decl, xmlDocument, xmlText);
 
 		XmlPrint(xmlDocument, writer);
 	}
@@ -318,6 +484,7 @@ RenderDocumentRecord
 
 void RenderDocumentRecord(
 	Ptr<GlobalLinesRecord> global,
+	IndexResult& result,
 	Ptr<ParsingTable> parsingTable,
 	Ptr<SymbolGroup> symbolGroup,
 	const WString& fileGroupPrefix,
@@ -326,12 +493,6 @@ void RenderDocumentRecord(
 	vint& writtenReferenceCount
 )
 {
-	for (vint i = 0; i < symbolGroup->children.Count(); i++)
-	{
-		auto childGroup = symbolGroup->children[i];
-		RenderDocumentRecord(global, parsingTable, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
-	}
-
 	if (symbolGroup->kind == SymbolGroupKind::Symbol)
 	{
 		vint index = global->declComments.Keys().IndexOf(symbolGroup->symbol);
@@ -341,7 +502,16 @@ void RenderDocumentRecord(
 			Utf8Encoder encoder;
 			EncoderStream encoderStream(fileStream, encoder);
 			StreamWriter referenceWriter(encoderStream);
-			ValidateAndFixDocumentRecord(global, parsingTable, symbolGroup->symbol, global->declComments.Values()[index], referenceWriter);
+			ValidateAndFixDocumentRecord(global, result, parsingTable, symbolGroup->symbol, global->declComments.Values()[index], referenceWriter);
+		}
+	}
+
+	if (symbolGroup->kind != SymbolGroupKind::Symbol || symbolGroup->symbol->kind != symbol_component::SymbolKind::Enum)
+	{
+		for (vint i = 0; i < symbolGroup->children.Count(); i++)
+		{
+			auto childGroup = symbolGroup->children[i];
+			RenderDocumentRecord(global, result, parsingTable, childGroup, fileGroupPrefix, pathReference, progressReporter, writtenReferenceCount);
 		}
 	}
 
@@ -375,7 +545,7 @@ void GenerateReferenceIndex(
 		if (predefinedGroups.Contains(fileGroup->name))
 		{
 			Folder(pathReference / fileGroup->uniqueId).Create(true);
-			RenderDocumentRecord(global, parsingTable, fileGroup, fileGroup->uniqueId, pathReference, progressReporter, writtenReferenceCount);
+			RenderDocumentRecord(global, result, parsingTable, fileGroup, fileGroup->uniqueId, pathReference, progressReporter, writtenReferenceCount);
 		}
 	}
 }

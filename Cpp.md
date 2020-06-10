@@ -29,14 +29,15 @@
 - [ ] Generate reference pages
   - [ ] Copy document comment to a folder, with a folder-structured XML file (`ReferenceIndex.xml`), mapping symbol ids to file names.
     - [ ] Process hyper-links.
-      - [ ] If the first hyperlink in enum item points to the enum type, report.
-      - [ ] `[T:x]` (type), `[M:x]` (method) and `[F:x]` (field) only use primary symbols.
-      - [ ] Ensure that the hyper link resolves to one single target.
+      - [x] If the first hyperlink in enum item points to the enum type, report.
+      - [x] `[T:x]` (type), `[M:x]` (method) and `[F:x]` (field) only use primary symbols.
+      - [x] Ensure that the hyper link resolves to one single target.
         - [ ] ```x`` means a symbol with specified number (x) of template arguments.
-        - [ ] Allow overloaded methods.
+        - [x] Allow overloaded methods.
       - [ ] `<see cref="SYMBOL">` searches a symbol from the current scope, using `::` and ```x`` for scoping and template argument number.
-    - [ ] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declId="DeclId"/>`.
-    - [ ] For enum, enum items store in the same XML file.
+    - [x] Convert hyper-links to a normalized format: `<symbol docId="optional:SymbolId" declFile="" declId="DeclId"/>`.
+      - [x] for multiple symbols, it is `<symbols><symbol>...</symbols>`.
+    - [x] For enum, enum items store in the same XML file.
   - [ ] Temporary `ReferenceIndex.html` for viewing extracted XML content and the folder structure.
 - [ ] Refine document comment
   - [ ] Vlpp
