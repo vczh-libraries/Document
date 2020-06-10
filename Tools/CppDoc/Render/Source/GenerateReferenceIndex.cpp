@@ -510,7 +510,7 @@ vint ProcessDocumentRecordHyperLinksInternal(
 			{
 				subNodes.Add(node);
 
-				if (decl->symbol->kind == symbol_component::SymbolKind::Enum && xmlContainer->name.value == L"enumitem" && i == 0)
+				if (decl->symbol->kind == symbol_component::SymbolKind::Enum && xmlContainer->name.value == L"enumitem" && i < 2)
 				{
 					Console::WriteLine(L"");
 					Console::WriteLine(L"<enumitem> CANNOT START WITH A HYPERLINK:");

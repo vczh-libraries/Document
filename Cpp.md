@@ -26,10 +26,7 @@
 
 ### Document Generation
 
-- [ ] Generate reference pages
-  - [ ] Copy document comment to a folder, with a folder-structured XML file (`ReferenceIndex.xml`), mapping symbol ids to file names.
-    - [ ] If the first hyperlink in enum item points to the enum type, report.
-    - [ ] Temporary `ReferenceIndex.html` for viewing extracted XML content and the folder structure.
+- [ ] Temporary `ReferenceIndex.html` for viewing extracted XML content and the folder structure.
 - [ ] Refine document comment
   - [ ] Vlpp
   - [ ] VlppOS

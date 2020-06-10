@@ -1,19 +1,19 @@
 <Document><summary>
  Represents an image format.
  </summary><enumitem name="Bmp">
- <symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/>Bitmap format.
+ Bitmap format.
  </enumitem><enumitem name="Gif">
- <symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/>GIF format.
+ GIF format.
  </enumitem><enumitem name="Icon">
- <symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/>Icon format.
+ Icon format.
  </enumitem><enumitem name="Jpeg">
- <symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/>JPEG format.
+ JPEG format.
  </enumitem><enumitem name="Png">
- <symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/>PNG format.
+ PNG format.
  </enumitem><enumitem name="Tiff">
- <symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/>TIFF format.
+ TIFF format.
  </enumitem><enumitem name="Unknown">
- <symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/>Unknown format.
+ Unknown format.
  </enumitem><enumitem name="Wmp">
- <symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/>WMP format.
+ WMP format.
  </enumitem></Document>
