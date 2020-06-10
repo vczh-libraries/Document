@@ -29,7 +29,6 @@
 - [ ] Generate reference pages
   - [ ] Copy document comment to a folder, with a folder-structured XML file (`ReferenceIndex.xml`), mapping symbol ids to file names.
     - [ ] If the first hyperlink in enum item points to the enum type, report.
-    - [ ] `<see cref="SYMBOL">` searches a symbol from the current scope, using `::` and ```x`` for scoping and template argument number.
     - [ ] Temporary `ReferenceIndex.html` for viewing extracted XML content and the folder structure.
 - [ ] Refine document comment
   - [ ] Vlpp

@@ -239,207 +239,243 @@ Ptr<XmlElement> ResolveHyperLink(
 	IndexResult& result,
 	Symbol* symbol,
 	Ptr<Declaration> decl,
-	Ptr<RegexMatch> match,
+	bool relativeSearch,
+	const WString& hyperlinkType,
+	const List<RegexString>& contents,
+	const WString& hyperlinkText,
 	const WString& xmlText
 )
 {
-	auto type = match->Groups()[L"type"][0].Value();
-	auto& contents = match->Groups()[L"content"];
-	if (type != L"T" && type != L"M" && type != L"F")
+	if (!relativeSearch && hyperlinkType != L"T" && hyperlinkType != L"M" && hyperlinkType != L"F")
 	{
 		Console::WriteLine(L"");
-		Console::WriteLine(L"UNRECONIZABLE HPERLINK: " + match->Result().Value());
+		Console::WriteLine(L"UNRECONIZABLE HPERLINK: " + hyperlinkText);
 		Console::WriteLine(xmlText);
 	}
-	else
+
+	ResolveSymbolResult rar;
+	for (vint j = 0; j < contents.Count(); j++)
 	{
-		ResolveSymbolResult rar;
-		for (vint j = 0; j < contents.Count(); j++)
+		CppName cppName;
+		cppName.type = CppNameType::Normal;
+		cppName.name = contents[j].Value();
+
+		vint templateArgumentCount = 0;
 		{
-			CppName cppName;
-			cppName.type = CppNameType::Normal;
-			cppName.name = contents[j].Value();
-
-			vint templateArgumentCount = 0;
+			vint index = INVLOC.FindFirst(cppName.name, L"`", Locale::Normalization::None).key;
+			if (index != -1)
 			{
-				vint index = INVLOC.FindFirst(cppName.name, L"`", Locale::Normalization::None).key;
-				if (index != -1)
-				{
-					templateArgumentCount = wtoi(cppName.name.Right(cppName.name.Length() - index - 1));
-					cppName.name = cppName.name.Left(index);
-				}
+				templateArgumentCount = wtoi(cppName.name.Right(cppName.name.Length() - index - 1));
+				cppName.name = cppName.name.Left(index);
 			}
+		}
 
-			if (j == 0)
+		if (j == 0)
+		{
+			if (relativeSearch)
 			{
-				rar = ResolveSymbolInNamespaceContext(result.pa, result.pa.root.Obj(), cppName, false);
+				rar = ResolveSymbolInContext(result.pa.AdjustForDecl(decl->symbol), cppName, false);
 			}
 			else
 			{
-				auto ritem = rar.types->items[0];
-				if (ritem.symbol->kind == symbol_component::SymbolKind::Namespace)
-				{
-					rar = ResolveSymbolInNamespaceContext(result.pa, ritem.symbol, cppName, false);
-				}
-				else
-				{
-					auto idType = MakePtr<IdType>();
-					idType->resolving = rar.types;
-					rar = ResolveChildSymbol(result.pa, idType, cppName);
-				}
+				rar = ResolveSymbolInNamespaceContext(result.pa, result.pa.root.Obj(), cppName, false);
 			}
-
-			if (rar.types)
+		}
+		else
+		{
+			auto ritem = rar.types->items[0];
+			if (ritem.symbol->kind == symbol_component::SymbolKind::Namespace)
 			{
-				for (vint k = rar.types->items.Count() - 1; k >= 0; k--)
-				{
-					bool needToDelete = false;
-					auto symbol = rar.types->items[k].symbol;
-					switch (symbol->kind)
-					{
-					case CLASS_SYMBOL_KIND:
-						if (auto spec = symbol->GetAnyForwardDecl<ForwardClassDeclaration>()->templateSpec)
-						{
-							if (templateArgumentCount != spec->arguments.Count())
-							{
-								needToDelete = true;
-							}
-						}
-						else if (templateArgumentCount != 0)
-						{
-							needToDelete = true;
-						}
-						break;
-					case symbol_component::SymbolKind::TypeAlias:
-						if (auto spec = symbol->GetAnyForwardDecl<TypeAliasDeclaration>()->templateSpec)
-						{
-							if (templateArgumentCount != spec->arguments.Count())
-							{
-								needToDelete = true;
-							}
-						}
-						else if (templateArgumentCount != 0)
-						{
-							needToDelete = true;
-						}
-						break;
-					case symbol_component::SymbolKind::Enum:
-					case symbol_component::SymbolKind::Namespace:
-						if (templateArgumentCount != 0)
-						{
-							needToDelete = true;
-						}
-						break;
-					default:
-						needToDelete = true;
-					}
-
-					if (needToDelete)
-					{
-						rar.types->items.RemoveAt(k);
-					}
-				}
-				if (rar.types->items.Count() == 0)
-				{
-					rar.types = nullptr;
-				}
+				rar = ResolveSymbolInNamespaceContext(result.pa, ritem.symbol, cppName, false);
 			}
-
-			if (rar.values)
+			else
 			{
-				for (vint k = rar.values->items.Count() - 1; k >= 0; k--)
-				{
-					bool needToDelete = false;
-					auto symbol = rar.values->items[k].symbol;
-					switch (symbol->kind)
-					{
-					case symbol_component::SymbolKind::FunctionSymbol:
-						if (auto spec = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>()->templateSpec)
-						{
-							if (templateArgumentCount != spec->arguments.Count())
-							{
-								needToDelete = true;
-							}
-						}
-						else if (templateArgumentCount != 0)
-						{
-							needToDelete = true;
-						}
-						break;
-					case symbol_component::SymbolKind::ValueAlias:
-						{
-							auto spec = symbol->GetAnyForwardDecl<ValueAliasDeclaration>()->templateSpec;
-							if (templateArgumentCount != spec->arguments.Count())
-							{
-								needToDelete = true;
-							}
-						}
-						break;
-					case symbol_component::SymbolKind::EnumItem:
-					case symbol_component::SymbolKind::Variable:
-						if (templateArgumentCount != 0)
-						{
-							needToDelete = true;
-						}
-						break;
-					default:
-						needToDelete = true;
-					}
-
-					if (needToDelete)
-					{
-						rar.values->items.RemoveAt(k);
-					}
-				}
-				if (rar.values->items.Count() == 0)
-				{
-					rar.values = nullptr;
-				}
-			}
-
-			if (type == L"T" || j < contents.Count() - 1)
-			{
-				if (!rar.types) goto FOUND_ERROR;
-				if (rar.types->items.Count() != 1) goto FOUND_ERROR;
+				auto idType = MakePtr<IdType>();
+				idType->resolving = rar.types;
+				rar = ResolveChildSymbol(result.pa, idType, cppName);
 			}
 		}
 
-		if (type == L"T")
+		if (rar.types)
+		{
+			for (vint k = rar.types->items.Count() - 1; k >= 0; k--)
+			{
+				bool needToDelete = false;
+				auto symbol = rar.types->items[k].symbol;
+				switch (symbol->kind)
+				{
+				case CLASS_SYMBOL_KIND:
+					if (auto spec = symbol->GetAnyForwardDecl<ForwardClassDeclaration>()->templateSpec)
+					{
+						if (templateArgumentCount != spec->arguments.Count())
+						{
+							needToDelete = true;
+						}
+					}
+					else if (templateArgumentCount != 0)
+					{
+						needToDelete = true;
+					}
+					break;
+				case symbol_component::SymbolKind::TypeAlias:
+					if (auto spec = symbol->GetAnyForwardDecl<TypeAliasDeclaration>()->templateSpec)
+					{
+						if (templateArgumentCount != spec->arguments.Count())
+						{
+							needToDelete = true;
+						}
+					}
+					else if (templateArgumentCount != 0)
+					{
+						needToDelete = true;
+					}
+					break;
+				case symbol_component::SymbolKind::Enum:
+				case symbol_component::SymbolKind::Namespace:
+					if (templateArgumentCount != 0)
+					{
+						needToDelete = true;
+					}
+					break;
+				default:
+					needToDelete = true;
+				}
+
+				if (needToDelete)
+				{
+					rar.types->items.RemoveAt(k);
+				}
+			}
+			if (rar.types->items.Count() == 0)
+			{
+				rar.types = nullptr;
+			}
+		}
+
+		if (rar.values)
+		{
+			for (vint k = rar.values->items.Count() - 1; k >= 0; k--)
+			{
+				bool needToDelete = false;
+				auto symbol = rar.values->items[k].symbol;
+				switch (symbol->kind)
+				{
+				case symbol_component::SymbolKind::FunctionSymbol:
+					if (auto spec = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>()->templateSpec)
+					{
+						if (templateArgumentCount != spec->arguments.Count())
+						{
+							needToDelete = true;
+						}
+					}
+					else if (templateArgumentCount != 0)
+					{
+						needToDelete = true;
+					}
+					break;
+				case symbol_component::SymbolKind::ValueAlias:
+					{
+						auto spec = symbol->GetAnyForwardDecl<ValueAliasDeclaration>()->templateSpec;
+						if (templateArgumentCount != spec->arguments.Count())
+						{
+							needToDelete = true;
+						}
+					}
+					break;
+				case symbol_component::SymbolKind::EnumItem:
+				case symbol_component::SymbolKind::Variable:
+					if (templateArgumentCount != 0)
+					{
+						needToDelete = true;
+					}
+					break;
+				default:
+					needToDelete = true;
+				}
+
+				if (needToDelete)
+				{
+					rar.values->items.RemoveAt(k);
+				}
+			}
+			if (rar.values->items.Count() == 0)
+			{
+				rar.values = nullptr;
+			}
+		}
+
+		if (hyperlinkType == L"T" || j < contents.Count() - 1)
 		{
 			if (!rar.types) goto FOUND_ERROR;
 			if (rar.types->items.Count() != 1) goto FOUND_ERROR;
-			return BuildHyperlink(global, result, rar.types->items[0].symbol);
 		}
-		else if (type == L"F")
+	}
+
+	if (hyperlinkType == L"T")
+	{
+		if (!rar.types) goto FOUND_ERROR;
+		if (rar.types->items.Count() != 1) goto FOUND_ERROR;
+		return BuildHyperlink(global, result, rar.types->items[0].symbol);
+	}
+	else if (hyperlinkType == L"F")
+	{
+		if (!rar.values) goto FOUND_ERROR;
+		if (rar.values->items.Count() != 1) goto FOUND_ERROR;
+		return BuildHyperlink(global, result, rar.values->items[0].symbol);
+	}
+	else if (hyperlinkType == L"M")
+	{
+		if (!rar.values) goto FOUND_ERROR;
+		if (rar.values->items.Count() == 1)
 		{
-			if (!rar.values) goto FOUND_ERROR;
-			if (rar.values->items.Count() != 1) goto FOUND_ERROR;
 			return BuildHyperlink(global, result, rar.values->items[0].symbol);
 		}
 		else
 		{
-			if (!rar.values) goto FOUND_ERROR;
-			if (rar.values->items.Count() == 1)
+			auto xmlSymbols = MakePtr<XmlElement>();
+			xmlSymbols->name.value = L"symbols";
+			for (vint j = 0; j < rar.values->items.Count(); j++)
 			{
-				return BuildHyperlink(global, result, rar.values->items[0].symbol);
+				xmlSymbols->subNodes.Add(BuildHyperlink(global, result, rar.values->items[j].symbol));
 			}
-			else
-			{
-				auto xmlSymbols = MakePtr<XmlElement>();
-				xmlSymbols->name.value = L"symbols";
-				for (vint j = 0; j < rar.values->items.Count(); j++)
-				{
-					xmlSymbols->subNodes.Add(BuildHyperlink(global, result, rar.values->items[j].symbol));
-				}
-				return xmlSymbols;
-			}
+			return xmlSymbols;
+		}
+	}
+	else
+	{
+		if (!rar.values && !rar.types) goto FOUND_ERROR;
+		if (rar.values && !rar.types && rar.values->items.Count() == 1)
+		{
+			return BuildHyperlink(global, result, rar.values->items[0].symbol);
+		}
+		if (!rar.values && rar.types && rar.types->items.Count() == 1)
+		{
+			return BuildHyperlink(global, result, rar.types->items[0].symbol);
 		}
 
-	FOUND_ERROR:
-		Console::WriteLine(L"");
-		Console::WriteLine(L"UNRESOLVABLE HPERLINK: " + match->Result().Value());
-		Console::WriteLine(xmlText);
+		auto xmlSymbols = MakePtr<XmlElement>();
+		xmlSymbols->name.value = L"symbols";
+		if (rar.values)
+		{
+			for (vint j = 0; j < rar.values->items.Count(); j++)
+			{
+				xmlSymbols->subNodes.Add(BuildHyperlink(global, result, rar.values->items[j].symbol));
+			}
+		}
+		if (rar.types)
+		{
+			for (vint j = 0; j < rar.types->items.Count(); j++)
+			{
+				xmlSymbols->subNodes.Add(BuildHyperlink(global, result, rar.types->items[j].symbol));
+			}
+		}
+		return xmlSymbols;
 	}
+
+FOUND_ERROR:
+	Console::WriteLine(L"");
+	Console::WriteLine(L"UNRESOLVABLE HPERLINK: " + hyperlinkText);
+	Console::WriteLine(xmlText);
 	return nullptr;
 }
 
@@ -468,7 +504,9 @@ vint ProcessDocumentRecordHyperLinksInternal(
 		auto match = matches[i];
 		if (match->Success())
 		{
-			if (auto node = ResolveHyperLink(global, result, symbol, decl, match, xmlText))
+			auto type = match->Groups()[L"type"][0].Value();
+			auto& contents = match->Groups()[L"content"];
+			if (auto node = ResolveHyperLink(global, result, symbol, decl, false, type, contents, match->Result().Value(), xmlText))
 			{
 				subNodes.Add(node);
 
@@ -518,13 +556,31 @@ void ProcessDocumentRecordHyperLinksInternal(
 	const WString& xmlText
 )
 {
+	static Regex regexHyperLink(L"^((<content>[a-zA-Z0-9`]+)::)*(<content>[a-zA-Z0-9`]+)$");
+
 	if (xmlElement->name.value == L"see")
 	{
 		if (auto attr = XmlGetAttribute(xmlElement, L"cref"))
 		{
-			Console::WriteLine(L"");
-			Console::WriteLine(L"<see/> NOT SUPPORTED YET:");
-			Console::WriteLine(xmlText);
+			auto hyperlinkText = GenerateToStream([&](StreamWriter& writer)
+			{
+				XmlPrint(xmlElement, writer);
+			});
+
+			if (auto match = regexHyperLink.MatchHead(attr->value.value))
+			{
+				auto& contents = match->Groups()[L"content"];
+				if (auto node = ResolveHyperLink(global, result, symbol, decl, true, L"", contents, hyperlinkText, xmlText))
+				{
+					xmlContainer->subNodes[indexInXmlContainer] = node;
+				}
+			}
+			else
+			{
+				Console::WriteLine(L"");
+				Console::WriteLine(L"UNRESOLVABLE HPERLINK: " + hyperlinkText);
+				Console::WriteLine(xmlText);
+			}
 		}
 		else
 		{
