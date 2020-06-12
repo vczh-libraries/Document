@@ -28,8 +28,11 @@
 
 - [ ] Temporary `ReferenceIndex.xml` for viewing extracted XML content and the folder structure.
   - [ ] namespaces are flattened, no document for namespace.
+    - [ ] automatically generate document pages for namespaces.
+    - [ ] automatically hardcode document page path for root and category pages
   - [ ] tree nodes only record id and file paths to reference fragment XML files.
   - [ ] tree nodes are grouped by `public/protected/private` for classes.
+  - [ ] URL will be `/references/ID.html`.
 - [ ] Insert metadata to document comment.
   - [ ] `<Document symbolId="SYMBOL-ID" displayText="DISPLAY-TEXT">` (display text is used in tree view).
   - [ ] `<seealsos>`.
@@ -49,9 +52,9 @@
   - [ ] remove `<a anchor="ANCHOR">`.
   - [ ] `<article>` and `<topic>` are forbidden in XML documents
   - [ ] predefined `<topic>` will be generated according to top-level elements in XML document, `<p>` will be automatically inserted as the top element in `<topic>`.
-  - [ ] no dynamic tree node for document pages, instead only hardcode parents and siblings on the left side.
+  - [ ] no dynamic tree node for document pages, instead only hardcode indented parents and a list of children or sibiling (when no children) on the left panel.
+    - [ ] the left panel will be automatically added if this xml is read from a tree node xml file.
   - [ ] generate a completed list of article pages to a text file for `npm run download`.
-    - [ ] add `<navigate id="ID" directory="XML-FILE">` in `<article>`, the tree node files will be read to calculate contents.
   - [ ] try `Remove Comments` in [here](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/) to remove comments in webpacked javascript files.
 - [ ] Refine document comment
   - [ ] Vlpp
@@ -62,7 +65,7 @@
   - [ ] Workflow
   - [ ] GacUI
 - [ ] Connect reflection symbols to C++ symbols
-- [ ] Author document
+- [ ] Author document (Separate document tree and reference tree)
   - [ ] Vlpp
   - [ ] VlppOS
   - [ ] VlppRegex
