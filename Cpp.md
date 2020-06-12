@@ -26,7 +26,33 @@
 
 ### Document Generation
 
-- [ ] Temporary `ReferenceIndex.html` for viewing extracted XML content and the folder structure.
+- [ ] Temporary `ReferenceIndex.xml` for viewing extracted XML content and the folder structure.
+  - [ ] namespaces are flattened, no document for namespace.
+  - [ ] tree nodes only record id and file paths to reference fragment XML files.
+  - [ ] tree nodes are grouped by `public/protected/private` for classes.
+- [ ] Insert metadata to document comment.
+  - [ ] `<Document symbolId="SYMBOL-ID" displayText="DISPLAY-TEXT">` (display text is used in tree view).
+  - [ ] `<seealsos>`.
+    - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
+    - [ ] for classes, all documented direct/indirect base types and members are inserted to see also.
+  - [ ] `<signature>`.
+    - [ ] template header must be generated (include expression for default values).
+    - [ ] **type**: `class/struct/union/enum` NAME.
+    - [ ] **function**: complete signature (include expression for default values).
+      - [ ] `static`, `const`, `volatile`, `&`, `&&` must exist in signature.
+    - [ ] **value alias**, **variable**, **type alias**: type is included.
+  - [ ] `<basetypes>`: inheritance tree, generic types are written as `NAME<...>`.
+- [ ] Update `WebsiteSource` to view references.
+  - [ ] document the format of before/after processed XML comment.
+  - [ ] must interpret: `<summary>`, `<typeparam>`, `<param>`, `<enumitem>`, `<returns>`, `<remarks>`, `<seealsos>`, `<signature>`, `<basetypes>`.
+  - [ ] must process: `<symbol>`.
+  - [ ] remove `<a anchor="ANCHOR">`.
+  - [ ] `<article>` and `<topic>` are forbidden in XML documents
+  - [ ] predefined `<topic>` will be generated according to top-level elements in XML document, `<p>` will be automatically inserted as the top element in `<topic>`.
+  - [ ] no dynamic tree node for document pages, instead only hardcode parents and siblings on the left side.
+  - [ ] generate a completed list of article pages to a text file for `npm run download`.
+    - [ ] add `<navigate id="ID" directory="XML-FILE">` in `<article>`, the tree node files will be read to calculate contents.
+  - [ ] try `Remove Comments` in [here](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/) to remove comments in webpacked javascript files.
 - [ ] Refine document comment
   - [ ] Vlpp
   - [ ] VlppOS
