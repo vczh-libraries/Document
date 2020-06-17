@@ -1,1 +1,1 @@
-<Document><summary>Test is the text box modified.</summary><returns>Returns true if the text box is modified.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetModified@bool()" accessor="public" category="Function" name="GetModified"><summary>Test is the text box modified.</summary><returns>Returns true if the text box is modified.</returns></Document>

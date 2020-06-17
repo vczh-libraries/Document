@@ -1,1 +1,1 @@
-<Document><summary>Set a preference of using memory.</summary><param name="mode">Set to true (by default) to let the container efficiently reduce memory usage when necessary.</param></Document>
+<Document symbolId="vl::collections::Dictionary::SetLessMemoryMode@void(bool)" accessor="public" category="Function" name="SetLessMemoryMode"><summary>Set a preference of using memory.</summary><param name="mode">Set to true (by default) to let the container efficiently reduce memory usage when necessary.</param></Document>

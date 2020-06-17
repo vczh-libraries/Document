@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetLines@::vl::presentation::elements::text::TextLines &amp;()" accessor="public" category="Function" name="GetLines"><summary>
  Get the internal <symbol docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/> object that stores all characters and colors.
  </summary><returns>The internal <symbol docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/> object.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Get the format.</summary><returns>The format.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiDatePicker::GetDateFormatW@::vl::WString const &amp;()" accessor="public" category="Function" name="GetDateFormatW"><summary>Get the format.</summary><returns>The format.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Get the text of this item.</summary><returns>The text of this item.</returns></Document>
+<Document symbolId="vl::presentation::controls::list::TextItem::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText"><summary>Get the text of this item.</summary><returns>The text of this item.</returns></Document>

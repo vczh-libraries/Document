@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::regex::RegexProc::argument" accessor="public" category="Variable" name="argument"><summary>
  The argument object that is the first argument for <symbol docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/> and <symbol docId="vl::regex::RegexProc::colorizeProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::colorizeProc"/>.
  </summary></Document>

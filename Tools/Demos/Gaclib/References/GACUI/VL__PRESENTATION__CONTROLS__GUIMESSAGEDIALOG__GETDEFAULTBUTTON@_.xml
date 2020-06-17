@@ -1,1 +1,1 @@
-<Document><summary>Get the default button for the selected button combination.</summary><returns>The default button.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiMessageDialog::GetDefaultButton@::vl::presentation::INativeDialogService::MessageBoxDefaultButton()" accessor="public" category="Function" name="GetDefaultButton"><summary>Get the default button for the selected button combination.</summary><returns>The default button.</returns></Document>

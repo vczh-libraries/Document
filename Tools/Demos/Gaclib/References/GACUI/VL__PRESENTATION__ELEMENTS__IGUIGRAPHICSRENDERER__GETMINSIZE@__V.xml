@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::GetMinSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetMinSize"><summary>
  Calculate the minimum size using the binded graphics element and its state.
  </summary><returns>The minimum size.</returns></Document>

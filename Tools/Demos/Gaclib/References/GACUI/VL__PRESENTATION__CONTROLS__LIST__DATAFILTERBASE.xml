@@ -1,1 +1,1 @@
-<Document><summary>Base class for <symbol declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/>.</summary></Document>
+<Document symbolId="vl::presentation::controls::list::DataFilterBase" accessor="" category="Class" name="DataFilterBase"><summary>Base class for <symbol declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/>.</summary></Document>

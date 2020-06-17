@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::text::ColorEntry" accessor="" category="Struct" name="ColorEntry"><summary>
  Represents color entry in a color table. Use <symbol docId="vl::presentation::elements::GuiColorizedTextElement::GetColors@::vl::presentation::elements::GuiColorizedTextElement::ColorArray const &amp;()" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::GetColors@::vl::presentation::elements::GuiColorizedTextElement::ColorArray const &amp;()[decl0]"/> and <symbol docId="vl::presentation::elements::GuiColorizedTextElement::SetColors@void(::vl::presentation::elements::GuiColorizedTextElement::ColorArray const &amp;)" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetColors@void(::vl::presentation::elements::GuiColorizedTextElement::ColorArray const &amp;)[decl0]"/> to access the color table.
  </summary></Document>

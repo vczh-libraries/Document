@@ -1,1 +1,1 @@
-<Document><summary>Test if it has already been evaluated or not.</summary><returns>Returns true if it has already been evaluated.</returns></Document>
+<Document symbolId="vl::Lazy::IsEvaluated@bool const()" accessor="public" category="Function" name="IsEvaluated"><summary>Test if it has already been evaluated or not.</summary><returns>Returns true if it has already been evaluated.</returns></Document>

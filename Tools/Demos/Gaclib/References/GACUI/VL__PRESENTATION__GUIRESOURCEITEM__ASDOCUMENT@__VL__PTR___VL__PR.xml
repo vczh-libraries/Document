@@ -1,1 +1,1 @@
-<Document><summary>Get the contained object as a document model.</summary><returns>The contained object.</returns></Document>
+<Document symbolId="vl::presentation::GuiResourceItem::AsDocument@::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;()" accessor="public" category="Function" name="AsDocument"><summary>Get the contained object as a document model.</summary><returns>The contained object.</returns></Document>

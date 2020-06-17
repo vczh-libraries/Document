@@ -1,1 +1,1 @@
-<Document><summary>Test is the composition aligned to its parent.</summary><returns>Returns true if the composition is aligned to its parent.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiBoundsComposition::IsAlignedToParent@bool()" accessor="public" category="Function" name="IsAlignedToParent"><summary>Test is the composition aligned to its parent.</summary><returns>Returns true if the composition is aligned to its parent.</returns></Document>

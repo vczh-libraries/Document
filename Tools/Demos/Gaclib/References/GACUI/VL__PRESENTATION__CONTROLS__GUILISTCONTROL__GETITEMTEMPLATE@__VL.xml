@@ -1,1 +1,1 @@
-<Document><summary>Get the item style provider.</summary><returns>The item style provider.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::GetItemTemplate@::vl::presentation::controls::GuiListControl::ItemStyleProperty()" accessor="public" category="Function" name="GetItemTemplate"><summary>Get the item style provider.</summary><returns>The item style provider.</returns></Document>

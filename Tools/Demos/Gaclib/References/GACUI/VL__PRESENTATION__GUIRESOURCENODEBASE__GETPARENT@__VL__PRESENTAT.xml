@@ -1,1 +1,1 @@
-<Document><summary>Get the containing folder. Returns null means that this is the root resource node.</summary><returns>The containing folder.</returns></Document>
+<Document symbolId="vl::presentation::GuiResourceNodeBase::GetParent@::vl::presentation::GuiResourceFolder *()" accessor="public" category="Function" name="GetParent"><summary>Get the containing folder. Returns null means that this is the root resource node.</summary><returns>The containing folder.</returns></Document>

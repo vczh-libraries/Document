@@ -1,1 +1,1 @@
-<Document><summary>Set the editor factory for the column.</summary><param name="value">The editor factory.</param></Document>
+<Document symbolId="vl::presentation::controls::list::DataColumn::SetEditorFactory@void(::vl::Ptr&lt;::vl::presentation::controls::list::IDataEditorFactory&gt;)" accessor="public" category="Function" name="SetEditorFactory"><summary>Set the editor factory for the column.</summary><param name="value">The editor factory.</param></Document>

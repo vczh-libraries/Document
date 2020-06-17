@@ -1,1 +1,1 @@
-<Document><summary>Port of the server, like 80.</summary></Document>
+<Document symbolId="vl::HttpRequest::port" accessor="public" category="Variable" name="port"><summary>Port of the server, like 80.</summary></Document>

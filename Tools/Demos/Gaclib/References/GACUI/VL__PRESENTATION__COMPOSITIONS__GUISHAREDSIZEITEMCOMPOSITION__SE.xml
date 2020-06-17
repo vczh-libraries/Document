@@ -1,1 +1,1 @@
-<Document><summary>Set the group name of this item.</summary><param name="value">The group name.</param></Document>
+<Document symbolId="vl::presentation::compositions::GuiSharedSizeItemComposition::SetGroup@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetGroup"><summary>Set the group name of this item.</summary><param name="value">The group name.</param></Document>

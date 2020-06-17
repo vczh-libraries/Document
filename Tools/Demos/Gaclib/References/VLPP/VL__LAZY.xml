@@ -1,1 +1,1 @@
-<Document><summary>A type representing a lazy evaluation.</summary><typeparam name="T">The type of the evaluation result.</typeparam></Document>
+<Document symbolId="vl::Lazy" accessor="" category="Class" name="Lazy"><summary>A type representing a lazy evaluation.</summary><typeparam name="T">The type of the evaluation result.</typeparam></Document>

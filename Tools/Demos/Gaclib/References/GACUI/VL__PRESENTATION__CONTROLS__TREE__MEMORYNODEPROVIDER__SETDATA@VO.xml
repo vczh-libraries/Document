@@ -1,1 +1,1 @@
-<Document><summary>Set the data object.</summary><param name="value">The data object.</param></Document>
+<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::SetData@void(::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt; const &amp;)" accessor="public" category="Function" name="SetData"><summary>Set the data object.</summary><param name="value">The data object.</param></Document>

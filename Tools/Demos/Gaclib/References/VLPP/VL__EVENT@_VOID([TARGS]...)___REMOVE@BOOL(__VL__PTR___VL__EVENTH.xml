@@ -1,1 +1,1 @@
-<Document><summary>Remove a callback.</summary><returns>Returns true if this operation succeeded.</returns><param name="handler">The event handler representing the callback.</param></Document>
+<Document symbolId="vl::Event@&lt;void([TArgs]...)&gt;::Remove@bool(::vl::Ptr&lt;::vl::EventHandler&gt;)" accessor="public" category="Function" name="Remove"><summary>Remove a callback.</summary><returns>Returns true if this operation succeeded.</returns><param name="handler">The event handler representing the callback.</param></Document>

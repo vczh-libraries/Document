@@ -1,1 +1,1 @@
-<Document><summary>Remove all elements.</summary><returns>Returns true if all elements are removed.</returns></Document>
+<Document symbolId="vl::collections::ListBase::Clear@bool()" accessor="public" category="Function" name="Clear"><summary>Remove all elements.</summary><returns>Returns true if all elements are removed.</returns></Document>

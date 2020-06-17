@@ -1,1 +1,1 @@
-<Document><summary>Type of the token, representing the index of a regular expression that creates this token in the regular expression list in the grammar file.</summary></Document>
+<Document symbolId="vl::parsing::ParsingToken::tokenIndex" accessor="public" category="Variable" name="tokenIndex"><summary>Type of the token, representing the index of a regular expression that creates this token in the regular expression list in the grammar file.</summary></Document>

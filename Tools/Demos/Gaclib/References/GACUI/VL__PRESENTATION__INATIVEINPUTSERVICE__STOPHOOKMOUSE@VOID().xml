@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::INativeInputService::StopHookMouse@void()" accessor="public" category="Function" name="StopHookMouse"><summary>
  Stop to receive global mouse message.
  </summary></Document>

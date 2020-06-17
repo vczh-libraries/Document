@@ -1,1 +1,1 @@
-<Document><summary>Request body. This is a binary array using an array container to char.</summary></Document>
+<Document symbolId="vl::HttpRequest::body" accessor="public" category="Variable" name="body"><summary>Request body. This is a binary array using an array container to char.</summary></Document>

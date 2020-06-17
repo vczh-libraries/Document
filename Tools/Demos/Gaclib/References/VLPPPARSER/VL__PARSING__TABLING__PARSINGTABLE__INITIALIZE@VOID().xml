@@ -1,1 +1,1 @@
-<Document><summary>Initialize the parsing table. This function should be called after deserializing the table from a string.</summary></Document>
+<Document symbolId="vl::parsing::tabling::ParsingTable::Initialize@void()" accessor="public" category="Function" name="Initialize"><summary>Initialize the parsing table. This function should be called after deserializing the table from a string.</summary></Document>

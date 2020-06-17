@@ -1,1 +1,1 @@
-<Document><summary>Get the base line option for this flow item.</summary><returns>The base line option.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiFlowItemComposition::GetFlowOption@::vl::presentation::compositions::GuiFlowOption()" accessor="public" category="Function" name="GetFlowOption"><summary>Get the base line option for this flow item.</summary><returns>The base line option.</returns></Document>

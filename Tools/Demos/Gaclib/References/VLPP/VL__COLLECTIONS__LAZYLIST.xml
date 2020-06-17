@@ -1,1 +1,1 @@
-<Document><summary>A lazy evaluated readonly container.</summary><typeparam name="T">The type of elements.</typeparam></Document>
+<Document symbolId="vl::collections::LazyList" accessor="" category="Class" name="LazyList"><summary>A lazy evaluated readonly container.</summary><typeparam name="T">The type of elements.</typeparam></Document>

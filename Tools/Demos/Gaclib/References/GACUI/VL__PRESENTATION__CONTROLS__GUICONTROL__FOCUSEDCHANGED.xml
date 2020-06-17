@@ -1,1 +1,1 @@
-<Document><summary>Focused event. This event will be raised when the focusing state of the control is changed.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::FocusedChanged" accessor="public" category="Variable" name="FocusedChanged"><summary>Focused event. This event will be raised when the focusing state of the control is changed.</summary></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Set the horizontal alignment for this paragraph.</summary><param name="value">The alignment.</param></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetParagraphAlignment@void(::vl::presentation::Alignment)" accessor="public" category="Function" name="SetParagraphAlignment"><summary>Set the horizontal alignment for this paragraph.</summary><param name="value">The alignment.</param></Document>

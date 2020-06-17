@@ -1,1 +1,1 @@
-<Document><summary>Create the correct strict parser to parse the grammar itself.</summary><returns>The created parse.</returns></Document>
+<Document symbolId="vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;()" accessor="" category="Function" name="CreateBootstrapStrictParser"><summary>Create the correct strict parser to parse the grammar itself.</summary><returns>The created parse.</returns></Document>

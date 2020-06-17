@@ -1,1 +1,1 @@
-<Document><summary>Get the total numbers of acrossed rows for this cell composition.</summary><returns>The total numbers of acrossed rows for this cell composition.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiCellComposition::GetRowSpan@::vl::vint()" accessor="public" category="Function" name="GetRowSpan"><summary>Get the total numbers of acrossed rows for this cell composition.</summary><returns>The total numbers of acrossed rows for this cell composition.</returns></Document>

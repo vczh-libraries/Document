@@ -1,1 +1,1 @@
-<Document><summary>Get if the font preview is enabled.</summary><returns>Returns true if the font preview is enabled.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiFontDialog::GetShowEffect@bool()" accessor="public" category="Function" name="GetShowEffect"><summary>Get if the font preview is enabled.</summary><returns>Returns true if the font preview is enabled.</returns></Document>

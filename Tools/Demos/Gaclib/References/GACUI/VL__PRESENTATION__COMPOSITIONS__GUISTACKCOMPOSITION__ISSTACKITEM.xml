@@ -1,1 +1,1 @@
-<Document><summary>Test is any stack item clipped in the stack direction.</summary><returns>Returns true if any stack item is clipped.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiStackComposition::IsStackItemClipped@bool()" accessor="public" category="Function" name="IsStackItemClipped"><summary>Test is any stack item clipped in the stack direction.</summary><returns>Returns true if any stack item is clipped.</returns></Document>

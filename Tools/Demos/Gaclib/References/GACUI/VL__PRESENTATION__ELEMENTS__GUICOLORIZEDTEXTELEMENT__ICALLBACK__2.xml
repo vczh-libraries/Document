@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::ICallback::FontChanged@void()" accessor="public" category="Function" name="FontChanged"><summary>
  Called when the font configuration of a <symbol docId="vl::presentation::elements::GuiColorizedTextElement" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement"/> changed.
  </summary></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Set the dropdown context menu of this item.</summary><param name="value">The dropdown context menu of this item.</param></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewColumn::SetDropdownPopup@void(::vl::presentation::controls::GuiMenu *)" accessor="public" category="Function" name="SetDropdownPopup"><summary>Set the dropdown context menu of this item.</summary><param name="value">The dropdown context menu of this item.</param></Document>

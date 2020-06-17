@@ -1,1 +1,1 @@
-<Document><summary>Type for optionally storing a value.</summary><typeparam name="T">Type of the value.</typeparam></Document>
+<Document symbolId="vl::Nullable" accessor="" category="Class" name="Nullable"><summary>Type for optionally storing a value.</summary><typeparam name="T">Type of the value.</typeparam></Document>

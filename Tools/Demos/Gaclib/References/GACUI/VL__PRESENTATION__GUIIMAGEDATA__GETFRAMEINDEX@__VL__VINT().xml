@@ -1,1 +1,1 @@
-<Document><summary>Get the specified frame index.</summary><returns>The specified frame index.</returns></Document>
+<Document symbolId="vl::presentation::GuiImageData::GetFrameIndex@::vl::vint()" accessor="public" category="Function" name="GetFrameIndex"><summary>Get the specified frame index.</summary><returns>The specified frame index.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Item provider callback. Item providers use this interface to notify item modification.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemProviderCallback" accessor="public" category="Class" name="IItemProviderCallback"><summary>Item provider callback. Item providers use this interface to notify item modification.</summary></Document>

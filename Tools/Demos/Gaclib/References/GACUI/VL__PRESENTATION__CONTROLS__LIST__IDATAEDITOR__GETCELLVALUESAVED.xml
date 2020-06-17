@@ -1,1 +1,1 @@
-<Document><summary>Test if the edit has saved the data.</summary><returns>Returns true if the data is saved.</returns></Document>
+<Document symbolId="vl::presentation::controls::list::IDataEditor::GetCellValueSaved@bool()" accessor="public" category="Function" name="GetCellValueSaved"><summary>Test if the edit has saved the data.</summary><returns>Returns true if the data is saved.</returns></Document>

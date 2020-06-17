@@ -1,1 +1,1 @@
-<Document><summary>Base type for a list container.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam></Document>
+<Document symbolId="vl::collections::ListBase" accessor="" category="Class" name="ListBase"><summary>Base type for a list container.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam></Document>

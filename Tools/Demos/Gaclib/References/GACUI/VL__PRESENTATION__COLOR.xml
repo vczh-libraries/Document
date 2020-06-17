@@ -1,1 +1,1 @@
-<Document><summary>Represents a 32bit RGBA color. Values of separate components can be accessed using fields &quot;r&quot;, &quot;g&quot;, &quot;b&quot; and &quot;a&quot;.</summary></Document>
+<Document symbolId="vl::presentation::Color" accessor="" category="Struct" name="Color"><summary>Represents a 32bit RGBA color. Values of separate components can be accessed using fields &quot;r&quot;, &quot;g&quot;, &quot;b&quot; and &quot;a&quot;.</summary></Document>

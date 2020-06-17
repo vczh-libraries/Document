@@ -1,1 +1,1 @@
-<Document><summary>Get the minimum size limitation of the composition.</summary><returns>The minimum size limitation of the composition.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetMinSizeLimitation@::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation()" accessor="public" category="Function" name="GetMinSizeLimitation"><summary>Get the minimum size limitation of the composition.</summary><returns>The minimum size limitation of the composition.</returns></Document>

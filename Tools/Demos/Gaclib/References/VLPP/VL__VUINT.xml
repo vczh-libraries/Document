@@ -1,1 +1,1 @@
-<Document><summary>Unsigned interface whose size is equal to sizeof(void*).</summary></Document>
+<Document symbolId="vl::vuint" accessor="" category="TypeAlias" name="vuint"><summary>Unsigned interface whose size is equal to sizeof(void*).</summary></Document>

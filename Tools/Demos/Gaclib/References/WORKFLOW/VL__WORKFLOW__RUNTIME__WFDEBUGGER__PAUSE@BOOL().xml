@@ -1,1 +1,1 @@
-<Document><summary>Pause the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger::Pause@bool()" accessor="public" category="Function" name="Pause"><summary>Pause the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns></Document>

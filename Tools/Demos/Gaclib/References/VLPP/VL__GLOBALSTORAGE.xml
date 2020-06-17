@@ -1,4 +1,4 @@
-<Document><summary><![CDATA[
+<Document symbolId="vl::GlobalStorage" accessor="" category="Class" name="GlobalStorage"><summary><![CDATA[
  Base type of all global storages. A global storage is a value with a key to store some information. In order to create a global storage, you should do the following in a cpp file:
  BEGIN_GLOBAL_STOREGE_CLASS(<put the key here, it should be a legal C++ identifier>)
 		<put all variables here>

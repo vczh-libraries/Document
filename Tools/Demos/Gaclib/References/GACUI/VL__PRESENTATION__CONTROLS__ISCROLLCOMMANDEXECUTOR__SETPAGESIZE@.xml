@@ -1,1 +1,1 @@
-<Document><summary>Change to page size of the scroll.</summary><param name="value">The page size.</param></Document>
+<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SetPageSize@void(::vl::vint)" accessor="public" category="Function" name="SetPageSize"><summary>Change to page size of the scroll.</summary><param name="value">The page size.</param></Document>

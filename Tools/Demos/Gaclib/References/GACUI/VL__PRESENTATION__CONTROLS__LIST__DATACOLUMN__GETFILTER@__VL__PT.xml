@@ -1,1 +1,1 @@
-<Document><summary>Get the filter for the column.</summary><returns>The filter for the column.</returns></Document>
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetFilter@::vl::Ptr&lt;::vl::presentation::controls::list::IDataFilter&gt;()" accessor="public" category="Function" name="GetFilter"><summary>Get the filter for the column.</summary><returns>The filter for the column.</returns></Document>

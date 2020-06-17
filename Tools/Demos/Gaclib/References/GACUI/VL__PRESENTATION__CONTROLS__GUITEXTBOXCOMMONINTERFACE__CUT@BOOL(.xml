@@ -1,1 +1,1 @@
-<Document><summary>Cut the selection text.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Cut@bool()" accessor="public" category="Function" name="Cut"><summary>Cut the selection text.</summary><returns>Returns true if this operation succeeded.</returns></Document>

@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::text::TextLine::text" accessor="public" category="Variable" name="text"><summary>
  A character buffer starts from the first character of this line.
  </summary></Document>

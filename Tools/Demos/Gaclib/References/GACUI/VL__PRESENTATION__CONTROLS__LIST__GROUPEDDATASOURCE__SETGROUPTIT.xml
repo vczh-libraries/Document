@@ -1,1 +1,1 @@
-<Document><summary>Get the group title property.</summary><param name="value">The group title property.</param></Document>
+<Document symbolId="vl::presentation::controls::list::GroupedDataSource::SetGroupTitleProperty@void(::vl::presentation::ItemProperty&lt;::vl::WString&gt; const &amp;)" accessor="public" category="Function" name="SetGroupTitleProperty"><summary>Get the group title property.</summary><param name="value">The group title property.</param></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Called when the callback is detached from a text box control.</summary></Document>
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::Detach@void()" accessor="public" category="Function" name="Detach"><summary>Called when the callback is detached from a text box control.</summary></Document>

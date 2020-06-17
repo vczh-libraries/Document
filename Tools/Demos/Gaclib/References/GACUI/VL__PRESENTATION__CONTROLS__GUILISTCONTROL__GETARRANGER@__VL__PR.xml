@@ -1,1 +1,1 @@
-<Document><summary>Get the item arranger.</summary><returns>The item arranger.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::GetArranger@::vl::presentation::controls::GuiListControl::IItemArranger *()" accessor="public" category="Function" name="GetArranger"><summary>Get the item arranger.</summary><returns>The item arranger.</returns></Document>

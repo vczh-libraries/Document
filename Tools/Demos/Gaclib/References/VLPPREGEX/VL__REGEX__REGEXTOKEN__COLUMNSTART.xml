@@ -1,1 +1,1 @@
-<Document><summary>Column number of the first character, begins at 0.</summary></Document>
+<Document symbolId="vl::regex::RegexToken::columnStart" accessor="public" category="Variable" name="columnStart"><summary>Column number of the first character, begins at 0.</summary></Document>

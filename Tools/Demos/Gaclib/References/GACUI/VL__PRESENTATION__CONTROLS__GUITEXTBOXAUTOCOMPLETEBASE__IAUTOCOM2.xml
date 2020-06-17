@@ -1,1 +1,1 @@
-<Document><summary>Get the auto complete control that will be installed in a popup to show candidate items.</summary><returns>The auto complete control.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IAutoCompleteControlProvider::GetAutoCompleteControl@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetAutoCompleteControl"><summary>Get the auto complete control that will be installed in a popup to show candidate items.</summary><returns>The auto complete control.</returns></Document>

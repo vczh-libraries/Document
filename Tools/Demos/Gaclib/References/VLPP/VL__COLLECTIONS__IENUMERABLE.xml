@@ -1,1 +1,1 @@
-<Document><summary>Enumerable.</summary><typeparam name="T">Type of the elements in the enumerator.</typeparam></Document>
+<Document symbolId="vl::collections::IEnumerable" accessor="" category="Class" name="IEnumerable"><summary>Enumerable.</summary><typeparam name="T">Type of the elements in the enumerator.</typeparam></Document>

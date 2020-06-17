@@ -1,1 +1,1 @@
-<Document><summary>Get the minimum possible position.</summary><returns>The minimum possible position.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::GetMinPosition@::vl::vint()" accessor="public" category="Function" name="GetMinPosition"><summary>Get the minimum possible position.</summary><returns>The minimum possible position.</returns></Document>

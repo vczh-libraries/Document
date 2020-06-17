@@ -1,1 +1,1 @@
-<Document><summary>Set the selected color.</summary><param name="value">The selected color.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiColorDialog::SetSelectedColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetSelectedColor"><summary>Set the selected color.</summary><param name="value">The selected color.</param></Document>

@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::Gui3DBorderElement::GetColor2@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor2"><summary>
  Get the right-bottom color.
  </summary><returns>The right-bottom color.</returns></Document>

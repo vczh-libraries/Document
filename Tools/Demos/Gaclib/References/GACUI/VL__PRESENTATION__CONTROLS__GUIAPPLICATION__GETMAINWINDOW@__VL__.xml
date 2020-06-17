@@ -1,1 +1,1 @@
-<Document><summary>Get the main window.</summary><returns>The main window.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiApplication::GetMainWindow@::vl::presentation::controls::GuiWindow *()" accessor="public" category="Function" name="GetMainWindow"><summary>Get the main window.</summary><returns>The main window.</returns></Document>

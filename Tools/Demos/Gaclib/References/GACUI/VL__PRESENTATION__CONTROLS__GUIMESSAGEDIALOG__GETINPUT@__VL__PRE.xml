@@ -1,1 +1,1 @@
-<Document><summary>Get the button combination that appear on the dialog.</summary><returns>The button combination.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiMessageDialog::GetInput@::vl::presentation::INativeDialogService::MessageBoxButtonsInput()" accessor="public" category="Function" name="GetInput"><summary>Get the button combination that appear on the dialog.</summary><returns>The button combination.</returns></Document>

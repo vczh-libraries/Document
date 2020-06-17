@@ -1,1 +1,1 @@
-<Document><summary>Get the contained object as a string.</summary><returns>The contained object.</returns></Document>
+<Document symbolId="vl::presentation::GuiResourceItem::AsString@::vl::Ptr&lt;::vl::presentation::GuiTextData&gt;()" accessor="public" category="Function" name="AsString"><summary>Get the contained object as a string.</summary><returns>The contained object.</returns></Document>

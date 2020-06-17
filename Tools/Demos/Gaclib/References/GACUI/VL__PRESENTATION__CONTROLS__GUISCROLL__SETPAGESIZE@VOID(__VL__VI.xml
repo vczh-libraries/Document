@@ -1,1 +1,1 @@
-<Document><summary>Set the page size.</summary><param name="value">The page size.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::SetPageSize@void(::vl::vint)" accessor="public" category="Function" name="SetPageSize"><summary>Set the page size.</summary><param name="value">The page size.</param></Document>

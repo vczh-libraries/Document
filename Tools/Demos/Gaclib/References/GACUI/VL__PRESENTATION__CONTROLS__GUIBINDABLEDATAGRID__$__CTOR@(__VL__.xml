@@ -1,1 +1,1 @@
-<Document><summary>Create a bindable Data grid control.</summary><param name="themeName">The theme name for retriving a default control template.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableDataGrid::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor"><summary>Create a bindable Data grid control.</summary><param name="themeName">The theme name for retriving a default control template.</param></Document>

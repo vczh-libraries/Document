@@ -1,1 +1,1 @@
-<Document><summary>Get all individual views to switch.</summary><returns>All individual views to switch.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiResponsiveViewComposition::GetViews@::vl::collections::ObservableListBase&lt;::vl::presentation::compositions::GuiResponsiveCompositionBase *&gt; &amp;()" accessor="public" category="Function" name="GetViews"><summary>Get all individual views to switch.</summary><returns>All individual views to switch.</returns></Document>

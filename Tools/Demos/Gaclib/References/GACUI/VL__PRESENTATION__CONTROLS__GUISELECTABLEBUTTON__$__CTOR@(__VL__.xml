@@ -1,1 +1,1 @@
-<Document><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableButton::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param></Document>

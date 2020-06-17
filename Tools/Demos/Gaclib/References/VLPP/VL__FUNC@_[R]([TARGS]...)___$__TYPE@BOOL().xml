@@ -1,1 +1,1 @@
-<Document><summary>Test is the reference a null reference.</summary><returns>Returns true if it is not a null reference.</returns></Document>
+<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__type@bool()" accessor="public" category="Function" name="$__type"><summary>Test is the reference a null reference.</summary><returns>Returns true if it is not a null reference.</returns></Document>

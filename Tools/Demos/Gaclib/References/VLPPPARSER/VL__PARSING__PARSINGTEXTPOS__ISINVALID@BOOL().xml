@@ -1,1 +1,1 @@
-<Document><summary>Test if this position a valid position.</summary><returns>Returns true if this position is a valid position.</returns></Document>
+<Document symbolId="vl::parsing::ParsingTextPos::IsInvalid@bool()" accessor="public" category="Function" name="IsInvalid"><summary>Test if this position a valid position.</summary><returns>Returns true if this position is a valid position.</returns></Document>

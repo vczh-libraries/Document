@@ -1,1 +1,1 @@
-<Document><summary>Move a string.</summary><param name="string">The string to move.</param></Document>
+<Document symbolId="vl::ObjectString::$__ctor@(::vl::ObjectString&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Move a string.</summary><param name="string">The string to move.</param></Document>

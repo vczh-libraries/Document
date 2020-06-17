@@ -1,1 +1,1 @@
-<Document><summary>Token at which the error happens.</summary></Document>
+<Document symbolId="vl::parsing::ParsingError::token" accessor="public" category="Variable" name="token"><summary>Token at which the error happens.</summary></Document>

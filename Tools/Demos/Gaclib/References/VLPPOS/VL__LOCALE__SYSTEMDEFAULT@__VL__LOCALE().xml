@@ -1,1 +1,1 @@
-<Document><summary>Get the system default locale. This locale controls the code page that used by the the system to interpret ANSI string buffers.</summary><returns>The system default locale.</returns></Document>
+<Document symbolId="vl::Locale::SystemDefault@::vl::Locale()" accessor="public" category="Function" name="SystemDefault"><summary>Get the system default locale. This locale controls the code page that used by the the system to interpret ANSI string buffers.</summary><returns>The system default locale.</returns></Document>

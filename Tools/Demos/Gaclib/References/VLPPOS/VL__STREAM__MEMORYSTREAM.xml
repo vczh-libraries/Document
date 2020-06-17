@@ -1,1 +1,1 @@
-<Document><summary>A readable, writable, seekable and peekable stream that stores everything in memory.</summary></Document>
+<Document symbolId="vl::stream::MemoryStream" accessor="" category="Class" name="MemoryStream"><summary>A readable, writable, seekable and peekable stream that stores everything in memory.</summary></Document>

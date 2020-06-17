@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::INativeControllerListener" accessor="" category="Class" name="INativeControllerListener"><summary>
  Represents a global message listener to an <symbol docId="vl::presentation::INativeController" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeController"/>.
  </summary></Document>

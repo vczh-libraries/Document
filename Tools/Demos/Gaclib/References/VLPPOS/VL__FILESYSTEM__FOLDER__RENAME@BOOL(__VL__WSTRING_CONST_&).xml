@@ -1,1 +1,1 @@
-<Document><summary>Rename the folder in the same folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="newName">The new folder name.</param></Document>
+<Document symbolId="vl::filesystem::Folder::Rename@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="Rename"><summary>Rename the folder in the same folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="newName">The new folder name.</param></Document>

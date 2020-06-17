@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::GuiSolidBackgroundElement::SetShape@void(::vl::presentation::elements::ElementShape)" accessor="public" category="Function" name="SetShape"><summary>
  Set the shape.
  </summary><param name="value">The new shape.</param></Document>

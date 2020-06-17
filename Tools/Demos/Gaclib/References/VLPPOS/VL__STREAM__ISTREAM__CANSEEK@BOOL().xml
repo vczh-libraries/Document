@@ -1,1 +1,1 @@
-<Document><summary>Test if the stream is seekable.</summary><returns>Returns true if the stream is seekable.</returns></Document>
+<Document symbolId="vl::stream::IStream::CanSeek@bool()" accessor="public" category="Function" name="CanSeek"><summary>Test if the stream is seekable.</summary><returns>Returns true if the stream is seekable.</returns></Document>

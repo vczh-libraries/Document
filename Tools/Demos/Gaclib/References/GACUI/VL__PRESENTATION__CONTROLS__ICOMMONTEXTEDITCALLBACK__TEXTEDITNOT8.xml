@@ -1,1 +1,1 @@
-<Document><summary>The end position of the selection before replacing.</summary></Document>
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::originalEnd" accessor="public" category="Variable" name="originalEnd"><summary>The end position of the selection before replacing.</summary></Document>

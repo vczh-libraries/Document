@@ -1,1 +1,1 @@
-<Document><summary>Set the preferred minimum size.</summary><param name="value">The preferred minimum size.</param></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)" accessor="public" category="Function" name="SetPreferredMinSize"><summary>Set the preferred minimum size.</summary><param name="value">The preferred minimum size.</param></Document>

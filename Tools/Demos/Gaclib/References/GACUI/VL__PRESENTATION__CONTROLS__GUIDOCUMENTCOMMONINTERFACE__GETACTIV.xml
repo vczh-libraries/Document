@@ -1,1 +1,1 @@
-<Document><summary>Get the href attribute of the active hyperlink.</summary><returns>The href attribute of the active hyperlink.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetActiveHyperlinkReference@::vl::WString()" accessor="public" category="Function" name="GetActiveHyperlinkReference"><summary>Get the href attribute of the active hyperlink.</summary><returns>The href attribute of the active hyperlink.</returns></Document>

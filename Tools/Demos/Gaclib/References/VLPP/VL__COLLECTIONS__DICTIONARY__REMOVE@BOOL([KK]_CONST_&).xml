@@ -1,1 +1,1 @@
-<Document><summary>Remove a key with the associated value.</summary><returns>Returns true if the key and the value is removed.</returns><param name="key">The key.</param></Document>
+<Document symbolId="vl::collections::Dictionary::Remove@bool([KK] const &amp;)" accessor="public" category="Function" name="Remove"><summary>Remove a key with the associated value.</summary><returns>Returns true if the key and the value is removed.</returns><param name="key">The key.</param></Document>

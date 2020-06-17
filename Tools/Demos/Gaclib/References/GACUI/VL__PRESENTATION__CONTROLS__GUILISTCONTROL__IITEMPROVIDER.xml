@@ -1,1 +1,1 @@
-<Document><summary>Item provider for a <symbol docId="vl::presentation::controls::GuiListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl"/>.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemProvider" accessor="public" category="Class" name="IItemProvider"><summary>Item provider for a <symbol docId="vl::presentation::controls::GuiListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl"/>.</summary></Document>

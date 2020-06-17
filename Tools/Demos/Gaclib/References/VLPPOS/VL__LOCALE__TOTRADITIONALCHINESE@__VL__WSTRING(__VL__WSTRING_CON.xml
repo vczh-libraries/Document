@@ -1,1 +1,1 @@
-<Document><summary>Convert characters to the Traditional Chinese.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param></Document>
+<Document symbolId="vl::Locale::ToTraditionalChinese@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToTraditionalChinese"><summary>Convert characters to the Traditional Chinese.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param></Document>

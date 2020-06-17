@@ -1,1 +1,1 @@
-<Document><summary>Get the cell area in the space of the table&apos;s parent composition&apos;s client area.</summary><returns>The cell area.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::GetCellArea@::vl::presentation::Rect()" accessor="public" category="Function" name="GetCellArea"><summary>Get the cell area in the space of the table&apos;s parent composition&apos;s client area.</summary><returns>The cell area.</returns></Document>

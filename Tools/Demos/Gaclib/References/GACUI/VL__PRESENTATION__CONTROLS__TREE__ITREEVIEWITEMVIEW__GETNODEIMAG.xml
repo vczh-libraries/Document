@@ -1,1 +1,1 @@
-<Document><summary>Get the image of a node.</summary><returns>Get the image of a node.</returns><param name="node">The node.</param></Document>
+<Document symbolId="vl::presentation::controls::tree::ITreeViewItemView::GetNodeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;(::vl::presentation::controls::tree::INodeProvider *)" accessor="public" category="Function" name="GetNodeImage"><summary>Get the image of a node.</summary><returns>Get the image of a node.</returns><param name="node">The node.</param></Document>

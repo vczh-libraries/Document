@@ -1,1 +1,1 @@
-<Document><summary>Create a stream.</summary><param name="_block">Size for each allocation. The stream will only allocate new memory of size &quot;_block&quot; when it reaches the end and has to extend.</param></Document>
+<Document symbolId="vl::stream::MemoryStream::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create a stream.</summary><param name="_block">Size for each allocation. The stream will only allocate new memory of size &quot;_block&quot; when it reaches the end and has to extend.</param></Document>

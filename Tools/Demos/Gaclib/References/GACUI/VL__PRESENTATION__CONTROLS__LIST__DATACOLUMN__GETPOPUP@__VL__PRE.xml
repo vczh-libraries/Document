@@ -1,1 +1,1 @@
-<Document><summary>Get the popup for the column.</summary><returns>The popup for the column.</returns></Document>
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetPopup@::vl::presentation::controls::GuiMenu *()" accessor="public" category="Function" name="GetPopup"><summary>Get the popup for the column.</summary><returns>The popup for the column.</returns></Document>

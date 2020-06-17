@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::text::TextLine::Split@::vl::presentation::elements::text::TextLine(::vl::vint)" accessor="public" category="Function" name="Split"><summary>
  Split a text line into two by the position. The current line contains characters before this position. This function returns a new text line contains characters after this position.
  </summary><returns>The new text line.</returns><param name="index">.</param></Document>

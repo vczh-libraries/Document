@@ -1,1 +1,1 @@
-<Document><summary>Get the cell padding. A cell padding is the distance between a table client area and a cell, or between two cells.</summary><returns>The cell padding.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::GetCellPadding@::vl::vint()" accessor="public" category="Function" name="GetCellPadding"><summary>Get the cell padding. A cell padding is the distance between a table client area and a cell, or between two cells.</summary><returns>The cell padding.</returns></Document>

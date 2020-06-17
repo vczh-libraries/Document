@@ -1,1 +1,1 @@
-<Document><summary>Get the item source.</summary><returns>The item source.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableTreeView::GetItemSource@::vl::reflection::description::Value()" accessor="public" category="Function" name="GetItemSource"><summary>Get the item source.</summary><returns>The item source.</returns></Document>

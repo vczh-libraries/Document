@@ -1,1 +1,1 @@
-<Document><summary>Create the parse using a parsing table.</summary><param name="_table">The parsing table.</param></Document>
+<Document symbolId="vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create the parse using a parsing table.</summary><param name="_table">The parsing table.</param></Document>

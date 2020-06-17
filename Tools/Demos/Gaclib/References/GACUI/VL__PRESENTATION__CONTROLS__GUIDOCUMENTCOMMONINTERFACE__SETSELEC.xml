@@ -1,1 +1,1 @@
-<Document><summary>Set the selected model.</summary><param name="value">The selected model.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SetSelectionModel@void(::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;)" accessor="public" category="Function" name="SetSelectionModel"><summary>Set the selected model.</summary><param name="value">The selected model.</param></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Convert a 64-bits signed interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param></Document>
+<Document symbolId="vl::i64tow@::vl::WString(::vl::vint64_t)" accessor="" category="Function" name="i64tow"><summary>Convert a 64-bits signed interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param></Document>

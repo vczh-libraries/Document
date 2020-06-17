@@ -1,1 +1,1 @@
-<Document><summary>Get the size of this item.</summary><returns>The size of this item.</returns></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewColumn::GetSize@::vl::vint()" accessor="public" category="Function" name="GetSize"><summary>Get the size of this item.</summary><returns>The size of this item.</returns></Document>

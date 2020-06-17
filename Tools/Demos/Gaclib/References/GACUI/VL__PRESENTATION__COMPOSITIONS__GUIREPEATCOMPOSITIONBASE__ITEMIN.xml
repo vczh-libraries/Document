@@ -1,1 +1,1 @@
-<Document><summary>An event called after a new item is inserted.</summary></Document>
+<Document symbolId="vl::presentation::compositions::GuiRepeatCompositionBase::ItemInserted" accessor="public" category="Variable" name="ItemInserted"><summary>An event called after a new item is inserted.</summary></Document>

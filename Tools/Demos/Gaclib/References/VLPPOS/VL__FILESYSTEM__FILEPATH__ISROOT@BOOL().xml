@@ -1,1 +1,1 @@
-<Document><summary>Test if the file path is a the root of all file system objects.</summary><returns>Returns true if the file path is the root of all file system objects.</returns></Document>
+<Document symbolId="vl::filesystem::FilePath::IsRoot@bool()" accessor="public" category="Function" name="IsRoot"><summary>Test if the file path is a the root of all file system objects.</summary><returns>Returns true if the file path is the root of all file system objects.</returns></Document>

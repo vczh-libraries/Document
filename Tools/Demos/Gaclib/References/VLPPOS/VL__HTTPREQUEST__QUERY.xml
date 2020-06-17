@@ -1,1 +1,1 @@
-<Document><summary>Query of the request, like &quot;/GettingStart.html&quot;.</summary></Document>
+<Document symbolId="vl::HttpRequest::query" accessor="public" category="Variable" name="query"><summary>Query of the request, like &quot;/GettingStart.html&quot;.</summary></Document>

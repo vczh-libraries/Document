@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::INativeImage::GetFrame@::vl::presentation::INativeImageFrame *(::vl::vint)" accessor="public" category="Function" name="GetFrame"><summary>
  Get the frame in this image by a specified frame index.
  </summary><returns>The frame in this image by a specified frame index.</returns><param name="index">The specified frame index.</param></Document>

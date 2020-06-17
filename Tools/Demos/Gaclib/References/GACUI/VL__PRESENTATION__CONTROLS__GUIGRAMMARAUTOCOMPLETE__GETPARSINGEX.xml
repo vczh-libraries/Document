@@ -1,1 +1,1 @@
-<Document><summary>Get the internal parsing executor.</summary><returns>The parsing executor.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiGrammarAutoComplete::GetParsingExecutor@::vl::Ptr&lt;::vl::presentation::controls::RepeatingParsingExecutor&gt;()" accessor="public" category="Function" name="GetParsingExecutor"><summary>Get the internal parsing executor.</summary><returns>The parsing executor.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Create a container.</summary><param name="_itemProvider">The item provider in the same control to receive notifications.</param></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewDataColumns::$__ctor@(::vl::presentation::controls::list::IListViewItemProvider *)" accessor="public" category="Function" name="$__ctor"><summary>Create a container.</summary><param name="_itemProvider">The item provider in the same control to receive notifications.</param></Document>

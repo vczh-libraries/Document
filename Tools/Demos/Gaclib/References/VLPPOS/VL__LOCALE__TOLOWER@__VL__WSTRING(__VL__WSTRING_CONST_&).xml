@@ -1,1 +1,1 @@
-<Document><summary>Convert characters to the lower case using the file system rule.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param></Document>
+<Document symbolId="vl::Locale::ToLower@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToLower"><summary>Convert characters to the lower case using the file system rule.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param></Document>

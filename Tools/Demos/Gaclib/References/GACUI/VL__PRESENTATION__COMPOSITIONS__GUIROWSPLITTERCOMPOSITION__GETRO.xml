@@ -1,1 +1,1 @@
-<Document><summary>Get the number of rows that above the splitter.</summary><returns>The number of rows that above the splitter.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiRowSplitterComposition::GetRowsToTheTop@::vl::vint()" accessor="public" category="Function" name="GetRowsToTheTop"><summary>Get the number of rows that above the splitter.</summary><returns>The number of rows that above the splitter.</returns></Document>

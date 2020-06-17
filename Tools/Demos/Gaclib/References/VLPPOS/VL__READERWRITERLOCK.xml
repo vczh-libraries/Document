@@ -1,4 +1,4 @@
-<Document><summary><![CDATA[
+<Document symbolId="vl::ReaderWriterLock" accessor="" category="Class" name="ReaderWriterLock"><summary><![CDATA[
  Reader writer lock.
  The macro "READER_LOCK" and "WRITER_LOCK" are encouraged to use instead of calling ]]><symbol docId="vl::ReaderWriterLock::EnterReader@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::EnterReader@void()[decl0]"/><![CDATA[, ]]><symbol docId="vl::ReaderWriterLock::LeaveReader@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::LeaveReader@void()[decl0]"/><![CDATA[, ]]><symbol docId="vl::ReaderWriterLock::EnterWriter@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::EnterWriter@void()[decl0]"/><![CDATA[ and ]]><symbol docId="vl::ReaderWriterLock::LeaveWriter@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::LeaveWriter@void()[decl0]"/><![CDATA[ like this:
  READER_LOCK(yourLock)

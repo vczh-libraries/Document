@@ -1,1 +1,1 @@
-<Document><summary>Content type, like &quot;text/xml&quot;.</summary></Document>
+<Document symbolId="vl::HttpRequest::contentType" accessor="public" category="Variable" name="contentType"><summary>Content type, like &quot;text/xml&quot;.</summary></Document>

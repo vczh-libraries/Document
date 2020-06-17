@@ -1,1 +1,1 @@
-<Document><summary>Prepare an image for the clipboard.</summary><param name="value">The image.</param></Document>
+<Document symbolId="vl::presentation::INativeClipboardWriter::SetImage@void(::vl::Ptr&lt;::vl::presentation::INativeImage&gt;)" accessor="public" category="Function" name="SetImage"><summary>Prepare an image for the clipboard.</summary><param name="value">The image.</param></Document>

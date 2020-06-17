@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::regex::RegexProc::colorizeProc" accessor="public" category="Variable" name="colorizeProc"><summary>
  The colorizer callback. It is called when a token is recognized.
  </summary></Document>

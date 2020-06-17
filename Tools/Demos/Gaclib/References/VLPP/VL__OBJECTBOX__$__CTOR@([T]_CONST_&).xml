@@ -1,1 +1,1 @@
-<Document><summary>Box a value.</summary><param name="_object">The value to box.</param></Document>
+<Document symbolId="vl::ObjectBox::$__ctor@([T] const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Box a value.</summary><param name="_object">The value to box.</param></Document>

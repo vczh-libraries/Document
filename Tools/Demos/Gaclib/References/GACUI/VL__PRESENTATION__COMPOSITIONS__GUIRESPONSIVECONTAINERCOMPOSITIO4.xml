@@ -1,1 +1,1 @@
-<Document><summary>Get the responsive composition to control.</summary><returns>The responsive composition to control.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiResponsiveContainerComposition::GetResponsiveTarget@::vl::presentation::compositions::GuiResponsiveCompositionBase *()" accessor="public" category="Function" name="GetResponsiveTarget"><summary>Get the responsive composition to control.</summary><returns>The responsive composition to control.</returns></Document>

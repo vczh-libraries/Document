@@ -1,1 +1,1 @@
-<Document><summary>Release a reader lock.</summary></Document>
+<Document symbolId="vl::ReaderWriterLock::LeaveReader@void()" accessor="public" category="Function" name="LeaveReader"><summary>Release a reader lock.</summary></Document>

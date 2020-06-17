@@ -1,1 +1,1 @@
-<Document><summary>Context changed event. This event will be raised when the font of the control is changed.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::ContextChanged" accessor="public" category="Variable" name="ContextChanged"><summary>Context changed event. This event will be raised when the font of the control is changed.</summary></Document>

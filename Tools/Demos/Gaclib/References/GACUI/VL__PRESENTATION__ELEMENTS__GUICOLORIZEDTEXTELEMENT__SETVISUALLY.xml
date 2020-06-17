@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetVisuallyEnabled@void(bool)" accessor="public" category="Function" name="SetVisuallyEnabled"><summary>
  Set the enabling state.
  </summary><param name="value">True if the element will be rendered as an enabled element.</param></Document>

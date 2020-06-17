@@ -1,1 +1,1 @@
-<Document><summary>Stop the thread.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::Thread::Stop@bool()" accessor="public" category="Function" name="Stop"><summary>Stop the thread.</summary><returns>Returns true if this operation succeeded.</returns></Document>

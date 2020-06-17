@@ -1,1 +1,1 @@
-<Document><summary>Get the height of a row.</summary><returns>The height of a row in pixel.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRowHeight@::vl::vint()" accessor="public" category="Function" name="GetRowHeight"><summary>Get the height of a row.</summary><returns>The height of a row in pixel.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Decoder to transform UTF-8 text to wchar_t.</summary></Document>
+<Document symbolId="vl::stream::Utf8Decoder" accessor="" category="Class" name="Utf8Decoder"><summary>Decoder to transform UTF-8 text to wchar_t.</summary></Document>

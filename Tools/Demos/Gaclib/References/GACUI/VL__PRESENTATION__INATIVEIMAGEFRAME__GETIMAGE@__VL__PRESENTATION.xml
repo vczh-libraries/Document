@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::INativeImageFrame::GetImage@::vl::presentation::INativeImage *()" accessor="public" category="Function" name="GetImage"><summary>
  Get the image that owns this frame.
  </summary><returns>The image that owns this frame.</returns></Document>

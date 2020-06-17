@@ -1,1 +1,1 @@
-<Document><summary>Set the enablility for this command.</summary><param name="value">The enablility for this command.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetEnabled@void(bool)" accessor="public" category="Function" name="SetEnabled"><summary>Set the enablility for this command.</summary><param name="value">The enablility for this command.</param></Document>

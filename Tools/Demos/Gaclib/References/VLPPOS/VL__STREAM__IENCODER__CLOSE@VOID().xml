@@ -1,1 +1,1 @@
-<Document><summary>Stop the transformation, ensuring all written content is transformed to the target stream.</summary></Document>
+<Document symbolId="vl::stream::IEncoder::Close@void()" accessor="public" category="Function" name="Close"><summary>Stop the transformation, ensuring all written content is transformed to the target stream.</summary></Document>

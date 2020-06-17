@@ -1,1 +1,1 @@
-<Document><summary>The start position of the selection after caret changing.</summary></Document>
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct::newBegin" accessor="public" category="Variable" name="newBegin"><summary>The start position of the selection after caret changing.</summary></Document>

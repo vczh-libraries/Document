@@ -1,1 +1,1 @@
-<Document><summary>Get the file path of the current executable.</summary><returns>The file path of the current executable.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiApplication::GetExecutablePath@::vl::WString()" accessor="public" category="Function" name="GetExecutablePath"><summary>Get the file path of the current executable.</summary><returns>The file path of the current executable.</returns></Document>

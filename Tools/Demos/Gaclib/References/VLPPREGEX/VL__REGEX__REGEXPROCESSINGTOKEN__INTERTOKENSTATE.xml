@@ -1,4 +1,4 @@
-<Document><summary>
+<Document symbolId="vl::regex::RegexProcessingToken::interTokenState" accessor="public" category="Variable" name="interTokenState"><summary>
  The inter token state object, could be modified after the callback.
  When the callback returns:
    if the completeText parameter is true in <symbol docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/>, it should be nullptr.

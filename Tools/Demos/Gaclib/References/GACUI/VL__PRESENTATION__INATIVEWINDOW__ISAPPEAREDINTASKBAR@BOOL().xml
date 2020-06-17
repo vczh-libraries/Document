@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::INativeWindow::IsAppearedInTaskBar@bool()" accessor="public" category="Function" name="IsAppearedInTaskBar"><summary>
  Test is the window icon appeared in the task bar.
  </summary><returns>Returns true if the window icon appears in the task bar.</returns></Document>

@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::INativeWindowListener::DpiChanged@void()" accessor="public" category="Function" name="DpiChanged"><summary>
  Called when the dpi associated with this window is changed.
  </summary></Document>

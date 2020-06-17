@@ -1,1 +1,1 @@
-<Document><summary>Set the auto selection state. True if the button is automatically selected or unselected when the button is clicked.</summary><param name="value">The auto selection state.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableButton::SetAutoSelection@void(bool)" accessor="public" category="Function" name="SetAutoSelection"><summary>Set the auto selection state. True if the button is automatically selected or unselected when the button is clicked.</summary><param name="value">The auto selection state.</param></Document>

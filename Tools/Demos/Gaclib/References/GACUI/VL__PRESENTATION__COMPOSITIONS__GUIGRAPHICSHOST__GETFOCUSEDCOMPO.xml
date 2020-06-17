@@ -1,1 +1,1 @@
-<Document><summary>Get the focus composition. A focused composition will receive keyboard messages.</summary><returns>The focus composition.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::GetFocusedComposition@::vl::presentation::compositions::GuiGraphicsComposition *()" accessor="public" category="Function" name="GetFocusedComposition"><summary>Get the focus composition. A focused composition will receive keyboard messages.</summary><returns>The focus composition.</returns></Document>

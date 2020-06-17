@@ -1,1 +1,1 @@
-<Document><summary>Get the attached group controller.</summary><returns>The attached group controller.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableButton::GetGroupController@::vl::presentation::controls::GuiSelectableButton::GroupController *()" accessor="public" category="Function" name="GetGroupController"><summary>Get the attached group controller.</summary><returns>The attached group controller.</returns></Document>

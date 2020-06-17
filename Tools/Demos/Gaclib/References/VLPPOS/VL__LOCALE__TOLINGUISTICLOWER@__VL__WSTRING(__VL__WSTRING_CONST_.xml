@@ -1,1 +1,1 @@
-<Document><summary>Convert characters to the lower case using the linguistic rule.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param></Document>
+<Document symbolId="vl::Locale::ToLinguisticLower@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToLinguisticLower"><summary>Convert characters to the lower case using the linguistic rule.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param></Document>

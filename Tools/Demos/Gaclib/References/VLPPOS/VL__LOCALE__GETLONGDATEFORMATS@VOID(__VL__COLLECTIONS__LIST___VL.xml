@@ -1,1 +1,1 @@
-<Document><summary>Get all long date formats for the locale.</summary><param name="formats">The formats.</param></Document>
+<Document symbolId="vl::Locale::GetLongDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetLongDateFormats"><summary>Get all long date formats for the locale.</summary><param name="formats">The formats.</param></Document>

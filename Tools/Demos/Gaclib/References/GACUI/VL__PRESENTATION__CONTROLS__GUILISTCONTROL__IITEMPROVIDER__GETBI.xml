@@ -1,1 +1,1 @@
-<Document><summary>Get the binding value of an item.</summary><returns>The binding value of an item.</returns><param name="itemIndex">The index of the item.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemProvider::GetBindingValue@::vl::reflection::description::Value(::vl::vint)" accessor="public" category="Function" name="GetBindingValue"><summary>Get the binding value of an item.</summary><returns>The binding value of an item.</returns><param name="itemIndex">The index of the item.</param></Document>

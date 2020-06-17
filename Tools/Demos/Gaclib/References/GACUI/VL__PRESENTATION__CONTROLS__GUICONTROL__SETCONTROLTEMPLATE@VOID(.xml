@@ -1,1 +1,1 @@
-<Document><summary>Set the associated control template.</summary><param name="value">The control template.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &amp;)" accessor="public" category="Function" name="SetControlTemplate"><summary>Set the associated control template.</summary><param name="value">The control template.</param></Document>

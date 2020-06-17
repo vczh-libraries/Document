@@ -1,1 +1,1 @@
-<Document><summary>Visible event. This event will be raised when the visibility state of the control is changed.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::VisibleChanged" accessor="public" category="Variable" name="VisibleChanged"><summary>Visible event. This event will be raised when the visibility state of the control is changed.</summary></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Read a string until a line breaks is reached.</summary><returns>The string. It does not contain the line break.</returns></Document>
+<Document symbolId="vl::stream::TextReader::ReadLine@::vl::WString()" accessor="public" category="Function" name="ReadLine"><summary>Read a string until a line breaks is reached.</summary><returns>The string. It does not contain the line break.</returns></Document>

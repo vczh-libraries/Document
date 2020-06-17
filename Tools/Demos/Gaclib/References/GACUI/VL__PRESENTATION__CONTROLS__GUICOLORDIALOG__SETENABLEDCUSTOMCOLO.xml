@@ -1,1 +1,1 @@
-<Document><summary>Set if custom color panel is enabled for the dialog.</summary><param name="value">Set to true to enable the custom color panel for the dialog.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiColorDialog::SetEnabledCustomColor@void(bool)" accessor="public" category="Function" name="SetEnabledCustomColor"><summary>Set if custom color panel is enabled for the dialog.</summary><param name="value">Set to true to enable the custom color panel for the dialog.</param></Document>

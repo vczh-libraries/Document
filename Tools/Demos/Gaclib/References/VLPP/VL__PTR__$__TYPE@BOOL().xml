@@ -1,1 +1,1 @@
-<Document><summary>Test if it is a null pointer.</summary><returns>Returns true if it is not null.</returns></Document>
+<Document symbolId="vl::Ptr::$__type@bool()" accessor="public" category="Function" name="$__type"><summary>Test if it is a null pointer.</summary><returns>Returns true if it is not null.</returns></Document>

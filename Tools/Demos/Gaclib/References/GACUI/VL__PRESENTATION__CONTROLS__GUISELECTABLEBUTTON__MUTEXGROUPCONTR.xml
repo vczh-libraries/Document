@@ -1,1 +1,1 @@
-<Document><summary>A mutex group controller, usually for radio buttons.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableButton::MutexGroupController" accessor="public" category="Class" name="MutexGroupController"><summary>A mutex group controller, usually for radio buttons.</summary></Document>

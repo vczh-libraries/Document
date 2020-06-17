@@ -1,1 +1,1 @@
-<Document><summary>Set the temporary content control.</summary><param name="control">The temporary content control.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiTooltip::SetTemporaryContentControl@void(::vl::presentation::controls::GuiControl *)" accessor="public" category="Function" name="SetTemporaryContentControl"><summary>Set the temporary content control.</summary><param name="control">The temporary content control.</param></Document>

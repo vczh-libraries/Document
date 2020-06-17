@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &amp;, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)" accessor="public" category="Function" name="RegisterRendererFactory"><summary>
  Register a <symbol docId="vl::presentation::elements::IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"/> and bind it to a registered <symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/>.
  </summary><param name="elementTypeName">The element type to represent a graphics element factory.</param><param name="factory">The instance of the graphics renderer factory to register.</param><returns>Returns true if this operation succeeded.</returns></Document>

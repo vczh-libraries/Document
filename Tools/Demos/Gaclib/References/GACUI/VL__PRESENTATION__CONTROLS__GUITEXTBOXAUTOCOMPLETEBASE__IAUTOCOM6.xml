@@ -1,1 +1,1 @@
-<Document><summary>Store candidate items in the list control.</summary><param name="items">Candidate items.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IAutoCompleteControlProvider::SetSortedContent@void(::vl::collections::List&lt;::vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem&gt; const &amp;)" accessor="public" category="Function" name="SetSortedContent"><summary>Store candidate items in the list control.</summary><param name="items">Candidate items.</param></Document>

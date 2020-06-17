@@ -1,1 +1,1 @@
-<Document><summary>Get the content of the file as text.</summary><returns>Returns false if this operation succeeded.</returns><param name="text">The content of the file.</param></Document>
+<Document symbolId="vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &amp;)" accessor="public" category="Function" name="ReadAllTextByBom"><summary>Get the content of the file as text.</summary><returns>Returns false if this operation succeeded.</returns><param name="text">The content of the file.</param></Document>

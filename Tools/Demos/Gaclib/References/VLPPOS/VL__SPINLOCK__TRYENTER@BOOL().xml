@@ -1,1 +1,1 @@
-<Document><summary>Try enter a spin lock. This function will return immediately.</summary><returns>Returns true if the current thread owned the spin lock.</returns></Document>
+<Document symbolId="vl::SpinLock::TryEnter@bool()" accessor="public" category="Function" name="TryEnter"><summary>Try enter a spin lock. This function will return immediately.</summary><returns>Returns true if the current thread owned the spin lock.</returns></Document>

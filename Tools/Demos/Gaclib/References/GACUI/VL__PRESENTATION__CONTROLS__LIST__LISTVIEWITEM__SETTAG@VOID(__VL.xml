@@ -1,1 +1,1 @@
-<Document><summary>Set the tag of this item.</summary><param name="value">The tag of this item.</param></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewItem::SetTag@void(::vl::reflection::description::Value const &amp;)" accessor="public" category="Function" name="SetTag"><summary>Set the tag of this item.</summary><param name="value">The tag of this item.</param></Document>

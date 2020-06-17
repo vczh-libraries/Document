@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &amp;)" accessor="public" category="Function" name="GetRendererFactory"><summary>
  Get the instance of a registered <symbol docId="vl::presentation::elements::IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"/> that is binded to a specified element type.
  </summary><returns>Returns the renderer factory.</returns><param name="elementTypeName">The element type to get a corresponding graphics renderer factory.</param></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Prepare a text for the clipboard.</summary><param name="value">The text.</param></Document>
+<Document symbolId="vl::presentation::INativeClipboardWriter::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Prepare a text for the clipboard.</summary><param name="value">The text.</param></Document>

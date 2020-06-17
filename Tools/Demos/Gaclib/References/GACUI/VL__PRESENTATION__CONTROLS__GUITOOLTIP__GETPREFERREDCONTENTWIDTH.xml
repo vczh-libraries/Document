@@ -1,1 +1,1 @@
-<Document><summary>Get the preferred content width.</summary><returns>The preferred content width.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiTooltip::GetPreferredContentWidth@::vl::vint()" accessor="public" category="Function" name="GetPreferredContentWidth"><summary>Get the preferred content width.</summary><returns>The preferred content width.</returns></Document>

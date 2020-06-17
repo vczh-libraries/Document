@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::GuiImageFrameElement::SetImage@void(::vl::Ptr&lt;::vl::presentation::INativeImage&gt;)" accessor="public" category="Function" name="SetImage"><summary>
  Set the containing image.
  </summary><param name="value">The new containing image.</param></Document>

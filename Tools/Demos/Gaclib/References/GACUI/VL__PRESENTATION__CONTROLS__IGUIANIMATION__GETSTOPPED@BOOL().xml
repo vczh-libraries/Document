@@ -1,1 +1,1 @@
-<Document><summary>Test if the animation has ended.</summary><returns>Returns true if the animation has ended.</returns></Document>
+<Document symbolId="vl::presentation::controls::IGuiAnimation::GetStopped@bool()" accessor="public" category="Function" name="GetStopped"><summary>Test if the animation has ended.</summary><returns>Returns true if the animation has ended.</returns></Document>

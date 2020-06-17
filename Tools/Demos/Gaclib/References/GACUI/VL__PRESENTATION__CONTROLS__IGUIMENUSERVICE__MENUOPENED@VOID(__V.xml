@@ -1,1 +1,1 @@
-<Document><summary>Called when the sub menu is opened.</summary><param name="menu">The sub menu.</param></Document>
+<Document symbolId="vl::presentation::controls::IGuiMenuService::MenuOpened@void(::vl::presentation::controls::GuiMenu *)" accessor="public" category="Function" name="MenuOpened"><summary>Called when the sub menu is opened.</summary><param name="menu">The sub menu.</param></Document>

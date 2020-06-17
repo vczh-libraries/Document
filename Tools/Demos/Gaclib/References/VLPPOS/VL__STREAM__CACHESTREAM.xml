@@ -1,4 +1,4 @@
-<Document><summary>
+<Document symbolId="vl::stream::CacheStream" accessor="" category="Class" name="CacheStream"><summary>
  A cache stream. Features (readable, writable, seekable, peekable) are enabled according to the target stream.
  When you read from the cache strema, it will read a specified size of content from the target stream first and cache, reducing the numbers of operations on the target stream.
  When you write to the cache strema, it will save them to a buffer, and write to the target stream until the buffer reaches a specified size, reducing the numbers of operations on the target stream.

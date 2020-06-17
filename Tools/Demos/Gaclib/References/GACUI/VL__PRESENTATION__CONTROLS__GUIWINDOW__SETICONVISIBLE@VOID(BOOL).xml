@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::controls::GuiWindow::SetIconVisible@void(bool)" accessor="public" category="Function" name="SetIconVisible"><summary>
  Make the icon visible or invisible.
  </summary><param name="visible">True to make the icon visible.</param></Document>

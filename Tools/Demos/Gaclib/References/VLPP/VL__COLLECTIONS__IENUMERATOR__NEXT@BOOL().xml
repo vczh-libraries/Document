@@ -1,1 +1,1 @@
-<Document><summary>Step forward.</summary><returns>Returns false if the enumerator reaches the end.</returns></Document>
+<Document symbolId="vl::collections::IEnumerator::Next@bool()" accessor="public" category="Function" name="Next"><summary>Step forward.</summary><returns>Returns false if the enumerator reaches the end.</returns></Document>

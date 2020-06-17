@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::text::TextLine::AppendAndFinalize@void(::vl::presentation::elements::text::TextLine &amp;)" accessor="public" category="Function" name="AppendAndFinalize"><summary>
  Append a text line after the this text line, and finalize the input text line.
  </summary><param name="line">The text line that contains all characters and color indices to append and be finalized.</param></Document>

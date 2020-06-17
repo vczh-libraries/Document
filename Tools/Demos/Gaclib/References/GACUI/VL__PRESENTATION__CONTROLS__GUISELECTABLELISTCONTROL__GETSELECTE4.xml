@@ -1,1 +1,1 @@
-<Document><summary>Get indices of all selected items.</summary><returns>Indices of all selected items.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl::GetSelectedItems@::vl::collections::SortedList&lt;::vl::vint&gt; const &amp;()" accessor="public" category="Function" name="GetSelectedItems"><summary>Get indices of all selected items.</summary><returns>Indices of all selected items.</returns></Document>

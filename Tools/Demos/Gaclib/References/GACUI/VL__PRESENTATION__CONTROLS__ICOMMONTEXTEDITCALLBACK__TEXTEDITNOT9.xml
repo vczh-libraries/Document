@@ -1,1 +1,1 @@
-<Document><summary>The start position of the selection before replacing.</summary></Document>
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::originalStart" accessor="public" category="Variable" name="originalStart"><summary>The start position of the selection before replacing.</summary></Document>

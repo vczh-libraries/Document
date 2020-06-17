@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::elements::GuiGradientBackgroundElement::Direction" accessor="public" category="Enum" name="Direction"><summary>
  Defines a direction of the <symbol docId="vl::presentation::elements::GuiGradientBackgroundElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiGradientBackgroundElement"/>.
  </summary><enumitem name="Backslash">Back slash direction.</enumitem><enumitem name="Horizontal">Horizontal direction.</enumitem><enumitem name="Slash">Slash direction.</enumitem><enumitem name="Vertical">vertical direction.</enumitem></Document>

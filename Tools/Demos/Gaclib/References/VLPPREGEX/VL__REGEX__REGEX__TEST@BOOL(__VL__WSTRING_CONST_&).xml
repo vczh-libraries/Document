@@ -1,1 +1,1 @@
-<Document><summary>Match a fragment of the text, ignoring all capturing requirements.</summary><returns>Returns true if succeeded.</returns><param name="text">The text to match.</param></Document>
+<Document symbolId="vl::regex::Regex::Test@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="Test"><summary>Match a fragment of the text, ignoring all capturing requirements.</summary><returns>Returns true if succeeded.</returns><param name="text">The text to match.</param></Document>

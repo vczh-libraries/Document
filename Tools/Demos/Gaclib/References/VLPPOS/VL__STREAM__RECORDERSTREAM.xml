@@ -1,1 +1,1 @@
-<Document><summary>A readable stream that, read from an stream, and write everything that is read to another stream.</summary></Document>
+<Document symbolId="vl::stream::RecorderStream" accessor="" category="Class" name="RecorderStream"><summary>A readable stream that, read from an stream, and write everything that is read to another stream.</summary></Document>

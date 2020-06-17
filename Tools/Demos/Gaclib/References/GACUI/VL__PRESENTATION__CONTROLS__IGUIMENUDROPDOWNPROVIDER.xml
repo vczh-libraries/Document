@@ -1,1 +1,1 @@
-<Document><summary>IGuiMenuService is a required service to tell a ribbon group that this control has a dropdown to display.</summary></Document>
+<Document symbolId="vl::presentation::controls::IGuiMenuDropdownProvider" accessor="" category="Class" name="IGuiMenuDropdownProvider"><summary>IGuiMenuService is a required service to tell a ribbon group that this control has a dropdown to display.</summary></Document>

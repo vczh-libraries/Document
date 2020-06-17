@@ -1,1 +1,1 @@
-<Document><summary>Create a reference using a function object.</summary><typeparam name="C">Type of the function object.</typeparam><param name="function">The function object. It could be a lambda expression.</param></Document>
+<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([C] &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a reference using a function object.</summary><typeparam name="C">Type of the function object.</typeparam><param name="function">The function object. It could be a lambda expression.</param></Document>

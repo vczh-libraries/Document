@@ -1,1 +1,1 @@
-<Document><summary>Set the current auto complete controller.</summary><param name="value">The current auto complete controller.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SetAutoComplete@void(::vl::Ptr&lt;::vl::presentation::controls::GuiTextBoxAutoCompleteBase&gt;)" accessor="public" category="Function" name="SetAutoComplete"><summary>Set the current auto complete controller.</summary><param name="value">The current auto complete controller.</param></Document>

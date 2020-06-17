@@ -1,1 +1,1 @@
-<Document><summary>The position of the input string.</summary><returns>The position.</returns></Document>
+<Document symbolId="vl::regex::RegexString::Start@::vl::vint()" accessor="public" category="Function" name="Start"><summary>The position of the input string.</summary><returns>The position.</returns></Document>

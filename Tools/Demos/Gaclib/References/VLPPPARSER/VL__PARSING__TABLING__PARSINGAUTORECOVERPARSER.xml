@@ -1,1 +1,1 @@
-<Document><summary>A strict parse. It doesn&apos;t allow ambiguity but allows error recovery.</summary></Document>
+<Document symbolId="vl::parsing::tabling::ParsingAutoRecoverParser" accessor="" category="Class" name="ParsingAutoRecoverParser"><summary>A strict parse. It doesn&apos;t allow ambiguity but allows error recovery.</summary></Document>

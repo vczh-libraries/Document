@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::controls::GuiWindow::GetSizeBox@bool()" accessor="public" category="Function" name="GetSizeBox"><summary>
  Test is the size box visible.
  </summary><returns>Returns true if the size box is visible.</returns></Document>

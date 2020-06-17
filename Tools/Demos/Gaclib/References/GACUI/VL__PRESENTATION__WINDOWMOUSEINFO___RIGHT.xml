@@ -1,1 +1,1 @@
-<Document><summary>True if the right mouse button is pressed.</summary></Document>
+<Document symbolId="vl::presentation::WindowMouseInfo_::right" accessor="public" category="Variable" name="right"><summary>True if the right mouse button is pressed.</summary></Document>

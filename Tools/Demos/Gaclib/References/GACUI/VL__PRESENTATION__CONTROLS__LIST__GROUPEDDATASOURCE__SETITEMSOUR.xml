@@ -1,1 +1,1 @@
-<Document><summary>Set the item source.</summary><param name="value">The item source. Null is acceptable if you want to clear all data.</param></Document>
+<Document symbolId="vl::presentation::controls::list::GroupedDataSource::SetItemSource@void(::vl::Ptr&lt;::vl::presentation::controls::list::GroupedDataSource::IValueEnumerable&gt;)" accessor="public" category="Function" name="SetItemSource"><summary>Set the item source.</summary><param name="value">The item source. Null is acceptable if you want to clear all data.</param></Document>

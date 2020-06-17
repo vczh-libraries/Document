@@ -1,1 +1,1 @@
-<Document><summary>Get the current displaying view.</summary><returns>The current displaying view.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiResponsiveViewComposition::GetCurrentView@::vl::presentation::compositions::GuiResponsiveCompositionBase *()" accessor="public" category="Function" name="GetCurrentView"><summary>Get the current displaying view.</summary><returns>The current displaying view.</returns></Document>

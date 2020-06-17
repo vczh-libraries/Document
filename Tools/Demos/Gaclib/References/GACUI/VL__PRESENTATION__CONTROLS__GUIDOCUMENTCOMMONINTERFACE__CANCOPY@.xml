@@ -1,1 +1,1 @@
-<Document><summary>Test can the selection be copied.</summary><returns>Returns true if the selection can be cut.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::CanCopy@bool()" accessor="public" category="Function" name="CanCopy"><summary>Test can the selection be copied.</summary><returns>Returns true if the selection can be cut.</returns></Document>

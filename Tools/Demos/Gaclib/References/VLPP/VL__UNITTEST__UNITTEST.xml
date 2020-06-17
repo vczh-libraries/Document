@@ -1,4 +1,4 @@
-<Document><summary><![CDATA[
+<Document symbolId="vl::unittest::UnitTest" accessor="" category="Class" name="UnitTest"><summary><![CDATA[
  A static class containing all unit test operations.
  1) Writing test cases:
    TEST_FILE

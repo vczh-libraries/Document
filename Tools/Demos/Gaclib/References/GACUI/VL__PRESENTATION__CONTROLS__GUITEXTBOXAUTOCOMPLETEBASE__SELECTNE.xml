@@ -1,1 +1,1 @@
-<Document><summary>Select the next item.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::SelectNextListItem@bool()" accessor="public" category="Function" name="SelectNextListItem"><summary>Select the next item.</summary><returns>Returns true if this operation succeeded.</returns></Document>

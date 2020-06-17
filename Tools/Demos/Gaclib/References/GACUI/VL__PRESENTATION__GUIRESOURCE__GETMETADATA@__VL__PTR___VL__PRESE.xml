@@ -1,1 +1,1 @@
-<Document><summary>Get the metadata of the resource.</summary><returns>The metadata.</returns></Document>
+<Document symbolId="vl::presentation::GuiResource::GetMetadata@::vl::Ptr&lt;::vl::presentation::GuiResourceMetadata&gt;()" accessor="public" category="Function" name="GetMetadata"><summary>Get the metadata of the resource.</summary><returns>The metadata.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Set the total size.</summary><param name="value">The total size.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::SetTotalSize@void(::vl::vint)" accessor="public" category="Function" name="SetTotalSize"><summary>Set the total size.</summary><param name="value">The total size.</param></Document>

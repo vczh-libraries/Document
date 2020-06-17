@@ -1,1 +1,1 @@
-<Document><summary>Set the minimum number of items should be displayed.</summary><param name="value">The minimum number of items should be displayed.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::SetMinCount@void(::vl::vint)" accessor="public" category="Function" name="SetMinCount"><summary>Set the minimum number of items should be displayed.</summary><param name="value">The minimum number of items should be displayed.</param></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Range where the error happens.</summary></Document>
+<Document symbolId="vl::parsing::ParsingError::codeRange" accessor="public" category="Variable" name="codeRange"><summary>Range where the error happens.</summary></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Get the real type of the stored object.</summary><returns>The real type. Returns null if the value is null.</returns></Document>
+<Document symbolId="vl::reflection::description::Value::IsNull@bool()" accessor="public" category="Function" name="IsNull"><summary>Get the real type of the stored object.</summary><returns>The real type. Returns null if the value is null.</returns></Document>

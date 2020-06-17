@@ -1,1 +1,1 @@
-<Document><summary>Increase the editing counter indicating that an <symbol declFile="GuiControlTemplates.h" declId="NI$vl::presentation::templates::GuiListItemTemplate"/> is editing an item.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemProvider::PushEditing@void()" accessor="public" category="Function" name="PushEditing"><summary>Increase the editing counter indicating that an <symbol declFile="GuiControlTemplates.h" declId="NI$vl::presentation::templates::GuiListItemTemplate"/> is editing an item.</summary></Document>

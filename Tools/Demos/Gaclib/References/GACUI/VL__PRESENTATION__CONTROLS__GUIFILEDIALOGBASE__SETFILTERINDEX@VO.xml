@@ -1,1 +1,1 @@
-<Document><summary>Set the filter index.</summary><param name="value">The filter index.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetFilterIndex@void(::vl::vint)" accessor="public" category="Function" name="SetFilterIndex"><summary>Set the filter index.</summary><param name="value">The filter index.</param></Document>

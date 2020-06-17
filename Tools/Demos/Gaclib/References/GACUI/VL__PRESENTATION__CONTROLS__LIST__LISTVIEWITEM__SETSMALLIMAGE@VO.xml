@@ -1,1 +1,1 @@
-<Document><summary>Set the small image of this item.</summary><param name="value">The small image of this item.</param></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewItem::SetSmallImage@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetSmallImage"><summary>Set the small image of this item.</summary><param name="value">The small image of this item.</param></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Get how the value is stored.</summary><returns>How the value is stored.</returns></Document>
+<Document symbolId="vl::reflection::description::Value::GetValueType@::vl::reflection::description::Value::ValueType()" accessor="public" category="Function" name="GetValueType"><summary>Get how the value is stored.</summary><returns>How the value is stored.</returns></Document>

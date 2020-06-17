@@ -1,1 +1,1 @@
-<Document><summary>Test if the stream is peekable.</summary><returns>Returns true if the stream is peekable.</returns></Document>
+<Document symbolId="vl::stream::IStream::CanPeek@bool()" accessor="public" category="Function" name="CanPeek"><summary>Test if the stream is peekable.</summary><returns>Returns true if the stream is peekable.</returns></Document>

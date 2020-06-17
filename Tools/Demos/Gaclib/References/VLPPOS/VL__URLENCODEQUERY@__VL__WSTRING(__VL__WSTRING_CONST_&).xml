@@ -1,1 +1,1 @@
-<Document><summary>Encode a text as part of the url. This function can be used to create arguments in an URL.</summary><returns>The encoded text.</returns><param name="query">The text to encode.</param></Document>
+<Document symbolId="vl::UrlEncodeQuery@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="UrlEncodeQuery"><summary>Encode a text as part of the url. This function can be used to create arguments in an URL.</summary><returns>The encoded text.</returns><param name="query">The text to encode.</param></Document>

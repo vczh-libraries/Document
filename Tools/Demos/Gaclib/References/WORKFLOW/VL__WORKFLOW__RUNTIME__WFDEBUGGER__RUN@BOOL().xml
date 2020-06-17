@@ -1,1 +1,1 @@
-<Document><summary>Continue to run the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger::Run@bool()" accessor="public" category="Function" name="Run"><summary>Continue to run the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns></Document>

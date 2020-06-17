@@ -1,1 +1,1 @@
-<Document><summary>List.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam></Document>
+<Document symbolId="vl::collections::List" accessor="" category="Class" name="List"><summary>List.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam></Document>

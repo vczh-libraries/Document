@@ -1,1 +1,1 @@
-<Document><summary>Callback data for text caret changing.</summary></Document>
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct" accessor="public" category="Struct" name="TextCaretChangedStruct"><summary>Callback data for text caret changing.</summary></Document>

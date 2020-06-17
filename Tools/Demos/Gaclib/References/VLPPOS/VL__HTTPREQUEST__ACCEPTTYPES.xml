@@ -1,1 +1,1 @@
-<Document><summary>Accept type list, elements of it like &quot;text/xml&quot;.</summary></Document>
+<Document symbolId="vl::HttpRequest::acceptTypes" accessor="public" category="Variable" name="acceptTypes"><summary>Accept type list, elements of it like &quot;text/xml&quot;.</summary></Document>

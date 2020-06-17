@@ -1,1 +1,1 @@
-<Document><summary>Get all short time formats for the locale.</summary><param name="formats">The formats.</param></Document>
+<Document symbolId="vl::Locale::GetShortTimeFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetShortTimeFormats"><summary>Get all short time formats for the locale.</summary><param name="formats">The formats.</param></Document>

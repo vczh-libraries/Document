@@ -1,1 +1,1 @@
-<Document><summary>Copy the selection text.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::Copy@bool()" accessor="public" category="Function" name="Copy"><summary>Copy the selection text.</summary><returns>Returns true if this operation succeeded.</returns></Document>

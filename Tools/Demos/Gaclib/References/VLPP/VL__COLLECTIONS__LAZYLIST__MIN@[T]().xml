@@ -1,1 +1,1 @@
-<Document><summary>Get the minimum value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The minimum value.</returns></Document>
+<Document symbolId="vl::collections::LazyList::Min@[T]()" accessor="public" category="Function" name="Min"><summary>Get the minimum value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The minimum value.</returns></Document>

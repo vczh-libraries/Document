@@ -1,1 +1,1 @@
-<Document><summary>The end position of the selection before caret changing.</summary></Document>
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct::oldEnd" accessor="public" category="Variable" name="oldEnd"><summary>The end position of the selection before caret changing.</summary></Document>

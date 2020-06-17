@@ -1,1 +1,1 @@
-<Document><summary>Try acquire a writer lock. This function will return immediately.</summary><returns>Returns true if the current thread acquired the writer lock.</returns></Document>
+<Document symbolId="vl::ReaderWriterLock::TryEnterWriter@bool()" accessor="public" category="Function" name="TryEnterWriter"><summary>Try acquire a writer lock. This function will return immediately.</summary><returns>Returns true if the current thread acquired the writer lock.</returns></Document>

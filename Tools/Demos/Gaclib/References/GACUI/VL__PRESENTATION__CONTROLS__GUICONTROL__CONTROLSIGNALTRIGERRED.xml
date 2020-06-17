@@ -1,1 +1,1 @@
-<Document><summary>Control signal trigerred. This event will be raised because of multiple reason specified in the argument.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::ControlSignalTrigerred" accessor="public" category="Variable" name="ControlSignalTrigerred"><summary>Control signal trigerred. This event will be raised because of multiple reason specified in the argument.</summary></Document>

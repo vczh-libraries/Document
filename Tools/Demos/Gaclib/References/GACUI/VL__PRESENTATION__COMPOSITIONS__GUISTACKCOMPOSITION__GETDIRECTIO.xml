@@ -1,1 +1,1 @@
-<Document><summary>Get the stack item layout direction.</summary><returns>The stack item layout direction.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiStackComposition::GetDirection@::vl::presentation::compositions::GuiStackComposition::Direction()" accessor="public" category="Function" name="GetDirection"><summary>Get the stack item layout direction.</summary><returns>The stack item layout direction.</returns></Document>

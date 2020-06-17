@@ -1,1 +1,1 @@
-<Document><summary>Test if the scroll gets focus when it is clicked.</summary><returns>Returns true if the scroll gets focus when it is clicked</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::GetAutoFocus@bool()" accessor="public" category="Function" name="GetAutoFocus"><summary>Test if the scroll gets focus when it is clicked.</summary><returns>Returns true if the scroll gets focus when it is clicked</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Default implementation for <symbol docId="vl::presentation::compositions::IGuiAltActionHost" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltActionHost"/></summary></Document>
+<Document symbolId="vl::presentation::compositions::GuiAltActionHostBase" accessor="" category="Class" name="GuiAltActionHostBase"><summary>Default implementation for <symbol docId="vl::presentation::compositions::IGuiAltActionHost" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltActionHost"/></summary></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Create a new lazy list with all elements in this lazy list. If some elements appear several times, only one will be kept.</summary><returns>The created lazy list.</returns></Document>
+<Document symbolId="vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()" accessor="public" category="Function" name="Distinct"><summary>Create a new lazy list with all elements in this lazy list. If some elements appear several times, only one will be kept.</summary><returns>The created lazy list.</returns></Document>

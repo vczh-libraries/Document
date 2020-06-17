@@ -1,1 +1,1 @@
-<Document><summary>Get the all items of this group, could be null.</summary><returns>All items of this group.</returns></Document>
+<Document symbolId="vl::presentation::controls::list::GalleryGroup::GetItemValues@::vl::Ptr&lt;::vl::presentation::controls::list::GalleryGroup::IValueList&gt;()" accessor="public" category="Function" name="GetItemValues"><summary>Get the all items of this group, could be null.</summary><returns>All items of this group.</returns></Document>

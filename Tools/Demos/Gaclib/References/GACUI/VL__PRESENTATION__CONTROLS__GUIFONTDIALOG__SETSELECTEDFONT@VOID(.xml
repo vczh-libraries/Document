@@ -1,1 +1,1 @@
-<Document><summary>Set the selected font.</summary><param name="value">The selected font.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiFontDialog::SetSelectedFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetSelectedFont"><summary>Set the selected font.</summary><param name="value">The selected font.</param></Document>

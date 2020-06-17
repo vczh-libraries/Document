@@ -1,1 +1,1 @@
-<Document><summary>Switch to a larger view.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::presentation::compositions::GuiResponsiveCompositionBase::LevelUp@bool()" accessor="public" category="Function" name="LevelUp"><summary>Switch to a larger view.</summary><returns>Returns true if this operation succeeded.</returns></Document>

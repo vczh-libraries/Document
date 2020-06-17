@@ -1,1 +1,1 @@
-<Document><summary>Row number of the last character, begins at 0.</summary></Document>
+<Document symbolId="vl::regex::RegexToken::rowEnd" accessor="public" category="Variable" name="rowEnd"><summary>Row number of the last character, begins at 0.</summary></Document>

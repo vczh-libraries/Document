@@ -676,26 +676,28 @@ void ValidateAndFixDocumentRecord(
 					for (vint i = 0; i < classDecl->decls.Count(); i++)
 					{
 						auto child = classDecl->decls[i];
-						auto childSymbol = child.f1->symbol;
-						if (childSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
+						if (auto childSymbol = child.f1->symbol)
 						{
-							childSymbol = childSymbol->GetFunctionSymbol_Fb();
-						}
-						if (symbol == childSymbol)
-						{
-							switch (child.f0)
+							if (childSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
 							{
-							case CppClassAccessor::Public:
-								att->value.value = L"public";
-								break;
-							case CppClassAccessor::Protected:
-								att->value.value = L"protected";
-								break;
-							case CppClassAccessor::Private:
-								att->value.value = L"private";
-								break;
+								childSymbol = childSymbol->GetFunctionSymbol_Fb();
 							}
-							goto FOUND_ACCESSOR;
+							if (symbol == childSymbol)
+							{
+								switch (child.f0)
+								{
+								case CppClassAccessor::Public:
+									att->value.value = L"public";
+									break;
+								case CppClassAccessor::Protected:
+									att->value.value = L"protected";
+									break;
+								case CppClassAccessor::Private:
+									att->value.value = L"private";
+									break;
+								}
+								goto FOUND_ACCESSOR;
+							}
 						}
 					}
 					throw L"Failed to find the accessor for this member.";

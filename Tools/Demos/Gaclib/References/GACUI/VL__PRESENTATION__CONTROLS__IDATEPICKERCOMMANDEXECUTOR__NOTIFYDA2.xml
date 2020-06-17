@@ -1,1 +1,1 @@
-<Document><summary>Called when navigated to a date.</summary></Document>
+<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateNavigated@void()" accessor="public" category="Function" name="NotifyDateNavigated"><summary>Called when navigated to a date.</summary></Document>

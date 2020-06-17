@@ -1,1 +1,1 @@
-<Document><summary>Name of the server, like &quot;gaclib.net&quot;.</summary></Document>
+<Document symbolId="vl::HttpRequest::server" accessor="public" category="Variable" name="server"><summary>Name of the server, like &quot;gaclib.net&quot;.</summary></Document>

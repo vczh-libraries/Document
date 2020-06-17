@@ -1,1 +1,1 @@
-<Document><summary>Get the sorted columm. If no column is under a sorted state, it returns -1.</summary><returns>The column number.</returns></Document>
+<Document symbolId="vl::presentation::controls::list::IDataGridView::GetSortedColumn@::vl::vint()" accessor="public" category="Function" name="GetSortedColumn"><summary>Get the sorted columm. If no column is under a sorted state, it returns -1.</summary><returns>The column number.</returns></Document>

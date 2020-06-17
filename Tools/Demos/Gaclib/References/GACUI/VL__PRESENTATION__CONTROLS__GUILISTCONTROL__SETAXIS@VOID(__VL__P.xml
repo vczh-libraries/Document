@@ -1,1 +1,1 @@
-<Document><summary>Set the item coordinate transformer</summary><param name="value">The new item coordinate transformer</param></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::SetAxis@void(::vl::Ptr&lt;::vl::presentation::compositions::IGuiAxis&gt;)" accessor="public" category="Function" name="SetAxis"><summary>Set the item coordinate transformer</summary><param name="value">The new item coordinate transformer</param></Document>

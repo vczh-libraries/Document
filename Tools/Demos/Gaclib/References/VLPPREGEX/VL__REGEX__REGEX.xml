@@ -1,4 +1,4 @@
-<Document><summary><![CDATA[
+<Document symbolId="vl::regex::Regex" accessor="" category="Class" name="Regex"><summary><![CDATA[
  Regular Expression. Here is a brief description of the regular expression grammar:
 	1) Charset:
 		a, [a-z], [^a-z]

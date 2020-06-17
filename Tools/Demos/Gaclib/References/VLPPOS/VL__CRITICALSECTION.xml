@@ -1,4 +1,4 @@
-<Document><summary><![CDATA[
+<Document symbolId="vl::CriticalSection" accessor="" category="Class" name="CriticalSection"><summary><![CDATA[
  Critical section. It is similar to mutex, but in Windows, enter a owned critical section will not cause dead lock.
  The macro "CS_LOCK" is encouraged to use instead of calling ]]><symbol docId="vl::CriticalSection::Enter@void()" declFile="Threading.h" declId="FB$vl::CriticalSection::Enter@void()[decl0]"/><![CDATA[ and ]]><symbol docId="vl::CriticalSection::Leave@void()" declFile="Threading.h" declId="FB$vl::CriticalSection::Leave@void()[decl0]"/><![CDATA[ like this:
  CS_LOCK(yourCriticalSection)

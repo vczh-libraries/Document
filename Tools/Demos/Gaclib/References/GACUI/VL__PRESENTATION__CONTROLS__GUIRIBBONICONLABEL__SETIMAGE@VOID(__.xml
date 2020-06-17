@@ -1,1 +1,1 @@
-<Document><summary>Set the image for the menu button.</summary><param name="value">The image for the menu button.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiRibbonIconLabel::SetImage@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetImage"><summary>Set the image for the menu button.</summary><param name="value">The image for the menu button.</param></Document>

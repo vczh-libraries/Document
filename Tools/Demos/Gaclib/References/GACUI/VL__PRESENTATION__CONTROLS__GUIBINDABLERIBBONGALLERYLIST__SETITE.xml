@@ -1,1 +1,1 @@
-<Document><summary>Set the item style provider</summary><param name="value">The new item style provider</param></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::SetItemTemplate@void(::vl::presentation::controls::GuiBindableRibbonGalleryList::ItemStyleProperty)" accessor="public" category="Function" name="SetItemTemplate"><summary>Set the item style provider</summary><param name="value">The new item style provider</param></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Set the maximum number of items should be displayed.</summary><param name="value">The maximum number of items should be displayed.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::SetMaxCount@void(::vl::vint)" accessor="public" category="Function" name="SetMaxCount"><summary>Set the maximum number of items should be displayed.</summary><param name="value">The maximum number of items should be displayed.</param></Document>

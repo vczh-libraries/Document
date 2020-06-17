@@ -1,1 +1,1 @@
-<Document><summary>Store a shared pointer.</summary><returns>The boxed value.</returns><param name="value">The shared pointer to store.</param></Document>
+<Document symbolId="vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;)" accessor="public" category="Function" name="From"><summary>Store a shared pointer.</summary><returns>The boxed value.</returns><param name="value">The shared pointer to store.</param></Document>

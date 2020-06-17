@@ -1,1 +1,1 @@
-<Document><summary>Set the large image for this command.</summary><param name="value">The large image for this command.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetLargeImage@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetLargeImage"><summary>Set the large image for this command.</summary><param name="value">The large image for this command.</param></Document>

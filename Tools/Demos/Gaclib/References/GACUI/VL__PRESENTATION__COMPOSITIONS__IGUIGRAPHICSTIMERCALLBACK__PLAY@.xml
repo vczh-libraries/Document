@@ -1,1 +1,1 @@
-<Document><summary>Called periodically.</summary><returns>Returns false to indicate that this callback need to be removed.</returns></Document>
+<Document symbolId="vl::presentation::compositions::IGuiGraphicsTimerCallback::Play@bool()" accessor="public" category="Function" name="Play"><summary>Called periodically.</summary><returns>Returns false to indicate that this callback need to be removed.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Get the position of the current element in the enumerator.</summary><returns>The position of the current element.</returns></Document>
+<Document symbolId="vl::collections::IEnumerator::Index@::vl::vint()" accessor="public" category="Function" name="Index"><summary>Get the position of the current element in the enumerator.</summary><returns>The position of the current element.</returns></Document>

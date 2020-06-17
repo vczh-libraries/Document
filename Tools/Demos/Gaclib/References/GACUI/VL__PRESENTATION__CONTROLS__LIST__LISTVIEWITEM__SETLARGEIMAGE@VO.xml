@@ -1,1 +1,1 @@
-<Document><summary>Set the large image of this item.</summary><param name="value">The large image of this item.</param></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewItem::SetLargeImage@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetLargeImage"><summary>Set the large image of this item.</summary><param name="value">The large image of this item.</param></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Test does the folder exist or not.</summary><returns>Returns true if the folder exists.</returns></Document>
+<Document symbolId="vl::filesystem::Folder::Exists@bool()" accessor="public" category="Function" name="Exists"><summary>Test does the folder exist or not.</summary><returns>Returns true if the folder exists.</returns></Document>

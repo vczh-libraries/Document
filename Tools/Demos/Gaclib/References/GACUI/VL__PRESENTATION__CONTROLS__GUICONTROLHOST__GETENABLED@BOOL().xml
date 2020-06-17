@@ -1,1 +1,1 @@
-<Document><summary>Test is the window enabled.</summary><returns>Returns true if the window is enabled.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::GetEnabled@bool()" accessor="public" category="Function" name="GetEnabled"><summary>Test is the window enabled.</summary><returns>Returns true if the window is enabled.</returns></Document>

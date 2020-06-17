@@ -1,3 +1,3 @@
-<Document><summary>
+<Document symbolId="vl::presentation::WindowMouseInfo_" accessor="" category="Struct" name="WindowMouseInfo_"><summary>
  Mouse message information.
  </summary><typeparam name="T">Type of the coordinate.</typeparam></Document>

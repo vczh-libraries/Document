@@ -1,1 +1,1 @@
-<Document><summary>Create an item provider using a node root provider.</summary><param name="_root">The node root provider.</param></Document>
+<Document symbolId="vl::presentation::controls::tree::NodeItemProvider::$__ctor@(::vl::Ptr&lt;::vl::presentation::controls::tree::INodeRootProvider&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create an item provider using a node root provider.</summary><param name="_root">The node root provider.</param></Document>

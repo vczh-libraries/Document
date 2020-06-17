@@ -1,1 +1,1 @@
-<Document><summary>Get the row number (starts at 0) of the source code of the executing module.</summary><returns>The row number.</returns></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetRowBeforeCodegen@::vl::vint()" accessor="public" category="Function" name="GetRowBeforeCodegen"><summary>Get the row number (starts at 0) of the source code of the executing module.</summary><returns>The row number.</returns></Document>

@@ -1,1 +1,1 @@
-<Document><summary>Set the callback.</summary><param name="value">The callback.</param></Document>
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::SetCallback@void(::vl::presentation::elements::GuiDocumentElement::ICallback *)" accessor="public" category="Function" name="SetCallback"><summary>Set the callback.</summary><param name="value">The callback.</param></Document>

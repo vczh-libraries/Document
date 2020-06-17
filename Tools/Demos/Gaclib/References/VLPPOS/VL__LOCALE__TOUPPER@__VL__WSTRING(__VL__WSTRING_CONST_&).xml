@@ -1,1 +1,1 @@
-<Document><summary>Convert characters to the upper case using the file system rule.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param></Document>
+<Document symbolId="vl::Locale::ToUpper@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToUpper"><summary>Convert characters to the upper case using the file system rule.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param></Document>
