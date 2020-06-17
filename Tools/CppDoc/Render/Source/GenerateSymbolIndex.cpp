@@ -220,6 +220,7 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(
 
 	auto symbolGroup = MakePtr<SymbolGroup>();
 	symbolGroup->symbol = context;
+	
 	if (generateChildSymbols && context->kind != symbol_component::SymbolKind::Root)
 	{
 		symbolGroup->braces = true;

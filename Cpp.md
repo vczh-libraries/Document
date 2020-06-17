@@ -31,10 +31,8 @@
     - [ ] automatically generate document pages for namespaces.
     - [ ] automatically hardcode document page path for root and category pages
   - [ ] tree nodes only record id and file paths to reference fragment XML files.
-  - [ ] tree nodes are grouped by `public/protected/private` for classes.
   - [ ] URL will be `/references/ID.html`.
 - [ ] Insert metadata to document comment.
-  - [ ] `<Document symbolId="SYMBOL-ID" displayText="DISPLAY-TEXT">` (display text is used in tree view).
   - [ ] `<seealsos>`.
     - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
     - [ ] for classes, all documented direct/indirect base types and members are inserted to see also.
@@ -45,6 +43,7 @@
       - [ ] `static`, `const`, `volatile`, `&`, `&&` must exist in signature.
     - [ ] **value alias**, **variable**, **type alias**: type is included.
   - [ ] `<basetypes>`: inheritance tree, generic types are written as `NAME<...>`.
+  - [ ] Document article XML and document before/after generated XML to `WebsiteSource` project.
 - [ ] Update `WebsiteSource` to view references.
   - [ ] document the format of before/after processed XML comment.
   - [ ] must interpret: `<summary>`, `<typeparam>`, `<param>`, `<enumitem>`, `<returns>`, `<remarks>`, `<seealsos>`, `<signature>`, `<basetypes>`.

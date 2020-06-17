@@ -242,12 +242,12 @@ enum class SymbolGroupKind
 
 struct SymbolGroup
 {
-	SymbolGroupKind					kind = SymbolGroupKind::Symbol;
-	WString							uniqueId;
-	WString							name;
-	Symbol*							symbol = nullptr;
-	bool							braces = false;
-	List<Ptr<SymbolGroup>>			children;
+	SymbolGroupKind					kind = SymbolGroupKind::Symbol;		// category of this symbol
+	WString							uniqueId;							// unique id for file name generation
+	WString							name;								// for SymbolGroupKind::Group/Text/SymbolAndText
+	Symbol*							symbol = nullptr;					// for SymbolGroupKind::Symbol/SymbolAndText
+	bool							braces = false;						// switch of generate braces in SymbolIndex.html
+	List<Ptr<SymbolGroup>>			children;							// child symbols
 };
 
 // {PathPrefix, Label}

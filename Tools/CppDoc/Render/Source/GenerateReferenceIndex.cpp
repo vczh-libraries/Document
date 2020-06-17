@@ -632,11 +632,13 @@ void ValidateAndFixDocumentRecord(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
 	Ptr<ParsingTable> parsingTable,
-	Symbol* symbol,
+	Ptr<SymbolGroup> symbolGroup,
 	Ptr<DocumentRecord> documentRecord,
 	StreamWriter& writer
 )
 {
+	auto symbol = symbolGroup->symbol;
+
 	auto xmlText = GenerateToStream([&](StreamWriter& xmlWriter)
 	{
 		xmlWriter.WriteLine(L"<Document>");
@@ -654,6 +656,89 @@ void ValidateAndFixDocumentRecord(
 
 		CheckDocumentRecordSubItem(symbol, documentRecord->decl, xmlDocument, xmlText);
 		ProcessDocumentRecordHyperLinks(global, result, symbol, documentRecord->decl, xmlDocument, xmlText);
+
+		{
+			auto att = MakePtr<XmlAttribute>();
+			att->name.value = L"symbolId";
+			att->value.value = symbol->uniqueId;
+			xmlDocument->rootElement->attributes.Add(att);
+		}
+		{
+			auto att = MakePtr<XmlAttribute>();
+			att->name.value = L"accessor";
+			xmlDocument->rootElement->attributes.Add(att);
+
+			switch (symbol->GetParentScope()->kind)
+			{
+			case CLASS_SYMBOL_KIND:
+				{
+					auto classDecl = symbol->GetParentScope()->GetImplDecl_NFb<ClassDeclaration>();
+					for (vint i = 0; i < classDecl->decls.Count(); i++)
+					{
+						auto child = classDecl->decls[i];
+						auto childSymbol = child.f1->symbol;
+						if (childSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
+						{
+							childSymbol = childSymbol->GetFunctionSymbol_Fb();
+						}
+						if (symbol == childSymbol)
+						{
+							switch (child.f0)
+							{
+							case CppClassAccessor::Public:
+								att->value.value = L"public";
+								break;
+							case CppClassAccessor::Protected:
+								att->value.value = L"protected";
+								break;
+							case CppClassAccessor::Private:
+								att->value.value = L"private";
+								break;
+							}
+							goto FOUND_ACCESSOR;
+						}
+					}
+					throw L"Failed to find the accessor for this member.";
+				}
+			FOUND_ACCESSOR:
+				break;
+			}
+		}
+		{
+			auto att = MakePtr<XmlAttribute>();
+			att->name.value = L"category";
+			xmlDocument->rootElement->attributes.Add(att);
+
+			switch (symbol->kind)
+			{
+#define WRITE_CATEGORY(CATEGORY)										\
+		case symbol_component::SymbolKind::CATEGORY:					\
+			att->value.value = L#CATEGORY;								\
+			break														\
+
+				WRITE_CATEGORY(Enum);
+				WRITE_CATEGORY(Class);
+				WRITE_CATEGORY(Struct);
+				WRITE_CATEGORY(Union);
+				WRITE_CATEGORY(TypeAlias);
+				WRITE_CATEGORY(Variable);
+				WRITE_CATEGORY(ValueAlias);
+				WRITE_CATEGORY(Namespace);
+#undef WRITE_CATEGORY
+
+			case symbol_component::SymbolKind::FunctionSymbol:
+				att->value.value = L"Function";
+				break;
+			default:
+				throw L"Unexpected symbol kind.";
+			}
+		}
+		{
+			auto att = MakePtr<XmlAttribute>();
+			att->name.value = L"name";
+			att->value.value = symbol->name;
+			xmlDocument->rootElement->attributes.Add(att);
+		}
 
 		XmlPrint(xmlDocument, writer);
 	}
@@ -689,7 +774,7 @@ void RenderDocumentRecord(
 			Utf8Encoder encoder;
 			EncoderStream encoderStream(fileStream, encoder);
 			StreamWriter referenceWriter(encoderStream);
-			ValidateAndFixDocumentRecord(global, result, parsingTable, symbolGroup->symbol, global->declComments.Values()[index], referenceWriter);
+			ValidateAndFixDocumentRecord(global, result, parsingTable, symbolGroup, global->declComments.Values()[index], referenceWriter);
 		}
 	}
 
