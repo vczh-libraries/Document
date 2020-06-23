@@ -1,6 +1,9 @@
 #include "Render.h"
 #include <Symbol_TemplateSpec.h>
 
+WString AppendFunctionParametersInHtml(FunctionType* funcType);
+WString AppendGenericArgumentsInHtml(VariadicList<GenericArgument>& arguments);
+
 /***********************************************************************
 GetTypeDisplayNameInHtml
 ***********************************************************************/
@@ -68,7 +71,7 @@ public:
 
 		if (self->expr)
 		{
-			result += L"[<span class=\"cpp_keyword\">(expr)</span>]";
+			result += L"[<span class=\"cpp_keyword\">expr</span>]";
 		}
 		else
 		{
@@ -80,8 +83,8 @@ public:
 
 	void Visit(DecorateType* self)override
 	{
-		if (self->isVolatile) result = L"<span class=\"cpp_keyword\"> volatile</span>" + result;
-		if (self->isConst) result = L"<span class=\"cpp_keyword\"> const</span>" + result;
+		if (self->isVolatile) result = L" <span class=\"cpp_keyword\">volatile</span>" + result;
+		if (self->isConst) result = L" <span class=\"cpp_keyword\">const</span>" + result;
 		self->type->Accept(this);
 	}
 
@@ -114,6 +117,11 @@ public:
 			result += GetTypeDisplayNameInHtml(self->decoratorReturnType);
 		}
 
+		if (self->qualifierConst)		result += L" <span class=\"cpp_keyword\">const</span>";
+		if (self->qualifierVolatile)	result += L" <span class=\"cpp_keyword\">volatile</span>";
+		if (self->qualifierLRef)		result += L" &";
+		if (self->qualifierRRef)		result += L" &&";
+
 		self->returnType->Accept(this);
 	}
 
@@ -129,11 +137,11 @@ public:
 	{
 		if (self->expr)
 		{
-			result = L"<span class=\"cpp_keyword\">decltype</span>(...)" + result;
+			result = L"<span class=\"cpp_keyword\">decltype(expr)</span>" + result;
 		}
 		else
 		{
-			result = L"<span class=\"cpp_keyword\">decltype</span>(<span class=\"cpp_keyword\">auto</span>)" + result;
+			result = L"<span class=\"cpp_keyword\">decltype(auto)</span>" + result;
 		}
 	}
 
@@ -170,7 +178,7 @@ public:
 
 	void Visit(GenericType* self)override
 	{
-		result = GetTypeDisplayNameInHtml(self->type, false) + AppendGenericArguments(self->arguments) + result;
+		result = GetTypeDisplayNameInHtml(self->type, false) + AppendGenericArgumentsInHtml(self->arguments) + result;
 	}
 };
 
@@ -211,10 +219,10 @@ WString AppendFunctionParametersInHtml(FunctionType* funcType)
 }
 
 /***********************************************************************
-AppendTemplateArguments
+AppendTemplateArgumentsInHtml
 ***********************************************************************/
 
-WString AppendTemplateArguments(List<TemplateSpec::Argument>& arguments)
+WString AppendTemplateArgumentsInHtml(List<TemplateSpec::Argument>& arguments)
 {
 	WString result = HtmlTextSingleLineToString(L"<");
 	for (vint i = 0; i < arguments.Count(); i++)
@@ -223,7 +231,7 @@ WString AppendTemplateArguments(List<TemplateSpec::Argument>& arguments)
 		auto argument = arguments[i];
 		if (argument.argumentType == CppTemplateArgumentType::Value)
 		{
-			result += L"<span class=\"cpp_keyword\">(expr)</span>";
+			result += L"<span class=\"cpp_keyword\">expr</span>";
 		}
 		else
 		{
@@ -242,10 +250,10 @@ WString AppendTemplateArguments(List<TemplateSpec::Argument>& arguments)
 }
 
 /***********************************************************************
-AppendGenericArguments
+AppendGenericArgumentsInHtml
 ***********************************************************************/
 
-WString AppendGenericArguments(VariadicList<GenericArgument>& arguments)
+WString AppendGenericArgumentsInHtml(VariadicList<GenericArgument>& arguments)
 {
 	WString result = HtmlTextSingleLineToString(L"<");
 	for (vint i = 0; i < arguments.Count(); i++)
@@ -254,7 +262,7 @@ WString AppendGenericArguments(VariadicList<GenericArgument>& arguments)
 		auto argument = arguments[i];
 		if (argument.item.expr)
 		{
-			result += L"<span class=\"cpp_keyword\">(expr)</span>";
+			result += L"<span class=\"cpp_keyword\">expr</span>";
 		}
 		else
 		{
@@ -318,11 +326,11 @@ WString GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol, bool renderTypeArgume
 	{
 		if (specializationSpec)
 		{
-			result += AppendGenericArguments(specializationSpec->arguments);
+			result += AppendGenericArgumentsInHtml(specializationSpec->arguments);
 		}
 		else if (templateSpec)
 		{
-			result += AppendTemplateArguments(templateSpec->arguments);
+			result += AppendTemplateArgumentsInHtml(templateSpec->arguments);
 		}
 	}
 	return result;

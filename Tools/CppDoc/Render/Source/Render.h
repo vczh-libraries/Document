@@ -210,10 +210,12 @@ HTML Display Name
 
 extern WString										GetTypeDisplayNameInHtml(Ptr<Type> type, bool renderTypeArguments = true);
 extern WString										AppendFunctionParametersInHtml(FunctionType* funcType);
-extern WString										AppendTemplateArguments(List<TemplateSpec::Argument>& arguments);
-extern WString										AppendGenericArguments(VariadicList<GenericArgument>& arguments);
 extern WString										GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol, bool renderTypeArguments);
 extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
+
+extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type);
+extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type, const WString& signature, bool needParenthesesForFuncArray);
+extern WString										GetSymbolDisplayNameInSignature(Symbol* symbol);
 
 /***********************************************************************
 Index Collecting

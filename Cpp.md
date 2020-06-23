@@ -40,7 +40,6 @@
     - [ ] template header must be generated (include expression for default values).
     - [ ] **type**: `class/struct/union/enum` NAME, with base types
     - [ ] **function**: complete signature (include expression for default values).
-      - [ ] `static`, `const`, `volatile`, `&`, `&&` must exist in signature.
     - [ ] **value alias**, **variable**, **type alias**: type is included, `static`, `constexpr` must exist in signature.
   - [ ] `<basetypes>`: inheritance tree, generic types are written as `NAME<...>`.
   - [ ] Document article XML and document before/after generated XML to `WebsiteSource` project.
