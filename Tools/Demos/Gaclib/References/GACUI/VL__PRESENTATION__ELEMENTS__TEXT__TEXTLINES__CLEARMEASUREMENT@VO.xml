@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::ClearMeasurement@void()" accessor="public" category="Function" name="ClearMeasurement"><summary>
  Clear all cached <symbol docId="vl::presentation::elements::text::CharAtt::rightOffset" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt::rightOffset"/>.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[void();
+]]></signature></Document>

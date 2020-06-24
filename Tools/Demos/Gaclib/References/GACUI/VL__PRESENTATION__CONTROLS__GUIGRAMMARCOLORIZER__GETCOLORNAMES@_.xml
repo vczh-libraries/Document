@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::GetColorNames@::vl::collections::SortedList&lt;::vl::WString&gt; const &amp;()" accessor="public" category="Function" name="GetColorNames"><summary>Get all color names.</summary><returns>All color names.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::GetColorNames@::vl::collections::SortedList&lt;::vl::WString&gt; const &amp;()" accessor="public" category="Function" name="GetColorNames"><summary>Get all color names.</summary><returns>All color names.</returns><signature><![CDATA[collections::SortedList<WString> const &();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiColumnSplitterComposition::GetColumnsToTheLeft@::vl::vint()" accessor="public" category="Function" name="GetColumnsToTheLeft"><summary>Get the number of columns that before the splitter.</summary><returns>The number of columns that before the splitter.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiColumnSplitterComposition::GetColumnsToTheLeft@::vl::vint()" accessor="public" category="Function" name="GetColumnsToTheLeft"><summary>Get the number of columns that before the splitter.</summary><returns>The number of columns that before the splitter.</returns><signature><![CDATA[vint();
+]]></signature></Document>

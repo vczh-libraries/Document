@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentContentRun::GetRepresentationText@::vl::WString()" accessor="public" category="Function" name="GetRepresentationText"><summary>Get representation text.</summary><returns>The representation text.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentContentRun::GetRepresentationText@::vl::WString()" accessor="public" category="Function" name="GetRepresentationText"><summary>Get representation text.</summary><returns>The representation text.</returns><signature><![CDATA[WString();
+]]></signature></Document>

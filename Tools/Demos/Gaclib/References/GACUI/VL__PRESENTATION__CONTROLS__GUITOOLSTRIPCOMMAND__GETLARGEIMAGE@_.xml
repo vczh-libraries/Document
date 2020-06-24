@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image for this command.</summary><returns>The large image for this command.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image for this command.</summary><returns>The large image for this command.</returns><signature><![CDATA[Ptr<GuiImageData>();
+]]></signature></Document>

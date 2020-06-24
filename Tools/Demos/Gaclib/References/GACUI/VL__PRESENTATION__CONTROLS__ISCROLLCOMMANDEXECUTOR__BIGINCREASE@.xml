@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::BigIncrease@void()" accessor="public" category="Function" name="BigIncrease"><summary>Do big increment.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::BigIncrease@void()" accessor="public" category="Function" name="BigIncrease"><summary>Do big increment.</summary><signature><![CDATA[void();
+]]></signature></Document>

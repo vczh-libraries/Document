@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::GetMinimizedBox@bool()" accessor="public" category="Function" name="GetMinimizedBox"><summary>
  Test is the minimize box visible.
- </summary><returns>Returns true if the minimize box is visible.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the minimize box is visible.</returns><signature><![CDATA[bool();
+]]></signature></Document>

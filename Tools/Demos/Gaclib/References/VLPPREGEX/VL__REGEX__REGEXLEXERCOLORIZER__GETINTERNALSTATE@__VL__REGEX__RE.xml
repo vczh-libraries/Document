@@ -1,1 +1,2 @@
-<Document symbolId="vl::regex::RegexLexerColorizer::GetInternalState@::vl::regex::RegexLexerColorizer::InternalState()" accessor="public" category="Function" name="GetInternalState"><summary>Get the internal state.</summary><returns>The internal state.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::regex::RegexLexerColorizer::GetInternalState@::vl::regex::RegexLexerColorizer::InternalState()" accessor="public" category="Function" name="GetInternalState"><summary>Get the internal state.</summary><returns>The internal state.</returns><signature><![CDATA[InternalState();
+]]></signature></Document>

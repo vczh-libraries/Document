@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetVisuallyEnabled@bool()" accessor="public" category="Function" name="GetVisuallyEnabled"><summary>Test if this control is rendered as enabled.</summary><returns>Returns true if this control is rendered as enabled.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::GetVisuallyEnabled@bool()" accessor="public" category="Function" name="GetVisuallyEnabled"><summary>Test if this control is rendered as enabled.</summary><returns>Returns true if this control is rendered as enabled.</returns><signature><![CDATA[bool();
+]]></signature></Document>

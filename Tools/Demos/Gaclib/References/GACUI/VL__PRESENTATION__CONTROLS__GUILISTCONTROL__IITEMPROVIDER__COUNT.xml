@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemProvider::Count@::vl::vint()" accessor="public" category="Function" name="Count"><summary>Get the number of items in this item proivder.</summary><returns>The number of items in this item proivder.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemProvider::Count@::vl::vint()" accessor="public" category="Function" name="Count"><summary>Get the number of items in this item proivder.</summary><returns>The number of items in this item proivder.</returns><signature><![CDATA[vint();
+]]></signature></Document>

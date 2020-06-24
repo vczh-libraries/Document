@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog::GetForceFontExist@bool()" accessor="public" category="Function" name="GetForceFontExist"><summary>Get if the dialog only accepts an existing font.</summary><returns>Returns true if the dialog only accepts an existing font.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiFontDialog::GetForceFontExist@bool()" accessor="public" category="Function" name="GetForceFontExist"><summary>Get if the dialog only accepts an existing font.</summary><returns>Returns true if the dialog only accepts an existing font.</returns><signature><![CDATA[bool();
+]]></signature></Document>

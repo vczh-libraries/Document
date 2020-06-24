@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeController::InputService@::vl::presentation::INativeInputService *()" accessor="public" category="Function" name="InputService"><summary>
  Get the user input service.
- </summary><returns>The user input service</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The user input service</returns><signature><![CDATA[INativeInputService *();
+]]></signature></Document>

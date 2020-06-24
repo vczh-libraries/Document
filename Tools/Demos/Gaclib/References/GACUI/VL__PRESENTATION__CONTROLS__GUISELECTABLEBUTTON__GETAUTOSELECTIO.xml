@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableButton::GetAutoSelection@bool()" accessor="public" category="Function" name="GetAutoSelection"><summary>Get the auto selection state. True if the button is automatically selected or unselected when the button is clicked.</summary><returns>The auto selection state.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableButton::GetAutoSelection@bool()" accessor="public" category="Function" name="GetAutoSelection"><summary>Get the auto selection state. True if the button is automatically selected or unselected when the button is clicked.</summary><returns>The auto selection state.</returns><signature><![CDATA[bool();
+]]></signature></Document>

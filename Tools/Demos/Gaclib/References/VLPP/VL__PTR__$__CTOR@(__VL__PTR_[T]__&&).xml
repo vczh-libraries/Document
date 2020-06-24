@@ -1,1 +1,2 @@
-<Document symbolId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Move a smart pointer.</summary><param name="pointer">The smart pointer to Move.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Move a smart pointer.</summary><param name="pointer">The smart pointer to Move.</param><signature><![CDATA[(Ptr<T> &&);
+]]></signature></Document>

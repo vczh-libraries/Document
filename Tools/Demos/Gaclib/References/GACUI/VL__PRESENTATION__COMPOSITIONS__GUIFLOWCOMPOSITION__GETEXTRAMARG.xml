@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetExtraMargin@::vl::presentation::Margin()" accessor="public" category="Function" name="GetExtraMargin"><summary>Get the extra margin inside the flow composition.</summary><returns>The extra margin inside the flow composition.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetExtraMargin@::vl::presentation::Margin()" accessor="public" category="Function" name="GetExtraMargin"><summary>Get the extra margin inside the flow composition.</summary><returns>The extra margin inside the flow composition.</returns><signature><![CDATA[Margin();
+]]></signature></Document>

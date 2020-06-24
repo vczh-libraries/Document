@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetParent@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetParent"><summary>Get the parent control.</summary><returns>The parent control.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::GetParent@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetParent"><summary>Get the parent control.</summary><returns>The parent control.</returns><signature><![CDATA[GuiControl *();
+]]></signature></Document>

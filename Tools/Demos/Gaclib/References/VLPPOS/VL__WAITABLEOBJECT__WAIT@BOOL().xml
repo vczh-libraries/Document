@@ -1,1 +1,2 @@
-<Document symbolId="vl::WaitableObject::Wait@bool()" accessor="public" category="Function" name="Wait"><summary>Wait for this object to signal.</summary><returns>Returns true if the object is signaled. Returns false if this operation failed.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::WaitableObject::Wait@bool()" accessor="public" category="Function" name="Wait"><summary>Wait for this object to signal.</summary><returns>Returns true if the object is signaled. Returns false if this operation failed.</returns><signature><![CDATA[bool();
+]]></signature></Document>

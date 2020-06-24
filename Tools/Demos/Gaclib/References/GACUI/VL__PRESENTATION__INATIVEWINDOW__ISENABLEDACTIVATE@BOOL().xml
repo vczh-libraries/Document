@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::IsEnabledActivate@bool()" accessor="public" category="Function" name="IsEnabledActivate"><summary>
  Test is the window allowed to be activated.
- </summary><returns>Returns true if the window is allowed to be activated.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the window is allowed to be activated.</returns><signature><![CDATA[bool();
+]]></signature></Document>

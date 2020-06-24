@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Copy@bool()" accessor="public" category="Function" name="Copy"><summary>Copy the selection text.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Copy@bool()" accessor="public" category="Function" name="Copy"><summary>Copy the selection text.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool();
+]]></signature></Document>

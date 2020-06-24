@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::GetLastActivatedBreakPoint@::vl::vint()" accessor="public" category="Function" name="GetLastActivatedBreakPoint"><summary>Get the index of the last activated break point.</summary><returns>The index of the last activated break point.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger::GetLastActivatedBreakPoint@::vl::vint()" accessor="public" category="Function" name="GetLastActivatedBreakPoint"><summary>Get the index of the last activated break point.</summary><returns>The index of the last activated break point.</returns><signature><![CDATA[vint();
+]]></signature></Document>

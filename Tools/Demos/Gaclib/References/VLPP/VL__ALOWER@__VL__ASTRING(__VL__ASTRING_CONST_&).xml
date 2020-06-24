@@ -1,1 +1,2 @@
-<Document symbolId="vl::alower@::vl::AString(::vl::AString const &amp;)" accessor="" category="Function" name="alower"><summary>Convert all letters to lower case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::alower@::vl::AString(::vl::AString const &amp;)" accessor="" category="Function" name="alower"><summary>Convert all letters to lower case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[AString(AString const &);
+]]></signature></Document>

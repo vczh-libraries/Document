@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement::IsCaretEndPreferFrontSide@bool()" accessor="public" category="Function" name="IsCaretEndPreferFrontSide"><summary>
  Get the prefer side for the caret.
- </summary><returns>Returns true if the caret is rendered for the front side.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the caret is rendered for the front side.</returns><signature><![CDATA[bool();
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiGradientBackgroundElement::GetDirection@::vl::presentation::elements::GuiGradientBackgroundElement::Direction()" accessor="public" category="Function" name="GetDirection"><summary>
  Get the direction.
- </summary><returns>The direction.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The direction.</returns><signature><![CDATA[Direction();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::SetArranger@void(::vl::Ptr&lt;::vl::presentation::controls::GuiListControl::IItemArranger&gt;)" accessor="public" category="Function" name="SetArranger"><summary>Set the item arranger</summary><param name="value">The new item arranger</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::SetArranger@void(::vl::Ptr&lt;::vl::presentation::controls::GuiListControl::IItemArranger&gt;)" accessor="public" category="Function" name="SetArranger"><summary>Set the item arranger</summary><param name="value">The new item arranger</param><signature><![CDATA[void(Ptr<IItemArranger>);
+]]></signature></Document>

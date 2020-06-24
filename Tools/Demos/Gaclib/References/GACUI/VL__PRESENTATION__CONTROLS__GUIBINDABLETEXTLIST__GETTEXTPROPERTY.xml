@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiBindableTextList::GetTextProperty@::vl::presentation::ItemProperty&lt;::vl::WString&gt;()" accessor="public" category="Function" name="GetTextProperty"><summary>Get the text property name to get the item text from an item.</summary><returns>The text property name.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableTextList::GetTextProperty@::vl::presentation::ItemProperty&lt;::vl::WString&gt;()" accessor="public" category="Function" name="GetTextProperty"><summary>Get the text property name to get the item text from an item.</summary><returns>The text property name.</returns><signature><![CDATA[ItemProperty<WString>();
+]]></signature></Document>

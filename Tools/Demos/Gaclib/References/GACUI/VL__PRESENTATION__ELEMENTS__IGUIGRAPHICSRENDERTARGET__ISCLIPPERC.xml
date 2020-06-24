@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::IsClipperCoverWholeTarget@bool()" accessor="public" category="Function" name="IsClipperCoverWholeTarget"><summary>
  Test is the combined clipper is as large as the render target.
- </summary><returns>Return true if the combined clipper is as large as the render target.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Return true if the combined clipper is as large as the render target.</returns><signature><![CDATA[bool();
+]]></signature></Document>

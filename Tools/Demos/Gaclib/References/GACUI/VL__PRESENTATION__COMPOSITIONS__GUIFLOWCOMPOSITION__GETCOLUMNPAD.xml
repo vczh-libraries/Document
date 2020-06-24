@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetColumnPadding@::vl::vint()" accessor="public" category="Function" name="GetColumnPadding"><summary>Get the distance between columns.</summary><returns>The distance between columns.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetColumnPadding@::vl::vint()" accessor="public" category="Function" name="GetColumnPadding"><summary>Get the distance between columns.</summary><returns>The distance between columns.</returns><signature><![CDATA[vint();
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiInnerShadowElement::SetColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetColor"><summary>
  Set the shadow color.
- </summary><param name="value">The new shadow color.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="value">The new shadow color.</param><signature><![CDATA[void(Color);
+]]></signature></Document>

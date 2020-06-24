@@ -1,1 +1,3 @@
-<Document symbolId="vl::presentation::GuiResourceFolder::AddItem@bool(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::presentation::GuiResourceItem&gt;)" accessor="public" category="Function" name="AddItem"><summary>Add a resource item.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name of this resource item.</param><param name="item">The resource item.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResourceFolder::AddItem@bool(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::presentation::GuiResourceItem&gt;)" accessor="public" category="Function" name="AddItem"><summary>Add a resource item.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name of this resource item.</param><param name="item">The resource item.</param><signature><![CDATA[bool(WString const &,
+Ptr<GuiResourceItem>);
+]]></signature></Document>

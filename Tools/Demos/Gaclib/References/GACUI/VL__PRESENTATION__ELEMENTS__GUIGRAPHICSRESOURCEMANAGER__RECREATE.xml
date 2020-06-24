@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::RecreateRenderTarget@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="RecreateRenderTarget"><summary>
  Recreate the render target for the specified window.
- </summary><param name="window">The specified window.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="window">The specified window.</param><signature><![CDATA[void(INativeWindow *);
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::Gui3DBorderElement::SetColor2@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetColor2"><summary>
  Set the border color.
- </summary><param name="value">The new right-bottom color.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="value">The new right-bottom color.</param><signature><![CDATA[void(Color);
+]]></signature></Document>

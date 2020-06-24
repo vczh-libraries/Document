@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetAxis@::vl::Ptr&lt;::vl::presentation::compositions::IGuiAxis&gt;()" accessor="public" category="Function" name="GetAxis"><summary>Get the axis of the layout.</summary><returns>The axis.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetAxis@::vl::Ptr&lt;::vl::presentation::compositions::IGuiAxis&gt;()" accessor="public" category="Function" name="GetAxis"><summary>Get the axis of the layout.</summary><returns>The axis.</returns><signature><![CDATA[Ptr<IGuiAxis>();
+]]></signature></Document>

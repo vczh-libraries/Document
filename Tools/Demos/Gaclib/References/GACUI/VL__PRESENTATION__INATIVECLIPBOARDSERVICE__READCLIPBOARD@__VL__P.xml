@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::INativeClipboardService::ReadClipboard@::vl::Ptr&lt;::vl::presentation::INativeClipboardReader&gt;()" accessor="public" category="Function" name="ReadClipboard"><summary>Read clipboard.</summary><returns>The clipboard reader.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::INativeClipboardService::ReadClipboard@::vl::Ptr&lt;::vl::presentation::INativeClipboardReader&gt;()" accessor="public" category="Function" name="ReadClipboard"><summary>Read clipboard.</summary><returns>The clipboard reader.</returns><signature><![CDATA[Ptr<INativeClipboardReader>();
+]]></signature></Document>

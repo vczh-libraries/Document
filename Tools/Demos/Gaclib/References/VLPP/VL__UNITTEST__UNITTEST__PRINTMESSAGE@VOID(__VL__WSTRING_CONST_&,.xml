@@ -1,1 +1,3 @@
-<Document symbolId="vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &amp;, ::vl::unittest::UnitTest::MessageKind)" accessor="public" category="Function" name="PrintMessage"><summary>Print a message with specified color.</summary><param name="string">The content.</param><param name="kind">The kind of the content.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &amp;, ::vl::unittest::UnitTest::MessageKind)" accessor="public" category="Function" name="PrintMessage"><summary>Print a message with specified color.</summary><param name="string">The content.</param><param name="kind">The kind of the content.</param><signature><![CDATA[static void(WString const &,
+MessageKind);
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image for the menu button.</summary><returns>The large image for the menu button.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiMenuButton::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image for the menu button.</summary><returns>The large image for the menu button.</returns><signature><![CDATA[Ptr<GuiImageData>();
+]]></signature></Document>

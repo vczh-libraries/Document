@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiBindableDataGrid::GetColumns@::vl::presentation::controls::list::DataColumns &amp;()" accessor="public" category="Function" name="GetColumns"><summary>Get all columns.</summary><returns>All columns.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableDataGrid::GetColumns@::vl::presentation::controls::list::DataColumns &amp;()" accessor="public" category="Function" name="GetColumns"><summary>Get all columns.</summary><returns>All columns.</returns><signature><![CDATA[list::DataColumns &();
+]]></signature></Document>

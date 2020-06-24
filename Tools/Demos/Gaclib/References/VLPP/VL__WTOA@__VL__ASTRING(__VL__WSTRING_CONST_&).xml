@@ -1,1 +1,2 @@
-<Document symbolId="vl::wtoa@::vl::AString(::vl::WString const &amp;)" accessor="" category="Function" name="wtoa"><summary>Convert an Unicode string to an Ansi string.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::wtoa@::vl::AString(::vl::WString const &amp;)" accessor="" category="Function" name="wtoa"><summary>Convert an Unicode string to an Ansi string.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[AString(WString const &);
+]]></signature></Document>

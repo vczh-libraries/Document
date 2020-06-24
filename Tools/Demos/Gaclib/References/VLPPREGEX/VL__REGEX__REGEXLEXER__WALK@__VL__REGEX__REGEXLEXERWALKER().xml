@@ -1,1 +1,2 @@
-<Document symbolId="vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()" accessor="public" category="Function" name="Walk"><summary>Create a equivalence walker from this lexical analyzer.</summary><returns>The walker.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()" accessor="public" category="Function" name="Walk"><summary>Create a equivalence walker from this lexical analyzer.</summary><returns>The walker.</returns><signature><![CDATA[RegexLexerWalker() const;
+]]></signature></Document>

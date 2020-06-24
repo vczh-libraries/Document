@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::ListViewItem::GetSubItems@::vl::presentation::controls::list::ListViewSubItems &amp;()" accessor="public" category="Function" name="GetSubItems"><summary>Get all sub items of this item.</summary><returns>All sub items of this item.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewItem::GetSubItems@::vl::presentation::controls::list::ListViewSubItems &amp;()" accessor="public" category="Function" name="GetSubItems"><summary>Get all sub items of this item.</summary><returns>All sub items of this item.</returns><signature><![CDATA[ListViewSubItems &();
+]]></signature></Document>

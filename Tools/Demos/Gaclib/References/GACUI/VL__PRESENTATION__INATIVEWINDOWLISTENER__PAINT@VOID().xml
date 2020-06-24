@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Paint@void()" accessor="public" category="Function" name="Paint"><summary>
  Called when the window is painting.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[void();
+]]></signature></Document>

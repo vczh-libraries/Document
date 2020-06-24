@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::Convert@::vl::presentation::Size(::vl::presentation::NativeSize)" accessor="public" category="Function" name="Convert"><summary>
  Convert size from native coordinate to GUI coordinate.
- </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[Size(NativeSize);
+]]></signature></Document>

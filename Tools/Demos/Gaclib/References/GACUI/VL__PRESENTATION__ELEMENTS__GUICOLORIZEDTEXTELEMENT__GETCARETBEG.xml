@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetCaretBegin@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretBegin"><summary>
  Get the begin position of the selection area.
- </summary><returns>The begin position of the selection area.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The begin position of the selection area.</returns><signature><![CDATA[TextPos();
+]]></signature></Document>

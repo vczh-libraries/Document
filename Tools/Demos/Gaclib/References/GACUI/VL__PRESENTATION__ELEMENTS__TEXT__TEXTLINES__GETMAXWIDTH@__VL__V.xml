@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::GetMaxWidth@::vl::vint()" accessor="public" category="Function" name="GetMaxWidth"><summary>
  Returns the total width of the text lines.
- </summary><returns>The width of the text lines, in pixel.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The width of the text lines, in pixel.</returns><signature><![CDATA[vint();
+]]></signature></Document>

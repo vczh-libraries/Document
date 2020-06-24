@@ -1,1 +1,3 @@
-<Document symbolId="vl::collections::Array::$__ctor@([T] const *, ::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create an array.</summary><param name="_buffer">Pointer to an array to copy.</param><param name="size">The size of the array.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::Array::$__ctor@([T] const *, ::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create an array.</summary><param name="_buffer">Pointer to an array to copy.</param><param name="size">The size of the array.</param><signature><![CDATA[(T const *,
+vint);
+]]></signature></Document>

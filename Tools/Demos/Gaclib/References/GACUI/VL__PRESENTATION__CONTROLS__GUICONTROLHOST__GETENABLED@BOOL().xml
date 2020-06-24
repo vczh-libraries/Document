@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::GetEnabled@bool()" accessor="public" category="Function" name="GetEnabled"><summary>Test is the window enabled.</summary><returns>Returns true if the window is enabled.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::GetEnabled@bool()" accessor="public" category="Function" name="GetEnabled"><summary>Test is the window enabled.</summary><returns>Returns true if the window is enabled.</returns><signature><![CDATA[bool();
+]]></signature></Document>

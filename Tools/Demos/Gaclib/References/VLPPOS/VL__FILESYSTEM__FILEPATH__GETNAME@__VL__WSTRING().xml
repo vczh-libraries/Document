@@ -1,1 +1,2 @@
-<Document symbolId="vl::filesystem::FilePath::GetName@::vl::WString()" accessor="public" category="Function" name="GetName"><summary>Get the last piece of names in the file path.</summary><returns>The last piece of names in the file path.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::filesystem::FilePath::GetName@::vl::WString()" accessor="public" category="Function" name="GetName"><summary>Get the last piece of names in the file path.</summary><returns>The last piece of names in the file path.</returns><signature><![CDATA[WString() const;
+]]></signature></Document>

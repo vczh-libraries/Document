@@ -1,1 +1,2 @@
-<Document symbolId="vl::parsing::ParsingTreeObject::GetType@::vl::WString const &amp;()" accessor="public" category="Function" name="GetType"><summary>Get the type name of the object.</summary><returns>The type name of the object.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::parsing::ParsingTreeObject::GetType@::vl::WString const &amp;()" accessor="public" category="Function" name="GetType"><summary>Get the type name of the object.</summary><returns>The type name of the object.</returns><signature><![CDATA[WString const &();
+]]></signature></Document>

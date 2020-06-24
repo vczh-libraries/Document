@@ -1,1 +1,2 @@
-<Document symbolId="vl::SpinLock::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a spin lock.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::SpinLock::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a spin lock.</summary><signature><![CDATA[();
+]]></signature></Document>

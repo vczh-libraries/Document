@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::GetViewBounds@::vl::presentation::Rect()" accessor="public" category="Function" name="GetViewBounds"><summary>Get the view bounds.</summary><returns>The view bounds.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScrollView::GetViewBounds@::vl::presentation::Rect()" accessor="public" category="Function" name="GetViewBounds"><summary>Get the view bounds.</summary><returns>The view bounds.</returns><signature><![CDATA[Rect();
+]]></signature></Document>

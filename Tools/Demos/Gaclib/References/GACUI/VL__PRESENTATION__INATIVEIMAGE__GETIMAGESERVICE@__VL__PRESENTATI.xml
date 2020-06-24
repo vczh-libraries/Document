@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeImage::GetImageService@::vl::presentation::INativeImageService *()" accessor="public" category="Function" name="GetImageService"><summary>
  Get the image service that creates this image.
- </summary><returns>The image service that creates this image.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The image service that creates this image.</returns><signature><![CDATA[INativeImageService *();
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowListener::GotFocus@void()" accessor="public" category="Function" name="GotFocus"><summary>
  Called when the window got the focus.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[void();
+]]></signature></Document>

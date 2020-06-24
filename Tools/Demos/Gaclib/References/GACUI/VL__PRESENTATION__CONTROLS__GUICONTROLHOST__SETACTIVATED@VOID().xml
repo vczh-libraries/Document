@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::SetActivated@void()" accessor="public" category="Function" name="SetActivated"><summary>Activate the window.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::SetActivated@void()" accessor="public" category="Function" name="SetActivated"><summary>Activate the window.</summary><signature><![CDATA[void();
+]]></signature></Document>

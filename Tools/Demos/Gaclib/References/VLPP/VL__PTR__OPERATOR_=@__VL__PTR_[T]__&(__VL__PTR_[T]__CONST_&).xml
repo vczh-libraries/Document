@@ -1,1 +1,2 @@
-<Document symbolId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="operator ="><summary>Copy a smart pointer.</summary><returns>The copied smart pointer.</returns><param name="pointer">The smart pointer to copy.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="operator ="><summary>Copy a smart pointer.</summary><returns>The copied smart pointer.</returns><param name="pointer">The smart pointer to copy.</param><signature><![CDATA[Ptr<T> &(Ptr<T> const &);
+]]></signature></Document>

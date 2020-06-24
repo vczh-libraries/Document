@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTab::GetPages@::vl::collections::ObservableList&lt;::vl::presentation::controls::GuiTabPage *&gt; &amp;()" accessor="public" category="Function" name="GetPages"><summary>Get all pages.</summary><returns>All pages.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTab::GetPages@::vl::collections::ObservableList&lt;::vl::presentation::controls::GuiTabPage *&gt; &amp;()" accessor="public" category="Function" name="GetPages"><summary>Get all pages.</summary><returns>All pages.</returns><signature><![CDATA[collections::ObservableList<GuiTabPage *> &();
+]]></signature></Document>

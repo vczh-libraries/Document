@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetParagraphAlignment@::vl::presentation::Alignment()" accessor="public" category="Function" name="GetParagraphAlignment"><summary>Get the horizontal alignment for this paragraph.</summary><returns>The alignment.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetParagraphAlignment@::vl::presentation::Alignment()" accessor="public" category="Function" name="GetParagraphAlignment"><summary>Get the horizontal alignment for this paragraph.</summary><returns>The alignment.</returns><signature><![CDATA[Alignment();
+]]></signature></Document>

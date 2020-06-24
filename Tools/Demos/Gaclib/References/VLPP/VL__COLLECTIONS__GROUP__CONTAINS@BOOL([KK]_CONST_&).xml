@@ -1,1 +1,2 @@
-<Document symbolId="vl::collections::Group::Contains@bool([KK] const &amp;)" accessor="public" category="Function" name="Contains"><summary>Test if a key exists in the group or not.</summary><returns>Returns true if the key exists.</returns><param name="key">The key to find.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::Group::Contains@bool([KK] const &amp;)" accessor="public" category="Function" name="Contains"><summary>Test if a key exists in the group or not.</summary><returns>Returns true if the key exists.</returns><param name="key">The key to find.</param><signature><![CDATA[bool(KK const &) const;
+]]></signature></Document>

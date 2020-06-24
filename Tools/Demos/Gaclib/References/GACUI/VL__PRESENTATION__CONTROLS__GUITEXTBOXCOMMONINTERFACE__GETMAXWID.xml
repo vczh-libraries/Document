@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetMaxWidth@::vl::vint()" accessor="public" category="Function" name="GetMaxWidth"><summary>Get the maximum width of all rows.</summary><returns>The maximum width of all rows.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetMaxWidth@::vl::vint()" accessor="public" category="Function" name="GetMaxWidth"><summary>Get the maximum width of all rows.</summary><returns>The maximum width of all rows.</returns><signature><![CDATA[vint();
+]]></signature></Document>

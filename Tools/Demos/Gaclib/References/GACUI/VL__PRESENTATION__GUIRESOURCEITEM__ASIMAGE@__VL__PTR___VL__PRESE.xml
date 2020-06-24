@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourceItem::AsImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="AsImage"><summary>Get the contained object as an image.</summary><returns>The contained object.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResourceItem::AsImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="AsImage"><summary>Get the contained object as an image.</summary><returns>The contained object.</returns><signature><![CDATA[Ptr<GuiImageData>();
+]]></signature></Document>

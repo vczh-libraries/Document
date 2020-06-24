@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver::GetType@::vl::WString()" accessor="public" category="Function" name="GetType"><summary>Get the type of the resource that load by this resolver.</summary><returns>The type.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver::GetType@::vl::WString()" accessor="public" category="Function" name="GetType"><summary>Get the type of the resource that load by this resolver.</summary><returns>The type.</returns><signature><![CDATA[WString();
+]]></signature></Document>

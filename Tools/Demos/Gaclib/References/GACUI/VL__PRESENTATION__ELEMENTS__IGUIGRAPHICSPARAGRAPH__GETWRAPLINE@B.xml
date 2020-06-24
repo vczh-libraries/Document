@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetWrapLine@bool()" accessor="public" category="Function" name="GetWrapLine"><summary>Get if line auto-wrapping is enabled for this paragraph.</summary><returns>Return true if line auto-wrapping is enabled for this paragraph.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetWrapLine@bool()" accessor="public" category="Function" name="GetWrapLine"><summary>Get if line auto-wrapping is enabled for this paragraph.</summary><returns>Return true if line auto-wrapping is enabled for this paragraph.</returns><signature><![CDATA[bool();
+]]></signature></Document>

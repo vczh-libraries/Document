@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::IGuiAltAction::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this service.</summary><signature><![CDATA[static wchar_t const * const IGuiAltAction:: Identifier;
+<Document symbolId="vl::presentation::compositions::IGuiAltAction::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this service.</summary><signature><![CDATA[static wchar_t const * const Identifier;
 ]]></signature></Document>

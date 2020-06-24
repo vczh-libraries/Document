@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetMaxHeight@::vl::vint()" accessor="public" category="Function" name="GetMaxHeight"><summary>Get the total height of all rows.</summary><returns>The total height of all rows.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetMaxHeight@::vl::vint()" accessor="public" category="Function" name="GetMaxHeight"><summary>Get the total height of all rows.</summary><returns>The total height of all rows.</returns><signature><![CDATA[vint();
+]]></signature></Document>

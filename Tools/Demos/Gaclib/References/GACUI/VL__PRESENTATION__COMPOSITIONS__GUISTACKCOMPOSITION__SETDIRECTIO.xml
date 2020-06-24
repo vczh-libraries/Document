@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiStackComposition::SetDirection@void(::vl::presentation::compositions::GuiStackComposition::Direction)" accessor="public" category="Function" name="SetDirection"><summary>Set the stack item layout direction.</summary><param name="value">The stack item layout direction.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiStackComposition::SetDirection@void(::vl::presentation::compositions::GuiStackComposition::Direction)" accessor="public" category="Function" name="SetDirection"><summary>Set the stack item layout direction.</summary><param name="value">The stack item layout direction.</param><signature><![CDATA[void(Direction);
+]]></signature></Document>

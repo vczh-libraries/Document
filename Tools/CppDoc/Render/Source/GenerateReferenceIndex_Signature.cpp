@@ -87,7 +87,7 @@ public:
 			self = dynamic_cast<ArrayType*>(elementType);
 		}
 		needParenthesesForFuncArray = true;
-		self->type->Accept(this);
+		elementType->Accept(this);
 	}
 
 	void Visit(DecorateType* self)override
@@ -521,7 +521,7 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			}
 			for (vint i = 0; i < symbol->GetImplSymbols_F().Count(); i++)
 			{
-				auto decl = symbol->GetImplSymbols_F()[i]->GetForwardDecl_Fb().Cast<ForwardFunctionDeclaration>();
+				auto decl = symbol->GetImplSymbols_F()[i]->GetImplDecl_NFb().Cast<ForwardFunctionDeclaration>();
 				decoratorStatic |= decl->decoratorStatic;
 				decoratorConstexpr |= decl->decoratorConstexpr;
 				decoratorExplicit |= decl->decoratorExplicit;

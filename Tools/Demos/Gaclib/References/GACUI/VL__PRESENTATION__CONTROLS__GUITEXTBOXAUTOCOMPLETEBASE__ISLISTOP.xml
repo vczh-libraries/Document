@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IsListOpening@bool()" accessor="public" category="Function" name="IsListOpening"><summary>Get the list state.</summary><returns>Returns true if the list is visible.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IsListOpening@bool()" accessor="public" category="Function" name="IsListOpening"><summary>Get the list state.</summary><returns>Returns true if the list is visible.</returns><signature><![CDATA[bool();
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::ShowDeactivated@void()" accessor="public" category="Function" name="ShowDeactivated"><summary>
  Show the window without activation.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[void();
+]]></signature></Document>

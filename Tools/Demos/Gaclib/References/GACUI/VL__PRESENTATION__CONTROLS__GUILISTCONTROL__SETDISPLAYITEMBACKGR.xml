@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::SetDisplayItemBackground@void(bool)" accessor="public" category="Function" name="SetDisplayItemBackground"><summary>Set if the list control displays predefined item background.</summary><param name="value">Set to true to display item background.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::SetDisplayItemBackground@void(bool)" accessor="public" category="Function" name="SetDisplayItemBackground"><summary>Set if the list control displays predefined item background.</summary><param name="value">Set to true to display item background.</param><signature><![CDATA[void(bool);
+]]></signature></Document>

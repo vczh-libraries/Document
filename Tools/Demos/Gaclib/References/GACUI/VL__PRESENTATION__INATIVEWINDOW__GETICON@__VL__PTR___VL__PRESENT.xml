@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetIcon"><summary>
  Get the icon.
- </summary><returns>Returns the icon.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns the icon.</returns><signature><![CDATA[Ptr<GuiImageData>();
+]]></signature></Document>

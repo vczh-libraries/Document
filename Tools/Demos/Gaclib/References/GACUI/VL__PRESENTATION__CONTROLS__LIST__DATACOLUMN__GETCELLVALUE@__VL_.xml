@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetCellValue@::vl::reflection::description::Value(::vl::vint)" accessor="public" category="Function" name="GetCellValue"><summary>Get the cell value from an item.</summary><returns>The cell value.</returns><param name="row">The row index of the item.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetCellValue@::vl::reflection::description::Value(::vl::vint)" accessor="public" category="Function" name="GetCellValue"><summary>Get the cell value from an item.</summary><returns>The cell value.</returns><param name="row">The row index of the item.</param><signature><![CDATA[description::Value(vint);
+]]></signature></Document>

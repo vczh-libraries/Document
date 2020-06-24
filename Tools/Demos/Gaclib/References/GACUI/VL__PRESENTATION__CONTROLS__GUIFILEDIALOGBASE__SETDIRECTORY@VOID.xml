@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetDirectory@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetDirectory"><summary>Set the default folder.</summary><param name="value">The default folder.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetDirectory@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetDirectory"><summary>Set the default folder.</summary><param name="value">The default folder.</param><signature><![CDATA[void(WString const &);
+]]></signature></Document>

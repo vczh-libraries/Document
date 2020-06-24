@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::GetDebuggerForCurrentThread@::vl::Ptr&lt;::vl::workflow::runtime::WfDebugger&gt;()" accessor="" category="Function" name="GetDebuggerForCurrentThread"><summary>Get the debugger for the current thread.</summary><returns>The debugger.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::GetDebuggerForCurrentThread@::vl::Ptr&lt;::vl::workflow::runtime::WfDebugger&gt;()" accessor="" category="Function" name="GetDebuggerForCurrentThread"><summary>Get the debugger for the current thread.</summary><returns>The debugger.</returns><signature><![CDATA[Ptr<WfDebugger>();
+]]></signature></Document>

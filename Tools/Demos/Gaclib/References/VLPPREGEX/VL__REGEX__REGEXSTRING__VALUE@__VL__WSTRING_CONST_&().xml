@@ -1,1 +1,2 @@
-<Document symbolId="vl::regex::RegexString::Value@::vl::WString const &amp;()" accessor="public" category="Function" name="Value"><summary>Get the fragment.</summary><returns>The fragment.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::regex::RegexString::Value@::vl::WString const &amp;()" accessor="public" category="Function" name="Value"><summary>Get the fragment.</summary><returns>The fragment.</returns><signature><![CDATA[WString const &() const;
+]]></signature></Document>

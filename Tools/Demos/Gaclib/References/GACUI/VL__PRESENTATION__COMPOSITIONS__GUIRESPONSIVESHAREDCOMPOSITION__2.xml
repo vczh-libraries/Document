@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiResponsiveSharedComposition::GetShared@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetShared"><summary>Get the selected shared control.</summary><returns>The selected shared control.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiResponsiveSharedComposition::GetShared@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetShared"><summary>Get the selected shared control.</summary><returns>The selected shared control.</returns><signature><![CDATA[controls::GuiControl *();
+]]></signature></Document>

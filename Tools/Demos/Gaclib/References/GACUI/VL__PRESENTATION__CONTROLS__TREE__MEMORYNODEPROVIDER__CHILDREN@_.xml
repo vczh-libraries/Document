@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::Children@::vl::presentation::controls::tree::MemoryNodeProvider::NodeCollection &amp;()" accessor="public" category="Function" name="Children"><summary>Get all sub nodes.</summary><returns>All sub nodes.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::Children@::vl::presentation::controls::tree::MemoryNodeProvider::NodeCollection &amp;()" accessor="public" category="Function" name="Children"><summary>Get all sub nodes.</summary><returns>All sub nodes.</returns><signature><![CDATA[NodeCollection &();
+]]></signature></Document>

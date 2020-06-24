@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::SetTabSpaceCount@void(::vl::vint)" accessor="public" category="Function" name="SetTabSpaceCount"><summary>
  Set the number of spaces to replace a tab character for rendering.
- </summary><param name="value">The number of spaces to replace a tab character for rendering.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="value">The number of spaces to replace a tab character for rendering.</param><signature><![CDATA[void(vint);
+]]></signature></Document>

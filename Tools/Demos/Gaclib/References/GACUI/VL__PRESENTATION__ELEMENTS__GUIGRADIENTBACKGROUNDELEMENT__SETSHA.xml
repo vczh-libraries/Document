@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiGradientBackgroundElement::SetShape@void(::vl::presentation::elements::ElementShape)" accessor="public" category="Function" name="SetShape"><summary>
  Set the shape.
- </summary><param name="value">The new shape.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="value">The new shape.</param><signature><![CDATA[void(ElementShape);
+]]></signature></Document>

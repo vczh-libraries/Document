@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::TextWriter::WriteString@void(::vl::WString const &amp;)" accessor="public" category="Function" name="WriteString"><summary>Write a string.</summary><param name="string">The string to write.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::TextWriter::WriteString@void(::vl::WString const &amp;)" accessor="public" category="Function" name="WriteString"><summary>Write a string.</summary><param name="string">The string to write.</param><signature><![CDATA[void(WString const &);
+]]></signature></Document>

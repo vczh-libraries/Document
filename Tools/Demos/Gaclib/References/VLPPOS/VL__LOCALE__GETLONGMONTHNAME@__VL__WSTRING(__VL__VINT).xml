@@ -1,1 +1,2 @@
-<Document symbolId="vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetLongMonthName"><summary>Get the long display string of a month.</summary><returns>The display string.</returns><param name="month">Month, begins from 1 as January.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetLongMonthName"><summary>Get the long display string of a month.</summary><returns>The display string.</returns><param name="month">Month, begins from 1 as January.</param><signature><![CDATA[WString(vint) const;
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Moved@void()" accessor="public" category="Function" name="Moved"><summary>
  Called when the window is moved.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[void();
+]]></signature></Document>

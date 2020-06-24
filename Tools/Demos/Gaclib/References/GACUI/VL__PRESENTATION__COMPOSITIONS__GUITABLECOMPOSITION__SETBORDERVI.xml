@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::SetBorderVisible@void(bool)" accessor="public" category="Function" name="SetBorderVisible"><summary>Set the border visibility.</summary><param name="value">Set to true to let the border thickness equal to the cell padding, otherwise zero.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::SetBorderVisible@void(bool)" accessor="public" category="Function" name="SetBorderVisible"><summary>Set the border visibility.</summary><param name="value">Set to true to let the border thickness equal to the cell padding, otherwise zero.</param><signature><![CDATA[void(bool);
+]]></signature></Document>

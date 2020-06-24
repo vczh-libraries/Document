@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiStackComposition::SetPadding@void(::vl::vint)" accessor="public" category="Function" name="SetPadding"><summary>Set the stack item padding.</summary><param name="value">The stack item padding.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiStackComposition::SetPadding@void(::vl::vint)" accessor="public" category="Function" name="SetPadding"><summary>Set the stack item padding.</summary><param name="value">The stack item padding.</param><signature><![CDATA[void(vint);
+]]></signature></Document>

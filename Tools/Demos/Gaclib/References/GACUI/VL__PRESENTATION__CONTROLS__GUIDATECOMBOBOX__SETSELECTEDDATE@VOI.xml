@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDateComboBox::SetSelectedDate@void(::vl::DateTime const &amp;)" accessor="public" category="Function" name="SetSelectedDate"><summary>Display a date.</summary><param name="value">The date.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDateComboBox::SetSelectedDate@void(::vl::DateTime const &amp;)" accessor="public" category="Function" name="SetSelectedDate"><summary>Display a date.</summary><param name="value">The date.</param><signature><![CDATA[void(DateTime const &);
+]]></signature></Document>

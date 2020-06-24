@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::GetSelectedIndex@::vl::vint()" accessor="public" category="Function" name="GetSelectedIndex"><summary>Get the selected index.</summary><returns>The selected index.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::GetSelectedIndex@::vl::vint()" accessor="public" category="Function" name="GetSelectedIndex"><summary>Get the selected index.</summary><returns>The selected index.</returns><signature><![CDATA[vint();
+]]></signature></Document>

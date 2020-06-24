@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::StreamReader::$__ctor@(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a text reader.</summary><param name="_stream">The stream to read.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::StreamReader::$__ctor@(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a text reader.</summary><param name="_stream">The stream to read.</param><signature><![CDATA[(IStream &);
+]]></signature></Document>

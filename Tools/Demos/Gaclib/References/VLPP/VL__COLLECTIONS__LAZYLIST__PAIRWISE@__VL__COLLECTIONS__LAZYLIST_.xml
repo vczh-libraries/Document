@@ -1,1 +1,5 @@
-<Document symbolId="vl::collections::LazyList::Pairwise@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;[T], [U]&gt;&gt;(::vl::collections::IEnumerable&lt;[U]&gt; const &amp;)" accessor="public" category="Function" name="Pairwise"><summary>Create a new lazy list of pairs from elements from two containers.</summary><typeparam name="U">Type of all elements in the second container.</typeparam><returns>The created lazy list.</returns><param name="remains">The second container.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::LazyList::Pairwise@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;[T], [U]&gt;&gt;(::vl::collections::IEnumerable&lt;[U]&gt; const &amp;)" accessor="public" category="Function" name="Pairwise"><summary>Create a new lazy list of pairs from elements from two containers.</summary><typeparam name="U">Type of all elements in the second container.</typeparam><returns>The created lazy list.</returns><param name="remains">The second container.</param><signature><![CDATA[template <
+    typename U
+>
+LazyList<Pair<T, U>>(IEnumerable<U> const &) const;
+]]></signature></Document>

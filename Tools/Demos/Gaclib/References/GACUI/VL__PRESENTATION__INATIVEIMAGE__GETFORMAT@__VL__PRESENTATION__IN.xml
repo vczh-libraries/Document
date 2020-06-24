@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeImage::GetFormat@::vl::presentation::INativeImage::FormatType()" accessor="public" category="Function" name="GetFormat"><summary>
  Get the image format.
- </summary><returns>The image format.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The image format.</returns><signature><![CDATA[FormatType();
+]]></signature></Document>

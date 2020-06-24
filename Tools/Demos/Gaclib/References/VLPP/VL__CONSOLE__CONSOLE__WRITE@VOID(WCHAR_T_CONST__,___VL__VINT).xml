@@ -1,1 +1,3 @@
-<Document symbolId="vl::console::Console::Write@void(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="Write"><summary>Write to the command line window.</summary><param name="string">Content to write.</param><param name="length">Size of the content in wchar_t. The zero terminator is not included.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::console::Console::Write@void(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="Write"><summary>Write to the command line window.</summary><param name="string">Content to write.</param><param name="length">Size of the content in wchar_t. The zero terminator is not included.</param><signature><![CDATA[static void(wchar_t const *,
+vint);
+]]></signature></Document>

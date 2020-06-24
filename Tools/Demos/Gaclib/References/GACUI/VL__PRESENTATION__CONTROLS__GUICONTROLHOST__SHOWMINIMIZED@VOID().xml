@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::ShowMinimized@void()" accessor="public" category="Function" name="ShowMinimized"><summary>
  Minimize the window.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[void();
+]]></signature></Document>

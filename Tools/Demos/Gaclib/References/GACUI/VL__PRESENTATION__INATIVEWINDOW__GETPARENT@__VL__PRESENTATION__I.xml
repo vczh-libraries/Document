@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::GetParent@::vl::presentation::INativeWindow *()" accessor="public" category="Function" name="GetParent"><summary>
  Get the parent window. A parent window doesn&apos;t contain a child window. It always displayed below the child windows. When a parent window is minimized or restored, so as its child windows.
- </summary><returns>The parent window.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The parent window.</returns><signature><![CDATA[INativeWindow *();
+]]></signature></Document>

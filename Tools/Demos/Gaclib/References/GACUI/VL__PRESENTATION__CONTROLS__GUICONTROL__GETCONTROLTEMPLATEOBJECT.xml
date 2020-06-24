@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *()" accessor="public" category="Function" name="GetControlTemplateObject"><summary>Get the associated style controller.</summary><returns>The associated style controller.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::GetControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *()" accessor="public" category="Function" name="GetControlTemplateObject"><summary>Get the associated style controller.</summary><returns>The associated style controller.</returns><signature><![CDATA[templates::GuiControlTemplate *();
+]]></signature></Document>

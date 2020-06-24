@@ -1,1 +1,2 @@
-<Document symbolId="vl::RepeatingTaskExecutor::EnsureTaskFinished@void()" accessor="public" category="Function" name="EnsureTaskFinished"><summary>Wait for all tasks to finish.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::RepeatingTaskExecutor::EnsureTaskFinished@void()" accessor="public" category="Function" name="EnsureTaskFinished"><summary>Wait for all tasks to finish.</summary><signature><![CDATA[void();
+]]></signature></Document>

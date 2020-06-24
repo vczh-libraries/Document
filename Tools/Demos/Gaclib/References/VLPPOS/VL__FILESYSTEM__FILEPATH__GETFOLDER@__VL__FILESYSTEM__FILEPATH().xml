@@ -1,1 +1,2 @@
-<Document symbolId="vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()" accessor="public" category="Function" name="GetFolder"><summary>Get the containing folder of this file path.</summary><returns>The containing folder.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()" accessor="public" category="Function" name="GetFolder"><summary>Get the containing folder of this file path.</summary><returns>The containing folder.</returns><signature><![CDATA[FilePath() const;
+]]></signature></Document>

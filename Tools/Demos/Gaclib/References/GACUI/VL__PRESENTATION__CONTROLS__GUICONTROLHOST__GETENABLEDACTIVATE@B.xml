@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::GetEnabledActivate@bool()" accessor="public" category="Function" name="GetEnabledActivate"><summary>Test is the window allowed to be activated.</summary><returns>Returns true if the window is allowed to be activated.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::GetEnabledActivate@bool()" accessor="public" category="Function" name="GetEnabledActivate"><summary>Test is the window allowed to be activated.</summary><returns>Returns true if the window is allowed to be activated.</returns><signature><![CDATA[bool();
+]]></signature></Document>

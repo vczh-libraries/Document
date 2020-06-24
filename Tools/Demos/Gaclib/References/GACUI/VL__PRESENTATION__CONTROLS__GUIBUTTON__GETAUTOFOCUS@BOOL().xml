@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiButton::GetAutoFocus@bool()" accessor="public" category="Function" name="GetAutoFocus"><summary>Test if the button gets focus when it is clicked.</summary><returns>Returns true if the button gets focus when it is clicked</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiButton::GetAutoFocus@bool()" accessor="public" category="Function" name="GetAutoFocus"><summary>Test if the button gets focus when it is clicked.</summary><returns>Returns true if the button gets focus when it is clicked</returns><signature><![CDATA[bool();
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowService::Run@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="Run"><summary>
  Make the specified window a main window, show that window, and wait until the windows is closed.
- </summary><param name="window">The specified window.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="window">The specified window.</param><signature><![CDATA[void(INativeWindow *);
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::TextReader::ReadToEnd@::vl::WString()" accessor="public" category="Function" name="ReadToEnd"><summary>Read everying remain.</summary><returns>The string.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::TextReader::ReadToEnd@::vl::WString()" accessor="public" category="Function" name="ReadToEnd"><summary>Read everying remain.</summary><returns>The string.</returns><signature><![CDATA[WString();
+]]></signature></Document>

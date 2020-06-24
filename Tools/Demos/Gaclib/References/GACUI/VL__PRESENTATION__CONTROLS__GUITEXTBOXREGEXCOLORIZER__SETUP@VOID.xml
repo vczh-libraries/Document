@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::Setup@void()" accessor="public" category="Function" name="Setup"><summary>Setup the colorizer. After that, the colorizer cannot be changed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::Setup@void()" accessor="public" category="Function" name="Setup"><summary>Setup the colorizer. After that, the colorizer cannot be changed.</summary><signature><![CDATA[void();
+]]></signature></Document>

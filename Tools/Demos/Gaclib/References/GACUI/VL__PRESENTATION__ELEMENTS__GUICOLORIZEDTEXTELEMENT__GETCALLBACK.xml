@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetCallback@::vl::presentation::elements::GuiColorizedTextElement::ICallback *()" accessor="public" category="Function" name="GetCallback"><summary>
  Get the binded callback object.
- </summary><returns>The binded callback object.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The binded callback object.</returns><signature><![CDATA[ICallback *();
+]]></signature></Document>

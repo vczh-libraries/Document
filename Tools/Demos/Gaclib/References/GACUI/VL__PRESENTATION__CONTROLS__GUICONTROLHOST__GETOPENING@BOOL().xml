@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::GetOpening@bool()" accessor="public" category="Function" name="GetOpening"><summary>Test is the window opened.</summary><returns>Returns true if the window is opened.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::GetOpening@bool()" accessor="public" category="Function" name="GetOpening"><summary>Test is the window opened.</summary><returns>Returns true if the window is opened.</returns><signature><![CDATA[bool();
+]]></signature></Document>

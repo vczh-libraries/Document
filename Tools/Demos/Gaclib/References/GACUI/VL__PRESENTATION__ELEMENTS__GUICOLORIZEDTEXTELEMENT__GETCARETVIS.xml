@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetCaretVisible@bool()" accessor="public" category="Function" name="GetCaretVisible"><summary>
  Get the caret visibility.
- </summary><returns>Returns true if the caret will be rendered.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the caret will be rendered.</returns><signature><![CDATA[bool();
+]]></signature></Document>

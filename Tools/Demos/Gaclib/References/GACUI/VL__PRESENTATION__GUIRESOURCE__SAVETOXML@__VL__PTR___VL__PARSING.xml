@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::GuiResource::SaveToXml@::vl::Ptr&lt;::vl::parsing::xml::XmlDocument&gt;()" accessor="public" category="Function" name="SaveToXml"><summary>Save the resource to xml.</summary><returns>The xml.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResource::SaveToXml@::vl::Ptr&lt;::vl::parsing::xml::XmlDocument&gt;()" accessor="public" category="Function" name="SaveToXml"><summary>Save the resource to xml.</summary><returns>The xml.</returns><signature><![CDATA[Ptr<parsing::xml::XmlDocument>();
+]]></signature></Document>

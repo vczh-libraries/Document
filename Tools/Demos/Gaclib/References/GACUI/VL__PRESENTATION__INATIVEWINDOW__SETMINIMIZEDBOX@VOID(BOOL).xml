@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetMinimizedBox@void(bool)" accessor="public" category="Function" name="SetMinimizedBox"><summary>
  Make the minimize box visible or invisible.
- </summary><param name="visible">True to make the minimize box visible.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="visible">True to make the minimize box visible.</param><signature><![CDATA[void(bool);
+]]></signature></Document>

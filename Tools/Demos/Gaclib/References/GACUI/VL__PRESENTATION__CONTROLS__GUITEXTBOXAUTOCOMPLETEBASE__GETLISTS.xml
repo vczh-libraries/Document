@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::GetListStartPosition@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetListStartPosition"><summary>Get the last start position when the list is opened.</summary><returns>The start position.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::GetListStartPosition@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetListStartPosition"><summary>Get the last start position when the list is opened.</summary><returns>The start position.</returns><signature><![CDATA[TextPos();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::SetAcceptTabInput@void(bool)" accessor="public" category="Function" name="SetAcceptTabInput"><summary>Set if this control accepts tab character input.</summary><param name="value">Set to true to make this control accept tab character input.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::SetAcceptTabInput@void(bool)" accessor="public" category="Function" name="SetAcceptTabInput"><summary>Set if this control accepts tab character input.</summary><param name="value">Set to true to make this control accept tab character input.</param><signature><![CDATA[void(bool);
+]]></signature></Document>

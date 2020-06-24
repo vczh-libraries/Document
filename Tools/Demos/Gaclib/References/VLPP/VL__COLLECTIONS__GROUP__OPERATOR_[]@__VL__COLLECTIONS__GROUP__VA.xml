@@ -1,1 +1,2 @@
-<Document symbolId="vl::collections::Group::operator []@::vl::collections::Group::ValueContainer const &amp;([KK] const &amp;)" accessor="public" category="Function" name="operator []"><summary>Get all values associated with a key.</summary><returns>All values.</returns><param name="key">The key to find.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::Group::operator []@::vl::collections::Group::ValueContainer const &amp;([KK] const &amp;)" accessor="public" category="Function" name="operator []"><summary>Get all values associated with a key.</summary><returns>All values.</returns><param name="key">The key to find.</param><signature><![CDATA[ValueContainer const &(KK const &) const;
+]]></signature></Document>

@@ -1,1 +1,3 @@
-<Document symbolId="vl::stream::FileStream::$__ctor@(::vl::WString const &amp;, ::vl::stream::FileStream::AccessRight)" accessor="public" category="Function" name="$__ctor"><summary>Create a stream.</summary><param name="fileName">File to operate.</param><param name="_accessRight">Operations want to perform on the file.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::FileStream::$__ctor@(::vl::WString const &amp;, ::vl::stream::FileStream::AccessRight)" accessor="public" category="Function" name="$__ctor"><summary>Create a stream.</summary><param name="fileName">File to operate.</param><param name="_accessRight">Operations want to perform on the file.</param><signature><![CDATA[(WString const &,
+AccessRight);
+]]></signature></Document>

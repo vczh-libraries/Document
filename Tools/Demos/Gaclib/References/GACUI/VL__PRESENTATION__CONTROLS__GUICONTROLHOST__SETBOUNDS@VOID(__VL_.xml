@@ -1,1 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::SetBounds@void(::vl::presentation::NativePoint, ::vl::presentation::Size)" accessor="public" category="Function" name="SetBounds"><summary>Set the location in screen space and the client size of the window.</summary><param name="location">The location of the window.</param><param name="size">The client size of the window.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::SetBounds@void(::vl::presentation::NativePoint, ::vl::presentation::Size)" accessor="public" category="Function" name="SetBounds"><summary>Set the location in screen space and the client size of the window.</summary><param name="location">The location of the window.</param><param name="size">The client size of the window.</param><signature><![CDATA[void(NativePoint,
+Size);
+]]></signature></Document>

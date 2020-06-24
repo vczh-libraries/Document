@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::INativeClipboardReader::ContainsImage@bool()" accessor="public" category="Function" name="ContainsImage"><summary>Test is there an image in the clipboard.</summary><returns>Returns true if there is an image in the clipboard.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::INativeClipboardReader::ContainsImage@bool()" accessor="public" category="Function" name="ContainsImage"><summary>Test is there an image in the clipboard.</summary><returns>Returns true if there is an image in the clipboard.</returns><signature><![CDATA[bool();
+]]></signature></Document>

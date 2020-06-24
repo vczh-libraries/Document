@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::SetPosition@void(::vl::vint)" accessor="public" category="Function" name="SetPosition"><summary>Set the position.</summary><param name="value">The position.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::SetPosition@void(::vl::vint)" accessor="public" category="Function" name="SetPosition"><summary>Set the position.</summary><param name="value">The position.</param><signature><![CDATA[void(vint);
+]]></signature></Document>

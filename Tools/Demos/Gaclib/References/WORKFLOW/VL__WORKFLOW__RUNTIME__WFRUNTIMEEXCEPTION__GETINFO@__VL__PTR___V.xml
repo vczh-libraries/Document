@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeException::GetInfo@::vl::Ptr&lt;::vl::workflow::runtime::WfRuntimeExceptionInfo&gt;()" accessor="public" category="Function" name="GetInfo"><summary>Get the detailed information.</summary><returns>The detailed information.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeException::GetInfo@::vl::Ptr&lt;::vl::workflow::runtime::WfRuntimeExceptionInfo&gt;()" accessor="public" category="Function" name="GetInfo"><summary>Get the detailed information.</summary><returns>The detailed information.</returns><signature><![CDATA[Ptr<WfRuntimeExceptionInfo>() const;
+]]></signature></Document>

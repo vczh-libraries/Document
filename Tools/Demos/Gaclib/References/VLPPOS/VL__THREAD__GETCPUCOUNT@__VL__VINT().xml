@@ -1,1 +1,2 @@
-<Document symbolId="vl::Thread::GetCPUCount@::vl::vint()" accessor="public" category="Function" name="GetCPUCount"><summary>Get the number of logical processors.</summary><returns>The number of logical processor.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Thread::GetCPUCount@::vl::vint()" accessor="public" category="Function" name="GetCPUCount"><summary>Get the number of logical processors.</summary><returns>The number of logical processor.</returns><signature><![CDATA[static vint();
+]]></signature></Document>

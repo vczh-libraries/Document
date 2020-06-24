@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiImageFrameElement::GetStretch@bool()" accessor="public" category="Function" name="GetStretch"><summary>
  Get if stretching is enabled for this image.
- </summary><returns>Return true if stretching is enabled for this image.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Return true if stretching is enabled for this image.</returns><signature><![CDATA[bool();
+]]></signature></Document>

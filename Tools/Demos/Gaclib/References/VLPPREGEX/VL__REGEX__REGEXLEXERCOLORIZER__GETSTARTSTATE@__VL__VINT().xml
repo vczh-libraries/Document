@@ -1,1 +1,2 @@
-<Document symbolId="vl::regex::RegexLexerColorizer::GetStartState@::vl::vint()" accessor="public" category="Function" name="GetStartState"><summary>Get the start DFA state number, which represents the correct state before colorizing any characters.</summary><returns>The DFA state number.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::regex::RegexLexerColorizer::GetStartState@::vl::vint()" accessor="public" category="Function" name="GetStartState"><summary>Get the start DFA state number, which represents the correct state before colorizing any characters.</summary><returns>The DFA state number.</returns><signature><![CDATA[vint() const;
+]]></signature></Document>

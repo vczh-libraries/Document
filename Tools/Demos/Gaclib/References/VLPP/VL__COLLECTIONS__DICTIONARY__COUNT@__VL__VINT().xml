@@ -1,1 +1,2 @@
-<Document symbolId="vl::collections::Dictionary::Count@::vl::vint()" accessor="public" category="Function" name="Count"><summary>Get the number of keys.</summary><returns>The number of keys.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::Dictionary::Count@::vl::vint()" accessor="public" category="Function" name="Count"><summary>Get the number of keys.</summary><returns>The number of keys.</returns><signature><![CDATA[vint() const;
+]]></signature></Document>

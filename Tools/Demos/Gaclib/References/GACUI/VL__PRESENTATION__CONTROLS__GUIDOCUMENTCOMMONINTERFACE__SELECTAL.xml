@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SelectAll@void()" accessor="public" category="Function" name="SelectAll"><summary>Select all text.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SelectAll@void()" accessor="public" category="Function" name="SelectAll"><summary>Select all text.</summary><signature><![CDATA[void();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::GetMinPosition@::vl::vint()" accessor="public" category="Function" name="GetMinPosition"><summary>Get the minimum possible position.</summary><returns>The minimum possible position.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::GetMinPosition@::vl::vint()" accessor="public" category="Function" name="GetMinPosition"><summary>Get the minimum possible position.</summary><returns>The minimum possible position.</returns><signature><![CDATA[vint();
+]]></signature></Document>

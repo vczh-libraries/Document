@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiApplication::SetLocale@void(::vl::Locale)" accessor="public" category="Function" name="SetLocale"><summary>Set the locale for all windows.</summary><param name="value">The selected locale.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiApplication::SetLocale@void(::vl::Locale)" accessor="public" category="Function" name="SetLocale"><summary>Set the locale for all windows.</summary><param name="value">The selected locale.</param><signature><![CDATA[void(Locale);
+]]></signature></Document>

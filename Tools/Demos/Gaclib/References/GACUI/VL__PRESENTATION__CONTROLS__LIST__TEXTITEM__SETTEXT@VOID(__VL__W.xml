@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::TextItem::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Set the text of this item.</summary><param name="value">The text of this item.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::TextItem::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Set the text of this item.</summary><param name="value">The text of this item.</param><signature><![CDATA[void(WString const &);
+]]></signature></Document>

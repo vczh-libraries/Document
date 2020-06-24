@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement::GetBackgroundColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetBackgroundColor"><summary>
  Get the background color.
- </summary><returns>The background color.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The background color.</returns><signature><![CDATA[Color();
+]]></signature></Document>

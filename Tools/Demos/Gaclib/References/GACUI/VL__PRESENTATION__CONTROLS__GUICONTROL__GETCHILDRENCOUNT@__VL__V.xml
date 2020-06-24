@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetChildrenCount@::vl::vint()" accessor="public" category="Function" name="GetChildrenCount"><summary>Get the number of child controls.</summary><returns>The number of child controls.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::GetChildrenCount@::vl::vint()" accessor="public" category="Function" name="GetChildrenCount"><summary>Get the number of child controls.</summary><returns>The number of child controls.</returns><signature><![CDATA[vint();
+]]></signature></Document>

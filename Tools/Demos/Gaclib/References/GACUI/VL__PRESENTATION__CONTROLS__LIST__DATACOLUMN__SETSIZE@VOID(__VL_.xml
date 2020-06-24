@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::SetSize@void(::vl::vint)" accessor="public" category="Function" name="SetSize"><summary>Set the size for the column.</summary><param name="value">The size for the column.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::DataColumn::SetSize@void(::vl::vint)" accessor="public" category="Function" name="SetSize"><summary>Set the size for the column.</summary><param name="value">The size for the column.</param><signature><![CDATA[void(vint);
+]]></signature></Document>

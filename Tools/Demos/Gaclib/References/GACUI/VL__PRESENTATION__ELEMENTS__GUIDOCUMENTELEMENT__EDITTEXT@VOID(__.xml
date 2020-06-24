@@ -1,1 +1,5 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::EditText@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, bool, ::vl::collections::Array&lt;::vl::WString&gt; const &amp;)" accessor="public" category="Function" name="EditText"><summary>Edit text in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="frontSide">Set to true to use the text style in front of the specified range.</param><param name="text">The new text.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::EditText@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, bool, ::vl::collections::Array&lt;::vl::WString&gt; const &amp;)" accessor="public" category="Function" name="EditText"><summary>Edit text in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="frontSide">Set to true to use the text style in front of the specified range.</param><param name="text">The new text.</param><signature><![CDATA[void(TextPos,
+TextPos,
+bool,
+collections::Array<WString> const &);
+]]></signature></Document>

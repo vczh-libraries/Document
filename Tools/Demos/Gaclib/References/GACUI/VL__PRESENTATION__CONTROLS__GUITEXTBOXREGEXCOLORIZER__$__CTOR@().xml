@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the colorizer.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the colorizer.</summary><signature><![CDATA[();
+]]></signature></Document>

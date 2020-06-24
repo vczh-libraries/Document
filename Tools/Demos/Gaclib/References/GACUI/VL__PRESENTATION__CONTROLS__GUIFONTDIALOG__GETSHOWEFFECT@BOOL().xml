@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog::GetShowEffect@bool()" accessor="public" category="Function" name="GetShowEffect"><summary>Get if the font preview is enabled.</summary><returns>Returns true if the font preview is enabled.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiFontDialog::GetShowEffect@bool()" accessor="public" category="Function" name="GetShowEffect"><summary>Get if the font preview is enabled.</summary><returns>Returns true if the font preview is enabled.</returns><signature><![CDATA[bool();
+]]></signature></Document>

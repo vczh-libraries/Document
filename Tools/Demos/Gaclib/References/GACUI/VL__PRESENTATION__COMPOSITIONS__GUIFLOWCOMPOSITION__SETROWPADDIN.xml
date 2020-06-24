@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetRowPadding@void(::vl::vint)" accessor="public" category="Function" name="SetRowPadding"><summary>Set the distance between rows.</summary><param name="value">The distance between rows.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetRowPadding@void(::vl::vint)" accessor="public" category="Function" name="SetRowPadding"><summary>Set the distance between rows.</summary><param name="value">The distance between rows.</param><signature><![CDATA[void(vint);
+]]></signature></Document>

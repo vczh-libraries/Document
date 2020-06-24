@@ -1,1 +1,8 @@
-<Document symbolId="vl::reflection::description::UnboxParameter@void(::vl::reflection::description::Value const &amp;, [T] &amp;, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &amp;)" accessor="" category="Function" name="UnboxParameter"><summary>Box an reflectable object. It supports generic types such as containers, functions, etc.</summary><typeparam name="T">Type of the object.</typeparam><param name="value">The value to unbox.</param><param name="result">The unboxed object.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param><param name="valueName">The name of the object to provide a friendly exception message if the conversion is failed (optional).</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::reflection::description::UnboxParameter@void(::vl::reflection::description::Value const &amp;, [T] &amp;, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &amp;)" accessor="" category="Function" name="UnboxParameter"><summary>Box an reflectable object. It supports generic types such as containers, functions, etc.</summary><typeparam name="T">Type of the object.</typeparam><param name="value">The value to unbox.</param><param name="result">The unboxed object.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param><param name="valueName">The name of the object to provide a friendly exception message if the conversion is failed (optional).</param><signature><![CDATA[template <
+    typename T
+>
+void(Value const &,
+T &,
+ITypeDescriptor * /* optional */,
+WString const & /* optional */);
+]]></signature></Document>

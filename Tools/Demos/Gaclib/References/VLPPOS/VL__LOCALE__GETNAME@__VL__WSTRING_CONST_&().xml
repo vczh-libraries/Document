@@ -1,1 +1,2 @@
-<Document symbolId="vl::Locale::GetName@::vl::WString const &amp;()" accessor="public" category="Function" name="GetName"><summary>Get the name of the locale.</summary><returns>The name of the locale.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Locale::GetName@::vl::WString const &amp;()" accessor="public" category="Function" name="GetName"><summary>Get the name of the locale.</summary><returns>The name of the locale.</returns><signature><![CDATA[WString const &() const;
+]]></signature></Document>

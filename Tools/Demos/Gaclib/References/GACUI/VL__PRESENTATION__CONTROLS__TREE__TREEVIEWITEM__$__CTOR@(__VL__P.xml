@@ -1,1 +1,3 @@
-<Document symbolId="vl::presentation::controls::tree::TreeViewItem::$__ctor@(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt; const &amp;, ::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a tree view item with specified image and text.</summary><param name="_image">The specified image.</param><param name="_text">The specified text.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::tree::TreeViewItem::$__ctor@(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt; const &amp;, ::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a tree view item with specified image and text.</summary><param name="_image">The specified image.</param><param name="_text">The specified text.</param><signature><![CDATA[(Ptr<GuiImageData> const &,
+WString const &);
+]]></signature></Document>

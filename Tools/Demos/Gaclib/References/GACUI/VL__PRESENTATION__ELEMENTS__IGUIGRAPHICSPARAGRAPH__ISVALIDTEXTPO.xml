@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::IsValidTextPos@bool(::vl::vint)" accessor="public" category="Function" name="IsValidTextPos"><summary>Test is the text position valid.</summary><returns>Returns true if the text position is valid.</returns><param name="textPos">The text position to test.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::IsValidTextPos@bool(::vl::vint)" accessor="public" category="Function" name="IsValidTextPos"><summary>Test is the text position valid.</summary><returns>Returns true if the text position is valid.</returns><param name="textPos">The text position to test.</param><signature><![CDATA[bool(vint);
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::GetMaxLength@::vl::vint()" accessor="public" category="Function" name="GetMaxLength"><summary>Get the maximum length of this composition.</summary><returns>The maximum length of this composition.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::GetMaxLength@::vl::vint()" accessor="public" category="Function" name="GetMaxLength"><summary>Get the maximum length of this composition.</summary><returns>The maximum length of this composition.</returns><signature><![CDATA[vint();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::TextWriter::WriteChar@void(wchar_t)" accessor="public" category="Function" name="WriteChar"><summary>Write a single character.</summary><param name="c">The character to write.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::TextWriter::WriteChar@void(wchar_t)" accessor="public" category="Function" name="WriteChar"><summary>Write a single character.</summary><param name="c">The character to write.</param><signature><![CDATA[void(wchar_t);
+]]></signature></Document>

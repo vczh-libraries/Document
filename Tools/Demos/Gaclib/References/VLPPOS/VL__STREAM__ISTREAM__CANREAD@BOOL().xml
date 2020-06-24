@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::IStream::CanRead@bool()" accessor="public" category="Function" name="CanRead"><summary>Test if the stream is readable.</summary><returns>Returns true if the stream is readable.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::IStream::CanRead@bool()" accessor="public" category="Function" name="CanRead"><summary>Test if the stream is readable.</summary><returns>Returns true if the stream is readable.</returns><signature><![CDATA[bool() const;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::GetVerticalScroll@::vl::presentation::controls::GuiScroll *()" accessor="public" category="Function" name="GetVerticalScroll"><summary>Get the vertical scroll control.</summary><returns>The vertical scroll control.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScrollView::GetVerticalScroll@::vl::presentation::controls::GuiScroll *()" accessor="public" category="Function" name="GetVerticalScroll"><summary>Get the vertical scroll control.</summary><returns>The vertical scroll control.</returns><signature><![CDATA[GuiScroll *();
+]]></signature></Document>

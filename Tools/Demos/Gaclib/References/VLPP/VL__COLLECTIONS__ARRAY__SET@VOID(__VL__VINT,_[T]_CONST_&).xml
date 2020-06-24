@@ -1,1 +1,3 @@
-<Document symbolId="vl::collections::Array::Set@void(::vl::vint, [T] const &amp;)" accessor="public" category="Function" name="Set"><summary>Replace an item.</summary><param name="index">The position of the item.</param><param name="item">The new item to put into the array.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::Array::Set@void(::vl::vint, [T] const &amp;)" accessor="public" category="Function" name="Set"><summary>Replace an item.</summary><param name="index">The position of the item.</param><param name="item">The new item to put into the array.</param><signature><![CDATA[void(vint,
+T const &);
+]]></signature></Document>

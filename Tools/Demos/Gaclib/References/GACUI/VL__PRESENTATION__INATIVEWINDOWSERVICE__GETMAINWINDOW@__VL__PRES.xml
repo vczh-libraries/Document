@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowService::GetMainWindow@::vl::presentation::INativeWindow *()" accessor="public" category="Function" name="GetMainWindow"><summary>
  Get the main window.
- </summary><returns>The main window.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The main window.</returns><signature><![CDATA[INativeWindow *();
+]]></signature></Document>

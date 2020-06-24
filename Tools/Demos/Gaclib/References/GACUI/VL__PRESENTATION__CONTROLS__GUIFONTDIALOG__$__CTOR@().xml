@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a font dialog.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiFontDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a font dialog.</summary><signature><![CDATA[();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::regex::RegexString::Length@::vl::vint()" accessor="public" category="Function" name="Length"><summary>The size of the fragment in characters.</summary><returns>The size.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::regex::RegexString::Length@::vl::vint()" accessor="public" category="Function" name="Length"><summary>The size of the fragment in characters.</summary><returns>The size.</returns><signature><![CDATA[vint() const;
+]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::IDataGridView::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this view.</summary><signature><![CDATA[static wchar_t const * const IDataGridView:: Identifier;
+<Document symbolId="vl::presentation::controls::list::IDataGridView::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this view.</summary><signature><![CDATA[static wchar_t const * const Identifier;
 ]]></signature></Document>

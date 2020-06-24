@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetMultiline@bool()" accessor="public" category="Function" name="GetMultiline"><summary>
  Get if multiple lines is enabled for this text.
- </summary><returns>Return true if multiple lines is enabled for this text.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Return true if multiple lines is enabled for this text.</returns><signature><![CDATA[bool();
+]]></signature></Document>

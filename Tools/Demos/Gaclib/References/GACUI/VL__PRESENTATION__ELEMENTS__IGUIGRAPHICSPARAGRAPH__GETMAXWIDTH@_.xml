@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetMaxWidth@::vl::vint()" accessor="public" category="Function" name="GetMaxWidth"><summary>Get the max width for this paragraph. If there is no max width limitation, it returns -1.</summary><returns>The max width for this paragraph.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetMaxWidth@::vl::vint()" accessor="public" category="Function" name="GetMaxWidth"><summary>Get the max width for this paragraph. If there is no max width limitation, it returns -1.</summary><returns>The max width for this paragraph.</returns><signature><![CDATA[vint();
+]]></signature></Document>

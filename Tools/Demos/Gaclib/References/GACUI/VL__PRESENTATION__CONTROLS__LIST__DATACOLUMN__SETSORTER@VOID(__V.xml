@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::SetSorter@void(::vl::Ptr&lt;::vl::presentation::controls::list::IDataSorter&gt;)" accessor="public" category="Function" name="SetSorter"><summary>Set the sorter for the column.</summary><param name="value">The sorter.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::DataColumn::SetSorter@void(::vl::Ptr&lt;::vl::presentation::controls::list::IDataSorter&gt;)" accessor="public" category="Function" name="SetSorter"><summary>Set the sorter for the column.</summary><param name="value">The sorter.</param><signature><![CDATA[void(Ptr<IDataSorter>);
+]]></signature></Document>

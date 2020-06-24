@@ -1,1 +1,2 @@
-<Document symbolId="vl::ObjectString::$__ctor@(::vl::ObjectString&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy a string.</summary><param name="string">The string to copy.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::ObjectString::$__ctor@(::vl::ObjectString&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy a string.</summary><param name="string">The string to copy.</param><signature><![CDATA[(ObjectString<T> const &);
+]]></signature></Document>

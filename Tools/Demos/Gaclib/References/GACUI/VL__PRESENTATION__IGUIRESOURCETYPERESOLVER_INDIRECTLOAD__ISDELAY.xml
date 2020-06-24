@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_IndirectLoad::IsDelayLoad@bool()" accessor="public" category="Function" name="IsDelayLoad"><summary>Get the delay load feature for this resolver.</summary><returns>Returns true if this type need to delay load.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver_IndirectLoad::IsDelayLoad@bool()" accessor="public" category="Function" name="IsDelayLoad"><summary>Get the delay load feature for this resolver.</summary><returns>Returns true if this type need to delay load.</returns><signature><![CDATA[bool();
+]]></signature></Document>

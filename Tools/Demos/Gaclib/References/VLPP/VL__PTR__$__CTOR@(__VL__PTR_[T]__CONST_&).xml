@@ -1,1 +1,2 @@
-<Document symbolId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy a smart pointer.</summary><param name="pointer">The smart pointer to copy.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy a smart pointer.</summary><param name="pointer">The smart pointer to copy.</param><signature><![CDATA[(Ptr<T> const &);
+]]></signature></Document>

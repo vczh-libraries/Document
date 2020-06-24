@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::GetSubMenu@::vl::presentation::controls::GuiToolstripMenu *()" accessor="public" category="Function" name="GetSubMenu"><summary>Get the dropdown menu.</summary><returns>The dropdown menu.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::GetSubMenu@::vl::presentation::controls::GuiToolstripMenu *()" accessor="public" category="Function" name="GetSubMenu"><summary>Get the dropdown menu.</summary><returns>The dropdown menu.</returns><signature><![CDATA[GuiToolstripMenu *();
+]]></signature></Document>

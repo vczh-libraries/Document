@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetFileName@::vl::WString()" accessor="public" category="Function" name="GetFileName"><summary>Get the selected file name.</summary><returns>The selected file name.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetFileName@::vl::WString()" accessor="public" category="Function" name="GetFileName"><summary>Get the selected file name.</summary><returns>The selected file name.</returns><signature><![CDATA[WString();
+]]></signature></Document>

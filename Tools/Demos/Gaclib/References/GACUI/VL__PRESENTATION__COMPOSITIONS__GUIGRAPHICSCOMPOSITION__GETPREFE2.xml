@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetPreferredMinSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetPreferredMinSize"><summary>Get the preferred minimum size.</summary><returns>The preferred minimum size.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetPreferredMinSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetPreferredMinSize"><summary>Get the preferred minimum size.</summary><returns>The preferred minimum size.</returns><signature><![CDATA[Size();
+]]></signature></Document>

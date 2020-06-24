@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetSourceCodeAfterCodegen@::vl::WString()" accessor="public" category="Function" name="GetSourceCodeAfterCodegen"><summary>Get the source code of the executing module from generated syntax trees from the final compiling pass.</summary><returns>The source code.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetSourceCodeAfterCodegen@::vl::WString()" accessor="public" category="Function" name="GetSourceCodeAfterCodegen"><summary>Get the source code of the executing module from generated syntax trees from the final compiling pass.</summary><returns>The source code.</returns><signature><![CDATA[WString();
+]]></signature></Document>

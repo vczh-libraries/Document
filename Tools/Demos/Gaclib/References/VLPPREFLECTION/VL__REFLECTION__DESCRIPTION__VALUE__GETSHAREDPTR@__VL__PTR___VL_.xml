@@ -1,1 +1,2 @@
-<Document symbolId="vl::reflection::description::Value::GetSharedPtr@::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;()" accessor="public" category="Function" name="GetSharedPtr"><summary>Get the stored shared pointer if possible.</summary><returns>The stored shared pointer. Returns null if failed.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::reflection::description::Value::GetSharedPtr@::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;()" accessor="public" category="Function" name="GetSharedPtr"><summary>Get the stored shared pointer if possible.</summary><returns>The stored shared pointer. Returns null if failed.</returns><signature><![CDATA[Ptr<DescriptableObject>() const;
+]]></signature></Document>

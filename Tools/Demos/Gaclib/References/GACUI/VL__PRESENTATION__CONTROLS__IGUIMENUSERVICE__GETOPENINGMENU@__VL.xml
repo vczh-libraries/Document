@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::IGuiMenuService::GetOpeningMenu@::vl::presentation::controls::GuiMenu *()" accessor="public" category="Function" name="GetOpeningMenu"><summary>Get the opening sub menu.</summary><returns>The opening sub menu.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::IGuiMenuService::GetOpeningMenu@::vl::presentation::controls::GuiMenu *()" accessor="public" category="Function" name="GetOpeningMenu"><summary>Get the opening sub menu.</summary><returns>The opening sub menu.</returns><signature><![CDATA[GuiMenu *();
+]]></signature></Document>

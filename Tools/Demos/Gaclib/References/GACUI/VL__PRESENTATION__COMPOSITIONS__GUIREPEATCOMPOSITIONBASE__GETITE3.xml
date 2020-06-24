@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiRepeatCompositionBase::GetItemTemplate@::vl::presentation::compositions::GuiRepeatCompositionBase::ItemStyleProperty()" accessor="public" category="Function" name="GetItemTemplate"><summary>Get the item style provider.</summary><returns>The item style provider.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiRepeatCompositionBase::GetItemTemplate@::vl::presentation::compositions::GuiRepeatCompositionBase::ItemStyleProperty()" accessor="public" category="Function" name="GetItemTemplate"><summary>Get the item style provider.</summary><returns>The item style provider.</returns><signature><![CDATA[ItemStyleProperty();
+]]></signature></Document>

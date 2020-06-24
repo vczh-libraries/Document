@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::GetDefaultColor@::vl::presentation::elements::text::ColorEntry()" accessor="public" category="Function" name="GetDefaultColor"><summary>Get the default color.</summary><returns>The default color.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::GetDefaultColor@::vl::presentation::elements::text::ColorEntry()" accessor="public" category="Function" name="GetDefaultColor"><summary>Get the default color.</summary><returns>The default color.</returns><signature><![CDATA[elements::text::ColorEntry();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::IStream::Size@::vl::pos_t()" accessor="public" category="Function" name="Size"><summary>Get the size of the content..</summary><returns>The size of the content. Returns -1 if the size is unknown or the stream is not available.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::IStream::Size@::vl::pos_t()" accessor="public" category="Function" name="Size"><summary>Get the size of the content..</summary><returns>The size of the content. Returns -1 if the size is unknown or the stream is not available.</returns><signature><![CDATA[pos_t() const;
+]]></signature></Document>

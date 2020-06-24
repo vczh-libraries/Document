@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::CharMeasurer::GetRowHeight@::vl::vint()" accessor="public" category="Function" name="GetRowHeight"><summary>
  Measure the height of a character.
- </summary><returns>The height of a character, in pixel.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The height of a character, in pixel.</returns><signature><![CDATA[vint();
+]]></signature></Document>

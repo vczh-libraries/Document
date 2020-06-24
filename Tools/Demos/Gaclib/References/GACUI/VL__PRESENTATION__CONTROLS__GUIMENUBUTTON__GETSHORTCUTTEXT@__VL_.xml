@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::GetShortcutText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetShortcutText"><summary>Get the shortcut key text for the menu button.</summary><returns>The shortcut key text for the menu button.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiMenuButton::GetShortcutText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetShortcutText"><summary>Get the shortcut key text for the menu button.</summary><returns>The shortcut key text for the menu button.</returns><signature><![CDATA[WString const &();
+]]></signature></Document>

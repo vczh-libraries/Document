@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::EndSetColors@void()" accessor="public" category="Function" name="EndSetColors"><summary>Submit all color settings.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::EndSetColors@void()" accessor="public" category="Function" name="EndSetColors"><summary>Submit all color settings.</summary><signature><![CDATA[void();
+]]></signature></Document>

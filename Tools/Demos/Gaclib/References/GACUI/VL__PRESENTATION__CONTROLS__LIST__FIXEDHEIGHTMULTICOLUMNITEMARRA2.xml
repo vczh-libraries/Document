@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the arranger.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the arranger.</summary><signature><![CDATA[();
+]]></signature></Document>

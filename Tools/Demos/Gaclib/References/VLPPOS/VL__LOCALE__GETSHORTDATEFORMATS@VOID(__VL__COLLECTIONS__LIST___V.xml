@@ -1,1 +1,2 @@
-<Document symbolId="vl::Locale::GetShortDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetShortDateFormats"><summary>Get all short date formats for the locale.</summary><param name="formats">The formats.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Locale::GetShortDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetShortDateFormats"><summary>Get all short date formats for the locale.</summary><param name="formats">The formats.</param><signature><![CDATA[void(collections::List<WString> &) const;
+]]></signature></Document>

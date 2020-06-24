@@ -1,1 +1,2 @@
-<Document symbolId="vl::Locale::GetLongDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetLongDateFormats"><summary>Get all long date formats for the locale.</summary><param name="formats">The formats.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Locale::GetLongDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetLongDateFormats"><summary>Get all long date formats for the locale.</summary><param name="formats">The formats.</param><signature><![CDATA[void(collections::List<WString> &) const;
+]]></signature></Document>

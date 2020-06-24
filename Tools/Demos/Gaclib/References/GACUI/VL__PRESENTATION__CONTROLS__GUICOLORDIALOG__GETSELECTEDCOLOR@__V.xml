@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiColorDialog::GetSelectedColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetSelectedColor"><summary>Get the selected color.</summary><returns>The selected color.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiColorDialog::GetSelectedColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetSelectedColor"><summary>Get the selected color.</summary><returns>The selected color.</returns><signature><![CDATA[Color();
+]]></signature></Document>

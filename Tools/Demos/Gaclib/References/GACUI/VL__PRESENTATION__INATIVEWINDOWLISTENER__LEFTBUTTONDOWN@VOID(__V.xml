@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowListener::LeftButtonDown@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="LeftButtonDown"><summary>
  Called when the left mouse button is pressed.
- </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void(NativeWindowMouseInfo const &);
+]]></signature></Document>

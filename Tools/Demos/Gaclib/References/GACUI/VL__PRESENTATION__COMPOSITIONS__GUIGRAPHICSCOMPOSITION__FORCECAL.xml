@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::ForceCalculateSizeImmediately@void()" accessor="public" category="Function" name="ForceCalculateSizeImmediately"><summary>Force to calculate layout and size immediately</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::ForceCalculateSizeImmediately@void()" accessor="public" category="Function" name="ForceCalculateSizeImmediately"><summary>Force to calculate layout and size immediately</summary><signature><![CDATA[void();
+]]></signature></Document>

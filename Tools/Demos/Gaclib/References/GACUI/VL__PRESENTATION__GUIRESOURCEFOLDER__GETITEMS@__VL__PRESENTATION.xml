@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourceFolder::GetItems@::vl::presentation::GuiResourceFolder::ItemList const &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all sub items.</summary><returns>All sub items.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResourceFolder::GetItems@::vl::presentation::GuiResourceFolder::ItemList const &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all sub items.</summary><returns>All sub items.</returns><signature><![CDATA[ItemList const &();
+]]></signature></Document>

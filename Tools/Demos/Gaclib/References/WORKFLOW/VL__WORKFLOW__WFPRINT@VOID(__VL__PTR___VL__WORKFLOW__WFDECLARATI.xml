@@ -1,1 +1,4 @@
-<Document symbolId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfDeclaration&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" accessor="" category="Function" name="WfPrint"><summary>Print a Workflow declaration.</summary><param name="node">The Workflow declaration.</param><param name="indent">The indentation.</param><param name="writer">The target writer.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfDeclaration&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" accessor="" category="Function" name="WfPrint"><summary>Print a Workflow declaration.</summary><param name="node">The Workflow declaration.</param><param name="indent">The indentation.</param><param name="writer">The target writer.</param><signature><![CDATA[void(Ptr<WfDeclaration>,
+WString const &,
+parsing::ParsingWriter &);
+]]></signature></Document>

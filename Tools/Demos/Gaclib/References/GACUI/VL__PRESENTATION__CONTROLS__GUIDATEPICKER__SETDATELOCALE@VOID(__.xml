@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::SetDateLocale@void(::vl::Locale const &amp;)" accessor="public" category="Function" name="SetDateLocale"><summary>Set the locale to display texts.</summary><param name="value">The locale.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDatePicker::SetDateLocale@void(::vl::Locale const &amp;)" accessor="public" category="Function" name="SetDateLocale"><summary>Set the locale to display texts.</summary><param name="value">The locale.</param><signature><![CDATA[void(Locale const &);
+]]></signature></Document>

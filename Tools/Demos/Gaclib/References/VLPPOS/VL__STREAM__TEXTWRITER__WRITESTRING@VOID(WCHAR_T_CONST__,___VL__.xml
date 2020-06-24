@@ -1,1 +1,3 @@
-<Document symbolId="vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="WriteString"><summary>Write a string.</summary><param name="string">Buffer to the string to write.</param><param name="charCount">Size of the string in characters not including the zero terminator.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="WriteString"><summary>Write a string.</summary><param name="string">Buffer to the string to write.</param><param name="charCount">Size of the string in characters not including the zero terminator.</param><signature><![CDATA[void(wchar_t const *,
+vint);
+]]></signature></Document>

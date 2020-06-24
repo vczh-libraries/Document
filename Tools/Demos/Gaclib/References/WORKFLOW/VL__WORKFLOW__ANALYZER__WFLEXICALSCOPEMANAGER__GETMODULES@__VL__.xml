@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager::GetModules@::vl::workflow::analyzer::WfLexicalScopeManager::ModuleList &amp;()" accessor="public" category="Function" name="GetModules"><summary>Get all added modules.</summary><returns>All added modules.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager::GetModules@::vl::workflow::analyzer::WfLexicalScopeManager::ModuleList &amp;()" accessor="public" category="Function" name="GetModules"><summary>Get all added modules.</summary><returns>All added modules.</returns><signature><![CDATA[ModuleList &();
+]]></signature></Document>

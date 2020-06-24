@@ -1,1 +1,2 @@
-<Document symbolId="vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetShortDayOfWeekName"><summary>Get the short display string of a day of week.</summary><returns>The display string.</returns><param name="dayOfWeek">Day of week, begins from 0 as Sunday.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Locale::GetShortDayOfWeekName@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetShortDayOfWeekName"><summary>Get the short display string of a day of week.</summary><returns>The display string.</returns><param name="dayOfWeek">Day of week, begins from 0 as Sunday.</param><signature><![CDATA[WString(vint) const;
+]]></signature></Document>

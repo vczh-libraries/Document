@@ -1,2 +1,3 @@
 <Document symbolId="vl::Lazy::$__ctor@([T] const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create an evaluation using the result directly.</summary><param name="value">The result that you have already known.</param>0
-<signature><![CDATA[]]></signature></Document>
+<signature><![CDATA[(T const &);
+]]></signature></Document>

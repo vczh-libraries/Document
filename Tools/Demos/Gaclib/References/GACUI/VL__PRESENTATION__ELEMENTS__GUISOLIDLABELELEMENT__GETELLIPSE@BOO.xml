@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetEllipse@bool()" accessor="public" category="Function" name="GetEllipse"><summary>
  Get if ellipse is enabled for this text. Ellipse will appear when the text is clipped.
- </summary><returns>Return true if ellipse is enabled for this text.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Return true if ellipse is enabled for this text.</returns><signature><![CDATA[bool();
+]]></signature></Document>

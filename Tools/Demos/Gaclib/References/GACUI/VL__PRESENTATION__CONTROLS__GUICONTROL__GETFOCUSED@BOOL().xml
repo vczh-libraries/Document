@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetFocused@bool()" accessor="public" category="Function" name="GetFocused"><summary>Test if this control is focused.</summary><returns>Returns true if this control is focused.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::GetFocused@bool()" accessor="public" category="Function" name="GetFocused"><summary>Test if this control is focused.</summary><returns>Returns true if this control is focused.</returns><signature><![CDATA[bool();
+]]></signature></Document>

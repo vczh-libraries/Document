@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::GetBorder@bool()" accessor="public" category="Function" name="GetBorder"><summary>
  Test is the border visible.
- </summary><returns>Returns true if the border is visible.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the border is visible.</returns><signature><![CDATA[bool();
+]]></signature></Document>

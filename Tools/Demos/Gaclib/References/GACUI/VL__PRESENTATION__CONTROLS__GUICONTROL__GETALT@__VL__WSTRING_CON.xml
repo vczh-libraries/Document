@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetAlt@::vl::WString const &amp;()" accessor="public" category="Function" name="GetAlt"><summary>Get the Alt-combined shortcut key associated with this control.</summary><returns>The Alt-combined shortcut key associated with this control.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::GetAlt@::vl::WString const &amp;()" accessor="public" category="Function" name="GetAlt"><summary>Get the Alt-combined shortcut key associated with this control.</summary><returns>The Alt-combined shortcut key associated with this control.</returns><signature><![CDATA[WString const &();
+]]></signature></Document>

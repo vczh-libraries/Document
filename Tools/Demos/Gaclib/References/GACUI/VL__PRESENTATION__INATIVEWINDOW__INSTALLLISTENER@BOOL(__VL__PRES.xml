@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::InstallListener@bool(::vl::presentation::INativeWindowListener *)" accessor="public" category="Function" name="InstallListener"><summary>
  Install an message listener.
- </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The listener to install.</param><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The listener to install.</param><signature><![CDATA[bool(INativeWindowListener *);
+]]></signature></Document>

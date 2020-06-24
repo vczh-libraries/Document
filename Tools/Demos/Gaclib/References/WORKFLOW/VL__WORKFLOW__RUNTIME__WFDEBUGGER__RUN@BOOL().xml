@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::Run@bool()" accessor="public" category="Function" name="Run"><summary>Continue to run the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger::Run@bool()" accessor="public" category="Function" name="Run"><summary>Continue to run the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns><signature><![CDATA[bool();
+]]></signature></Document>

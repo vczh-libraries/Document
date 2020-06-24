@@ -1,1 +1,2 @@
-<Document symbolId="vl::Ptr::$__ctor@([T] *)" accessor="public" category="Function" name="$__ctor"><summary>Convert a pointer to an object to a smart pointer.</summary><param name="pointer">The pointer to the object.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Ptr::$__ctor@([T] *)" accessor="public" category="Function" name="$__ctor"><summary>Convert a pointer to an object to a smart pointer.</summary><param name="pointer">The pointer to the object.</param><signature><![CDATA[(T *);
+]]></signature></Document>

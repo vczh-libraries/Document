@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiImageFrameElement::GetImage@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;()" accessor="public" category="Function" name="GetImage"><summary>
  Get the containing image.
- </summary><returns>The contining picture.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The contining picture.</returns><signature><![CDATA[Ptr<INativeImage>();
+]]></signature></Document>

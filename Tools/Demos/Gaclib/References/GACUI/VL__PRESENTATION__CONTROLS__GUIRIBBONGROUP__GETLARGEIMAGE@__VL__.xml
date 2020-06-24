@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonGroup::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image for the collapsed ribbon group.</summary><returns>The large image for the collapsed ribbon group.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiRibbonGroup::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image for the collapsed ribbon group.</summary><returns>The large image for the collapsed ribbon group.</returns><signature><![CDATA[Ptr<GuiImageData>();
+]]></signature></Document>

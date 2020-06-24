@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiColorDialog::GetEnabledCustomColor@bool()" accessor="public" category="Function" name="GetEnabledCustomColor"><summary>Get if the custom color panel is enabled for the dialog.</summary><returns>Returns true if the color panel is enabled for the dialog.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiColorDialog::GetEnabledCustomColor@bool()" accessor="public" category="Function" name="GetEnabledCustomColor"><summary>Get if the custom color panel is enabled for the dialog.</summary><returns>Returns true if the color panel is enabled for the dialog.</returns><signature><![CDATA[bool();
+]]></signature></Document>

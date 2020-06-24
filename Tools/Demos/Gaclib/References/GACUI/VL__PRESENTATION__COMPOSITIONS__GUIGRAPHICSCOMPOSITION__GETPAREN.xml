@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetParent@::vl::presentation::compositions::GuiGraphicsComposition *()" accessor="public" category="Function" name="GetParent"><summary>Get the parent composition.</summary><returns>The parent composition.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetParent@::vl::presentation::compositions::GuiGraphicsComposition *()" accessor="public" category="Function" name="GetParent"><summary>Get the parent composition.</summary><returns>The parent composition.</returns><signature><![CDATA[GuiGraphicsComposition *();
+]]></signature></Document>

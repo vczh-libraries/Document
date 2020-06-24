@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::OnStartExecution@void()" accessor="protected" category="Function" name="OnStartExecution"><summary>Called when a new Workflow program is about to run.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger::OnStartExecution@void()" accessor="protected" category="Function" name="OnStartExecution"><summary>Called when a new Workflow program is about to run.</summary><signature><![CDATA[void();
+]]></signature></Document>

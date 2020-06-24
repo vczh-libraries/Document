@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::Clear@void()" accessor="public" category="Function" name="Clear"><summary>
  Remove every text lines.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[void();
+]]></signature></Document>

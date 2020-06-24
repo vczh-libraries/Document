@@ -1,1 +1,2 @@
-<Document symbolId="vl::collections::ListBase::Clear@bool()" accessor="public" category="Function" name="Clear"><summary>Remove all elements.</summary><returns>Returns true if all elements are removed.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::ListBase::Clear@bool()" accessor="public" category="Function" name="Clear"><summary>Remove all elements.</summary><returns>Returns true if all elements are removed.</returns><signature><![CDATA[bool();
+]]></signature></Document>

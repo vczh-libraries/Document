@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::CanCut@bool()" accessor="public" category="Function" name="CanCut"><summary>Test can the selection be cut.</summary><returns>Returns true if the selection can be cut.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::CanCut@bool()" accessor="public" category="Function" name="CanCut"><summary>Test can the selection be cut.</summary><returns>Returns true if the selection can be cut.</returns><signature><![CDATA[bool();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::SetSmallMove@void(::vl::vint)" accessor="public" category="Function" name="SetSmallMove"><summary>Set the small move.</summary><param name="value">The small move.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::SetSmallMove@void(::vl::vint)" accessor="public" category="Function" name="SetSmallMove"><summary>Set the small move.</summary><param name="value">The small move.</param><signature><![CDATA[void(vint);
+]]></signature></Document>

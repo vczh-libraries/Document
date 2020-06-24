@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::TextItem::GetChecked@bool()" accessor="public" category="Function" name="GetChecked"><summary>Get the check state of this item.</summary><returns>The check state of this item.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::TextItem::GetChecked@bool()" accessor="public" category="Function" name="GetChecked"><summary>Get the check state of this item.</summary><returns>The check state of this item.</returns><signature><![CDATA[bool();
+]]></signature></Document>

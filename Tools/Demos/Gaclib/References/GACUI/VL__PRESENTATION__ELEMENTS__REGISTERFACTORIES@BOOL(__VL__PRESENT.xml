@@ -1,3 +1,5 @@
 <Document symbolId="vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)" accessor="" category="Function" name="RegisterFactories"><summary>
  Helper function to register a <symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/> with a <symbol docId="vl::presentation::elements::IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"/> and bind them together.
- </summary><returns>Returns true if this operation succeeded.</returns><param name="elementFactory">The element factory to register.</param><param name="rendererFactory">The renderer factory to register.</param><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if this operation succeeded.</returns><param name="elementFactory">The element factory to register.</param><param name="rendererFactory">The renderer factory to register.</param><signature><![CDATA[bool(IGuiGraphicsElementFactory *,
+IGuiGraphicsRendererFactory *);
+]]></signature></Document>

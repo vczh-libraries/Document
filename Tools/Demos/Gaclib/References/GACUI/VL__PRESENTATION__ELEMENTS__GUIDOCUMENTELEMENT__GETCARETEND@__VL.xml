@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement::GetCaretEnd@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretEnd"><summary>
  Get the end position of the selection area.
- </summary><returns>The end position of the selection area.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The end position of the selection area.</returns><signature><![CDATA[TextPos();
+]]></signature></Document>

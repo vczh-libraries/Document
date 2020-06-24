@@ -1,1 +1,2 @@
-<Document symbolId="vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;()" accessor="public" category="Function" name="GetTable"><summary>Get the parser table that used to do the parsing.</summary><returns>The parser table that used to do the parsing.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;()" accessor="public" category="Function" name="GetTable"><summary>Get the parser table that used to do the parsing.</summary><returns>The parser table that used to do the parsing.</returns><signature><![CDATA[Ptr<ParsingTable>();
+]]></signature></Document>

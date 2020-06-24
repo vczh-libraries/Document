@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonTabPage::GetHighlighted@bool()" accessor="public" category="Function" name="GetHighlighted"><summary>Test if this is a highlighted tab page.</summary><returns>Returns true if this is a highlighted tab page.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiRibbonTabPage::GetHighlighted@bool()" accessor="public" category="Function" name="GetHighlighted"><summary>Test if this is a highlighted tab page.</summary><returns>Returns true if this is a highlighted tab page.</returns><signature><![CDATA[bool();
+]]></signature></Document>

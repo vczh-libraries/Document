@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::IGuiPlugin::Load@void()" accessor="public" category="Function" name="Load"><summary>Called when the plugin manager want to load this plugin.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::IGuiPlugin::Load@void()" accessor="public" category="Function" name="Load"><summary>Called when the plugin manager want to load this plugin.</summary><signature><![CDATA[void();
+]]></signature></Document>

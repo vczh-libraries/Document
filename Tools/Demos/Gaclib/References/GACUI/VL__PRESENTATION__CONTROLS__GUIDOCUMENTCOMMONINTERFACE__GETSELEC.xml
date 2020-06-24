@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetSelectionModel@::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;()" accessor="public" category="Function" name="GetSelectionModel"><summary>Get the selected model.</summary><returns>The selected model.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetSelectionModel@::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;()" accessor="public" category="Function" name="GetSelectionModel"><summary>Get the selected model.</summary><returns>The selected model.</returns><signature><![CDATA[Ptr<DocumentModel>();
+]]></signature></Document>

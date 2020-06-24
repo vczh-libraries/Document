@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::GetRunningType@::vl::workflow::runtime::WfDebugger::RunningType()" accessor="public" category="Function" name="GetRunningType"><summary>Get the running type of the debugger.</summary><returns>The running type of the debugger.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger::GetRunningType@::vl::workflow::runtime::WfDebugger::RunningType()" accessor="public" category="Function" name="GetRunningType"><summary>Get the running type of the debugger.</summary><returns>The running type of the debugger.</returns><signature><![CDATA[RunningType();
+]]></signature></Document>

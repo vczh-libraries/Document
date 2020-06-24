@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::GetColumns@::vl::vint()" accessor="public" category="Function" name="GetColumns"><summary>Get the number of columns.</summary><returns>The number of columns.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::GetColumns@::vl::vint()" accessor="public" category="Function" name="GetColumns"><summary>Get the number of columns.</summary><returns>The number of columns.</returns><signature><![CDATA[vint();
+]]></signature></Document>

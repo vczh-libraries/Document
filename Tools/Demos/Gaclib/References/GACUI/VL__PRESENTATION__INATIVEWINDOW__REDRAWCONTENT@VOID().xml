@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::RedrawContent@void()" accessor="public" category="Function" name="RedrawContent"><summary>
  Redraw the content of the window.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[void();
+]]></signature></Document>

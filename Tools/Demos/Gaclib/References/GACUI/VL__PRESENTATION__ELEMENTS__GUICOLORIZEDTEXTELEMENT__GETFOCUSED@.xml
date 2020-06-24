@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetFocused@bool()" accessor="public" category="Function" name="GetFocused"><summary>
  Get the focused state.
- </summary><returns>Returns true if the element will be rendered as a focused element.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the element will be rendered as a focused element.</returns><signature><![CDATA[bool();
+]]></signature></Document>

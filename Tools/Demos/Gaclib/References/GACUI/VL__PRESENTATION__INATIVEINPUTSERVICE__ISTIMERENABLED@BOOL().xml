@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeInputService::IsTimerEnabled@bool()" accessor="public" category="Function" name="IsTimerEnabled"><summary>
  Test is the global timer message receiving enabled.
- </summary><returns>Returns true if the global timer message receiving is enabled.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the global timer message receiving is enabled.</returns><signature><![CDATA[bool();
+]]></signature></Document>

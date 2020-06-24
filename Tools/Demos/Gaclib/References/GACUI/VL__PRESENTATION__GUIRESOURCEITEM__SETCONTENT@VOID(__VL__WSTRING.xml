@@ -1,1 +1,3 @@
-<Document symbolId="vl::presentation::GuiResourceItem::SetContent@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;)" accessor="public" category="Function" name="SetContent"><summary>Set the containd object for this resource item.</summary><param name="_typeName">The type name of this contained object.</param><param name="value">The contained object.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResourceItem::SetContent@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;)" accessor="public" category="Function" name="SetContent"><summary>Set the containd object for this resource item.</summary><param name="_typeName">The type name of this contained object.</param><param name="value">The contained object.</param><signature><![CDATA[void(WString const &,
+Ptr<DescriptableObject>);
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetSelectionText@::vl::WString()" accessor="public" category="Function" name="GetSelectionText"><summary>Get the selected text.</summary><returns>The selected text.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetSelectionText@::vl::WString()" accessor="public" category="Function" name="GetSelectionText"><summary>Get the selected text.</summary><returns>The selected text.</returns><signature><![CDATA[WString();
+]]></signature></Document>

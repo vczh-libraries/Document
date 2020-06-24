@@ -1,1 +1,3 @@
-<Document symbolId="vl::atou64_test@::vl::vuint64_t(::vl::AString const &amp;, bool &amp;)" accessor="" category="Function" name="atou64_test"><summary>Convert a string to a 64-bits unsigned integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::atou64_test@::vl::vuint64_t(::vl::AString const &amp;, bool &amp;)" accessor="" category="Function" name="atou64_test"><summary>Convert a string to a 64-bits unsigned integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vuint64_t(AString const &,
+bool &);
+]]></signature></Document>

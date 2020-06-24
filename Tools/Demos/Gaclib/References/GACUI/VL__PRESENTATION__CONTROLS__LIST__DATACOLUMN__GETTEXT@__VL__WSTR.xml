@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetText@::vl::WString()" accessor="public" category="Function" name="GetText"><summary>Get the text for the column.</summary><returns>The text for the column.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetText@::vl::WString()" accessor="public" category="Function" name="GetText"><summary>Get the text for the column.</summary><returns>The text for the column.</returns><signature><![CDATA[WString();
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeAsyncService::IsInMainThread@bool(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="IsInMainThread"><summary>
  Test is the current thread the main thread.
- </summary><returns>Returns true if the current thread is the main thread.</returns><param name="window">A window to access the corressponding main thread.</param><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the current thread is the main thread.</returns><param name="window">A window to access the corressponding main thread.</param><signature><![CDATA[bool(INativeWindow *);
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::filesystem::Folder::GetFiles@bool(::vl::collections::List&lt;::vl::filesystem::File&gt; &amp;)" accessor="public" category="Function" name="GetFiles"><summary>Get all files in this folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="files">All files.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::filesystem::Folder::GetFiles@bool(::vl::collections::List&lt;::vl::filesystem::File&gt; &amp;)" accessor="public" category="Function" name="GetFiles"><summary>Get all files in this folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="files">All files.</param><signature><![CDATA[bool(collections::List<File> &) const;
+]]></signature></Document>

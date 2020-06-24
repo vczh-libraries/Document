@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText"><summary>Get the text for this command.</summary><returns>The text for this command.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText"><summary>Get the text for this command.</summary><returns>The text for this command.</returns><signature><![CDATA[WString const &();
+]]></signature></Document>

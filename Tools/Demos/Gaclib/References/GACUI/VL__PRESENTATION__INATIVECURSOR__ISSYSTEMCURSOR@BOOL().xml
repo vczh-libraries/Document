@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeCursor::IsSystemCursor@bool()" accessor="public" category="Function" name="IsSystemCursor"><summary>
  Test is the cursor a system provided cursor.
- </summary><returns>Returns true if the cursor a system provided cursor.</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>Returns true if the cursor a system provided cursor.</returns><signature><![CDATA[bool();
+]]></signature></Document>

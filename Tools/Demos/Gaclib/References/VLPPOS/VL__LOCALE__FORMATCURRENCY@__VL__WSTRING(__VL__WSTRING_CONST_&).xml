@@ -1,1 +1,2 @@
-<Document symbolId="vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="FormatCurrency"><summary>Convert a currency (money) to a formatted string.</summary><returns>The formatted string.</returns><param name="currency">The currency to convert.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Locale::FormatCurrency@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="FormatCurrency"><summary>Convert a currency (money) to a formatted string.</summary><returns>The formatted string.</returns><param name="currency">The currency to convert.</param><signature><![CDATA[WString(WString const &) const;
+]]></signature></Document>

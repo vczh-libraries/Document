@@ -1,1 +1,3 @@
-<Document symbolId="vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create a cache stream using a target stream.</summary><param name="_target">The target stream.</param><param name="_block">Size of the cache.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create a cache stream using a target stream.</summary><param name="_target">The target stream.</param><param name="_block">Size of the cache.</param><signature><![CDATA[(IStream &,
+vint /* optional */);
+]]></signature></Document>

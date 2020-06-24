@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()" accessor="public" category="Function" name="CallbackService"><summary>
  Get the callback service.
- </summary><returns>The callback service</returns><signature><![CDATA[]]></signature></Document>
+ </summary><returns>The callback service</returns><signature><![CDATA[INativeCallbackService *();
+]]></signature></Document>

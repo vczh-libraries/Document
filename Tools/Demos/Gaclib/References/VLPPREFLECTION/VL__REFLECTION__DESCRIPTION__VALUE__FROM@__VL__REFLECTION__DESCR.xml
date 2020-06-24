@@ -1,1 +1,2 @@
-<Document symbolId="vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)" accessor="public" category="Function" name="From"><summary>Store a raw pointer.</summary><returns>The boxed value.</returns><param name="value">The raw pointer to store.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)" accessor="public" category="Function" name="From"><summary>Store a raw pointer.</summary><returns>The boxed value.</returns><param name="value">The raw pointer to store.</param><signature><![CDATA[static Value(DescriptableObject *);
+]]></signature></Document>

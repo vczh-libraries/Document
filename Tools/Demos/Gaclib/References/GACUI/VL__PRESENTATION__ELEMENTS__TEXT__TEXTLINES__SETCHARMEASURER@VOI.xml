@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::SetCharMeasurer@void(::vl::presentation::elements::text::CharMeasurer *)" accessor="public" category="Function" name="SetCharMeasurer"><summary>
  Binded a <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.
- </summary><param name="value">The <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/> to bind.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="value">The <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/> to bind.</param><signature><![CDATA[void(CharMeasurer *);
+]]></signature></Document>

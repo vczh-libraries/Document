@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create a global context for executing a Workflow program.</summary><param name="_assembly">The assembly.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create a global context for executing a Workflow program.</summary><param name="_assembly">The assembly.</param><signature><![CDATA[(Ptr<WfAssembly>);
+]]></signature></Document>

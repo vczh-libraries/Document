@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::IStream::CanSeek@bool()" accessor="public" category="Function" name="CanSeek"><summary>Test if the stream is seekable.</summary><returns>Returns true if the stream is seekable.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::IStream::CanSeek@bool()" accessor="public" category="Function" name="CanSeek"><summary>Test if the stream is seekable.</summary><returns>Returns true if the stream is seekable.</returns><signature><![CDATA[bool() const;
+]]></signature></Document>

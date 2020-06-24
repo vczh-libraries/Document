@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::GetSubMenuOpening@bool()" accessor="public" category="Function" name="GetSubMenuOpening"><summary>Test is the sub menu opened.</summary><returns>Returns true if the sub menu is opened.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiMenuButton::GetSubMenuOpening@bool()" accessor="public" category="Function" name="GetSubMenuOpening"><summary>Test is the sub menu opened.</summary><returns>Returns true if the sub menu is opened.</returns><signature><![CDATA[bool();
+]]></signature></Document>

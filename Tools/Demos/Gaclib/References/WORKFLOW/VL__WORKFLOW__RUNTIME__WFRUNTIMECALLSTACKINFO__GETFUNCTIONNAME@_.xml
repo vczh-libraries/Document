@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetFunctionName@::vl::WString()" accessor="public" category="Function" name="GetFunctionName"><summary>Get the name of the executing function.</summary><returns>The name of the execution function.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetFunctionName@::vl::WString()" accessor="public" category="Function" name="GetFunctionName"><summary>Get the name of the executing function.</summary><returns>The name of the execution function.</returns><signature><![CDATA[WString();
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>
  Create a graphics resource manager without any predefined factories
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[();
+]]></signature></Document>

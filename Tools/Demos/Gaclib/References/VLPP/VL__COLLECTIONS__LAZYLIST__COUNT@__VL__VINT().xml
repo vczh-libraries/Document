@@ -1,1 +1,2 @@
-<Document symbolId="vl::collections::LazyList::Count@::vl::vint()" accessor="public" category="Function" name="Count"><summary>Get the number of elements in the lazy list.</summary><returns>The number of elements.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::LazyList::Count@::vl::vint()" accessor="public" category="Function" name="Count"><summary>Get the number of elements in the lazy list.</summary><returns>The number of elements.</returns><signature><![CDATA[vint() const;
+]]></signature></Document>

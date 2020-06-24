@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>
  Set the text.
- </summary><param name="value">The new text.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="value">The new text.</param><signature><![CDATA[void(WString const &);
+]]></signature></Document>

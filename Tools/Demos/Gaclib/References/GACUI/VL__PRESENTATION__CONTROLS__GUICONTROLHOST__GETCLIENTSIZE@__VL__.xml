@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::GetClientSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetClientSize"><summary>Get the client size of the window.</summary><returns>The client size of the window.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::GetClientSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetClientSize"><summary>Get the client size of the window.</summary><returns>The client size of the window.</returns><signature><![CDATA[Size();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::GetMinCount@::vl::vint()" accessor="public" category="Function" name="GetMinCount"><summary>Get the minimum number of items should be displayed.</summary><returns>The minimum number of items should be displayed.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::GetMinCount@::vl::vint()" accessor="public" category="Function" name="GetMinCount"><summary>Get the minimum number of items should be displayed.</summary><returns>The minimum number of items should be displayed.</returns><signature><![CDATA[vint();
+]]></signature></Document>

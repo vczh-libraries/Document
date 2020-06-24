@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeResourceService::SetDefaultFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetDefaultFont"><summary>
  Override the default font configuration for the current process, only available GacUI library.
- </summary><param name="value">The font configuration to override.</param><signature><![CDATA[]]></signature></Document>
+ </summary><param name="value">The font configuration to override.</param><signature><![CDATA[void(FontProperties const &);
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::Locale::UserDefault@::vl::Locale()" accessor="public" category="Function" name="UserDefault"><summary>Get the user default locale. This locale reflect the user&apos;s setting.</summary><returns>The user default locale.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Locale::UserDefault@::vl::Locale()" accessor="public" category="Function" name="UserDefault"><summary>Get the user default locale. This locale reflect the user&apos;s setting.</summary><returns>The user default locale.</returns><signature><![CDATA[static Locale();
+]]></signature></Document>

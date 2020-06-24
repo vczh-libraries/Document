@@ -1,1 +1,2 @@
-<Document symbolId="vl::Nullable::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a null value.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Nullable::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a null value.</summary><signature><![CDATA[();
+]]></signature></Document>

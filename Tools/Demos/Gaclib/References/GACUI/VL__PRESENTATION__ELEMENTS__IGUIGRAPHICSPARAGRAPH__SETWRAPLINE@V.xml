@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetWrapLine@void(bool)" accessor="public" category="Function" name="SetWrapLine"><summary>Set if line auto-wrapping is enabled for this paragraph.</summary><param name="value">True if line auto-wrapping is enabled for this paragraph.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetWrapLine@void(bool)" accessor="public" category="Function" name="SetWrapLine"><summary>Set if line auto-wrapping is enabled for this paragraph.</summary><param name="value">True if line auto-wrapping is enabled for this paragraph.</param><signature><![CDATA[void(bool);
+]]></signature></Document>

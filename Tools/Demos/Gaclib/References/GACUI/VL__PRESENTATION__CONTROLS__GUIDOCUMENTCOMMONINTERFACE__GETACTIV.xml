@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetActiveHyperlinkReference@::vl::WString()" accessor="public" category="Function" name="GetActiveHyperlinkReference"><summary>Get the href attribute of the active hyperlink.</summary><returns>The href attribute of the active hyperlink.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetActiveHyperlinkReference@::vl::WString()" accessor="public" category="Function" name="GetActiveHyperlinkReference"><summary>Get the href attribute of the active hyperlink.</summary><returns>The href attribute of the active hyperlink.</returns><signature><![CDATA[WString();
+]]></signature></Document>

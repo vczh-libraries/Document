@@ -1,1 +1,2 @@
-<Document symbolId="vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator&lt;[T]&gt; *()" accessor="public" category="Function" name="Clone"><summary>Copy the enumerator with the current state.</summary><returns>The copied enumerator.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator&lt;[T]&gt; *()" accessor="public" category="Function" name="Clone"><summary>Copy the enumerator with the current state.</summary><returns>The copied enumerator.</returns><signature><![CDATA[IEnumerator<T> *() const;
+]]></signature></Document>

@@ -1,1 +1,3 @@
-<Document symbolId="vl::Locale::FormatDate@::vl::WString(::vl::WString const &amp;, ::vl::DateTime)" accessor="public" category="Function" name="FormatDate"><summary>Convert a date to a formatted string.</summary><returns>The formatted string.</returns><param name="format">The format to use.</param><param name="date">The date to convert.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Locale::FormatDate@::vl::WString(::vl::WString const &amp;, ::vl::DateTime)" accessor="public" category="Function" name="FormatDate"><summary>Convert a date to a formatted string.</summary><returns>The formatted string.</returns><param name="format">The format to use.</param><param name="date">The date to convert.</param><signature><![CDATA[WString(WString const &,
+DateTime) const;
+]]></signature></Document>

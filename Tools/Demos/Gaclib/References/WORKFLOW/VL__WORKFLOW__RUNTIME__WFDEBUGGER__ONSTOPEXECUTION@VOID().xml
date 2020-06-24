@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::OnStopExecution@void()" accessor="protected" category="Function" name="OnStopExecution"><summary>Called when a Workflow program is stopped by any reason.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger::OnStopExecution@void()" accessor="protected" category="Function" name="OnStopExecution"><summary>Called when a Workflow program is stopped by any reason.</summary><signature><![CDATA[void();
+]]></signature></Document>

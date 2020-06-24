@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::IDataGridView::IsSortOrderAscending@bool()" accessor="public" category="Function" name="IsSortOrderAscending"><summary>Test is the sort order ascending. </summary><returns>Returns true if the sort order is ascending.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::IDataGridView::IsSortOrderAscending@bool()" accessor="public" category="Function" name="IsSortOrderAscending"><summary>Test is the sort order ascending. </summary><returns>Returns true if the sort order is ascending.</returns><signature><![CDATA[bool();
+]]></signature></Document>

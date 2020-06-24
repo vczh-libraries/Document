@@ -1,1 +1,2 @@
-<Document symbolId="vl::collections::SortedList::Add@::vl::vint([T] const &amp;)" accessor="public" category="Function" name="Add"><summary>Add an item at a correct position to keep everying in order.</summary><returns>The index of the added item.</returns><param name="item">The item to add.</param><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::SortedList::Add@::vl::vint([T] const &amp;)" accessor="public" category="Function" name="Add"><summary>Add an item at a correct position to keep everying in order.</summary><returns>The index of the added item.</returns><param name="item">The item to add.</param><signature><![CDATA[vint(T const &);
+]]></signature></Document>

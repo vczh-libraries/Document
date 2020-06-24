@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::IGuiAnimation::Pause@void()" accessor="public" category="Function" name="Pause"><summary>Called when the animation is about to pause.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::IGuiAnimation::Pause@void()" accessor="public" category="Function" name="Pause"><summary>Called when the animation is about to pause.</summary><signature><![CDATA[void();
+]]></signature></Document>

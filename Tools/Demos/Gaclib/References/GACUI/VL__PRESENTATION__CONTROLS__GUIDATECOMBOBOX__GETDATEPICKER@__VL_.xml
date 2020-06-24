@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDateComboBox::GetDatePicker@::vl::presentation::controls::GuiDatePicker *()" accessor="public" category="Function" name="GetDatePicker"><summary>Get the date picker control.</summary><returns>The date picker control.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDateComboBox::GetDatePicker@::vl::presentation::controls::GuiDatePicker *()" accessor="public" category="Function" name="GetDatePicker"><summary>Get the date picker control.</summary><returns>The date picker control.</returns><signature><![CDATA[GuiDatePicker *();
+]]></signature></Document>

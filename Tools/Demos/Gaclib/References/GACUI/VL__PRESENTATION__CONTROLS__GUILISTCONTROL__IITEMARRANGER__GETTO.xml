@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::GetTotalSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetTotalSize"><summary>Get the total size of all data controls.</summary><returns>The total size.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::GetTotalSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetTotalSize"><summary>Get the total size of all data controls.</summary><returns>The total size.</returns><signature><![CDATA[Size();
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::GetParsingExecutor@::vl::Ptr&lt;::vl::presentation::controls::RepeatingParsingExecutor&gt;()" accessor="public" category="Function" name="GetParsingExecutor"><summary>Get the internal parsing executor.</summary><returns>The parsing executor.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::GetParsingExecutor@::vl::Ptr&lt;::vl::presentation::controls::RepeatingParsingExecutor&gt;()" accessor="public" category="Function" name="GetParsingExecutor"><summary>Get the internal parsing executor.</summary><returns>The parsing executor.</returns><signature><![CDATA[Ptr<RepeatingParsingExecutor>();
+]]></signature></Document>

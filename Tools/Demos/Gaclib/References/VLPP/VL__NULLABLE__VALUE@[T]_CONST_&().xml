@@ -1,1 +1,2 @@
-<Document symbolId="vl::Nullable::Value@[T] const &amp;()" accessor="public" category="Function" name="Value"><summary>Unbox the value. This operation will cause an access violation of it is null.</summary><returns>The original value.</returns><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Nullable::Value@[T] const &amp;()" accessor="public" category="Function" name="Value"><summary>Unbox the value. This operation will cause an access violation of it is null.</summary><returns>The original value.</returns><signature><![CDATA[T const &() const;
+]]></signature></Document>
