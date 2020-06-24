@@ -1,1 +1,2 @@
-<Document symbolId="vl::AString" accessor="" category="TypeAlias" name="AString"><summary>Ansi string.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::AString" accessor="" category="TypeAlias" name="AString"><summary>Ansi string.</summary><signature><![CDATA[using AString = ObjectString<char>;
+]]></signature></Document>

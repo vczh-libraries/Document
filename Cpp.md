@@ -39,7 +39,7 @@
   - [ ] `<signature>`.
     - [ ] baes types for classes.
     - [ ] **function**: complete signature (include expression for default values).
-    - [ ] **value alias**, **variable**, **type alias**: type is included, `static`, `constexpr` must exist in signature.
+    - [ ] **variable**: type is included, `static`, `constexpr` must exist in signature.
   - [ ] `<basetypes>`: inheritance tree, generic types are written as `NAME<...>`.
   - [ ] Document article XML and document before/after generated XML to `WebsiteSource` project.
 - [ ] Update `WebsiteSource` to view references.

@@ -426,12 +426,39 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			// TODO: write base class
 		});
 	case symbol_component::SymbolKind::TypeAlias:
-		return L"";
+		return GenerateToStream([=](StreamWriter& writer)
+		{
+			auto decl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>();
+			if (decl->templateSpec)
+			{
+				WriteTemplateSpecInSignature(decl->templateSpec, L"", writer);
+			}
+			writer.WriteString(L"using ");
+			writer.WriteString(decl->name.name);
+			writer.WriteString(L" = ");
+			writer.WriteString(GetTypeDisplayNameInSignature(decl->type));
+			writer.WriteLine(L";");
+		});
 	case symbol_component::SymbolKind::ValueAlias:
-		return L"";
-	case symbol_component::SymbolKind::Variable:
-		return L"";
+		return GenerateToStream([=](StreamWriter& writer)
+		{
+			auto decl = symbol->GetImplDecl_NFb<ValueAliasDeclaration>();
+			if (decl->templateSpec)
+			{
+				WriteTemplateSpecInSignature(decl->templateSpec, L"", writer);
+			}
+			if (decl->decoratorConstexpr) writer.WriteString(L"constexpr ");
+			writer.WriteString(GetTypeDisplayNameInSignature(decl->type, decl->name.name, false));
+			writer.WriteLine(L" = expr;");
+		});
 	case symbol_component::SymbolKind::Namespace:
+		return GenerateToStream([=](StreamWriter& writer)
+		{
+			writer.WriteString(L"namespace ");
+			writer.WriteString(symbol->name);
+			writer.WriteLine(L";");
+		});
+	case symbol_component::SymbolKind::Variable:
 		return L"";
 	case symbol_component::SymbolKind::FunctionSymbol:
 		return L"";

@@ -1,1 +1,2 @@
-<Document symbolId="vl::WString" accessor="" category="TypeAlias" name="WString"><summary>Unicode string.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::WString" accessor="" category="TypeAlias" name="WString"><summary>Unicode string.</summary><signature><![CDATA[using WString = ObjectString<wchar_t>;
+]]></signature></Document>

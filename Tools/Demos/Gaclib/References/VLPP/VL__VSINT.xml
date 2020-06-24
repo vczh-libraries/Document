@@ -1,1 +1,2 @@
-<Document symbolId="vl::vsint" accessor="" category="TypeAlias" name="vsint"><summary>Signed interface whose size is equal to sizeof(void*).</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::vsint" accessor="" category="TypeAlias" name="vsint"><summary>Signed interface whose size is equal to sizeof(void*).</summary><signature><![CDATA[using vsint = vint32_t;
+]]></signature></Document>

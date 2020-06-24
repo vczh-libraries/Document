@@ -1,1 +1,2 @@
-<Document symbolId="vl::KeyType::Type" accessor="public" category="TypeAlias" name="Type"><summary>The index type of a value for containers.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::KeyType::Type" accessor="public" category="TypeAlias" name="Type"><summary>The index type of a value for containers.</summary><signature><![CDATA[using Type = T;
+]]></signature></Document>

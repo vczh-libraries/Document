@@ -1,1 +1,2 @@
-<Document symbolId="vl::vuint64_t" accessor="" category="TypeAlias" name="vuint64_t"><summary>8-bytes unsigned integer.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::vuint64_t" accessor="" category="TypeAlias" name="vuint64_t"><summary>8-bytes unsigned integer.</summary><signature><![CDATA[using vuint64_t = unsigned__int64;;
+]]></signature></Document>

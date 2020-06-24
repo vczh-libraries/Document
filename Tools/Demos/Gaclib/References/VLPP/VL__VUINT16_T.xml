@@ -1,1 +1,2 @@
-<Document symbolId="vl::vuint16_t" accessor="" category="TypeAlias" name="vuint16_t"><summary>2-bytes unsigned integer.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::vuint16_t" accessor="" category="TypeAlias" name="vuint16_t"><summary>2-bytes unsigned integer.</summary><signature><![CDATA[using vuint16_t = unsigned__int16;
+]]></signature></Document>
