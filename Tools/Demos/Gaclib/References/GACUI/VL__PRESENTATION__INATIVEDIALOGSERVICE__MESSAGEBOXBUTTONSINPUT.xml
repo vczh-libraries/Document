@@ -1,3 +1,13 @@
 <Document symbolId="vl::presentation::INativeDialogService::MessageBoxButtonsInput" accessor="public" category="Enum" name="MessageBoxButtonsInput"><summary>
  Message box button combination for displaying a message box.
- </summary><enumitem name="DisplayAbortRetryIgnore">Display Abort, Retry, Ignore.</enumitem><enumitem name="DisplayCancelTryAgainContinue">Display Cancel, TryAgain, Continue.</enumitem><enumitem name="DisplayOK">Display OK.</enumitem><enumitem name="DisplayOKCancel">Display OK, Cancel.</enumitem><enumitem name="DisplayRetryCancel">Display Retry, Cancel.</enumitem><enumitem name="DisplayYesNo">Display Yes, No.</enumitem><enumitem name="DisplayYesNoCancel">Display Yes, No, Cancel.</enumitem><signature><![CDATA[]]></signature></Document>
+ </summary><enumitem name="DisplayAbortRetryIgnore">Display Abort, Retry, Ignore.</enumitem><enumitem name="DisplayCancelTryAgainContinue">Display Cancel, TryAgain, Continue.</enumitem><enumitem name="DisplayOK">Display OK.</enumitem><enumitem name="DisplayOKCancel">Display OK, Cancel.</enumitem><enumitem name="DisplayRetryCancel">Display Retry, Cancel.</enumitem><enumitem name="DisplayYesNo">Display Yes, No.</enumitem><enumitem name="DisplayYesNoCancel">Display Yes, No, Cancel.</enumitem><signature><![CDATA[enum MessageBoxButtonsInput
+{
+    DisplayOK,
+    DisplayOKCancel,
+    DisplayYesNo,
+    DisplayYesNoCancel,
+    DisplayRetryCancel,
+    DisplayAbortRetryIgnore,
+    DisplayCancelTryAgainContinue,
+};
+]]></signature></Document>

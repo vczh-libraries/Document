@@ -1,1 +1,9 @@
-<Document symbolId="vl::presentation::controls::TabPageOrder" accessor="" category="Enum" name="TabPageOrder"><summary>Represents the order of tab pages.</summary><enumitem name="BottomToTop">Bottom to top.</enumitem><enumitem name="LeftToRight">Left to right.</enumitem><enumitem name="RightToLeft">Right to left.</enumitem><enumitem name="TopToBottom">Top to bottom.</enumitem><enumitem name="Unknown">Unknown.</enumitem><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::TabPageOrder" accessor="" category="Enum" name="TabPageOrder"><summary>Represents the order of tab pages.</summary><enumitem name="BottomToTop">Bottom to top.</enumitem><enumitem name="LeftToRight">Left to right.</enumitem><enumitem name="RightToLeft">Right to left.</enumitem><enumitem name="TopToBottom">Top to bottom.</enumitem><enumitem name="Unknown">Unknown.</enumitem><signature><![CDATA[enum class TabPageOrder
+{
+    Unknown,
+    LeftToRight,
+    RightToLeft,
+    TopToBottom,
+    BottomToTop,
+};
+]]></signature></Document>

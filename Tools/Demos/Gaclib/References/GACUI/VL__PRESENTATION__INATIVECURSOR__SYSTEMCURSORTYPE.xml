@@ -26,4 +26,20 @@
  Sizing W-E cursor.
  </enumitem><enumitem name="SmallWaiting">
  Small waiting cursor.
- </enumitem><signature><![CDATA[]]></signature></Document>
+ </enumitem><signature><![CDATA[enum SystemCursorType
+{
+    SmallWaiting,
+    LargeWaiting,
+    Arrow,
+    Cross,
+    Hand,
+    Help,
+    IBeam,
+    SizeAll,
+    SizeNESW,
+    SizeNS,
+    SizeNWSE,
+    SizeWE,
+    LastSystemCursor,
+};
+]]></signature></Document>

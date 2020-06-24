@@ -1,1 +1,7 @@
-<Document symbolId="vl::presentation::INativeWindow::WindowSizeState" accessor="public" category="Enum" name="WindowSizeState"><summary>Window size state.</summary><enumitem name="Maximized">Maximized.</enumitem><enumitem name="Minimized">Minimized.</enumitem><enumitem name="Restored">Restored.</enumitem><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::INativeWindow::WindowSizeState" accessor="public" category="Enum" name="WindowSizeState"><summary>Window size state.</summary><enumitem name="Maximized">Maximized.</enumitem><enumitem name="Minimized">Minimized.</enumitem><enumitem name="Restored">Restored.</enumitem><signature><![CDATA[enum WindowSizeState
+{
+    Minimized,
+    Restored,
+    Maximized,
+};
+]]></signature></Document>

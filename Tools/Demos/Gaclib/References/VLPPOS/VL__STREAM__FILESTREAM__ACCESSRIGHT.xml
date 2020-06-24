@@ -1,1 +1,7 @@
-<Document symbolId="vl::stream::FileStream::AccessRight" accessor="public" category="Enum" name="AccessRight"><summary>Access to the file.</summary><enumitem name="ReadOnly">The file is opened to read.</enumitem><enumitem name="ReadWrite">The file is opened to both read and write.</enumitem><enumitem name="WriteOnly">The file is opened to write.</enumitem><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::FileStream::AccessRight" accessor="public" category="Enum" name="AccessRight"><summary>Access to the file.</summary><enumitem name="ReadOnly">The file is opened to read.</enumitem><enumitem name="ReadWrite">The file is opened to both read and write.</enumitem><enumitem name="WriteOnly">The file is opened to write.</enumitem><signature><![CDATA[enum AccessRight
+{
+    ReadOnly,
+    WriteOnly,
+    ReadWrite,
+};
+]]></signature></Document>

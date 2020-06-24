@@ -1,1 +1,20 @@
-<Document symbolId="vl::presentation::INativeWindowListener::HitTestResult" accessor="public" category="Enum" name="HitTestResult"><summary>Hit test result for a native window.</summary><enumitem name="BorderBottom">Bottom border.</enumitem><enumitem name="BorderLeft">Left border.</enumitem><enumitem name="BorderLeftBottom">Left bottom border.</enumitem><enumitem name="BorderLeftTop">Left top border.</enumitem><enumitem name="BorderNoSizing">Border that doesn&apos;t contain sizing functionalitiy.</enumitem><enumitem name="BorderRight">Right border.</enumitem><enumitem name="BorderRightBottom">Right bottom border.</enumitem><enumitem name="BorderRightTop">Right top border.</enumitem><enumitem name="BorderTop">Top border.</enumitem><enumitem name="ButtonClose">Close button.</enumitem><enumitem name="ButtonMaximum">Maximum button.</enumitem><enumitem name="ButtonMinimum">Minimum button.</enumitem><enumitem name="Client">Client button.</enumitem><enumitem name="Icon">Icon.</enumitem><enumitem name="NoDecision">Let the OS window layer decide.</enumitem><enumitem name="Title">Title</enumitem><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::INativeWindowListener::HitTestResult" accessor="public" category="Enum" name="HitTestResult"><summary>Hit test result for a native window.</summary><enumitem name="BorderBottom">Bottom border.</enumitem><enumitem name="BorderLeft">Left border.</enumitem><enumitem name="BorderLeftBottom">Left bottom border.</enumitem><enumitem name="BorderLeftTop">Left top border.</enumitem><enumitem name="BorderNoSizing">Border that doesn&apos;t contain sizing functionalitiy.</enumitem><enumitem name="BorderRight">Right border.</enumitem><enumitem name="BorderRightBottom">Right bottom border.</enumitem><enumitem name="BorderRightTop">Right top border.</enumitem><enumitem name="BorderTop">Top border.</enumitem><enumitem name="ButtonClose">Close button.</enumitem><enumitem name="ButtonMaximum">Maximum button.</enumitem><enumitem name="ButtonMinimum">Minimum button.</enumitem><enumitem name="Client">Client button.</enumitem><enumitem name="Icon">Icon.</enumitem><enumitem name="NoDecision">Let the OS window layer decide.</enumitem><enumitem name="Title">Title</enumitem><signature><![CDATA[enum HitTestResult
+{
+    BorderNoSizing,
+    BorderLeft,
+    BorderRight,
+    BorderTop,
+    BorderBottom,
+    BorderLeftTop,
+    BorderRightTop,
+    BorderLeftBottom,
+    BorderRightBottom,
+    Title,
+    ButtonMinimum,
+    ButtonMaximum,
+    ButtonClose,
+    Client,
+    Icon,
+    NoDecision,
+};
+]]></signature></Document>

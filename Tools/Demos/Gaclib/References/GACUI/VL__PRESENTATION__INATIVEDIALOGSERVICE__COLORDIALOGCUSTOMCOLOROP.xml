@@ -1,3 +1,9 @@
 <Document symbolId="vl::presentation::INativeDialogService::ColorDialogCustomColorOptions" accessor="public" category="Enum" name="ColorDialogCustomColorOptions"><summary>
  Color dialog custom color options
- </summary><enumitem name="CustomColorDisabled">Disable the custom color panel.</enumitem><enumitem name="CustomColorEnabled">Enable the custom color panel.</enumitem><enumitem name="CustomColorOpened">Open the custom color panel at the beginning.</enumitem><signature><![CDATA[]]></signature></Document>
+ </summary><enumitem name="CustomColorDisabled">Disable the custom color panel.</enumitem><enumitem name="CustomColorEnabled">Enable the custom color panel.</enumitem><enumitem name="CustomColorOpened">Open the custom color panel at the beginning.</enumitem><signature><![CDATA[enum ColorDialogCustomColorOptions
+{
+    CustomColorDisabled,
+    CustomColorEnabled,
+    CustomColorOpened,
+};
+]]></signature></Document>

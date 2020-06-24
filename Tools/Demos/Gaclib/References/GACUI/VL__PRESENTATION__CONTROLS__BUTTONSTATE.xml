@@ -1,1 +1,7 @@
-<Document symbolId="vl::presentation::controls::ButtonState" accessor="" category="Enum" name="ButtonState"><summary>The visual state for button.</summary><enumitem name="Active">Active state (when the cursor is hovering on a button).</enumitem><enumitem name="Normal">Normal state.</enumitem><enumitem name="Pressed">Pressed state (when the buttin is being pressed).</enumitem><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::ButtonState" accessor="" category="Enum" name="ButtonState"><summary>The visual state for button.</summary><enumitem name="Active">Active state (when the cursor is hovering on a button).</enumitem><enumitem name="Normal">Normal state.</enumitem><enumitem name="Pressed">Pressed state (when the buttin is being pressed).</enumitem><signature><![CDATA[enum class ButtonState
+{
+    Normal,
+    Active,
+    Pressed,
+};
+]]></signature></Document>

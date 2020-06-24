@@ -326,5 +326,47 @@ GetSymbolDisplayNameInSignature
 
 WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 {
-	return L"";
+	switch (symbol->kind)
+	{
+	case symbol_component::SymbolKind::Enum:
+		return GenerateToStream([=](StreamWriter& writer)
+		{
+			auto fdecl = symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
+			auto decl = symbol->GetImplDecl_NFb<EnumDeclaration>();
+
+			writer.WriteString(L"enum ");
+			if (fdecl->enumClass) writer.WriteString(L"class ");
+			if (fdecl->name) writer.WriteString(fdecl->name.name);
+			if (decl)
+			{
+				writer.WriteLine(L"");
+				writer.WriteLine(L"{");
+				for (vint i = 0; i < decl->items.Count(); i++)
+				{
+					writer.WriteString(L"    ");
+					writer.WriteString(decl->items[i]->name.name);
+					writer.WriteLine(L",");
+				}
+				writer.WriteLine(L"};");
+			}
+			else
+			{
+				writer.WriteLine(L";");
+			}
+		});
+	case CLASS_SYMBOL_KIND:
+		return L"";
+	case symbol_component::SymbolKind::TypeAlias:
+		return L"";
+	case symbol_component::SymbolKind::ValueAlias:
+		return L"";
+	case symbol_component::SymbolKind::Variable:
+		return L"";
+	case symbol_component::SymbolKind::Namespace:
+		return L"";
+	case symbol_component::SymbolKind::FunctionSymbol:
+		return L"";
+	default:
+		throw L"Unexpected symbol kind.";
+	}
 }

@@ -1,3 +1,10 @@
 <Document symbolId="vl::presentation::INativeDialogService::FileDialogTypes" accessor="public" category="Enum" name="FileDialogTypes"><summary>
  File dialog type.
- </summary><enumitem name="FileDialogOpen">Open file dialog.</enumitem><enumitem name="FileDialogOpenPreview">Open file dialog with preview.</enumitem><enumitem name="FileDialogSave">Save file dialog.</enumitem><enumitem name="FileDialogSavePreview">Save file dialog with preview.</enumitem><signature><![CDATA[]]></signature></Document>
+ </summary><enumitem name="FileDialogOpen">Open file dialog.</enumitem><enumitem name="FileDialogOpenPreview">Open file dialog with preview.</enumitem><enumitem name="FileDialogSave">Save file dialog.</enumitem><enumitem name="FileDialogSavePreview">Save file dialog with preview.</enumitem><signature><![CDATA[enum FileDialogTypes
+{
+    FileDialogOpen,
+    FileDialogOpenPreview,
+    FileDialogSave,
+    FileDialogSavePreview,
+};
+]]></signature></Document>

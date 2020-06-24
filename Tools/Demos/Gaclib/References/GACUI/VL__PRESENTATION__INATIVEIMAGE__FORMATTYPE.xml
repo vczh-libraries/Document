@@ -16,4 +16,15 @@
  Unknown format.
  </enumitem><enumitem name="Wmp">
  WMP format.
- </enumitem><signature><![CDATA[]]></signature></Document>
+ </enumitem><signature><![CDATA[enum FormatType
+{
+    Bmp,
+    Gif,
+    Icon,
+    Jpeg,
+    Png,
+    Tiff,
+    Wmp,
+    Unknown,
+};
+]]></signature></Document>
