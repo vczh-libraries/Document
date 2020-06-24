@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::MemoryNodeRootProvider::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a node root provider.</summary><signature><![CDATA[();
+<Document symbolId="vl::presentation::controls::tree::MemoryNodeRootProvider::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a node root provider.</summary><signature><![CDATA[ MemoryNodeRootProvider();
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetModified@bool()" accessor="public" category="Function" name="GetModified"><summary>Test is the text box modified.</summary><returns>Returns true if the text box is modified.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetModified@bool()" accessor="public" category="Function" name="GetModified"><summary>Test is the text box modified.</summary><returns>Returns true if the text box is modified.</returns><signature><![CDATA[bool GetModified();
 ]]></signature></Document>

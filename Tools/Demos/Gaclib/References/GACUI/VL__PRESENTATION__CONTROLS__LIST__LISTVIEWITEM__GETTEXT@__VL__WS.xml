@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::ListViewItem::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText"><summary>Get the text of this item.</summary><returns>The text of this item.</returns><signature><![CDATA[WString const &();
+<Document symbolId="vl::presentation::controls::list::ListViewItem::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText"><summary>Get the text of this item.</summary><returns>The text of this item.</returns><signature><![CDATA[WString const & GetText();
 ]]></signature></Document>

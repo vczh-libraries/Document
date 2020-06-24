@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetTag@::vl::reflection::description::Value()" accessor="public" category="Function" name="GetTag"><summary>Get the tag object of the control.</summary><returns>The tag object of the control.</returns><signature><![CDATA[description::Value();
+<Document symbolId="vl::presentation::controls::GuiControl::GetTag@::vl::reflection::description::Value()" accessor="public" category="Function" name="GetTag"><summary>Get the tag object of the control.</summary><returns>The tag object of the control.</returns><signature><![CDATA[description::Value GetTag();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowService::GetWindow@::vl::presentation::INativeWindow *(::vl::presentation::NativePoint)" accessor="public" category="Function" name="GetWindow"><summary>
  Get the window that under a specified position in screen space.
- </summary><returns>The window that under a specified position in screen space.</returns><param name="location">The specified position in screen space.</param><signature><![CDATA[INativeWindow *(NativePoint);
+ </summary><returns>The window that under a specified position in screen space.</returns><param name="location">The specified position in screen space.</param><signature><![CDATA[INativeWindow * GetWindow(NativePoint);
 ]]></signature></Document>

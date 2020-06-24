@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::QueryFullSize@::vl::presentation::Size()" accessor="protected" category="Function" name="QueryFullSize"><summary>Calculate the full size of the content.</summary><returns>The full size of the content.</returns><signature><![CDATA[Size();
+<Document symbolId="vl::presentation::controls::GuiScrollView::QueryFullSize@::vl::presentation::Size()" accessor="protected" category="Function" name="QueryFullSize"><summary>Calculate the full size of the content.</summary><returns>The full size of the content.</returns><signature><![CDATA[Size QueryFullSize();
 ]]></signature></Document>

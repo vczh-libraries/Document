@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetControlThemeName@::vl::presentation::theme::ThemeName()" accessor="public" category="Function" name="GetControlThemeName"><summary>Get the associated theme name.</summary><returns>The theme name.</returns><signature><![CDATA[theme::ThemeName();
+<Document symbolId="vl::presentation::controls::GuiControl::GetControlThemeName@::vl::presentation::theme::ThemeName()" accessor="public" category="Function" name="GetControlThemeName"><summary>Get the associated theme name.</summary><returns>The theme name.</returns><signature><![CDATA[theme::ThemeName GetControlThemeName();
 ]]></signature></Document>

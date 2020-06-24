@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiLabel::SetTextColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetTextColor"><summary>Set the text color.</summary><param name="value">The text color.</param><signature><![CDATA[void(Color);
+<Document symbolId="vl::presentation::controls::GuiLabel::SetTextColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetTextColor"><summary>Set the text color.</summary><param name="value">The text color.</param><signature><![CDATA[void SetTextColor(Color);
 ]]></signature></Document>

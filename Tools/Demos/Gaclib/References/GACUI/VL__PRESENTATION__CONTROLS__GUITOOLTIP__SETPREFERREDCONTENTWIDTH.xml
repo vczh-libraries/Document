@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTooltip::SetPreferredContentWidth@void(::vl::vint)" accessor="public" category="Function" name="SetPreferredContentWidth"><summary>Set the preferred content width.</summary><param name="value">The preferred content width.</param><signature><![CDATA[void(vint);
+<Document symbolId="vl::presentation::controls::GuiTooltip::SetPreferredContentWidth@void(::vl::vint)" accessor="public" category="Function" name="SetPreferredContentWidth"><summary>Set the preferred content width.</summary><param name="value">The preferred content width.</param><signature><![CDATA[void SetPreferredContentWidth(vint);
 ]]></signature></Document>

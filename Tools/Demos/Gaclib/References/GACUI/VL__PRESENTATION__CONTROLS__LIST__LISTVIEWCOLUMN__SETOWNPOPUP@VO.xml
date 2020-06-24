@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::ListViewColumn::SetOwnPopup@void(bool)" accessor="public" category="Function" name="SetOwnPopup"><summary>Set if the column owns the popup.</summary><param name="value">Set to true to let the column own the popup.</param><signature><![CDATA[void(bool);
+<Document symbolId="vl::presentation::controls::list::ListViewColumn::SetOwnPopup@void(bool)" accessor="public" category="Function" name="SetOwnPopup"><summary>Set if the column owns the popup.</summary><param name="value">Set to true to let the column own the popup.</param><signature><![CDATA[void SetOwnPopup(bool);
 ]]></signature></Document>

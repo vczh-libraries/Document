@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::GetAnalyzer@::vl::Ptr&lt;::vl::presentation::controls::RepeatingParsingExecutor::IParsingAnalyzer&gt;()" accessor="public" category="Function" name="GetAnalyzer"><summary>Get the parsing analyzer.</summary><returns>The parsing analyzer.</returns><signature><![CDATA[Ptr<IParsingAnalyzer>();
+<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::GetAnalyzer@::vl::Ptr&lt;::vl::presentation::controls::RepeatingParsingExecutor::IParsingAnalyzer&gt;()" accessor="public" category="Function" name="GetAnalyzer"><summary>Get the parsing analyzer.</summary><returns>The parsing analyzer.</returns><signature><![CDATA[Ptr<IParsingAnalyzer> GetAnalyzer();
 ]]></signature></Document>

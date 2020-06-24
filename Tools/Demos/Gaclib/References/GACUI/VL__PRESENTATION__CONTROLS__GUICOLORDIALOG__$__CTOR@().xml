@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiColorDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a color dialog.</summary><signature><![CDATA[();
+<Document symbolId="vl::presentation::controls::GuiColorDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a color dialog.</summary><signature><![CDATA[ GuiColorDialog();
 ]]></signature></Document>

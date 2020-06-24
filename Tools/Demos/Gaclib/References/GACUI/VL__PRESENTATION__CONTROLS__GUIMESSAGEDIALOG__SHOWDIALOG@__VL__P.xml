@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMessageDialog::ShowDialog@::vl::presentation::INativeDialogService::MessageBoxButtonsOutput()" accessor="public" category="Function" name="ShowDialog"><summary>Show the dialog.</summary><returns>Returns the clicked button.</returns><signature><![CDATA[INativeDialogService::MessageBoxButtonsOutput();
+<Document symbolId="vl::presentation::controls::GuiMessageDialog::ShowDialog@::vl::presentation::INativeDialogService::MessageBoxButtonsOutput()" accessor="public" category="Function" name="ShowDialog"><summary>Show the dialog.</summary><returns>Returns the clicked button.</returns><signature><![CDATA[INativeDialogService::MessageBoxButtonsOutput ShowDialog();
 ]]></signature></Document>

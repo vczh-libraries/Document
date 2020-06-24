@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::SetViewPosition@void(::vl::presentation::Point)" accessor="public" category="Function" name="SetViewPosition"><summary>Set the position of the left-top corner of the view bounds.</summary><param name="value">The position.</param><signature><![CDATA[void(Point);
+<Document symbolId="vl::presentation::controls::GuiScrollView::SetViewPosition@void(::vl::presentation::Point)" accessor="public" category="Function" name="SetViewPosition"><summary>Set the position of the left-top corner of the view bounds.</summary><param name="value">The position.</param><signature><![CDATA[void SetViewPosition(Point);
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::GetAxis@::vl::presentation::compositions::IGuiAxis *()" accessor="public" category="Function" name="GetAxis"><summary>Get the item coordinate transformer.</summary><returns>The item coordinate transformer.</returns><signature><![CDATA[compositions::IGuiAxis *();
+<Document symbolId="vl::presentation::controls::GuiListControl::GetAxis@::vl::presentation::compositions::IGuiAxis *()" accessor="public" category="Function" name="GetAxis"><summary>Get the item coordinate transformer.</summary><returns>The item coordinate transformer.</returns><signature><![CDATA[compositions::IGuiAxis * GetAxis();
 ]]></signature></Document>

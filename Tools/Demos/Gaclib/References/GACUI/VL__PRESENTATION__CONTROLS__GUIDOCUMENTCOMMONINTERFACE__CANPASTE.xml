@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::CanPaste@bool()" accessor="public" category="Function" name="CanPaste"><summary>Test can the content in the clipboard be pasted.</summary><returns>Returns true if the content in the clipboard can be pasted.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::CanPaste@bool()" accessor="public" category="Function" name="CanPaste"><summary>Test can the content in the clipboard be pasted.</summary><returns>Returns true if the content in the clipboard can be pasted.</returns><signature><![CDATA[bool CanPaste();
 ]]></signature></Document>

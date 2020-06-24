@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiOpenFileDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a open file dialog.</summary><signature><![CDATA[();
+<Document symbolId="vl::presentation::controls::GuiOpenFileDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a open file dialog.</summary><signature><![CDATA[ GuiOpenFileDialog();
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::console::Console::Read@::vl::WString()" accessor="public" category="Function" name="Read"><summary>Read from the command line window.</summary><returns>The whole line read from the command line window.</returns><signature><![CDATA[static WString();
+<Document symbolId="vl::console::Console::Read@::vl::WString()" accessor="public" category="Function" name="Read"><summary>Read from the command line window.</summary><returns>The whole line read from the command line window.</returns><signature><![CDATA[static WString Read();
 ]]></signature></Document>

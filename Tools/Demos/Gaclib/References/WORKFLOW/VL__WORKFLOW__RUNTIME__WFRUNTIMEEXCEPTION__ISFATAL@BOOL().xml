@@ -1,2 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeException::IsFatal@bool()" accessor="public" category="Function" name="IsFatal"><summary>Get the fatal error flag.</summary><returns>Returns true if this exception is a fatal error, which normally means state corruption in a Workflow runtime.</returns><signature><![CDATA[bool() const;
+<Document symbolId="vl::workflow::runtime::WfRuntimeException::IsFatal@bool()" accessor="public" category="Function" name="IsFatal"><summary>Get the fatal error flag.</summary><returns>Returns true if this exception is a fatal error, which normally means state corruption in a Workflow runtime.</returns><signature><![CDATA[bool IsFatal() const;
 ]]></signature></Document>

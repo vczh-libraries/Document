@@ -1,2 +1,2 @@
-<Document symbolId="vl::console::Console::Write@void(wchar_t const *)" accessor="public" category="Function" name="Write"><summary>Write to the command line window.</summary><param name="string">Content to write.</param><signature><![CDATA[static void(wchar_t const *);
+<Document symbolId="vl::console::Console::Write@void(wchar_t const *)" accessor="public" category="Function" name="Write"><summary>Write to the command line window.</summary><param name="string">Content to write.</param><signature><![CDATA[static void Write(wchar_t const *);
 ]]></signature></Document>

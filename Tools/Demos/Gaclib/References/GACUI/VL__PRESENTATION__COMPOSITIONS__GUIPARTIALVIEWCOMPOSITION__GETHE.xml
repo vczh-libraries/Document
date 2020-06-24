@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::GetHeightPageSize@double()" accessor="public" category="Function" name="GetHeightPageSize"><summary>Get the page size to decide the vertical size. Value in [0, 1].</summary><returns>The page size to decide the vertical size.</returns><signature><![CDATA[double();
+<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::GetHeightPageSize@double()" accessor="public" category="Function" name="GetHeightPageSize"><summary>Get the page size to decide the vertical size. Value in [0, 1].</summary><returns>The page size to decide the vertical size.</returns><signature><![CDATA[double GetHeightPageSize();
 ]]></signature></Document>

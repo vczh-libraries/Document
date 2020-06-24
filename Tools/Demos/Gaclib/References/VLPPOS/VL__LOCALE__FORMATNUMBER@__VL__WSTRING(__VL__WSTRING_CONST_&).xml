@@ -1,2 +1,2 @@
-<Document symbolId="vl::Locale::FormatNumber@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="FormatNumber"><summary>Convert a number to a formatted string.</summary><returns>The formatted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString(WString const &) const;
+<Document symbolId="vl::Locale::FormatNumber@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="FormatNumber"><summary>Convert a number to a formatted string.</summary><returns>The formatted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString FormatNumber(WString const &) const;
 ]]></signature></Document>

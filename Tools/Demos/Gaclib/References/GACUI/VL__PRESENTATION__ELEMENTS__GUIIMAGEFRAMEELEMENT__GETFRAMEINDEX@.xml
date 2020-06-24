@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiImageFrameElement::GetFrameIndex@::vl::vint()" accessor="public" category="Function" name="GetFrameIndex"><summary>
  Get the index of the frame in the containing image.
- </summary><returns>The index of the frame in the containing image</returns><signature><![CDATA[vint();
+ </summary><returns>The index of the frame in the containing image</returns><signature><![CDATA[vint GetFrameIndex();
 ]]></signature></Document>

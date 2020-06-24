@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::IGuiAnimation::Resume@void()" accessor="public" category="Function" name="Resume"><summary>Called when the animation is about to resume.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::IGuiAnimation::Resume@void()" accessor="public" category="Function" name="Resume"><summary>Called when the animation is about to resume.</summary><signature><![CDATA[void Resume();
 ]]></signature></Document>

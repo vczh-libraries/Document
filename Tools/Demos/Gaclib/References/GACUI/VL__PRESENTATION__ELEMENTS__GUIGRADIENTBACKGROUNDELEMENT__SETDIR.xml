@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiGradientBackgroundElement::SetDirection@void(::vl::presentation::elements::GuiGradientBackgroundElement::Direction)" accessor="public" category="Function" name="SetDirection"><summary>
  Set the direction.
- </summary><param name="value">The new direction.</param><signature><![CDATA[void(Direction);
+ </summary><param name="value">The new direction.</param><signature><![CDATA[void SetDirection(Direction);
 ]]></signature></Document>

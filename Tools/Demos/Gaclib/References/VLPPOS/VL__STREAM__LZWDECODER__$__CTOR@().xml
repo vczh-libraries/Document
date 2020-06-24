@@ -1,2 +1,2 @@
-<Document symbolId="vl::stream::LzwDecoder::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an decoder.</summary><signature><![CDATA[();
+<Document symbolId="vl::stream::LzwDecoder::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an decoder.</summary><signature><![CDATA[ LzwDecoder();
 ]]></signature></Document>

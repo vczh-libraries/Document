@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::CalculateView@void()" accessor="public" category="Function" name="CalculateView"><summary>Force to update contents and scroll bars.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiScrollView::CalculateView@void()" accessor="public" category="Function" name="CalculateView"><summary>Force to update contents and scroll bars.</summary><signature><![CDATA[void CalculateView();
 ]]></signature></Document>

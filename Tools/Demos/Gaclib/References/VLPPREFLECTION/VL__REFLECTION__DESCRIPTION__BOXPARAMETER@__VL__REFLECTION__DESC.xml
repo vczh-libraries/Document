@@ -1,6 +1,6 @@
 <Document symbolId="vl::reflection::description::BoxParameter@::vl::reflection::description::Value(::vl::reflection::description::TypeInfoRetriver::ResultReferenceType, ::vl::reflection::description::ITypeDescriptor *)" accessor="" category="Function" name="BoxParameter"><summary>Box an reflectable object. It supports generic types such as containers, functions, etc.</summary><returns>The boxed value.</returns><typeparam name="T">Type of the object.</typeparam><param name="object">The object to box.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param><signature><![CDATA[template <
     typename T
 >
-Value(TypeInfoRetriver<T>::ResultReferenceType,
+Value BoxParameter(TypeInfoRetriver<T>::ResultReferenceType,
 ITypeDescriptor * /* optional */);
 ]]></signature></Document>

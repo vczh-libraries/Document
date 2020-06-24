@@ -1,2 +1,2 @@
-<Document symbolId="vl::reflection::description::Value::GetRawPtr@::vl::reflection::DescriptableObject *()" accessor="public" category="Function" name="GetRawPtr"><summary>Get the stored raw pointer if possible.</summary><returns>The stored raw pointer. Returns null if failed.</returns><signature><![CDATA[DescriptableObject *() const;
+<Document symbolId="vl::reflection::description::Value::GetRawPtr@::vl::reflection::DescriptableObject *()" accessor="public" category="Function" name="GetRawPtr"><summary>Get the stored raw pointer if possible.</summary><returns>The stored raw pointer. Returns null if failed.</returns><signature><![CDATA[DescriptableObject * GetRawPtr() const;
 ]]></signature></Document>

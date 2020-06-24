@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourceItem::GetTypeName@::vl::WString const &amp;()" accessor="public" category="Function" name="GetTypeName"><summary>Get the type of this resource item.</summary><returns>The type name.</returns><signature><![CDATA[WString const &();
+<Document symbolId="vl::presentation::GuiResourceItem::GetTypeName@::vl::WString const &amp;()" accessor="public" category="Function" name="GetTypeName"><summary>Get the type of this resource item.</summary><returns>The type name.</returns><signature><![CDATA[WString const & GetTypeName();
 ]]></signature></Document>

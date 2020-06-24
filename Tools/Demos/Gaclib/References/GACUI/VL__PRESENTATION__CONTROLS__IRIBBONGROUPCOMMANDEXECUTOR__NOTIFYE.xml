@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::IRibbonGroupCommandExecutor::NotifyExpandButtonClicked@void()" accessor="public" category="Function" name="NotifyExpandButtonClicked"><summary>Called when the expand button is clicked.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::IRibbonGroupCommandExecutor::NotifyExpandButtonClicked@void()" accessor="public" category="Function" name="NotifyExpandButtonClicked"><summary>Called when the expand button is clicked.</summary><signature><![CDATA[void NotifyExpandButtonClicked();
 ]]></signature></Document>

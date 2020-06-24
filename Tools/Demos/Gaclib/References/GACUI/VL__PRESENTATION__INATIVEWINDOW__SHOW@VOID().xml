@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::Show@void()" accessor="public" category="Function" name="Show"><summary>
  Show the window.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void Show();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetColor@bool(::vl::vint, ::vl::vint, ::vl::presentation::Color)" accessor="public" category="Function" name="SetColor"><summary>Replace the color within the specified range.</summary><param name="start">The position of the first character of the specified range.</param><param name="length">The length of the specified range by character.</param><param name="value">The color.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool(vint,
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetColor@bool(::vl::vint, ::vl::vint, ::vl::presentation::Color)" accessor="public" category="Function" name="SetColor"><summary>Replace the color within the specified range.</summary><param name="start">The position of the first character of the specified range.</param><param name="length">The length of the specified range by character.</param><param name="value">The color.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool SetColor(vint,
 vint,
 Color);
 ]]></signature></Document>

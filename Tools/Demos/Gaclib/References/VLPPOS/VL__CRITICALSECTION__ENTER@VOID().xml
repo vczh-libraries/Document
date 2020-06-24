@@ -1,2 +1,2 @@
-<Document symbolId="vl::CriticalSection::Enter@void()" accessor="public" category="Function" name="Enter"><summary>Enter a critical section.</summary><signature><![CDATA[void();
+<Document symbolId="vl::CriticalSection::Enter@void()" accessor="public" category="Function" name="Enter"><summary>Enter a critical section.</summary><signature><![CDATA[void Enter();
 ]]></signature></Document>

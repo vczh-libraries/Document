@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::IGuiResourceResolverManager::GetMaxPrecompilePassIndex@::vl::vint()" accessor="public" category="Function" name="GetMaxPrecompilePassIndex"><summary>Get the maximum precompiling pass index.</summary><returns>The maximum precompiling pass index.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::IGuiResourceResolverManager::GetMaxPrecompilePassIndex@::vl::vint()" accessor="public" category="Function" name="GetMaxPrecompilePassIndex"><summary>Get the maximum precompiling pass index.</summary><returns>The maximum precompiling pass index.</returns><signature><![CDATA[vint GetMaxPrecompilePassIndex();
 ]]></signature></Document>

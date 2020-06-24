@@ -1,3 +1,3 @@
-<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)" accessor="public" category="Function" name="Rebuild"><summary>Compile.</summary><param name="keepTypeDescriptorNames">Set to false to delete all cache of reflectable C++ types before compiling.</param><param name="callback">The callback to receive progress information, could be nullptr.</param><signature><![CDATA[void(bool,
+<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)" accessor="public" category="Function" name="Rebuild"><summary>Compile.</summary><param name="keepTypeDescriptorNames">Set to false to delete all cache of reflectable C++ types before compiling.</param><param name="callback">The callback to receive progress information, could be nullptr.</param><signature><![CDATA[void Rebuild(bool,
 IWfCompilerCallback * /* optional */);
 ]]></signature></Document>

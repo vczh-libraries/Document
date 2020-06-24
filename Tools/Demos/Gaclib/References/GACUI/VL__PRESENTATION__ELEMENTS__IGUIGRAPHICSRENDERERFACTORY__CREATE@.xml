@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRendererFactory::Create@::vl::presentation::elements::IGuiGraphicsRenderer *()" accessor="public" category="Function" name="Create"><summary>
  Create a <symbol docId="vl::presentation::elements::IGuiGraphicsRenderer" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderer"/>.
- </summary><returns>Returns the created graphics renderer.</returns><signature><![CDATA[IGuiGraphicsRenderer *();
+ </summary><returns>Returns the created graphics renderer.</returns><signature><![CDATA[IGuiGraphicsRenderer * Create();
 ]]></signature></Document>

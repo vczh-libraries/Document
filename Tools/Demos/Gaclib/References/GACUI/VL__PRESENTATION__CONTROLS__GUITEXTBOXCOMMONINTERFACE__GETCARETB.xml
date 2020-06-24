@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetCaretBegin@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretBegin"><summary>Get the begin text position of the selection.</summary><returns>The begin text position of the selection.</returns><signature><![CDATA[TextPos();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetCaretBegin@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretBegin"><summary>Get the begin text position of the selection.</summary><returns>The begin text position of the selection.</returns><signature><![CDATA[TextPos GetCaretBegin();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl::SelectItemsByKey@bool(::vl::presentation::VKEY, bool, bool)" accessor="public" category="Function" name="SelectItemsByKey"><summary>Set the selection status using keys.</summary><returns>Returns true if this operation succeeded.</returns><param name="code">The key code that is pressing.</param><param name="ctrl">Set to true if the control key is pressing.</param><param name="shift">Set to true if the shift key is pressing.</param><signature><![CDATA[bool(VKEY,
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl::SelectItemsByKey@bool(::vl::presentation::VKEY, bool, bool)" accessor="public" category="Function" name="SelectItemsByKey"><summary>Set the selection status using keys.</summary><returns>Returns true if this operation succeeded.</returns><param name="code">The key code that is pressing.</param><param name="ctrl">Set to true if the control key is pressing.</param><param name="shift">Set to true if the shift key is pressing.</param><signature><![CDATA[bool SelectItemsByKey(VKEY,
 bool,
 bool);
 ]]></signature></Document>

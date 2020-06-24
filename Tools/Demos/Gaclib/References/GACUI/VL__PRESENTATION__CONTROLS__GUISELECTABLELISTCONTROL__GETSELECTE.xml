@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl::GetSelected@bool(::vl::vint)" accessor="public" category="Function" name="GetSelected"><summary>Get the selection status of an item.</summary><returns>The selection status of an item.</returns><param name="itemIndex">The index of the item.</param><signature><![CDATA[bool(vint);
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl::GetSelected@bool(::vl::vint)" accessor="public" category="Function" name="GetSelected"><summary>Get the selection status of an item.</summary><returns>The selection status of an item.</returns><param name="itemIndex">The index of the item.</param><signature><![CDATA[bool GetSelected(vint);
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::GetMaximizedBox@bool()" accessor="public" category="Function" name="GetMaximizedBox"><summary>
  Test is the maximize box visible.
- </summary><returns>Returns true if the maximize box is visible.</returns><signature><![CDATA[bool();
+ </summary><returns>Returns true if the maximize box is visible.</returns><signature><![CDATA[bool GetMaximizedBox();
 ]]></signature></Document>

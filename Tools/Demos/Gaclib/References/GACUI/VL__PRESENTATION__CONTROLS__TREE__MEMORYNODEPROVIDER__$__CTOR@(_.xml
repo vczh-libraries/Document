@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::$__ctor@(::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create a node provider with a data object.</summary><param name="_data">The data object.</param><signature><![CDATA[(Ptr<DescriptableObject> /* optional */);
+<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::$__ctor@(::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create a node provider with a data object.</summary><param name="_data">The data object.</param><signature><![CDATA[ MemoryNodeProvider(Ptr<DescriptableObject> /* optional */);
 ]]></signature></Document>

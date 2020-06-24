@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::GalleryGroup::GetName@::vl::WString()" accessor="public" category="Function" name="GetName"><summary>Get the title of this group.</summary><returns>The title of this group.</returns><signature><![CDATA[WString();
+<Document symbolId="vl::presentation::controls::list::GalleryGroup::GetName@::vl::WString()" accessor="public" category="Function" name="GetName"><summary>Get the title of this group.</summary><returns>The title of this group.</returns><signature><![CDATA[WString GetName();
 ]]></signature></Document>

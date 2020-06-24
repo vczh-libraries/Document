@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonGallery::GetScrollUpEnabled@bool()" accessor="public" category="Function" name="GetScrollUpEnabled"><summary>Test if the scroll up button is enabled.</summary><returns>Returns true if the scroll up button is enabled.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiRibbonGallery::GetScrollUpEnabled@bool()" accessor="public" category="Function" name="GetScrollUpEnabled"><summary>Test if the scroll up button is enabled.</summary><returns>Returns true if the scroll up button is enabled.</returns><signature><![CDATA[bool GetScrollUpEnabled();
 ]]></signature></Document>

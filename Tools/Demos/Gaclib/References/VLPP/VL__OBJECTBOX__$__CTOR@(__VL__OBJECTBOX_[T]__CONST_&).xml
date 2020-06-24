@@ -1,2 +1,2 @@
-<Document symbolId="vl::ObjectBox::$__ctor@(::vl::ObjectBox&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy a box.</summary><param name="value">The box.</param><signature><![CDATA[(ObjectBox<T> const &);
+<Document symbolId="vl::ObjectBox::$__ctor@(::vl::ObjectBox&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy a box.</summary><param name="value">The box.</param><signature><![CDATA[ ObjectBox(ObjectBox<T> const &);
 ]]></signature></Document>

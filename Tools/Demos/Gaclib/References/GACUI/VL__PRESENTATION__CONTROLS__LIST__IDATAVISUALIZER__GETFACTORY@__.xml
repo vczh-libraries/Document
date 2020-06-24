@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::IDataVisualizer::GetFactory@::vl::presentation::controls::list::IDataVisualizerFactory *()" accessor="public" category="Function" name="GetFactory"><summary>Get the factory object that creates this visualizer.</summary><returns>The factory object.</returns><signature><![CDATA[IDataVisualizerFactory *();
+<Document symbolId="vl::presentation::controls::list::IDataVisualizer::GetFactory@::vl::presentation::controls::list::IDataVisualizerFactory *()" accessor="public" category="Function" name="GetFactory"><summary>Get the factory object that creates this visualizer.</summary><returns>The factory object.</returns><signature><![CDATA[IDataVisualizerFactory * GetFactory();
 ]]></signature></Document>

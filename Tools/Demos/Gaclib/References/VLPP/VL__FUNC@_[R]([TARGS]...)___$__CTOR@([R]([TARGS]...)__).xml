@@ -1,2 +1,2 @@
-<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([R]([TArgs]...) *)" accessor="public" category="Function" name="$__ctor"><summary>Create a reference using a function pointer.</summary><param name="function">The function pointer.</param><signature><![CDATA[(R( *)(TArgs...));
+<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([R]([TArgs]...) *)" accessor="public" category="Function" name="$__ctor"><summary>Create a reference using a function pointer.</summary><param name="function">The function pointer.</param><signature><![CDATA[ Func(R( *)(TArgs...));
 ]]></signature></Document>

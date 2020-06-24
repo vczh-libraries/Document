@@ -1,2 +1,2 @@
-<Document symbolId="vl::ftow@::vl::WString(double)" accessor="" category="Function" name="ftow"><summary>Convert a 64-bits floating pointer number to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString(double);
+<Document symbolId="vl::ftow@::vl::WString(double)" accessor="" category="Function" name="ftow"><summary>Convert a 64-bits floating pointer number to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString ftow(double);
 ]]></signature></Document>

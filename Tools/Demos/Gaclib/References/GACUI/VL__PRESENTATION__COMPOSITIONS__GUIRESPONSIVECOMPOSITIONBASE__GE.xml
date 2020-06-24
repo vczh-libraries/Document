@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiResponsiveCompositionBase::GetCurrentLevel@::vl::vint()" accessor="public" category="Function" name="GetCurrentLevel"><summary>Get the current level. Zero is the view with the smallest size.</summary><returns>The current level.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::compositions::GuiResponsiveCompositionBase::GetCurrentLevel@::vl::vint()" accessor="public" category="Function" name="GetCurrentLevel"><summary>Get the current level. Zero is the view with the smallest size.</summary><returns>The current level.</returns><signature><![CDATA[vint GetCurrentLevel();
 ]]></signature></Document>

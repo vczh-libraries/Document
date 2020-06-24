@@ -1,2 +1,2 @@
-<Document symbolId="vl::ObjectBox::Unbox@[T] const &amp;()" accessor="public" category="Function" name="Unbox"><summary>Unbox the value.</summary><returns>The original value.</returns><signature><![CDATA[T const &();
+<Document symbolId="vl::ObjectBox::Unbox@[T] const &amp;()" accessor="public" category="Function" name="Unbox"><summary>Unbox the value.</summary><returns>The original value.</returns><signature><![CDATA[T const & Unbox();
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::GetSubMenu@::vl::presentation::controls::GuiMenu *()" accessor="public" category="Function" name="GetSubMenu"><summary>Get the sub menu. If the sub menu is not created, it returns null.</summary><returns>The sub menu.</returns><signature><![CDATA[GuiMenu *();
+<Document symbolId="vl::presentation::controls::GuiMenuButton::GetSubMenu@::vl::presentation::controls::GuiMenu *()" accessor="public" category="Function" name="GetSubMenu"><summary>Get the sub menu. If the sub menu is not created, it returns null.</summary><returns>The sub menu.</returns><signature><![CDATA[GuiMenu * GetSubMenu();
 ]]></signature></Document>

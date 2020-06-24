@@ -1,2 +1,2 @@
-<Document symbolId="vl::collections::PartialOrderingProcessor::Sort@void()" accessor="public" category="Function" name="Sort"><summary>Sort. This method can only be called once.</summary><signature><![CDATA[void();
+<Document symbolId="vl::collections::PartialOrderingProcessor::Sort@void()" accessor="public" category="Function" name="Sort"><summary>Sort. This method can only be called once.</summary><signature><![CDATA[void Sort();
 ]]></signature></Document>

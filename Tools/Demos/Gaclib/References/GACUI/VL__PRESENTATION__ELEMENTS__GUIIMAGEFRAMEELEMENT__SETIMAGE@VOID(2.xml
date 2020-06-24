@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiImageFrameElement::SetImage@void(::vl::Ptr&lt;::vl::presentation::INativeImage&gt;, ::vl::vint)" accessor="public" category="Function" name="SetImage"><summary>
  Set the containing image and the frame index.
- </summary><param name="_image">The new containing image.</param><param name="_frameIndex">The new frameIndex.</param><signature><![CDATA[void(Ptr<INativeImage>,
+ </summary><param name="_image">The new containing image.</param><param name="_frameIndex">The new frameIndex.</param><signature><![CDATA[void SetImage(Ptr<INativeImage>,
 vint);
 ]]></signature></Document>

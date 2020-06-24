@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiSaveFileDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a save file dialog.</summary><signature><![CDATA[();
+<Document symbolId="vl::presentation::controls::GuiSaveFileDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a save file dialog.</summary><signature><![CDATA[ GuiSaveFileDialog();
 ]]></signature></Document>

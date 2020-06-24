@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentItem::GetName@::vl::WString()" accessor="public" category="Function" name="GetName"><summary>Get the name of the document item.</summary><returns>The name.</returns><signature><![CDATA[WString();
+<Document symbolId="vl::presentation::controls::GuiDocumentItem::GetName@::vl::WString()" accessor="public" category="Function" name="GetName"><summary>Get the name of the document item.</summary><returns>The name.</returns><signature><![CDATA[WString GetName();
 ]]></signature></Document>

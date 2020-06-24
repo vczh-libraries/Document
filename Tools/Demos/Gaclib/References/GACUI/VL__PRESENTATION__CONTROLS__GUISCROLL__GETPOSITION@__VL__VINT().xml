@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::GetPosition@::vl::vint()" accessor="public" category="Function" name="GetPosition"><summary>Get the position.</summary><returns>The position.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::controls::GuiScroll::GetPosition@::vl::vint()" accessor="public" category="Function" name="GetPosition"><summary>Get the position.</summary><returns>The position.</returns><signature><![CDATA[vint GetPosition();
 ]]></signature></Document>

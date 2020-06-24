@@ -1,2 +1,2 @@
-<Document symbolId="vl::filesystem::FilePath::IsFolder@bool()" accessor="public" category="Function" name="IsFolder"><summary>Test if the file path is a folder.</summary><returns>Returns true if the file path is a folder.</returns><signature><![CDATA[bool() const;
+<Document symbolId="vl::filesystem::FilePath::IsFolder@bool()" accessor="public" category="Function" name="IsFolder"><summary>Test if the file path is a folder.</summary><returns>Returns true if the file path is a folder.</returns><signature><![CDATA[bool IsFolder() const;
 ]]></signature></Document>

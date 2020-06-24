@@ -2,7 +2,7 @@
     typename TList, 
     typename TSubClass
 >
-void(TList const &,
+void InitWithSubClass(TList const &,
 GroupOf<TList> const &,
 Dictionary<TList::ElementType, TSubClass> const &);
 ]]></signature></Document>

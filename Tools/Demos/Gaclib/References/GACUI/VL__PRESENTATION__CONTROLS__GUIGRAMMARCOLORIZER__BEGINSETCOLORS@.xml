@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::BeginSetColors@void()" accessor="public" category="Function" name="BeginSetColors"><summary>Reset all color settings.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::BeginSetColors@void()" accessor="public" category="Function" name="BeginSetColors"><summary>Reset all color settings.</summary><signature><![CDATA[void BeginSetColors();
 ]]></signature></Document>

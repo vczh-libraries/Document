@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::GetSmallMove@::vl::vint()" accessor="public" category="Function" name="GetSmallMove"><summary>Get the small move.</summary><returns>The small move.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::controls::GuiScroll::GetSmallMove@::vl::vint()" accessor="public" category="Function" name="GetSmallMove"><summary>Get the small move.</summary><returns>The small move.</returns><signature><![CDATA[vint GetSmallMove();
 ]]></signature></Document>

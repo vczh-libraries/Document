@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SetReadonly@void(bool)" accessor="public" category="Function" name="SetReadonly"><summary>Set the readonly mode.</summary><param name="value">Set to true to make the texg box readonly.</param><signature><![CDATA[void(bool);
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SetReadonly@void(bool)" accessor="public" category="Function" name="SetReadonly"><summary>Set the readonly mode.</summary><param name="value">Set to true to make the texg box readonly.</param><signature><![CDATA[void SetReadonly(bool);
 ]]></signature></Document>

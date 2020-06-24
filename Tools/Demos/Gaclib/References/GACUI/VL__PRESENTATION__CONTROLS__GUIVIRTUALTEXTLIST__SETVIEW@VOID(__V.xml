@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualTextList::SetView@void(::vl::presentation::controls::TextListView)" accessor="public" category="Function" name="SetView"><summary>Set the current view.</summary><param name="_view">The current view.</param><signature><![CDATA[void(TextListView);
+<Document symbolId="vl::presentation::controls::GuiVirtualTextList::SetView@void(::vl::presentation::controls::TextListView)" accessor="public" category="Function" name="SetView"><summary>Set the current view.</summary><param name="_view">The current view.</param><signature><![CDATA[void SetView(TextListView);
 ]]></signature></Document>

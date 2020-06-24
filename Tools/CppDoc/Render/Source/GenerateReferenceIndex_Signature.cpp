@@ -546,7 +546,10 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			}
 			else
 			{
-				WString name = L" " + fdecl->name;
+				WString name = 
+					fdecl->name.name == L"$__ctor" ? L" " + symbol->GetParentScope()->GetAnyForwardDecl<ForwardClassDeclaration>()->name.name :
+					fdecl->name.name == L"$__dtor" ? L" ~" + symbol->GetParentScope()->GetAnyForwardDecl<ForwardClassDeclaration>()->name.name :
+					L" " + fdecl->name.name;
 				if (fdecl->specializationSpec) name += AppendGenericArgumentsInSignature(fdecl->specializationSpec->arguments);
 
 				auto type = GetTypeWithoutMemberAndCC(fdecl->type).Cast<FunctionType>();

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::GroupedDataSource::GetItemSource@::vl::Ptr&lt;::vl::presentation::controls::list::GroupedDataSource::IValueEnumerable&gt;()" accessor="public" category="Function" name="GetItemSource"><summary>Get the item source.</summary><returns>The item source.</returns><signature><![CDATA[Ptr<IValueEnumerable>();
+<Document symbolId="vl::presentation::controls::list::GroupedDataSource::GetItemSource@::vl::Ptr&lt;::vl::presentation::controls::list::GroupedDataSource::IValueEnumerable&gt;()" accessor="public" category="Function" name="GetItemSource"><summary>Get the item source.</summary><returns>The item source.</returns><signature><![CDATA[Ptr<IValueEnumerable> GetItemSource();
 ]]></signature></Document>

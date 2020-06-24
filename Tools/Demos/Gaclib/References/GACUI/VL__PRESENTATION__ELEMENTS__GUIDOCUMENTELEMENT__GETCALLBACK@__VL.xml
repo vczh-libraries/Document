@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::GetCallback@::vl::presentation::elements::GuiDocumentElement::ICallback *()" accessor="public" category="Function" name="GetCallback"><summary>Get the callback.</summary><returns>The callback.</returns><signature><![CDATA[ICallback *();
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::GetCallback@::vl::presentation::elements::GuiDocumentElement::ICallback *()" accessor="public" category="Function" name="GetCallback"><summary>Get the callback.</summary><returns>The callback.</returns><signature><![CDATA[ICallback * GetCallback();
 ]]></signature></Document>

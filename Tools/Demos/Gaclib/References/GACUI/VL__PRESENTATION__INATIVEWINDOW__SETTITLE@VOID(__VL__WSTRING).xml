@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetTitle@void(::vl::WString)" accessor="public" category="Function" name="SetTitle"><summary>
  Set the title of the window. A title will be displayed as a name of this window.
- </summary><param name="title">The title of the window.</param><signature><![CDATA[void(WString);
+ </summary><param name="title">The title of the window.</param><signature><![CDATA[void SetTitle(WString);
 ]]></signature></Document>

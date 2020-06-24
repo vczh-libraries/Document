@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetIcon@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetIcon"><summary>
  Set the icon.
- </summary><param name="icon">The icon. Set to null to use the default icon.</param><signature><![CDATA[void(Ptr<GuiImageData>);
+ </summary><param name="icon">The icon. Set to null to use the default icon.</param><signature><![CDATA[void SetIcon(Ptr<GuiImageData>);
 ]]></signature></Document>

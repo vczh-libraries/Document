@@ -1,2 +1,2 @@
-<Document symbolId="vl::regex::RegexString::Start@::vl::vint()" accessor="public" category="Function" name="Start"><summary>The position of the input string.</summary><returns>The position.</returns><signature><![CDATA[vint() const;
+<Document symbolId="vl::regex::RegexString::Start@::vl::vint()" accessor="public" category="Function" name="Start"><summary>The position of the input string.</summary><returns>The position.</returns><signature><![CDATA[vint Start() const;
 ]]></signature></Document>

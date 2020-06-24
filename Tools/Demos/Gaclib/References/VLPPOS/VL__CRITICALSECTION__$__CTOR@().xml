@@ -1,2 +1,2 @@
-<Document symbolId="vl::CriticalSection::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a critical section.</summary><signature><![CDATA[();
+<Document symbolId="vl::CriticalSection::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a critical section.</summary><signature><![CDATA[ CriticalSection();
 ]]></signature></Document>

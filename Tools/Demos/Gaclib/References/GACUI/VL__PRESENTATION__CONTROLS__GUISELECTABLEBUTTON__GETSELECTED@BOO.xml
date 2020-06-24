@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableButton::GetSelected@bool()" accessor="public" category="Function" name="GetSelected"><summary>Get the selected state.</summary><returns>The selected state.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiSelectableButton::GetSelected@bool()" accessor="public" category="Function" name="GetSelected"><summary>Get the selected state.</summary><returns>The selected state.</returns><signature><![CDATA[bool GetSelected();
 ]]></signature></Document>

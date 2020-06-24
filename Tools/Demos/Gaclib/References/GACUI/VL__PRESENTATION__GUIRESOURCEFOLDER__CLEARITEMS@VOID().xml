@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourceFolder::ClearItems@void()" accessor="public" category="Function" name="ClearItems"><summary>Remove all resource item.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::GuiResourceFolder::ClearItems@void()" accessor="public" category="Function" name="ClearItems"><summary>Remove all resource item.</summary><signature><![CDATA[void ClearItems();
 ]]></signature></Document>

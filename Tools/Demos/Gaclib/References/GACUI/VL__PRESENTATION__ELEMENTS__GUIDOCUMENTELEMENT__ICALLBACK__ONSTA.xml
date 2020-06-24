@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::ICallback::OnStartRender@void()" accessor="public" category="Function" name="OnStartRender"><summary>Called when the rendering is started.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::ICallback::OnStartRender@void()" accessor="public" category="Function" name="OnStartRender"><summary>Called when the rendering is started.</summary><signature><![CDATA[void OnStartRender();
 ]]></signature></Document>

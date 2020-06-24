@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::GetClipper@::vl::presentation::Rect()" accessor="public" category="Function" name="GetClipper"><summary>
  Get the combined clipper
- </summary><returns>The combined clipper</returns><signature><![CDATA[Rect();
+ </summary><returns>The combined clipper</returns><signature><![CDATA[Rect GetClipper();
 ]]></signature></Document>

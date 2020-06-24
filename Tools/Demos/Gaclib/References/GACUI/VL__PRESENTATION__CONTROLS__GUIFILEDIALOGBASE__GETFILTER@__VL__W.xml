@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetFilter@::vl::WString const &amp;()" accessor="public" category="Function" name="GetFilter"><summary>Get the filter.</summary><returns>The filter.</returns><signature><![CDATA[WString const &();
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetFilter@::vl::WString const &amp;()" accessor="public" category="Function" name="GetFilter"><summary>Get the filter.</summary><returns>The filter.</returns><signature><![CDATA[WString const & GetFilter();
 ]]></signature></Document>

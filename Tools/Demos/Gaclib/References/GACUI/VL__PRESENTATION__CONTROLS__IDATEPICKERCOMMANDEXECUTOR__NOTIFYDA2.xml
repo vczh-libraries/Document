@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateNavigated@void()" accessor="public" category="Function" name="NotifyDateNavigated"><summary>Called when navigated to a date.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateNavigated@void()" accessor="public" category="Function" name="NotifyDateNavigated"><summary>Called when navigated to a date.</summary><signature><![CDATA[void NotifyDateNavigated();
 ]]></signature></Document>

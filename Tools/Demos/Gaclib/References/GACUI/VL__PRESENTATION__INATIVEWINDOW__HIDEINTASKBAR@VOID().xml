@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::HideInTaskBar@void()" accessor="public" category="Function" name="HideInTaskBar"><summary>
  Hide the icon in the task bar.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void HideInTaskBar();
 ]]></signature></Document>

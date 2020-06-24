@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)" accessor="" category="Function" name="SetGuiGraphicsResourceManager"><summary>
  Set the current <symbol docId="vl::presentation::elements::GuiGraphicsResourceManager" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiGraphicsResourceManager"/>.
- </summary><param name="resourceManager">The resource manager to set.</param><signature><![CDATA[void(GuiGraphicsResourceManager *);
+ </summary><param name="resourceManager">The resource manager to set.</param><signature><![CDATA[void SetGuiGraphicsResourceManager(GuiGraphicsResourceManager *);
 ]]></signature></Document>

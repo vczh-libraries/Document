@@ -1,2 +1,2 @@
-<Document symbolId="vl::stream::TextReader::ReadChar@wchar_t()" accessor="public" category="Function" name="ReadChar"><summary>Read a single character.</summary><returns>The character.</returns><signature><![CDATA[wchar_t();
+<Document symbolId="vl::stream::TextReader::ReadChar@wchar_t()" accessor="public" category="Function" name="ReadChar"><summary>Read a single character.</summary><returns>The character.</returns><signature><![CDATA[wchar_t ReadChar();
 ]]></signature></Document>

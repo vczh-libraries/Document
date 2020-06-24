@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl::ClearSelection@void()" accessor="public" category="Function" name="ClearSelection"><summary>Unselect all items.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl::ClearSelection@void()" accessor="public" category="Function" name="ClearSelection"><summary>Unselect all items.</summary><signature><![CDATA[void ClearSelection();
 ]]></signature></Document>

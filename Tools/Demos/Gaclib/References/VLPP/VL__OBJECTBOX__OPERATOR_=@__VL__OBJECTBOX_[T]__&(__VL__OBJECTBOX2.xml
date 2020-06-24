@@ -1,2 +1,2 @@
-<Document symbolId="vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;(::vl::ObjectBox&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="operator ="><summary>Move a box.</summary><returns>The boxed value.</returns><param name="value">The box.</param><signature><![CDATA[ObjectBox<T> &(ObjectBox<T> &&);
+<Document symbolId="vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;(::vl::ObjectBox&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="operator ="><summary>Move a box.</summary><returns>The boxed value.</returns><param name="value">The box.</param><signature><![CDATA[ObjectBox<T> & operator =(ObjectBox<T> &&);
 ]]></signature></Document>

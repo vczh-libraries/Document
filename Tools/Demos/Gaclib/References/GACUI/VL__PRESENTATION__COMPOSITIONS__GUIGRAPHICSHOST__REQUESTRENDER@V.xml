@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::RequestRender@void()" accessor="public" category="Function" name="RequestRender"><summary>Request a rendering</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::RequestRender@void()" accessor="public" category="Function" name="RequestRender"><summary>Request a rendering</summary><signature><![CDATA[void RequestRender();
 ]]></signature></Document>

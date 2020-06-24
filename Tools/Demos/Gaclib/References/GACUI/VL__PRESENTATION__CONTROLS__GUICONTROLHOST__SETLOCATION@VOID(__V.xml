@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::SetLocation@void(::vl::presentation::NativePoint)" accessor="public" category="Function" name="SetLocation"><summary>Set the location of the window in screen space.</summary><param name="value">The location of the window.</param><signature><![CDATA[void(NativePoint);
+<Document symbolId="vl::presentation::controls::GuiControlHost::SetLocation@void(::vl::presentation::NativePoint)" accessor="public" category="Function" name="SetLocation"><summary>Set the location of the window in screen space.</summary><param name="value">The location of the window.</param><signature><![CDATA[void SetLocation(NativePoint);
 ]]></signature></Document>

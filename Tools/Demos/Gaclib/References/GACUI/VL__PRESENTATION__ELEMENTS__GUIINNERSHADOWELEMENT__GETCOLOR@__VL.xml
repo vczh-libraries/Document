@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiInnerShadowElement::GetColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor"><summary>
  Get the shadow color.
- </summary><returns>The shadow color.</returns><signature><![CDATA[Color();
+ </summary><returns>The shadow color.</returns><signature><![CDATA[Color GetColor();
 ]]></signature></Document>

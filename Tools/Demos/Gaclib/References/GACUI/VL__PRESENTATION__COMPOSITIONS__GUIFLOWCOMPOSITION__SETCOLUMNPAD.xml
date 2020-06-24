@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetColumnPadding@void(::vl::vint)" accessor="public" category="Function" name="SetColumnPadding"><summary>Set the distance between columns.</summary><param name="value">The distance between columns.</param><signature><![CDATA[void(vint);
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetColumnPadding@void(::vl::vint)" accessor="public" category="Function" name="SetColumnPadding"><summary>Set the distance between columns.</summary><param name="value">The distance between columns.</param><signature><![CDATA[void SetColumnPadding(vint);
 ]]></signature></Document>

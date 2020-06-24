@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsTimerManager::Play@void()" accessor="public" category="Function" name="Play"><summary>Called periodically.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsTimerManager::Play@void()" accessor="public" category="Function" name="Play"><summary>Called periodically.</summary><signature><![CDATA[void Play();
 ]]></signature></Document>

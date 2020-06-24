@@ -1,2 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfAssembly::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty assembly.</summary><signature><![CDATA[();
+<Document symbolId="vl::workflow::runtime::WfAssembly::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty assembly.</summary><signature><![CDATA[ WfAssembly();
 ]]></signature></Document>

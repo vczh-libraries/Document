@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement::SetPoints@void(::vl::presentation::Point const *, ::vl::vint)" accessor="public" category="Function" name="SetPoints"><summary>
  Set all points to the polygon element.
- </summary><param name="p">A pointer to a buffer that stores all points.</param><param name="count">The number of points.</param><signature><![CDATA[void(Point const *,
+ </summary><param name="p">A pointer to a buffer that stores all points.</param><param name="count">The number of points.</param><signature><![CDATA[void SetPoints(Point const *,
 vint);
 ]]></signature></Document>

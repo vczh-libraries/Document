@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::GetDate@::vl::DateTime const &amp;()" accessor="public" category="Function" name="GetDate"><summary>Get the displayed date.</summary><returns>The date.</returns><signature><![CDATA[DateTime const &();
+<Document symbolId="vl::presentation::controls::GuiDatePicker::GetDate@::vl::DateTime const &amp;()" accessor="public" category="Function" name="GetDate"><summary>Get the displayed date.</summary><returns>The date.</returns><signature><![CDATA[DateTime const & GetDate();
 ]]></signature></Document>

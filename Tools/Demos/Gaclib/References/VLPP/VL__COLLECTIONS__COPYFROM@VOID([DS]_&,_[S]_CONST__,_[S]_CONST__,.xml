@@ -2,7 +2,7 @@
     typename Ds, 
     typename S
 >
-void(Ds &,
+void CopyFrom(Ds &,
 S const *,
 S const *,
 bool /* optional */);

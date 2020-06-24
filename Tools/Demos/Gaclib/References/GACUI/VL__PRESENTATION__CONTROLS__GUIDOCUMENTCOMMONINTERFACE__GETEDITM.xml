@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetEditMode@::vl::presentation::controls::GuiDocumentCommonInterface::EditMode()" accessor="public" category="Function" name="GetEditMode"><summary>Get the edit mode of this control.</summary><returns>The edit mode.</returns><signature><![CDATA[EditMode();
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetEditMode@::vl::presentation::controls::GuiDocumentCommonInterface::EditMode()" accessor="public" category="Function" name="GetEditMode"><summary>Get the edit mode of this control.</summary><returns>The edit mode.</returns><signature><![CDATA[EditMode GetEditMode();
 ]]></signature></Document>

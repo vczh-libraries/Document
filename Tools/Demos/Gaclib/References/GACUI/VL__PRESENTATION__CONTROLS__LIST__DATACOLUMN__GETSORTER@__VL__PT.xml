@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetSorter@::vl::Ptr&lt;::vl::presentation::controls::list::IDataSorter&gt;()" accessor="public" category="Function" name="GetSorter"><summary>Get the sorter for the column.</summary><returns>The sorter for the column.</returns><signature><![CDATA[Ptr<IDataSorter>();
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetSorter@::vl::Ptr&lt;::vl::presentation::controls::list::IDataSorter&gt;()" accessor="public" category="Function" name="GetSorter"><summary>Get the sorter for the column.</summary><returns>The sorter for the column.</returns><signature><![CDATA[Ptr<IDataSorter> GetSorter();
 ]]></signature></Document>

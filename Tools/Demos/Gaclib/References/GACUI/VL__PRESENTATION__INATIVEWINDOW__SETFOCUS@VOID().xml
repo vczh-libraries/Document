@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetFocus@void()" accessor="public" category="Function" name="SetFocus"><summary>
  Set focus to the window.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void SetFocus();
 ]]></signature></Document>

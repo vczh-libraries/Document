@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetCaretLarge@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretLarge"><summary>Get the right-bottom text position of the selection.</summary><returns>The right-bottom text position of the selection.</returns><signature><![CDATA[TextPos();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetCaretLarge@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretLarge"><summary>Get the right-bottom text position of the selection.</summary><returns>The right-bottom text position of the selection.</returns><signature><![CDATA[TextPos GetCaretLarge();
 ]]></signature></Document>

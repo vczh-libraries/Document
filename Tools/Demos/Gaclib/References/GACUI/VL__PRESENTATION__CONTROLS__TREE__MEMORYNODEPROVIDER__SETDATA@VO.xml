@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::SetData@void(::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt; const &amp;)" accessor="public" category="Function" name="SetData"><summary>Set the data object.</summary><param name="value">The data object.</param><signature><![CDATA[void(Ptr<DescriptableObject> const &);
+<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::SetData@void(::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt; const &amp;)" accessor="public" category="Function" name="SetData"><summary>Set the data object.</summary><param name="value">The data object.</param><signature><![CDATA[void SetData(Ptr<DescriptableObject> const &);
 ]]></signature></Document>

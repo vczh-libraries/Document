@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetClientSize@void(::vl::presentation::NativeSize)" accessor="public" category="Function" name="SetClientSize"><summary>
  Set the client size of the window.
- </summary><param name="size">The client size of the window.</param><signature><![CDATA[void(NativeSize);
+ </summary><param name="size">The client size of the window.</param><signature><![CDATA[void SetClientSize(NativeSize);
 ]]></signature></Document>

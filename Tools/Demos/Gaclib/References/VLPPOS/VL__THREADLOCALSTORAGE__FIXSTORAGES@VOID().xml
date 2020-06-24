@@ -1,2 +1,2 @@
-<Document symbolId="vl::ThreadLocalStorage::FixStorages@void()" accessor="public" category="Function" name="FixStorages"><summary>Fix all storage creation.</summary><signature><![CDATA[static void();
+<Document symbolId="vl::ThreadLocalStorage::FixStorages@void()" accessor="public" category="Function" name="FixStorages"><summary>Fix all storage creation.</summary><signature><![CDATA[static void FixStorages();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeImageService::CreateImageFromFile@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;(::vl::WString const &amp;)" accessor="public" category="Function" name="CreateImageFromFile"><summary>
  Create an image from file.
- </summary><returns>The created image.</returns><param name="path">The file path.</param><signature><![CDATA[Ptr<INativeImage>(WString const &);
+ </summary><returns>The created image.</returns><param name="path">The file path.</param><signature><![CDATA[Ptr<INativeImage> CreateImageFromFile(WString const &);
 ]]></signature></Document>

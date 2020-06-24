@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::FreeHeightItemArranger::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the arranger.</summary><signature><![CDATA[();
+<Document symbolId="vl::presentation::controls::list::FreeHeightItemArranger::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the arranger.</summary><signature><![CDATA[ FreeHeightItemArranger();
 ]]></signature></Document>

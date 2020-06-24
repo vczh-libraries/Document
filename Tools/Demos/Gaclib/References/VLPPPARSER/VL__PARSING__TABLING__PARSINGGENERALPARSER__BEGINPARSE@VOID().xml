@@ -1,2 +1,2 @@
-<Document symbolId="vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()" accessor="public" category="Function" name="BeginParse"><summary>Initialization. It should be called before each time of parsing.</summary><signature><![CDATA[void();
+<Document symbolId="vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()" accessor="public" category="Function" name="BeginParse"><summary>Initialization. It should be called before each time of parsing.</summary><signature><![CDATA[void BeginParse();
 ]]></signature></Document>

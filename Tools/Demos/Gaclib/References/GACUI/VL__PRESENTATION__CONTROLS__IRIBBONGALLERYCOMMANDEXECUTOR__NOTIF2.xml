@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::IRibbonGalleryCommandExecutor::NotifyScrollDown@void()" accessor="public" category="Function" name="NotifyScrollDown"><summary>Called when the scroll down button is clicked.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::IRibbonGalleryCommandExecutor::NotifyScrollDown@void()" accessor="public" category="Function" name="NotifyScrollDown"><summary>Called when the scroll down button is clicked.</summary><signature><![CDATA[void NotifyScrollDown();
 ]]></signature></Document>

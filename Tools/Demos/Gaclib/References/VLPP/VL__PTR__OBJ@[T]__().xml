@@ -1,2 +1,2 @@
-<Document symbolId="vl::Ptr::Obj@[T] *()" accessor="public" category="Function" name="Obj"><summary>Get the pointer to the object.</summary><returns>The pointer to the object.</returns><signature><![CDATA[T *() const;
+<Document symbolId="vl::Ptr::Obj@[T] *()" accessor="public" category="Function" name="Obj"><summary>Get the pointer to the object.</summary><returns>The pointer to the object.</returns><signature><![CDATA[T * Obj() const;
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::GetTokenRegexes@::vl::collections::List&lt;::vl::WString&gt; &amp;()" accessor="public" category="Function" name="GetTokenRegexes"><summary>Get all regular expressions for tokens.</summary><returns>All regular expressions for tokens.</returns><signature><![CDATA[collections::List<WString> &();
+<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::GetTokenRegexes@::vl::collections::List&lt;::vl::WString&gt; &amp;()" accessor="public" category="Function" name="GetTokenRegexes"><summary>Get all regular expressions for tokens.</summary><returns>All regular expressions for tokens.</returns><signature><![CDATA[collections::List<WString> & GetTokenRegexes();
 ]]></signature></Document>

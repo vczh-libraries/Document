@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="SetParent"><summary>
  Set the parent window. A parent window doesn&apos;t contain a child window. It always displayed below the child windows. When a parent window is minimized or restored, so as its child windows.
- </summary><param name="parent">The parent window.</param><signature><![CDATA[void(INativeWindow *);
+ </summary><param name="parent">The parent window.</param><signature><![CDATA[void SetParent(INativeWindow *);
 ]]></signature></Document>

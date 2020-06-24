@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsElement::GetRenderer@::vl::presentation::elements::IGuiGraphicsRenderer *()" accessor="public" category="Function" name="GetRenderer"><summary>
  Access the associated <symbol docId="vl::presentation::elements::IGuiGraphicsRenderer" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderer"/> for this graphics element.
- </summary><returns>Returns the related renderer.</returns><signature><![CDATA[IGuiGraphicsRenderer *();
+ </summary><returns>Returns the related renderer.</returns><signature><![CDATA[IGuiGraphicsRenderer * GetRenderer();
 ]]></signature></Document>

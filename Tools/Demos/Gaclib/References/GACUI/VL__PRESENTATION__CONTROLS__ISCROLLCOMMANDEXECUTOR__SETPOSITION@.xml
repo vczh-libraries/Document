@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SetPosition@void(::vl::vint)" accessor="public" category="Function" name="SetPosition"><summary>Change to position of the scroll.</summary><param name="value">The position.</param><signature><![CDATA[void(vint);
+<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SetPosition@void(::vl::vint)" accessor="public" category="Function" name="SetPosition"><summary>Change to position of the scroll.</summary><param name="value">The position.</param><signature><![CDATA[void SetPosition(vint);
 ]]></signature></Document>

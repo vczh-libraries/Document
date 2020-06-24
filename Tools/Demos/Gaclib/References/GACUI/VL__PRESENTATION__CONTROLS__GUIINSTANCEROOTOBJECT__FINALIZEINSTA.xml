@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()" accessor="public" category="Function" name="FinalizeInstance"><summary>Clear all subscriptions and components.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()" accessor="public" category="Function" name="FinalizeInstance"><summary>Clear all subscriptions and components.</summary><signature><![CDATA[void FinalizeInstance();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeScreen::GetScalingY@double()" accessor="public" category="Function" name="GetScalingY"><summary>
  Get the scaling for the screen&apos;s vertical edge.
- </summary><returns>The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.</returns><signature><![CDATA[double();
+ </summary><returns>The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.</returns><signature><![CDATA[double GetScalingY();
 ]]></signature></Document>

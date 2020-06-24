@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the command.</summary><signature><![CDATA[();
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the command.</summary><signature><![CDATA[ GuiToolstripCommand();
 ]]></signature></Document>

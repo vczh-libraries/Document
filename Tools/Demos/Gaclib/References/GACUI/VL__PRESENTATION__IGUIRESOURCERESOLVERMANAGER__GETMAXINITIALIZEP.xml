@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::IGuiResourceResolverManager::GetMaxInitializePassIndex@::vl::vint()" accessor="public" category="Function" name="GetMaxInitializePassIndex"><summary>Get the maximum initializing pass index.</summary><returns>The maximum initializing pass index.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::IGuiResourceResolverManager::GetMaxInitializePassIndex@::vl::vint()" accessor="public" category="Function" name="GetMaxInitializePassIndex"><summary>Get the maximum initializing pass index.</summary><returns>The maximum initializing pass index.</returns><signature><![CDATA[vint GetMaxInitializePassIndex();
 ]]></signature></Document>

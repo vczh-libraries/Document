@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::GetBorderVisible@bool()" accessor="public" category="Function" name="GetBorderVisible"><summary>Get the border visibility.</summary><returns>Returns true means the border thickness equals to the cell padding, otherwise zero.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::GetBorderVisible@bool()" accessor="public" category="Function" name="GetBorderVisible"><summary>Get the border visibility.</summary><returns>Returns true means the border thickness equals to the cell padding, otherwise zero.</returns><signature><![CDATA[bool GetBorderVisible();
 ]]></signature></Document>

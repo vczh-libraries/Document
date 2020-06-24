@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::IDataVisualizer::NotifyDeletedTemplate@void()" accessor="public" category="Function" name="NotifyDeletedTemplate"><summary>Notify that the template has been deleted during the deconstruction of UI objects.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::list::IDataVisualizer::NotifyDeletedTemplate@void()" accessor="public" category="Function" name="NotifyDeletedTemplate"><summary>Notify that the template has been deleted during the deconstruction of UI objects.</summary><signature><![CDATA[void NotifyDeletedTemplate();
 ]]></signature></Document>

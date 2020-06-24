@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::GetDocument@::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;()" accessor="public" category="Function" name="GetDocument"><summary>Get the document.</summary><returns>The document.</returns><signature><![CDATA[Ptr<DocumentModel>();
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::GetDocument@::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;()" accessor="public" category="Function" name="GetDocument"><summary>Get the document.</summary><returns>The document.</returns><signature><![CDATA[Ptr<DocumentModel> GetDocument();
 ]]></signature></Document>

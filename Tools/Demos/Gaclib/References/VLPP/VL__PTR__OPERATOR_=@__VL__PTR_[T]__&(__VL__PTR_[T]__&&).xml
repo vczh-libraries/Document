@@ -1,2 +1,2 @@
-<Document symbolId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="operator ="><summary>Move a smart pointer.</summary><returns>The moved smart pointer.</returns><param name="pointer">The smart pointer to Move.</param><signature><![CDATA[Ptr<T> &(Ptr<T> &&);
+<Document symbolId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="operator ="><summary>Move a smart pointer.</summary><returns>The moved smart pointer.</returns><param name="pointer">The smart pointer to Move.</param><signature><![CDATA[Ptr<T> & operator =(Ptr<T> &&);
 ]]></signature></Document>

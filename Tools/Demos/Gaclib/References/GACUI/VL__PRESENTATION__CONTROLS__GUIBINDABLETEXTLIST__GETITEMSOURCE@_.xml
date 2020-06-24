@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiBindableTextList::GetItemSource@::vl::Ptr&lt;::vl::reflection::description::IValueEnumerable&gt;()" accessor="public" category="Function" name="GetItemSource"><summary>Get the item source.</summary><returns>The item source.</returns><signature><![CDATA[Ptr<description::IValueEnumerable>();
+<Document symbolId="vl::presentation::controls::GuiBindableTextList::GetItemSource@::vl::Ptr&lt;::vl::reflection::description::IValueEnumerable&gt;()" accessor="public" category="Function" name="GetItemSource"><summary>Get the item source.</summary><returns>The item source.</returns><signature><![CDATA[Ptr<description::IValueEnumerable> GetItemSource();
 ]]></signature></Document>

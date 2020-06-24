@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::GetPreferredMenuClientSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetPreferredMenuClientSize"><summary>Get the preferred client size for the sub menu.</summary><returns>The preferred client size for the sub menu.</returns><signature><![CDATA[Size();
+<Document symbolId="vl::presentation::controls::GuiMenuButton::GetPreferredMenuClientSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetPreferredMenuClientSize"><summary>Get the preferred client size for the sub menu.</summary><returns>The preferred client size for the sub menu.</returns><signature><![CDATA[Size GetPreferredMenuClientSize();
 ]]></signature></Document>

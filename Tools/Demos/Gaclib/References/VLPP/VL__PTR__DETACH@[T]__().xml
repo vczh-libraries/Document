@@ -1,2 +1,2 @@
-<Document symbolId="vl::Ptr::Detach@[T] *()" accessor="public" category="Function" name="Detach"><summary>Detach the contained object from this smart pointer.</summary><returns>The detached object. Returns null if this smart pointer is empty.</returns><signature><![CDATA[T *();
+<Document symbolId="vl::Ptr::Detach@[T] *()" accessor="public" category="Function" name="Detach"><summary>Detach the contained object from this smart pointer.</summary><returns>The detached object. Returns null if this smart pointer is empty.</returns><signature><![CDATA[T * Detach();
 ]]></signature></Document>

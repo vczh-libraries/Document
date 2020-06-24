@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetSize@::vl::vint()" accessor="public" category="Function" name="GetSize"><summary>Get the size for the column.</summary><returns>The size for the column.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetSize@::vl::vint()" accessor="public" category="Function" name="GetSize"><summary>Get the size for the column.</summary><returns>The size for the column.</returns><signature><![CDATA[vint GetSize();
 ]]></signature></Document>

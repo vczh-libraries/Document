@@ -1,4 +1,4 @@
-<Document symbolId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfType&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" accessor="" category="Function" name="WfPrint"><summary>Print a Workflow type.</summary><param name="node">The Workflow type.</param><param name="indent">The indentation.</param><param name="writer">The target writer.</param><signature><![CDATA[void(Ptr<WfType>,
+<Document symbolId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfType&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" accessor="" category="Function" name="WfPrint"><summary>Print a Workflow type.</summary><param name="node">The Workflow type.</param><param name="indent">The indentation.</param><param name="writer">The target writer.</param><signature><![CDATA[void WfPrint(Ptr<WfType>,
 WString const &,
 parsing::ParsingWriter &);
 ]]></signature></Document>

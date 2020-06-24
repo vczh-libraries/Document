@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::ListViewColumn::GetSortingState@::vl::presentation::controls::ColumnSortingState()" accessor="public" category="Function" name="GetSortingState"><summary>Get the sorting state of this item.</summary><returns>The sorting state of this item.</returns><signature><![CDATA[ColumnSortingState();
+<Document symbolId="vl::presentation::controls::list::ListViewColumn::GetSortingState@::vl::presentation::controls::ColumnSortingState()" accessor="public" category="Function" name="GetSortingState"><summary>Get the sorting state of this item.</summary><returns>The sorting state of this item.</returns><signature><![CDATA[ColumnSortingState GetSortingState();
 ]]></signature></Document>

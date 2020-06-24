@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::INodeProviderCallback::OnAttached@void(::vl::presentation::controls::tree::INodeRootProvider *)" accessor="public" category="Function" name="OnAttached"><summary>Called when this callback is attached to a node root.</summary><param name="provider">The root node.</param><signature><![CDATA[void(INodeRootProvider *);
+<Document symbolId="vl::presentation::controls::tree::INodeProviderCallback::OnAttached@void(::vl::presentation::controls::tree::INodeRootProvider *)" accessor="public" category="Function" name="OnAttached"><summary>Called when this callback is attached to a node root.</summary><param name="provider">The root node.</param><signature><![CDATA[void OnAttached(INodeRootProvider *);
 ]]></signature></Document>

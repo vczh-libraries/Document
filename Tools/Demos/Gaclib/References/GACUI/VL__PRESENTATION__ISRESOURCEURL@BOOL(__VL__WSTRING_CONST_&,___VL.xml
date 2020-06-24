@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::IsResourceUrl@bool(::vl::WString const &amp;, ::vl::WString &amp;, ::vl::WString &amp;)" accessor="" category="Function" name="IsResourceUrl"><summary>Test is a text a resource url and extract the protocol and the path.</summary><returns>Returns true if the text is a resource url.</returns><param name="text">The text.</param><param name="protocol">The extracted protocol.</param><param name="path">The extracted path.</param><signature><![CDATA[bool(WString const &,
+<Document symbolId="vl::presentation::IsResourceUrl@bool(::vl::WString const &amp;, ::vl::WString &amp;, ::vl::WString &amp;)" accessor="" category="Function" name="IsResourceUrl"><summary>Test is a text a resource url and extract the protocol and the path.</summary><returns>Returns true if the text is a resource url.</returns><param name="text">The text.</param><param name="protocol">The extracted protocol.</param><param name="path">The extracted path.</param><signature><![CDATA[bool IsResourceUrl(WString const &,
 WString &,
 WString &);
 ]]></signature></Document>

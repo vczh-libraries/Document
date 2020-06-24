@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::IDataGridView::SortByColumn@void(::vl::vint, bool)" accessor="public" category="Function" name="SortByColumn"><summary>Set the column sorting state to update the data.</summary><param name="column">The index of the column. Set to -1 means go back to the unsorted state.</param><param name="ascending">Set to true if the data is sorted in ascending order.</param><signature><![CDATA[void(vint,
+<Document symbolId="vl::presentation::controls::list::IDataGridView::SortByColumn@void(::vl::vint, bool)" accessor="public" category="Function" name="SortByColumn"><summary>Set the column sorting state to update the data.</summary><param name="column">The index of the column. Set to -1 means go back to the unsorted state.</param><param name="ascending">Set to true if the data is sorted in ascending order.</param><signature><![CDATA[void SortByColumn(vint,
 bool);
 ]]></signature></Document>

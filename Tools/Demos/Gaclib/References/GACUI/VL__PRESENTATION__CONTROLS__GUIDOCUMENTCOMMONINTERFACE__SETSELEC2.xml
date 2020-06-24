@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SetSelectionText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetSelectionText"><summary>Set the selected text.</summary><param name="value">The selected text.</param><signature><![CDATA[void(WString const &);
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SetSelectionText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetSelectionText"><summary>Set the selected text.</summary><param name="value">The selected text.</param><signature><![CDATA[void SetSelectionText(WString const &);
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::NotifyModificationSaved@void()" accessor="public" category="Function" name="NotifyModificationSaved"><summary>Notify the text box that the current status is considered saved.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::NotifyModificationSaved@void()" accessor="public" category="Function" name="NotifyModificationSaved"><summary>Notify the text box that the current status is considered saved.</summary><signature><![CDATA[void NotifyModificationSaved();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetTopMost@void(bool)" accessor="public" category="Function" name="SetTopMost"><summary>
  Make the window always or never on top of the desktop.
- </summary><param name="topmost">True to make the window always  on top of the desktop.</param><signature><![CDATA[void(bool);
+ </summary><param name="topmost">True to make the window always  on top of the desktop.</param><signature><![CDATA[void SetTopMost(bool);
 ]]></signature></Document>

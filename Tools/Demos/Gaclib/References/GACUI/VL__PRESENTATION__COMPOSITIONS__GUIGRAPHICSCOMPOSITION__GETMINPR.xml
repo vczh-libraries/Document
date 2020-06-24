@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetMinPreferredClientSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetMinPreferredClientSize"><summary>Get the preferred minimum client size.</summary><returns>The preferred minimum client size.</returns><signature><![CDATA[Size();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetMinPreferredClientSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetMinPreferredClientSize"><summary>Get the preferred minimum client size.</summary><returns>The preferred minimum client size.</returns><signature><![CDATA[Size GetMinPreferredClientSize();
 ]]></signature></Document>

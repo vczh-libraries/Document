@@ -1,2 +1,2 @@
-<Document symbolId="vl::stream::IStream::CanWrite@bool()" accessor="public" category="Function" name="CanWrite"><summary>Test if the stream is writable.</summary><returns>Returns true if the stream is writable.</returns><signature><![CDATA[bool() const;
+<Document symbolId="vl::stream::IStream::CanWrite@bool()" accessor="public" category="Function" name="CanWrite"><summary>Test if the stream is writable.</summary><returns>Returns true if the stream is writable.</returns><signature><![CDATA[bool CanWrite() const;
 ]]></signature></Document>

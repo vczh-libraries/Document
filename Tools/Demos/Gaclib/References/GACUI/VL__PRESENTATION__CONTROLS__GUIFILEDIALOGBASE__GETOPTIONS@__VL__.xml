@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetOptions@::vl::presentation::INativeDialogService::FileDialogOptions()" accessor="public" category="Function" name="GetOptions"><summary>Get the dialog options.</summary><returns>The dialog options.</returns><signature><![CDATA[INativeDialogService::FileDialogOptions();
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetOptions@::vl::presentation::INativeDialogService::FileDialogOptions()" accessor="public" category="Function" name="GetOptions"><summary>Get the dialog options.</summary><returns>The dialog options.</returns><signature><![CDATA[INativeDialogService::FileDialogOptions GetOptions();
 ]]></signature></Document>

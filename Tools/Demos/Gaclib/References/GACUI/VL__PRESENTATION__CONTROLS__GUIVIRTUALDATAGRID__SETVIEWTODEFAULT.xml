@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualDataGrid::SetViewToDefault@void()" accessor="public" category="Function" name="SetViewToDefault"><summary>Change the view to data grid&apos;s default view.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiVirtualDataGrid::SetViewToDefault@void()" accessor="public" category="Function" name="SetViewToDefault"><summary>Change the view to data grid&apos;s default view.</summary><signature><![CDATA[void SetViewToDefault();
 ]]></signature></Document>

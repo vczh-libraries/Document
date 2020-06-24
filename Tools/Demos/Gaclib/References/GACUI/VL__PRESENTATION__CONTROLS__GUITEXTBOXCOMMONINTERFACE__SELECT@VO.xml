@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Select@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="Select"><summary>Select (highlight) a part of text.</summary><param name="begin">The begin position.</param><param name="end">The end position. This is also the caret position.</param><signature><![CDATA[void(TextPos,
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Select@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="Select"><summary>Select (highlight) a part of text.</summary><param name="begin">The begin position.</param><param name="end">The end position. This is also the caret position.</param><signature><![CDATA[void Select(TextPos,
 TextPos);
 ]]></signature></Document>

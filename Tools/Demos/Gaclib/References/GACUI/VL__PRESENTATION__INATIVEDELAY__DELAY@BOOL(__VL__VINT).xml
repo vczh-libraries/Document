@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::INativeDelay::Delay@bool(::vl::vint)" accessor="public" category="Function" name="Delay"><summary>If the current task is pending, execute the task after a specified period.</summary><returns>Returns true if this operation succeeded.</returns><param name="milliseconds">A specified period.</param><signature><![CDATA[bool(vint);
+<Document symbolId="vl::presentation::INativeDelay::Delay@bool(::vl::vint)" accessor="public" category="Function" name="Delay"><summary>If the current task is pending, execute the task after a specified period.</summary><returns>Returns true if this operation succeeded.</returns><param name="milliseconds">A specified period.</param><signature><![CDATA[bool Delay(vint);
 ]]></signature></Document>

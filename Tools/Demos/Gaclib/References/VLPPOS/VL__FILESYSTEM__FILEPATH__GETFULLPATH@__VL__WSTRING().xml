@@ -1,2 +1,2 @@
-<Document symbolId="vl::filesystem::FilePath::GetFullPath@::vl::WString()" accessor="public" category="Function" name="GetFullPath"><summary>Get the content of the file path.</summary><returns>The content of the file path.</returns><signature><![CDATA[WString() const;
+<Document symbolId="vl::filesystem::FilePath::GetFullPath@::vl::WString()" accessor="public" category="Function" name="GetFullPath"><summary>Get the content of the file path.</summary><returns>The content of the file path.</returns><signature><![CDATA[WString GetFullPath() const;
 ]]></signature></Document>

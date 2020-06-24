@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::GetRows@::vl::vint()" accessor="public" category="Function" name="GetRows"><summary>Get the number of rows.</summary><returns>The number of rows.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::GetRows@::vl::vint()" accessor="public" category="Function" name="GetRows"><summary>Get the number of rows.</summary><returns>The number of rows.</returns><signature><![CDATA[vint GetRows();
 ]]></signature></Document>

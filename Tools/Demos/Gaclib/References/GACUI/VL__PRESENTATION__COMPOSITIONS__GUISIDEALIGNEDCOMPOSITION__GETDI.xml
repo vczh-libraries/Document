@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::GetDirection@::vl::presentation::compositions::GuiSideAlignedComposition::Direction()" accessor="public" category="Function" name="GetDirection"><summary>Get the border to align.</summary><returns>The border to align.</returns><signature><![CDATA[Direction();
+<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::GetDirection@::vl::presentation::compositions::GuiSideAlignedComposition::Direction()" accessor="public" category="Function" name="GetDirection"><summary>Get the border to align.</summary><returns>The border to align.</returns><signature><![CDATA[Direction GetDirection();
 ]]></signature></Document>

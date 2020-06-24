@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog::SetSelectedFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetSelectedFont"><summary>Set the selected font.</summary><param name="value">The selected font.</param><signature><![CDATA[void(FontProperties const &);
+<Document symbolId="vl::presentation::controls::GuiFontDialog::SetSelectedFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetSelectedFont"><summary>Set the selected font.</summary><param name="value">The selected font.</param><signature><![CDATA[void SetSelectedFont(FontProperties const &);
 ]]></signature></Document>

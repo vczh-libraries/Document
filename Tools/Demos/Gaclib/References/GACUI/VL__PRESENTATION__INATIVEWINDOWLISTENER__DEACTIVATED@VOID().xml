@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Deactivated@void()" accessor="public" category="Function" name="Deactivated"><summary>
  Called when the window is deactivated.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void Deactivated();
 ]]></signature></Document>

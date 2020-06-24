@@ -1,2 +1,2 @@
-<Document symbolId="vl::ConditionVariable::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a conditional variable.</summary><signature><![CDATA[();
+<Document symbolId="vl::ConditionVariable::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a conditional variable.</summary><signature><![CDATA[ ConditionVariable();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::DisableCustomFrameMode@void()" accessor="public" category="Function" name="DisableCustomFrameMode"><summary>
  Disable the window customized frame mode.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void DisableCustomFrameMode();
 ]]></signature></Document>

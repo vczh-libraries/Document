@@ -1,2 +1,2 @@
-<Document symbolId="vl::Lazy::$__ctor@(::vl::Func&lt;[T]()&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create an evaluation using a function.</summary><param name="evaluator">The function.</param><signature><![CDATA[(Func<T()> const &);
+<Document symbolId="vl::Lazy::$__ctor@(::vl::Func&lt;[T]()&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create an evaluation using a function.</summary><param name="evaluator">The function.</param><signature><![CDATA[ Lazy(Func<T()> const &);
 ]]></signature></Document>

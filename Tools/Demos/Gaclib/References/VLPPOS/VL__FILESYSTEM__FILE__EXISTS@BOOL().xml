@@ -1,2 +1,2 @@
-<Document symbolId="vl::filesystem::File::Exists@bool()" accessor="public" category="Function" name="Exists"><summary>Test does the file exist or not.</summary><returns>Returns true if the file exists.</returns><signature><![CDATA[bool() const;
+<Document symbolId="vl::filesystem::File::Exists@bool()" accessor="public" category="Function" name="Exists"><summary>Test does the file exist or not.</summary><returns>Returns true if the file exists.</returns><signature><![CDATA[bool Exists() const;
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::GetItemProvider@::vl::presentation::controls::GuiListControl::IItemProvider *()" accessor="public" category="Function" name="GetItemProvider"><summary>Get the item provider.</summary><returns>The item provider.</returns><signature><![CDATA[IItemProvider *();
+<Document symbolId="vl::presentation::controls::GuiListControl::GetItemProvider@::vl::presentation::controls::GuiListControl::IItemProvider *()" accessor="public" category="Function" name="GetItemProvider"><summary>Get the item provider.</summary><returns>The item provider.</returns><signature><![CDATA[IItemProvider * GetItemProvider();
 ]]></signature></Document>

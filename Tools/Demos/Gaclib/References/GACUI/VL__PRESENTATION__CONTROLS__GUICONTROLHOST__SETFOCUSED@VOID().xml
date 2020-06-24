@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::SetFocused@void()" accessor="public" category="Function" name="SetFocused"><summary>Focus the window.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiControlHost::SetFocused@void()" accessor="public" category="Function" name="SetFocused"><summary>Focus the window.</summary><signature><![CDATA[void SetFocused();
 ]]></signature></Document>

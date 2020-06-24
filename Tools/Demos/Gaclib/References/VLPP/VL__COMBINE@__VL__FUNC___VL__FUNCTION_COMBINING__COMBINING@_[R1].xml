@@ -3,7 +3,7 @@
     typename F2, 
     typename C
 >
-Func<function_combining::Combining<F1, F2, C>::FinalFunctionType>(Func<C>,
+Func<function_combining::Combining<F1, F2, C>::FinalFunctionType> Combine(Func<C>,
 Func<F1>,
 Func<F2>);
 ]]></signature></Document>

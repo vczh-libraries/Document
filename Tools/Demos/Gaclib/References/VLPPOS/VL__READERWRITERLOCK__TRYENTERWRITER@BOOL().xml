@@ -1,2 +1,2 @@
-<Document symbolId="vl::ReaderWriterLock::TryEnterWriter@bool()" accessor="public" category="Function" name="TryEnterWriter"><summary>Try acquire a writer lock. This function will return immediately.</summary><returns>Returns true if the current thread acquired the writer lock.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::ReaderWriterLock::TryEnterWriter@bool()" accessor="public" category="Function" name="TryEnterWriter"><summary>Try acquire a writer lock. This function will return immediately.</summary><returns>Returns true if the current thread acquired the writer lock.</returns><signature><![CDATA[bool TryEnterWriter();
 ]]></signature></Document>

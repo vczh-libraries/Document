@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::ListViewColumn::GetOwnPopup@bool()" accessor="public" category="Function" name="GetOwnPopup"><summary>Test if the column owns the popup. Owned popup will be deleted in the destructor.</summary><returns>Returns true if the column owns the popup.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::list::ListViewColumn::GetOwnPopup@bool()" accessor="public" category="Function" name="GetOwnPopup"><summary>Test if the column owns the popup. Owned popup will be deleted in the destructor.</summary><returns>Returns true if the column owns the popup.</returns><signature><![CDATA[bool GetOwnPopup();
 ]]></signature></Document>

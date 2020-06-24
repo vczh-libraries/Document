@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IAutoCompleteControlProvider::GetItemCount@::vl::vint()" accessor="public" category="Function" name="GetItemCount"><summary>Get the numbers of all stored candidate items.</summary><returns>The number of all stored candidate items.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IAutoCompleteControlProvider::GetItemCount@::vl::vint()" accessor="public" category="Function" name="GetItemCount"><summary>Get the numbers of all stored candidate items.</summary><returns>The number of all stored candidate items.</returns><signature><![CDATA[vint GetItemCount();
 ]]></signature></Document>

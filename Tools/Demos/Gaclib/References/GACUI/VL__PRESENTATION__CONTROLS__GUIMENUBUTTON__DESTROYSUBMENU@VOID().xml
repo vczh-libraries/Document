@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::DestroySubMenu@void()" accessor="public" category="Function" name="DestroySubMenu"><summary>Destroy the sub menu if necessary.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiMenuButton::DestroySubMenu@void()" accessor="public" category="Function" name="DestroySubMenu"><summary>Destroy the sub menu if necessary.</summary><signature><![CDATA[void DestroySubMenu();
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::GetTotalSize@::vl::vint()" accessor="public" category="Function" name="GetTotalSize"><summary>Get the total size.</summary><returns>The total size.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::controls::GuiScroll::GetTotalSize@::vl::vint()" accessor="public" category="Function" name="GetTotalSize"><summary>Get the total size.</summary><returns>The total size.</returns><signature><![CDATA[vint GetTotalSize();
 ]]></signature></Document>

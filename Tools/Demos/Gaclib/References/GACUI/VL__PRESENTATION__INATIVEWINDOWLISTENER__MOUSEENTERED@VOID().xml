@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowListener::MouseEntered@void()" accessor="public" category="Function" name="MouseEntered"><summary>
  Called when the mouse entered the window.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void MouseEntered();
 ]]></signature></Document>

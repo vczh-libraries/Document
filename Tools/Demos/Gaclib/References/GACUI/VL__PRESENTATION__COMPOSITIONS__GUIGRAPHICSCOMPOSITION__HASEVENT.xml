@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::HasEventReceiver@bool()" accessor="public" category="Function" name="HasEventReceiver"><summary>Test if any event receiver has already been requested.</summary><returns>Returns true if any event receiver has already been requested.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::HasEventReceiver@bool()" accessor="public" category="Function" name="HasEventReceiver"><summary>Test if any event receiver has already been requested.</summary><returns>Returns true if any event receiver has already been requested.</returns><signature><![CDATA[bool HasEventReceiver();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLine::Finalize@void()" accessor="public" category="Function" name="Finalize"><summary>
  Release all resources used in this line.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void Finalize();
 ]]></signature></Document>

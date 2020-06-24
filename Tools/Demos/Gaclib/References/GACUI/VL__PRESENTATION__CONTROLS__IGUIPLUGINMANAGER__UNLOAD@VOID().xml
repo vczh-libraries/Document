@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::IGuiPluginManager::Unload@void()" accessor="public" category="Function" name="Unload"><summary>Unload all plugins.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::IGuiPluginManager::Unload@void()" accessor="public" category="Function" name="Unload"><summary>Unload all plugins.</summary><signature><![CDATA[void Unload();
 ]]></signature></Document>

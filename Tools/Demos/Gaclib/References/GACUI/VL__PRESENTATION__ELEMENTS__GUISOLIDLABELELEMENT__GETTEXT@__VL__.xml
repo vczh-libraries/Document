@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText"><summary>
  Get the text.
- </summary><returns>The text.</returns><signature><![CDATA[WString const &();
+ </summary><returns>The text.</returns><signature><![CDATA[WString const & GetText();
 ]]></signature></Document>

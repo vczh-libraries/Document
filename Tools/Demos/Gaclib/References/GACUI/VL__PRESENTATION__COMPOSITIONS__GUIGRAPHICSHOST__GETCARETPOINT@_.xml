@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::GetCaretPoint@::vl::presentation::Point()" accessor="public" category="Function" name="GetCaretPoint"><summary>Get the caret point. A caret point is the position to place the edit box of the activated input method editor.</summary><returns>The caret point.</returns><signature><![CDATA[Point();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::GetCaretPoint@::vl::presentation::Point()" accessor="public" category="Function" name="GetCaretPoint"><summary>Get the caret point. A caret point is the position to place the edit box of the activated input method editor.</summary><returns>The caret point.</returns><signature><![CDATA[Point GetCaretPoint();
 ]]></signature></Document>

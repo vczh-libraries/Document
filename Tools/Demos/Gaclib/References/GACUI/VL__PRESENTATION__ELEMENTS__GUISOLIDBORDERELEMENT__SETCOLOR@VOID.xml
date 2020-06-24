@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiSolidBorderElement::SetColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetColor"><summary>
  Set the border color.
- </summary><param name="value">The new border color.</param><signature><![CDATA[void(Color);
+ </summary><param name="value">The new border color.</param><signature><![CDATA[void SetColor(Color);
 ]]></signature></Document>

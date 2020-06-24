@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::GetSelectedListItem@::vl::WString()" accessor="public" category="Function" name="GetSelectedListItem"><summary>Get the selected item.</summary><returns>The text of the selected item. Returns empty if there is no selected item.</returns><signature><![CDATA[WString();
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::GetSelectedListItem@::vl::WString()" accessor="public" category="Function" name="GetSelectedListItem"><summary>Get the selected item.</summary><returns>The text of the selected item. Returns empty if there is no selected item.</returns><signature><![CDATA[WString GetSelectedListItem();
 ]]></signature></Document>

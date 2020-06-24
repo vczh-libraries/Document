@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::ITextItemView::GetChecked@bool(::vl::vint)" accessor="public" category="Function" name="GetChecked"><summary>Get the check state of an item.</summary><returns>The check state of an item.</returns><param name="itemIndex">The index of an item.</param><signature><![CDATA[bool(vint);
+<Document symbolId="vl::presentation::controls::list::ITextItemView::GetChecked@bool(::vl::vint)" accessor="public" category="Function" name="GetChecked"><summary>Get the check state of an item.</summary><returns>The check state of an item.</returns><param name="itemIndex">The index of an item.</param><signature><![CDATA[bool GetChecked(vint);
 ]]></signature></Document>

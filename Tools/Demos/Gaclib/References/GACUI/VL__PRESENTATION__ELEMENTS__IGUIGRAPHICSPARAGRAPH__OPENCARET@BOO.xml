@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::OpenCaret@bool(::vl::vint, ::vl::presentation::Color, bool)" accessor="public" category="Function" name="OpenCaret"><summary>Make the caret visible so that it will be rendered in the paragraph.</summary><returns>Returns true if this operation succeeded.</returns><param name="caret">The caret.</param><param name="color">The color of the caret.</param><param name="frontSide">Set to true to display the caret for the character before it.</param><signature><![CDATA[bool(vint,
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::OpenCaret@bool(::vl::vint, ::vl::presentation::Color, bool)" accessor="public" category="Function" name="OpenCaret"><summary>Make the caret visible so that it will be rendered in the paragraph.</summary><returns>Returns true if this operation succeeded.</returns><param name="caret">The caret.</param><param name="color">The color of the caret.</param><param name="frontSide">Set to true to display the caret for the character before it.</param><signature><![CDATA[bool OpenCaret(vint,
 Color,
 bool);
 ]]></signature></Document>

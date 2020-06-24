@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()" accessor="public" category="Function" name="GetBounds"><summary>
  Get the bounds of the window.
- </summary><returns>The bounds of the window.</returns><signature><![CDATA[NativeRect();
+ </summary><returns>The bounds of the window.</returns><signature><![CDATA[NativeRect GetBounds();
 ]]></signature></Document>

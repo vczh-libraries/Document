@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiTableSplitterCompositionBase::GetTableParent@::vl::presentation::compositions::GuiTableComposition *()" accessor="public" category="Function" name="GetTableParent"><summary>Get the owner table composition.</summary><returns>The owner table composition.</returns><signature><![CDATA[GuiTableComposition *();
+<Document symbolId="vl::presentation::compositions::GuiTableSplitterCompositionBase::GetTableParent@::vl::presentation::compositions::GuiTableComposition *()" accessor="public" category="Function" name="GetTableParent"><summary>Get the owner table composition.</summary><returns>The owner table composition.</returns><signature><![CDATA[GuiTableComposition * GetTableParent();
 ]]></signature></Document>

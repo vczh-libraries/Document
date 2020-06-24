@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetGlobalBounds@::vl::presentation::Rect()" accessor="public" category="Function" name="GetGlobalBounds"><summary>Get the bounds in the top composition space.</summary><returns>The bounds in the top composition space.</returns><signature><![CDATA[Rect();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetGlobalBounds@::vl::presentation::Rect()" accessor="public" category="Function" name="GetGlobalBounds"><summary>Get the bounds in the top composition space.</summary><returns>The bounds in the top composition space.</returns><signature><![CDATA[Rect GetGlobalBounds();
 ]]></signature></Document>

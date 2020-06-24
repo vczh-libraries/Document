@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase::GetLexerStartState@::vl::vint()" accessor="public" category="Function" name="GetLexerStartState"><summary>Get the lexical analyzer start state for the first line.</summary><returns>The lexical analyzer start state for the first line.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase::GetLexerStartState@::vl::vint()" accessor="public" category="Function" name="GetLexerStartState"><summary>Get the lexical analyzer start state for the first line.</summary><returns>The lexical analyzer start state for the first line.</returns><signature><![CDATA[vint GetLexerStartState();
 ]]></signature></Document>

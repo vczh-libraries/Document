@@ -1,2 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::GetBreakPointCount@::vl::vint()" accessor="public" category="Function" name="GetBreakPointCount"><summary>Get the number of all break points.</summary><returns>The number of all break points.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::workflow::runtime::WfDebugger::GetBreakPointCount@::vl::vint()" accessor="public" category="Function" name="GetBreakPointCount"><summary>Get the number of all break points.</summary><returns>The number of all break points.</returns><signature><![CDATA[vint GetBreakPointCount();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeController::DialogService@::vl::presentation::INativeDialogService *()" accessor="public" category="Function" name="DialogService"><summary>
  Get the dialog service.
- </summary><returns>The user dialog service</returns><signature><![CDATA[INativeDialogService *();
+ </summary><returns>The user dialog service</returns><signature><![CDATA[INativeDialogService * DialogService();
 ]]></signature></Document>

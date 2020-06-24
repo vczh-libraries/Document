@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds@void(::vl::presentation::compositions::GuiBoundsComposition *, ::vl::presentation::Rect)" accessor="public" category="Function" name="SetStyleBounds"><summary>Set the bounds of an item control.</summary><param name="style">The item control.</param><param name="bounds">The new bounds.</param><signature><![CDATA[void(compositions::GuiBoundsComposition *,
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds@void(::vl::presentation::compositions::GuiBoundsComposition *, ::vl::presentation::Rect)" accessor="public" category="Function" name="SetStyleBounds"><summary>Set the bounds of an item control.</summary><param name="style">The item control.</param><param name="bounds">The new bounds.</param><signature><![CDATA[void SetStyleBounds(compositions::GuiBoundsComposition *,
 Rect);
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::TextItem::SetChecked@void(bool)" accessor="public" category="Function" name="SetChecked"><summary>Set the check state of this item.</summary><param name="value">The check state of this item.</param><signature><![CDATA[void(bool);
+<Document symbolId="vl::presentation::controls::list::TextItem::SetChecked@void(bool)" accessor="public" category="Function" name="SetChecked"><summary>Set the check state of this item.</summary><param name="value">The check state of this item.</param><signature><![CDATA[void SetChecked(bool);
 ]]></signature></Document>

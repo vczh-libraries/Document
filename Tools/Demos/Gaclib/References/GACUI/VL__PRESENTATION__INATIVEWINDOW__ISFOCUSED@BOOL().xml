@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::IsFocused@bool()" accessor="public" category="Function" name="IsFocused"><summary>
  Test is the window focused.
- </summary><returns>Returns true if the window is focused.</returns><signature><![CDATA[bool();
+ </summary><returns>Returns true if the window is focused.</returns><signature><![CDATA[bool IsFocused();
 ]]></signature></Document>

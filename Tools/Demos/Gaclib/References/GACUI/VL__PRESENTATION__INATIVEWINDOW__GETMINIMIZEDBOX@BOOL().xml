@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::GetMinimizedBox@bool()" accessor="public" category="Function" name="GetMinimizedBox"><summary>
  Test is the minimize box visible.
- </summary><returns>Returns true if the minimize box is visible.</returns><signature><![CDATA[bool();
+ </summary><returns>Returns true if the minimize box is visible.</returns><signature><![CDATA[bool GetMinimizedBox();
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::Locale::Enumerate@void(::vl::collections::List&lt;::vl::Locale&gt; &amp;)" accessor="public" category="Function" name="Enumerate"><summary>Get all supported locales.</summary><param name="locales">All supported locales.</param><signature><![CDATA[static void(collections::List<Locale> &);
+<Document symbolId="vl::Locale::Enumerate@void(::vl::collections::List&lt;::vl::Locale&gt; &amp;)" accessor="public" category="Function" name="Enumerate"><summary>Get all supported locales.</summary><param name="locales">All supported locales.</param><signature><![CDATA[static void Enumerate(collections::List<Locale> &);
 ]]></signature></Document>

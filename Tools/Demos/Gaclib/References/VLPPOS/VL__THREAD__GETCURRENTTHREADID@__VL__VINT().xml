@@ -1,2 +1,2 @@
-<Document symbolId="vl::Thread::GetCurrentThreadId@::vl::vint()" accessor="public" category="Function" name="GetCurrentThreadId"><summary>Get the current thread id.</summary><returns>The current thread id.</returns><signature><![CDATA[static vint();
+<Document symbolId="vl::Thread::GetCurrentThreadId@::vl::vint()" accessor="public" category="Function" name="GetCurrentThreadId"><summary>Get the current thread id.</summary><returns>The current thread id.</returns><signature><![CDATA[static vint GetCurrentThreadId();
 ]]></signature></Document>

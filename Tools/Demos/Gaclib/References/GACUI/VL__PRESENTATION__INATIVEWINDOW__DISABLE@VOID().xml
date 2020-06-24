@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::Disable@void()" accessor="public" category="Function" name="Disable"><summary>
  Disable the window.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void Disable();
 ]]></signature></Document>

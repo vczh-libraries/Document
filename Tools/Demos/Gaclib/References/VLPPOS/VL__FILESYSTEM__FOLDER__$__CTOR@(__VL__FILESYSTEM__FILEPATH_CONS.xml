@@ -1,2 +1,2 @@
-<Document symbolId="vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a reference to a specified folder.</summary><param name="_filePath">The specified folder.</param><signature><![CDATA[(FilePath const &);
+<Document symbolId="vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a reference to a specified folder.</summary><param name="_filePath">The specified folder.</param><signature><![CDATA[ Folder(FilePath const &);
 ]]></signature></Document>

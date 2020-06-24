@@ -1,2 +1,2 @@
-<Document symbolId="vl::ConditionVariable::WakeAllPendings@void()" accessor="public" category="Function" name="WakeAllPendings"><summary>Wake all thread that pending on this condition variable.</summary><signature><![CDATA[void();
+<Document symbolId="vl::ConditionVariable::WakeAllPendings@void()" accessor="public" category="Function" name="WakeAllPendings"><summary>Wake all thread that pending on this condition variable.</summary><signature><![CDATA[void WakeAllPendings();
 ]]></signature></Document>

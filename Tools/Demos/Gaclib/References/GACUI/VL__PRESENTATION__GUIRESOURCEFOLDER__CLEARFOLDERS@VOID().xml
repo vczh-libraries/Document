@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourceFolder::ClearFolders@void()" accessor="public" category="Function" name="ClearFolders"><summary>Remove all resource folders.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::GuiResourceFolder::ClearFolders@void()" accessor="public" category="Function" name="ClearFolders"><summary>Remove all resource folders.</summary><signature><![CDATA[void ClearFolders();
 ]]></signature></Document>

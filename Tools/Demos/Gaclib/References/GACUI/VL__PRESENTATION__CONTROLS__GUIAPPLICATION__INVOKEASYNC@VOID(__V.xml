@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiApplication::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeAsync"><summary>Invoke a specified function asynchronously.</summary><param name="proc">The specified function.</param><signature><![CDATA[void(Func<void()> const &);
+<Document symbolId="vl::presentation::controls::GuiApplication::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeAsync"><summary>Invoke a specified function asynchronously.</summary><param name="proc">The specified function.</param><signature><![CDATA[void InvokeAsync(Func<void()> const &);
 ]]></signature></Document>

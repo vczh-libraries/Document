@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiStackComposition::GetPadding@::vl::vint()" accessor="public" category="Function" name="GetPadding"><summary>Get the stack item padding.</summary><returns>The stack item padding.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::compositions::GuiStackComposition::GetPadding@::vl::vint()" accessor="public" category="Function" name="GetPadding"><summary>Get the stack item padding.</summary><returns>The stack item padding.</returns><signature><![CDATA[vint GetPadding();
 ]]></signature></Document>

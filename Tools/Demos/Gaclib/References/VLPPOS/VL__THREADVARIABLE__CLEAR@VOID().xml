@@ -1,2 +1,2 @@
-<Document symbolId="vl::ThreadVariable::Clear@void()" accessor="public" category="Function" name="Clear"><summary>Remove the data from this storage.</summary><signature><![CDATA[void();
+<Document symbolId="vl::ThreadVariable::Clear@void()" accessor="public" category="Function" name="Clear"><summary>Remove the data from this storage.</summary><signature><![CDATA[void Clear();
 ]]></signature></Document>

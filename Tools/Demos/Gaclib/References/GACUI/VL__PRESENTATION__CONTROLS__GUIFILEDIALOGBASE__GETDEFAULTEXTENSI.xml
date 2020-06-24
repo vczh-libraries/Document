@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetDefaultExtension@::vl::WString()" accessor="public" category="Function" name="GetDefaultExtension"><summary>Get the default file extension.</summary><returns>The default file extension.</returns><signature><![CDATA[WString();
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetDefaultExtension@::vl::WString()" accessor="public" category="Function" name="GetDefaultExtension"><summary>Get the default file extension.</summary><returns>The default file extension.</returns><signature><![CDATA[WString GetDefaultExtension();
 ]]></signature></Document>

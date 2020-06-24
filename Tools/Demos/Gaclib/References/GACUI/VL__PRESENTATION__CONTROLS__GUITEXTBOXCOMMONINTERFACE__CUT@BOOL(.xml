@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Cut@bool()" accessor="public" category="Function" name="Cut"><summary>Cut the selection text.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Cut@bool()" accessor="public" category="Function" name="Cut"><summary>Cut the selection text.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Cut();
 ]]></signature></Document>

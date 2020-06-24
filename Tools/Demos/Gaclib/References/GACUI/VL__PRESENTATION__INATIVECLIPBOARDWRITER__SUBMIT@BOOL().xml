@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::INativeClipboardWriter::Submit@bool()" accessor="public" category="Function" name="Submit"><summary>Send all data to the clipboard.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::INativeClipboardWriter::Submit@bool()" accessor="public" category="Function" name="Submit"><summary>Send all data to the clipboard.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Submit();
 ]]></signature></Document>

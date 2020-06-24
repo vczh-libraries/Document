@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::GetLocation@::vl::presentation::NativePoint()" accessor="public" category="Function" name="GetLocation"><summary>Get the location of the window in screen space.</summary><returns>The location of the window.</returns><signature><![CDATA[NativePoint();
+<Document symbolId="vl::presentation::controls::GuiControlHost::GetLocation@::vl::presentation::NativePoint()" accessor="public" category="Function" name="GetLocation"><summary>Get the location of the window in screen space.</summary><returns>The location of the window.</returns><signature><![CDATA[NativePoint GetLocation();
 ]]></signature></Document>

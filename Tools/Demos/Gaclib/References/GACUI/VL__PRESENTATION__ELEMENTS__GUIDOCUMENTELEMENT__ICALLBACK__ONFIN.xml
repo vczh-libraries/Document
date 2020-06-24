@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::ICallback::OnFinishRender@void()" accessor="public" category="Function" name="OnFinishRender"><summary>Called when the rendering is finished.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::ICallback::OnFinishRender@void()" accessor="public" category="Function" name="OnFinishRender"><summary>Called when the rendering is finished.</summary><signature><![CDATA[void OnFinishRender();
 ]]></signature></Document>

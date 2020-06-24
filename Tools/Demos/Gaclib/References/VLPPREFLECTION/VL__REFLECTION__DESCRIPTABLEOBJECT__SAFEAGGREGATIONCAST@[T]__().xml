@@ -1,5 +1,5 @@
 <Document symbolId="vl::reflection::DescriptableObject::SafeAggregationCast@[T] *()" accessor="public" category="Function" name="SafeAggregationCast"><summary>Cast the object to another type, considered aggregation.</summary><returns>The object with the expected type in all aggregated objects.</returns><typeparam name="T">The expected type to cast.</typeparam><signature><![CDATA[template <
     typename T
 >
-T *();
+T * SafeAggregationCast();
 ]]></signature></Document>

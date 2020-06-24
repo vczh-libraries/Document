@@ -1,3 +1,3 @@
-<Document symbolId="vl::regex::RegexLexerWalker::IsClosedToken@bool(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="IsClosedToken"><summary>Test if the input text is a complete token.</summary><returns>Returns true if the input text is a complete token.</returns><param name="input">The input text.</param><param name="length">Size of the input text in characters.</param><signature><![CDATA[bool(wchar_t const *,
+<Document symbolId="vl::regex::RegexLexerWalker::IsClosedToken@bool(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="IsClosedToken"><summary>Test if the input text is a complete token.</summary><returns>Returns true if the input text is a complete token.</returns><param name="input">The input text.</param><param name="length">Size of the input text in characters.</param><signature><![CDATA[bool IsClosedToken(wchar_t const *,
 vint) const;
 ]]></signature></Document>

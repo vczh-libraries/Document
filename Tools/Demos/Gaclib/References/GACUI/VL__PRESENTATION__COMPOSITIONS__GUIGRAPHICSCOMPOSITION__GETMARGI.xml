@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetMargin@::vl::presentation::Margin()" accessor="public" category="Function" name="GetMargin"><summary>Get the margin.</summary><returns>The margin.</returns><signature><![CDATA[Margin();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetMargin@::vl::presentation::Margin()" accessor="public" category="Function" name="GetMargin"><summary>Get the margin.</summary><returns>The margin.</returns><signature><![CDATA[Margin GetMargin();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowListener::MiddleButtonDoubleClick@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="MiddleButtonDoubleClick"><summary>
  Called when the middle mouse button performed a double click.
- </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void(NativeWindowMouseInfo const &);
+ </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void MiddleButtonDoubleClick(NativeWindowMouseInfo const &);
 ]]></signature></Document>

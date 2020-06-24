@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::ShowRestored@void()" accessor="public" category="Function" name="ShowRestored"><summary>
  Restore the window.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void ShowRestored();
 ]]></signature></Document>

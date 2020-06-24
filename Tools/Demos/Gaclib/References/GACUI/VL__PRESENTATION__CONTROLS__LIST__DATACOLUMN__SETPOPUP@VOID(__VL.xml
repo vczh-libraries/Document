@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::SetPopup@void(::vl::presentation::controls::GuiMenu *)" accessor="public" category="Function" name="SetPopup"><summary>Set the popup for the column.</summary><param name="value">The popup for the column.</param><signature><![CDATA[void(GuiMenu *);
+<Document symbolId="vl::presentation::controls::list::DataColumn::SetPopup@void(::vl::presentation::controls::GuiMenu *)" accessor="public" category="Function" name="SetPopup"><summary>Set the popup for the column.</summary><param name="value">The popup for the column.</param><signature><![CDATA[void SetPopup(GuiMenu *);
 ]]></signature></Document>

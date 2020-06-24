@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::InvalidateTabOrderCache@void()" accessor="public" category="Function" name="InvalidateTabOrderCache"><summary>Invalidte the internal tab order control list. Next time when TAB is pressed it will be rebuilt.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::InvalidateTabOrderCache@void()" accessor="public" category="Function" name="InvalidateTabOrderCache"><summary>Invalidte the internal tab order control list. Next time when TAB is pressed it will be rebuilt.</summary><signature><![CDATA[void InvalidateTabOrderCache();
 ]]></signature></Document>

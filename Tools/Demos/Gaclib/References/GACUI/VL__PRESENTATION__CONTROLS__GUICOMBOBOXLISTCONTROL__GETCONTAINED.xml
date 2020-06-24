@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::GetContainedListControl@::vl::presentation::controls::GuiSelectableListControl *()" accessor="public" category="Function" name="GetContainedListControl"><summary>Get the list control.</summary><returns>The list control.</returns><signature><![CDATA[GuiSelectableListControl *();
+<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::GetContainedListControl@::vl::presentation::controls::GuiSelectableListControl *()" accessor="public" category="Function" name="GetContainedListControl"><summary>Get the list control.</summary><returns>The list control.</returns><signature><![CDATA[GuiSelectableListControl * GetContainedListControl();
 ]]></signature></Document>

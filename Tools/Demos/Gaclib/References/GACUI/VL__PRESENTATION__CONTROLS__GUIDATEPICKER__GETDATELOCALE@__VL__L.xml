@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::GetDateLocale@::vl::Locale const &amp;()" accessor="public" category="Function" name="GetDateLocale"><summary>Get the locale.</summary><returns>The locale.</returns><signature><![CDATA[Locale const &();
+<Document symbolId="vl::presentation::controls::GuiDatePicker::GetDateLocale@::vl::Locale const &amp;()" accessor="public" category="Function" name="GetDateLocale"><summary>Get the locale.</summary><returns>The locale.</returns><signature><![CDATA[Locale const & GetDateLocale();
 ]]></signature></Document>

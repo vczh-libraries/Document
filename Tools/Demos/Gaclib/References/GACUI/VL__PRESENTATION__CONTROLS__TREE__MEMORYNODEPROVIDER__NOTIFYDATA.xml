@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::NotifyDataModified@void()" accessor="public" category="Function" name="NotifyDataModified"><summary>Notify that the state in the binded data object is modified.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::NotifyDataModified@void()" accessor="public" category="Function" name="NotifyDataModified"><summary>Notify that the state in the binded data object is modified.</summary><signature><![CDATA[void NotifyDataModified();
 ]]></signature></Document>

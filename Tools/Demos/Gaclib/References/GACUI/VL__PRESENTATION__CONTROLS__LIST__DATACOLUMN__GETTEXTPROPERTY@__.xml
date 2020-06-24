@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetTextProperty@::vl::presentation::ItemProperty&lt;::vl::WString&gt;()" accessor="public" category="Function" name="GetTextProperty"><summary>Get the text property name to get the cell text from an item.</summary><returns>The text property name.</returns><signature><![CDATA[ItemProperty<WString>();
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetTextProperty@::vl::presentation::ItemProperty&lt;::vl::WString&gt;()" accessor="public" category="Function" name="GetTextProperty"><summary>Get the text property name to get the cell text from an item.</summary><returns>The text property name.</returns><signature><![CDATA[ItemProperty<WString> GetTextProperty();
 ]]></signature></Document>

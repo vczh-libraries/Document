@@ -1,2 +1,2 @@
-<Document symbolId="vl::reflection::DescriptableObject::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()" accessor="public" category="Function" name="GetTypeDescriptor"><summary>Get the type descriptor that describe the real type of this object.</summary><returns>The real type.</returns><signature><![CDATA[description::ITypeDescriptor *();
+<Document symbolId="vl::reflection::DescriptableObject::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()" accessor="public" category="Function" name="GetTypeDescriptor"><summary>Get the type descriptor that describe the real type of this object.</summary><returns>The real type.</returns><signature><![CDATA[description::ITypeDescriptor * GetTypeDescriptor();
 ]]></signature></Document>

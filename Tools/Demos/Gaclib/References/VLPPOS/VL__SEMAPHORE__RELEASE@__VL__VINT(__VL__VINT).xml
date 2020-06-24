@@ -1,2 +1,2 @@
-<Document symbolId="vl::Semaphore::Release@::vl::vint(::vl::vint)" accessor="public" category="Function" name="Release"><summary> Release the semaphore multiple times. </summary><returns>Returns true if this operation succeeded.</returns><param name="count">The amout to release.</param><signature><![CDATA[vint(vint);
+<Document symbolId="vl::Semaphore::Release@::vl::vint(::vl::vint)" accessor="public" category="Function" name="Release"><summary> Release the semaphore multiple times. </summary><returns>Returns true if this operation succeeded.</returns><param name="count">The amout to release.</param><signature><![CDATA[vint Release(vint);
 ]]></signature></Document>

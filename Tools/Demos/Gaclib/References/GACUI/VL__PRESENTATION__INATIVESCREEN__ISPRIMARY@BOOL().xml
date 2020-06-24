@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeScreen::IsPrimary@bool()" accessor="public" category="Function" name="IsPrimary"><summary>
  Test is the screen is a primary screen.
- </summary><returns>Returns true if the screen is a primary screen.</returns><signature><![CDATA[bool();
+ </summary><returns>Returns true if the screen is a primary screen.</returns><signature><![CDATA[bool IsPrimary();
 ]]></signature></Document>

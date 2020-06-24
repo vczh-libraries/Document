@@ -2,5 +2,5 @@
     typename C, 
     typename /* optional */
 >
-(Ptr<C> &&);
+ Ptr(Ptr<C> &&);
 ]]></signature></Document>

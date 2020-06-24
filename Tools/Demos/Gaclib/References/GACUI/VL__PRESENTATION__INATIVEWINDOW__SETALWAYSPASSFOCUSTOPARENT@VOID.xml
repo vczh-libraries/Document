@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetAlwaysPassFocusToParent@void(bool)" accessor="public" category="Function" name="SetAlwaysPassFocusToParent"><summary>
  Enable or disble always passing the focus to its parent window.
- </summary><param name="value">True to enable always passing the focus to its parent window.</param><signature><![CDATA[void(bool);
+ </summary><param name="value">True to enable always passing the focus to its parent window.</param><signature><![CDATA[void SetAlwaysPassFocusToParent(bool);
 ]]></signature></Document>

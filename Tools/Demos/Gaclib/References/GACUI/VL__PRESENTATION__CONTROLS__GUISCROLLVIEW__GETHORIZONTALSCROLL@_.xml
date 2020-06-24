@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::GetHorizontalScroll@::vl::presentation::controls::GuiScroll *()" accessor="public" category="Function" name="GetHorizontalScroll"><summary>Get the horizontal scroll control.</summary><returns>The horizontal scroll control.</returns><signature><![CDATA[GuiScroll *();
+<Document symbolId="vl::presentation::controls::GuiScrollView::GetHorizontalScroll@::vl::presentation::controls::GuiScroll *()" accessor="public" category="Function" name="GetHorizontalScroll"><summary>Get the horizontal scroll control.</summary><returns>The horizontal scroll control.</returns><signature><![CDATA[GuiScroll * GetHorizontalScroll();
 ]]></signature></Document>

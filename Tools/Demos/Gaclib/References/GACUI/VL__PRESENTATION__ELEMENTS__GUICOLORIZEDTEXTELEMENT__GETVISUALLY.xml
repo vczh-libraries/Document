@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetVisuallyEnabled@bool()" accessor="public" category="Function" name="GetVisuallyEnabled"><summary>
  Get the enabling state.
- </summary><returns>Returns true if the element will be rendered as an enabled element.</returns><signature><![CDATA[bool();
+ </summary><returns>Returns true if the element will be rendered as an enabled element.</returns><signature><![CDATA[bool GetVisuallyEnabled();
 ]]></signature></Document>

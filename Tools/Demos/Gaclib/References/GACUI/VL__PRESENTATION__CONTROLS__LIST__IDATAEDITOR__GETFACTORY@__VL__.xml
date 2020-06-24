@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::IDataEditor::GetFactory@::vl::presentation::controls::list::IDataEditorFactory *()" accessor="public" category="Function" name="GetFactory"><summary>Get the factory object that creates this editor.</summary><returns>The factory object.</returns><signature><![CDATA[IDataEditorFactory *();
+<Document symbolId="vl::presentation::controls::list::IDataEditor::GetFactory@::vl::presentation::controls::list::IDataEditorFactory *()" accessor="public" category="Function" name="GetFactory"><summary>Get the factory object that creates this editor.</summary><returns>The factory object.</returns><signature><![CDATA[IDataEditorFactory * GetFactory();
 ]]></signature></Document>

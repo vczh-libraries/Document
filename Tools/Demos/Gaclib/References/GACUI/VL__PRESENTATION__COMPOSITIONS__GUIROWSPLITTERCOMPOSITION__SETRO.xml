@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiRowSplitterComposition::SetRowsToTheTop@void(::vl::vint)" accessor="public" category="Function" name="SetRowsToTheTop"><summary>Set the number of rows that above the splitter.</summary><param name="value">The number of rows that above the splitter</param><signature><![CDATA[void(vint);
+<Document symbolId="vl::presentation::compositions::GuiRowSplitterComposition::SetRowsToTheTop@void(::vl::vint)" accessor="public" category="Function" name="SetRowsToTheTop"><summary>Set the number of rows that above the splitter.</summary><param name="value">The number of rows that above the splitter</param><signature><![CDATA[void SetRowsToTheTop(vint);
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::stream::IStream::Close@void()" accessor="public" category="Function" name="Close"><summary>Close the stream.</summary><signature><![CDATA[void();
+<Document symbolId="vl::stream::IStream::Close@void()" accessor="public" category="Function" name="Close"><summary>Close the stream.</summary><signature><![CDATA[void Close();
 ]]></signature></Document>

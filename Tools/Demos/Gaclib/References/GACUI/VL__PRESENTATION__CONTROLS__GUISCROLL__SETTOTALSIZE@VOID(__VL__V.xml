@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::SetTotalSize@void(::vl::vint)" accessor="public" category="Function" name="SetTotalSize"><summary>Set the total size.</summary><param name="value">The total size.</param><signature><![CDATA[void(vint);
+<Document symbolId="vl::presentation::controls::GuiScroll::SetTotalSize@void(::vl::vint)" accessor="public" category="Function" name="SetTotalSize"><summary>Set the total size.</summary><param name="value">The total size.</param><signature><![CDATA[void SetTotalSize(vint);
 ]]></signature></Document>

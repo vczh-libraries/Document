@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::MeasureRow@void(::vl::vint)" accessor="public" category="Function" name="MeasureRow"><summary>
  Measure all characters in a specified row.
- </summary><param name="row">The specified row number.</param><signature><![CDATA[void(vint);
+ </summary><param name="row">The specified row number.</param><signature><![CDATA[void MeasureRow(vint);
 ]]></signature></Document>

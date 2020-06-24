@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::GetNativeWindow@::vl::presentation::INativeWindow *()" accessor="public" category="Function" name="GetNativeWindow"><summary>Get the associated window.</summary><returns>The associated window.</returns><signature><![CDATA[INativeWindow *();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::GetNativeWindow@::vl::presentation::INativeWindow *()" accessor="public" category="Function" name="GetNativeWindow"><summary>Get the associated window.</summary><returns>The associated window.</returns><signature><![CDATA[INativeWindow * GetNativeWindow();
 ]]></signature></Document>

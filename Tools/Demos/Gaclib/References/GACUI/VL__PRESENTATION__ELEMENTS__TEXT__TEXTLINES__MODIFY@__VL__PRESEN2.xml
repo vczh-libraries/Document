@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::Modify@::vl::presentation::TextPos(::vl::presentation::TextPos, ::vl::presentation::TextPos, wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="Modify"><summary>
  Modify some text lines by replacing characters.
- </summary><returns>The new end position.</returns><param name="start">The start position of the range of characters to be replaced.</param><param name="end">The end position of the range of characters to be replaced.</param><param name="input">The buffer to the string to replace into the text lines.</param><param name="inputCount">The number of characters to replace into the text lines.</param><signature><![CDATA[TextPos(TextPos,
+ </summary><returns>The new end position.</returns><param name="start">The start position of the range of characters to be replaced.</param><param name="end">The end position of the range of characters to be replaced.</param><param name="input">The buffer to the string to replace into the text lines.</param><param name="inputCount">The number of characters to replace into the text lines.</param><signature><![CDATA[TextPos Modify(TextPos,
 TextPos,
 wchar_t const *,
 vint);

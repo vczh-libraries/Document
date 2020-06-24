@@ -1,2 +1,2 @@
-<Document symbolId="vl::SpinLock::TryEnter@bool()" accessor="public" category="Function" name="TryEnter"><summary>Try enter a spin lock. This function will return immediately.</summary><returns>Returns true if the current thread owned the spin lock.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::SpinLock::TryEnter@bool()" accessor="public" category="Function" name="TryEnter"><summary>Try enter a spin lock. This function will return immediately.</summary><returns>Returns true if the current thread owned the spin lock.</returns><signature><![CDATA[bool TryEnter();
 ]]></signature></Document>

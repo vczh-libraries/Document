@@ -1,2 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::GetBreakException@bool()" accessor="public" category="Function" name="GetBreakException"><summary>Test if the exception break point is enabled or not.</summary><returns>Returns true if the exception break point is enabled.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::workflow::runtime::WfDebugger::GetBreakException@bool()" accessor="public" category="Function" name="GetBreakException"><summary>Test if the exception break point is enabled or not.</summary><returns>Returns true if the exception break point is enabled.</returns><signature><![CDATA[bool GetBreakException();
 ]]></signature></Document>

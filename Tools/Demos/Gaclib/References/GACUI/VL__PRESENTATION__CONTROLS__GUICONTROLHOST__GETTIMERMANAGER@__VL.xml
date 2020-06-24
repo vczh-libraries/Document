@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::GetTimerManager@::vl::presentation::compositions::GuiGraphicsTimerManager *()" accessor="public" category="Function" name="GetTimerManager"><summary>Get the timer manager.</summary><returns>The timer manager.</returns><signature><![CDATA[compositions::GuiGraphicsTimerManager *();
+<Document symbolId="vl::presentation::controls::GuiControlHost::GetTimerManager@::vl::presentation::compositions::GuiGraphicsTimerManager *()" accessor="public" category="Function" name="GetTimerManager"><summary>Get the timer manager.</summary><returns>The timer manager.</returns><signature><![CDATA[compositions::GuiGraphicsTimerManager * GetTimerManager();
 ]]></signature></Document>

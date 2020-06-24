@@ -1,2 +1,2 @@
-<Document symbolId="vl::collections::LazyList::Last@[T]([T])" accessor="public" category="Function" name="Last"><summary>Get the last value in the lazy list.</summary><returns>The last value.</returns><param name="defaultValue">Returns this argument if the lazy list is empty.</param><signature><![CDATA[T(T) const;
+<Document symbolId="vl::collections::LazyList::Last@[T]([T])" accessor="public" category="Function" name="Last"><summary>Get the last value in the lazy list.</summary><returns>The last value.</returns><param name="defaultValue">Returns this argument if the lazy list is empty.</param><signature><![CDATA[T Last(T) const;
 ]]></signature></Document>

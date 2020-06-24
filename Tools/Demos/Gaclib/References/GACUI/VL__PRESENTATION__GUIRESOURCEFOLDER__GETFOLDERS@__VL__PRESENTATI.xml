@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourceFolder::GetFolders@::vl::presentation::GuiResourceFolder::FolderList const &amp;()" accessor="public" category="Function" name="GetFolders"><summary>Get all sub folders.</summary><returns>All sub folders.</returns><signature><![CDATA[FolderList const &();
+<Document symbolId="vl::presentation::GuiResourceFolder::GetFolders@::vl::presentation::GuiResourceFolder::FolderList const &amp;()" accessor="public" category="Function" name="GetFolders"><summary>Get all sub folders.</summary><returns>All sub folders.</returns><signature><![CDATA[FolderList const & GetFolders();
 ]]></signature></Document>

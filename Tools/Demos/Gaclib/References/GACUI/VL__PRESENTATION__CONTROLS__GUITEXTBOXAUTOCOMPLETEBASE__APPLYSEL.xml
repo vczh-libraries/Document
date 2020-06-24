@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::ApplySelectedListItem@bool()" accessor="public" category="Function" name="ApplySelectedListItem"><summary>Apply the selected item into the text box.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::ApplySelectedListItem@bool()" accessor="public" category="Function" name="ApplySelectedListItem"><summary>Apply the selected item into the text box.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool ApplySelectedListItem();
 ]]></signature></Document>

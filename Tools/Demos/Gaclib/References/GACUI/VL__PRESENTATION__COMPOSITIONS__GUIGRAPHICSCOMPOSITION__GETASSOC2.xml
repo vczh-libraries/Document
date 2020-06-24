@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetAssociatedCursor@::vl::presentation::INativeCursor *()" accessor="public" category="Function" name="GetAssociatedCursor"><summary>Get the associated cursor.</summary><returns>The associated cursor.</returns><signature><![CDATA[INativeCursor *();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetAssociatedCursor@::vl::presentation::INativeCursor *()" accessor="public" category="Function" name="GetAssociatedCursor"><summary>Get the associated cursor.</summary><returns>The associated cursor.</returns><signature><![CDATA[INativeCursor * GetAssociatedCursor();
 ]]></signature></Document>

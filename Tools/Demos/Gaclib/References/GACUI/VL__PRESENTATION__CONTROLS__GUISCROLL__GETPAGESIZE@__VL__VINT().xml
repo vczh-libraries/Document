@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::GetPageSize@::vl::vint()" accessor="public" category="Function" name="GetPageSize"><summary>Get the page size.</summary><returns>The page size.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::controls::GuiScroll::GetPageSize@::vl::vint()" accessor="public" category="Function" name="GetPageSize"><summary>Get the page size.</summary><returns>The page size.</returns><signature><![CDATA[vint GetPageSize();
 ]]></signature></Document>

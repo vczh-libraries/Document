@@ -1,2 +1,2 @@
-<Document symbolId="vl::SpinLock::Enter@void()" accessor="public" category="Function" name="Enter"><summary>Enter a spin lock.</summary><signature><![CDATA[void();
+<Document symbolId="vl::SpinLock::Enter@void()" accessor="public" category="Function" name="Enter"><summary>Enter a spin lock.</summary><signature><![CDATA[void Enter();
 ]]></signature></Document>

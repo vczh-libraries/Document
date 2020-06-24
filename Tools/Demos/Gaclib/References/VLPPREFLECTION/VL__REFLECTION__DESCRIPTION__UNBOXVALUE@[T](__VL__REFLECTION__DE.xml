@@ -1,7 +1,7 @@
 <Document symbolId="vl::reflection::description::UnboxValue@[T](::vl::reflection::description::Value const &amp;, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &amp;)" accessor="" category="Function" name="UnboxValue"><summary>Unbox an reflectable object. Its type cannot be generic.</summary><returns>The unboxed object.</returns><typeparam name="T">Type of the object.</typeparam><param name="value">The value to unbox.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param><param name="valueName">The name of the object to provide a friendly exception message if the conversion is failed (optional).</param><signature><![CDATA[template <
     typename T
 >
-T(Value const &,
+T UnboxValue(Value const &,
 ITypeDescriptor * /* optional */,
 WString const & /* optional */);
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::IGuiResourcePathResolverFactory::GetProtocol@::vl::WString()" accessor="public" category="Function" name="GetProtocol"><summary>Get the protocol for this resolver.</summary><returns>The protocol.</returns><signature><![CDATA[WString();
+<Document symbolId="vl::presentation::IGuiResourcePathResolverFactory::GetProtocol@::vl::WString()" accessor="public" category="Function" name="GetProtocol"><summary>Get the protocol for this resolver.</summary><returns>The protocol.</returns><signature><![CDATA[WString GetProtocol();
 ]]></signature></Document>

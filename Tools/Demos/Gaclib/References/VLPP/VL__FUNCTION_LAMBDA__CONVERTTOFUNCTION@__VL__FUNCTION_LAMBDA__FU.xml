@@ -1,5 +1,5 @@
 <Document symbolId="vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])" accessor="" category="Function" name="ConvertToFunction"><summary>Create a function reference to a function pointer, with all type information autotimatically inferred. You can use the macro called &quot;FUNCTION&quot; to refer to this function.</summary><typeparam name="T">Type of the function pointer.</typeparam><returns>The function reference.</returns><param name="functionObject">The function pointer.</param><signature><![CDATA[template <
     typename T
 >
-FunctionObjectRetriveType<T>::Type(T);
+FunctionObjectRetriveType<T>::Type ConvertToFunction(T);
 ]]></signature></Document>

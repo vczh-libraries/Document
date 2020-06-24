@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::SetDate@void(::vl::DateTime const &amp;)" accessor="public" category="Function" name="SetDate"><summary>Display a date.</summary><param name="value">The date.</param><signature><![CDATA[void(DateTime const &);
+<Document symbolId="vl::presentation::controls::GuiDatePicker::SetDate@void(::vl::DateTime const &amp;)" accessor="public" category="Function" name="SetDate"><summary>Display a date.</summary><param name="value">The date.</param><signature><![CDATA[void SetDate(DateTime const &);
 ]]></signature></Document>

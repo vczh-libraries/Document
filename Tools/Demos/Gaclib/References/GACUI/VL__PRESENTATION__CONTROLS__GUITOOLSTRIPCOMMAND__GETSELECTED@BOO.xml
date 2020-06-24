@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetSelected@bool()" accessor="public" category="Function" name="GetSelected"><summary>Get the selection for this command.</summary><returns>The selection for this command.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetSelected@bool()" accessor="public" category="Function" name="GetSelected"><summary>Get the selection for this command.</summary><returns>The selection for this command.</returns><signature><![CDATA[bool GetSelected();
 ]]></signature></Document>

@@ -1,3 +1,3 @@
-<Document symbolId="vl::atoi_test@::vl::vint(::vl::AString const &amp;, bool &amp;)" accessor="" category="Function" name="atoi_test"><summary>Convert a string to an signed integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vint(AString const &,
+<Document symbolId="vl::atoi_test@::vl::vint(::vl::AString const &amp;, bool &amp;)" accessor="" category="Function" name="atoi_test"><summary>Convert a string to an signed integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vint atoi_test(AString const &,
 bool &);
 ]]></signature></Document>

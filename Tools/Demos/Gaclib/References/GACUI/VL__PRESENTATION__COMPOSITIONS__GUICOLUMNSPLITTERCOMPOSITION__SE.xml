@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiColumnSplitterComposition::SetColumnsToTheLeft@void(::vl::vint)" accessor="public" category="Function" name="SetColumnsToTheLeft"><summary>Set the number of columns that before the splitter.</summary><param name="value">The number of columns that before the splitter</param><signature><![CDATA[void(vint);
+<Document symbolId="vl::presentation::compositions::GuiColumnSplitterComposition::SetColumnsToTheLeft@void(::vl::vint)" accessor="public" category="Function" name="SetColumnsToTheLeft"><summary>Set the number of columns that before the splitter.</summary><param name="value">The number of columns that before the splitter</param><signature><![CDATA[void SetColumnsToTheLeft(vint);
 ]]></signature></Document>

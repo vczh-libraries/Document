@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetEnabled@bool()" accessor="public" category="Function" name="GetEnabled"><summary>Test if this control is enabled.</summary><returns>Returns true if this control is enabled.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiControl::GetEnabled@bool()" accessor="public" category="Function" name="GetEnabled"><summary>Test if this control is enabled.</summary><returns>Returns true if this control is enabled.</returns><signature><![CDATA[bool GetEnabled();
 ]]></signature></Document>

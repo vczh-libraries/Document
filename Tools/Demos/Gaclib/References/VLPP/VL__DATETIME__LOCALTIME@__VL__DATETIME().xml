@@ -1,2 +1,2 @@
-<Document symbolId="vl::DateTime::LocalTime@::vl::DateTime()" accessor="public" category="Function" name="LocalTime"><summary>Get the current local time.</summary><returns>The current local time.</returns><signature><![CDATA[static DateTime();
+<Document symbolId="vl::DateTime::LocalTime@::vl::DateTime()" accessor="public" category="Function" name="LocalTime"><summary>Get the current local time.</summary><returns>The current local time.</returns><signature><![CDATA[static DateTime LocalTime();
 ]]></signature></Document>

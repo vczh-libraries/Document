@@ -1,2 +1,2 @@
-<Document symbolId="vl::regex::RegexMatch::Result@::vl::regex::RegexString const &amp;()" accessor="public" category="Function" name="Result"><summary>Get the whole fragment that matches.</summary><returns>The whole fragment.</returns><signature><![CDATA[RegexString const &() const;
+<Document symbolId="vl::regex::RegexMatch::Result@::vl::regex::RegexString const &amp;()" accessor="public" category="Function" name="Result"><summary>Get the whole fragment that matches.</summary><returns>The whole fragment.</returns><signature><![CDATA[RegexString const & Result() const;
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiCellComposition::GetColumn@::vl::vint()" accessor="public" category="Function" name="GetColumn"><summary>Get the column number for this cell composition.</summary><returns>The column number for this cell composition.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::compositions::GuiCellComposition::GetColumn@::vl::vint()" accessor="public" category="Function" name="GetColumn"><summary>Get the column number for this cell composition.</summary><returns>The column number for this cell composition.</returns><signature><![CDATA[vint GetColumn();
 ]]></signature></Document>

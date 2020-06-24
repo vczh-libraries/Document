@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::GetViewSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetViewSize"><summary>Get the view size.</summary><returns>The view size.</returns><signature><![CDATA[Size();
+<Document symbolId="vl::presentation::controls::GuiScrollView::GetViewSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetViewSize"><summary>Get the view size.</summary><returns>The view size.</returns><signature><![CDATA[Size GetViewSize();
 ]]></signature></Document>

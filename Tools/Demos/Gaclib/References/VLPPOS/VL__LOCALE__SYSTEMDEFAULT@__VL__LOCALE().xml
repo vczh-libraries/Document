@@ -1,2 +1,2 @@
-<Document symbolId="vl::Locale::SystemDefault@::vl::Locale()" accessor="public" category="Function" name="SystemDefault"><summary>Get the system default locale. This locale controls the code page that used by the the system to interpret ANSI string buffers.</summary><returns>The system default locale.</returns><signature><![CDATA[static Locale();
+<Document symbolId="vl::Locale::SystemDefault@::vl::Locale()" accessor="public" category="Function" name="SystemDefault"><summary>Get the system default locale. This locale controls the code page that used by the the system to interpret ANSI string buffers.</summary><returns>The system default locale.</returns><signature><![CDATA[static Locale SystemDefault();
 ]]></signature></Document>

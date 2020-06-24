@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::UpdateSubscriptions@void()" accessor="public" category="Function" name="UpdateSubscriptions"><summary>Clear all subscriptions.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::UpdateSubscriptions@void()" accessor="public" category="Function" name="UpdateSubscriptions"><summary>Clear all subscriptions.</summary><signature><![CDATA[void UpdateSubscriptions();
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::IGuiPluginManager::Load@void()" accessor="public" category="Function" name="Load"><summary>Load all plugins, and check if dependencies of all plugins are ready.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::IGuiPluginManager::Load@void()" accessor="public" category="Function" name="Load"><summary>Load all plugins, and check if dependencies of all plugins are ready.</summary><signature><![CDATA[void Load();
 ]]></signature></Document>

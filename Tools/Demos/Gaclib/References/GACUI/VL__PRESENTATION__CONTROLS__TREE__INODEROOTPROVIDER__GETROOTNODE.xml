@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::INodeRootProvider::GetRootNode@::vl::Ptr&lt;::vl::presentation::controls::tree::INodeProvider&gt;()" accessor="public" category="Function" name="GetRootNode"><summary>Get the instance of the root node.</summary><returns>Returns the instance of the root node.</returns><signature><![CDATA[Ptr<INodeProvider>();
+<Document symbolId="vl::presentation::controls::tree::INodeRootProvider::GetRootNode@::vl::Ptr&lt;::vl::presentation::controls::tree::INodeProvider&gt;()" accessor="public" category="Function" name="GetRootNode"><summary>Get the instance of the root node.</summary><returns>Returns the instance of the root node.</returns><signature><![CDATA[Ptr<INodeProvider> GetRootNode();
 ]]></signature></Document>

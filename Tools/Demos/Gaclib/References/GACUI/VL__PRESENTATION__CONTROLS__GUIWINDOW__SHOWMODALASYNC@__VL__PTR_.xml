@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::ShowModalAsync@::vl::Ptr&lt;::vl::reflection::description::IAsync&gt;(::vl::presentation::controls::GuiWindow *)" accessor="public" category="Function" name="ShowModalAsync"><summary>
  Show a model window as an async operation, which ends when the window is closed.
- </summary><returns>Returns true if the size box is visible.</returns><param name="owner">The window to disable as a parent window.</param><signature><![CDATA[Ptr<reflection::description::IAsync>(GuiWindow *);
+ </summary><returns>Returns true if the size box is visible.</returns><param name="owner">The window to disable as a parent window.</param><signature><![CDATA[Ptr<reflection::description::IAsync> ShowModalAsync(GuiWindow *);
 ]]></signature></Document>

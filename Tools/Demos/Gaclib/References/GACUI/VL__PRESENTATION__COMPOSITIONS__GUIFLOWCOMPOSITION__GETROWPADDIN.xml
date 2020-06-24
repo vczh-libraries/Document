@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetRowPadding@::vl::vint()" accessor="public" category="Function" name="GetRowPadding"><summary>Get the distance between rows.</summary><returns>The distance between rows.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetRowPadding@::vl::vint()" accessor="public" category="Function" name="GetRowPadding"><summary>Get the distance between rows.</summary><returns>The distance between rows.</returns><signature><![CDATA[vint GetRowPadding();
 ]]></signature></Document>

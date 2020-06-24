@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::SetItemTemplate@void(::vl::presentation::controls::GuiListControl::ItemStyleProperty)" accessor="public" category="Function" name="SetItemTemplate"><summary>Set the item style provider</summary><param name="value">The new item style provider</param><signature><![CDATA[void(ItemStyleProperty);
+<Document symbolId="vl::presentation::controls::GuiListControl::SetItemTemplate@void(::vl::presentation::controls::GuiListControl::ItemStyleProperty)" accessor="public" category="Function" name="SetItemTemplate"><summary>Set the item style provider</summary><param name="value">The new item style provider</param><signature><![CDATA[void SetItemTemplate(ItemStyleProperty);
 ]]></signature></Document>

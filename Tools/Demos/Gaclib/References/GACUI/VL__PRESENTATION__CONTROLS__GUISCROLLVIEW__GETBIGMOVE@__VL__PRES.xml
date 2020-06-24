@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::GetBigMove@::vl::presentation::Size()" accessor="protected" category="Function" name="GetBigMove"><summary>Calculate the big move of the scroll bar.</summary><returns>The big move of the scroll bar.</returns><signature><![CDATA[Size();
+<Document symbolId="vl::presentation::controls::GuiScrollView::GetBigMove@::vl::presentation::Size()" accessor="protected" category="Function" name="GetBigMove"><summary>Calculate the big move of the scroll bar.</summary><returns>The big move of the scroll bar.</returns><signature><![CDATA[Size GetBigMove();
 ]]></signature></Document>

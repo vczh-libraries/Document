@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement::GetPoint@::vl::presentation::Point const &amp;(::vl::vint)" accessor="public" category="Function" name="GetPoint"><summary>
  Get a point of the polygon element using an index.
- </summary><param name="index">The index to access a point.</param><returns>The point of the polygon element associated with the index.</returns><signature><![CDATA[Point const &(vint);
+ </summary><param name="index">The index to access a point.</param><returns>The point of the polygon element associated with the index.</returns><signature><![CDATA[Point const & GetPoint(vint);
 ]]></signature></Document>

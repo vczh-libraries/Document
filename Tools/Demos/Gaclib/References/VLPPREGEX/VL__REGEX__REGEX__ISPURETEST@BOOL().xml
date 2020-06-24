@@ -1,2 +1,2 @@
-<Document symbolId="vl::regex::Regex::IsPureTest@bool()" accessor="public" category="Function" name="IsPureTest"><summary>Test does the Regex uses DFA to test a string. Test means ignoring all capturing requirements.</summary><returns>Returns true if DFA is used.</returns><signature><![CDATA[bool() const;
+<Document symbolId="vl::regex::Regex::IsPureTest@bool()" accessor="public" category="Function" name="IsPureTest"><summary>Test does the Regex uses DFA to test a string. Test means ignoring all capturing requirements.</summary><returns>Returns true if DFA is used.</returns><signature><![CDATA[bool IsPureTest() const;
 ]]></signature></Document>

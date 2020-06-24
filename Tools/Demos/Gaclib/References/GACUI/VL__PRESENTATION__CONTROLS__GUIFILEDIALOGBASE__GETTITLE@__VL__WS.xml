@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetTitle@::vl::WString()" accessor="public" category="Function" name="GetTitle"><summary>Get the title.</summary><returns>The title.</returns><signature><![CDATA[WString();
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetTitle@::vl::WString()" accessor="public" category="Function" name="GetTitle"><summary>Get the title.</summary><returns>The title.</returns><signature><![CDATA[WString GetTitle();
 ]]></signature></Document>

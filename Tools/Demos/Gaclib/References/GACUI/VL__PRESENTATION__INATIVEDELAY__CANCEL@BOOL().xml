@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::INativeDelay::Cancel@bool()" accessor="public" category="Function" name="Cancel"><summary>If the current task is pending, cancel the task.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::INativeDelay::Cancel@bool()" accessor="public" category="Function" name="Cancel"><summary>If the current task is pending, cancel the task.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Cancel();
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::GuiImageData::GetFrameIndex@::vl::vint()" accessor="public" category="Function" name="GetFrameIndex"><summary>Get the specified frame index.</summary><returns>The specified frame index.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::GuiImageData::GetFrameIndex@::vl::vint()" accessor="public" category="Function" name="GetFrameIndex"><summary>Get the specified frame index.</summary><returns>The specified frame index.</returns><signature><![CDATA[vint GetFrameIndex();
 ]]></signature></Document>

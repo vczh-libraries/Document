@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::GetSelectedItem@::vl::reflection::description::Value()" accessor="public" category="Function" name="GetSelectedItem"><summary>Get the selected item.</summary><returns>The selected item.</returns><signature><![CDATA[description::Value();
+<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::GetSelectedItem@::vl::reflection::description::Value()" accessor="public" category="Function" name="GetSelectedItem"><summary>Get the selected item.</summary><returns>The selected item.</returns><signature><![CDATA[description::Value GetSelectedItem();
 ]]></signature></Document>

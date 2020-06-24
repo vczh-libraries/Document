@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Paste@bool()" accessor="public" category="Function" name="Paste"><summary>Paste the content from the clipboard and replace the selected text.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Paste@bool()" accessor="public" category="Function" name="Paste"><summary>Paste the content from the clipboard and replace the selected text.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Paste();
 ]]></signature></Document>

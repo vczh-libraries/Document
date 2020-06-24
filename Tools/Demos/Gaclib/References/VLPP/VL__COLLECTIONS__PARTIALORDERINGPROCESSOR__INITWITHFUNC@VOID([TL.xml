@@ -2,6 +2,6 @@
     typename TList, 
     typename TFunc
 >
-void(TList const &,
+void InitWithFunc(TList const &,
 TFunc &&);
 ]]></signature></Document>

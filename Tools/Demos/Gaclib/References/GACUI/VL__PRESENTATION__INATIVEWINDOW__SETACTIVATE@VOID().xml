@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetActivate@void()" accessor="public" category="Function" name="SetActivate"><summary>
  Activate to the window.
- </summary><signature><![CDATA[void();
+ </summary><signature><![CDATA[void SetActivate();
 ]]></signature></Document>

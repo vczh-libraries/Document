@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::CloseList@void()" accessor="public" category="Function" name="CloseList"><summary>Notify the list to be invisible.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::CloseList@void()" accessor="public" category="Function" name="CloseList"><summary>Notify the list to be invisible.</summary><signature><![CDATA[void CloseList();
 ]]></signature></Document>

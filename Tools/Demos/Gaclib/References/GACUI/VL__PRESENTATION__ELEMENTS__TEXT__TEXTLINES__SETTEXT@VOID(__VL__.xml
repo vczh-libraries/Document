@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>
  Set the string to the text lines. This operation will modified every <symbol docId="vl::presentation::elements::text::TextLine" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine"/> objects.
- </summary><param name="value">The string to set into the text lines.</param><signature><![CDATA[void(WString const &);
+ </summary><param name="value">The string to set into the text lines.</param><signature><![CDATA[void SetText(WString const &);
 ]]></signature></Document>

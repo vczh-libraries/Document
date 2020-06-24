@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::DeleteAfterProcessingAllEvents@void()" accessor="public" category="Function" name="DeleteAfterProcessingAllEvents"><summary>Delete this control host after processing all events.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiControlHost::DeleteAfterProcessingAllEvents@void()" accessor="public" category="Function" name="DeleteAfterProcessingAllEvents"><summary>Delete this control host after processing all events.</summary><signature><![CDATA[void DeleteAfterProcessingAllEvents();
 ]]></signature></Document>

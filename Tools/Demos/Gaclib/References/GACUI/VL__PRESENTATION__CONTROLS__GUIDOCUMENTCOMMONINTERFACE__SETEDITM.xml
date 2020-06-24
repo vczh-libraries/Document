@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SetEditMode@void(::vl::presentation::controls::GuiDocumentCommonInterface::EditMode)" accessor="public" category="Function" name="SetEditMode"><summary>Set the edit mode of this control.</summary><param name="value">The edit mode.</param><signature><![CDATA[void(EditMode);
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SetEditMode@void(::vl::presentation::controls::GuiDocumentCommonInterface::EditMode)" accessor="public" category="Function" name="SetEditMode"><summary>Set the edit mode of this control.</summary><param name="value">The edit mode.</param><signature><![CDATA[void SetEditMode(EditMode);
 ]]></signature></Document>

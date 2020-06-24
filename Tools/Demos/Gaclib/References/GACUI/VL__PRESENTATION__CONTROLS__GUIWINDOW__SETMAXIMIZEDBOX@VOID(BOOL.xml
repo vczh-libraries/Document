@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::SetMaximizedBox@void(bool)" accessor="public" category="Function" name="SetMaximizedBox"><summary>
  Make the maximize box visible or invisible.
- </summary><param name="visible">True to make the maximize box visible.</param><signature><![CDATA[void(bool);
+ </summary><param name="visible">True to make the maximize box visible.</param><signature><![CDATA[void SetMaximizedBox(bool);
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetViewPosition@void(::vl::presentation::Point)" accessor="public" category="Function" name="SetViewPosition"><summary>
  Set the left-top position of the visible bounds of characters.
- </summary><param name="value">The left-top position of the visible bounds of characters.</param><signature><![CDATA[void(Point);
+ </summary><param name="value">The left-top position of the visible bounds of characters.</param><signature><![CDATA[void SetViewPosition(Point);
 ]]></signature></Document>

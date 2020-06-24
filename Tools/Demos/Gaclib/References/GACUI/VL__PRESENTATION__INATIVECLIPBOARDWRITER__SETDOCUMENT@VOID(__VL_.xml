@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::INativeClipboardWriter::SetDocument@void(::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;)" accessor="public" category="Function" name="SetDocument"><summary>Prepare a document for the clipboard.</summary><param name="value">The document.</param><signature><![CDATA[void(Ptr<DocumentModel>);
+<Document symbolId="vl::presentation::INativeClipboardWriter::SetDocument@void(::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;)" accessor="public" category="Function" name="SetDocument"><summary>Prepare a document for the clipboard.</summary><param name="value">The document.</param><signature><![CDATA[void SetDocument(Ptr<DocumentModel>);
 ]]></signature></Document>

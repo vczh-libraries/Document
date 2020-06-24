@@ -1,2 +1,2 @@
-<Document symbolId="vl::ObjectString::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty string.</summary><signature><![CDATA[();
+<Document symbolId="vl::ObjectString::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty string.</summary><signature><![CDATA[ ObjectString();
 ]]></signature></Document>

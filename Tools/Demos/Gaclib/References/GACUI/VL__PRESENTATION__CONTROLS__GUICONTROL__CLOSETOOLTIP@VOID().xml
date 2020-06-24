@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::CloseTooltip@void()" accessor="public" category="Function" name="CloseTooltip"><summary>Close the tooltip that owned by this control.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::GuiControl::CloseTooltip@void()" accessor="public" category="Function" name="CloseTooltip"><summary>Close the tooltip that owned by this control.</summary><signature><![CDATA[void CloseTooltip();
 ]]></signature></Document>

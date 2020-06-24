@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiInnerShadowElement::GetThickness@::vl::vint()" accessor="public" category="Function" name="GetThickness"><summary>
  Get the thickness.
- </summary><returns>The thickness.</returns><signature><![CDATA[vint();
+ </summary><returns>The thickness.</returns><signature><![CDATA[vint GetThickness();
 ]]></signature></Document>

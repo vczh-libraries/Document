@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::GetViewPosition@::vl::presentation::Point()" accessor="public" category="Function" name="GetViewPosition"><summary>Get the position of the left-top corner of the view bounds.</summary><returns>The view position.</returns><signature><![CDATA[Point();
+<Document symbolId="vl::presentation::controls::GuiScrollView::GetViewPosition@::vl::presentation::Point()" accessor="public" category="Function" name="GetViewPosition"><summary>Get the position of the left-top corner of the view bounds.</summary><returns>The view position.</returns><signature><![CDATA[Point GetViewPosition();
 ]]></signature></Document>

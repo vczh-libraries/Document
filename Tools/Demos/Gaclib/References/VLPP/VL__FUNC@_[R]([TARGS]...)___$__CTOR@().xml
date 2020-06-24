@@ -1,2 +1,2 @@
-<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a null function reference.</summary><signature><![CDATA[();
+<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a null function reference.</summary><signature><![CDATA[ Func();
 ]]></signature></Document>

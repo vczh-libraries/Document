@@ -1,2 +1,2 @@
-<Document symbolId="vl::stream::BomEncoder::$__ctor@(::vl::stream::BomEncoder::Encoding)" accessor="public" category="Function" name="$__ctor"><summary>Create an encoder.</summary><param name="_encoding">Specified encoding.</param><signature><![CDATA[(Encoding);
+<Document symbolId="vl::stream::BomEncoder::$__ctor@(::vl::stream::BomEncoder::Encoding)" accessor="public" category="Function" name="$__ctor"><summary>Create an encoder.</summary><param name="_encoding">Specified encoding.</param><signature><![CDATA[ BomEncoder(Encoding);
 ]]></signature></Document>

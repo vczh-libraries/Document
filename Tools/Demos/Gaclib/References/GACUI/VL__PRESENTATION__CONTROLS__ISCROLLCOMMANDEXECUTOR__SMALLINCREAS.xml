@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SmallIncrease@void()" accessor="public" category="Function" name="SmallIncrease"><summary>Do small increment.</summary><signature><![CDATA[void();
+<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SmallIncrease@void()" accessor="public" category="Function" name="SmallIncrease"><summary>Do small increment.</summary><signature><![CDATA[void SmallIncrease();
 ]]></signature></Document>

@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::ITextItemView::SetChecked@void(::vl::vint, bool)" accessor="public" category="Function" name="SetChecked"><summary>Set the check state of an item without invoving any UI action.</summary><param name="itemIndex">The index of an item.</param><param name="value">The new check state.</param><signature><![CDATA[void(vint,
+<Document symbolId="vl::presentation::controls::list::ITextItemView::SetChecked@void(::vl::vint, bool)" accessor="public" category="Function" name="SetChecked"><summary>Set the check state of an item without invoving any UI action.</summary><param name="itemIndex">The index of an item.</param><param name="value">The new check state.</param><signature><![CDATA[void SetChecked(vint,
 bool);
 ]]></signature></Document>

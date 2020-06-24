@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::CanUndo@bool()" accessor="public" category="Function" name="CanUndo"><summary>Test can undo.</summary><returns>Returns true if this action can be performed.</returns><signature><![CDATA[bool();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::CanUndo@bool()" accessor="public" category="Function" name="CanUndo"><summary>Test can undo.</summary><returns>Returns true if this action can be performed.</returns><signature><![CDATA[bool CanUndo();
 ]]></signature></Document>

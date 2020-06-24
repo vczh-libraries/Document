@@ -1,2 +1,2 @@
-<Document symbolId="vl::stream::IDecoder::Close@void()" accessor="public" category="Function" name="Close"><summary>Stop the transformation.</summary><signature><![CDATA[void();
+<Document symbolId="vl::stream::IDecoder::Close@void()" accessor="public" category="Function" name="Close"><summary>Stop the transformation.</summary><signature><![CDATA[void Close();
 ]]></signature></Document>

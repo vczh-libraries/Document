@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow::SetBorder@void(bool)" accessor="public" category="Function" name="SetBorder"><summary>
  Make the border visible or invisible.
- </summary><param name="visible">True to make the border visible.</param><signature><![CDATA[void(bool);
+ </summary><param name="visible">True to make the border visible.</param><signature><![CDATA[void SetBorder(bool);
 ]]></signature></Document>

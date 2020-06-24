@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::Gui3DBorderElement::GetColor1@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor1"><summary>
  Get the left-top color.
- </summary><returns>The left-top color.</returns><signature><![CDATA[Color();
+ </summary><returns>The left-top color.</returns><signature><![CDATA[Color GetColor1();
 ]]></signature></Document>

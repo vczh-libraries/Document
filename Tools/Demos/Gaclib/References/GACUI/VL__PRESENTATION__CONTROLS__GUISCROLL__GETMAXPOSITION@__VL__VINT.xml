@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::GetMaxPosition@::vl::vint()" accessor="public" category="Function" name="GetMaxPosition"><summary>Get the maximum possible position.</summary><returns>The maximum possible position.</returns><signature><![CDATA[vint();
+<Document symbolId="vl::presentation::controls::GuiScroll::GetMaxPosition@::vl::vint()" accessor="public" category="Function" name="GetMaxPosition"><summary>Get the maximum possible position.</summary><returns>The maximum possible position.</returns><signature><![CDATA[vint GetMaxPosition();
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::ThreadVariable::Get@[T] &amp;()" accessor="public" category="Function" name="Get"><summary>Get the stored data.</summary><returns>The stored ata.</returns><signature><![CDATA[T &();
+<Document symbolId="vl::ThreadVariable::Get@[T] &amp;()" accessor="public" category="Function" name="Get"><summary>Get the stored data.</summary><returns>The stored ata.</returns><signature><![CDATA[T & Get();
 ]]></signature></Document>
