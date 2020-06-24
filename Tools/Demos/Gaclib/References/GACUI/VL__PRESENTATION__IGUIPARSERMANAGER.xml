@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::IGuiParserManager" accessor="" category="Class" name="IGuiParserManager"><summary>Parser manager for caching parsing table globally.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::IGuiParserManager" accessor="" category="Class" name="IGuiParserManager"><summary>Parser manager for caching parsing table globally.</summary><signature><![CDATA[class IGuiParserManager;
+]]></signature></Document>

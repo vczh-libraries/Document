@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiDirect2DElement" accessor="" category="Class" name="GuiDirect2DElement"><summary>
  Defines an element for customized rendering using Direct2D.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiDirect2DElement;
+]]></signature></Document>

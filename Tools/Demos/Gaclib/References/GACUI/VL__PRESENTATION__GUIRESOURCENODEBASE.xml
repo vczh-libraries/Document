@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourceNodeBase" accessor="" category="Class" name="GuiResourceNodeBase"><summary>Resource node base.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResourceNodeBase" accessor="" category="Class" name="GuiResourceNodeBase"><summary>Resource node base.</summary><signature><![CDATA[class GuiResourceNodeBase;
+]]></signature></Document>

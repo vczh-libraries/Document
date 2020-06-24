@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeImageFrame" accessor="" category="Class" name="INativeImageFrame"><summary>
  Represents an image frame.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeImageFrame;
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiSolidBorderElement" accessor="" category="Class" name="GuiSolidBorderElement"><summary>
  Defines a border element with a thickness of one pixel.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiSolidBorderElement;
+]]></signature></Document>

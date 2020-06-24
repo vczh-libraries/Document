@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::TextPos" accessor="" category="Struct" name="TextPos"><summary>
  Represents the position in multiple lines of text.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[struct TextPos;
+]]></signature></Document>

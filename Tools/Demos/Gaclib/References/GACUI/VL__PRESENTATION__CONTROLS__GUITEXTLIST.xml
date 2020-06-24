@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextList" accessor="" category="Class" name="GuiTextList"><summary>Text list control.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextList" accessor="" category="Class" name="GuiTextList"><summary>Text list control.</summary><signature><![CDATA[class GuiTextList;
+]]></signature></Document>

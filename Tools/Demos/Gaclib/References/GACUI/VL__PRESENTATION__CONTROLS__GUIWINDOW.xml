@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiWindow" accessor="" category="Class" name="GuiWindow"><summary>
  Represents a normal window.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiWindow;
+]]></signature></Document>

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::FontProperties" accessor="" category="Struct" name="FontProperties"><summary>
  Represents a font configuration.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[struct FontProperties;
+]]></signature></Document>

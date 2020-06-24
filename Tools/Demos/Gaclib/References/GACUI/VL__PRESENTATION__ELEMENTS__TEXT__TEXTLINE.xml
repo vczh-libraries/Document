@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLine" accessor="" category="Struct" name="TextLine"><summary>
  Represents a line of characters.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[struct TextLine;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::Interface" accessor="" category="Class" name="Interface"><summary>Base type of all interfaces. All interface types are encouraged to be virtual inherited.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Interface" accessor="" category="Class" name="Interface"><summary>Base type of all interfaces. All interface types are encouraged to be virtual inherited.</summary><signature><![CDATA[class Interface;
+]]></signature></Document>

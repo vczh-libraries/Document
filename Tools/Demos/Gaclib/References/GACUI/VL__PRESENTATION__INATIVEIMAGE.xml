@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeImage" accessor="" category="Class" name="INativeImage"><summary>
  Represents an image.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeImage;
+]]></signature></Document>

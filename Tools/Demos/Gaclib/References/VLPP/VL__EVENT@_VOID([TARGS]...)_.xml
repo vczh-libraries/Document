@@ -1,1 +1,4 @@
-<Document symbolId="vl::Event@&lt;void([TArgs]...)&gt;" accessor="" category="Class" name="Event@&lt;void([TArgs]...)&gt;"><summary>Event.</summary><typeparam name="TArgs">Types of callback parameters.</typeparam><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::Event@&lt;void([TArgs]...)&gt;" accessor="" category="Class" name="Event@&lt;void([TArgs]...)&gt;"><summary>Event.</summary><typeparam name="TArgs">Types of callback parameters.</typeparam><signature><![CDATA[template <
+typename TArgs>
+class Event<void(TArgs...)>;
+]]></signature></Document>

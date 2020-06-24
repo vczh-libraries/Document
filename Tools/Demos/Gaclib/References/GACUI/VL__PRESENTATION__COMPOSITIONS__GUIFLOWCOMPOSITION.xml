@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiFlowComposition" accessor="" category="Class" name="GuiFlowComposition"><summary>
  Represents a flow composition.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiFlowComposition;
+]]></signature></Document>

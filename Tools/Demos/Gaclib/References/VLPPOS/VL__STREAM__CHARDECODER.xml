@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::CharDecoder" accessor="" category="Class" name="CharDecoder"><summary>Base type of all character decoder.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::CharDecoder" accessor="" category="Class" name="CharDecoder"><summary>Base type of all character decoder.</summary><signature><![CDATA[class CharDecoder;
+]]></signature></Document>

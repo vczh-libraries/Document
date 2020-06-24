@@ -1,1 +1,4 @@
-<Document symbolId="vl::ObjectBox" accessor="" category="Class" name="ObjectBox"><summary>Type for storing a value to wherever requiring a <symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/> to <symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/>.</summary><typeparam name="T">Type of the value.</typeparam><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::ObjectBox" accessor="" category="Class" name="ObjectBox"><summary>Type for storing a value to wherever requiring a <symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/> to <symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/>.</summary><typeparam name="T">Type of the value.</typeparam><signature><![CDATA[template <
+typename T>
+class ObjectBox;
+]]></signature></Document>

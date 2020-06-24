@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiImageFrameElement" accessor="" category="Class" name="GuiImageFrameElement"><summary>
  Defines an element containing an image.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiImageFrameElement;
+]]></signature></Document>

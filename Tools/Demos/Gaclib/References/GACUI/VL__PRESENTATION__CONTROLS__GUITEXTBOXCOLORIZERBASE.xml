@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase" accessor="" category="Class" name="GuiTextBoxColorizerBase"><summary>The base class of text box colorizer.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase" accessor="" category="Class" name="GuiTextBoxColorizerBase"><summary>The base class of text box colorizer.</summary><signature><![CDATA[class GuiTextBoxColorizerBase;
+]]></signature></Document>

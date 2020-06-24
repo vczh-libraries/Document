@@ -6,4 +6,5 @@
  4) Write functions, available only if <symbol docId="vl::stream::IStream::CanWrite@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanWrite@bool()[decl0]"/> returns true.
  5) Seek functions, available only if <symbol docId="vl::stream::IStream::CanSeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanSeek@bool()[decl0]"/> returns true.
  6) Size functions, available only if <symbol docId="vl::stream::IStream::IsLimited@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::IsLimited@bool()[decl0]"/> returns true. But there are still some streams knows that the content is limited, but the size is unknown. In this case, <symbol docId="vl::stream::IStream::Size@::vl::pos_t()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]"/> will return -1.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class IStream;
+]]></signature></Document>

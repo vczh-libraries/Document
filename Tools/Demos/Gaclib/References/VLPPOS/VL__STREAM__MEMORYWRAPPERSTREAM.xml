@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::MemoryWrapperStream" accessor="" category="Class" name="MemoryWrapperStream"><summary>A readable, writable, seekable and peekable stream that operates a buffer.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::MemoryWrapperStream" accessor="" category="Class" name="MemoryWrapperStream"><summary>A readable, writable, seekable and peekable stream that operates a buffer.</summary><signature><![CDATA[class MemoryWrapperStream;
+]]></signature></Document>

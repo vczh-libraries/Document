@@ -11,4 +11,5 @@
 			Pass  5: Compile
 			Pass  6: Generate instance types with everything to InstanceCtor				/ Compile animation types
 			Pass  7: Compile
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class IGuiResourceTypeResolver_Precompile;
+]]></signature></Document>

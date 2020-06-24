@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListViewBase" accessor="" category="Class" name="GuiListViewBase"><summary>List view base control. All list view controls inherit from this class.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiListViewBase" accessor="" category="Class" name="GuiListViewBase"><summary>List view base control. All list view controls inherit from this class.</summary><signature><![CDATA[class GuiListViewBase;
+]]></signature></Document>

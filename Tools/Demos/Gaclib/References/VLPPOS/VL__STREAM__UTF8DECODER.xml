@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::Utf8Decoder" accessor="" category="Class" name="Utf8Decoder"><summary>Decoder to transform UTF-8 text to wchar_t.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::Utf8Decoder" accessor="" category="Class" name="Utf8Decoder"><summary>Decoder to transform UTF-8 text to wchar_t.</summary><signature><![CDATA[class Utf8Decoder;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeExceptionInfo" accessor="" category="Class" name="WfRuntimeExceptionInfo"><summary>Representing an raised exception.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeExceptionInfo" accessor="" category="Class" name="WfRuntimeExceptionInfo"><summary>Representing an raised exception.</summary><signature><![CDATA[class WfRuntimeExceptionInfo;
+]]></signature></Document>

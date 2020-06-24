@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::FreeHeightItemArranger" accessor="" category="Class" name="FreeHeightItemArranger"><summary>Free height item arranger. This arranger will cache heights of all items.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::FreeHeightItemArranger" accessor="" category="Class" name="FreeHeightItemArranger"><summary>Free height item arranger. This arranger will cache heights of all items.</summary><signature><![CDATA[class FreeHeightItemArranger;
+]]></signature></Document>

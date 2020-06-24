@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiBoundsComposition" accessor="" category="Class" name="GuiBoundsComposition"><summary>
  Represents a composition that is free to change the expected bounds.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiBoundsComposition;
+]]></signature></Document>

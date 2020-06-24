@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::ListViewItem" accessor="" category="Class" name="ListViewItem"><summary>List view item.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewItem" accessor="" category="Class" name="ListViewItem"><summary>List view item.</summary><signature><![CDATA[class ListViewItem;
+]]></signature></Document>

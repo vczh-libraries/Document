@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeAsyncService" accessor="" category="Class" name="INativeAsyncService"><summary>
  Asynchronized operation service. GacUI is not a thread safe library except for this service. To access this service, use <symbol docId="vl::presentation::INativeController::AsyncService@::vl::presentation::INativeAsyncService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::AsyncService@::vl::presentation::INativeAsyncService *()[decl0]"/>.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeAsyncService;
+]]></signature></Document>

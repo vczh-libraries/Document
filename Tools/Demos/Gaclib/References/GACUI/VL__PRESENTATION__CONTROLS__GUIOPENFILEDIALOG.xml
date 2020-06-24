@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiOpenFileDialog" accessor="" category="Class" name="GuiOpenFileDialog"><summary>Open file dialog.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiOpenFileDialog" accessor="" category="Class" name="GuiOpenFileDialog"><summary>Open file dialog.</summary><signature><![CDATA[class GuiOpenFileDialog;
+]]></signature></Document>

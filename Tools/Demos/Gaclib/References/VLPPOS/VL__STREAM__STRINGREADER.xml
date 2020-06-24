@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::StringReader" accessor="" category="Class" name="StringReader"><summary>Text reader from a string.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::StringReader" accessor="" category="Class" name="StringReader"><summary>Text reader from a string.</summary><signature><![CDATA[class StringReader;
+]]></signature></Document>

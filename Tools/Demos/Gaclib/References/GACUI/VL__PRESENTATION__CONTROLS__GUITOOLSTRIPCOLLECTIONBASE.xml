@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCollectionBase" accessor="" category="Class" name="GuiToolstripCollectionBase"><summary>Toolstrip item collection.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiToolstripCollectionBase" accessor="" category="Class" name="GuiToolstripCollectionBase"><summary>Toolstrip item collection.</summary><signature><![CDATA[class GuiToolstripCollectionBase;
+]]></signature></Document>

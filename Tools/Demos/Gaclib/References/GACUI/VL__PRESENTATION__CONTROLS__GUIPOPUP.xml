@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiPopup" accessor="" category="Class" name="GuiPopup"><summary>
  Represents a popup window. When the mouse click on other window or the desktop, the popup window will be closed automatically.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiPopup;
+]]></signature></Document>

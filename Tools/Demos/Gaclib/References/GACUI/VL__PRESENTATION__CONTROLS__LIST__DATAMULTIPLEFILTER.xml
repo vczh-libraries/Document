@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataMultipleFilter" accessor="" category="Class" name="DataMultipleFilter"><summary>Base class for a <symbol declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/> that contains multiple sub filters.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::DataMultipleFilter" accessor="" category="Class" name="DataMultipleFilter"><summary>Base class for a <symbol declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/> that contains multiple sub filters.</summary><signature><![CDATA[class DataMultipleFilter;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiBindableDataGrid" accessor="" category="Class" name="GuiBindableDataGrid"><summary>A bindable Data grid control.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableDataGrid" accessor="" category="Class" name="GuiBindableDataGrid"><summary>A bindable Data grid control.</summary><signature><![CDATA[class GuiBindableDataGrid;
+]]></signature></Document>

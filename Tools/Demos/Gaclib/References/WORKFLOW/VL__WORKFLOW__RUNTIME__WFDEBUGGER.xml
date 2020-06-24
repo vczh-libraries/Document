@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger" accessor="" category="Class" name="WfDebugger"><summary>Workflow debugger.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger" accessor="" category="Class" name="WfDebugger"><summary>Workflow debugger.</summary><signature><![CDATA[class WfDebugger;
+]]></signature></Document>

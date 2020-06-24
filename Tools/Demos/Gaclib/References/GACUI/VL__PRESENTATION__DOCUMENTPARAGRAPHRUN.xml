@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentParagraphRun" accessor="" category="Class" name="DocumentParagraphRun"><summary>Pepresents a paragraph run.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentParagraphRun" accessor="" category="Class" name="DocumentParagraphRun"><summary>Pepresents a paragraph run.</summary><signature><![CDATA[class DocumentParagraphRun;
+]]></signature></Document>

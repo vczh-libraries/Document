@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiControlSignalEventArgs" accessor="" category="Struct" name="GuiControlSignalEventArgs"><summary>Control signal event arguments.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiControlSignalEventArgs" accessor="" category="Struct" name="GuiControlSignalEventArgs"><summary>Control signal event arguments.</summary><signature><![CDATA[struct GuiControlSignalEventArgs;
+]]></signature></Document>

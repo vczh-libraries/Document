@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiStackComposition" accessor="" category="Class" name="GuiStackComposition"><summary>
  Represents a stack composition.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiStackComposition;
+]]></signature></Document>

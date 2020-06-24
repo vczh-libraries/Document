@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiRepeatCompositionBase" accessor="" category="Class" name="GuiRepeatCompositionBase"><summary>A base class for all bindable repeat compositions.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiRepeatCompositionBase" accessor="" category="Class" name="GuiRepeatCompositionBase"><summary>A base class for all bindable repeat compositions.</summary><signature><![CDATA[class GuiRepeatCompositionBase;
+]]></signature></Document>

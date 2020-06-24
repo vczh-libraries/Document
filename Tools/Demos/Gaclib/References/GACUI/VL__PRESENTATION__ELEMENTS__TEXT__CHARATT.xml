@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::CharAtt" accessor="" category="Struct" name="CharAtt"><summary>
  Represents the extra information of a character to display.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[struct CharAtt;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::parsing::tabling::ParsingAutoRecoverParser" accessor="" category="Class" name="ParsingAutoRecoverParser"><summary>A strict parse. It doesn&apos;t allow ambiguity but allows error recovery.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::parsing::tabling::ParsingAutoRecoverParser" accessor="" category="Class" name="ParsingAutoRecoverParser"><summary>A strict parse. It doesn&apos;t allow ambiguity but allows error recovery.</summary><signature><![CDATA[class ParsingAutoRecoverParser;
+]]></signature></Document>

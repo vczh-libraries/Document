@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiAxis" accessor="" category="Class" name="GuiAxis"><summary>Axis aligned item coordinate transformer. This transformer transforms coordinates by changing the axis direction.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiAxis" accessor="" category="Class" name="GuiAxis"><summary>Axis aligned item coordinate transformer. This transformer transforms coordinates by changing the axis direction.</summary><signature><![CDATA[class GuiAxis;
+]]></signature></Document>

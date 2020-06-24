@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::SemanticColorizeContext" accessor="public" category="Struct" name="SemanticColorizeContext"><summary>Context for doing semantic colorizing.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::SemanticColorizeContext" accessor="public" category="Struct" name="SemanticColorizeContext"><summary>Context for doing semantic colorizing.</summary><signature><![CDATA[struct SemanticColorizeContext;
+]]></signature></Document>

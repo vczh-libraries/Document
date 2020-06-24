@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::IWfBreakPointAction" accessor="" category="Class" name="IWfBreakPointAction"><summary>Break point action.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::IWfBreakPointAction" accessor="" category="Class" name="IWfBreakPointAction"><summary>Break point action.</summary><signature><![CDATA[class IWfBreakPointAction;
+]]></signature></Document>

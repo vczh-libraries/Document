@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::GuiResource" accessor="" category="Class" name="GuiResource"><summary>Resource. A resource is a root resource folder that does not have a name.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResource" accessor="" category="Class" name="GuiResource"><summary>Resource. A resource is a root resource folder that does not have a name.</summary><signature><![CDATA[class GuiResource;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl" accessor="" category="Class" name="GuiSelectableListControl"><summary>Represents a list control that each item is selectable.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl" accessor="" category="Class" name="GuiSelectableListControl"><summary>Represents a list control that each item is selectable.</summary><signature><![CDATA[class GuiSelectableListControl;
+]]></signature></Document>

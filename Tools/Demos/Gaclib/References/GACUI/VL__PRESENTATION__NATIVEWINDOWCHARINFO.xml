@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::NativeWindowCharInfo" accessor="" category="Struct" name="NativeWindowCharInfo"><summary>
  Character message information.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[struct NativeWindowCharInfo;
+]]></signature></Document>

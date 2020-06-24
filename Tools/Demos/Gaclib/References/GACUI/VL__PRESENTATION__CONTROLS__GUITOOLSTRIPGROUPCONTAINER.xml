@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripGroupContainer" accessor="" category="Class" name="GuiToolstripGroupContainer"><summary>A toolstrip item, which is also a toolstrip item container, automatically maintaining splitters between items.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiToolstripGroupContainer" accessor="" category="Class" name="GuiToolstripGroupContainer"><summary>A toolstrip item, which is also a toolstrip item container, automatically maintaining splitters between items.</summary><signature><![CDATA[class GuiToolstripGroupContainer;
+]]></signature></Document>

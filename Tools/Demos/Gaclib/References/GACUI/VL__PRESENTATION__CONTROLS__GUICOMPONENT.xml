@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiComponent" accessor="" category="Class" name="GuiComponent"><summary>
  Represnets a component.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiComponent;
+]]></signature></Document>

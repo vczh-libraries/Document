@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::GuiImageData" accessor="" category="Class" name="GuiImageData"><summary>
  Represnets an image to display.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiImageData;
+]]></signature></Document>

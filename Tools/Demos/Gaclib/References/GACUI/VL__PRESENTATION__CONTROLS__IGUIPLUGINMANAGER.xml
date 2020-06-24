@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::IGuiPluginManager" accessor="" category="Class" name="IGuiPluginManager"><summary>Represents a plugin manager.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::IGuiPluginManager" accessor="" category="Class" name="IGuiPluginManager"><summary>Represents a plugin manager.</summary><signature><![CDATA[class IGuiPluginManager;
+]]></signature></Document>

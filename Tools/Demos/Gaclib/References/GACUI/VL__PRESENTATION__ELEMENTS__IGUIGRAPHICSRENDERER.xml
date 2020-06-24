@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer" accessor="" category="Class" name="IGuiGraphicsRenderer"><summary>
  This is the interface for graphics renderers.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class IGuiGraphicsRenderer;
+]]></signature></Document>

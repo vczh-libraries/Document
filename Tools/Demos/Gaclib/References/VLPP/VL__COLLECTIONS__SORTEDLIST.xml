@@ -1,1 +1,4 @@
-<Document symbolId="vl::collections::SortedList" accessor="" category="Class" name="SortedList"><summary>List that keeps everything in order.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::SortedList" accessor="" category="Class" name="SortedList"><summary>List that keeps everything in order.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam><signature><![CDATA[template <
+typename T, typename K /* optional */>
+class SortedList;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::WaitableObject" accessor="" category="Class" name="WaitableObject"><summary>Base type of all synchronization objects.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::WaitableObject" accessor="" category="Class" name="WaitableObject"><summary>Base type of all synchronization objects.</summary><signature><![CDATA[class WaitableObject;
+]]></signature></Document>

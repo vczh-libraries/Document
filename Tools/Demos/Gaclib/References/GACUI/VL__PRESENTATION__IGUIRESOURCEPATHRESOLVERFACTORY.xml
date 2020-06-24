@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::IGuiResourcePathResolverFactory" accessor="" category="Class" name="IGuiResourcePathResolverFactory"><summary>Represents an <symbol docId="vl::presentation::IGuiResourcePathResolver" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourcePathResolver"/> factory.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::IGuiResourcePathResolverFactory" accessor="" category="Class" name="IGuiResourcePathResolverFactory"><summary>Represents an <symbol docId="vl::presentation::IGuiResourcePathResolver" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourcePathResolver"/> factory.</summary><signature><![CDATA[class IGuiResourcePathResolverFactory;
+]]></signature></Document>

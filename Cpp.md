@@ -37,8 +37,7 @@
     - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
     - [ ] for classes, all documented direct/indirect base types and members are inserted to see also.
   - [ ] `<signature>`.
-    - [ ] template header must be generated (include expression for default values).
-    - [ ] **type**: `class/struct/union/enum` NAME, with base types
+    - [ ] baes types for classes.
     - [ ] **function**: complete signature (include expression for default values).
     - [ ] **value alias**, **variable**, **type alias**: type is included, `static`, `constexpr` must exist in signature.
   - [ ] `<basetypes>`: inheritance tree, generic types are written as `NAME<...>`.

@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeClipboardWriter" accessor="" category="Class" name="INativeClipboardWriter"><summary>
  Clipboard writer.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeClipboardWriter;
+]]></signature></Document>

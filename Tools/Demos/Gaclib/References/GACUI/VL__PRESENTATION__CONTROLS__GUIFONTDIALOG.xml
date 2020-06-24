@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog" accessor="" category="Class" name="GuiFontDialog"><summary>Font dialog.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiFontDialog" accessor="" category="Class" name="GuiFontDialog"><summary>Font dialog.</summary><signature><![CDATA[class GuiFontDialog;
+]]></signature></Document>

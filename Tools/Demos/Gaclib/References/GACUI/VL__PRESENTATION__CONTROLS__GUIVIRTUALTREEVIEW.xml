@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualTreeView" accessor="" category="Class" name="GuiVirtualTreeView"><summary>Tree view control in virtual mode.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiVirtualTreeView" accessor="" category="Class" name="GuiVirtualTreeView"><summary>Tree view control in virtual mode.</summary><signature><![CDATA[class GuiVirtualTreeView;
+]]></signature></Document>

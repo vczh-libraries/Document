@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLines" accessor="" category="Class" name="TextLines"><summary>
  A class to maintain multiple lines of text buffer.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class TextLines;
+]]></signature></Document>

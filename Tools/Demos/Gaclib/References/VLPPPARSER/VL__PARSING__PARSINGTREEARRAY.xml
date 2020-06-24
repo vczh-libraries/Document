@@ -1,1 +1,2 @@
-<Document symbolId="vl::parsing::ParsingTreeArray" accessor="" category="Class" name="ParsingTreeArray"><summary>Representing an array node in a abstract syntax tree.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::parsing::ParsingTreeArray" accessor="" category="Class" name="ParsingTreeArray"><summary>Representing an array node in a abstract syntax tree.</summary><signature><![CDATA[class ParsingTreeArray;
+]]></signature></Document>

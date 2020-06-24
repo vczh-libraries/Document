@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourceMetadata" accessor="" category="Class" name="GuiResourceMetadata"><summary>Resource metadata.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResourceMetadata" accessor="" category="Class" name="GuiResourceMetadata"><summary>Resource metadata.</summary><signature><![CDATA[class GuiResourceMetadata;
+]]></signature></Document>

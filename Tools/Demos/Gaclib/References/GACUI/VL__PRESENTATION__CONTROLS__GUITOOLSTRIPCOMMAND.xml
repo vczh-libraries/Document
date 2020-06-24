@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand" accessor="" category="Class" name="GuiToolstripCommand"><summary>A command for toolstrip controls.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand" accessor="" category="Class" name="GuiToolstripCommand"><summary>A command for toolstrip controls.</summary><signature><![CDATA[class GuiToolstripCommand;
+]]></signature></Document>

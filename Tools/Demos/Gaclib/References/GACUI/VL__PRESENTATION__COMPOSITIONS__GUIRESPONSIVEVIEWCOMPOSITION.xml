@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiResponsiveViewComposition" accessor="" category="Class" name="GuiResponsiveViewComposition"><summary>A responsive layout composition defined by views of different sizes.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiResponsiveViewComposition" accessor="" category="Class" name="GuiResponsiveViewComposition"><summary>A responsive layout composition defined by views of different sizes.</summary><signature><![CDATA[class GuiResponsiveViewComposition;
+]]></signature></Document>

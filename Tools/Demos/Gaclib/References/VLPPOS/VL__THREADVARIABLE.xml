@@ -1,1 +1,4 @@
-<Document symbolId="vl::ThreadVariable" accessor="" category="Class" name="ThreadVariable"><summary>Thread local variable. This type can only be used to define global variables. Different threads can store different values to and obtain differnt values from a thread local variable.</summary><typeparam name="T">Type of the storage.</typeparam><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::ThreadVariable" accessor="" category="Class" name="ThreadVariable"><summary>Thread local variable. This type can only be used to define global variables. Different threads can store different values to and obtain differnt values from a thread local variable.</summary><typeparam name="T">Type of the storage.</typeparam><signature><![CDATA[template <
+typename T>
+class ThreadVariable;
+]]></signature></Document>

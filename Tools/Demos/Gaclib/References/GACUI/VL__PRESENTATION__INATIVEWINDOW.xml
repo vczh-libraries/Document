@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindow" accessor="" category="Class" name="INativeWindow"><summary>
  Represents a window.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeWindow;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor" accessor="" category="Class" name="RepeatingParsingExecutor"><summary>Repeating parsing executor.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor" accessor="" category="Class" name="RepeatingParsingExecutor"><summary>Repeating parsing executor.</summary><signature><![CDATA[class RepeatingParsingExecutor;
+]]></signature></Document>

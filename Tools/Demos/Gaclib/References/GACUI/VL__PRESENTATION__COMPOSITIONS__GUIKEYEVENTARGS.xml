@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiKeyEventArgs" accessor="" category="Struct" name="GuiKeyEventArgs"><summary>Keyboard event arguments.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiKeyEventArgs" accessor="" category="Struct" name="GuiKeyEventArgs"><summary>Keyboard event arguments.</summary><signature><![CDATA[struct GuiKeyEventArgs;
+]]></signature></Document>

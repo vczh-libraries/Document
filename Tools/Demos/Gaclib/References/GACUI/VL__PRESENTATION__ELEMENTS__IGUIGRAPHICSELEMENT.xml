@@ -2,4 +2,5 @@
  This is the interface for graphics elements.
  Graphics elements usually contains some information and helper functions for visible things.
  An graphics elements should be created using ElementType::Create.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class IGuiGraphicsElement;
+]]></signature></Document>

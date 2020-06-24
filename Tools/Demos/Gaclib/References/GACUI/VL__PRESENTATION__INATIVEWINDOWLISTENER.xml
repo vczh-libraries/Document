@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowListener" accessor="" category="Class" name="INativeWindowListener"><summary>
  Represents a message listener to an <symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeWindowListener;
+]]></signature></Document>

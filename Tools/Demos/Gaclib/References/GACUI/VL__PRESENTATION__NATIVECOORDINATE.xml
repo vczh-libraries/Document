@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::NativeCoordinate" accessor="" category="Struct" name="NativeCoordinate"><summary>
  Represents a position in the global screen coordinate space.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[struct NativeCoordinate;
+]]></signature></Document>

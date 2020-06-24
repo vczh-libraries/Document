@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor" accessor="" category="Class" name="IDatePickerCommandExecutor"><summary>A command executor for the style controller to change the control state.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor" accessor="" category="Class" name="IDatePickerCommandExecutor"><summary>A command executor for the style controller to change the control state.</summary><signature><![CDATA[class IDatePickerCommandExecutor;
+]]></signature></Document>

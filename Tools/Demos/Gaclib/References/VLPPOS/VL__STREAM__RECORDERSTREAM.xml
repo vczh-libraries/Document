@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::RecorderStream" accessor="" category="Class" name="RecorderStream"><summary>A readable stream that, read from an stream, and write everything that is read to another stream.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::RecorderStream" accessor="" category="Class" name="RecorderStream"><summary>A readable stream that, read from an stream, and write everything that is read to another stream.</summary><signature><![CDATA[class RecorderStream;
+]]></signature></Document>

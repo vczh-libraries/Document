@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeScreenService" accessor="" category="Class" name="INativeScreenService"><summary>
  Screen information service. To access this service, use <symbol docId="vl::presentation::INativeController::ScreenService@::vl::presentation::INativeScreenService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::ScreenService@::vl::presentation::INativeScreenService *()[decl0]"/>.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeScreenService;
+]]></signature></Document>

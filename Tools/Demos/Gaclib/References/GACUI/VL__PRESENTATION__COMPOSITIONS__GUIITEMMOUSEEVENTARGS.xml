@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiItemMouseEventArgs" accessor="" category="Struct" name="GuiItemMouseEventArgs"><summary>Item mouse event arguments.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiItemMouseEventArgs" accessor="" category="Struct" name="GuiItemMouseEventArgs"><summary>Item mouse event arguments.</summary><signature><![CDATA[struct GuiItemMouseEventArgs;
+]]></signature></Document>

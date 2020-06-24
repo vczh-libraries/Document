@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs" accessor="" category="Struct" name="GuiDirect2DElementEventArgs"><summary>Direct2D Rendering event arguments.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs" accessor="" category="Struct" name="GuiDirect2DElementEventArgs"><summary>Direct2D Rendering event arguments.</summary><signature><![CDATA[struct GuiDirect2DElementEventArgs;
+]]></signature></Document>

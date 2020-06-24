@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTabPage" accessor="" category="Class" name="GuiTabPage"><summary>Represnets a tab page control.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTabPage" accessor="" category="Class" name="GuiTabPage"><summary>Represnets a tab page control.</summary><signature><![CDATA[class GuiTabPage;
+]]></signature></Document>

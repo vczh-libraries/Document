@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::ListViewColumns" accessor="" category="Class" name="ListViewColumns"><summary>List view column container.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::ListViewColumns" accessor="" category="Class" name="ListViewColumns"><summary>List view column container.</summary><signature><![CDATA[class ListViewColumns;
+]]></signature></Document>

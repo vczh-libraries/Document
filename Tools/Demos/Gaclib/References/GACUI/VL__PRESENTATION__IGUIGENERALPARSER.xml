@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::IGuiGeneralParser" accessor="" category="Class" name="IGuiGeneralParser"><summary>Represents a parser.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::IGuiGeneralParser" accessor="" category="Class" name="IGuiGeneralParser"><summary>Represents a parser.</summary><signature><![CDATA[class IGuiGeneralParser;
+]]></signature></Document>

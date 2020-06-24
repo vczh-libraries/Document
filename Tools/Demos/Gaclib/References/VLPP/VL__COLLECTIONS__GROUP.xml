@@ -1,1 +1,4 @@
-<Document symbolId="vl::collections::Group" accessor="" category="Class" name="Group"><summary>Group, which is similar to an dictionary, but a group can associate multiple values with a key.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys.</typeparam><typeparam name="VK">Type of the key type of values.</typeparam><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::collections::Group" accessor="" category="Class" name="Group"><summary>Group, which is similar to an dictionary, but a group can associate multiple values with a key.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys.</typeparam><typeparam name="VK">Type of the key type of values.</typeparam><signature><![CDATA[template <
+typename KT, typename VT, typename KK /* optional */, typename VK /* optional */>
+class Group;
+]]></signature></Document>

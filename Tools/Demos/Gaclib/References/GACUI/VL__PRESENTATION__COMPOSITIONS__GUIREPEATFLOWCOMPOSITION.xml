@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiRepeatFlowComposition" accessor="" category="Class" name="GuiRepeatFlowComposition"><summary>Bindable flow composition.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiRepeatFlowComposition" accessor="" category="Class" name="GuiRepeatFlowComposition"><summary>Bindable flow composition.</summary><signature><![CDATA[class GuiRepeatFlowComposition;
+]]></signature></Document>

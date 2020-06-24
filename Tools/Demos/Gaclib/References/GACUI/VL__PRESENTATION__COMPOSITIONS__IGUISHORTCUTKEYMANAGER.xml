@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyManager" accessor="" category="Class" name="IGuiShortcutKeyManager"><summary>Shortcut key manager item.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyManager" accessor="" category="Class" name="IGuiShortcutKeyManager"><summary>Shortcut key manager item.</summary><signature><![CDATA[class IGuiShortcutKeyManager;
+]]></signature></Document>

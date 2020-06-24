@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView" accessor="" category="Class" name="GuiScrollView"><summary>A control with a vertical scroll bar and a horizontal scroll bar to perform partial viewing.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScrollView" accessor="" category="Class" name="GuiScrollView"><summary>A control with a vertical scroll bar and a horizontal scroll bar to perform partial viewing.</summary><signature><![CDATA[class GuiScrollView;
+]]></signature></Document>

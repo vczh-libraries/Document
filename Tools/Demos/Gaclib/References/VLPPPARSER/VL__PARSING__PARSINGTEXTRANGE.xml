@@ -1,1 +1,2 @@
-<Document symbolId="vl::parsing::ParsingTextRange" accessor="" category="Struct" name="ParsingTextRange"><summary>A type representing text range.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::parsing::ParsingTextRange" accessor="" category="Struct" name="ParsingTextRange"><summary>A type representing text range.</summary><signature><![CDATA[struct ParsingTextRange;
+]]></signature></Document>

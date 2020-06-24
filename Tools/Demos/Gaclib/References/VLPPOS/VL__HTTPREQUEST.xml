@@ -1,1 +1,2 @@
-<Document symbolId="vl::HttpRequest" accessor="" category="Class" name="HttpRequest"><summary>A type representing an http requiest.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::HttpRequest" accessor="" category="Class" name="HttpRequest"><summary>A type representing an http requiest.</summary><signature><![CDATA[class HttpRequest;
+]]></signature></Document>

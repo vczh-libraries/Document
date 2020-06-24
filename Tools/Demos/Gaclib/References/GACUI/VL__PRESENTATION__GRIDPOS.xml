@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::GridPos" accessor="" category="Struct" name="GridPos"><summary>
  Represents the cell position in a grid.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[struct GridPos;
+]]></signature></Document>

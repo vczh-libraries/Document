@@ -233,4 +233,5 @@
 				return result;
 			}
 
- ]]></summary><signature><![CDATA[]]></signature></Document>
+ ]]></summary><signature><![CDATA[class ParsingTable;
+]]></signature></Document>

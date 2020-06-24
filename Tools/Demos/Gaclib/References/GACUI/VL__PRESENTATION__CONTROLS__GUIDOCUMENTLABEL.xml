@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentLabel" accessor="" category="Class" name="GuiDocumentLabel"><summary>Static document viewer for displaying <symbol docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/>.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentLabel" accessor="" category="Class" name="GuiDocumentLabel"><summary>Static document viewer for displaying <symbol docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/>.</summary><signature><![CDATA[class GuiDocumentLabel;
+]]></signature></Document>

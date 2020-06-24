@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentHyperlinkRun" accessor="" category="Class" name="DocumentHyperlinkRun"><summary>Pepresents a hyperlink text run.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentHyperlinkRun" accessor="" category="Class" name="DocumentHyperlinkRun"><summary>Pepresents a hyperlink text run.</summary><signature><![CDATA[class DocumentHyperlinkRun;
+]]></signature></Document>

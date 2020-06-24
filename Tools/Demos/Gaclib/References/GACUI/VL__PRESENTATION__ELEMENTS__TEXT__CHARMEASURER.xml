@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::CharMeasurer" accessor="" category="Class" name="CharMeasurer"><summary>
  An abstract class for character size measuring in differect rendering technology.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class CharMeasurer;
+]]></signature></Document>

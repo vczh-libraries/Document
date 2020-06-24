@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyleProperties" accessor="" category="Class" name="DocumentStyleProperties"><summary>Represents a text style.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentStyleProperties" accessor="" category="Class" name="DocumentStyleProperties"><summary>Represents a text style.</summary><signature><![CDATA[class DocumentStyleProperties;
+]]></signature></Document>

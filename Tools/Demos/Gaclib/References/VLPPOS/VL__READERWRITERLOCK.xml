@@ -10,4 +10,5 @@
  {
 		<code>
  }
- ]]></summary><signature><![CDATA[]]></signature></Document>
+ ]]></summary><signature><![CDATA[class ReaderWriterLock;
+]]></signature></Document>

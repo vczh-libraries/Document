@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeCursor" accessor="" category="Class" name="INativeCursor"><summary>
  Represents a cursor.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeCursor;
+]]></signature></Document>

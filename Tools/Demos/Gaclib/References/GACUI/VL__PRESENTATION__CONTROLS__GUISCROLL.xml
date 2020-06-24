@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll" accessor="" category="Class" name="GuiScroll"><summary>A scroll control, which represents a one dimension sub range of a whole range.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll" accessor="" category="Class" name="GuiScroll"><summary>A scroll control, which represents a one dimension sub range of a whole range.</summary><signature><![CDATA[class GuiScroll;
+]]></signature></Document>

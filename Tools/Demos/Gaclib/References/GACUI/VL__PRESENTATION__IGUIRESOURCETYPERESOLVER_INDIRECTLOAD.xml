@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_IndirectLoad" accessor="" category="Class" name="IGuiResourceTypeResolver_IndirectLoad"><summary>Represents a symbol type for loading a resource with a preload type.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver_IndirectLoad" accessor="" category="Class" name="IGuiResourceTypeResolver_IndirectLoad"><summary>Represents a symbol type for loading a resource with a preload type.</summary><signature><![CDATA[class IGuiResourceTypeResolver_IndirectLoad;
+]]></signature></Document>

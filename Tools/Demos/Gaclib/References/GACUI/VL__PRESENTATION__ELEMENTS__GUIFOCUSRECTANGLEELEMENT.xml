@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiFocusRectangleElement" accessor="" category="Class" name="GuiFocusRectangleElement"><summary>
  Defines a focus rectangle with a thickness of one pixel.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiFocusRectangleElement;
+]]></signature></Document>

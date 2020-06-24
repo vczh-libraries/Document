@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenu" accessor="" category="Class" name="GuiMenu"><summary>Popup menu.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiMenu" accessor="" category="Class" name="GuiMenu"><summary>Popup menu.</summary><signature><![CDATA[class GuiMenu;
+]]></signature></Document>

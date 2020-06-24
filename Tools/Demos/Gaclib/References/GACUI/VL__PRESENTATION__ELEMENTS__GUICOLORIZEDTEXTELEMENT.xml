@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement" accessor="" category="Class" name="GuiColorizedTextElement"><summary>
  Defines a text element with separate color configuration for each character.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiColorizedTextElement;
+]]></signature></Document>

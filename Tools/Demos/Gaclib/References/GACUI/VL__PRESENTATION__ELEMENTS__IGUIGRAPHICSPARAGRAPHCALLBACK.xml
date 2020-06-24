@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraphCallback" accessor="" category="Class" name="IGuiGraphicsParagraphCallback"><summary>Paragraph callback</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraphCallback" accessor="" category="Class" name="IGuiGraphicsParagraphCallback"><summary>Paragraph callback</summary><signature><![CDATA[class IGuiGraphicsParagraphCallback;
+]]></signature></Document>

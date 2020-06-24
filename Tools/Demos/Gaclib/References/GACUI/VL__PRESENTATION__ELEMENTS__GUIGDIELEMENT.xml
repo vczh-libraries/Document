@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiGDIElement" accessor="" category="Class" name="GuiGDIElement"><summary>
  Defines an element for customized rendering using GDI.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiGDIElement;
+]]></signature></Document>

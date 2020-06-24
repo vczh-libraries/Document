@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::BomDecoder" accessor="" category="Class" name="BomDecoder"><summary>Decoder to transform text to wchar_t. This decoder depends on the BOM information at the beginning to decide the format of the input.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::BomDecoder" accessor="" category="Class" name="BomDecoder"><summary>Decoder to transform text to wchar_t. This decoder depends on the BOM information at the beginning to decide the format of the input.</summary><signature><![CDATA[class BomDecoder;
+]]></signature></Document>

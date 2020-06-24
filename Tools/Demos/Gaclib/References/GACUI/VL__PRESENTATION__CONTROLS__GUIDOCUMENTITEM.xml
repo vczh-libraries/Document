@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentItem" accessor="" category="Class" name="GuiDocumentItem"><summary>Embedded object in a document.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentItem" accessor="" category="Class" name="GuiDocumentItem"><summary>Embedded object in a document.</summary><signature><![CDATA[class GuiDocumentItem;
+]]></signature></Document>

@@ -1,3 +1,6 @@
 <Document symbolId="vl::presentation::Margin_" accessor="" category="Struct" name="Margin_"><summary>
  Represents a margin in a two dimensions space.
- </summary><typeparam name="T">Type of the coordinate.</typeparam><signature><![CDATA[]]></signature></Document>
+ </summary><typeparam name="T">Type of the coordinate.</typeparam><signature><![CDATA[template <
+typename T>
+struct Margin_;
+]]></signature></Document>

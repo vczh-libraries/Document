@@ -2,7 +2,6 @@
 #include <Symbol_TemplateSpec.h>
 
 WString AppendFunctionParametersInSignature(FunctionType* funcType);
-WString AppendTemplateArgumentsInSignature(List<TemplateSpec::Argument>& arguments);
 WString AppendGenericArgumentsInSignature(VariadicList<GenericArgument>& arguments);
 WString GetUnscopedSymbolDisplayNameInSignature(Symbol* symbol);
 
@@ -244,35 +243,6 @@ WString AppendFunctionParametersInSignature(FunctionType* funcType)
 }
 
 /***********************************************************************
-AppendTemplateArgumentsInSignature
-***********************************************************************/
-
-WString AppendTemplateArgumentsInSignature(List<TemplateSpec::Argument>& arguments)
-{
-	WString signature = L"<";
-	for (vint i = 0; i < arguments.Count(); i++)
-	{
-		if (i > 0) signature += L", ";
-		auto argument = arguments[i];
-		if (argument.argumentType == CppTemplateArgumentType::Value)
-		{
-			signature += L"expr";
-		}
-		else
-		{
-			signature += argument.name.name;
-		}
-		if (argument.ellipsis)
-		{
-			signature += L" ...";
-		}
-	}
-	signature += L">";
-
-	return signature;
-}
-
-/***********************************************************************
 AppendGenericArgumentsInSignature
 ***********************************************************************/
 
@@ -324,6 +294,64 @@ WString GetUnscopedSymbolDisplayNameInSignature(Symbol* symbol)
 GetSymbolDisplayNameInSignature
 ***********************************************************************/
 
+void WriteTemplateSpecInSignature(Ptr<TemplateSpec> spec, const WString& indent, StreamWriter& writer)
+{
+	writer.WriteString(indent);
+	writer.WriteLine(L"template <");
+
+	for (vint i = 0; i < spec->arguments.Count(); i++)
+	{
+		auto argument = spec->arguments[i];
+		switch (argument.argumentType)
+		{
+		case CppTemplateArgumentType::HighLevelType:
+			WriteTemplateSpecInSignature(argument.templateSpec, indent + L"    ", writer);
+			writer.WriteString(indent);
+			if (argument.name)
+			{
+				writer.WriteString(L"class ");
+				writer.WriteString(argument.name.name);
+			}
+			else
+			{
+				writer.WriteString(L"class");
+			}
+			if (argument.type) writer.WriteString(L" /* optional */");
+			break;
+		case CppTemplateArgumentType::Type:
+			writer.WriteString(indent);
+			if (argument.name)
+			{
+				writer.WriteString(L"typename ");
+				writer.WriteString(argument.name.name);
+			}
+			else
+			{
+				writer.WriteString(L"typename");
+			}
+			if (argument.type) writer.WriteString(L" /* optional */");
+			break;
+		case CppTemplateArgumentType::Value:
+			writer.WriteString(indent);
+			if (argument.name)
+			{
+				writer.WriteString(GetTypeDisplayNameInSignature(argument.type, argument.name.name, false));
+			}
+			else
+			{
+				writer.WriteString(GetTypeDisplayNameInSignature(argument.type));
+			}
+			if (argument.expr) writer.WriteString(L" /* optional */");
+			break;
+		}
+
+		if (i < spec->arguments.Count() - 1) writer.WriteString(L", ");
+	}
+
+	writer.WriteString(indent);
+	writer.WriteLine(L">");
+}
+
 WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 {
 	switch (symbol->kind)
@@ -332,7 +360,7 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 		return GenerateToStream([=](StreamWriter& writer)
 		{
 			auto fdecl = symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
-			auto decl = symbol->GetImplDecl_NFb<EnumDeclaration>();
+			auto decl = fdecl.Cast<EnumDeclaration>();
 
 			writer.WriteString(L"enum ");
 			if (fdecl->enumClass) writer.WriteString(L"class ");
@@ -355,7 +383,30 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			}
 		});
 	case CLASS_SYMBOL_KIND:
-		return L"";
+		return GenerateToStream([=](StreamWriter& writer)
+		{
+			auto fdecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
+			if (fdecl->templateSpec)
+			{
+				WriteTemplateSpecInSignature(fdecl->templateSpec, L"", writer);
+			}
+			switch (symbol->kind)
+			{
+			case symbol_component::SymbolKind::Class:
+				writer.WriteString(L"class ");
+				break;
+			case symbol_component::SymbolKind::Struct:
+				writer.WriteString(L"struct ");
+				break;
+			case symbol_component::SymbolKind::Union:
+				writer.WriteString(L"union ");
+				break;
+			}
+			if (fdecl->name) writer.WriteString(fdecl->name.name);
+			if (fdecl->specializationSpec) writer.WriteString(AppendGenericArgumentsInSignature(fdecl->specializationSpec->arguments));
+			writer.WriteLine(L";");
+			// TODO: write base class
+		});
 	case symbol_component::SymbolKind::TypeAlias:
 		return L"";
 	case symbol_component::SymbolKind::ValueAlias:

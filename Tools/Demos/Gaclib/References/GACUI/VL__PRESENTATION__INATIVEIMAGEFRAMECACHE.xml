@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeImageFrameCache" accessor="" category="Class" name="INativeImageFrameCache"><summary>
  Represents a customized cache object for an image frame.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeImageFrameCache;
+]]></signature></Document>

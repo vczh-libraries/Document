@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiTableComposition" accessor="" category="Class" name="GuiTableComposition"><summary>
  Represents a table composition.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiTableComposition;
+]]></signature></Document>

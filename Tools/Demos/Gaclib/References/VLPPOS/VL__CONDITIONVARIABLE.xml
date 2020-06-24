@@ -1,1 +1,2 @@
-<Document symbolId="vl::ConditionVariable" accessor="" category="Class" name="ConditionVariable"><summary>Conditional variable.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::ConditionVariable" accessor="" category="Class" name="ConditionVariable"><summary>Conditional variable.</summary><signature><![CDATA[class ConditionVariable;
+]]></signature></Document>

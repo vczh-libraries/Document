@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableButton::GroupController" accessor="public" category="Class" name="GroupController"><summary>Selection group controller. Control the selection state of all attached button.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableButton::GroupController" accessor="public" category="Class" name="GroupController"><summary>Selection group controller. Control the selection state of all attached button.</summary><signature><![CDATA[class GroupController;
+]]></signature></Document>

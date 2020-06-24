@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiRepeatStackComposition" accessor="" category="Class" name="GuiRepeatStackComposition"><summary>Bindable stack composition.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiRepeatStackComposition" accessor="" category="Class" name="GuiRepeatStackComposition"><summary>Bindable stack composition.</summary><signature><![CDATA[class GuiRepeatStackComposition;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface" accessor="" category="Class" name="GuiTextBoxCommonInterface"><summary>Common interface for text box controls.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface" accessor="" category="Class" name="GuiTextBoxCommonInterface"><summary>Common interface for text box controls.</summary><signature><![CDATA[class GuiTextBoxCommonInterface;
+]]></signature></Document>

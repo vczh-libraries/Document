@@ -1,1 +1,2 @@
-<Document symbolId="vl::parsing::ParsingError" accessor="" category="Class" name="ParsingError"><summary>Error.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::parsing::ParsingError" accessor="" category="Class" name="ParsingError"><summary>Error.</summary><signature><![CDATA[class ParsingError;
+]]></signature></Document>

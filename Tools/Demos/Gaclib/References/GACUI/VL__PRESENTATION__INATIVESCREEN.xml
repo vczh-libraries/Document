@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeScreen" accessor="" category="Class" name="INativeScreen"><summary>
  Represents a screen.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeScreen;
+]]></signature></Document>

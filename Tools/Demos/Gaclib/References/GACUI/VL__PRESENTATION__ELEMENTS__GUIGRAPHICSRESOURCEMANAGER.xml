@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager" accessor="" category="Class" name="GuiGraphicsResourceManager"><summary>
  This is a class for managing grpahics element factories and graphics renderer factories
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class GuiGraphicsResourceManager;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::ParsingTokenContext" accessor="" category="Struct" name="ParsingTokenContext"><summary>A data structure storing the context of a token.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::ParsingTokenContext" accessor="" category="Struct" name="ParsingTokenContext"><summary>A data structure storing the context of a token.</summary><signature><![CDATA[struct ParsingTokenContext;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::stream::Utf16Encoder" accessor="" category="Class" name="Utf16Encoder"><summary>Encoder to transform UTF-16 text from wchar_t.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::stream::Utf16Encoder" accessor="" category="Class" name="Utf16Encoder"><summary>Encoder to transform UTF-16 text from wchar_t.</summary><signature><![CDATA[class Utf16Encoder;
+]]></signature></Document>

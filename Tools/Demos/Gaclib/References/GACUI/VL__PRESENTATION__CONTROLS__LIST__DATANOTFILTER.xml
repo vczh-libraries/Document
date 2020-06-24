@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::DataNotFilter" accessor="" category="Class" name="DataNotFilter"><summary>A filter that keep a row if the sub filter not agrees.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::DataNotFilter" accessor="" category="Class" name="DataNotFilter"><summary>A filter that keep a row if the sub filter not agrees.</summary><signature><![CDATA[class DataNotFilter;
+]]></signature></Document>

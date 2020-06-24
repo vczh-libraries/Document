@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::INativeClipboardReader" accessor="" category="Class" name="INativeClipboardReader"><summary>
  Clipboard reader.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class INativeClipboardReader;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase" accessor="" category="Class" name="GuiTextBoxAutoCompleteBase"><summary>The base class of text box auto complete controller.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase" accessor="" category="Class" name="GuiTextBoxAutoCompleteBase"><summary>The base class of text box auto complete controller.</summary><signature><![CDATA[class GuiTextBoxAutoCompleteBase;
+]]></signature></Document>

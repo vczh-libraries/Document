@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::compositions::IGuiGraphicsTimerCallback" accessor="" category="Class" name="IGuiGraphicsTimerCallback"><summary>
  Represents a timer callback object.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[class IGuiGraphicsTimerCallback;
+]]></signature></Document>

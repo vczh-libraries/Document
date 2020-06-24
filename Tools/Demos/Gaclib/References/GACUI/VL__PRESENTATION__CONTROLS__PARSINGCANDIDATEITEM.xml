@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::ParsingCandidateItem" accessor="" category="Struct" name="ParsingCandidateItem"><summary>A data structure storing the information for a candidate item.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::ParsingCandidateItem" accessor="" category="Struct" name="ParsingCandidateItem"><summary>A data structure storing the information for a candidate item.</summary><signature><![CDATA[struct ParsingCandidateItem;
+]]></signature></Document>

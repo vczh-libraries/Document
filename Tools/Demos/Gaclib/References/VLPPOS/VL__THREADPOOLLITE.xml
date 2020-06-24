@@ -1,1 +1,2 @@
-<Document symbolId="vl::ThreadPoolLite" accessor="" category="Class" name="ThreadPoolLite"><summary>A light-weight thread pool.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::ThreadPoolLite" accessor="" category="Class" name="ThreadPoolLite"><summary>A light-weight thread pool.</summary><signature><![CDATA[class ThreadPoolLite;
+]]></signature></Document>
