@@ -46,4 +46,4 @@
 		(!regex): Any prefix of the following text should not match the regex, and it is not counted in the whole match (DFA incompatible)
 		(<#name>regex): Name the regex "name", and it applies here
 		(<&name>): Copy the named regex "name" here and apply
- ]]></summary></Document>
+ ]]></summary><signature><![CDATA[]]></signature></Document>

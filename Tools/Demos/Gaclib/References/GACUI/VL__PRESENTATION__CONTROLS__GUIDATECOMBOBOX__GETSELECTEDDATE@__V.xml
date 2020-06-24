@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiDateComboBox::GetSelectedDate@::vl::DateTime const &amp;()" accessor="public" category="Function" name="GetSelectedDate"><summary>Get the displayed date.</summary><returns>The date.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiDateComboBox::GetSelectedDate@::vl::DateTime const &amp;()" accessor="public" category="Function" name="GetSelectedDate"><summary>Get the displayed date.</summary><returns>The date.</returns><signature><![CDATA[]]></signature></Document>

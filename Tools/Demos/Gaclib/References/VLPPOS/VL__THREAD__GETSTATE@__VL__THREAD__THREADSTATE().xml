@@ -1,1 +1,1 @@
-<Document symbolId="vl::Thread::GetState@::vl::Thread::ThreadState()" accessor="public" category="Function" name="GetState"><summary>Get the state of the thread.</summary><returns>The state of the thread.</returns></Document>
+<Document symbolId="vl::Thread::GetState@::vl::Thread::ThreadState()" accessor="public" category="Function" name="GetState"><summary>Get the state of the thread.</summary><returns>The state of the thread.</returns><signature><![CDATA[]]></signature></Document>

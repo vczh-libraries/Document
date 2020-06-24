@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::INativeClipboardReader::GetImage@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;()" accessor="public" category="Function" name="GetImage"><summary>Get the image from the clipboard.</summary><returns>The image.</returns></Document>
+<Document symbolId="vl::presentation::INativeClipboardReader::GetImage@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;()" accessor="public" category="Function" name="GetImage"><summary>Get the image from the clipboard.</summary><returns>The image.</returns><signature><![CDATA[]]></signature></Document>

@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiControl::FontChanged" accessor="public" category="Variable" name="FontChanged"><summary>Font changed event. This event will be raised when the font of the control is changed.</summary></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::FontChanged" accessor="public" category="Variable" name="FontChanged"><summary>Font changed event. This event will be raised when the font of the control is changed.</summary><signature><![CDATA[]]></signature></Document>

@@ -1,1 +1,1 @@
-<Document symbolId="vl::regex::RegexLexerColorizer::Pass@void(wchar_t)" accessor="public" category="Function" name="Pass"><summary>Step forward by one character.</summary><param name="input">The input character.</param></Document>
+<Document symbolId="vl::regex::RegexLexerColorizer::Pass@void(wchar_t)" accessor="public" category="Function" name="Pass"><summary>Step forward by one character.</summary><param name="input">The input character.</param><signature><![CDATA[]]></signature></Document>

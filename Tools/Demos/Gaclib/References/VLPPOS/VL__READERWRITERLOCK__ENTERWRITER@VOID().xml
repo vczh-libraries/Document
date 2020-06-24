@@ -1,1 +1,1 @@
-<Document symbolId="vl::ReaderWriterLock::EnterWriter@void()" accessor="public" category="Function" name="EnterWriter"><summary>Acquire a writer lock.</summary></Document>
+<Document symbolId="vl::ReaderWriterLock::EnterWriter@void()" accessor="public" category="Function" name="EnterWriter"><summary>Acquire a writer lock.</summary><signature><![CDATA[]]></signature></Document>

@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::ConfigChanged" accessor="public" category="Variable" name="ConfigChanged"><summary>Event that will be raised with row numbers, column numbers or options are changed.</summary></Document>
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::ConfigChanged" accessor="public" category="Variable" name="ConfigChanged"><summary>Event that will be raised with row numbers, column numbers or options are changed.</summary><signature><![CDATA[]]></signature></Document>

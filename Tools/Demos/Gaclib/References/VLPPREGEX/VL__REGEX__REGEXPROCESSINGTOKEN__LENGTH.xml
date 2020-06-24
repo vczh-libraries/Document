@@ -2,4 +2,4 @@
  The length of the token, could be modified after the callback.
  When the callback returns, the length is not allowed to be decreased.
  This value will be -1 if <symbol docId="vl::regex::RegexProcessingToken::interTokenState" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::interTokenState"/> is not null.
- </summary></Document>
+ </summary><signature><![CDATA[]]></signature></Document>

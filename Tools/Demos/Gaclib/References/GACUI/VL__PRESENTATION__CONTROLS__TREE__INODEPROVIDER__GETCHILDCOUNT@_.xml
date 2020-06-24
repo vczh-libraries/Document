@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::tree::INodeProvider::GetChildCount@::vl::vint()" accessor="public" category="Function" name="GetChildCount"><summary>Get the number of all sub nodes.</summary><returns>The number of all sub nodes.</returns></Document>
+<Document symbolId="vl::presentation::controls::tree::INodeProvider::GetChildCount@::vl::vint()" accessor="public" category="Function" name="GetChildCount"><summary>Get the number of all sub nodes.</summary><returns>The number of all sub nodes.</returns><signature><![CDATA[]]></signature></Document>

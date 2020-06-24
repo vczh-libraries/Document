@@ -1,1 +1,1 @@
-<Document symbolId="vl::ReaderWriterLock::LeaveWriter@void()" accessor="public" category="Function" name="LeaveWriter"><summary>Release a writer lock.</summary></Document>
+<Document symbolId="vl::ReaderWriterLock::LeaveWriter@void()" accessor="public" category="Function" name="LeaveWriter"><summary>Release a writer lock.</summary><signature><![CDATA[]]></signature></Document>

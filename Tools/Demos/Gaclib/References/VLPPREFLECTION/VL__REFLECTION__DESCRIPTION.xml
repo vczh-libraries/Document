@@ -237,4 +237,4 @@
 	6) Load types when you think is a good timing using this code:
 		vl::reflection::description::GetGlobalTypeManager()->AddTypeLoader(new MyTypeLoader);
 
- ]]></summary><typeparam name="T">Type of your created reflection class.</typeparam></Document>
+ ]]></summary><typeparam name="T">Type of your created reflection class.</typeparam><signature><![CDATA[]]></signature></Document>

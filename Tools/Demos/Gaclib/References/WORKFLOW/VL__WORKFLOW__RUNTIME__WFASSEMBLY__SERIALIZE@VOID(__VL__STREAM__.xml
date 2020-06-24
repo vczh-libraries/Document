@@ -1,1 +1,1 @@
-<Document symbolId="vl::workflow::runtime::WfAssembly::Serialize@void(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="Serialize"><summary>Serialize an assembly.</summary><param name="output">Serialized binary data.</param></Document>
+<Document symbolId="vl::workflow::runtime::WfAssembly::Serialize@void(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="Serialize"><summary>Serialize an assembly.</summary><param name="output">Serialized binary data.</param><signature><![CDATA[]]></signature></Document>

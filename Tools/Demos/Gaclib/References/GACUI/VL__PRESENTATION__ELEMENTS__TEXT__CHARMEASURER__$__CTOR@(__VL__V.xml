@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::elements::text::CharMeasurer::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>
  Initialize a character measurer.
- </summary><param name="_rowHeight">The default character height in pixel before the character measurer is binded to a render target.</param></Document>
+ </summary><param name="_rowHeight">The default character height in pixel before the character measurer is binded to a render target.</param><signature><![CDATA[]]></signature></Document>

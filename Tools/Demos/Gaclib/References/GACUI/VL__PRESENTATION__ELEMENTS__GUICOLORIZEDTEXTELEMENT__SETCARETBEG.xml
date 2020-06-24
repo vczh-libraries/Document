@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetCaretBegin@void(::vl::presentation::TextPos)" accessor="public" category="Function" name="SetCaretBegin"><summary>
  Set the begin position of the selection area.
- </summary><param name="value">The begin position of the selection area.</param></Document>
+ </summary><param name="value">The begin position of the selection area.</param><signature><![CDATA[]]></signature></Document>

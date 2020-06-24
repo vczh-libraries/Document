@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetTitle@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetTitle"><summary>Set the title.</summary><param name="value">The title.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetTitle@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetTitle"><summary>Set the title.</summary><param name="value">The title.</param><signature><![CDATA[]]></signature></Document>

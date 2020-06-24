@@ -1,1 +1,1 @@
-<Document symbolId="vl::collections::LazyList::IsEmpty@bool()" accessor="public" category="Function" name="IsEmpty"><summary>Test is the lazy list empty.</summary><returns>Returns true if the lazy list is empty.</returns></Document>
+<Document symbolId="vl::collections::LazyList::IsEmpty@bool()" accessor="public" category="Function" name="IsEmpty"><summary>Test is the lazy list empty.</summary><returns>Returns true if the lazy list is empty.</returns><signature><![CDATA[]]></signature></Document>

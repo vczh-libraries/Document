@@ -1,1 +1,1 @@
-<Document symbolId="vl::Thread::Sleep@void(::vl::vint)" accessor="public" category="Function" name="Sleep"><summary>Pause the caller thread for a period of time.</summary><param name="ms">Time in milliseconds.</param></Document>
+<Document symbolId="vl::Thread::Sleep@void(::vl::vint)" accessor="public" category="Function" name="Sleep"><summary>Pause the caller thread for a period of time.</summary><param name="ms">Time in milliseconds.</param><signature><![CDATA[]]></signature></Document>

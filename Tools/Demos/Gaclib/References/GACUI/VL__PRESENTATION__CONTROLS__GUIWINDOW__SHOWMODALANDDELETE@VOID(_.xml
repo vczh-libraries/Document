@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::ShowModalAndDelete@void(::vl::presentation::controls::GuiWindow *, ::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="ShowModalAndDelete"><summary>
  Show a model window, get a callback when the window is closed, and then delete itself.
- </summary><param name="owner">The window to disable as a parent window.</param><param name="callback">The callback to call after the window is closed.</param></Document>
+ </summary><param name="owner">The window to disable as a parent window.</param><param name="callback">The callback to call after the window is closed.</param><signature><![CDATA[]]></signature></Document>

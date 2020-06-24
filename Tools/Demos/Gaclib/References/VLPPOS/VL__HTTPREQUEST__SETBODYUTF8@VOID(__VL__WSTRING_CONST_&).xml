@@ -1,1 +1,1 @@
-<Document symbolId="vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetBodyUtf8"><summary>Fill the body with a text using UTF-8 encoding.</summary><param name="bodyString">The text to fill.</param></Document>
+<Document symbolId="vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetBodyUtf8"><summary>Fill the body with a text using UTF-8 encoding.</summary><param name="bodyString">The text to fill.</param><signature><![CDATA[]]></signature></Document>

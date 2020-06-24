@@ -1,1 +1,1 @@
-<Document symbolId="vl::collections::List::Remove@bool([K] const &amp;)" accessor="public" category="Function" name="Remove"><summary>Remove an item.</summary><returns>Returns true if the item is removed.</returns><param name="item">The item to remove.</param></Document>
+<Document symbolId="vl::collections::List::Remove@bool([K] const &amp;)" accessor="public" category="Function" name="Remove"><summary>Remove an item.</summary><returns>Returns true if the item is removed.</returns><param name="item">The item to remove.</param><signature><![CDATA[]]></signature></Document>

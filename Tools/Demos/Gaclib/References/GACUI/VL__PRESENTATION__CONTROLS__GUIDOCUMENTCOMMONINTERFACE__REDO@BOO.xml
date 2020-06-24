@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::Redo@bool()" accessor="public" category="Function" name="Redo"><summary>Perform the redo action.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::Redo@bool()" accessor="public" category="Function" name="Redo"><summary>Perform the redo action.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[]]></signature></Document>

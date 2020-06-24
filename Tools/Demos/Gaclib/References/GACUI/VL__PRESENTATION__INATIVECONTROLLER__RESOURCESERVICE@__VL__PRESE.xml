@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::INativeController::ResourceService@::vl::presentation::INativeResourceService *()" accessor="public" category="Function" name="ResourceService"><summary>
  Get the system resource service.
- </summary><returns>The system resource service</returns></Document>
+ </summary><returns>The system resource service</returns><signature><![CDATA[]]></signature></Document>

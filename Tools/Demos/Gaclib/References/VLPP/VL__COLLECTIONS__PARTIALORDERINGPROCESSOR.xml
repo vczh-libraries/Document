@@ -6,4 +6,4 @@
  The sorting result is a list of strong connected components in order.
  If a depends on b, then the component containing a appears after the component containing b.
  Node could represent a sub class if InitWithSubClass is called.
- </summary></Document>
+ </summary><signature><![CDATA[]]></signature></Document>

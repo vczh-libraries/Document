@@ -326,5 +326,5 @@ GetSymbolDisplayNameInSignature
 
 WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 {
-	throw 0;
+	return L"";
 }

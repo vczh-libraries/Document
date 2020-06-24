@@ -1,1 +1,1 @@
-<Document symbolId="vl::collections::ArrayBase" accessor="" category="Class" name="ArrayBase"><summary>Base type of all linear container.</summary><typeparam name="T">Type of elements.</typeparam></Document>
+<Document symbolId="vl::collections::ArrayBase" accessor="" category="Class" name="ArrayBase"><summary>Base type of all linear container.</summary><typeparam name="T">Type of elements.</typeparam><signature><![CDATA[]]></signature></Document>

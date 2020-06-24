@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::PushClipper@void(::vl::presentation::Rect)" accessor="public" category="Function" name="PushClipper"><summary>
  Apply a clipper to the render target.
  The result clipper is combined by all clippers in the clipper stack maintained by the render target.
- </summary><param name="clipper">The clipper to push.</param></Document>
+ </summary><param name="clipper">The clipper to push.</param><signature><![CDATA[]]></signature></Document>

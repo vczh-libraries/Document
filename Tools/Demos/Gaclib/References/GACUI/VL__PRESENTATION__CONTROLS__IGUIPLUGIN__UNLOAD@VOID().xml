@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::IGuiPlugin::Unload@void()" accessor="public" category="Function" name="Unload"><summary>Called when the plugin manager want to unload this plugin.</summary></Document>
+<Document symbolId="vl::presentation::controls::IGuiPlugin::Unload@void()" accessor="public" category="Function" name="Unload"><summary>Called when the plugin manager want to unload this plugin.</summary><signature><![CDATA[]]></signature></Document>

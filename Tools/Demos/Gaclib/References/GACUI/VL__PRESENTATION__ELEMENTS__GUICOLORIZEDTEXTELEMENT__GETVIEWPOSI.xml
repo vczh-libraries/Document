@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetViewPosition@::vl::presentation::Point()" accessor="public" category="Function" name="GetViewPosition"><summary>
  Get the left-top position of the visible bounds of characters.
- </summary><returns>The left-top position of the visible bounds of characters.</returns></Document>
+ </summary><returns>The left-top position of the visible bounds of characters.</returns><signature><![CDATA[]]></signature></Document>

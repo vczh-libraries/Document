@@ -1,1 +1,1 @@
-<Document symbolId="vl::Semaphore::Release@bool()" accessor="public" category="Function" name="Release"><summary> Release the semaphore once. </summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::Semaphore::Release@bool()" accessor="public" category="Function" name="Release"><summary> Release the semaphore once. </summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[]]></signature></Document>

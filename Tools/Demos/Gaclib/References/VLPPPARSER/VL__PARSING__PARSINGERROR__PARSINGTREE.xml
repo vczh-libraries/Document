@@ -1,1 +1,1 @@
-<Document symbolId="vl::parsing::ParsingError::parsingTree" accessor="public" category="Variable" name="parsingTree"><summary>A syntax tree that contains this error.</summary></Document>
+<Document symbolId="vl::parsing::ParsingError::parsingTree" accessor="public" category="Variable" name="parsingTree"><summary>A syntax tree that contains this error.</summary><signature><![CDATA[]]></signature></Document>

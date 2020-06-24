@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiMessageDialog::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText"><summary>Get the text for the dialog.</summary><returns>The text.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiMessageDialog::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText"><summary>Get the text for the dialog.</summary><returns>The text.</returns><signature><![CDATA[]]></signature></Document>

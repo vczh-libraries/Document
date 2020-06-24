@@ -1,1 +1,1 @@
-<Document symbolId="vl::collections::Array::Resize@void(::vl::vint)" accessor="public" category="Function" name="Resize"><summary>Change the size of the array.</summary><param name="size">The new size of the array.</param></Document>
+<Document symbolId="vl::collections::Array::Resize@void(::vl::vint)" accessor="public" category="Function" name="Resize"><summary>Change the size of the array.</summary><param name="size">The new size of the array.</param><signature><![CDATA[]]></signature></Document>

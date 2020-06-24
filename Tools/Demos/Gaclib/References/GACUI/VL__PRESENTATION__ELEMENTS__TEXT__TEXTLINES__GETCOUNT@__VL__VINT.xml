@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::GetCount@::vl::vint()" accessor="public" category="Function" name="GetCount"><summary>
  Returns the number of text lines.
- </summary><returns>The number of text lines.</returns></Document>
+ </summary><returns>The number of text lines.</returns><signature><![CDATA[]]></signature></Document>

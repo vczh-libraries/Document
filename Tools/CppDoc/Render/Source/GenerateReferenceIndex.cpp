@@ -741,6 +741,16 @@ void ValidateAndFixDocumentRecord(
 			att->value.value = symbol->name;
 			xmlDocument->rootElement->attributes.Add(att);
 		}
+		{
+			auto cdata = MakePtr<XmlCData>();
+			cdata->content.value = GetSymbolDisplayNameInSignature(symbol);
+
+			auto xmlSignature = MakePtr<XmlElement>();
+			xmlSignature->name.value = L"signature";
+			xmlSignature->subNodes.Add(cdata);
+
+			xmlDocument->rootElement->subNodes.Add(xmlSignature);
+		}
 
 		XmlPrint(xmlDocument, writer);
 	}

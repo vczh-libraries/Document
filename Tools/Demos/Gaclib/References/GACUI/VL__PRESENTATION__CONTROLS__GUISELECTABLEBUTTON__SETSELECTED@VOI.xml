@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableButton::SetSelected@void(bool)" accessor="public" category="Function" name="SetSelected"><summary>Set the selected state.</summary><param name="value">The selected state.</param></Document>
+<Document symbolId="vl::presentation::controls::GuiSelectableButton::SetSelected@void(bool)" accessor="public" category="Function" name="SetSelected"><summary>Set the selected state.</summary><param name="value">The selected state.</param><signature><![CDATA[]]></signature></Document>

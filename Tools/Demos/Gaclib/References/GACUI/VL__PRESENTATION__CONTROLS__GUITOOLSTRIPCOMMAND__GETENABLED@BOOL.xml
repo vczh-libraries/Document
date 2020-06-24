@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetEnabled@bool()" accessor="public" category="Function" name="GetEnabled"><summary>Get the enablility for this command.</summary><returns>The enablility for this command.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetEnabled@bool()" accessor="public" category="Function" name="GetEnabled"><summary>Get the enablility for this command.</summary><returns>The enablility for this command.</returns><signature><![CDATA[]]></signature></Document>

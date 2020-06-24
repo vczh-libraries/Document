@@ -1,1 +1,1 @@
-<Document symbolId="vl::HttpResponse::statusCode" accessor="public" category="Variable" name="statusCode"><summary>Status code, like 200.</summary></Document>
+<Document symbolId="vl::HttpResponse::statusCode" accessor="public" category="Variable" name="statusCode"><summary>Status code, like 200.</summary><signature><![CDATA[]]></signature></Document>

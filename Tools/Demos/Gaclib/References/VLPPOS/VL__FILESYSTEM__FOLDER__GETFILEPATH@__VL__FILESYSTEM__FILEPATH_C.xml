@@ -1,1 +1,1 @@
-<Document symbolId="vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &amp;()" accessor="public" category="Function" name="GetFilePath"><summary>Get the file path of the folder.</summary><returns>The file path.</returns></Document>
+<Document symbolId="vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &amp;()" accessor="public" category="Function" name="GetFilePath"><summary>Get the file path of the folder.</summary><returns>The file path.</returns><signature><![CDATA[]]></signature></Document>

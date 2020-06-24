@@ -1,1 +1,1 @@
-<Document symbolId="vl::Thread::Start@bool()" accessor="public" category="Function" name="Start"><summary>Start the thread.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::Thread::Start@bool()" accessor="public" category="Function" name="Start"><summary>Start the thread.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[]]></signature></Document>

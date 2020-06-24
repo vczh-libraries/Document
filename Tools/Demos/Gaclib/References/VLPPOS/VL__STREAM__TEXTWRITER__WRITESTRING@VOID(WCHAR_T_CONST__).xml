@@ -1,1 +1,1 @@
-<Document symbolId="vl::stream::TextWriter::WriteString@void(wchar_t const *)" accessor="public" category="Function" name="WriteString"><summary>Write a string.</summary><param name="string">Buffer to the zero terminated string to write.</param></Document>
+<Document symbolId="vl::stream::TextWriter::WriteString@void(wchar_t const *)" accessor="public" category="Function" name="WriteString"><summary>Write a string.</summary><param name="string">Buffer to the zero terminated string to write.</param><signature><![CDATA[]]></signature></Document>

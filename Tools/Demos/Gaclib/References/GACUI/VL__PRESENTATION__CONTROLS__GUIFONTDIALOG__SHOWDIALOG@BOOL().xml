@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog::ShowDialog@bool()" accessor="public" category="Function" name="ShowDialog"><summary>Show the dialog.</summary><returns>Returns true if the &quot;OK&quot; button is clicked.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiFontDialog::ShowDialog@bool()" accessor="public" category="Function" name="ShowDialog"><summary>Show the dialog.</summary><returns>Returns true if the &quot;OK&quot; button is clicked.</returns><signature><![CDATA[]]></signature></Document>

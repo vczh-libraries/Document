@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::ResizeRenderTarget@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="ResizeRenderTarget"><summary>
  Resize the render target to fit the current window size.
- </summary><param name="window">The specified window.</param></Document>
+ </summary><param name="window">The specified window.</param><signature><![CDATA[]]></signature></Document>

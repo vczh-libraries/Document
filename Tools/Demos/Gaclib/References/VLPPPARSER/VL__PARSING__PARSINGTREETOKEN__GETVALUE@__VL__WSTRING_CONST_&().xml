@@ -1,1 +1,1 @@
-<Document symbolId="vl::parsing::ParsingTreeToken::GetValue@::vl::WString const &amp;()" accessor="public" category="Function" name="GetValue"><summary>Get the content of the token.</summary><returns>The content of the token.</returns></Document>
+<Document symbolId="vl::parsing::ParsingTreeToken::GetValue@::vl::WString const &amp;()" accessor="public" category="Function" name="GetValue"><summary>Get the content of the token.</summary><returns>The content of the token.</returns><signature><![CDATA[]]></signature></Document>

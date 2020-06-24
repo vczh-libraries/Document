@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::IsSubMenuExists@bool()" accessor="public" category="Function" name="IsSubMenuExists"><summary>Test does the sub menu exist.</summary><returns>Returns true if the sub menu exists.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiMenuButton::IsSubMenuExists@bool()" accessor="public" category="Function" name="IsSubMenuExists"><summary>Test does the sub menu exist.</summary><returns>Returns true if the sub menu exists.</returns><signature><![CDATA[]]></signature></Document>

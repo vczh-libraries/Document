@@ -1,1 +1,1 @@
-<Document symbolId="vl::ObjectString::Length@::vl::vint()" accessor="public" category="Function" name="Length"><summary>Get the size of the string in characters.</summary><returns>The size.</returns></Document>
+<Document symbolId="vl::ObjectString::Length@::vl::vint()" accessor="public" category="Function" name="Length"><summary>Get the size of the string in characters.</summary><returns>The size.</returns><signature><![CDATA[]]></signature></Document>

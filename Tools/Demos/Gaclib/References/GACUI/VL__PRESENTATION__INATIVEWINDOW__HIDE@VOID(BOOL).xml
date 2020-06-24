@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::INativeWindow::Hide@void(bool)" accessor="public" category="Function" name="Hide"><summary>
  Hide the window.
- </summary><param name="closeWindow">Set to true to really close the window. Or the window will just be hidden. This parameter only affect the main window.</param></Document>
+ </summary><param name="closeWindow">Set to true to really close the window. Or the window will just be hidden. This parameter only affect the main window.</param><signature><![CDATA[]]></signature></Document>

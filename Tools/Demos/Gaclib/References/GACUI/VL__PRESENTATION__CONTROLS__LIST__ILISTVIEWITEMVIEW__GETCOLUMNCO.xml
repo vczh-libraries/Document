@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::list::IListViewItemView::GetColumnCount@::vl::vint()" accessor="public" category="Function" name="GetColumnCount"><summary>Get the number of all columns.</summary><returns>The number of all columns.</returns></Document>
+<Document symbolId="vl::presentation::controls::list::IListViewItemView::GetColumnCount@::vl::vint()" accessor="public" category="Function" name="GetColumnCount"><summary>Get the number of all columns.</summary><returns>The number of all columns.</returns><signature><![CDATA[]]></signature></Document>

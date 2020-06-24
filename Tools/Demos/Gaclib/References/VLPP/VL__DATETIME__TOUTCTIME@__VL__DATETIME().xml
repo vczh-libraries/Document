@@ -1,1 +1,1 @@
-<Document symbolId="vl::DateTime::ToUtcTime@::vl::DateTime()" accessor="public" category="Function" name="ToUtcTime"><summary>Convert the local time to the UTC time.</summary><returns>The local time.</returns></Document>
+<Document symbolId="vl::DateTime::ToUtcTime@::vl::DateTime()" accessor="public" category="Function" name="ToUtcTime"><summary>Convert the local time to the UTC time.</summary><returns>The local time.</returns><signature><![CDATA[]]></signature></Document>

@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::INativeController::AsyncService@::vl::presentation::INativeAsyncService *()" accessor="public" category="Function" name="AsyncService"><summary>
  Get the asynchronized operation service.
- </summary><returns>The asynchronized operation service</returns></Document>
+ </summary><returns>The asynchronized operation service</returns><signature><![CDATA[]]></signature></Document>

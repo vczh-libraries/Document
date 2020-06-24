@@ -1,1 +1,1 @@
-<Document symbolId="vl::Error" accessor="" category="Class" name="Error"><summary>Base type of all errors. An error is an exception that you are not allowed to catch. Raising it means there is a fatal error in the code.</summary></Document>
+<Document symbolId="vl::Error" accessor="" category="Class" name="Error"><summary>Base type of all errors. An error is an exception that you are not allowed to catch. Raising it means there is a fatal error in the code.</summary><signature><![CDATA[]]></signature></Document>

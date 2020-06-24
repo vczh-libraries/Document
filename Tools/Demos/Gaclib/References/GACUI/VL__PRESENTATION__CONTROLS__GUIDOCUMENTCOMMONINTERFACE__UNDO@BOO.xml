@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::Undo@bool()" accessor="public" category="Function" name="Undo"><summary>Perform the undo action.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::Undo@bool()" accessor="public" category="Function" name="Undo"><summary>Perform the undo action.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[]]></signature></Document>

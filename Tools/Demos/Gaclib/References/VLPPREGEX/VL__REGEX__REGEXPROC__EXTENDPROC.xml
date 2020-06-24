@@ -3,4 +3,4 @@
  If the length parameter is -1, it means the caller does not measure the incoming text buffer, which automatically indicates that the buffer is null-terminated.
  If the length parameter is not -1, it means the number of available characters in the buffer.
  The completeText parameter could be true or false. When it is false, it means that the buffer does not contain all the text.
- </summary></Document>
+ </summary><signature><![CDATA[]]></signature></Document>

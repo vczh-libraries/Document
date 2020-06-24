@@ -1,1 +1,1 @@
-<Document symbolId="vl::stream::TextWriter::WriteLine@void(::vl::WString const &amp;)" accessor="public" category="Function" name="WriteLine"><summary>Write a string with a CRLF.</summary><param name="string">The string to write.</param></Document>
+<Document symbolId="vl::stream::TextWriter::WriteLine@void(::vl::WString const &amp;)" accessor="public" category="Function" name="WriteLine"><summary>Write a string with a CRLF.</summary><param name="string">The string to write.</param><signature><![CDATA[]]></signature></Document>

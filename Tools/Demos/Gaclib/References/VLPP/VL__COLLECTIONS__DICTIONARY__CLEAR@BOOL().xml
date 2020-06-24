@@ -1,1 +1,1 @@
-<Document symbolId="vl::collections::Dictionary::Clear@bool()" accessor="public" category="Function" name="Clear"><summary>Remove everything.</summary><returns>Returns true if all keys and values are removed.</returns></Document>
+<Document symbolId="vl::collections::Dictionary::Clear@bool()" accessor="public" category="Function" name="Clear"><summary>Remove everything.</summary><returns>Returns true if all keys and values are removed.</returns><signature><![CDATA[]]></signature></Document>

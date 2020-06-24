@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::elements::text::CharMeasurer::GetRowHeightInternal@::vl::vint(::vl::presentation::elements::IGuiGraphicsRenderTarget *)" accessor="protected" category="Function" name="GetRowHeightInternal"><summary>
  Measure the height of a character.
- </summary><returns>The height in pixel.</returns><param name="renderTarget">The render target which the character is going to be rendered.</param></Document>
+ </summary><returns>The height in pixel.</returns><param name="renderTarget">The render target which the character is going to be rendered.</param><signature><![CDATA[]]></signature></Document>

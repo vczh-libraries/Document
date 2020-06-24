@@ -1,1 +1,1 @@
-<Document symbolId="vl::stream::TextReader::IsEnd@bool()" accessor="public" category="Function" name="IsEnd"><summary>Test does the reader reach the end or not.</summary><returns>Returns true if the reader reaches the end.</returns></Document>
+<Document symbolId="vl::stream::TextReader::IsEnd@bool()" accessor="public" category="Function" name="IsEnd"><summary>Test does the reader reach the end or not.</summary><returns>Returns true if the reader reaches the end.</returns><signature><![CDATA[]]></signature></Document>

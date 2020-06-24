@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::Alignment" accessor="" category="Enum" name="Alignment"><summary>
  Defines an alignment direction.
- </summary><enumitem name="Bottom">Aligned to the bottom side.</enumitem><enumitem name="Center">Aligned to the center.</enumitem><enumitem name="Left">Aligned to the left side.</enumitem><enumitem name="Right">Aligned to the right side.</enumitem><enumitem name="Top">Aligned to the top side.</enumitem></Document>
+ </summary><enumitem name="Bottom">Aligned to the bottom side.</enumitem><enumitem name="Center">Aligned to the center.</enumitem><enumitem name="Left">Aligned to the left side.</enumitem><enumitem name="Right">Aligned to the right side.</enumitem><enumitem name="Top">Aligned to the top side.</enumitem><signature><![CDATA[]]></signature></Document>

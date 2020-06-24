@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::INativeScreenService::GetScreenCount@::vl::vint()" accessor="public" category="Function" name="GetScreenCount"><summary>
  Get the number of all available screens.
- </summary><returns>The number of all available screens.</returns></Document>
+ </summary><returns>The number of all available screens.</returns><signature><![CDATA[]]></signature></Document>

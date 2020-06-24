@@ -1,1 +1,1 @@
-<Document symbolId="vl::EventObject::Signal@bool()" accessor="public" category="Function" name="Signal"><summary>Signal the event.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::EventObject::Signal@bool()" accessor="public" category="Function" name="Signal"><summary>Signal the event.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[]]></signature></Document>

@@ -1,1 +1,1 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetTooltipWidth@::vl::vint()" accessor="public" category="Function" name="GetTooltipWidth"><summary>Get the tooltip width of the control.</summary><returns>The tooltip width of the control.</returns></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::GetTooltipWidth@::vl::vint()" accessor="public" category="Function" name="GetTooltipWidth"><summary>Get the tooltip width of the control.</summary><returns>The tooltip width of the control.</returns><signature><![CDATA[]]></signature></Document>

@@ -9,4 +9,4 @@
  END_GLOBAL_STORAGE_CLASS
  Then you have a global storage. You can only use this global storage in the current cpp file. ]]><symbol docId="vl::InitializeGlobalStorage@void()" declFile="GlobalStorage.h" declId="FB$vl::InitializeGlobalStorage@void()[decl0]"/><![CDATA[ should be called before using any global storage. ]]><symbol docId="vl::FinalizeGlobalStorage@void()" declFile="GlobalStorage.h" declId="FB$vl::FinalizeGlobalStorage@void()[decl0]"/><![CDATA[ is encouraged to call if you think you will not use any global storages anymore. It will reduce noices when you want to detect memory leaks.
  If the key of the global variable is called Key, and the variable you want to access is called Variable, then you can use GetKey()->Variable to access that variable. The GetKey function is created in the macro calls before.
- ]]></summary></Document>
+ ]]></summary><signature><![CDATA[]]></signature></Document>

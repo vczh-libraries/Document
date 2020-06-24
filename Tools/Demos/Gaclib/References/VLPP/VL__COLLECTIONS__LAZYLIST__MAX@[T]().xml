@@ -1,1 +1,1 @@
-<Document symbolId="vl::collections::LazyList::Max@[T]()" accessor="public" category="Function" name="Max"><summary>Get the maximum value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The maximum value.</returns></Document>
+<Document symbolId="vl::collections::LazyList::Max@[T]()" accessor="public" category="Function" name="Max"><summary>Get the maximum value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The maximum value.</returns><signature><![CDATA[]]></signature></Document>

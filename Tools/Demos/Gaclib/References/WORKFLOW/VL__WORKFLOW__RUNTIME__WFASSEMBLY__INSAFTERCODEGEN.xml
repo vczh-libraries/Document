@@ -1,1 +1,1 @@
-<Document symbolId="vl::workflow::runtime::WfAssembly::insAfterCodegen" accessor="public" category="Variable" name="insAfterCodegen"><summary>Debug informations using the module code from generated syntax trees from the final compiling pass.</summary></Document>
+<Document symbolId="vl::workflow::runtime::WfAssembly::insAfterCodegen" accessor="public" category="Variable" name="insAfterCodegen"><summary>Debug informations using the module code from generated syntax trees from the final compiling pass.</summary><signature><![CDATA[]]></signature></Document>

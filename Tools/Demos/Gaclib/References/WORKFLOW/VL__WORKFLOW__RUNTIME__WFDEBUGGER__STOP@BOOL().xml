@@ -1,1 +1,1 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::Stop@bool()" accessor="public" category="Function" name="Stop"><summary>Stop the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns></Document>
+<Document symbolId="vl::workflow::runtime::WfDebugger::Stop@bool()" accessor="public" category="Function" name="Stop"><summary>Stop the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns><signature><![CDATA[]]></signature></Document>

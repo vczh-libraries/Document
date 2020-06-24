@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement::SetCaretColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetCaretColor"><summary>
  Set the color of the caret.
- </summary><param name="value">The color of the caret.</param></Document>
+ </summary><param name="value">The color of the caret.</param><signature><![CDATA[]]></signature></Document>

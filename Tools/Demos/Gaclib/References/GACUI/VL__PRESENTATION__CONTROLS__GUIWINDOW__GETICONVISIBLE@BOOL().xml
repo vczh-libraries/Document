@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::GetIconVisible@bool()" accessor="public" category="Function" name="GetIconVisible"><summary>
  Test is the icon visible.
- </summary><returns>Returns true if the icon is visible.</returns></Document>
+ </summary><returns>Returns true if the icon is visible.</returns><signature><![CDATA[]]></signature></Document>

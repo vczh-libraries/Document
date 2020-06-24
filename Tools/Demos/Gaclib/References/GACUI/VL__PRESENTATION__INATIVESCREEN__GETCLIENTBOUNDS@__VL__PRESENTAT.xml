@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::INativeScreen::GetClientBounds@::vl::presentation::NativeRect()" accessor="public" category="Function" name="GetClientBounds"><summary>
  Get the bounds of the screen client area.
- </summary><returns>The bounds of the screen client area.</returns></Document>
+ </summary><returns>The bounds of the screen client area.</returns><signature><![CDATA[]]></signature></Document>

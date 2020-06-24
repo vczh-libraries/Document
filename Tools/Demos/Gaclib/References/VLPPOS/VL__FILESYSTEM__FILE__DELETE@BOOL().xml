@@ -1,1 +1,1 @@
-<Document symbolId="vl::filesystem::File::Delete@bool()" accessor="public" category="Function" name="Delete"><summary>Delete the file.</summary><returns>Returns true if this operation succeeded.</returns></Document>
+<Document symbolId="vl::filesystem::File::Delete@bool()" accessor="public" category="Function" name="Delete"><summary>Delete the file.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[]]></signature></Document>
