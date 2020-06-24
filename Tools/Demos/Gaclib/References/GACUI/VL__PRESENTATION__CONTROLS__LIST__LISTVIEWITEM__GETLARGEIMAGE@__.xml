@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::ListViewItem::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image of this item.</summary><returns>The large image of this item.</returns><signature><![CDATA[Ptr<GuiImageData> GetLargeImage();
+<Document symbolId="vl::presentation::controls::list::ListViewItem::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image of this item.</summary><returns>The large image of this item.</returns><signature><![CDATA[Ptr<GuiImageData> GetLargeImage(
+);
 ]]></signature></Document>

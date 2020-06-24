@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::SetSizeBox@void(bool)" accessor="public" category="Function" name="SetSizeBox"><summary>
  Make the size box visible or invisible.
- </summary><param name="visible">True to make the size box visible.</param><signature><![CDATA[void SetSizeBox(bool);
+ </summary><param name="visible">True to make the size box visible.</param><signature><![CDATA[void SetSizeBox(
+    bool
+);
 ]]></signature></Document>

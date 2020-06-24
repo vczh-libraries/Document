@@ -1,4 +1,6 @@
-<Document symbolId="vl::presentation::controls::GuiPopup::ShowPopup@void(::vl::presentation::controls::GuiControl *, ::vl::presentation::Rect, bool)" accessor="public" category="Function" name="ShowPopup"><summary>Show the popup window with the bounds set to a specified control-relative value. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary><param name="control">The control that owns this popup temporary. And the location is relative to this control.</param><param name="bounds">The specified bounds.</param><param name="preferredTopBottomSide">Set to true if the popup window is expected to be opened at the top or bottom side of that bounds.</param><signature><![CDATA[void ShowPopup(GuiControl *,
-Rect,
-bool);
+<Document symbolId="vl::presentation::controls::GuiPopup::ShowPopup@void(::vl::presentation::controls::GuiControl *, ::vl::presentation::Rect, bool)" accessor="public" category="Function" name="ShowPopup"><summary>Show the popup window with the bounds set to a specified control-relative value. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary><param name="control">The control that owns this popup temporary. And the location is relative to this control.</param><param name="bounds">The specified bounds.</param><param name="preferredTopBottomSide">Set to true if the popup window is expected to be opened at the top or bottom side of that bounds.</param><signature><![CDATA[void ShowPopup(
+    GuiControl *,
+    Rect,
+    bool
+);
 ]]></signature></Document>

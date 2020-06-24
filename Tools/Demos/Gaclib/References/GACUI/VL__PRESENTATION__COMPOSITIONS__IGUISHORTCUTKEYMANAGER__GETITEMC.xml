@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyManager::GetItemCount@::vl::vint()" accessor="public" category="Function" name="GetItemCount"><summary>Get the number of shortcut key items that already attached to the manager.</summary><returns>T number of shortcut key items that already attached to the manager.</returns><signature><![CDATA[vint GetItemCount();
+<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyManager::GetItemCount@::vl::vint()" accessor="public" category="Function" name="GetItemCount"><summary>Get the number of shortcut key items that already attached to the manager.</summary><returns>T number of shortcut key items that already attached to the manager.</returns><signature><![CDATA[vint GetItemCount(
+);
 ]]></signature></Document>

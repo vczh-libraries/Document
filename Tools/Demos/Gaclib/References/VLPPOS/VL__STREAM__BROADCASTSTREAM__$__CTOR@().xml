@@ -1,2 +1,3 @@
-<Document symbolId="vl::stream::BroadcastStream::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a strema.</summary><signature><![CDATA[ BroadcastStream();
+<Document symbolId="vl::stream::BroadcastStream::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a strema.</summary><signature><![CDATA[ BroadcastStream(
+);
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement::GetPointsArray@::vl::presentation::elements::GuiPolygonElement::PointArray const &amp;()" accessor="public" category="Function" name="GetPointsArray"><summary>
  Get all points.
- </summary><returns>All points</returns><signature><![CDATA[PointArray const & GetPointsArray();
+ </summary><returns>All points</returns><signature><![CDATA[PointArray const & GetPointsArray(
+);
 ]]></signature></Document>

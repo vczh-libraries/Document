@@ -1,3 +1,5 @@
-<Document symbolId="vl::collections::Group::Add@bool([KT] const &amp;, [VT] const &amp;)" accessor="public" category="Function" name="Add"><summary>Add a key with an associated value. If the key already exists, the value will be associated with the key with other values.</summary><returns>Returns true if the pair is added.</returns><param name="key">The key.</param><param name="value">The value.</param><signature><![CDATA[bool Add(KT const &,
-VT const &);
+<Document symbolId="vl::collections::Group::Add@bool([KT] const &amp;, [VT] const &amp;)" accessor="public" category="Function" name="Add"><summary>Add a key with an associated value. If the key already exists, the value will be associated with the key with other values.</summary><returns>Returns true if the pair is added.</returns><param name="key">The key.</param><param name="value">The value.</param><signature><![CDATA[bool Add(
+    KT const &,
+    VT const &
+);
 ]]></signature></Document>

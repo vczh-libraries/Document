@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::GetMaxCount@::vl::vint()" accessor="public" category="Function" name="GetMaxCount"><summary>Get the maximum number of items should be displayed.</summary><returns>The maximum number of items should be displayed.</returns><signature><![CDATA[vint GetMaxCount();
+<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::GetMaxCount@::vl::vint()" accessor="public" category="Function" name="GetMaxCount"><summary>Get the maximum number of items should be displayed.</summary><returns>The maximum number of items should be displayed.</returns><signature><![CDATA[vint GetMaxCount(
+);
 ]]></signature></Document>

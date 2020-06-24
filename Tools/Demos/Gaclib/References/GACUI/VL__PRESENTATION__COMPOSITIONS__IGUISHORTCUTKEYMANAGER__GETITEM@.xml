@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyManager::GetItem@::vl::presentation::compositions::IGuiShortcutKeyItem *(::vl::vint)" accessor="public" category="Function" name="GetItem"><summary>Get the <symbol docId="vl::presentation::compositions::IGuiShortcutKeyItem" declFile="GuiGraphicsHost_ShortcutKey.h" declId="NI$vl::presentation::compositions::IGuiShortcutKeyItem"/> associated with the index.</summary><returns>The shortcut key item.</returns><param name="index">The index.</param><signature><![CDATA[IGuiShortcutKeyItem * GetItem(vint);
+<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyManager::GetItem@::vl::presentation::compositions::IGuiShortcutKeyItem *(::vl::vint)" accessor="public" category="Function" name="GetItem"><summary>Get the <symbol docId="vl::presentation::compositions::IGuiShortcutKeyItem" declFile="GuiGraphicsHost_ShortcutKey.h" declId="NI$vl::presentation::compositions::IGuiShortcutKeyItem"/> associated with the index.</summary><returns>The shortcut key item.</returns><param name="index">The index.</param><signature><![CDATA[IGuiShortcutKeyItem * GetItem(
+    vint
+);
 ]]></signature></Document>

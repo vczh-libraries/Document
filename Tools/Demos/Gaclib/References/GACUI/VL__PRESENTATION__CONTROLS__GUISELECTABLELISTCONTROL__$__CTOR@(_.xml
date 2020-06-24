@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiListControl::IItemProvider *)" accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider as a data source.</param><signature><![CDATA[ GuiSelectableListControl(theme::ThemeName,
-IItemProvider *);
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiListControl::IItemProvider *)" accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider as a data source.</param><signature><![CDATA[ GuiSelectableListControl(
+    theme::ThemeName,
+    IItemProvider *
+);
 ]]></signature></Document>

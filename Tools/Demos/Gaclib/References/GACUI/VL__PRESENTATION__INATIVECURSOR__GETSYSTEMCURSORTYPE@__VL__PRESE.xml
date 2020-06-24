@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeCursor::GetSystemCursorType@::vl::presentation::INativeCursor::SystemCursorType()" accessor="public" category="Function" name="GetSystemCursorType"><summary>
  Get the cursor type if the cursor a system provided cursor.
- </summary><returns>The cursor type.</returns><signature><![CDATA[SystemCursorType GetSystemCursorType();
+ </summary><returns>The cursor type.</returns><signature><![CDATA[SystemCursorType GetSystemCursorType(
+);
 ]]></signature></Document>

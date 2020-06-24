@@ -1,2 +1,4 @@
-<Document symbolId="vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy an evaluation.</summary><param name="lazy">The evaluation to copy.</param><signature><![CDATA[ Lazy(Lazy<T> const &);
+<Document symbolId="vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy an evaluation.</summary><param name="lazy">The evaluation to copy.</param><signature><![CDATA[ Lazy(
+    Lazy<T> const &
+);
 ]]></signature></Document>

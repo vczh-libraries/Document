@@ -1,4 +1,6 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::EditStyle@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, ::vl::Ptr&lt;::vl::presentation::DocumentStyleProperties&gt;)" accessor="public" category="Function" name="EditStyle"><summary>Edit style in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="style">The new style.</param><signature><![CDATA[void EditStyle(TextPos,
-TextPos,
-Ptr<DocumentStyleProperties>);
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::EditStyle@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, ::vl::Ptr&lt;::vl::presentation::DocumentStyleProperties&gt;)" accessor="public" category="Function" name="EditStyle"><summary>Edit style in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="style">The new style.</param><signature><![CDATA[void EditStyle(
+    TextPos,
+    TextPos,
+    Ptr<DocumentStyleProperties>
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::CriticalSection::Leave@void()" accessor="public" category="Function" name="Leave"><summary>Leave a critical section.</summary><signature><![CDATA[void Leave();
+<Document symbolId="vl::CriticalSection::Leave@void()" accessor="public" category="Function" name="Leave"><summary>Leave a critical section.</summary><signature><![CDATA[void Leave(
+);
 ]]></signature></Document>

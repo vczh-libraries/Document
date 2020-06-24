@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::Dictionary::Add@bool(::vl::collections::Pair&lt;[KT], [VT]&gt; const &amp;)" accessor="public" category="Function" name="Add"><summary>Add a key with an associated value. Exception will raise if the key already exists.</summary><returns>Returns true if the pair is added.</returns><param name="value">The pair of key and value.</param><signature><![CDATA[bool Add(Pair<KT, VT> const &);
+<Document symbolId="vl::collections::Dictionary::Add@bool(::vl::collections::Pair&lt;[KT], [VT]&gt; const &amp;)" accessor="public" category="Function" name="Add"><summary>Add a key with an associated value. Exception will raise if the key already exists.</summary><returns>Returns true if the pair is added.</returns><param name="value">The pair of key and value.</param><signature><![CDATA[bool Add(
+    Pair<KT, VT> const &
+);
 ]]></signature></Document>

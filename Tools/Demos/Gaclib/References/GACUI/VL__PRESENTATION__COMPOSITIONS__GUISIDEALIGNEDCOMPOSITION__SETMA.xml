@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::SetMaxLength@void(::vl::vint)" accessor="public" category="Function" name="SetMaxLength"><summary>Set the maximum length of this composition.</summary><param name="value">The maximum length of this composition.</param><signature><![CDATA[void SetMaxLength(vint);
+<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::SetMaxLength@void(::vl::vint)" accessor="public" category="Function" name="SetMaxLength"><summary>Set the maximum length of this composition.</summary><param name="value">The maximum length of this composition.</param><signature><![CDATA[void SetMaxLength(
+    vint
+);
 ]]></signature></Document>

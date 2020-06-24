@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Enabled@void()" accessor="public" category="Function" name="Enabled"><summary>
  Called when the window is enabled.
- </summary><signature><![CDATA[void Enabled();
+ </summary><signature><![CDATA[void Enabled(
+);
 ]]></signature></Document>

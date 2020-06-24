@@ -1,2 +1,3 @@
-<Document symbolId="vl::filesystem::FilePath::IsFile@bool()" accessor="public" category="Function" name="IsFile"><summary>Test if the file path is a file.</summary><returns>Returns true if the file path is a file.</returns><signature><![CDATA[bool IsFile() const;
+<Document symbolId="vl::filesystem::FilePath::IsFile@bool()" accessor="public" category="Function" name="IsFile"><summary>Test if the file path is a file.</summary><returns>Returns true if the file path is a file.</returns><signature><![CDATA[bool IsFile(
+) const;
 ]]></signature></Document>

@@ -2,5 +2,6 @@
     typename R, 
     typename... TArgs
 >
-class Func<R(TArgs...)>;
+class Func<R(
+TArgs...)>;
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetCellText@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetCellText"><summary>Get the text value from an item.</summary><returns>The text value.</returns><param name="row">The row index of the item.</param><signature><![CDATA[WString GetCellText(vint);
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetCellText@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetCellText"><summary>Get the text value from an item.</summary><returns>The text value.</returns><param name="row">The row index of the item.</param><signature><![CDATA[WString GetCellText(
+    vint
+);
 ]]></signature></Document>

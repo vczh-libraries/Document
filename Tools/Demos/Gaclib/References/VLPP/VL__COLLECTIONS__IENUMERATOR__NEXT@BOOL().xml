@@ -1,2 +1,3 @@
-<Document symbolId="vl::collections::IEnumerator::Next@bool()" accessor="public" category="Function" name="Next"><summary>Step forward.</summary><returns>Returns false if the enumerator reaches the end.</returns><signature><![CDATA[bool Next();
+<Document symbolId="vl::collections::IEnumerator::Next@bool()" accessor="public" category="Function" name="Next"><summary>Step forward.</summary><returns>Returns false if the enumerator reaches the end.</returns><signature><![CDATA[bool Next(
+);
 ]]></signature></Document>

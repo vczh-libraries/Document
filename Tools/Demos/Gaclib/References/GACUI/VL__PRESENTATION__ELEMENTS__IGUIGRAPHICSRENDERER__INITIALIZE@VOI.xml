@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::Initialize@void(::vl::presentation::elements::IGuiGraphicsElement *)" accessor="public" category="Function" name="Initialize"><summary>
  Initialize the grpahics renderer by binding a <symbol docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/> to it.
- </summary><param name="element">The graphics element to bind.</param><signature><![CDATA[void Initialize(IGuiGraphicsElement *);
+ </summary><param name="element">The graphics element to bind.</param><signature><![CDATA[void Initialize(
+    IGuiGraphicsElement *
+);
 ]]></signature></Document>

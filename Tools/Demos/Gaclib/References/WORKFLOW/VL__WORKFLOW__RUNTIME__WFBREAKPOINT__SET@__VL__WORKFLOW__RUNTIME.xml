@@ -1,3 +1,5 @@
-<Document symbolId="vl::workflow::runtime::WfBreakPoint::Set@::vl::workflow::runtime::WfBreakPoint(::vl::reflection::DescriptableObject *, ::vl::reflection::description::IPropertyInfo *)" accessor="public" category="Function" name="Set"><summary>Create an property writing break point.</summary><returns>The created break point.</returns><param name="thisObject">The target object. Set to null to apply to every object.</param><param name="propertyInfo">The property.</param><signature><![CDATA[static WfBreakPoint Set(reflection::DescriptableObject *,
-reflection::description::IPropertyInfo *);
+<Document symbolId="vl::workflow::runtime::WfBreakPoint::Set@::vl::workflow::runtime::WfBreakPoint(::vl::reflection::DescriptableObject *, ::vl::reflection::description::IPropertyInfo *)" accessor="public" category="Function" name="Set"><summary>Create an property writing break point.</summary><returns>The created break point.</returns><param name="thisObject">The target object. Set to null to apply to every object.</param><param name="propertyInfo">The property.</param><signature><![CDATA[static WfBreakPoint Set(
+    reflection::DescriptableObject *,
+    reflection::description::IPropertyInfo *
+);
 ]]></signature></Document>

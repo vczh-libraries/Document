@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::IsCapturing@bool()" accessor="public" category="Function" name="IsCapturing"><summary>
  Test if the window is capturing mouse messages.
- </summary><returns>Returns true if the window is capturing mouse messages.</returns><signature><![CDATA[bool IsCapturing();
+ </summary><returns>Returns true if the window is capturing mouse messages.</returns><signature><![CDATA[bool IsCapturing(
+);
 ]]></signature></Document>

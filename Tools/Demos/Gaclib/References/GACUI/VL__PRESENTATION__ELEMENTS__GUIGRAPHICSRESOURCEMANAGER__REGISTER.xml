@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)" accessor="public" category="Function" name="RegisterElementFactory"><summary>
  Register a <symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/> using the element type from <symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()[decl0]"/>.
- </summary><param name="factory">The instance of the graphics element factory to register.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool RegisterElementFactory(IGuiGraphicsElementFactory *);
+ </summary><param name="factory">The instance of the graphics element factory to register.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool RegisterElementFactory(
+    IGuiGraphicsElementFactory *
+);
 ]]></signature></Document>

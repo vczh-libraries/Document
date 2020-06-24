@@ -1,4 +1,7 @@
 <Document symbolId="vl::presentation::INativeAsyncService::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeAsync"><summary>
  Invoke a specified function with an specified argument asynchronisly.
- </summary><param name="proc">The specified function.</param><signature><![CDATA[void InvokeAsync(Func<void()> const &);
+ </summary><param name="proc">The specified function.</param><signature><![CDATA[void InvokeAsync(
+    Func<void(
+)> const &
+);
 ]]></signature></Document>

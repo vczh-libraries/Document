@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::GetSizeState@::vl::presentation::INativeWindow::WindowSizeState()" accessor="public" category="Function" name="GetSizeState"><summary>
  Get the window size state.
- </summary><returns>Returns the window size state.</returns><signature><![CDATA[WindowSizeState GetSizeState();
+ </summary><returns>Returns the window size state.</returns><signature><![CDATA[WindowSizeState GetSizeState(
+);
 ]]></signature></Document>

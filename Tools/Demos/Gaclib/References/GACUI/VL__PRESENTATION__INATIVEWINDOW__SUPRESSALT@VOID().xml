@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::SupressAlt@void()" accessor="public" category="Function" name="SupressAlt"><summary>
  Supress the system&apos;s Alt+X hot key
- </summary><signature><![CDATA[void SupressAlt();
+ </summary><signature><![CDATA[void SupressAlt(
+);
 ]]></signature></Document>

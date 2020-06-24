@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControl::HasChild@bool(::vl::presentation::controls::GuiControl *)" accessor="public" category="Function" name="HasChild"><summary>Test if a control owned by this control.</summary><returns>Returns true if the control is owned by this control.</returns><param name="control">The control to test.</param><signature><![CDATA[bool HasChild(GuiControl *);
+<Document symbolId="vl::presentation::controls::GuiControl::HasChild@bool(::vl::presentation::controls::GuiControl *)" accessor="public" category="Function" name="HasChild"><summary>Test if a control owned by this control.</summary><returns>Returns true if the control is owned by this control.</returns><param name="control">The control to test.</param><signature><![CDATA[bool HasChild(
+    GuiControl *
+);
 ]]></signature></Document>

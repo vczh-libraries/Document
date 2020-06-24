@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::SetHorizontalAlwaysVisible@void(bool)" accessor="public" category="Function" name="SetHorizontalAlwaysVisible"><summary>Set is the horizontal scroll bar always visible even the content doesn&apos;t exceed the view bounds.</summary><param name="value">Set to true if the horizontal scroll bar always visible even the content doesn&apos;t exceed the view bounds</param><signature><![CDATA[void SetHorizontalAlwaysVisible(bool);
+<Document symbolId="vl::presentation::controls::GuiScrollView::SetHorizontalAlwaysVisible@void(bool)" accessor="public" category="Function" name="SetHorizontalAlwaysVisible"><summary>Set is the horizontal scroll bar always visible even the content doesn&apos;t exceed the view bounds.</summary><param name="value">Set to true if the horizontal scroll bar always visible even the content doesn&apos;t exceed the view bounds</param><signature><![CDATA[void SetHorizontalAlwaysVisible(
+    bool
+);
 ]]></signature></Document>

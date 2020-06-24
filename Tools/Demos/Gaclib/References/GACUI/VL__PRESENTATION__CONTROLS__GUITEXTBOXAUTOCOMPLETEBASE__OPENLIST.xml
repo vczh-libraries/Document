@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::OpenList@void(::vl::presentation::TextPos)" accessor="public" category="Function" name="OpenList"><summary>Notify the list to be visible.</summary><param name="startPosition">The text position to show the list.</param><signature><![CDATA[void OpenList(TextPos);
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::OpenList@void(::vl::presentation::TextPos)" accessor="public" category="Function" name="OpenList"><summary>Notify the list to be visible.</summary><param name="startPosition">The text position to show the list.</param><signature><![CDATA[void OpenList(
+    TextPos
+);
 ]]></signature></Document>

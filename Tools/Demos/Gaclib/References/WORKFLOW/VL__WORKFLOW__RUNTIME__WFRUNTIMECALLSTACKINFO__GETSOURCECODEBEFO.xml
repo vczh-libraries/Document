@@ -1,2 +1,3 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetSourceCodeBeforeCodegen@::vl::WString()" accessor="public" category="Function" name="GetSourceCodeBeforeCodegen"><summary>Get the source code of the executing module.</summary><returns>The source code.</returns><signature><![CDATA[WString GetSourceCodeBeforeCodegen();
+<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetSourceCodeBeforeCodegen@::vl::WString()" accessor="public" category="Function" name="GetSourceCodeBeforeCodegen"><summary>Get the source code of the executing module.</summary><returns>The source code.</returns><signature><![CDATA[WString GetSourceCodeBeforeCodegen(
+);
 ]]></signature></Document>

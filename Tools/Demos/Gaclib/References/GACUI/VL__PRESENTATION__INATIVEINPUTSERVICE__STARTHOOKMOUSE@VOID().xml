@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeInputService::StartHookMouse@void()" accessor="public" category="Function" name="StartHookMouse"><summary>
  Start to reveive global mouse message.
- </summary><signature><![CDATA[void StartHookMouse();
+ </summary><signature><![CDATA[void StartHookMouse(
+);
 ]]></signature></Document>

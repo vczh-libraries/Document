@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement::SetBorderColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetBorderColor"><summary>
  Set the border color.
- </summary><param name="value">The new border color.</param><signature><![CDATA[void SetBorderColor(Color);
+ </summary><param name="value">The new border color.</param><signature><![CDATA[void SetBorderColor(
+    Color
+);
 ]]></signature></Document>

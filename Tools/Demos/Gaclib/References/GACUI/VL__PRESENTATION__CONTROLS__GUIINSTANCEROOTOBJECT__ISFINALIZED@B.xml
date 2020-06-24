@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::IsFinalized@bool()" accessor="public" category="Function" name="IsFinalized"><summary>Test has the object been finalized.</summary><returns>Returns true if this object has been finalized.</returns><signature><![CDATA[bool IsFinalized();
+<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::IsFinalized@bool()" accessor="public" category="Function" name="IsFinalized"><summary>Test has the object been finalized.</summary><returns>Returns true if this object has been finalized.</returns><signature><![CDATA[bool IsFinalized(
+);
 ]]></signature></Document>

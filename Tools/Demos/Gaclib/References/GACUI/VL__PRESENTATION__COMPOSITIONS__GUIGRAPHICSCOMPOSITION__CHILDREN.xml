@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::Children@::vl::presentation::compositions::GuiGraphicsComposition::CompositionList const &amp;()" accessor="public" category="Function" name="Children"><summary>Get all child compositions ordered by z-order from low to high.</summary><returns>Child compositions.</returns><signature><![CDATA[CompositionList const & Children();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::Children@::vl::presentation::compositions::GuiGraphicsComposition::CompositionList const &amp;()" accessor="public" category="Function" name="Children"><summary>Get all child compositions ordered by z-order from low to high.</summary><returns>Child compositions.</returns><signature><![CDATA[CompositionList const & Children(
+);
 ]]></signature></Document>

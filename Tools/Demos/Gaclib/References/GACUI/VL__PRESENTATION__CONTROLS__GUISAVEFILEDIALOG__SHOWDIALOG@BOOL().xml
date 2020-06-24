@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiSaveFileDialog::ShowDialog@bool()" accessor="public" category="Function" name="ShowDialog"><summary>Show the dialog.</summary><returns>Returns true if the &quot;Save&quot; button is clicked.</returns><signature><![CDATA[bool ShowDialog();
+<Document symbolId="vl::presentation::controls::GuiSaveFileDialog::ShowDialog@bool()" accessor="public" category="Function" name="ShowDialog"><summary>Show the dialog.</summary><returns>Returns true if the &quot;Save&quot; button is clicked.</returns><signature><![CDATA[bool ShowDialog(
+);
 ]]></signature></Document>

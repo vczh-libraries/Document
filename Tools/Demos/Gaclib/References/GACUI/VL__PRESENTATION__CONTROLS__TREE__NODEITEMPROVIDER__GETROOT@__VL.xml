@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::tree::NodeItemProvider::GetRoot@::vl::Ptr&lt;::vl::presentation::controls::tree::INodeRootProvider&gt;()" accessor="public" category="Function" name="GetRoot"><summary>Get the owned node root provider.</summary><returns>The node root provider.</returns><signature><![CDATA[Ptr<INodeRootProvider> GetRoot();
+<Document symbolId="vl::presentation::controls::tree::NodeItemProvider::GetRoot@::vl::Ptr&lt;::vl::presentation::controls::tree::INodeRootProvider&gt;()" accessor="public" category="Function" name="GetRoot"><summary>Get the owned node root provider.</summary><returns>The node root provider.</returns><signature><![CDATA[Ptr<INodeRootProvider> GetRoot(
+);
 ]]></signature></Document>

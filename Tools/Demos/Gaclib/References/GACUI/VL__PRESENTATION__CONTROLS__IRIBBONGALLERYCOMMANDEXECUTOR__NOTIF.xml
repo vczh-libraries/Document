@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::IRibbonGalleryCommandExecutor::NotifyDropdown@void()" accessor="public" category="Function" name="NotifyDropdown"><summary>Called when the dropdown button is clicked.</summary><signature><![CDATA[void NotifyDropdown();
+<Document symbolId="vl::presentation::controls::IRibbonGalleryCommandExecutor::NotifyDropdown@void()" accessor="public" category="Function" name="NotifyDropdown"><summary>Called when the dropdown button is clicked.</summary><signature><![CDATA[void NotifyDropdown(
+);
 ]]></signature></Document>

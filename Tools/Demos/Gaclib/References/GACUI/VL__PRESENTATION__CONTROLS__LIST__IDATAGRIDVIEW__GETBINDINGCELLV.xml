@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::list::IDataGridView::GetBindingCellValue@::vl::reflection::description::Value(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="GetBindingCellValue"><summary>Get the binding value of a cell.</summary><returns>The binding value of cell.</returns><param name="row">The row index of the cell.</param><param name="column">The column index of the cell.</param><signature><![CDATA[description::Value GetBindingCellValue(vint,
-vint);
+<Document symbolId="vl::presentation::controls::list::IDataGridView::GetBindingCellValue@::vl::reflection::description::Value(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="GetBindingCellValue"><summary>Get the binding value of a cell.</summary><returns>The binding value of cell.</returns><param name="row">The row index of the cell.</param><param name="column">The column index of the cell.</param><signature><![CDATA[description::Value GetBindingCellValue(
+    vint,
+    vint
+);
 ]]></signature></Document>

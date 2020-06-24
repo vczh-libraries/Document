@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::IGuiParserManager::GetParser@::vl::Ptr&lt;::vl::presentation::IGuiGeneralParser&gt;(::vl::WString const &amp;)" accessor="public" category="Function" name="GetParser"><summary>Get a parser.</summary><returns>The parser.</returns><param name="name">The name.</param><signature><![CDATA[Ptr<IGuiGeneralParser> GetParser(WString const &);
+<Document symbolId="vl::presentation::IGuiParserManager::GetParser@::vl::Ptr&lt;::vl::presentation::IGuiGeneralParser&gt;(::vl::WString const &amp;)" accessor="public" category="Function" name="GetParser"><summary>Get a parser.</summary><returns>The parser.</returns><param name="name">The name.</param><signature><![CDATA[Ptr<IGuiGeneralParser> GetParser(
+    WString const &
+);
 ]]></signature></Document>

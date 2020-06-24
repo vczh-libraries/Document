@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetVerticalAlignment@::vl::presentation::Alignment()" accessor="public" category="Function" name="GetVerticalAlignment"><summary>
  Get the vertical alignment of the text.
- </summary><returns>The vertical alignment of the text.</returns><signature><![CDATA[Alignment GetVerticalAlignment();
+ </summary><returns>The vertical alignment of the text.</returns><signature><![CDATA[Alignment GetVerticalAlignment(
+);
 ]]></signature></Document>

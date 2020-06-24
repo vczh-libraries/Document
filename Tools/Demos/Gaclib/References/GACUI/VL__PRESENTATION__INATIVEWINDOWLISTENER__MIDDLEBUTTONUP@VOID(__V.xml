@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowListener::MiddleButtonUp@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="MiddleButtonUp"><summary>
  Called when the middle mouse button is released.
- </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void MiddleButtonUp(NativeWindowMouseInfo const &);
+ </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void MiddleButtonUp(
+    NativeWindowMouseInfo const &
+);
 ]]></signature></Document>

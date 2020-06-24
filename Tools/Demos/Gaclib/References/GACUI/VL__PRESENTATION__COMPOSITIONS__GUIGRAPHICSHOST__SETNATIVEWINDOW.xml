@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::SetNativeWindow@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="SetNativeWindow"><summary>Associate a window. A <symbol docId="vl::presentation::compositions::GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"/> will fill and appear in the window.</summary><param name="_nativeWindow">The window to associated.</param><signature><![CDATA[void SetNativeWindow(INativeWindow *);
+<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::SetNativeWindow@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="SetNativeWindow"><summary>Associate a window. A <symbol docId="vl::presentation::compositions::GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"/> will fill and appear in the window.</summary><param name="_nativeWindow">The window to associated.</param><signature><![CDATA[void SetNativeWindow(
+    INativeWindow *
+);
 ]]></signature></Document>

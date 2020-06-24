@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripToolBar::GetToolstripItems@::vl::collections::ObservableListBase&lt;::vl::presentation::controls::GuiControl *&gt; &amp;()" accessor="public" category="Function" name="GetToolstripItems"><summary>Get all managed child controls ordered by their positions.</summary><returns>All managed child controls.</returns><signature><![CDATA[collections::ObservableListBase<GuiControl *> & GetToolstripItems();
+<Document symbolId="vl::presentation::controls::GuiToolstripToolBar::GetToolstripItems@::vl::collections::ObservableListBase&lt;::vl::presentation::controls::GuiControl *&gt; &amp;()" accessor="public" category="Function" name="GetToolstripItems"><summary>Get all managed child controls ordered by their positions.</summary><returns>All managed child controls.</returns><signature><![CDATA[collections::ObservableListBase<GuiControl *> & GetToolstripItems(
+);
 ]]></signature></Document>

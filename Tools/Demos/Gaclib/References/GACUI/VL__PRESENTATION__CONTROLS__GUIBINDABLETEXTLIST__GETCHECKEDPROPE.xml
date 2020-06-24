@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiBindableTextList::GetCheckedProperty@::vl::presentation::WritableItemProperty&lt;bool&gt;()" accessor="public" category="Function" name="GetCheckedProperty"><summary>Get the checked property name to get the check state from an item.</summary><returns>The checked property name.</returns><signature><![CDATA[WritableItemProperty<bool> GetCheckedProperty();
+<Document symbolId="vl::presentation::controls::GuiBindableTextList::GetCheckedProperty@::vl::presentation::WritableItemProperty&lt;bool&gt;()" accessor="public" category="Function" name="GetCheckedProperty"><summary>Get the checked property name to get the check state from an item.</summary><returns>The checked property name.</returns><signature><![CDATA[WritableItemProperty<bool> GetCheckedProperty(
+);
 ]]></signature></Document>

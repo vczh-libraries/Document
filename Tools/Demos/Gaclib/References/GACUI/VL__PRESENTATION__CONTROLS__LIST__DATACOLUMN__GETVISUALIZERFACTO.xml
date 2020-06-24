@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetVisualizerFactory@::vl::Ptr&lt;::vl::presentation::controls::list::IDataVisualizerFactory&gt;()" accessor="public" category="Function" name="GetVisualizerFactory"><summary>Get the visualizer factory for the column.</summary><returns>The the visualizer factory for the column.</returns><signature><![CDATA[Ptr<IDataVisualizerFactory> GetVisualizerFactory();
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetVisualizerFactory@::vl::Ptr&lt;::vl::presentation::controls::list::IDataVisualizerFactory&gt;()" accessor="public" category="Function" name="GetVisualizerFactory"><summary>Get the visualizer factory for the column.</summary><returns>The the visualizer factory for the column.</returns><signature><![CDATA[Ptr<IDataVisualizerFactory> GetVisualizerFactory(
+);
 ]]></signature></Document>

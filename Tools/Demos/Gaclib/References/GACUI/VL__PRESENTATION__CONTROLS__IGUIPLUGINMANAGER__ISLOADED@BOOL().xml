@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::IGuiPluginManager::IsLoaded@bool()" accessor="public" category="Function" name="IsLoaded"><returns>Returns true if all plugins are loaded.</returns><signature><![CDATA[bool IsLoaded();
+<Document symbolId="vl::presentation::controls::IGuiPluginManager::IsLoaded@bool()" accessor="public" category="Function" name="IsLoaded"><returns>Returns true if all plugins are loaded.</returns><signature><![CDATA[bool IsLoaded(
+);
 ]]></signature></Document>

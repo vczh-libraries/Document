@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase::GetContextStartState@::vl::vint()" accessor="public" category="Function" name="GetContextStartState"><summary>Get the context sensitive start state for the first line.</summary><returns>The context sensitive start state for the first line.</returns><signature><![CDATA[vint GetContextStartState();
+<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase::GetContextStartState@::vl::vint()" accessor="public" category="Function" name="GetContextStartState"><summary>Get the context sensitive start state for the first line.</summary><returns>The context sensitive start state for the first line.</returns><signature><![CDATA[vint GetContextStartState(
+);
 ]]></signature></Document>

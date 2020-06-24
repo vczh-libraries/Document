@@ -1,2 +1,4 @@
-<Document symbolId="vl::stream::IStream::Seek@void(::vl::pos_t)" accessor="public" category="Function" name="Seek"><summary>Step forward or backward from the current position. Will throw exception if the stream is not seekable or not available.</summary><param name="_size">The length of the step.</param><signature><![CDATA[void Seek(pos_t);
+<Document symbolId="vl::stream::IStream::Seek@void(::vl::pos_t)" accessor="public" category="Function" name="Seek"><summary>Step forward or backward from the current position. Will throw exception if the stream is not seekable or not available.</summary><param name="_size">The length of the step.</param><signature><![CDATA[void Seek(
+    pos_t
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl::GetMultiSelect@bool()" accessor="public" category="Function" name="GetMultiSelect"><summary>Get the multiple selection mode.</summary><returns>Returns true if multiple selection is enabled.</returns><signature><![CDATA[bool GetMultiSelect();
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl::GetMultiSelect@bool()" accessor="public" category="Function" name="GetMultiSelect"><summary>Get the multiple selection mode.</summary><returns>Returns true if multiple selection is enabled.</returns><signature><![CDATA[bool GetMultiSelect(
+);
 ]]></signature></Document>

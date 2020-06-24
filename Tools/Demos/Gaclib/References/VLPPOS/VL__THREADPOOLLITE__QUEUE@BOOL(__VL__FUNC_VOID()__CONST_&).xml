@@ -1,2 +1,5 @@
-<Document symbolId="vl::ThreadPoolLite::Queue@bool(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="Queue"><summary>Queue a function object.</summary><returns>Returns true if this operation succeeded.</returns><param name="proc">The function object.</param><signature><![CDATA[static bool Queue(Func<void()> const &);
+<Document symbolId="vl::ThreadPoolLite::Queue@bool(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="Queue"><summary>Queue a function object.</summary><returns>Returns true if this operation succeeded.</returns><param name="proc">The function object.</param><signature><![CDATA[static bool Queue(
+    Func<void(
+)> const &
+);
 ]]></signature></Document>

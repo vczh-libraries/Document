@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::INativeClipboardReader::ContainsText@bool()" accessor="public" category="Function" name="ContainsText"><summary>Test is there a text in the clipboard.</summary><returns>Returns true if there is a text in the clipboard.</returns><signature><![CDATA[bool ContainsText();
+<Document symbolId="vl::presentation::INativeClipboardReader::ContainsText@bool()" accessor="public" category="Function" name="ContainsText"><summary>Test is there a text in the clipboard.</summary><returns>Returns true if there is a text in the clipboard.</returns><signature><![CDATA[bool ContainsText(
+);
 ]]></signature></Document>

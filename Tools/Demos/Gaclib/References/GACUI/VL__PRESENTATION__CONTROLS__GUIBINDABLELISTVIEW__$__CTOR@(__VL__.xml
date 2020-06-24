@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiBindableListView::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor"><summary>Create a bindable List view control.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiBindableListView(theme::ThemeName);
+<Document symbolId="vl::presentation::controls::GuiBindableListView::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor"><summary>Create a bindable List view control.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiBindableListView(
+    theme::ThemeName
+);
 ]]></signature></Document>

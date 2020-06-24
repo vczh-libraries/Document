@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::IGuiPlugin::GetDependencies@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetDependencies"><summary>Get all dependencies of this plugin.</summary><param name="dependencies">To receive all dependencies.</param><signature><![CDATA[void GetDependencies(collections::List<WString> &);
+<Document symbolId="vl::presentation::controls::IGuiPlugin::GetDependencies@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetDependencies"><summary>Get all dependencies of this plugin.</summary><param name="dependencies">To receive all dependencies.</param><signature><![CDATA[void GetDependencies(
+    collections::List<WString> &
+);
 ]]></signature></Document>

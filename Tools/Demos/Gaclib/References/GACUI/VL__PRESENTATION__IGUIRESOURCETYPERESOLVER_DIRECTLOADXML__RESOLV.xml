@@ -1,4 +1,6 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_DirectLoadXml::ResolveResource@::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;(::vl::Ptr&lt;::vl::presentation::GuiResourceItem&gt;, ::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;, ::vl::presentation::GuiResourceError::List &amp;)" accessor="public" category="Function" name="ResolveResource"><summary>Load a resource for a type inside an xml element.</summary><returns>The resource.</returns><param name="resource">The resource item containing the resource.</param><param name="element">The xml element.</param><param name="errors">All collected errors during loading a resource.</param><signature><![CDATA[Ptr<DescriptableObject> ResolveResource(Ptr<GuiResourceItem>,
-Ptr<parsing::xml::XmlElement>,
-GuiResourceError::List &);
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver_DirectLoadXml::ResolveResource@::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;(::vl::Ptr&lt;::vl::presentation::GuiResourceItem&gt;, ::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;, ::vl::presentation::GuiResourceError::List &amp;)" accessor="public" category="Function" name="ResolveResource"><summary>Load a resource for a type inside an xml element.</summary><returns>The resource.</returns><param name="resource">The resource item containing the resource.</param><param name="element">The xml element.</param><param name="errors">All collected errors during loading a resource.</param><signature><![CDATA[Ptr<DescriptableObject> ResolveResource(
+    Ptr<GuiResourceItem>,
+    Ptr<parsing::xml::XmlElement>,
+    GuiResourceError::List &
+);
 ]]></signature></Document>

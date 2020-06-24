@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::Enable@void()" accessor="public" category="Function" name="Enable"><summary>
  Enable the window.
- </summary><signature><![CDATA[void Enable();
+ </summary><signature><![CDATA[void Enable(
+);
 ]]></signature></Document>

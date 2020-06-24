@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::DataOrFilter::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the filter.</summary><signature><![CDATA[ DataOrFilter();
+<Document symbolId="vl::presentation::controls::list::DataOrFilter::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the filter.</summary><signature><![CDATA[ DataOrFilter(
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetInternalMargin@void(::vl::presentation::Margin)" accessor="public" category="Function" name="SetInternalMargin"><summary>Set the internal margin.</summary><param name="value">The internal margin.</param><signature><![CDATA[void SetInternalMargin(Margin);
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetInternalMargin@void(::vl::presentation::Margin)" accessor="public" category="Function" name="SetInternalMargin"><summary>Set the internal margin.</summary><param name="value">The internal margin.</param><signature><![CDATA[void SetInternalMargin(
+    Margin
+);
 ]]></signature></Document>

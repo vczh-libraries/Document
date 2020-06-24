@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::GetRenderTarget@::vl::presentation::elements::IGuiGraphicsRenderTarget *()" accessor="public" category="Function" name="GetRenderTarget"><summary>
  Returns the binded <symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/>.
- </summary><returns>The binded <symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/>.</returns><signature><![CDATA[IGuiGraphicsRenderTarget * GetRenderTarget();
+ </summary><returns>The binded <symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/>.</returns><signature><![CDATA[IGuiGraphicsRenderTarget * GetRenderTarget(
+);
 ]]></signature></Document>

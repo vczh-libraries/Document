@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetPreferredBounds@::vl::presentation::Rect()" accessor="public" category="Function" name="GetPreferredBounds"><summary>Get the preferred bounds.</summary><returns>The preferred bounds.</returns><signature><![CDATA[Rect GetPreferredBounds();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetPreferredBounds@::vl::presentation::Rect()" accessor="public" category="Function" name="GetPreferredBounds"><summary>Get the preferred bounds.</summary><returns>The preferred bounds.</returns><signature><![CDATA[Rect GetPreferredBounds(
+);
 ]]></signature></Document>

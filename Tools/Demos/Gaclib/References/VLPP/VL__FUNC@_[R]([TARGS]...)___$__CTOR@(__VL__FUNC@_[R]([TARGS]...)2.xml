@@ -1,2 +1,5 @@
-<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Move a function reference.</summary><param name="function">The function reference to move.</param><signature><![CDATA[ Func(Func<R(TArgs...)> &&);
+<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Move a function reference.</summary><param name="function">The function reference to move.</param><signature><![CDATA[ Func(
+    Func<R(
+TArgs...)> &&
+);
 ]]></signature></Document>

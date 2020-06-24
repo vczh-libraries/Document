@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::tree::INodeProvider::GetParent@::vl::Ptr&lt;::vl::presentation::controls::tree::INodeProvider&gt;()" accessor="public" category="Function" name="GetParent"><summary>Get the parent node.</summary><returns>The parent node.</returns><signature><![CDATA[Ptr<INodeProvider> GetParent();
+<Document symbolId="vl::presentation::controls::tree::INodeProvider::GetParent@::vl::Ptr&lt;::vl::presentation::controls::tree::INodeProvider&gt;()" accessor="public" category="Function" name="GetParent"><summary>Get the parent node.</summary><returns>The parent node.</returns><signature><![CDATA[Ptr<INodeProvider> GetParent(
+);
 ]]></signature></Document>

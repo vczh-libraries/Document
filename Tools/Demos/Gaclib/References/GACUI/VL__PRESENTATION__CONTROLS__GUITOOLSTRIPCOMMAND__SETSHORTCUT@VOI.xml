@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetShortcut@void(::vl::presentation::compositions::IGuiShortcutKeyItem *)" accessor="public" category="Function" name="SetShortcut"><summary>Set the shortcut key item for this command.</summary><param name="value">The shortcut key item for this command.</param><signature><![CDATA[void SetShortcut(compositions::IGuiShortcutKeyItem *);
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetShortcut@void(::vl::presentation::compositions::IGuiShortcutKeyItem *)" accessor="public" category="Function" name="SetShortcut"><summary>Set the shortcut key item for this command.</summary><param name="value">The shortcut key item for this command.</param><signature><![CDATA[void SetShortcut(
+    compositions::IGuiShortcutKeyItem *
+);
 ]]></signature></Document>

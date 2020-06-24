@@ -1,5 +1,7 @@
 <Document symbolId="vl::presentation::INativeImage::SaveToStream@void(::vl::stream::IStream &amp;, ::vl::presentation::INativeImage::FormatType)" accessor="public" category="Function" name="SaveToStream"><summary>
  Save the image to a stream.
- </summary><param name="imageStream">The stream.</param><param name="formatType">The format of the image.</param><signature><![CDATA[void SaveToStream(stream::IStream &,
-FormatType /* optional */);
+ </summary><param name="imageStream">The stream.</param><param name="formatType">The format of the image.</param><signature><![CDATA[void SaveToStream(
+    stream::IStream &,
+    FormatType /* optional */
+);
 ]]></signature></Document>

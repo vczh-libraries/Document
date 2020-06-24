@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeControllerListener::ClipboardUpdated@void()" accessor="public" category="Function" name="ClipboardUpdated"><summary>
  Called when the content of the clipboard is updated.
- </summary><signature><![CDATA[void ClipboardUpdated();
+ </summary><signature><![CDATA[void ClipboardUpdated(
+);
 ]]></signature></Document>

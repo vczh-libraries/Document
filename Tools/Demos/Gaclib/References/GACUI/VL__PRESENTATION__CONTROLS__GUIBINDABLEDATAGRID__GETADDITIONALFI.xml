@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiBindableDataGrid::GetAdditionalFilter@::vl::Ptr&lt;::vl::presentation::controls::list::IDataFilter&gt;()" accessor="public" category="Function" name="GetAdditionalFilter"><summary>Get the additional filter.</summary><returns>The additional filter.</returns><signature><![CDATA[Ptr<list::IDataFilter> GetAdditionalFilter();
+<Document symbolId="vl::presentation::controls::GuiBindableDataGrid::GetAdditionalFilter@::vl::Ptr&lt;::vl::presentation::controls::list::IDataFilter&gt;()" accessor="public" category="Function" name="GetAdditionalFilter"><summary>Get the additional filter.</summary><returns>The additional filter.</returns><signature><![CDATA[Ptr<list::IDataFilter> GetAdditionalFilter(
+);
 ]]></signature></Document>

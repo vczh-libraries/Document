@@ -1,2 +1,3 @@
-<Document symbolId="vl::HttpRequest::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty request.</summary><signature><![CDATA[ HttpRequest();
+<Document symbolId="vl::HttpRequest::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty request.</summary><signature><![CDATA[ HttpRequest(
+);
 ]]></signature></Document>

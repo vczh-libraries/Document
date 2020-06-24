@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::DocumentRun::IVisitor::Visit@void(::vl::presentation::DocumentTextRun *)" accessor="public" category="Function" name="Visit"><summary>Visit operation for <symbol docId="vl::presentation::DocumentTextRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentTextRun"/>.</summary><param name="run">The run object.</param><signature><![CDATA[void Visit(DocumentTextRun *);
+<Document symbolId="vl::presentation::DocumentRun::IVisitor::Visit@void(::vl::presentation::DocumentTextRun *)" accessor="public" category="Function" name="Visit"><summary>Visit operation for <symbol docId="vl::presentation::DocumentTextRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentTextRun"/>.</summary><param name="run">The run object.</param><signature><![CDATA[void Visit(
+    DocumentTextRun *
+);
 ]]></signature></Document>

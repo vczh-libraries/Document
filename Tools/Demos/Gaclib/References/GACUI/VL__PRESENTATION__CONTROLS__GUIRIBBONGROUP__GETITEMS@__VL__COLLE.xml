@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonGroup::GetItems@::vl::collections::ObservableListBase&lt;::vl::presentation::controls::GuiControl *&gt; &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get the collection of controls in this group.</summary><returns>The collection of controls.</returns><signature><![CDATA[collections::ObservableListBase<GuiControl *> & GetItems();
+<Document symbolId="vl::presentation::controls::GuiRibbonGroup::GetItems@::vl::collections::ObservableListBase&lt;::vl::presentation::controls::GuiControl *&gt; &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get the collection of controls in this group.</summary><returns>The collection of controls.</returns><signature><![CDATA[collections::ObservableListBase<GuiControl *> & GetItems(
+);
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::ShowRestored@void()" accessor="public" category="Function" name="ShowRestored"><summary>
  Restore the window.
- </summary><signature><![CDATA[void ShowRestored();
+ </summary><signature><![CDATA[void ShowRestored(
+);
 ]]></signature></Document>

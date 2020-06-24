@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiAxis::GetDirection@::vl::presentation::AxisDirection()" accessor="public" category="Function" name="GetDirection"><summary>Get the specified axis direction.</summary><returns>The specified axis direction.</returns><signature><![CDATA[AxisDirection GetDirection();
+<Document symbolId="vl::presentation::compositions::GuiAxis::GetDirection@::vl::presentation::AxisDirection()" accessor="public" category="Function" name="GetDirection"><summary>Get the specified axis direction.</summary><returns>The specified axis direction.</returns><signature><![CDATA[AxisDirection GetDirection(
+);
 ]]></signature></Document>

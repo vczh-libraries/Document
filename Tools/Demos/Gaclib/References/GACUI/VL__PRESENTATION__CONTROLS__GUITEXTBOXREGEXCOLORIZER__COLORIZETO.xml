@@ -1,7 +1,9 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::ColorizeTokenContextSensitive@void(::vl::vint, wchar_t const *, ::vl::vint, ::vl::vint, ::vl::vint &amp;, ::vl::vint &amp;)" accessor="public" category="Function" name="ColorizeTokenContextSensitive"><summary>Callback function to set context sensitive state and change token accordingly.</summary><param name="lineIndex">Line index.</param><param name="text">Text buffer.</param><param name="start">The start position of the token.</param><param name="length">The length of the token.</param><param name="token">The token type. After executing this function, the new value of this argument indicates the new token type.</param><param name="contextState">The context sensitive state. After executing this function, the new value of this argument indicates the new state.</param><signature><![CDATA[void ColorizeTokenContextSensitive(vint,
-wchar_t const *,
-vint,
-vint,
-vint &,
-vint &);
+<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::ColorizeTokenContextSensitive@void(::vl::vint, wchar_t const *, ::vl::vint, ::vl::vint, ::vl::vint &amp;, ::vl::vint &amp;)" accessor="public" category="Function" name="ColorizeTokenContextSensitive"><summary>Callback function to set context sensitive state and change token accordingly.</summary><param name="lineIndex">Line index.</param><param name="text">Text buffer.</param><param name="start">The start position of the token.</param><param name="length">The length of the token.</param><param name="token">The token type. After executing this function, the new value of this argument indicates the new token type.</param><param name="contextState">The context sensitive state. After executing this function, the new value of this argument indicates the new state.</param><signature><![CDATA[void ColorizeTokenContextSensitive(
+    vint,
+    wchar_t const *,
+    vint,
+    vint,
+    vint &,
+    vint &
+);
 ]]></signature></Document>

@@ -1,4 +1,6 @@
-<Document symbolId="vl::Semaphore::Create@bool(::vl::vint, ::vl::vint, ::vl::WString const &amp;)" accessor="public" category="Function" name="Create"><summary>Create a semaphore.</summary><returns>Returns true if this operation succeeded.</returns><param name="initialCount">Define the counter of the semaphore.</param><param name="maxCount">Define the maximum value of the counter of the semaphore. This argument is only used in Windows.</param><param name="name">Name of the semaphore. If it is not empty, than it is a global named semaphore. This argument is ignored in Linux.</param><signature><![CDATA[bool Create(vint,
-vint,
-WString const & /* optional */);
+<Document symbolId="vl::Semaphore::Create@bool(::vl::vint, ::vl::vint, ::vl::WString const &amp;)" accessor="public" category="Function" name="Create"><summary>Create a semaphore.</summary><returns>Returns true if this operation succeeded.</returns><param name="initialCount">Define the counter of the semaphore.</param><param name="maxCount">Define the maximum value of the counter of the semaphore. This argument is only used in Windows.</param><param name="name">Name of the semaphore. If it is not empty, than it is a global named semaphore. This argument is ignored in Linux.</param><signature><![CDATA[bool Create(
+    vint,
+    vint,
+    WString const & /* optional */
+);
 ]]></signature></Document>

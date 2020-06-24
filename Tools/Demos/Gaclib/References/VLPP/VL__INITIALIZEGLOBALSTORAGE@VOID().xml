@@ -1,2 +1,3 @@
-<Document symbolId="vl::InitializeGlobalStorage@void()" accessor="" category="Function" name="InitializeGlobalStorage"><summary>Initialize the global storage.</summary><signature><![CDATA[void InitializeGlobalStorage();
+<Document symbolId="vl::InitializeGlobalStorage@void()" accessor="" category="Function" name="InitializeGlobalStorage"><summary>Initialize the global storage.</summary><signature><![CDATA[void InitializeGlobalStorage(
+);
 ]]></signature></Document>

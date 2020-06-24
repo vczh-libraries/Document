@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControl::SetTooltipWidth@void(::vl::vint)" accessor="public" category="Function" name="SetTooltipWidth"><summary>Set the tooltip width of the control.</summary><param name="value">The tooltip width of the control.</param><signature><![CDATA[void SetTooltipWidth(vint);
+<Document symbolId="vl::presentation::controls::GuiControl::SetTooltipWidth@void(::vl::vint)" accessor="public" category="Function" name="SetTooltipWidth"><summary>Set the tooltip width of the control.</summary><param name="value">The tooltip width of the control.</param><signature><![CDATA[void SetTooltipWidth(
+    vint
+);
 ]]></signature></Document>

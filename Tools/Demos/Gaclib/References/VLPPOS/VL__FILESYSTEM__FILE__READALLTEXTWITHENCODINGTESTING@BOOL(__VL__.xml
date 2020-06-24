@@ -1,4 +1,6 @@
-<Document symbolId="vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &amp;, ::vl::stream::BomEncoder::Encoding &amp;, bool &amp;)" accessor="public" category="Function" name="ReadAllTextWithEncodingTesting"><summary>Get the content of the file as text with encoding testing.</summary><returns>Returns false if this operation succeeded.</returns><param name="text">The content of the file.</param><param name="encoding">The encoding.</param><param name="containsBom">True if there is BOM.</param><signature><![CDATA[bool ReadAllTextWithEncodingTesting(WString &,
-stream::BomEncoder::Encoding &,
-bool &);
+<Document symbolId="vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &amp;, ::vl::stream::BomEncoder::Encoding &amp;, bool &amp;)" accessor="public" category="Function" name="ReadAllTextWithEncodingTesting"><summary>Get the content of the file as text with encoding testing.</summary><returns>Returns false if this operation succeeded.</returns><param name="text">The content of the file.</param><param name="encoding">The encoding.</param><param name="containsBom">True if there is BOM.</param><signature><![CDATA[bool ReadAllTextWithEncodingTesting(
+    WString &,
+    stream::BomEncoder::Encoding &,
+    bool &
+);
 ]]></signature></Document>

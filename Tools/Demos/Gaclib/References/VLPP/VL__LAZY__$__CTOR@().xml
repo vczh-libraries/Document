@@ -1,2 +1,3 @@
-<Document symbolId="vl::Lazy::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty evaluation.</summary><signature><![CDATA[ Lazy();
+<Document symbolId="vl::Lazy::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty evaluation.</summary><signature><![CDATA[ Lazy(
+);
 ]]></signature></Document>

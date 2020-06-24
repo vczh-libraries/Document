@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeInputService::StopTimer@void()" accessor="public" category="Function" name="StopTimer"><summary>
  Stop to receive global timer message.
- </summary><signature><![CDATA[void StopTimer();
+ </summary><signature><![CDATA[void StopTimer(
+);
 ]]></signature></Document>

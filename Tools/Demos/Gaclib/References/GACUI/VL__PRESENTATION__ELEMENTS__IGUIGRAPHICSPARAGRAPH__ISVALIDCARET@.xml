@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::IsValidCaret@bool(::vl::vint)" accessor="public" category="Function" name="IsValidCaret"><summary>Test is the caret valid.</summary><returns>Returns true if the caret is valid.</returns><param name="caret">The caret to test.</param><signature><![CDATA[bool IsValidCaret(vint);
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::IsValidCaret@bool(::vl::vint)" accessor="public" category="Function" name="IsValidCaret"><summary>Test is the caret valid.</summary><returns>Returns true if the caret is valid.</returns><param name="caret">The caret to test.</param><signature><![CDATA[bool IsValidCaret(
+    vint
+);
 ]]></signature></Document>

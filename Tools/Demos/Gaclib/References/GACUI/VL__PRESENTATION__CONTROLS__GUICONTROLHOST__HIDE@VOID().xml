@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::Hide@void()" accessor="public" category="Function" name="Hide"><summary>
  Hide the window.
- </summary><signature><![CDATA[void Hide();
+ </summary><signature><![CDATA[void Hide(
+);
 ]]></signature></Document>

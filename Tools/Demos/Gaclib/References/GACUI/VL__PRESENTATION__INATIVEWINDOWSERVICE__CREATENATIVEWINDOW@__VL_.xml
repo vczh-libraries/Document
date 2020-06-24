@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()" accessor="public" category="Function" name="CreateNativeWindow"><summary>
  Create a window.
- </summary><returns>The created window.</returns><signature><![CDATA[INativeWindow * CreateNativeWindow();
+ </summary><returns>The created window.</returns><signature><![CDATA[INativeWindow * CreateNativeWindow(
+);
 ]]></signature></Document>

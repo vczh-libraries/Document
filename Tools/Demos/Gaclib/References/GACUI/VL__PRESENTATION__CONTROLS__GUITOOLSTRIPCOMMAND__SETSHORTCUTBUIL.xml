@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetShortcutBuilder@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetShortcutBuilder"><summary>Set the shortcut builder for this command. When the command is attached to a window as a component without a shortcut, the command will try to convert the shortcut builder to a shortcut key item.</summary><param name="value">The shortcut builder for this command.</param><signature><![CDATA[void SetShortcutBuilder(WString const &);
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetShortcutBuilder@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetShortcutBuilder"><summary>Set the shortcut builder for this command. When the command is attached to a window as a component without a shortcut, the command will try to convert the shortcut builder to a shortcut key item.</summary><param name="value">The shortcut builder for this command.</param><signature><![CDATA[void SetShortcutBuilder(
+    WString const &
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::List::operator []@[T] &amp;(::vl::vint)" accessor="public" category="Function" name="operator []"><summary>Get the reference to the specified element.</summary><returns>The reference to the specified element.</returns><param name="index">The index of the element.</param><signature><![CDATA[T & operator [](vint);
+<Document symbolId="vl::collections::List::operator []@[T] &amp;(::vl::vint)" accessor="public" category="Function" name="operator []"><summary>Get the reference to the specified element.</summary><returns>The reference to the specified element.</returns><param name="index">The index of the element.</param><signature><![CDATA[T & operator [](
+    vint
+);
 ]]></signature></Document>

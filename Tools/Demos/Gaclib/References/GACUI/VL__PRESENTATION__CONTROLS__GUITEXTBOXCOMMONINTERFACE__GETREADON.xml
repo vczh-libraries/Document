@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetReadonly@bool()" accessor="public" category="Function" name="GetReadonly"><summary>Get the readonly mode.</summary><returns>Returns true if the text box is readonly.</returns><signature><![CDATA[bool GetReadonly();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetReadonly@bool()" accessor="public" category="Function" name="GetReadonly"><summary>Get the readonly mode.</summary><returns>Returns true if the text box is readonly.</returns><signature><![CDATA[bool GetReadonly(
+);
 ]]></signature></Document>

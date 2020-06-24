@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="NativeWindowCreated"><summary>
  Called when a window is created.
- </summary><param name="window">The created window.</param><signature><![CDATA[void NativeWindowCreated(INativeWindow *);
+ </summary><param name="window">The created window.</param><signature><![CDATA[void NativeWindowCreated(
+    INativeWindow *
+);
 ]]></signature></Document>

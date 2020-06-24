@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetCaretSmall@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretSmall"><summary>Get the left-top text position of the selection.</summary><returns>The left-top text position of the selection.</returns><signature><![CDATA[TextPos GetCaretSmall();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetCaretSmall@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretSmall"><summary>Get the left-top text position of the selection.</summary><returns>The left-top text position of the selection.</returns><signature><![CDATA[TextPos GetCaretSmall(
+);
 ]]></signature></Document>

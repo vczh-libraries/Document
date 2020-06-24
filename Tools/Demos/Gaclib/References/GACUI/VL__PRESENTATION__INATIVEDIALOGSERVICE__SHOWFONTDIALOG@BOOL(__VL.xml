@@ -1,7 +1,9 @@
-<Document symbolId="vl::presentation::INativeDialogService::ShowFontDialog@bool(::vl::presentation::INativeWindow *, ::vl::presentation::FontProperties &amp;, ::vl::presentation::Color &amp;, bool, bool, bool)" accessor="public" category="Function" name="ShowFontDialog"><summary>Show a font dialog.</summary><returns>Returns true if the user selected the OK button.</returns><param name="window">The current window.</param><param name="selectionFont">The font that the user selected.</param><param name="selectionColor">The color that the user selected.</param><param name="selected">Make the font dialog selected the font specified in the &quot;selectionFont&quot; and &quot;selectionColor&quot; parameters at the beginning.</param><param name="showEffect">Enable the user to edit some extended font properties.</param><param name="forceFontExist">Force the user to select existing font.</param><signature><![CDATA[bool ShowFontDialog(INativeWindow *,
-FontProperties &,
-Color &,
-bool /* optional */,
-bool /* optional */,
-bool /* optional */);
+<Document symbolId="vl::presentation::INativeDialogService::ShowFontDialog@bool(::vl::presentation::INativeWindow *, ::vl::presentation::FontProperties &amp;, ::vl::presentation::Color &amp;, bool, bool, bool)" accessor="public" category="Function" name="ShowFontDialog"><summary>Show a font dialog.</summary><returns>Returns true if the user selected the OK button.</returns><param name="window">The current window.</param><param name="selectionFont">The font that the user selected.</param><param name="selectionColor">The color that the user selected.</param><param name="selected">Make the font dialog selected the font specified in the &quot;selectionFont&quot; and &quot;selectionColor&quot; parameters at the beginning.</param><param name="showEffect">Enable the user to edit some extended font properties.</param><param name="forceFontExist">Force the user to select existing font.</param><signature><![CDATA[bool ShowFontDialog(
+    INativeWindow *,
+    FontProperties &,
+    Color &,
+    bool /* optional */,
+    bool /* optional */,
+    bool /* optional */
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::GroupedDataSource::GetGroups@::vl::presentation::controls::list::GroupedDataSource::GalleryGroupList const &amp;()" accessor="public" category="Function" name="GetGroups"><summary>Get all groups.</summary><returns>All groups.</returns><signature><![CDATA[GalleryGroupList const & GetGroups();
+<Document symbolId="vl::presentation::controls::list::GroupedDataSource::GetGroups@::vl::presentation::controls::list::GroupedDataSource::GalleryGroupList const &amp;()" accessor="public" category="Function" name="GetGroups"><summary>Get all groups.</summary><returns>All groups.</returns><signature><![CDATA[GalleryGroupList const & GetGroups(
+);
 ]]></signature></Document>

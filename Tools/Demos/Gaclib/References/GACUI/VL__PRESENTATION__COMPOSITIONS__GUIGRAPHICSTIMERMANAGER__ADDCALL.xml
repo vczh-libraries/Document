@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsTimerManager::AddCallback@void(::vl::Ptr&lt;::vl::presentation::compositions::IGuiGraphicsTimerCallback&gt;)" accessor="public" category="Function" name="AddCallback"><summary>Add a new callback.</summary><param name="callback">The new callback to add.</param><signature><![CDATA[void AddCallback(Ptr<IGuiGraphicsTimerCallback>);
+<Document symbolId="vl::presentation::compositions::GuiGraphicsTimerManager::AddCallback@void(::vl::Ptr&lt;::vl::presentation::compositions::IGuiGraphicsTimerCallback&gt;)" accessor="public" category="Function" name="AddCallback"><summary>Add a new callback.</summary><param name="callback">The new callback to add.</param><signature><![CDATA[void AddCallback(
+    Ptr<IGuiGraphicsTimerCallback>
+);
 ]]></signature></Document>

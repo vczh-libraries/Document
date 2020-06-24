@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::GetTokenColors@::vl::collections::List&lt;::vl::presentation::elements::text::ColorEntry&gt; &amp;()" accessor="public" category="Function" name="GetTokenColors"><summary>Get all colors for tokens.</summary><returns>All colors for tokens.</returns><signature><![CDATA[collections::List<elements::text::ColorEntry> & GetTokenColors();
+<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::GetTokenColors@::vl::collections::List&lt;::vl::presentation::elements::text::ColorEntry&gt; &amp;()" accessor="public" category="Function" name="GetTokenColors"><summary>Get all colors for tokens.</summary><returns>All colors for tokens.</returns><signature><![CDATA[collections::List<elements::text::ColorEntry> & GetTokenColors(
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::tree::TreeViewItem::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a tree view item.</summary><signature><![CDATA[ TreeViewItem();
+<Document symbolId="vl::presentation::controls::tree::TreeViewItem::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a tree view item.</summary><signature><![CDATA[ TreeViewItem(
+);
 ]]></signature></Document>

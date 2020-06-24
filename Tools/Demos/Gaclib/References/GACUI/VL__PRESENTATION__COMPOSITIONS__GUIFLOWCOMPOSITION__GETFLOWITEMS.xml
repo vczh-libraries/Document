@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetFlowItems@::vl::presentation::compositions::GuiFlowComposition::ItemCompositionList const &amp;()" accessor="public" category="Function" name="GetFlowItems"><summary>Get all flow items inside the flow composition.</summary><returns>All flow items inside the flow composition.</returns><signature><![CDATA[ItemCompositionList const & GetFlowItems();
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetFlowItems@::vl::presentation::compositions::GuiFlowComposition::ItemCompositionList const &amp;()" accessor="public" category="Function" name="GetFlowItems"><summary>Get all flow items inside the flow composition.</summary><returns>All flow items inside the flow composition.</returns><signature><![CDATA[ItemCompositionList const & GetFlowItems(
+);
 ]]></signature></Document>

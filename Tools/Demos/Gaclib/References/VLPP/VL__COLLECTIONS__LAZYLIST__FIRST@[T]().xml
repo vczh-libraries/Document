@@ -1,2 +1,3 @@
-<Document symbolId="vl::collections::LazyList::First@[T]()" accessor="public" category="Function" name="First"><summary>Get the first value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The first value.</returns><signature><![CDATA[T First() const;
+<Document symbolId="vl::collections::LazyList::First@[T]()" accessor="public" category="Function" name="First"><summary>Get the first value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The first value.</returns><signature><![CDATA[T First(
+) const;
 ]]></signature></Document>

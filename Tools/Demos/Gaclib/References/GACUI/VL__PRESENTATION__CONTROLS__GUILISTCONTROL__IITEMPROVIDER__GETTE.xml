@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemProvider::GetTextValue@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetTextValue"><summary>Get the text representation of an item.</summary><returns>The text representation of an item.</returns><param name="itemIndex">The index of the item.</param><signature><![CDATA[WString GetTextValue(vint);
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemProvider::GetTextValue@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetTextValue"><summary>Get the text representation of an item.</summary><returns>The text representation of an item.</returns><param name="itemIndex">The index of the item.</param><signature><![CDATA[WString GetTextValue(
+    vint
+);
 ]]></signature></Document>

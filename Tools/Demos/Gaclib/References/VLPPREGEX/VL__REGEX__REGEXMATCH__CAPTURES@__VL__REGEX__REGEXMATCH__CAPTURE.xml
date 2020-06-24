@@ -1,2 +1,3 @@
-<Document symbolId="vl::regex::RegexMatch::Captures@::vl::regex::RegexMatch::CaptureList const &amp;()" accessor="public" category="Function" name="Captures"><summary>Get all fragments that are captured.</summary><returns>All fragments that are captured.</returns><signature><![CDATA[CaptureList const & Captures() const;
+<Document symbolId="vl::regex::RegexMatch::Captures@::vl::regex::RegexMatch::CaptureList const &amp;()" accessor="public" category="Function" name="Captures"><summary>Get all fragments that are captured.</summary><returns>All fragments that are captured.</returns><signature><![CDATA[CaptureList const & Captures(
+) const;
 ]]></signature></Document>

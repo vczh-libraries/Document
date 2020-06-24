@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::AttachCallback@bool(::vl::presentation::controls::RepeatingParsingExecutor::ICallback *)" accessor="public" category="Function" name="AttachCallback"><summary>Detach callback.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The callback.</param><signature><![CDATA[bool AttachCallback(ICallback *);
+<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::AttachCallback@bool(::vl::presentation::controls::RepeatingParsingExecutor::ICallback *)" accessor="public" category="Function" name="AttachCallback"><summary>Detach callback.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The callback.</param><signature><![CDATA[bool AttachCallback(
+    ICallback *
+);
 ]]></signature></Document>

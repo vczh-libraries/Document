@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetCaretBounds@::vl::presentation::Rect(::vl::vint, bool)" accessor="public" category="Function" name="GetCaretBounds"><summary>Get the bounds of the caret.</summary><returns>The bounds whose width is 0. Returns an empty Rect value if failed.</returns><param name="caret">The caret.</param><param name="frontSide">Set to true to get the bounds of the front side, otherwise the back side. If only one side is valid, this argument is ignored.</param><signature><![CDATA[Rect GetCaretBounds(vint,
-bool);
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetCaretBounds@::vl::presentation::Rect(::vl::vint, bool)" accessor="public" category="Function" name="GetCaretBounds"><summary>Get the bounds of the caret.</summary><returns>The bounds whose width is 0. Returns an empty Rect value if failed.</returns><param name="caret">The caret.</param><param name="frontSide">Set to true to get the bounds of the front side, otherwise the back side. If only one side is valid, this argument is ignored.</param><signature><![CDATA[Rect GetCaretBounds(
+    vint,
+    bool
+);
 ]]></signature></Document>

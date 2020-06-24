@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::SetDateFormat@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetDateFormat"><summary>Set the format for the text of this control.</summary><param name="value">The format.</param><signature><![CDATA[void SetDateFormat(WString const &);
+<Document symbolId="vl::presentation::controls::GuiDatePicker::SetDateFormat@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetDateFormat"><summary>Set the format for the text of this control.</summary><param name="value">The format.</param><signature><![CDATA[void SetDateFormat(
+    WString const &
+);
 ]]></signature></Document>

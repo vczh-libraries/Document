@@ -1,3 +1,5 @@
-<Document symbolId="vl::ObjectString::$__ctor@([T] const *, ::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Copy a string.</summary><param name="_buffer">Memory to copy. It does not have to contain the zero terminator.</param><param name="_length">Size of the content in characters.</param><signature><![CDATA[ ObjectString(T const *,
-vint);
+<Document symbolId="vl::ObjectString::$__ctor@([T] const *, ::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Copy a string.</summary><param name="_buffer">Memory to copy. It does not have to contain the zero terminator.</param><param name="_length">Size of the content in characters.</param><signature><![CDATA[ ObjectString(
+    T const *,
+    vint
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiMessageDialog::SetModalOption@void(::vl::presentation::INativeDialogService::MessageBoxModalOptions)" accessor="public" category="Function" name="SetModalOption"><summary>Set the way that how this dialog disable windows of the current process.</summary><param name="value">The way that how this dialog disable windows of the current process.</param><signature><![CDATA[void SetModalOption(INativeDialogService::MessageBoxModalOptions);
+<Document symbolId="vl::presentation::controls::GuiMessageDialog::SetModalOption@void(::vl::presentation::INativeDialogService::MessageBoxModalOptions)" accessor="public" category="Function" name="SetModalOption"><summary>Set the way that how this dialog disable windows of the current process.</summary><param name="value">The way that how this dialog disable windows of the current process.</param><signature><![CDATA[void SetModalOption(
+    INativeDialogService::MessageBoxModalOptions
+);
 ]]></signature></Document>

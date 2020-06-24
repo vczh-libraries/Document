@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog::GetShowSelection@bool()" accessor="public" category="Function" name="GetShowSelection"><summary>Get if the selected font is already selected on the dialog when it is opened.</summary><returns>Returns true if the selected font is already selected on the dialog when it is opened.</returns><signature><![CDATA[bool GetShowSelection();
+<Document symbolId="vl::presentation::controls::GuiFontDialog::GetShowSelection@bool()" accessor="public" category="Function" name="GetShowSelection"><summary>Get if the selected font is already selected on the dialog when it is opened.</summary><returns>Returns true if the selected font is already selected on the dialog when it is opened.</returns><signature><![CDATA[bool GetShowSelection(
+);
 ]]></signature></Document>

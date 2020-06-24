@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::DocumentModel::SaveToXml@::vl::Ptr&lt;::vl::parsing::xml::XmlDocument&gt;()" accessor="public" category="Function" name="SaveToXml"><summary>Save a document model to an xml.</summary><returns>The saved xml document.</returns><signature><![CDATA[Ptr<parsing::xml::XmlDocument> SaveToXml();
+<Document symbolId="vl::presentation::DocumentModel::SaveToXml@::vl::Ptr&lt;::vl::parsing::xml::XmlDocument&gt;()" accessor="public" category="Function" name="SaveToXml"><summary>Save a document model to an xml.</summary><returns>The saved xml document.</returns><signature><![CDATA[Ptr<parsing::xml::XmlDocument> SaveToXml(
+);
 ]]></signature></Document>

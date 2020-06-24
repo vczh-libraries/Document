@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::List::Add@::vl::vint([T] const &amp;)" accessor="public" category="Function" name="Add"><summary>Add an item at the end of the list.</summary><returns>The index of the added item.</returns><param name="item">The item to add.</param><signature><![CDATA[vint Add(T const &);
+<Document symbolId="vl::collections::List::Add@::vl::vint([T] const &amp;)" accessor="public" category="Function" name="Add"><summary>Add an item at the end of the list.</summary><returns>The index of the added item.</returns><param name="item">The item to add.</param><signature><![CDATA[vint Add(
+    T const &
+);
 ]]></signature></Document>

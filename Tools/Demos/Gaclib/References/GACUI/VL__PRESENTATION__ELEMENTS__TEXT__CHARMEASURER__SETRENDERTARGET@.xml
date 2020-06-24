@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::text::CharMeasurer::SetRenderTarget@void(::vl::presentation::elements::IGuiGraphicsRenderTarget *)" accessor="public" category="Function" name="SetRenderTarget"><summary>
  Bind a render target to this character measurer.
- </summary><param name="value">The render target to bind.</param><signature><![CDATA[void SetRenderTarget(IGuiGraphicsRenderTarget *);
+ </summary><param name="value">The render target to bind.</param><signature><![CDATA[void SetRenderTarget(
+    IGuiGraphicsRenderTarget *
+);
 ]]></signature></Document>

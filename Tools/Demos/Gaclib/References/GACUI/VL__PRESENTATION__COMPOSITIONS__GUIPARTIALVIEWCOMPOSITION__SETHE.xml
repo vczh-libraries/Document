@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::SetHeightPageSize@void(double)" accessor="public" category="Function" name="SetHeightPageSize"><summary>Set the page size to decide the vertical size. Value in [0, 1].</summary><param name="value">The page size to decide the vertical size.</param><signature><![CDATA[void SetHeightPageSize(double);
+<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::SetHeightPageSize@void(double)" accessor="public" category="Function" name="SetHeightPageSize"><summary>Set the page size to decide the vertical size. Value in [0, 1].</summary><param name="value">The page size to decide the vertical size.</param><signature><![CDATA[void SetHeightPageSize(
+    double
+);
 ]]></signature></Document>

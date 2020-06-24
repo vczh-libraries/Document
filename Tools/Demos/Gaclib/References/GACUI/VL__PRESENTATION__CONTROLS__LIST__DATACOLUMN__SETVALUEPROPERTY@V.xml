@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::SetValueProperty@void(::vl::presentation::WritableItemProperty&lt;::vl::reflection::description::Value&gt; const &amp;)" accessor="public" category="Function" name="SetValueProperty"><summary>Set the value property name to get the cell value from an item.</summary><param name="value">The value property name.</param><signature><![CDATA[void SetValueProperty(WritableItemProperty<description::Value> const &);
+<Document symbolId="vl::presentation::controls::list::DataColumn::SetValueProperty@void(::vl::presentation::WritableItemProperty&lt;::vl::reflection::description::Value&gt; const &amp;)" accessor="public" category="Function" name="SetValueProperty"><summary>Set the value property name to get the cell value from an item.</summary><param name="value">The value property name.</param><signature><![CDATA[void SetValueProperty(
+    WritableItemProperty<description::Value> const &
+);
 ]]></signature></Document>

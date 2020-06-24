@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTab::GetSelectedPage@::vl::presentation::controls::GuiTabPage *()" accessor="public" category="Function" name="GetSelectedPage"><summary>Get the selected page.</summary><returns>The selected page.</returns><signature><![CDATA[GuiTabPage * GetSelectedPage();
+<Document symbolId="vl::presentation::controls::GuiTab::GetSelectedPage@::vl::presentation::controls::GuiTabPage *()" accessor="public" category="Function" name="GetSelectedPage"><summary>Get the selected page.</summary><returns>The selected page.</returns><signature><![CDATA[GuiTabPage * GetSelectedPage(
+);
 ]]></signature></Document>

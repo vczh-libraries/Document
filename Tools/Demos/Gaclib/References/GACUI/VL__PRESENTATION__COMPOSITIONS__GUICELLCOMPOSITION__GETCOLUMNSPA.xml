@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiCellComposition::GetColumnSpan@::vl::vint()" accessor="public" category="Function" name="GetColumnSpan"><summary>Get the total numbers of acrossed columns for this cell composition.</summary><returns>The total numbers of acrossed columns for this cell composition.</returns><signature><![CDATA[vint GetColumnSpan();
+<Document symbolId="vl::presentation::compositions::GuiCellComposition::GetColumnSpan@::vl::vint()" accessor="public" category="Function" name="GetColumnSpan"><summary>Get the total numbers of acrossed columns for this cell composition.</summary><returns>The total numbers of acrossed columns for this cell composition.</returns><signature><![CDATA[vint GetColumnSpan(
+);
 ]]></signature></Document>

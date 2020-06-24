@@ -1,2 +1,4 @@
-<Document symbolId="vl::RepeatingTaskExecutor::SubmitTask@void([T] const &amp;)" accessor="public" category="Function" name="SubmitTask"><summary>Queue a task. If there is a queued task that has not been executied yet, those tasks will be canceled. Only one task can be queued at the same moment.</summary><param name="input">The argument to run a task.</param><signature><![CDATA[void SubmitTask(T const &);
+<Document symbolId="vl::RepeatingTaskExecutor::SubmitTask@void([T] const &amp;)" accessor="public" category="Function" name="SubmitTask"><summary>Queue a task. If there is a queued task that has not been executied yet, those tasks will be canceled. Only one task can be queued at the same moment.</summary><param name="input">The argument to run a task.</param><signature><![CDATA[void SubmitTask(
+    T const &
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()" accessor="public" category="Function" name="Colorize"><summary>Create a equivalence colorizer from this lexical analyzer.</summary><returns>The colorizer.</returns><signature><![CDATA[RegexLexerColorizer Colorize() const;
+<Document symbolId="vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()" accessor="public" category="Function" name="Colorize"><summary>Create a equivalence colorizer from this lexical analyzer.</summary><returns>The colorizer.</returns><signature><![CDATA[RegexLexerColorizer Colorize(
+) const;
 ]]></signature></Document>

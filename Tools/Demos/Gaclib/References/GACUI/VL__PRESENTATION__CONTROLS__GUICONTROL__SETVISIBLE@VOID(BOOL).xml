@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControl::SetVisible@void(bool)" accessor="public" category="Function" name="SetVisible"><summary>Make the control visible or invisible.</summary><param name="value">Set to true to make the visible enabled.</param><signature><![CDATA[void SetVisible(bool);
+<Document symbolId="vl::presentation::controls::GuiControl::SetVisible@void(bool)" accessor="public" category="Function" name="SetVisible"><summary>Make the control visible or invisible.</summary><param name="value">Set to true to make the visible enabled.</param><signature><![CDATA[void SetVisible(
+    bool
+);
 ]]></signature></Document>

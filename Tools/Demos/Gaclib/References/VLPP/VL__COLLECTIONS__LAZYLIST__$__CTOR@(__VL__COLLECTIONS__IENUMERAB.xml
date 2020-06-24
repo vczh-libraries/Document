@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a lazy list with an enumerable.</summary><param name="enumerable">The enumerator.</param><signature><![CDATA[ LazyList(IEnumerable<T> const &);
+<Document symbolId="vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a lazy list with an enumerable.</summary><param name="enumerable">The enumerator.</param><signature><![CDATA[ LazyList(
+    IEnumerable<T> const &
+);
 ]]></signature></Document>

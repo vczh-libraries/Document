@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Destroying@void()" accessor="public" category="Function" name="Destroying"><summary>
  Called when the window is destroying.
- </summary><signature><![CDATA[void Destroying();
+ </summary><signature><![CDATA[void Destroying(
+);
 ]]></signature></Document>

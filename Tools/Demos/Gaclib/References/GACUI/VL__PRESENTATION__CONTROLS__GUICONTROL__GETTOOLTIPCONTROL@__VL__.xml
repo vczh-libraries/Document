@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetTooltipControl@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetTooltipControl"><summary>Get the tooltip control of the control.</summary><returns>The tooltip control of the control.</returns><signature><![CDATA[GuiControl * GetTooltipControl();
+<Document symbolId="vl::presentation::controls::GuiControl::GetTooltipControl@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetTooltipControl"><summary>Get the tooltip control of the control.</summary><returns>The tooltip control of the control.</returns><signature><![CDATA[GuiControl * GetTooltipControl(
+);
 ]]></signature></Document>

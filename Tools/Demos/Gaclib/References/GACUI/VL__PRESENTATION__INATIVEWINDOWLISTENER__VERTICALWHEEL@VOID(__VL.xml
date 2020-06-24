@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowListener::VerticalWheel@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="VerticalWheel"><summary>
  Called when the horizontal vertical wheel scrolls.
- </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void VerticalWheel(NativeWindowMouseInfo const &);
+ </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void VerticalWheel(
+    NativeWindowMouseInfo const &
+);
 ]]></signature></Document>

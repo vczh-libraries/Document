@@ -1,5 +1,7 @@
-<Document symbolId="vl::presentation::controls::tree::INodeProviderCallback::OnAfterItemModified@void(::vl::presentation::controls::tree::INodeProvider *, ::vl::vint, ::vl::vint, ::vl::vint)" accessor="public" category="Function" name="OnAfterItemModified"><summary>Called after sub items of a node are modified.</summary><param name="parentNode">The node containing modified sub items.</param><param name="start">The index of the first sub item.</param><param name="count">The number of sub items to be modified.</param><param name="newCount">The new number of modified sub items.</param><signature><![CDATA[void OnAfterItemModified(INodeProvider *,
-vint,
-vint,
-vint);
+<Document symbolId="vl::presentation::controls::tree::INodeProviderCallback::OnAfterItemModified@void(::vl::presentation::controls::tree::INodeProvider *, ::vl::vint, ::vl::vint, ::vl::vint)" accessor="public" category="Function" name="OnAfterItemModified"><summary>Called after sub items of a node are modified.</summary><param name="parentNode">The node containing modified sub items.</param><param name="start">The index of the first sub item.</param><param name="count">The number of sub items to be modified.</param><param name="newCount">The new number of modified sub items.</param><signature><![CDATA[void OnAfterItemModified(
+    INodeProvider *,
+    vint,
+    vint,
+    vint
+);
 ]]></signature></Document>

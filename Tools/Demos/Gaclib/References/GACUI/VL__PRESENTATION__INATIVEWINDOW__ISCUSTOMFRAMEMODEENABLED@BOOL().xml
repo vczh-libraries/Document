@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::IsCustomFrameModeEnabled@bool()" accessor="public" category="Function" name="IsCustomFrameModeEnabled"><summary>
  Test is the window customized frame mode enabled.
- </summary><returns>Returns true if the window customized frame mode is enabled.</returns><signature><![CDATA[bool IsCustomFrameModeEnabled();
+ </summary><returns>Returns true if the window customized frame mode is enabled.</returns><signature><![CDATA[bool IsCustomFrameModeEnabled(
+);
 ]]></signature></Document>

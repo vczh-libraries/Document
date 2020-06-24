@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::SetSelectedIndex@void(::vl::vint)" accessor="public" category="Function" name="SetSelectedIndex"><summary>Set the selected index.</summary><param name="value">The selected index.</param><signature><![CDATA[void SetSelectedIndex(vint);
+<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::SetSelectedIndex@void(::vl::vint)" accessor="public" category="Function" name="SetSelectedIndex"><summary>Set the selected index.</summary><param name="value">The selected index.</param><signature><![CDATA[void SetSelectedIndex(
+    vint
+);
 ]]></signature></Document>

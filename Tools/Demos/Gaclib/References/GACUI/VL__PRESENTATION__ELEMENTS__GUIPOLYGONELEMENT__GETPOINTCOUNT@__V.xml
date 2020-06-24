@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement::GetPointCount@::vl::vint()" accessor="public" category="Function" name="GetPointCount"><summary>
  Get the number of points
- </summary><returns>The number of points.</returns><signature><![CDATA[vint GetPointCount();
+ </summary><returns>The number of points.</returns><signature><![CDATA[vint GetPointCount(
+);
 ]]></signature></Document>

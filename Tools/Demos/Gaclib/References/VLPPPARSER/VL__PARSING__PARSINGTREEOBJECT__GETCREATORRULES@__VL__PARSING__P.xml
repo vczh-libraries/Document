@@ -1,2 +1,3 @@
-<Document symbolId="vl::parsing::ParsingTreeObject::GetCreatorRules@::vl::parsing::ParsingTreeObject::RuleList &amp;()" accessor="public" category="Function" name="GetCreatorRules"><summary>Get names of all rules that return this object.</summary><returns>Names of all rules.</returns><signature><![CDATA[RuleList & GetCreatorRules();
+<Document symbolId="vl::parsing::ParsingTreeObject::GetCreatorRules@::vl::parsing::ParsingTreeObject::RuleList &amp;()" accessor="public" category="Function" name="GetCreatorRules"><summary>Get names of all rules that return this object.</summary><returns>Names of all rules.</returns><signature><![CDATA[RuleList & GetCreatorRules(
+);
 ]]></signature></Document>

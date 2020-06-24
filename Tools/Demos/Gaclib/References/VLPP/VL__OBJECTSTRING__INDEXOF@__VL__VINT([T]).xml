@@ -1,2 +1,4 @@
-<Document symbolId="vl::ObjectString::IndexOf@::vl::vint([T])" accessor="public" category="Function" name="IndexOf"><summary>Find a character.</summary><returns>The position of the character. Returns -1 if it doesn not exist.</returns><param name="c">The character to find.</param><signature><![CDATA[vint IndexOf(T) const;
+<Document symbolId="vl::ObjectString::IndexOf@::vl::vint([T])" accessor="public" category="Function" name="IndexOf"><summary>Find a character.</summary><returns>The position of the character. Returns -1 if it doesn not exist.</returns><param name="c">The character to find.</param><signature><![CDATA[vint IndexOf(
+    T
+) const;
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::INativeClipboardWriter::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Prepare a text for the clipboard.</summary><param name="value">The text.</param><signature><![CDATA[void SetText(WString const &);
+<Document symbolId="vl::presentation::INativeClipboardWriter::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Prepare a text for the clipboard.</summary><param name="value">The text.</param><signature><![CDATA[void SetText(
+    WString const &
+);
 ]]></signature></Document>

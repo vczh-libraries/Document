@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::text::CharMeasurer::MeasureWidth@::vl::vint(::vl::presentation::elements::text::UnicodeCodePoint)" accessor="public" category="Function" name="MeasureWidth"><summary>
  Measure the width of a character using the binded render target.
- </summary><returns>The width of a character, in pixel.</returns><param name="codePoint">The unicode code point to measure.</param><signature><![CDATA[vint MeasureWidth(UnicodeCodePoint);
+ </summary><returns>The width of a character, in pixel.</returns><param name="codePoint">The unicode code point to measure.</param><signature><![CDATA[vint MeasureWidth(
+    UnicodeCodePoint
+);
 ]]></signature></Document>

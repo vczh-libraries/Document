@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::StartRendering@void()" accessor="public" category="Function" name="StartRendering"><summary>
  Notify the target to prepare for rendering.
- </summary><signature><![CDATA[void StartRendering();
+ </summary><signature><![CDATA[void StartRendering(
+);
 ]]></signature></Document>

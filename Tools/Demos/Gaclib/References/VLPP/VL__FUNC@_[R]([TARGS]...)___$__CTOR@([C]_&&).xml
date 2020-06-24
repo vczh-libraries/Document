@@ -2,5 +2,7 @@
     typename C, 
     typename /* optional */
 >
- Func(C &&);
+ Func(
+    C &&
+);
 ]]></signature></Document>

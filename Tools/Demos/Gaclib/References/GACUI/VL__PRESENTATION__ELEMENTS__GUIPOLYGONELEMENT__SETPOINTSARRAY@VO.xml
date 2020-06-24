@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement::SetPointsArray@void(::vl::presentation::elements::GuiPolygonElement::PointArray const &amp;)" accessor="public" category="Function" name="SetPointsArray"><summary>
  Set all points.
- </summary><param name="value">All points</param><signature><![CDATA[void SetPointsArray(PointArray const &);
+ </summary><param name="value">All points</param><signature><![CDATA[void SetPointsArray(
+    PointArray const &
+);
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::ICallback::ColorChanged@void()" accessor="public" category="Function" name="ColorChanged"><summary>
  Called when the color table of a <symbol docId="vl::presentation::elements::GuiColorizedTextElement" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement"/> changed.
- </summary><signature><![CDATA[void ColorChanged();
+ </summary><signature><![CDATA[void ColorChanged(
+);
 ]]></signature></Document>

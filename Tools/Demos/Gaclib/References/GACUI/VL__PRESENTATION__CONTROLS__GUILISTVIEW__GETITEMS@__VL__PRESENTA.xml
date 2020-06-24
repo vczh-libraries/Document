@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiListView::GetItems@::vl::presentation::controls::list::ListViewItemProvider &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all list view items.</summary><returns>All list view items.</returns><signature><![CDATA[list::ListViewItemProvider & GetItems();
+<Document symbolId="vl::presentation::controls::GuiListView::GetItems@::vl::presentation::controls::list::ListViewItemProvider &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all list view items.</summary><returns>All list view items.</returns><signature><![CDATA[list::ListViewItemProvider & GetItems(
+);
 ]]></signature></Document>

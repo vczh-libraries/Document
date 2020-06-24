@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::list::ListViewColumn::$__ctor@(::vl::WString const &amp;, ::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create a column with the specified text and size.</summary><param name="_text">The specified text.</param><param name="_size">The specified size.</param><signature><![CDATA[ ListViewColumn(WString const & /* optional */,
-vint /* optional */);
+<Document symbolId="vl::presentation::controls::list::ListViewColumn::$__ctor@(::vl::WString const &amp;, ::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create a column with the specified text and size.</summary><param name="_text">The specified text.</param><param name="_size">The specified size.</param><signature><![CDATA[ ListViewColumn(
+    WString const & /* optional */,
+    vint /* optional */
+);
 ]]></signature></Document>

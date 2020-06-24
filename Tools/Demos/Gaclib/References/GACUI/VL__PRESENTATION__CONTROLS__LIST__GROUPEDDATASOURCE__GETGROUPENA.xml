@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::GroupedDataSource::GetGroupEnabled@bool()" accessor="public" category="Function" name="GetGroupEnabled"><summary>Test if grouping is enabled. Enabled means there is really both GroupTitleProperty and GroupChildrenProperty is not empty.</summary><returns>Returns true if grouping is enabled.</returns><signature><![CDATA[bool GetGroupEnabled();
+<Document symbolId="vl::presentation::controls::list::GroupedDataSource::GetGroupEnabled@bool()" accessor="public" category="Function" name="GetGroupEnabled"><summary>Test if grouping is enabled. Enabled means there is really both GroupTitleProperty and GroupChildrenProperty is not empty.</summary><returns>Returns true if grouping is enabled.</returns><signature><![CDATA[bool GetGroupEnabled(
+);
 ]]></signature></Document>

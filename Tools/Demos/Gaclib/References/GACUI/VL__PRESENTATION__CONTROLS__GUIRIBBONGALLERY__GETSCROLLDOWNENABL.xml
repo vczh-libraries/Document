@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonGallery::GetScrollDownEnabled@bool()" accessor="public" category="Function" name="GetScrollDownEnabled"><summary>Test if the scroll down button is enabled.</summary><returns>Returns true if the scroll down button is enabled.</returns><signature><![CDATA[bool GetScrollDownEnabled();
+<Document symbolId="vl::presentation::controls::GuiRibbonGallery::GetScrollDownEnabled@bool()" accessor="public" category="Function" name="GetScrollDownEnabled"><summary>Test if the scroll down button is enabled.</summary><returns>Returns true if the scroll down button is enabled.</returns><signature><![CDATA[bool GetScrollDownEnabled(
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::Thread::Stop@bool()" accessor="public" category="Function" name="Stop"><summary>Stop the thread.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Stop();
+<Document symbolId="vl::Thread::Stop@bool()" accessor="public" category="Function" name="Stop"><summary>Stop the thread.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Stop(
+);
 ]]></signature></Document>

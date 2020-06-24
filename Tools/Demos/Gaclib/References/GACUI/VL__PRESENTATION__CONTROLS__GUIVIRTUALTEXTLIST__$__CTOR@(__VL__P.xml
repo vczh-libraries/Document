@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualTextList::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiListControl::IItemProvider *)" accessor="public" category="Function" name="$__ctor"><summary>Create a Text list control in virtual mode.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider for this control.</param><signature><![CDATA[ GuiVirtualTextList(theme::ThemeName,
-GuiListControl::IItemProvider *);
+<Document symbolId="vl::presentation::controls::GuiVirtualTextList::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiListControl::IItemProvider *)" accessor="public" category="Function" name="$__ctor"><summary>Create a Text list control in virtual mode.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider for this control.</param><signature><![CDATA[ GuiVirtualTextList(
+    theme::ThemeName,
+    GuiListControl::IItemProvider *
+);
 ]]></signature></Document>

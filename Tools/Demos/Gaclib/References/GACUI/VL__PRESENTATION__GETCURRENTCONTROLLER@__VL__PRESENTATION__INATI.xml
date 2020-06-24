@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::GetCurrentController@::vl::presentation::INativeController *()" accessor="" category="Function" name="GetCurrentController"><summary>
  Get the global native system service controller.
- </summary><returns>The global native system service controller.</returns><signature><![CDATA[INativeController * GetCurrentController();
+ </summary><returns>The global native system service controller.</returns><signature><![CDATA[INativeController * GetCurrentController(
+);
 ]]></signature></Document>

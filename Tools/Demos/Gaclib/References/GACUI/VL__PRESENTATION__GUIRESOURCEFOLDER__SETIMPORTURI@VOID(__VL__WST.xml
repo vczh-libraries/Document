@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::GuiResourceFolder::SetImportUri@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetImportUri"><summary>Set the import uri for this folder.</summary><param name="uri">The import uri for this folder. Set an empty string for non-import folders</param><signature><![CDATA[void SetImportUri(WString const &);
+<Document symbolId="vl::presentation::GuiResourceFolder::SetImportUri@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetImportUri"><summary>Set the import uri for this folder.</summary><param name="uri">The import uri for this folder. Set an empty string for non-import folders</param><signature><![CDATA[void SetImportUri(
+    WString const &
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::LazyList::Except@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Except"><summary>Create a new lazy list with only elements that appear in this lazy list but not in another container.</summary><returns>The created lazy list.</returns><param name="remains">The second container.</param><signature><![CDATA[LazyList<T> Except(IEnumerable<T> const &) const;
+<Document symbolId="vl::collections::LazyList::Except@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Except"><summary>Create a new lazy list with only elements that appear in this lazy list but not in another container.</summary><returns>The created lazy list.</returns><param name="remains">The second container.</param><signature><![CDATA[LazyList<T> Except(
+    IEnumerable<T> const &
+) const;
 ]]></signature></Document>

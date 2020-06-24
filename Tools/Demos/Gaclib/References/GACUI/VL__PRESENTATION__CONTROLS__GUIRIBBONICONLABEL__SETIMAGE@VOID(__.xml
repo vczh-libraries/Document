@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonIconLabel::SetImage@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetImage"><summary>Set the image for the menu button.</summary><param name="value">The image for the menu button.</param><signature><![CDATA[void SetImage(Ptr<GuiImageData>);
+<Document symbolId="vl::presentation::controls::GuiRibbonIconLabel::SetImage@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetImage"><summary>Set the image for the menu button.</summary><param name="value">The image for the menu button.</param><signature><![CDATA[void SetImage(
+    Ptr<GuiImageData>
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::tree::INodeRootProvider::DetachCallback@bool(::vl::presentation::controls::tree::INodeProviderCallback *)" accessor="public" category="Function" name="DetachCallback"><summary>Detach an node provider callback from this node provider.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The node provider callback.</param><signature><![CDATA[bool DetachCallback(INodeProviderCallback *);
+<Document symbolId="vl::presentation::controls::tree::INodeRootProvider::DetachCallback@bool(::vl::presentation::controls::tree::INodeProviderCallback *)" accessor="public" category="Function" name="DetachCallback"><summary>Detach an node provider callback from this node provider.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The node provider callback.</param><signature><![CDATA[bool DetachCallback(
+    INodeProviderCallback *
+);
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::EnableCustomFrameMode@void()" accessor="public" category="Function" name="EnableCustomFrameMode"><summary>
  Enable the window customized frame mode.
- </summary><signature><![CDATA[void EnableCustomFrameMode();
+ </summary><signature><![CDATA[void EnableCustomFrameMode(
+);
 ]]></signature></Document>

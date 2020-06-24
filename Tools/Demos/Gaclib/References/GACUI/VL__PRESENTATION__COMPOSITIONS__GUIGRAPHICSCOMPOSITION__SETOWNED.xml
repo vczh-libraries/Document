@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetOwnedElement@void(::vl::Ptr&lt;::vl::presentation::elements::IGuiGraphicsElement&gt;)" accessor="public" category="Function" name="SetOwnedElement"><summary>Set the contained graphics element.</summary><param name="element">The new graphics element to set.</param><signature><![CDATA[void SetOwnedElement(Ptr<elements::IGuiGraphicsElement>);
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetOwnedElement@void(::vl::Ptr&lt;::vl::presentation::elements::IGuiGraphicsElement&gt;)" accessor="public" category="Function" name="SetOwnedElement"><summary>Set the contained graphics element.</summary><param name="element">The new graphics element to set.</param><signature><![CDATA[void SetOwnedElement(
+    Ptr<elements::IGuiGraphicsElement>
+);
 ]]></signature></Document>

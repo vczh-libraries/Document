@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiResponsiveCompositionBase::GetLevelCount@::vl::vint()" accessor="public" category="Function" name="GetLevelCount"><summary>Get the level count. A level count represents how many views this composition carries.</summary><returns>The level count.</returns><signature><![CDATA[vint GetLevelCount();
+<Document symbolId="vl::presentation::compositions::GuiResponsiveCompositionBase::GetLevelCount@::vl::vint()" accessor="public" category="Function" name="GetLevelCount"><summary>Get the level count. A level count represents how many views this composition carries.</summary><returns>The level count.</returns><signature><![CDATA[vint GetLevelCount(
+);
 ]]></signature></Document>

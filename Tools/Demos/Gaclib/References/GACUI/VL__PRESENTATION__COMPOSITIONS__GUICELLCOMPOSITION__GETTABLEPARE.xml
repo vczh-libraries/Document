@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiCellComposition::GetTableParent@::vl::presentation::compositions::GuiTableComposition *()" accessor="public" category="Function" name="GetTableParent"><summary>Get the owner table composition.</summary><returns>The owner table composition.</returns><signature><![CDATA[GuiTableComposition * GetTableParent();
+<Document symbolId="vl::presentation::compositions::GuiCellComposition::GetTableParent@::vl::presentation::compositions::GuiTableComposition *()" accessor="public" category="Function" name="GetTableParent"><summary>Get the owner table composition.</summary><returns>The owner table composition.</returns><signature><![CDATA[GuiTableComposition * GetTableParent(
+);
 ]]></signature></Document>

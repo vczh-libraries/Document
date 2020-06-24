@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Precompile::GetMaxPassIndex@::vl::vint()" accessor="public" category="Function" name="GetMaxPassIndex"><summary>Get the maximum pass index that the precompiler needs.</summary><returns>Returns the maximum pass index. The precompiler doesn&apos;t not need to response to every pass.</returns><signature><![CDATA[vint GetMaxPassIndex();
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Precompile::GetMaxPassIndex@::vl::vint()" accessor="public" category="Function" name="GetMaxPassIndex"><summary>Get the maximum pass index that the precompiler needs.</summary><returns>Returns the maximum pass index. The precompiler doesn&apos;t not need to response to every pass.</returns><signature><![CDATA[vint GetMaxPassIndex(
+);
 ]]></signature></Document>

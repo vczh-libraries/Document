@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::IGuiParserManager::SetParser@bool(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::presentation::IGuiGeneralParser&gt;)" accessor="public" category="Function" name="SetParser"><summary>Set a parser by name.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name.</param><param name="parser">The parser.</param><signature><![CDATA[bool SetParser(WString const &,
-Ptr<IGuiGeneralParser>);
+<Document symbolId="vl::presentation::IGuiParserManager::SetParser@bool(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::presentation::IGuiGeneralParser&gt;)" accessor="public" category="Function" name="SetParser"><summary>Set a parser by name.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name.</param><param name="parser">The parser.</param><signature><![CDATA[bool SetParser(
+    WString const &,
+    Ptr<IGuiGeneralParser>
+);
 ]]></signature></Document>

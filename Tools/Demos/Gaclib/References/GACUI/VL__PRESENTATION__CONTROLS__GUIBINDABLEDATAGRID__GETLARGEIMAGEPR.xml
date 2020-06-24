@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiBindableDataGrid::GetLargeImageProperty@::vl::presentation::ItemProperty&lt;::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;&gt;()" accessor="public" category="Function" name="GetLargeImageProperty"><summary>Get the large image property name to get the large image from an item.</summary><returns>The large image property name.</returns><signature><![CDATA[ItemProperty<Ptr<GuiImageData>> GetLargeImageProperty();
+<Document symbolId="vl::presentation::controls::GuiBindableDataGrid::GetLargeImageProperty@::vl::presentation::ItemProperty&lt;::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;&gt;()" accessor="public" category="Function" name="GetLargeImageProperty"><summary>Get the large image property name to get the large image from an item.</summary><returns>The large image property name.</returns><signature><![CDATA[ItemProperty<Ptr<GuiImageData>> GetLargeImageProperty(
+);
 ]]></signature></Document>

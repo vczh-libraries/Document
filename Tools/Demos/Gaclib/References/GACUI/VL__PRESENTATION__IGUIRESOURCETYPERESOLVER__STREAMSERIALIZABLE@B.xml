@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver::StreamSerializable@bool()" accessor="public" category="Function" name="StreamSerializable"><summary>Test is this resource able to serialize in a precompiled binary resource or not.</summary><returns>Returns true if this resource is able to serialize in a precompiled binary resource.</returns><signature><![CDATA[bool StreamSerializable();
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver::StreamSerializable@bool()" accessor="public" category="Function" name="StreamSerializable"><summary>Test is this resource able to serialize in a precompiled binary resource or not.</summary><returns>Returns true if this resource is able to serialize in a precompiled binary resource.</returns><signature><![CDATA[bool StreamSerializable(
+);
 ]]></signature></Document>

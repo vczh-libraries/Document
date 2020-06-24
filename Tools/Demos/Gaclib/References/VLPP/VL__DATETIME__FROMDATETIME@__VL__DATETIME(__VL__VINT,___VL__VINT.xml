@@ -1,8 +1,10 @@
-<Document symbolId="vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)" accessor="public" category="Function" name="FromDateTime"><summary>Create a date time value.</summary><returns>The created date time value.</returns><param name="_year">The year.</param><param name="_month">The month.</param><param name="_day">The day.</param><param name="_hour">The hour.</param><param name="_minute">The minute.</param><param name="_second">The second.</param><param name="_milliseconds">The millisecond.</param><signature><![CDATA[static DateTime FromDateTime(vint,
-vint,
-vint,
-vint /* optional */,
-vint /* optional */,
-vint /* optional */,
-vint /* optional */);
+<Document symbolId="vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)" accessor="public" category="Function" name="FromDateTime"><summary>Create a date time value.</summary><returns>The created date time value.</returns><param name="_year">The year.</param><param name="_month">The month.</param><param name="_day">The day.</param><param name="_hour">The hour.</param><param name="_minute">The minute.</param><param name="_second">The second.</param><param name="_milliseconds">The millisecond.</param><signature><![CDATA[static DateTime FromDateTime(
+    vint,
+    vint,
+    vint,
+    vint /* optional */,
+    vint /* optional */,
+    vint /* optional */,
+    vint /* optional */
+);
 ]]></signature></Document>

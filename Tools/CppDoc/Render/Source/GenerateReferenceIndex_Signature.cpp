@@ -224,7 +224,7 @@ WString AppendFunctionParametersInSignature(FunctionType* funcType, bool topLeve
 {
 	return GenerateToStream([=](StreamWriter& writer)
 	{
-		writer.WriteString(L"(");
+		writer.WriteLine(L"(");
 		for (vint i = 0; i < funcType->parameters.Count(); i++)
 		{
 			WString name;
@@ -239,6 +239,10 @@ WString AppendFunctionParametersInSignature(FunctionType* funcType, bool topLeve
 				name = L"..." + name;
 			}
 
+			if (topLevel)
+			{
+				writer.WriteString(L"    ");
+			}
 			writer.WriteString(GetTypeDisplayNameInSignature(param.item->type, name, param.isVariadic));
 
 			if (topLevel && param.item->initializer)
@@ -256,6 +260,10 @@ WString AppendFunctionParametersInSignature(FunctionType* funcType, bool topLeve
 				{
 					writer.WriteString(L", ");
 				}
+			}
+			else if (topLevel)
+			{
+				writer.WriteLine(L"");
 			}
 		}
 

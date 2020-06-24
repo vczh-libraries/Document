@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::GetTextPosFromPoint@::vl::presentation::TextPos(::vl::presentation::Point)" accessor="public" category="Function" name="GetTextPosFromPoint"><summary>
  Get the text position near to specified point.
- </summary><returns>The text position.</returns><param name="point">The specified point, in pixel.</param><signature><![CDATA[TextPos GetTextPosFromPoint(Point);
+ </summary><returns>The text position.</returns><param name="point">The specified point, in pixel.</param><signature><![CDATA[TextPos GetTextPosFromPoint(
+    Point
+);
 ]]></signature></Document>

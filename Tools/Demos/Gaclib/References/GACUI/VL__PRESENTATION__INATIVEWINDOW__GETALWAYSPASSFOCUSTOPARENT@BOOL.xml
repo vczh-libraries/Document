@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::GetAlwaysPassFocusToParent@bool()" accessor="public" category="Function" name="GetAlwaysPassFocusToParent"><summary>
  Test is the window always pass the focus to its parent window.
- </summary><returns>Returns true if the window always pass the focus to its parent window.</returns><signature><![CDATA[bool GetAlwaysPassFocusToParent();
+ </summary><returns>Returns true if the window always pass the focus to its parent window.</returns><signature><![CDATA[bool GetAlwaysPassFocusToParent(
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::INativeClipboardService::WriteClipboard@::vl::Ptr&lt;::vl::presentation::INativeClipboardWriter&gt;()" accessor="public" category="Function" name="WriteClipboard"><summary>Write clipboard.</summary><returns>The clipboard writer.</returns><signature><![CDATA[Ptr<INativeClipboardWriter> WriteClipboard();
+<Document symbolId="vl::presentation::INativeClipboardService::WriteClipboard@::vl::Ptr&lt;::vl::presentation::INativeClipboardWriter&gt;()" accessor="public" category="Function" name="WriteClipboard"><summary>Write clipboard.</summary><returns>The clipboard writer.</returns><signature><![CDATA[Ptr<INativeClipboardWriter> WriteClipboard(
+);
 ]]></signature></Document>

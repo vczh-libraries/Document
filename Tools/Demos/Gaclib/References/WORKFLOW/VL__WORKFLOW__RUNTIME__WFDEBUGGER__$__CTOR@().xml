@@ -1,2 +1,3 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a debugger.</summary><signature><![CDATA[ WfDebugger();
+<Document symbolId="vl::workflow::runtime::WfDebugger::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a debugger.</summary><signature><![CDATA[ WfDebugger(
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetDirectory@::vl::WString()" accessor="public" category="Function" name="GetDirectory"><summary>Get the default folder.</summary><returns>The default folder.</returns><signature><![CDATA[WString GetDirectory();
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::GetDirectory@::vl::WString()" accessor="public" category="Function" name="GetDirectory"><summary>Get the default folder.</summary><returns>The default folder.</returns><signature><![CDATA[WString GetDirectory(
+);
 ]]></signature></Document>

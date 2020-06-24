@@ -1,2 +1,4 @@
-<Document symbolId="vl::itoa@::vl::AString(::vl::vint)" accessor="" category="Function" name="itoa"><summary>Convert a signed interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[AString itoa(vint);
+<Document symbolId="vl::itoa@::vl::AString(::vl::vint)" accessor="" category="Function" name="itoa"><summary>Convert a signed interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[AString itoa(
+    vint
+);
 ]]></signature></Document>

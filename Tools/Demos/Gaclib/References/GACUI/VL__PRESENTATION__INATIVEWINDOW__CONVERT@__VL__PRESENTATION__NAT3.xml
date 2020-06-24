@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindow::Convert@::vl::presentation::NativeMargin(::vl::presentation::Margin)" accessor="public" category="Function" name="Convert"><summary>
  Convert margin from GUI coordinate to native coordinate.
- </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativeMargin Convert(Margin);
+ </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativeMargin Convert(
+    Margin
+);
 ]]></signature></Document>

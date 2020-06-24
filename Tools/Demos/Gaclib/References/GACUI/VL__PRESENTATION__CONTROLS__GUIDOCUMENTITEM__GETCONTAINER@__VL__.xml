@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentItem::GetContainer@::vl::presentation::compositions::GuiGraphicsComposition *()" accessor="public" category="Function" name="GetContainer"><summary>Get the container for all embedded controls and compositions in this item.</summary><returns>The container.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetContainer();
+<Document symbolId="vl::presentation::controls::GuiDocumentItem::GetContainer@::vl::presentation::compositions::GuiGraphicsComposition *()" accessor="public" category="Function" name="GetContainer"><summary>Get the container for all embedded controls and compositions in this item.</summary><returns>The container.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetContainer(
+);
 ]]></signature></Document>

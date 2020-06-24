@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeController::GetExecutablePath@::vl::WString()" accessor="public" category="Function" name="GetExecutablePath"><summary>
  Get the file path of the current executable.
- </summary><returns>The file path of the current executable.</returns><signature><![CDATA[WString GetExecutablePath();
+ </summary><returns>The file path of the current executable.</returns><signature><![CDATA[WString GetExecutablePath(
+);
 ]]></signature></Document>

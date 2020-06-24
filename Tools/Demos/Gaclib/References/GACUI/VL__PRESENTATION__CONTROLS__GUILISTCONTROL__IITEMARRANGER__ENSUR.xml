@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::EnsureItemVisible@::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult(::vl::vint)" accessor="public" category="Function" name="EnsureItemVisible"><summary>Adjust the view location to make an item visible.</summary><returns>Returns the result of this operation.</returns><param name="itemIndex">The item index of the item to be made visible.</param><signature><![CDATA[EnsureItemVisibleResult EnsureItemVisible(vint);
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::EnsureItemVisible@::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult(::vl::vint)" accessor="public" category="Function" name="EnsureItemVisible"><summary>Adjust the view location to make an item visible.</summary><returns>Returns the result of this operation.</returns><param name="itemIndex">The item index of the item to be made visible.</param><signature><![CDATA[EnsureItemVisibleResult EnsureItemVisible(
+    vint
+);
 ]]></signature></Document>

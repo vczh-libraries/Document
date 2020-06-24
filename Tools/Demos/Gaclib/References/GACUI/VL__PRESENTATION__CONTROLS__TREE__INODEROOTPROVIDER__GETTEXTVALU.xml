@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::tree::INodeRootProvider::GetTextValue@::vl::WString(::vl::presentation::controls::tree::INodeProvider *)" accessor="public" category="Function" name="GetTextValue"><summary>Get the primary text of a node.</summary><returns>The primary text of a node.</returns><param name="node">The node.</param><signature><![CDATA[WString GetTextValue(INodeProvider *);
+<Document symbolId="vl::presentation::controls::tree::INodeRootProvider::GetTextValue@::vl::WString(::vl::presentation::controls::tree::INodeProvider *)" accessor="public" category="Function" name="GetTextValue"><summary>Get the primary text of a node.</summary><returns>The primary text of a node.</returns><param name="node">The node.</param><signature><![CDATA[WString GetTextValue(
+    INodeProvider *
+);
 ]]></signature></Document>

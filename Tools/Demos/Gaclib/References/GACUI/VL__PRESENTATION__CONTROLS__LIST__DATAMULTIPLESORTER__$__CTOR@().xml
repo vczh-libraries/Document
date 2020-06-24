@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::DataMultipleSorter::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the sorter.</summary><signature><![CDATA[ DataMultipleSorter();
+<Document symbolId="vl::presentation::controls::list::DataMultipleSorter::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the sorter.</summary><signature><![CDATA[ DataMultipleSorter(
+);
 ]]></signature></Document>

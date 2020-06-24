@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Precompile::GetPassSupport@::vl::presentation::IGuiResourceTypeResolver_Precompile::PassSupport(::vl::vint)" accessor="public" category="Function" name="GetPassSupport"><summary>Get how this resolver supports precompiling.</summary><param name="passIndex">The pass index.</param><returns>Returns how this resolver supports precompiling.</returns><signature><![CDATA[PassSupport GetPassSupport(vint);
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Precompile::GetPassSupport@::vl::presentation::IGuiResourceTypeResolver_Precompile::PassSupport(::vl::vint)" accessor="public" category="Function" name="GetPassSupport"><summary>Get how this resolver supports precompiling.</summary><param name="passIndex">The pass index.</param><returns>Returns how this resolver supports precompiling.</returns><signature><![CDATA[PassSupport GetPassSupport(
+    vint
+);
 ]]></signature></Document>

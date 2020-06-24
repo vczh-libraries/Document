@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemView::SetColumnSize@void(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="SetColumnSize"><summary>Set the size of the column.</summary><param name="index">The index of the column.</param><param name="value">The new size of the column.</param><signature><![CDATA[void SetColumnSize(vint,
-vint);
+<Document symbolId="vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemView::SetColumnSize@void(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="SetColumnSize"><summary>Set the size of the column.</summary><param name="index">The index of the column.</param><param name="value">The new size of the column.</param><signature><![CDATA[void SetColumnSize(
+    vint,
+    vint
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::KillAnimation@bool(::vl::Ptr&lt;::vl::presentation::controls::IGuiAnimation&gt;)" accessor="public" category="Function" name="KillAnimation"><summary>Kill an animation.</summary><returns>Returns true if this operation succeeded.</returns><param name="animation">The animation.</param><signature><![CDATA[bool KillAnimation(Ptr<IGuiAnimation>);
+<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::KillAnimation@bool(::vl::Ptr&lt;::vl::presentation::controls::IGuiAnimation&gt;)" accessor="public" category="Function" name="KillAnimation"><summary>Kill an animation.</summary><returns>Returns true if this operation succeeded.</returns><param name="animation">The animation.</param><signature><![CDATA[bool KillAnimation(
+    Ptr<IGuiAnimation>
+);
 ]]></signature></Document>

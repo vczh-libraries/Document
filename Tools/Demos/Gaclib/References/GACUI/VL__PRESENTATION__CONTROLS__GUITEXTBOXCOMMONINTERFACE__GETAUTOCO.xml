@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetAutoComplete@::vl::Ptr&lt;::vl::presentation::controls::GuiTextBoxAutoCompleteBase&gt;()" accessor="public" category="Function" name="GetAutoComplete"><summary>Get the current auto complete controller.</summary><returns>The current auto complete controller.</returns><signature><![CDATA[Ptr<GuiTextBoxAutoCompleteBase> GetAutoComplete();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetAutoComplete@::vl::Ptr&lt;::vl::presentation::controls::GuiTextBoxAutoCompleteBase&gt;()" accessor="public" category="Function" name="GetAutoComplete"><summary>Get the current auto complete controller.</summary><returns>The current auto complete controller.</returns><signature><![CDATA[Ptr<GuiTextBoxAutoCompleteBase> GetAutoComplete(
+);
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeInputService::StartTimer@void()" accessor="public" category="Function" name="StartTimer"><summary>
  Start to reveive global timer message.
- </summary><signature><![CDATA[void StartTimer();
+ </summary><signature><![CDATA[void StartTimer(
+);
 ]]></signature></Document>

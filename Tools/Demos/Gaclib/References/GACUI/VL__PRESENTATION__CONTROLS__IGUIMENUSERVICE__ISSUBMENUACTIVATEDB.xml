@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::IGuiMenuService::IsSubMenuActivatedByMouseDown@bool()" accessor="public" category="Function" name="IsSubMenuActivatedByMouseDown"><summary>Test all sub menu items are actived by mouse down.</summary><returns>Returns true if all sub menu items are actived by mouse down.</returns><signature><![CDATA[bool IsSubMenuActivatedByMouseDown();
+<Document symbolId="vl::presentation::controls::IGuiMenuService::IsSubMenuActivatedByMouseDown@bool()" accessor="public" category="Function" name="IsSubMenuActivatedByMouseDown"><summary>Test all sub menu items are actived by mouse down.</summary><returns>Returns true if all sub menu items are actived by mouse down.</returns><signature><![CDATA[bool IsSubMenuActivatedByMouseDown(
+);
 ]]></signature></Document>

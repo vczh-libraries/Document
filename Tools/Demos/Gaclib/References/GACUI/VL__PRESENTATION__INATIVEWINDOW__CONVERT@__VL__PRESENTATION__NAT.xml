@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)" accessor="public" category="Function" name="Convert"><summary>
  Convert point from GUI coordinate to native coordinate.
- </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativePoint Convert(Point);
+ </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativePoint Convert(
+    Point
+);
 ]]></signature></Document>

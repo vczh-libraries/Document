@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetVisible@bool()" accessor="public" category="Function" name="GetVisible"><summary>Test if this visible or invisible.</summary><returns>Returns true if this control is visible.</returns><signature><![CDATA[bool GetVisible();
+<Document symbolId="vl::presentation::controls::GuiControl::GetVisible@bool()" accessor="public" category="Function" name="GetVisible"><summary>Test if this visible or invisible.</summary><returns>Returns true if this control is visible.</returns><signature><![CDATA[bool GetVisible(
+);
 ]]></signature></Document>

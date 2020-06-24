@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRowText@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetRowText"><summary>Get the text from a specified row number.</summary><returns>The text from a specified row number.</returns><param name="row">The specified row number.</param><signature><![CDATA[WString GetRowText(vint);
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRowText@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetRowText"><summary>Get the text from a specified row number.</summary><returns>The text from a specified row number.</returns><param name="row">The specified row number.</param><signature><![CDATA[WString GetRowText(
+    vint
+);
 ]]></signature></Document>

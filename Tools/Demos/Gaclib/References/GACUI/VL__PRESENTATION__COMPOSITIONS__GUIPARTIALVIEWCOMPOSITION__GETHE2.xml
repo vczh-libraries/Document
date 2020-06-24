@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::GetHeightRatio@double()" accessor="public" category="Function" name="GetHeightRatio"><summary>Get the height ratio to decided the vertical location. Value in [0, 1-pageSize].</summary><returns>The height ratio to decided the vertical location.</returns><signature><![CDATA[double GetHeightRatio();
+<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::GetHeightRatio@double()" accessor="public" category="Function" name="GetHeightRatio"><summary>Get the height ratio to decided the vertical location. Value in [0, 1-pageSize].</summary><returns>The height ratio to decided the vertical location.</returns><signature><![CDATA[double GetHeightRatio(
+);
 ]]></signature></Document>

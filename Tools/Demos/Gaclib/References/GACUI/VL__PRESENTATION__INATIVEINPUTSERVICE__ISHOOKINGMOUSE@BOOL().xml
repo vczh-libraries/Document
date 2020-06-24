@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeInputService::IsHookingMouse@bool()" accessor="public" category="Function" name="IsHookingMouse"><summary>
  Test is the global mouse message receiving enabled.
- </summary><returns>Returns true if the global mouse message receiving is enabled.</returns><signature><![CDATA[bool IsHookingMouse();
+ </summary><returns>Returns true if the global mouse message receiving is enabled.</returns><signature><![CDATA[bool IsHookingMouse(
+);
 ]]></signature></Document>

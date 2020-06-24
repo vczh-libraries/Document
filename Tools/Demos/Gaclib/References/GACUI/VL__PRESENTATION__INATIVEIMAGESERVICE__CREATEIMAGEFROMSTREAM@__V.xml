@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeImageService::CreateImageFromStream@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="CreateImageFromStream"><summary>
  Create an image from stream.
- </summary><returns>The created image.</returns><param name="imageStream">The stream.</param><signature><![CDATA[Ptr<INativeImage> CreateImageFromStream(stream::IStream &);
+ </summary><returns>The created image.</returns><param name="imageStream">The stream.</param><signature><![CDATA[Ptr<INativeImage> CreateImageFromStream(
+    stream::IStream &
+);
 ]]></signature></Document>

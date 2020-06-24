@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::GetText@::vl::WString()" accessor="public" category="Function" name="GetText"><summary>
  Returns the whole string in the text lines.
- </summary><returns>The string.</returns><signature><![CDATA[WString GetText();
+ </summary><returns>The string.</returns><signature><![CDATA[WString GetText(
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::GetAdoptedSize@::vl::presentation::Size(::vl::presentation::Size)" accessor="public" category="Function" name="GetAdoptedSize"><summary>Get the adopted size for the view bounds.</summary><returns>The adopted size, making the vids bounds just enough to display several items.</returns><param name="expectedSize">The expected size, to provide a guidance.</param><signature><![CDATA[Size GetAdoptedSize(Size);
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::GetAdoptedSize@::vl::presentation::Size(::vl::presentation::Size)" accessor="public" category="Function" name="GetAdoptedSize"><summary>Get the adopted size for the view bounds.</summary><returns>The adopted size, making the vids bounds just enough to display several items.</returns><param name="expectedSize">The expected size, to provide a guidance.</param><signature><![CDATA[Size GetAdoptedSize(
+    Size
+);
 ]]></signature></Document>

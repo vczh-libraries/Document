@@ -1,5 +1,7 @@
 <Document symbolId="vl::collections::LazyList::$__ctor@(::vl::Ptr&lt;[TContainer]&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create a lazy list with a container.</summary><typeparam name="TContainer">Type of the container.</typeparam><param name="container">The container.</param><signature><![CDATA[template <
     typename TContainer
 >
- LazyList(Ptr<TContainer>);
+ LazyList(
+    Ptr<TContainer>
+);
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Opened@void()" accessor="public" category="Function" name="Opened"><summary>
  Called when the window is opened.
- </summary><signature><![CDATA[void Opened();
+ </summary><signature><![CDATA[void Opened(
+);
 ]]></signature></Document>

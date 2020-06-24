@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Closed@void()" accessor="public" category="Function" name="Closed"><summary>
  Called when the window is closed.
- </summary><signature><![CDATA[void Closed();
+ </summary><signature><![CDATA[void Closed(
+);
 ]]></signature></Document>

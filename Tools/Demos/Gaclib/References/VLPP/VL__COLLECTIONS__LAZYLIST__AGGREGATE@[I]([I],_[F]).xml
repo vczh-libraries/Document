@@ -2,6 +2,8 @@
     typename I, 
     typename F
 >
-I Aggregate(I,
-F) const;
+I Aggregate(
+    I,
+    F
+) const;
 ]]></signature></Document>

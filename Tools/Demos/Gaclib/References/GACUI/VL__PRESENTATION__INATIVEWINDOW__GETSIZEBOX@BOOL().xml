@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::GetSizeBox@bool()" accessor="public" category="Function" name="GetSizeBox"><summary>
  Test is the size box visible.
- </summary><returns>Returns true if the size box is visible.</returns><signature><![CDATA[bool GetSizeBox();
+ </summary><returns>Returns true if the size box is visible.</returns><signature><![CDATA[bool GetSizeBox(
+);
 ]]></signature></Document>

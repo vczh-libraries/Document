@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::Group::Remove@bool([KK] const &amp;)" accessor="public" category="Function" name="Remove"><summary>Remove a key with all associated values.</summary><returns>Returns true if the key and all associated values are removed.</returns><param name="key">The key.</param><signature><![CDATA[bool Remove(KK const &);
+<Document symbolId="vl::collections::Group::Remove@bool([KK] const &amp;)" accessor="public" category="Function" name="Remove"><summary>Remove a key with all associated values.</summary><returns>Returns true if the key and all associated values are removed.</returns><param name="key">The key.</param><signature><![CDATA[bool Remove(
+    KK const &
+);
 ]]></signature></Document>

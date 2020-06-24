@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::CloseCaret@bool()" accessor="public" category="Function" name="CloseCaret"><summary>Make the caret invisible.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool CloseCaret();
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::CloseCaret@bool()" accessor="public" category="Function" name="CloseCaret"><summary>Make the caret invisible.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool CloseCaret(
+);
 ]]></signature></Document>

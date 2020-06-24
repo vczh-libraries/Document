@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::SetMaxRatio@void(double)" accessor="public" category="Function" name="SetMaxRatio"><summary>Set the maximum ratio to limit the size according to the size of the parent.</summary><param name="value">The maximum ratio to limit the size according to the size of the parent.</param><signature><![CDATA[void SetMaxRatio(double);
+<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::SetMaxRatio@void(double)" accessor="public" category="Function" name="SetMaxRatio"><summary>Set the maximum ratio to limit the size according to the size of the parent.</summary><param name="value">The maximum ratio to limit the size according to the size of the parent.</param><signature><![CDATA[void SetMaxRatio(
+    double
+);
 ]]></signature></Document>

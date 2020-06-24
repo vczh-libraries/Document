@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Destroyed@void()" accessor="public" category="Function" name="Destroyed"><summary>
  Called when the window is destroyed.
- </summary><signature><![CDATA[void Destroyed();
+ </summary><signature><![CDATA[void Destroyed(
+);
 ]]></signature></Document>

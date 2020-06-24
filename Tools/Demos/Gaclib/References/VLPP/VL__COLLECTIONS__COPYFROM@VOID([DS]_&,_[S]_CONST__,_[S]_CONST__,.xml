@@ -2,8 +2,10 @@
     typename Ds, 
     typename S
 >
-void CopyFrom(Ds &,
-S const *,
-S const *,
-bool /* optional */);
+void CopyFrom(
+    Ds &,
+    S const *,
+    S const *,
+    bool /* optional */
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::Ptr::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a null pointer.</summary><signature><![CDATA[ Ptr();
+<Document symbolId="vl::Ptr::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a null pointer.</summary><signature><![CDATA[ Ptr(
+);
 ]]></signature></Document>

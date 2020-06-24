@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::ShowMaximized@void()" accessor="public" category="Function" name="ShowMaximized"><summary>
  Maximize the window.
- </summary><signature><![CDATA[void ShowMaximized();
+ </summary><signature><![CDATA[void ShowMaximized(
+);
 ]]></signature></Document>

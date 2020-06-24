@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiMessageDialog::GetIcon@::vl::presentation::INativeDialogService::MessageBoxIcons()" accessor="public" category="Function" name="GetIcon"><summary>Get the icon that appears on the dialog.</summary><returns>The icon.</returns><signature><![CDATA[INativeDialogService::MessageBoxIcons GetIcon();
+<Document symbolId="vl::presentation::controls::GuiMessageDialog::GetIcon@::vl::presentation::INativeDialogService::MessageBoxIcons()" accessor="public" category="Function" name="GetIcon"><summary>Get the icon that appears on the dialog.</summary><returns>The icon.</returns><signature><![CDATA[INativeDialogService::MessageBoxIcons GetIcon(
+);
 ]]></signature></Document>

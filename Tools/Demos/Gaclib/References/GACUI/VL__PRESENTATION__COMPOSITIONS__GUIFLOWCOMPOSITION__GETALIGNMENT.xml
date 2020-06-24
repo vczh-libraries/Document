@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetAlignment@::vl::presentation::compositions::FlowAlignment()" accessor="public" category="Function" name="GetAlignment"><summary>Get the alignment for rows.</summary><returns>The alignment.</returns><signature><![CDATA[FlowAlignment GetAlignment();
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetAlignment@::vl::presentation::compositions::FlowAlignment()" accessor="public" category="Function" name="GetAlignment"><summary>Get the alignment for rows.</summary><returns>The alignment.</returns><signature><![CDATA[FlowAlignment GetAlignment(
+);
 ]]></signature></Document>

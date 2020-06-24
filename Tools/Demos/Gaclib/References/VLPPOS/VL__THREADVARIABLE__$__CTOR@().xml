@@ -1,2 +1,3 @@
-<Document symbolId="vl::ThreadVariable::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a thread local variable.</summary><signature><![CDATA[ ThreadVariable();
+<Document symbolId="vl::ThreadVariable::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a thread local variable.</summary><signature><![CDATA[ ThreadVariable(
+);
 ]]></signature></Document>

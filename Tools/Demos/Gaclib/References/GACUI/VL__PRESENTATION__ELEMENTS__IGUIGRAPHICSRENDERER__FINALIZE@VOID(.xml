@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::Finalize@void()" accessor="public" category="Function" name="Finalize"><summary>
  Release all resources that used by this renderer.
- </summary><signature><![CDATA[void Finalize();
+ </summary><signature><![CDATA[void Finalize(
+);
 ]]></signature></Document>

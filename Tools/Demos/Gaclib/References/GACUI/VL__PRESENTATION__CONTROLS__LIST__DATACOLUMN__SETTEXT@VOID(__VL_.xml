@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Set the text for the column.</summary><param name="value">The text for the column.</param><signature><![CDATA[void SetText(WString const &);
+<Document symbolId="vl::presentation::controls::list::DataColumn::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Set the text for the column.</summary><param name="value">The text for the column.</param><signature><![CDATA[void SetText(
+    WString const &
+);
 ]]></signature></Document>

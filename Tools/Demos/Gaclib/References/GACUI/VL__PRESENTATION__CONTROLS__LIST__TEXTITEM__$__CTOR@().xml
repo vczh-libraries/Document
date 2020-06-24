@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::TextItem::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty text item.</summary><signature><![CDATA[ TextItem();
+<Document symbolId="vl::presentation::controls::list::TextItem::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty text item.</summary><signature><![CDATA[ TextItem(
+);
 ]]></signature></Document>

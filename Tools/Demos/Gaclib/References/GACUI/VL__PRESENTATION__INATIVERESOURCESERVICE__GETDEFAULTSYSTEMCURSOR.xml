@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeResourceService::GetDefaultSystemCursor@::vl::presentation::INativeCursor *()" accessor="public" category="Function" name="GetDefaultSystemCursor"><summary>
  Get a cached cursor object using a default system cursor type;
- </summary><returns>The cached cursor object.</returns><signature><![CDATA[INativeCursor * GetDefaultSystemCursor();
+ </summary><returns>The cached cursor object.</returns><signature><![CDATA[INativeCursor * GetDefaultSystemCursor(
+);
 ]]></signature></Document>

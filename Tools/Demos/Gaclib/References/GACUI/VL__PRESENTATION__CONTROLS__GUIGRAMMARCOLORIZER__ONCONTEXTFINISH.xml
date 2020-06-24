@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::OnContextFinishedAsync@void(::vl::presentation::controls::RepeatingParsingOutput const &amp;)" accessor="protected" category="Function" name="OnContextFinishedAsync"><summary>Called when the node is parsed successfully before restarting colorizing.</summary><param name="context">The result of the parsing.</param><signature><![CDATA[void OnContextFinishedAsync(RepeatingParsingOutput const &);
+<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::OnContextFinishedAsync@void(::vl::presentation::controls::RepeatingParsingOutput const &amp;)" accessor="protected" category="Function" name="OnContextFinishedAsync"><summary>Called when the node is parsed successfully before restarting colorizing.</summary><param name="context">The result of the parsing.</param><signature><![CDATA[void OnContextFinishedAsync(
+    RepeatingParsingOutput const &
+);
 ]]></signature></Document>

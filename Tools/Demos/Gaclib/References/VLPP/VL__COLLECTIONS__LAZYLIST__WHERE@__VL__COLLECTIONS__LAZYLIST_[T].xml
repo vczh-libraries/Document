@@ -1,5 +1,7 @@
 <Document symbolId="vl::collections::LazyList::Where@::vl::collections::LazyList&lt;[T]&gt;([F])" accessor="public" category="Function" name="Where"><summary>Create a new lazy list with all elements that satisfy with a condition.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a filter.</param><signature><![CDATA[template <
     typename F
 >
-LazyList<T> Where(F) const;
+LazyList<T> Where(
+    F
+) const;
 ]]></signature></Document>

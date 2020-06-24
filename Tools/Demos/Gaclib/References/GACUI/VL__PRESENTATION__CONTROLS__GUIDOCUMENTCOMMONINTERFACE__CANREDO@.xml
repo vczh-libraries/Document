@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::CanRedo@bool()" accessor="public" category="Function" name="CanRedo"><summary>Test can redo.</summary><returns>Returns true if this action can be performed.</returns><signature><![CDATA[bool CanRedo();
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::CanRedo@bool()" accessor="public" category="Function" name="CanRedo"><summary>Test can redo.</summary><returns>Returns true if this action can be performed.</returns><signature><![CDATA[bool CanRedo(
+);
 ]]></signature></Document>

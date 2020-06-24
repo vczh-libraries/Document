@@ -1,2 +1,3 @@
-<Document symbolId="vl::Lazy::IsAvailable@bool const()" accessor="public" category="Function" name="IsAvailable"><summary>Test if it is an empty evaluation or not.</summary><returns>Returns true if it is not empty.</returns><signature><![CDATA[bool const IsAvailable() const;
+<Document symbolId="vl::Lazy::IsAvailable@bool const()" accessor="public" category="Function" name="IsAvailable"><summary>Test if it is an empty evaluation or not.</summary><returns>Returns true if it is not empty.</returns><signature><![CDATA[bool const IsAvailable(
+) const;
 ]]></signature></Document>

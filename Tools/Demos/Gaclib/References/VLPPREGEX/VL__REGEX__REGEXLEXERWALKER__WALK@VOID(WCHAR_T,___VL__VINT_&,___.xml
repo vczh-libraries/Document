@@ -1,6 +1,8 @@
-<Document symbolId="vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &amp;, ::vl::vint &amp;, bool &amp;, bool &amp;)" accessor="public" category="Function" name="Walk"><summary>Step forward by one character.</summary><param name="input">The input character.</param><param name="state">The current state. Returns the new current state when this function returns.</param><param name="token">Returns the token index at the end of the token.</param><param name="finalState">Returns true if it reach the end of the token.</param><param name="previousTokenStop">Returns true if the last character is the end of the token.</param><signature><![CDATA[void Walk(wchar_t,
-vint &,
-vint &,
-bool &,
-bool &) const;
+<Document symbolId="vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &amp;, ::vl::vint &amp;, bool &amp;, bool &amp;)" accessor="public" category="Function" name="Walk"><summary>Step forward by one character.</summary><param name="input">The input character.</param><param name="state">The current state. Returns the new current state when this function returns.</param><param name="token">Returns the token index at the end of the token.</param><param name="finalState">Returns true if it reach the end of the token.</param><param name="previousTokenStop">Returns true if the last character is the end of the token.</param><signature><![CDATA[void Walk(
+    wchar_t,
+    vint &,
+    vint &,
+    bool &,
+    bool &
+) const;
 ]]></signature></Document>

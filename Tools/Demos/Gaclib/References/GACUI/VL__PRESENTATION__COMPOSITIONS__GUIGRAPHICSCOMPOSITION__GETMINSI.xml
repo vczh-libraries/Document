@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetMinSizeLimitation@::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation()" accessor="public" category="Function" name="GetMinSizeLimitation"><summary>Get the minimum size limitation of the composition.</summary><returns>The minimum size limitation of the composition.</returns><signature><![CDATA[MinSizeLimitation GetMinSizeLimitation();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetMinSizeLimitation@::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation()" accessor="public" category="Function" name="GetMinSizeLimitation"><summary>Get the minimum size limitation of the composition.</summary><returns>The minimum size limitation of the composition.</returns><signature><![CDATA[MinSizeLimitation GetMinSizeLimitation(
+);
 ]]></signature></Document>

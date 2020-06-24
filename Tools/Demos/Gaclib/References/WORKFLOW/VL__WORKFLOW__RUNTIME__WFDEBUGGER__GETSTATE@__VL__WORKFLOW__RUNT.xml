@@ -1,2 +1,3 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::GetState@::vl::workflow::runtime::WfDebugger::State()" accessor="public" category="Function" name="GetState"><summary>Get the current state of the debugger.</summary><returns>The state of the debugger.</returns><signature><![CDATA[State GetState();
+<Document symbolId="vl::workflow::runtime::WfDebugger::GetState@::vl::workflow::runtime::WfDebugger::State()" accessor="public" category="Function" name="GetState"><summary>Get the current state of the debugger.</summary><returns>The state of the debugger.</returns><signature><![CDATA[State GetState(
+);
 ]]></signature></Document>

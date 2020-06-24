@@ -1,2 +1,3 @@
-<Document symbolId="vl::parsing::ParsingTreeArray::GetItems@::vl::parsing::ParsingTreeArray::NodeArray &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all elements in this array.</summary><returns>All elements in this array.</returns><signature><![CDATA[NodeArray & GetItems();
+<Document symbolId="vl::parsing::ParsingTreeArray::GetItems@::vl::parsing::ParsingTreeArray::NodeArray &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all elements in this array.</summary><returns>All elements in this array.</returns><signature><![CDATA[NodeArray & GetItems(
+);
 ]]></signature></Document>

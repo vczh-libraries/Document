@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiCellOption::AbsoluteOption@::vl::presentation::compositions::GuiCellOption(::vl::vint)" accessor="public" category="Function" name="AbsoluteOption"><summary>Creates an absolute sizing option</summary><returns>The created option.</returns><param name="value">The absolute size.</param><signature><![CDATA[static GuiCellOption AbsoluteOption(vint);
+<Document symbolId="vl::presentation::compositions::GuiCellOption::AbsoluteOption@::vl::presentation::compositions::GuiCellOption(::vl::vint)" accessor="public" category="Function" name="AbsoluteOption"><summary>Creates an absolute sizing option</summary><returns>The created option.</returns><param name="value">The absolute size.</param><signature><![CDATA[static GuiCellOption AbsoluteOption(
+    vint
+);
 ]]></signature></Document>

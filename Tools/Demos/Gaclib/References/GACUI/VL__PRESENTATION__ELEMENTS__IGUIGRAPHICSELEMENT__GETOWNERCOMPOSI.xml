@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsElement::GetOwnerComposition@::vl::presentation::compositions::GuiGraphicsComposition *()" accessor="public" category="Function" name="GetOwnerComposition"><summary>
  Get the owner composition.
- </summary><returns>The owner composition.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetOwnerComposition();
+ </summary><returns>The owner composition.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetOwnerComposition(
+);
 ]]></signature></Document>

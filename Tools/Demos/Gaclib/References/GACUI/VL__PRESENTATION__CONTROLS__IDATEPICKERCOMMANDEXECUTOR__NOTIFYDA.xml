@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateChanged@void()" accessor="public" category="Function" name="NotifyDateChanged"><summary>Called when the date has been changed.</summary><signature><![CDATA[void NotifyDateChanged();
+<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateChanged@void()" accessor="public" category="Function" name="NotifyDateChanged"><summary>Called when the date has been changed.</summary><signature><![CDATA[void NotifyDateChanged(
+);
 ]]></signature></Document>

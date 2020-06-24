@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::GuiResource::GetWorkingDirectory@::vl::WString()" accessor="public" category="Function" name="GetWorkingDirectory"><summary>Get the directory where the resource is load.</summary><returns>The directory.</returns><signature><![CDATA[WString GetWorkingDirectory();
+<Document symbolId="vl::presentation::GuiResource::GetWorkingDirectory@::vl::WString()" accessor="public" category="Function" name="GetWorkingDirectory"><summary>Get the directory where the resource is load.</summary><returns>The directory.</returns><signature><![CDATA[WString GetWorkingDirectory(
+);
 ]]></signature></Document>

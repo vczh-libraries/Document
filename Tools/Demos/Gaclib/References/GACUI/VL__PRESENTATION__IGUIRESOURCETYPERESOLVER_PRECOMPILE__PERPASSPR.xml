@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Precompile::PerPassPrecompile@void(::vl::presentation::GuiResourcePrecompileContext &amp;, ::vl::presentation::GuiResourceError::List &amp;)" accessor="public" category="Function" name="PerPassPrecompile"><summary>Precompile for a pass.</summary><param name="context">The context for precompiling.</param><param name="errors">All collected errors during loading a resource.</param><signature><![CDATA[void PerPassPrecompile(GuiResourcePrecompileContext &,
-GuiResourceError::List &);
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Precompile::PerPassPrecompile@void(::vl::presentation::GuiResourcePrecompileContext &amp;, ::vl::presentation::GuiResourceError::List &amp;)" accessor="public" category="Function" name="PerPassPrecompile"><summary>Precompile for a pass.</summary><param name="context">The context for precompiling.</param><param name="errors">All collected errors during loading a resource.</param><signature><![CDATA[void PerPassPrecompile(
+    GuiResourcePrecompileContext &,
+    GuiResourceError::List &
+);
 ]]></signature></Document>

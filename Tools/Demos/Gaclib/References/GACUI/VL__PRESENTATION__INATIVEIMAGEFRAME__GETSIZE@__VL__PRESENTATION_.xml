@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeImageFrame::GetSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetSize"><summary>
  Get the size of this frame.
- </summary><returns>The size of this frame.</returns><signature><![CDATA[Size GetSize();
+ </summary><returns>The size of this frame.</returns><signature><![CDATA[Size GetSize(
+);
 ]]></signature></Document>

@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::ITabCommandExecutor::ShowTab@void(::vl::vint, bool)" accessor="public" category="Function" name="ShowTab"><summary>Select a tab page.</summary><param name="index">The specified position for the tab page.</param><param name="setFocus">Set to true to set focus to the tab control.</param><signature><![CDATA[void ShowTab(vint,
-bool);
+<Document symbolId="vl::presentation::controls::ITabCommandExecutor::ShowTab@void(::vl::vint, bool)" accessor="public" category="Function" name="ShowTab"><summary>Select a tab page.</summary><param name="index">The specified position for the tab page.</param><param name="setFocus">Set to true to set focus to the tab control.</param><signature><![CDATA[void ShowTab(
+    vint,
+    bool
+);
 ]]></signature></Document>

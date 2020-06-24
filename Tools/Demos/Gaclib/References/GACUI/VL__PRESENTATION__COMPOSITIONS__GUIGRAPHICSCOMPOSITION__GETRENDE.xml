@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetRenderTarget@::vl::presentation::elements::IGuiGraphicsRenderTarget *()" accessor="public" category="Function" name="GetRenderTarget"><summary>Get the binded render target.</summary><returns>The binded render target.</returns><signature><![CDATA[elements::IGuiGraphicsRenderTarget * GetRenderTarget();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetRenderTarget@::vl::presentation::elements::IGuiGraphicsRenderTarget *()" accessor="public" category="Function" name="GetRenderTarget"><summary>Get the binded render target.</summary><returns>The binded render target.</returns><signature><![CDATA[elements::IGuiGraphicsRenderTarget * GetRenderTarget(
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::ReloadVisibleStyles@void()" accessor="public" category="Function" name="ReloadVisibleStyles"><summary>Reload all visible items.</summary><signature><![CDATA[void ReloadVisibleStyles();
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::ReloadVisibleStyles@void()" accessor="public" category="Function" name="ReloadVisibleStyles"><summary>Reload all visible items.</summary><signature><![CDATA[void ReloadVisibleStyles(
+);
 ]]></signature></Document>

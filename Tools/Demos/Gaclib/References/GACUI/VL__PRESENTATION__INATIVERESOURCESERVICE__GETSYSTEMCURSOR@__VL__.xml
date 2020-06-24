@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeResourceService::GetSystemCursor@::vl::presentation::INativeCursor *(::vl::presentation::INativeCursor::SystemCursorType)" accessor="public" category="Function" name="GetSystemCursor"><summary>
  Get a cached cursor object using a predefined system cursor type;
- </summary><returns>The cached cursor object.</returns><param name="type">The predefined system cursor type.</param><signature><![CDATA[INativeCursor * GetSystemCursor(INativeCursor::SystemCursorType);
+ </summary><returns>The cached cursor object.</returns><param name="type">The predefined system cursor type.</param><signature><![CDATA[INativeCursor * GetSystemCursor(
+    INativeCursor::SystemCursorType
+);
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindowListener::LostFocus@void()" accessor="public" category="Function" name="LostFocus"><summary>
  Called when the window lost the focus.
- </summary><signature><![CDATA[void LostFocus();
+ </summary><signature><![CDATA[void LostFocus(
+);
 ]]></signature></Document>

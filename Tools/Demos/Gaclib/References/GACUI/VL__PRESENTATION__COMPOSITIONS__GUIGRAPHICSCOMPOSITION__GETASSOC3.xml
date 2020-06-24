@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetAssociatedHitTestResult@::vl::presentation::INativeWindowListener::HitTestResult()" accessor="public" category="Function" name="GetAssociatedHitTestResult"><summary>Get the associated hit test result.</summary><returns>The associated hit test result.</returns><signature><![CDATA[INativeWindowListener::HitTestResult GetAssociatedHitTestResult();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetAssociatedHitTestResult@::vl::presentation::INativeWindowListener::HitTestResult()" accessor="public" category="Function" name="GetAssociatedHitTestResult"><summary>Get the associated hit test result.</summary><returns>The associated hit test result.</returns><signature><![CDATA[INativeWindowListener::HitTestResult GetAssociatedHitTestResult(
+);
 ]]></signature></Document>

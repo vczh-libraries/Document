@@ -1,3 +1,6 @@
-<Document symbolId="vl::presentation::controls::IGuiAnimation::CreateAnimation@::vl::Ptr&lt;::vl::presentation::controls::IGuiAnimation&gt;(::vl::Func&lt;void(::vl::vuint64_t)&gt; const &amp;, ::vl::vuint64_t)" accessor="public" category="Function" name="CreateAnimation"><summary>Create a finite animation.</summary><returns>Returns the created animation.</returns><param name="run">The animation callback for each frame.</param><param name="milliseconds">The length of the animation.</param><signature><![CDATA[static Ptr<IGuiAnimation> CreateAnimation(Func<void(vuint64_t)> const &,
-vuint64_t);
+<Document symbolId="vl::presentation::controls::IGuiAnimation::CreateAnimation@::vl::Ptr&lt;::vl::presentation::controls::IGuiAnimation&gt;(::vl::Func&lt;void(::vl::vuint64_t)&gt; const &amp;, ::vl::vuint64_t)" accessor="public" category="Function" name="CreateAnimation"><summary>Create a finite animation.</summary><returns>Returns the created animation.</returns><param name="run">The animation callback for each frame.</param><param name="milliseconds">The length of the animation.</param><signature><![CDATA[static Ptr<IGuiAnimation> CreateAnimation(
+    Func<void(
+vuint64_t)> const &,
+    vuint64_t
+);
 ]]></signature></Document>

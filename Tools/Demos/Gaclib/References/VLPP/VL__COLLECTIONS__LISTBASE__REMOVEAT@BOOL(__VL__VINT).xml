@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::ListBase::RemoveAt@bool(::vl::vint)" accessor="public" category="Function" name="RemoveAt"><summary>Remove an element.</summary><returns>Returns true if the element is removed.</returns><param name="index">The index of the element to remove.</param><signature><![CDATA[bool RemoveAt(vint);
+<Document symbolId="vl::collections::ListBase::RemoveAt@bool(::vl::vint)" accessor="public" category="Function" name="RemoveAt"><summary>Remove an element.</summary><returns>Returns true if the element is removed.</returns><param name="index">The index of the element to remove.</param><signature><![CDATA[bool RemoveAt(
+    vint
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetAcceptTabInput@bool()" accessor="public" category="Function" name="GetAcceptTabInput"><summary>Test if this control accepts tab character input.</summary><returns>Returns true if this control accepts tab character input.</returns><signature><![CDATA[bool GetAcceptTabInput();
+<Document symbolId="vl::presentation::controls::GuiControl::GetAcceptTabInput@bool()" accessor="public" category="Function" name="GetAcceptTabInput"><summary>Test if this control accepts tab character input.</summary><returns>Returns true if this control accepts tab character input.</returns><signature><![CDATA[bool GetAcceptTabInput(
+);
 ]]></signature></Document>

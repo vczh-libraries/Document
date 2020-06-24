@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::IGuiMenuService::MenuClosed@void(::vl::presentation::controls::GuiMenu *)" accessor="public" category="Function" name="MenuClosed"><summary>Called when the sub menu is closed.</summary><param name="menu">The sub menu.</param><signature><![CDATA[void MenuClosed(GuiMenu *);
+<Document symbolId="vl::presentation::controls::IGuiMenuService::MenuClosed@void(::vl::presentation::controls::GuiMenu *)" accessor="public" category="Function" name="MenuClosed"><summary>Called when the sub menu is closed.</summary><param name="menu">The sub menu.</param><signature><![CDATA[void MenuClosed(
+    GuiMenu *
+);
 ]]></signature></Document>

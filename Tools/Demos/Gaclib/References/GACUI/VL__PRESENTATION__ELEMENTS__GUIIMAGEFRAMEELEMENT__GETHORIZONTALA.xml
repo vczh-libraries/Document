@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiImageFrameElement::GetHorizontalAlignment@::vl::presentation::Alignment()" accessor="public" category="Function" name="GetHorizontalAlignment"><summary>
  Get the horizontal alignment of the image.
- </summary><returns>The horizontal alignment of the image.</returns><signature><![CDATA[Alignment GetHorizontalAlignment();
+ </summary><returns>The horizontal alignment of the image.</returns><signature><![CDATA[Alignment GetHorizontalAlignment(
+);
 ]]></signature></Document>

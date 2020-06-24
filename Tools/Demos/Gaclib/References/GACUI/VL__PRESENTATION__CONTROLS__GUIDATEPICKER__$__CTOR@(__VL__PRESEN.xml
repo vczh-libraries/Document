@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::$__ctor@(::vl::presentation::theme::ThemeName, bool)" accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_nestedAlt">Set to true to make this date picker an <symbol docId="vl::presentation::compositions::IGuiAltActionHost" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltActionHost"/>.</param><signature><![CDATA[ GuiDatePicker(theme::ThemeName,
-bool /* optional */);
+<Document symbolId="vl::presentation::controls::GuiDatePicker::$__ctor@(::vl::presentation::theme::ThemeName, bool)" accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_nestedAlt">Set to true to make this date picker an <symbol docId="vl::presentation::compositions::IGuiAltActionHost" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltActionHost"/>.</param><signature><![CDATA[ GuiDatePicker(
+    theme::ThemeName,
+    bool /* optional */
+);
 ]]></signature></Document>

@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeInputService::IsKeyToggled@bool(::vl::presentation::VKEY)" accessor="public" category="Function" name="IsKeyToggled"><summary>
  Test is the specified key toggled.
- </summary><returns>Returns true if the specified key is toggled.</returns><param name="code">The key code to test.</param><signature><![CDATA[bool IsKeyToggled(VKEY);
+ </summary><returns>Returns true if the specified key is toggled.</returns><param name="code">The key code to test.</param><signature><![CDATA[bool IsKeyToggled(
+    VKEY
+);
 ]]></signature></Document>

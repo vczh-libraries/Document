@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::GuiResourceNodeBase::SetFileContentPath@void(::vl::WString const &amp;, ::vl::WString const &amp;)" accessor="public" category="Function" name="SetFileContentPath"><summary>Set the file content path of this resource node.</summary><param name="content">The file content path of this resource node .</param><param name="absolute">The file absolute path of this resource node .</param><signature><![CDATA[void SetFileContentPath(WString const &,
-WString const &);
+<Document symbolId="vl::presentation::GuiResourceNodeBase::SetFileContentPath@void(::vl::WString const &amp;, ::vl::WString const &amp;)" accessor="public" category="Function" name="SetFileContentPath"><summary>Set the file content path of this resource node.</summary><param name="content">The file content path of this resource node .</param><param name="absolute">The file absolute path of this resource node .</param><signature><![CDATA[void SetFileContentPath(
+    WString const &,
+    WString const &
+);
 ]]></signature></Document>

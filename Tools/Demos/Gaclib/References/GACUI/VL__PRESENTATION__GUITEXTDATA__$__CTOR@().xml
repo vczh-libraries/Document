@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::GuiTextData::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty text data.</summary><signature><![CDATA[ GuiTextData();
+<Document symbolId="vl::presentation::GuiTextData::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty text data.</summary><signature><![CDATA[ GuiTextData(
+);
 ]]></signature></Document>

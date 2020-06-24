@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::OnElementStateChanged@void()" accessor="public" category="Function" name="OnElementStateChanged"><summary>
  Notify that the state in the binded graphics element is changed. This function is usually called by the element itself.
- </summary><signature><![CDATA[void OnElementStateChanged();
+ </summary><signature><![CDATA[void OnElementStateChanged(
+);
 ]]></signature></Document>

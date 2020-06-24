@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::ArrayBase::Get@[T] const &amp;(::vl::vint)" accessor="public" category="Function" name="Get"><summary>Get the reference to the specified element.</summary><returns>The reference to the specified element.</returns><param name="index">The index of the element.</param><signature><![CDATA[T const & Get(vint) const;
+<Document symbolId="vl::collections::ArrayBase::Get@[T] const &amp;(::vl::vint)" accessor="public" category="Function" name="Get"><summary>Get the reference to the specified element.</summary><returns>The reference to the specified element.</returns><param name="index">The index of the element.</param><signature><![CDATA[T const & Get(
+    vint
+) const;
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::IDataVisualizerFactory::CreateVisualizer@::vl::Ptr&lt;::vl::presentation::controls::list::IDataVisualizer&gt;(::vl::presentation::controls::list::IDataGridContext *)" accessor="public" category="Function" name="CreateVisualizer"><summary>Create a data visualizer.</summary><returns>The created data visualizer.</returns><param name="dataGridContext">Context information of the data grid.</param><signature><![CDATA[Ptr<IDataVisualizer> CreateVisualizer(IDataGridContext *);
+<Document symbolId="vl::presentation::controls::list::IDataVisualizerFactory::CreateVisualizer@::vl::Ptr&lt;::vl::presentation::controls::list::IDataVisualizer&gt;(::vl::presentation::controls::list::IDataGridContext *)" accessor="public" category="Function" name="CreateVisualizer"><summary>Create a data visualizer.</summary><returns>The created data visualizer.</returns><param name="dataGridContext">Context information of the data grid.</param><signature><![CDATA[Ptr<IDataVisualizer> CreateVisualizer(
+    IDataGridContext *
+);
 ]]></signature></Document>

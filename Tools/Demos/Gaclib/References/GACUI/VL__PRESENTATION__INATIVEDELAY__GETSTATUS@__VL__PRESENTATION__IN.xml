@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::INativeDelay::GetStatus@::vl::presentation::INativeDelay::ExecuteStatus()" accessor="public" category="Function" name="GetStatus"><summary>Get the current status.</summary><returns>The current status.</returns><signature><![CDATA[ExecuteStatus GetStatus();
+<Document symbolId="vl::presentation::INativeDelay::GetStatus@::vl::presentation::INativeDelay::ExecuteStatus()" accessor="public" category="Function" name="GetStatus"><summary>Get the current status.</summary><returns>The current status.</returns><signature><![CDATA[ExecuteStatus GetStatus(
+);
 ]]></signature></Document>

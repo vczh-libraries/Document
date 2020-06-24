@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::theme::RegisterTheme@bool(::vl::Ptr&lt;::vl::presentation::theme::ThemeTemplates&gt;)" accessor="" category="Function" name="RegisterTheme"><summary>Register a control template collection object.</summary><returns>Returns true if this operation succeeded.</returns><param name="theme">The control template collection object.</param><signature><![CDATA[bool RegisterTheme(Ptr<ThemeTemplates>);
+<Document symbolId="vl::presentation::theme::RegisterTheme@bool(::vl::Ptr&lt;::vl::presentation::theme::ThemeTemplates&gt;)" accessor="" category="Function" name="RegisterTheme"><summary>Register a control template collection object.</summary><returns>Returns true if this operation succeeded.</returns><param name="theme">The control template collection object.</param><signature><![CDATA[bool RegisterTheme(
+    Ptr<ThemeTemplates>
+);
 ]]></signature></Document>

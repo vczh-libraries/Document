@@ -1,2 +1,3 @@
-<Document symbolId="vl::HttpResponse::GetBodyUtf8@::vl::WString()" accessor="public" category="Function" name="GetBodyUtf8"><summary>If you believe the server returns a text in UTF-8, use it to decode the body.</summary><returns>The response body as text.</returns><signature><![CDATA[WString GetBodyUtf8();
+<Document symbolId="vl::HttpResponse::GetBodyUtf8@::vl::WString()" accessor="public" category="Function" name="GetBodyUtf8"><summary>If you believe the server returns a text in UTF-8, use it to decode the body.</summary><returns>The response body as text.</returns><signature><![CDATA[WString GetBodyUtf8(
+);
 ]]></signature></Document>

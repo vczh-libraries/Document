@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl::SetMultiSelect@void(bool)" accessor="public" category="Function" name="SetMultiSelect"><summary>Set the multiple selection mode.</summary><param name="value">Set to true to enable multiple selection.</param><signature><![CDATA[void SetMultiSelect(bool);
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl::SetMultiSelect@void(bool)" accessor="public" category="Function" name="SetMultiSelect"><summary>Set the multiple selection mode.</summary><param name="value">Set to true to enable multiple selection.</param><signature><![CDATA[void SetMultiSelect(
+    bool
+);
 ]]></signature></Document>

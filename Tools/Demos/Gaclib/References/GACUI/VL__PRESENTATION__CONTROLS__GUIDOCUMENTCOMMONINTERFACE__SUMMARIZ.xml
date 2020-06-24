@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SummarizeParagraphAlignment@::vl::Nullable&lt;::vl::presentation::Alignment&gt;(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="SummarizeParagraphAlignment"><summary>Summarize the text alignment in a specified range.</summary><returns>The text alignment summary.</returns><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><signature><![CDATA[Nullable<Alignment> SummarizeParagraphAlignment(TextPos,
-TextPos);
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SummarizeParagraphAlignment@::vl::Nullable&lt;::vl::presentation::Alignment&gt;(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="SummarizeParagraphAlignment"><summary>Summarize the text alignment in a specified range.</summary><returns>The text alignment summary.</returns><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><signature><![CDATA[Nullable<Alignment> SummarizeParagraphAlignment(
+    TextPos,
+    TextPos
+);
 ]]></signature></Document>

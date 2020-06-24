@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetDocumentItems@::vl::presentation::controls::GuiDocumentCommonInterface::DocumentItemMap const &amp;()" accessor="public" category="Function" name="GetDocumentItems"><summary>Get all document items.</summary><returns>All document items.</returns><signature><![CDATA[DocumentItemMap const & GetDocumentItems();
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetDocumentItems@::vl::presentation::controls::GuiDocumentCommonInterface::DocumentItemMap const &amp;()" accessor="public" category="Function" name="GetDocumentItems"><summary>Get all document items.</summary><returns>All document items.</returns><signature><![CDATA[DocumentItemMap const & GetDocumentItems(
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiBindableTextList::SetTextProperty@void(::vl::presentation::ItemProperty&lt;::vl::WString&gt; const &amp;)" accessor="public" category="Function" name="SetTextProperty"><summary>Set the text property name to get the item text from an item.</summary><param name="value">The text property name.</param><signature><![CDATA[void SetTextProperty(ItemProperty<WString> const &);
+<Document symbolId="vl::presentation::controls::GuiBindableTextList::SetTextProperty@void(::vl::presentation::ItemProperty&lt;::vl::WString&gt; const &amp;)" accessor="public" category="Function" name="SetTextProperty"><summary>Set the text property name to get the item text from an item.</summary><param name="value">The text property name.</param><signature><![CDATA[void SetTextProperty(
+    ItemProperty<WString> const &
+);
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeResourceService::GetDefaultFont@::vl::presentation::FontProperties()" accessor="public" category="Function" name="GetDefaultFont"><summary>
  Get the default font configuration of the system.
- </summary><returns>The default font configuration of the system.</returns><signature><![CDATA[FontProperties GetDefaultFont();
+ </summary><returns>The default font configuration of the system.</returns><signature><![CDATA[FontProperties GetDefaultFont(
+);
 ]]></signature></Document>

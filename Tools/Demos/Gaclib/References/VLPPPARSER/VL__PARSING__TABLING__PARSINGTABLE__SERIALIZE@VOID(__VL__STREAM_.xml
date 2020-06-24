@@ -1,2 +1,4 @@
-<Document symbolId="vl::parsing::tabling::ParsingTable::Serialize@void(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="Serialize"><summary>Serialize the parsing table to a stream.</summary><param name="output">The stream.</param><signature><![CDATA[void Serialize(stream::IStream &);
+<Document symbolId="vl::parsing::tabling::ParsingTable::Serialize@void(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="Serialize"><summary>Serialize the parsing table to a stream.</summary><param name="output">The stream.</param><signature><![CDATA[void Serialize(
+    stream::IStream &
+);
 ]]></signature></Document>

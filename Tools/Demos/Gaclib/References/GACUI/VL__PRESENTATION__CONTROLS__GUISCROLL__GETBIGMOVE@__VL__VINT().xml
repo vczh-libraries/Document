@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::GetBigMove@::vl::vint()" accessor="public" category="Function" name="GetBigMove"><summary>Get the big move.</summary><returns>The big move.</returns><signature><![CDATA[vint GetBigMove();
+<Document symbolId="vl::presentation::controls::GuiScroll::GetBigMove@::vl::vint()" accessor="public" category="Function" name="GetBigMove"><summary>Get the big move.</summary><returns>The big move.</returns><signature><![CDATA[vint GetBigMove(
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiBoundsComposition::GetAlignmentToParent@::vl::presentation::Margin()" accessor="public" category="Function" name="GetAlignmentToParent"><summary>Get the alignment to its parent. -1 in each alignment component means that the corressponding side is not aligned to its parent.</summary><returns>The alignment to its parent.</returns><signature><![CDATA[Margin GetAlignmentToParent();
+<Document symbolId="vl::presentation::compositions::GuiBoundsComposition::GetAlignmentToParent@::vl::presentation::Margin()" accessor="public" category="Function" name="GetAlignmentToParent"><summary>Get the alignment to its parent. -1 in each alignment component means that the corressponding side is not aligned to its parent.</summary><returns>The alignment to its parent.</returns><signature><![CDATA[Margin GetAlignmentToParent(
+);
 ]]></signature></Document>

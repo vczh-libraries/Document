@@ -1,5 +1,7 @@
 <Document symbolId="vl::collections::LazyList::Aggregate@[T]([F])" accessor="public" category="Function" name="Aggregate"><summary>Aggregate a lazy list. An exception will raise if the lazy list is empty.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The aggregated value.</returns><param name="f">The lambda expression as an aggregator.</param><signature><![CDATA[template <
     typename F
 >
-T Aggregate(F) const;
+T Aggregate(
+    F
+) const;
 ]]></signature></Document>

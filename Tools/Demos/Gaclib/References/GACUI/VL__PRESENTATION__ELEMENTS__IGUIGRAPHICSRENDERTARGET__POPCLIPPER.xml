@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::PopClipper@void()" accessor="public" category="Function" name="PopClipper"><summary>
  Remove the last pushed clipper from the clipper stack.
- </summary><signature><![CDATA[void PopClipper();
+ </summary><signature><![CDATA[void PopClipper(
+);
 ]]></signature></Document>

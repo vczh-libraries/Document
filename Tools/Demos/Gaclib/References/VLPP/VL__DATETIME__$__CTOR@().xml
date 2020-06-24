@@ -1,2 +1,3 @@
-<Document symbolId="vl::DateTime::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty date time value.</summary><signature><![CDATA[ DateTime();
+<Document symbolId="vl::DateTime::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty date time value.</summary><signature><![CDATA[ DateTime(
+);
 ]]></signature></Document>

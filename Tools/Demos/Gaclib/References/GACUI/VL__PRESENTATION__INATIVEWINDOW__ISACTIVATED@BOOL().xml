@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::IsActivated@bool()" accessor="public" category="Function" name="IsActivated"><summary>
  Test is the window activated.
- </summary><returns>Returns true if the window is activated.</returns><signature><![CDATA[bool IsActivated();
+ </summary><returns>Returns true if the window is activated.</returns><signature><![CDATA[bool IsActivated(
+);
 ]]></signature></Document>

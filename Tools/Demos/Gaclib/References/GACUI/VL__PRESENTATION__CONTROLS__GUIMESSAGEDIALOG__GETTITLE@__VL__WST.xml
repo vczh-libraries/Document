@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiMessageDialog::GetTitle@::vl::WString const &amp;()" accessor="public" category="Function" name="GetTitle"><summary>Get the title for the dialog.</summary><returns>The title.</returns><signature><![CDATA[WString const & GetTitle();
+<Document symbolId="vl::presentation::controls::GuiMessageDialog::GetTitle@::vl::WString const &amp;()" accessor="public" category="Function" name="GetTitle"><summary>Get the title for the dialog.</summary><returns>The title.</returns><signature><![CDATA[WString const & GetTitle(
+);
 ]]></signature></Document>

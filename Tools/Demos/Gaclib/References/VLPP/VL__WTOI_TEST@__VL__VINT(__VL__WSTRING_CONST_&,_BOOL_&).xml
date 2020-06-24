@@ -1,3 +1,5 @@
-<Document symbolId="vl::wtoi_test@::vl::vint(::vl::WString const &amp;, bool &amp;)" accessor="" category="Function" name="wtoi_test"><summary>Convert a string to an signed integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vint wtoi_test(WString const &,
-bool &);
+<Document symbolId="vl::wtoi_test@::vl::vint(::vl::WString const &amp;, bool &amp;)" accessor="" category="Function" name="wtoi_test"><summary>Convert a string to an signed integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vint wtoi_test(
+    WString const &,
+    bool &
+);
 ]]></signature></Document>

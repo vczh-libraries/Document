@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::ShowInTaskBar@void()" accessor="public" category="Function" name="ShowInTaskBar"><summary>
  Show the icon in the task bar.
- </summary><signature><![CDATA[void ShowInTaskBar();
+ </summary><signature><![CDATA[void ShowInTaskBar(
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::collections::Dictionary::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a dictionary.</summary><signature><![CDATA[ Dictionary();
+<Document symbolId="vl::collections::Dictionary::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a dictionary.</summary><signature><![CDATA[ Dictionary(
+);
 ]]></signature></Document>

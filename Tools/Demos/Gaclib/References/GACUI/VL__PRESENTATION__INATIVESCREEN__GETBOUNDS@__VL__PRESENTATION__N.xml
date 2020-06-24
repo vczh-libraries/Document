@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeScreen::GetBounds@::vl::presentation::NativeRect()" accessor="public" category="Function" name="GetBounds"><summary>
  Get the bounds of the screen.
- </summary><returns>The bounds of the screen.</returns><signature><![CDATA[NativeRect GetBounds();
+ </summary><returns>The bounds of the screen.</returns><signature><![CDATA[NativeRect GetBounds(
+);
 ]]></signature></Document>

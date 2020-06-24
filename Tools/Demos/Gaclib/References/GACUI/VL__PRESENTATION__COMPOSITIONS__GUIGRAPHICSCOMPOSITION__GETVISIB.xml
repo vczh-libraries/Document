@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetVisible@bool()" accessor="public" category="Function" name="GetVisible"><summary>Get the visibility of the composition.</summary><returns>Returns true if the composition is visible.</returns><signature><![CDATA[bool GetVisible();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetVisible@bool()" accessor="public" category="Function" name="GetVisible"><summary>Get the visibility of the composition.</summary><returns>Returns true if the composition is visible.</returns><signature><![CDATA[bool GetVisible(
+);
 ]]></signature></Document>

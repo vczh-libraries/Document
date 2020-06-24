@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::IGuiAxis::VirtualSizeToRealSize@::vl::presentation::Size(::vl::presentation::Size)" accessor="public" category="Function" name="VirtualSizeToRealSize"><summary>Translate virtual size to real size.</summary><returns>The real size.</returns><param name="size">The virtual size.</param><signature><![CDATA[Size VirtualSizeToRealSize(Size);
+<Document symbolId="vl::presentation::compositions::IGuiAxis::VirtualSizeToRealSize@::vl::presentation::Size(::vl::presentation::Size)" accessor="public" category="Function" name="VirtualSizeToRealSize"><summary>Translate virtual size to real size.</summary><returns>The real size.</returns><param name="size">The virtual size.</param><signature><![CDATA[Size VirtualSizeToRealSize(
+    Size
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::IGuiMenuService::MenuItemExecuted@void()" accessor="public" category="Function" name="MenuItemExecuted"><summary>Called when the menu item is executed.</summary><signature><![CDATA[void MenuItemExecuted();
+<Document symbolId="vl::presentation::controls::IGuiMenuService::MenuItemExecuted@void()" accessor="public" category="Function" name="MenuItemExecuted"><summary>Called when the menu item is executed.</summary><signature><![CDATA[void MenuItemExecuted(
+);
 ]]></signature></Document>

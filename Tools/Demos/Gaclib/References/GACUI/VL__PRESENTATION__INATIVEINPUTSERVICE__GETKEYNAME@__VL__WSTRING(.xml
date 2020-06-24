@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeInputService::GetKeyName@::vl::WString(::vl::presentation::VKEY)" accessor="public" category="Function" name="GetKeyName"><summary>
  Get the name of a key.
- </summary><returns>The name of a key.</returns><param name="code">The key code.</param><signature><![CDATA[WString GetKeyName(VKEY);
+ </summary><returns>The name of a key.</returns><param name="code">The key code.</param><signature><![CDATA[WString GetKeyName(
+    VKEY
+);
 ]]></signature></Document>

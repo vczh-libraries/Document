@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::GuiResource::Precompile@::vl::Ptr&lt;::vl::presentation::GuiResourceFolder&gt;(::vl::presentation::IGuiResourcePrecompileCallback *, ::vl::presentation::GuiResourceError::List &amp;)" accessor="public" category="Function" name="Precompile"><summary>Precompile this resource to improve performance.</summary><returns>The resource folder contains all precompiled result. The folder will be added to the resource if there is no error.</returns><param name="callback">A callback to receive progress.</param><param name="errors">All collected errors during precompiling a resource.</param><signature><![CDATA[Ptr<GuiResourceFolder> Precompile(IGuiResourcePrecompileCallback *,
-GuiResourceError::List &);
+<Document symbolId="vl::presentation::GuiResource::Precompile@::vl::Ptr&lt;::vl::presentation::GuiResourceFolder&gt;(::vl::presentation::IGuiResourcePrecompileCallback *, ::vl::presentation::GuiResourceError::List &amp;)" accessor="public" category="Function" name="Precompile"><summary>Precompile this resource to improve performance.</summary><returns>The resource folder contains all precompiled result. The folder will be added to the resource if there is no error.</returns><param name="callback">A callback to receive progress.</param><param name="errors">All collected errors during precompiling a resource.</param><signature><![CDATA[Ptr<GuiResourceFolder> Precompile(
+    IGuiResourcePrecompileCallback *,
+    GuiResourceError::List &
+);
 ]]></signature></Document>

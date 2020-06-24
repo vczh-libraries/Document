@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::SetColumnOption@void(::vl::vint, ::vl::presentation::compositions::GuiCellOption)" accessor="public" category="Function" name="SetColumnOption"><summary>Set the sizing option of the specified column.</summary><param name="_column">The specified column number.</param><param name="option">The sizing option of the specified column.</param><signature><![CDATA[void SetColumnOption(vint,
-GuiCellOption);
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::SetColumnOption@void(::vl::vint, ::vl::presentation::compositions::GuiCellOption)" accessor="public" category="Function" name="SetColumnOption"><summary>Set the sizing option of the specified column.</summary><param name="_column">The specified column number.</param><param name="option">The sizing option of the specified column.</param><signature><![CDATA[void SetColumnOption(
+    vint,
+    GuiCellOption
+);
 ]]></signature></Document>

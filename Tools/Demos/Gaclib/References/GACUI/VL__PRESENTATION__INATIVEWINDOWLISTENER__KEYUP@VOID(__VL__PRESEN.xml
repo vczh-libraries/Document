@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowListener::KeyUp@void(::vl::presentation::NativeWindowKeyInfo const &amp;)" accessor="public" category="Function" name="KeyUp"><summary>
  Called a key is released.
- </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void KeyUp(NativeWindowKeyInfo const &);
+ </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void KeyUp(
+    NativeWindowKeyInfo const &
+);
 ]]></signature></Document>

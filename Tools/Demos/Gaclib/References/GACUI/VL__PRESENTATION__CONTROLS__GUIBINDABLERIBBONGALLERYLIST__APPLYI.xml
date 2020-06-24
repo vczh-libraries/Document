@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::ApplyItem@void(::vl::vint)" accessor="public" category="Function" name="ApplyItem"><summary>Select an item with <symbol docId="vl::presentation::controls::GuiBindableRibbonGalleryList::ItemApplied" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GuiBindableRibbonGalleryList::ItemApplied"/> event raised.</summary><param name="index">The index of the item to select. Set to -1 to clear the selection.</param><signature><![CDATA[void ApplyItem(vint);
+<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::ApplyItem@void(::vl::vint)" accessor="public" category="Function" name="ApplyItem"><summary>Select an item with <symbol docId="vl::presentation::controls::GuiBindableRibbonGalleryList::ItemApplied" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GuiBindableRibbonGalleryList::ItemApplied"/> event raised.</summary><param name="index">The index of the item to select. Set to -1 to clear the selection.</param><signature><![CDATA[void ApplyItem(
+    vint
+);
 ]]></signature></Document>

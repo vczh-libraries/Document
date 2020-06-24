@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::compositions::IGuiAxis::VirtualPointToRealPoint@::vl::presentation::Point(::vl::presentation::Size, ::vl::presentation::Point)" accessor="public" category="Function" name="VirtualPointToRealPoint"><summary>Translate virtual point to real point.</summary><returns>The real point.</returns><param name="realFullSize">The real full size.</param><param name="point">The virtual point.</param><signature><![CDATA[Point VirtualPointToRealPoint(Size,
-Point);
+<Document symbolId="vl::presentation::compositions::IGuiAxis::VirtualPointToRealPoint@::vl::presentation::Point(::vl::presentation::Size, ::vl::presentation::Point)" accessor="public" category="Function" name="VirtualPointToRealPoint"><summary>Translate virtual point to real point.</summary><returns>The real point.</returns><param name="realFullSize">The real full size.</param><param name="point">The virtual point.</param><signature><![CDATA[Point VirtualPointToRealPoint(
+    Size,
+    Point
+);
 ]]></signature></Document>

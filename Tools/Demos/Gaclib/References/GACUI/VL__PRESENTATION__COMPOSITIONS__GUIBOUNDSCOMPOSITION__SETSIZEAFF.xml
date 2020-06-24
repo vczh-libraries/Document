@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiBoundsComposition::SetSizeAffectParent@void(bool)" accessor="public" category="Function" name="SetSizeAffectParent"><summary>Set if the parent composition&apos;s size calculation is aware of the configuration of this composition.</summary><param name="value">Set to true to be awared.</param><signature><![CDATA[void SetSizeAffectParent(bool);
+<Document symbolId="vl::presentation::compositions::GuiBoundsComposition::SetSizeAffectParent@void(bool)" accessor="public" category="Function" name="SetSizeAffectParent"><summary>Set if the parent composition&apos;s size calculation is aware of the configuration of this composition.</summary><param name="value">Set to true to be awared.</param><signature><![CDATA[void SetSizeAffectParent(
+    bool
+);
 ]]></signature></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)" accessor="public" category="Function" name="SetInternalState"><summary>Restore the colorizer to a internal state.</summary><param name="state">The internal state.</param><signature><![CDATA[void SetInternalState(InternalState);
+<Document symbolId="vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)" accessor="public" category="Function" name="SetInternalState"><summary>Restore the colorizer to a internal state.</summary><param name="state">The internal state.</param><signature><![CDATA[void SetInternalState(
+    InternalState
+);
 ]]></signature></Document>

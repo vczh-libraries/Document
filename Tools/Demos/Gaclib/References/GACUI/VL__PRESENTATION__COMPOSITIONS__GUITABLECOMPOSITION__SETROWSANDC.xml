@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::SetRowsAndColumns@bool(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="SetRowsAndColumns"><summary>Change the number of rows and columns.</summary><returns>Returns true if this operation succeeded.</returns><param name="_rows">The number of rows.</param><param name="_columns">The number of columns.</param><signature><![CDATA[bool SetRowsAndColumns(vint,
-vint);
+<Document symbolId="vl::presentation::compositions::GuiTableComposition::SetRowsAndColumns@bool(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="SetRowsAndColumns"><summary>Change the number of rows and columns.</summary><returns>Returns true if this operation succeeded.</returns><param name="_rows">The number of rows.</param><param name="_columns">The number of columns.</param><signature><![CDATA[bool SetRowsAndColumns(
+    vint,
+    vint
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRowCount@::vl::vint()" accessor="public" category="Function" name="GetRowCount"><summary>Get the number of rows.</summary><returns>The number of rows.</returns><signature><![CDATA[vint GetRowCount();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRowCount@::vl::vint()" accessor="public" category="Function" name="GetRowCount"><summary>Get the number of rows.</summary><returns>The number of rows.</returns><signature><![CDATA[vint GetRowCount(
+);
 ]]></signature></Document>

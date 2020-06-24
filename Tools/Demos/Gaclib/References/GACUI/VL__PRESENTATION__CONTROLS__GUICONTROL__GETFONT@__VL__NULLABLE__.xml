@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetFont@::vl::Nullable&lt;::vl::presentation::FontProperties&gt; const &amp;()" accessor="public" category="Function" name="GetFont"><summary>Get the font of this control.</summary><returns>The font of this control.</returns><signature><![CDATA[Nullable<FontProperties> const & GetFont();
+<Document symbolId="vl::presentation::controls::GuiControl::GetFont@::vl::Nullable&lt;::vl::presentation::FontProperties&gt; const &amp;()" accessor="public" category="Function" name="GetFont"><summary>Get the font of this control.</summary><returns>The font of this control.</returns><signature><![CDATA[Nullable<FontProperties> const & GetFont(
+);
 ]]></signature></Document>

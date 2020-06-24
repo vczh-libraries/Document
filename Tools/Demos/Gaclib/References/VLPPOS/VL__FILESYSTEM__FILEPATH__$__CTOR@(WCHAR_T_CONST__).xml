@@ -1,2 +1,4 @@
-<Document symbolId="vl::filesystem::FilePath::$__ctor@(wchar_t const *)" accessor="public" category="Function" name="$__ctor"><summary>Create a file path.</summary><param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param><signature><![CDATA[ FilePath(wchar_t const *);
+<Document symbolId="vl::filesystem::FilePath::$__ctor@(wchar_t const *)" accessor="public" category="Function" name="$__ctor"><summary>Create a file path.</summary><param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param><signature><![CDATA[ FilePath(
+    wchar_t const *
+);
 ]]></signature></Document>

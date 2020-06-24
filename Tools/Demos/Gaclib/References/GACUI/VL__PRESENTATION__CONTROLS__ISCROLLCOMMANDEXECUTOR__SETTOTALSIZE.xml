@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SetTotalSize@void(::vl::vint)" accessor="public" category="Function" name="SetTotalSize"><summary>Change to total size of the scroll.</summary><param name="value">The total size.</param><signature><![CDATA[void SetTotalSize(vint);
+<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SetTotalSize@void(::vl::vint)" accessor="public" category="Function" name="SetTotalSize"><summary>Change to total size of the scroll.</summary><param name="value">The total size.</param><signature><![CDATA[void SetTotalSize(
+    vint
+);
 ]]></signature></Document>

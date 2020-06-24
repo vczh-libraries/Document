@@ -1,2 +1,3 @@
-<Document symbolId="vl::Locale::Invariant@::vl::Locale()" accessor="public" category="Function" name="Invariant"><summary>Get the invariant locale.</summary><returns>The invariant locale.</returns><signature><![CDATA[static Locale Invariant();
+<Document symbolId="vl::Locale::Invariant@::vl::Locale()" accessor="public" category="Function" name="Invariant"><summary>Get the invariant locale.</summary><returns>The invariant locale.</returns><signature><![CDATA[static Locale Invariant(
+);
 ]]></signature></Document>

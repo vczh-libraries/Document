@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::SetItemTemplate@void(::vl::presentation::controls::GuiComboBoxListControl::ItemStyleProperty)" accessor="public" category="Function" name="SetItemTemplate"><summary>Set the item style provider</summary><param name="value">The new item style provider</param><signature><![CDATA[void SetItemTemplate(ItemStyleProperty);
+<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::SetItemTemplate@void(::vl::presentation::controls::GuiComboBoxListControl::ItemStyleProperty)" accessor="public" category="Function" name="SetItemTemplate"><summary>Set the item style provider</summary><param name="value">The new item style provider</param><signature><![CDATA[void SetItemTemplate(
+    ItemStyleProperty
+);
 ]]></signature></Document>

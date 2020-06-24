@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::Array::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create an array.</summary><param name="size">The size of the array.</param><signature><![CDATA[ Array(vint /* optional */);
+<Document symbolId="vl::collections::Array::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create an array.</summary><param name="size">The size of the array.</param><signature><![CDATA[ Array(
+    vint /* optional */
+);
 ]]></signature></Document>

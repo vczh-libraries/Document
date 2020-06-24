@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::GetCharMeasurer@::vl::presentation::elements::text::CharMeasurer *()" accessor="public" category="Function" name="GetCharMeasurer"><summary>
  Returns the binded <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.
- </summary><returns>The binded <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.</returns><signature><![CDATA[CharMeasurer * GetCharMeasurer();
+ </summary><returns>The binded <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.</returns><signature><![CDATA[CharMeasurer * GetCharMeasurer(
+);
 ]]></signature></Document>

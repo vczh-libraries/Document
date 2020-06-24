@@ -1,3 +1,5 @@
-<Document symbolId="vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)" accessor="public" category="Function" name="DeleteReference"><summary>Destroy a pointer to the reference counter from an object.</summary><param name="counter">The pointer to the reference counter.</param><param name="reference">The object.</param><signature><![CDATA[static void DeleteReference(vint volatile *,
-void *);
+<Document symbolId="vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)" accessor="public" category="Function" name="DeleteReference"><summary>Destroy a pointer to the reference counter from an object.</summary><param name="counter">The pointer to the reference counter.</param><param name="reference">The object.</param><signature><![CDATA[static void DeleteReference(
+    vint volatile *,
+    void *
+);
 ]]></signature></Document>

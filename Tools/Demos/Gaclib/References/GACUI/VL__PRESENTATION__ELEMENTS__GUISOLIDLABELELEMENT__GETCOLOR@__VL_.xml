@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor"><summary>
  Get the text color.
- </summary><returns>The text color.</returns><signature><![CDATA[Color GetColor();
+ </summary><returns>The text color.</returns><signature><![CDATA[Color GetColor(
+);
 ]]></signature></Document>

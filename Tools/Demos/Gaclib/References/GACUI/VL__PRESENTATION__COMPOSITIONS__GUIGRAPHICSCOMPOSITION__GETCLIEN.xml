@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetClientArea@::vl::presentation::Rect()" accessor="public" category="Function" name="GetClientArea"><summary>Get the client area.</summary><returns>The client area.</returns><signature><![CDATA[Rect GetClientArea();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetClientArea@::vl::presentation::Rect()" accessor="public" category="Function" name="GetClientArea"><summary>Get the client area.</summary><returns>The client area.</returns><signature><![CDATA[Rect GetClientArea(
+);
 ]]></signature></Document>

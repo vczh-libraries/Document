@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetValueProperty@::vl::presentation::WritableItemProperty&lt;::vl::reflection::description::Value&gt;()" accessor="public" category="Function" name="GetValueProperty"><summary>Get the value property name to get the cell value from an item.</summary><returns>The value property name.</returns><signature><![CDATA[WritableItemProperty<description::Value> GetValueProperty();
+<Document symbolId="vl::presentation::controls::list::DataColumn::GetValueProperty@::vl::presentation::WritableItemProperty&lt;::vl::reflection::description::Value&gt;()" accessor="public" category="Function" name="GetValueProperty"><summary>Get the value property name to get the cell value from an item.</summary><returns>The value property name.</returns><signature><![CDATA[WritableItemProperty<description::Value> GetValueProperty(
+);
 ]]></signature></Document>

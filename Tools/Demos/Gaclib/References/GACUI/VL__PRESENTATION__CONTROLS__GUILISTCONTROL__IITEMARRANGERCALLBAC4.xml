@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize@::vl::presentation::Size(::vl::presentation::compositions::GuiBoundsComposition *)" accessor="public" category="Function" name="GetStylePreferredSize"><summary>Get the preferred size of an item control.</summary><returns>The preferred size of an item control.</returns><param name="style">The item control.</param><signature><![CDATA[Size GetStylePreferredSize(compositions::GuiBoundsComposition *);
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize@::vl::presentation::Size(::vl::presentation::compositions::GuiBoundsComposition *)" accessor="public" category="Function" name="GetStylePreferredSize"><summary>Get the preferred size of an item control.</summary><returns>The preferred size of an item control.</returns><param name="style">The item control.</param><signature><![CDATA[Size GetStylePreferredSize(
+    compositions::GuiBoundsComposition *
+);
 ]]></signature></Document>

@@ -1,5 +1,8 @@
 <Document symbolId="vl::presentation::INativeAsyncService::InvokeInMainThread@void(::vl::presentation::INativeWindow *, ::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeInMainThread"><summary>
  Invoke a specified function with an specified argument in the main thread.
- </summary><param name="window">A window to access the corressponding main thread.</param><param name="proc">The specified function.</param><signature><![CDATA[void InvokeInMainThread(INativeWindow *,
-Func<void()> const &);
+ </summary><param name="window">A window to access the corressponding main thread.</param><param name="proc">The specified function.</param><signature><![CDATA[void InvokeInMainThread(
+    INativeWindow *,
+    Func<void(
+)> const &
+);
 ]]></signature></Document>

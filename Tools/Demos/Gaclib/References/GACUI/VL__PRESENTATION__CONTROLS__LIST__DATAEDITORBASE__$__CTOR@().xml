@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::DataEditorBase::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the data editor.</summary><signature><![CDATA[ DataEditorBase();
+<Document symbolId="vl::presentation::controls::list::DataEditorBase::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the data editor.</summary><signature><![CDATA[ DataEditorBase(
+);
 ]]></signature></Document>

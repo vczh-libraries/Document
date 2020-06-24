@@ -1,2 +1,3 @@
-<Document symbolId="vl::Ptr::operator -&gt;@[T] *()" accessor="public" category="Function" name="operator -&gt;"><summary>Get the pointer to the object.</summary><returns>The pointer to the object.</returns><signature><![CDATA[T * operator ->() const;
+<Document symbolId="vl::Ptr::operator -&gt;@[T] *()" accessor="public" category="Function" name="operator -&gt;"><summary>Get the pointer to the object.</summary><returns>The pointer to the object.</returns><signature><![CDATA[T * operator ->(
+) const;
 ]]></signature></Document>

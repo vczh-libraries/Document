@@ -1,4 +1,6 @@
-<Document symbolId="vl::Locale::Compare@::vl::vint(::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::Locale::Normalization)" accessor="public" category="Function" name="Compare"><summary>Compare two strings.</summary><returns>Returns 0 if two strings are equal. Returns a positive number if the first string is larger. Returns a negative number if the second string is larger. When sorting strings, larger strings are put after then smaller strings.</returns><param name="s1">The first string to compare.</param><param name="s2">The second string to compare.</param><param name="normalization">Flags controlling how to normalize a string.</param><signature><![CDATA[vint Compare(WString const &,
-WString const &,
-Normalization) const;
+<Document symbolId="vl::Locale::Compare@::vl::vint(::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::Locale::Normalization)" accessor="public" category="Function" name="Compare"><summary>Compare two strings.</summary><returns>Returns 0 if two strings are equal. Returns a positive number if the first string is larger. Returns a negative number if the second string is larger. When sorting strings, larger strings are put after then smaller strings.</returns><param name="s1">The first string to compare.</param><param name="s2">The second string to compare.</param><param name="normalization">Flags controlling how to normalize a string.</param><signature><![CDATA[vint Compare(
+    WString const &,
+    WString const &,
+    Normalization
+) const;
 ]]></signature></Document>

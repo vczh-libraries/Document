@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetFont@::vl::presentation::FontProperties const &amp;()" accessor="public" category="Function" name="GetFont"><summary>
  Get the font configuration for all characters.
- </summary><returns>The font configuration.</returns><signature><![CDATA[FontProperties const & GetFont();
+ </summary><returns>The font configuration.</returns><signature><![CDATA[FontProperties const & GetFont(
+);
 ]]></signature></Document>

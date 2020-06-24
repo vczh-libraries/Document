@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::SetDirection@void(::vl::presentation::compositions::GuiSideAlignedComposition::Direction)" accessor="public" category="Function" name="SetDirection"><summary>Set the border to align.</summary><param name="value">The border to align.</param><signature><![CDATA[void SetDirection(Direction);
+<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::SetDirection@void(::vl::presentation::compositions::GuiSideAlignedComposition::Direction)" accessor="public" category="Function" name="SetDirection"><summary>Set the border to align.</summary><param name="value">The border to align.</param><signature><![CDATA[void SetDirection(
+    Direction
+);
 ]]></signature></Document>

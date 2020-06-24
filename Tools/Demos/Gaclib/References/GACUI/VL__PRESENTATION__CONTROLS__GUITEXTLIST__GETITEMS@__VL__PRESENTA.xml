@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextList::GetItems@::vl::presentation::controls::list::TextItemProvider &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all text items.</summary><returns>All text items.</returns><signature><![CDATA[list::TextItemProvider & GetItems();
+<Document symbolId="vl::presentation::controls::GuiTextList::GetItems@::vl::presentation::controls::list::TextItemProvider &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all text items.</summary><returns>All text items.</returns><signature><![CDATA[list::TextItemProvider & GetItems(
+);
 ]]></signature></Document>

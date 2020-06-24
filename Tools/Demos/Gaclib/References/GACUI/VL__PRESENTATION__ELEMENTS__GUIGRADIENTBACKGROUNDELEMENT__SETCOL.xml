@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiGradientBackgroundElement::SetColor1@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetColor1"><summary>
  Set the border color.
- </summary><param name="value">The new left-top color.</param><signature><![CDATA[void SetColor1(Color);
+ </summary><param name="value">The new left-top color.</param><signature><![CDATA[void SetColor1(
+    Color
+);
 ]]></signature></Document>

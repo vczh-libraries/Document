@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::GuiResourceItem::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a resource item.</summary><signature><![CDATA[ GuiResourceItem();
+<Document symbolId="vl::presentation::GuiResourceItem::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a resource item.</summary><signature><![CDATA[ GuiResourceItem(
+);
 ]]></signature></Document>

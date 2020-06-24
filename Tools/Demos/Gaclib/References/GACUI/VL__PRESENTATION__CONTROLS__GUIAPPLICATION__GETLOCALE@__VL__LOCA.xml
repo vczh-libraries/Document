@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiApplication::GetLocale@::vl::Locale()" accessor="public" category="Function" name="GetLocale"><summary>Returns the selected locale for all windows.</summary><returns>The selected locale.</returns><signature><![CDATA[Locale GetLocale();
+<Document symbolId="vl::presentation::controls::GuiApplication::GetLocale@::vl::Locale()" accessor="public" category="Function" name="GetLocale"><summary>Returns the selected locale for all windows.</summary><returns>The selected locale.</returns><signature><![CDATA[Locale GetLocale(
+);
 ]]></signature></Document>

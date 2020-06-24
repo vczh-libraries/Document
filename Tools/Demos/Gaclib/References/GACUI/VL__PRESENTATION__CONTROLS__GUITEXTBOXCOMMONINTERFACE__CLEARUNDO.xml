@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::ClearUndoRedo@void()" accessor="public" category="Function" name="ClearUndoRedo"><summary>Clear all undo and redo information.</summary><signature><![CDATA[void ClearUndoRedo();
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::ClearUndoRedo@void()" accessor="public" category="Function" name="ClearUndoRedo"><summary>Clear all undo and redo information.</summary><signature><![CDATA[void ClearUndoRedo(
+);
 ]]></signature></Document>

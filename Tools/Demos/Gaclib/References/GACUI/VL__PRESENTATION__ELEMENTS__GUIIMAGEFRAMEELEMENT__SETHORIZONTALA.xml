@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiImageFrameElement::SetHorizontalAlignment@void(::vl::presentation::Alignment)" accessor="public" category="Function" name="SetHorizontalAlignment"><summary>
  Set the horizontal alignment of the text.
- </summary><param name="value">The new horizontal alignment of the text.</param><signature><![CDATA[void SetHorizontalAlignment(Alignment);
+ </summary><param name="value">The new horizontal alignment of the text.</param><signature><![CDATA[void SetHorizontalAlignment(
+    Alignment
+);
 ]]></signature></Document>

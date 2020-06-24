@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SetSelectionTextAsKeyInput@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetSelectionTextAsKeyInput"><summary>Set the selected text and let to text box treat this changing as input by the keyboard.</summary><param name="value">The selected text.</param><signature><![CDATA[void SetSelectionTextAsKeyInput(WString const &);
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SetSelectionTextAsKeyInput@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetSelectionTextAsKeyInput"><summary>Set the selected text and let to text box treat this changing as input by the keyboard.</summary><param name="value">The selected text.</param><signature><![CDATA[void SetSelectionTextAsKeyInput(
+    WString const &
+);
 ]]></signature></Document>

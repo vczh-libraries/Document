@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::GuiTextData::GetText@::vl::WString()" accessor="public" category="Function" name="GetText"><summary>Get the specified text.</summary><returns>The specified text.</returns><signature><![CDATA[WString GetText();
+<Document symbolId="vl::presentation::GuiTextData::GetText@::vl::WString()" accessor="public" category="Function" name="GetText"><summary>Get the specified text.</summary><returns>The specified text.</returns><signature><![CDATA[WString GetText(
+);
 ]]></signature></Document>

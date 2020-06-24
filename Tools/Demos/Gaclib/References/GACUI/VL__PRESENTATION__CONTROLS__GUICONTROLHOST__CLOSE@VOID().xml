@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::Close@void()" accessor="public" category="Function" name="Close"><summary>
  Close the window and destroy the internal <symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/> object.
- </summary><signature><![CDATA[void Close();
+ </summary><signature><![CDATA[void Close(
+);
 ]]></signature></Document>

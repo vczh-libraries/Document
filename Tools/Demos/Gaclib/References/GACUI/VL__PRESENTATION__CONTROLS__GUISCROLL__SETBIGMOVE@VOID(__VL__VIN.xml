@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::SetBigMove@void(::vl::vint)" accessor="public" category="Function" name="SetBigMove"><summary>Set the big move.</summary><param name="value">The big move.</param><signature><![CDATA[void SetBigMove(vint);
+<Document symbolId="vl::presentation::controls::GuiScroll::SetBigMove@void(::vl::vint)" accessor="public" category="Function" name="SetBigMove"><summary>Set the big move.</summary><param name="value">The big move.</param><signature><![CDATA[void SetBigMove(
+    vint
+);
 ]]></signature></Document>

@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetWrapLineHeightCalculation@void(bool)" accessor="public" category="Function" name="SetWrapLineHeightCalculation"><summary>
  Set if the element calculates the min height when wrap line is enabled.
- </summary><param name="value">True if the element calculates the min height when wrap line is enabled.</param><signature><![CDATA[void SetWrapLineHeightCalculation(bool);
+ </summary><param name="value">True if the element calculates the min height when wrap line is enabled.</param><signature><![CDATA[void SetWrapLineHeightCalculation(
+    bool
+);
 ]]></signature></Document>

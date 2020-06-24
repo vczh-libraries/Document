@@ -1,3 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualDataGrid::SelectCell@bool(::vl::presentation::GridPos const &amp;, bool)" accessor="public" category="Function" name="SelectCell"><summary>Select a cell.</summary><returns>Returns true if the editor is opened.</returns><param name="value">The row index and column index of the selected cell.</param><param name="openEditor">Set to true to open an editor.</param><signature><![CDATA[bool SelectCell(GridPos const &,
-bool);
+<Document symbolId="vl::presentation::controls::GuiVirtualDataGrid::SelectCell@bool(::vl::presentation::GridPos const &amp;, bool)" accessor="public" category="Function" name="SelectCell"><summary>Select a cell.</summary><returns>Returns true if the editor is opened.</returns><param name="value">The row index and column index of the selected cell.</param><param name="openEditor">Set to true to open an editor.</param><signature><![CDATA[bool SelectCell(
+    GridPos const &,
+    bool
+);
 ]]></signature></Document>

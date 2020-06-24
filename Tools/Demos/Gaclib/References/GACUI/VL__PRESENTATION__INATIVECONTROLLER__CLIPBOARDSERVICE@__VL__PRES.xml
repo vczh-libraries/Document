@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeController::ClipboardService@::vl::presentation::INativeClipboardService *()" accessor="public" category="Function" name="ClipboardService"><summary>
  Get the clipboard service.
- </summary><returns>The clipboard service</returns><signature><![CDATA[INativeClipboardService * ClipboardService();
+ </summary><returns>The clipboard service</returns><signature><![CDATA[INativeClipboardService * ClipboardService(
+);
 ]]></signature></Document>

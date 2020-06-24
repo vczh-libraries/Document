@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::GetData@::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;()" accessor="public" category="Function" name="GetData"><summary>Get the data object.</summary><returns>The data object.</returns><signature><![CDATA[Ptr<DescriptableObject> GetData();
+<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider::GetData@::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;()" accessor="public" category="Function" name="GetData"><summary>Get the data object.</summary><returns>The data object.</returns><signature><![CDATA[Ptr<DescriptableObject> GetData(
+);
 ]]></signature></Document>

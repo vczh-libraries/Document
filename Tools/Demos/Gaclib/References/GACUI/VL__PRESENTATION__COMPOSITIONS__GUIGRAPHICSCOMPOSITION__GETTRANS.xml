@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetTransparentToMouse@bool()" accessor="public" category="Function" name="GetTransparentToMouse"><summary>Get is this composition transparent to mouse events.</summary><returns>Returns true if this composition is transparent to mouse events, which means it just passes all mouse events to the composition under it.</returns><signature><![CDATA[bool GetTransparentToMouse();
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetTransparentToMouse@bool()" accessor="public" category="Function" name="GetTransparentToMouse"><summary>Get is this composition transparent to mouse events.</summary><returns>Returns true if this composition is transparent to mouse events, which means it just passes all mouse events to the composition under it.</returns><signature><![CDATA[bool GetTransparentToMouse(
+);
 ]]></signature></Document>

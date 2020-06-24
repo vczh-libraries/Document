@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::GuiResourceNodeBase::GetFileAbsolutePath@::vl::WString const &amp;()" accessor="public" category="Function" name="GetFileAbsolutePath"><summary>Get the absolute file content path of this resource node. This path points to an existing file containing the content.</summary><returns>The file absolute path of this resource node .</returns><signature><![CDATA[WString const & GetFileAbsolutePath();
+<Document symbolId="vl::presentation::GuiResourceNodeBase::GetFileAbsolutePath@::vl::WString const &amp;()" accessor="public" category="Function" name="GetFileAbsolutePath"><summary>Get the absolute file content path of this resource node. This path points to an existing file containing the content.</summary><returns>The file absolute path of this resource node .</returns><signature><![CDATA[WString const & GetFileAbsolutePath(
+);
 ]]></signature></Document>

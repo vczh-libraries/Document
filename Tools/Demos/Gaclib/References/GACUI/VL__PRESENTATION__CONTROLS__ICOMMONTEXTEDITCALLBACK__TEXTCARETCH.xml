@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChanged@void(::vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct const &amp;)" accessor="public" category="Function" name="TextCaretChanged"><summary>Called after the caret is changed.</summary><param name="arguments">The data for this callback.</param><signature><![CDATA[void TextCaretChanged(TextCaretChangedStruct const &);
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChanged@void(::vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct const &amp;)" accessor="public" category="Function" name="TextCaretChanged"><summary>Called after the caret is changed.</summary><param name="arguments">The data for this callback.</param><signature><![CDATA[void TextCaretChanged(
+    TextCaretChangedStruct const &
+);
 ]]></signature></Document>

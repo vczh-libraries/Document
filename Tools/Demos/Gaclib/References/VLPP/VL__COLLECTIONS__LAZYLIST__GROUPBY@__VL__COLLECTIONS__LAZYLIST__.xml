@@ -1,5 +1,7 @@
 <Document symbolId="vl::collections::LazyList::GroupBy@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList&lt;[T]&gt;&gt;&gt;([F])" accessor="public" category="Function" name="GroupBy"><summary>Create a new lazy list, whose elements are groupd by from elements in this lazy list.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a key retriver to calcuate a key from an element.</param><signature><![CDATA[template <
     typename F
 >
-LazyList<Pair<vl::function_lambda::FunctionObjectRetriveType<F>::ResultType, LazyList<T>>> GroupBy(F) const;
+LazyList<Pair<vl::function_lambda::FunctionObjectRetriveType<F>::ResultType, LazyList<T>>> GroupBy(
+    F
+) const;
 ]]></signature></Document>

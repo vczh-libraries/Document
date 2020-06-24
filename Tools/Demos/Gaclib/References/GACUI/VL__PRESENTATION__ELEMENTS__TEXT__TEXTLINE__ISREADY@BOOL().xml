@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::text::TextLine::IsReady@bool()" accessor="public" category="Function" name="IsReady"><summary>
  Test is the line initialized.
- </summary><returns>Returns true if the line is initialized.</returns><signature><![CDATA[bool IsReady();
+ </summary><returns>Returns true if the line is initialized.</returns><signature><![CDATA[bool IsReady(
+);
 ]]></signature></Document>

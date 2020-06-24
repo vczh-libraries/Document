@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiApplication::GetExecutableFolder@::vl::WString()" accessor="public" category="Function" name="GetExecutableFolder"><summary>Get the folder of the current executable.</summary><returns>The folder of the current executable.</returns><signature><![CDATA[WString GetExecutableFolder();
+<Document symbolId="vl::presentation::controls::GuiApplication::GetExecutableFolder@::vl::WString()" accessor="public" category="Function" name="GetExecutableFolder"><summary>Get the folder of the current executable.</summary><returns>The folder of the current executable.</returns><signature><![CDATA[WString GetExecutableFolder(
+);
 ]]></signature></Document>

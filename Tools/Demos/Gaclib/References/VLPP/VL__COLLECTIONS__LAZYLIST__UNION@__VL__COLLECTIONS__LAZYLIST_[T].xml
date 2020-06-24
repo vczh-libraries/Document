@@ -1,2 +1,4 @@
-<Document symbolId="vl::collections::LazyList::Union@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Union"><summary>Create a new lazy list with elements in two containers. If some elements appear several times, only one will be kept.</summary><returns>The created lazy list.</returns><param name="remains">The second container.</param><signature><![CDATA[LazyList<T> Union(IEnumerable<T> const &) const;
+<Document symbolId="vl::collections::LazyList::Union@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Union"><summary>Create a new lazy list with elements in two containers. If some elements appear several times, only one will be kept.</summary><returns>The created lazy list.</returns><param name="remains">The second container.</param><signature><![CDATA[LazyList<T> Union(
+    IEnumerable<T> const &
+) const;
 ]]></signature></Document>

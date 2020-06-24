@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiColorDialog::GetOpenedCustomColor@bool()" accessor="public" category="Function" name="GetOpenedCustomColor"><summary>Get if the custom color panel is opened by default when it is enabled.</summary><returns>Returns true if the custom color panel is opened by default.</returns><signature><![CDATA[bool GetOpenedCustomColor();
+<Document symbolId="vl::presentation::controls::GuiColorDialog::GetOpenedCustomColor@bool()" accessor="public" category="Function" name="GetOpenedCustomColor"><summary>Get if the custom color panel is opened by default when it is enabled.</summary><returns>Returns true if the custom color panel is opened by default.</returns><signature><![CDATA[bool GetOpenedCustomColor(
+);
 ]]></signature></Document>

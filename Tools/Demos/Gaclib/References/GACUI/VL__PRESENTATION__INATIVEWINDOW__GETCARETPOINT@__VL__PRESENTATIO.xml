@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::INativeWindow::GetCaretPoint@::vl::presentation::NativePoint()" accessor="public" category="Function" name="GetCaretPoint"><summary>
  Get the caret point of the window. When an input method editor is opened, the input text box will be located to the caret point.
- </summary><returns>The caret point of the window.</returns><signature><![CDATA[NativePoint GetCaretPoint();
+ </summary><returns>The caret point of the window.</returns><signature><![CDATA[NativePoint GetCaretPoint(
+);
 ]]></signature></Document>

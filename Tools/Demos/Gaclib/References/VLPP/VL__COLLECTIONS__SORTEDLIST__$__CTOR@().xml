@@ -1,2 +1,3 @@
-<Document symbolId="vl::collections::SortedList::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a list.</summary><signature><![CDATA[ SortedList();
+<Document symbolId="vl::collections::SortedList::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a list.</summary><signature><![CDATA[ SortedList(
+);
 ]]></signature></Document>

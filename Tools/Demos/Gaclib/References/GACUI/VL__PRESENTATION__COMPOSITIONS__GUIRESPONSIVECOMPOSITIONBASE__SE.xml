@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiResponsiveCompositionBase::SetDirection@void(::vl::presentation::compositions::ResponsiveDirection)" accessor="public" category="Function" name="SetDirection"><summary>Set all supported directions.</summary><param name="value">All supported directions.</param><signature><![CDATA[void SetDirection(ResponsiveDirection);
+<Document symbolId="vl::presentation::compositions::GuiResponsiveCompositionBase::SetDirection@void(::vl::presentation::compositions::ResponsiveDirection)" accessor="public" category="Function" name="SetDirection"><summary>Set all supported directions.</summary><param name="value">All supported directions.</param><signature><![CDATA[void SetDirection(
+    ResponsiveDirection
+);
 ]]></signature></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::FinalizeGlobalStorage@void()" accessor="" category="Function" name="FinalizeGlobalStorage"><summary>Finalize the global storage.</summary><signature><![CDATA[void FinalizeGlobalStorage();
+<Document symbolId="vl::FinalizeGlobalStorage@void()" accessor="" category="Function" name="FinalizeGlobalStorage"><summary>Finalize the global storage.</summary><signature><![CDATA[void FinalizeGlobalStorage(
+);
 ]]></signature></Document>

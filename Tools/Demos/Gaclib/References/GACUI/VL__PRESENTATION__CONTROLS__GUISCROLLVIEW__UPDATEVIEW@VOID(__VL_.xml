@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::UpdateView@void(::vl::presentation::Rect)" accessor="protected" category="Function" name="UpdateView"><summary>Update the visible content using a view bounds. The view bounds is in the space from (0,0) to full size.</summary><param name="viewBounds">The view bounds.</param><signature><![CDATA[void UpdateView(Rect);
+<Document symbolId="vl::presentation::controls::GuiScrollView::UpdateView@void(::vl::presentation::Rect)" accessor="protected" category="Function" name="UpdateView"><summary>Update the visible content using a view bounds. The view bounds is in the space from (0,0) to full size.</summary><param name="viewBounds">The view bounds.</param><signature><![CDATA[void UpdateView(
+    Rect
+);
 ]]></signature></Document>

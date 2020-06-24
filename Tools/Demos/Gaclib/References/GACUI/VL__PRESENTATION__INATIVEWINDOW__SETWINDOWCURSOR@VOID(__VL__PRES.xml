@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindow::SetWindowCursor@void(::vl::presentation::INativeCursor *)" accessor="public" category="Function" name="SetWindowCursor"><summary>
  Set the mouse cursor of the window. When the mouse is on the window, the mouse cursor will be rendered.
- </summary><param name="cursor">The mouse cursor of the window.</param><signature><![CDATA[void SetWindowCursor(INativeCursor *);
+ </summary><param name="cursor">The mouse cursor of the window.</param><signature><![CDATA[void SetWindowCursor(
+    INativeCursor *
+);
 ]]></signature></Document>

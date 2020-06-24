@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetEllipse@void(bool)" accessor="public" category="Function" name="SetEllipse"><summary>
  Set if ellipse is enabled for this text. Ellipse will appear when the text is clipped.
- </summary><param name="value">True if ellipse is enabled for this text.</param><signature><![CDATA[void SetEllipse(bool);
+ </summary><param name="value">True if ellipse is enabled for this text.</param><signature><![CDATA[void SetEllipse(
+    bool
+);
 ]]></signature></Document>

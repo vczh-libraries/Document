@@ -1,2 +1,3 @@
-<Document symbolId="vl::filesystem::File::ReadAllTextByBom@::vl::WString()" accessor="public" category="Function" name="ReadAllTextByBom"><summary>Get the content of the file as text.</summary><returns>The content of the file.</returns><signature><![CDATA[WString ReadAllTextByBom() const;
+<Document symbolId="vl::filesystem::File::ReadAllTextByBom@::vl::WString()" accessor="public" category="Function" name="ReadAllTextByBom"><summary>Get the content of the file as text.</summary><returns>The content of the file.</returns><signature><![CDATA[WString ReadAllTextByBom(
+) const;
 ]]></signature></Document>
