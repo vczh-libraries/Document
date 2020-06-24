@@ -38,9 +38,7 @@
     - [ ] for classes, all documented direct/indirect base types and members are inserted to see also.
   - [ ] `<signature>`.
     - [ ] baes types for classes.
-    - [ ] **function**: complete signature (include expression for default values).
   - [ ] `<basetypes>`: inheritance tree, generic types are written as `NAME<...>`.
-  - [ ] Document article XML and document before/after generated XML to `WebsiteSource` project.
 - [ ] Update `WebsiteSource` to view references.
   - [ ] must interpret: `<summary>`, `<typeparam>`, `<param>`, `<enumitem>`, `<returns>`, `<remarks>`, `<seealsos>`, `<signature>`, `<basetypes>`.
   - [ ] must process: `<symbol>`.

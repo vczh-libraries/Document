@@ -214,7 +214,7 @@ extern WString										GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol, bool 
 extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 
 extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type);
-extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type, const WString& signature, bool needParenthesesForFuncArray);
+extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type, const WString& signature, bool needParenthesesForFuncArray, FunctionType* topLevelFunctionType = nullptr);
 extern WString										GetSymbolDisplayNameInSignature(Symbol* symbol);
 
 /***********************************************************************

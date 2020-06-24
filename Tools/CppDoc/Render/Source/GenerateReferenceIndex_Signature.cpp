@@ -1,7 +1,7 @@
 #include "Render.h"
 #include <Symbol_TemplateSpec.h>
 
-WString AppendFunctionParametersInSignature(FunctionType* funcType);
+WString AppendFunctionParametersInSignature(FunctionType* funcType, bool topLevel);
 WString AppendGenericArgumentsInSignature(VariadicList<GenericArgument>& arguments);
 WString GetUnscopedSymbolDisplayNameInSignature(Symbol* symbol);
 
@@ -119,7 +119,7 @@ public:
 			signature = L"(" + signature + L")";
 		}
 
-		signature += AppendFunctionParametersInSignature(self);
+		signature += AppendFunctionParametersInSignature(self, self == topLevelFunctionType);
 
 		if (self->decoratorReturnType)
 		{
@@ -133,7 +133,11 @@ public:
 		if (self->qualifierRRef)		signature += L" &&";
 
 		needParenthesesForFuncArray = true;
-		self->returnType->Accept(this);
+
+		if (self->returnType)
+		{
+			self->returnType->Accept(this);
+		}
 	}
 
 	void Visit(MemberType* self)override
@@ -198,17 +202,16 @@ public:
 WString GetTypeDisplayNameInSignature(Ptr<Type> type)
 {
 	GetSignatureTypeVisitor visitor;
-	visitor.topLevelFunctionType = GetTypeWithoutMemberAndCC(type).Cast<FunctionType>().Obj();
 	type->Accept(&visitor);
 	return visitor.signature;
 }
 
-WString GetTypeDisplayNameInSignature(Ptr<Type> type, const WString& signature, bool needParenthesesForFuncArray)
+WString GetTypeDisplayNameInSignature(Ptr<Type> type, const WString& signature, bool needParenthesesForFuncArray, FunctionType* topLevelFunctionType)
 {
 	GetSignatureTypeVisitor visitor;
 	visitor.signature = signature;
 	visitor.needParenthesesForFuncArray = needParenthesesForFuncArray;
-	visitor.topLevelFunctionType = GetTypeWithoutMemberAndCC(type).Cast<FunctionType>().Obj();
+	visitor.topLevelFunctionType = topLevelFunctionType;
 	type->Accept(&visitor);
 	return visitor.signature;
 }
@@ -217,32 +220,51 @@ WString GetTypeDisplayNameInSignature(Ptr<Type> type, const WString& signature, 
 AppendFunctionParametersInSignature
 ***********************************************************************/
 
-WString AppendFunctionParametersInSignature(FunctionType* funcType)
+WString AppendFunctionParametersInSignature(FunctionType* funcType, bool topLevel)
 {
-	WString result = L"(";
-	for (vint i = 0; i < funcType->parameters.Count(); i++)
+	return GenerateToStream([=](StreamWriter& writer)
 	{
-		if (i != 0) result += L", ";
-		if (funcType->parameters[i].isVariadic)
+		writer.WriteString(L"(");
+		for (vint i = 0; i < funcType->parameters.Count(); i++)
 		{
-			result += GetTypeDisplayNameInSignature(funcType->parameters[i].item->type, L"...", true);
-		}
-		else
-		{
-			result += GetTypeDisplayNameInSignature(funcType->parameters[i].item->type);
-		}
-	}
-	if (funcType->ellipsis)
-	{
-		if (funcType->parameters.Count() > 0)
-		{
-			result += L", ";
-		}
-		result += L"...";
-	}
-	result += L")";
+			WString name;
+			auto param = funcType->parameters[i];
+			if (topLevel && param.item->name)
+			{
+				name = L" " + param.item->name;
+			}
 
-	return result;
+			if (param.isVariadic)
+			{
+				name = L"..." + name;
+			}
+
+			writer.WriteString(GetTypeDisplayNameInSignature(param.item->type, name, param.isVariadic));
+
+			if (topLevel && param.item->initializer)
+			{
+				writer.WriteString(L" /* optional */");
+			}
+
+			if (i < funcType->parameters.Count() - 1 || funcType->ellipsis)
+			{
+				if (topLevel)
+				{
+					writer.WriteLine(L",");
+				}
+				else
+				{
+					writer.WriteString(L", ");
+				}
+			}
+		}
+
+		if (funcType->ellipsis)
+		{
+			writer.WriteString(L"...");
+		}
+		writer.WriteString(L")");
+	});
 }
 
 /***********************************************************************
@@ -462,26 +484,78 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 		return GenerateToStream([=](StreamWriter& writer)
 		{
 			auto fdecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
+			bool decoratorStatic = false;
+
+			if (auto decl = symbol->GetImplDecl_NFb<ForwardVariableDeclaration>())
 			{
-				bool declaratorStatic = false;
-
-				if (auto decl = symbol->GetImplDecl_NFb<ForwardVariableDeclaration>())
-				{
-					declaratorStatic |= decl->decoratorStatic;
-				}
-				for (vint i = 0; i < symbol->GetForwardDecls_N().Count(); i++)
-				{
-					declaratorStatic |= symbol->GetForwardDecls_N()[i].Cast<ForwardVariableDeclaration>()->decoratorStatic;
-				}
-
-				if (declaratorStatic) writer.WriteString(L"static ");
+				decoratorStatic |= decl->decoratorStatic;
+			}
+			for (vint i = 0; i < symbol->GetForwardDecls_N().Count(); i++)
+			{
+				decoratorStatic |= symbol->GetForwardDecls_N()[i].Cast<ForwardVariableDeclaration>()->decoratorStatic;
 			}
 
-			writer.WriteString(GetTypeDisplayNameInSignature(fdecl->type, L" " + fdecl->name.name, false));
+			if (decoratorStatic) writer.WriteString(L"static ");
+
+			auto type = GetTypeWithoutMemberAndCC(fdecl->type);
+			writer.WriteString(GetTypeDisplayNameInSignature(type, L" " + fdecl->name.name, false));
 			writer.WriteLine(L";");
 		});
 	case symbol_component::SymbolKind::FunctionSymbol:
-		return L"";
+		return GenerateToStream([=](StreamWriter& writer)
+		{
+			auto fdecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+
+			bool decoratorStatic = false;
+			bool decoratorConstexpr = false;
+			bool decoratorExplicit = false;
+			bool decoratorDelete = false;
+
+			for (vint i = 0; i < symbol->GetForwardSymbols_F().Count(); i++)
+			{
+				auto decl = symbol->GetForwardSymbols_F()[i]->GetForwardDecl_Fb().Cast<ForwardFunctionDeclaration>();
+				decoratorStatic |= decl->decoratorStatic;
+				decoratorConstexpr |= decl->decoratorConstexpr;
+				decoratorExplicit |= decl->decoratorExplicit;
+				decoratorDelete |= decl->decoratorDelete;
+			}
+			for (vint i = 0; i < symbol->GetImplSymbols_F().Count(); i++)
+			{
+				auto decl = symbol->GetImplSymbols_F()[i]->GetForwardDecl_Fb().Cast<ForwardFunctionDeclaration>();
+				decoratorStatic |= decl->decoratorStatic;
+				decoratorConstexpr |= decl->decoratorConstexpr;
+				decoratorExplicit |= decl->decoratorExplicit;
+				decoratorDelete |= decl->decoratorDelete;
+			}
+
+			if (fdecl->templateSpec)
+			{
+				WriteTemplateSpecInSignature(fdecl->templateSpec, L"", writer);
+			}
+
+			if (decoratorStatic) writer.WriteString(L"static ");
+			if (decoratorConstexpr) writer.WriteString(L"constexpr ");
+			if (decoratorExplicit) writer.WriteString(L"explicit ");
+
+			if (fdecl->name.name == L"$__type")
+			{
+				auto type = GetTypeWithoutMemberAndCC(fdecl->type).Cast<FunctionType>();
+				writer.WriteString(L"operator ");
+				writer.WriteString(GetTypeDisplayNameInSignature(type->returnType));
+				writer.WriteString(L"()");
+			}
+			else
+			{
+				WString name = L" " + fdecl->name;
+				if (fdecl->specializationSpec) name += AppendGenericArgumentsInSignature(fdecl->specializationSpec->arguments);
+
+				auto type = GetTypeWithoutMemberAndCC(fdecl->type).Cast<FunctionType>();
+				writer.WriteString(GetTypeDisplayNameInSignature(type, name, false, type.Obj()));
+			}
+
+			if (decoratorDelete) writer.WriteString(L" = delete");
+			writer.WriteLine(L";");
+		});
 	default:
 		throw L"Unexpected symbol kind.";
 	}
