@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::FontProperties::italic" accessor="public" category="Variable" name="italic"><summary>
  True if the font is italic.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[bool italic;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::DateLocaleChanged" accessor="public" category="Variable" name="DateLocaleChanged"><summary>Date locale changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDatePicker::DateLocaleChanged" accessor="public" category="Variable" name="DateLocaleChanged"><summary>Date locale changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateLocaleChanged;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::WindowLostFocus" accessor="public" category="Variable" name="WindowLostFocus"><summary>Window lost focus event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::WindowLostFocus" accessor="public" category="Variable" name="WindowLostFocus"><summary>Window lost focus event.</summary><signature><![CDATA[compositions::GuiNotifyEvent WindowLostFocus;
+]]></signature></Document>

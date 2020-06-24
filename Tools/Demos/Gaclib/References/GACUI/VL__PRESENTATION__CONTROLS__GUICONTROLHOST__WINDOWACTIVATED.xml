@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::WindowActivated" accessor="public" category="Variable" name="WindowActivated"><summary>Window activated event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControlHost::WindowActivated" accessor="public" category="Variable" name="WindowActivated"><summary>Window activated event.</summary><signature><![CDATA[compositions::GuiNotifyEvent WindowActivated;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::inputText" accessor="public" category="Variable" name="inputText"><summary>The text of the selection after replacing.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::inputText" accessor="public" category="Variable" name="inputText"><summary>The text of the selection after replacing.</summary><signature><![CDATA[WString inputText;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::DateSelected" accessor="public" category="Variable" name="DateSelected"><summary>Date selected event. Called when a day button is selected.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDatePicker::DateSelected" accessor="public" category="Variable" name="DateSelected"><summary>Date selected event. Called when a day button is selected.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateSelected;
+]]></signature></Document>

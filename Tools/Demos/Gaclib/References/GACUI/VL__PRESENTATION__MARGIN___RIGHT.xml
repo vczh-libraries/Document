@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::Margin_::right" accessor="public" category="Variable" name="right"><summary>
  The right margin.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[T right;
+]]></signature></Document>

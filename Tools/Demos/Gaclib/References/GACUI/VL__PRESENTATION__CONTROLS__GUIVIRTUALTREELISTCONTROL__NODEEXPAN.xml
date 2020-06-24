@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeExpanded" accessor="public" category="Variable" name="NodeExpanded"><summary>Node expanded event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeExpanded" accessor="public" category="Variable" name="NodeExpanded"><summary>Node expanded event.</summary><signature><![CDATA[compositions::GuiNodeNotifyEvent NodeExpanded;
+]]></signature></Document>

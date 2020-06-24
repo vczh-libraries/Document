@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::DateNavigated" accessor="public" category="Variable" name="DateNavigated"><summary>Date navigated event. Called when the current month is changed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDatePicker::DateNavigated" accessor="public" category="Variable" name="DateNavigated"><summary>Date navigated event. Called when the current month is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateNavigated;
+]]></signature></Document>

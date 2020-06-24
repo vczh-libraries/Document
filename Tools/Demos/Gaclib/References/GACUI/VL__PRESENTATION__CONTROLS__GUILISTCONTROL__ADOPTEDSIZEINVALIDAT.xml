@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::AdoptedSizeInvalidated" accessor="public" category="Variable" name="AdoptedSizeInvalidated"><summary>Adopted size invalidated.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::AdoptedSizeInvalidated" accessor="public" category="Variable" name="AdoptedSizeInvalidated"><summary>Adopted size invalidated.</summary><signature><![CDATA[compositions::GuiNotifyEvent AdoptedSizeInvalidated;
+]]></signature></Document>

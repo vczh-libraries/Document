@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_::y" accessor="public" category="Variable" name="y"><summary>The mouse position of y dimension.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::WindowMouseInfo_::y" accessor="public" category="Variable" name="y"><summary>The mouse position of y dimension.</summary><signature><![CDATA[T y;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::list::IListViewItemView::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this view.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::list::IListViewItemView::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this view.</summary><signature><![CDATA[static wchar_t const * const IListViewItemView:: Identifier;
+]]></signature></Document>

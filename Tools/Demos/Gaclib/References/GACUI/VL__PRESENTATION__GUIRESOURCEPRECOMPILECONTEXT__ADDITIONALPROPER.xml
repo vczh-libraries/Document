@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourcePrecompileContext::additionalProperties" accessor="public" category="Variable" name="additionalProperties"><summary>Additional properties for resource item contents</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResourcePrecompileContext::additionalProperties" accessor="public" category="Variable" name="additionalProperties"><summary>Additional properties for resource item contents</summary><signature><![CDATA[PropertyMap additionalProperties;
+]]></signature></Document>

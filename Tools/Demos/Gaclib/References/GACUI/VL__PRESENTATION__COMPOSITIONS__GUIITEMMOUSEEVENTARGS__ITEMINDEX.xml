@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiItemMouseEventArgs::itemIndex" accessor="public" category="Variable" name="itemIndex"><summary>Item index.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiItemMouseEventArgs::itemIndex" accessor="public" category="Variable" name="itemIndex"><summary>Item index.</summary><signature><![CDATA[vint itemIndex;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonGallery::RequestedScrollUp" accessor="public" category="Variable" name="RequestedScrollUp"><summary>Scroll up button clicked event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiRibbonGallery::RequestedScrollUp" accessor="public" category="Variable" name="RequestedScrollUp"><summary>Scroll up button clicked event.</summary><signature><![CDATA[compositions::GuiNotifyEvent RequestedScrollUp;
+]]></signature></Document>

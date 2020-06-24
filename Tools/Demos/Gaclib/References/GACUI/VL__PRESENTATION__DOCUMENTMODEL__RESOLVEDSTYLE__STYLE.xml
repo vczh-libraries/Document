@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentModel::ResolvedStyle::style" accessor="public" category="Variable" name="style"><summary>The style of the text.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentModel::ResolvedStyle::style" accessor="public" category="Variable" name="style"><summary>The style of the text.</summary><signature><![CDATA[FontProperties style;
+]]></signature></Document>

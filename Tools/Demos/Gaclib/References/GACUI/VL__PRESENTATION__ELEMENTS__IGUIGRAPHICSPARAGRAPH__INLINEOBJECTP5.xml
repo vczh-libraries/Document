@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties::breakCondition" accessor="public" category="Variable" name="breakCondition"><summary>The break condition of the inline object.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties::breakCondition" accessor="public" category="Variable" name="breakCondition"><summary>The break condition of the inline object.</summary><signature><![CDATA[BreakCondition breakCondition;
+]]></signature></Document>

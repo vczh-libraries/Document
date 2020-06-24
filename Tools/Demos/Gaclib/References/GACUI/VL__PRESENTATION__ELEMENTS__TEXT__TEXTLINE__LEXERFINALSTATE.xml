@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLine::lexerFinalState" accessor="public" category="Variable" name="lexerFinalState"><summary>
  The internal lexical analyzer state of a colorizer when it parses to the end of this line. -1 means that this state is not available.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[vint lexerFinalState;
+]]></signature></Document>

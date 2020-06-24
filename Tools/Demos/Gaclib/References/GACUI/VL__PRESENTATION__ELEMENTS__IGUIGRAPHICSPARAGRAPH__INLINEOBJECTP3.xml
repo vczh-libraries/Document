@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties::backgroundImage" accessor="public" category="Variable" name="backgroundImage"><summary>The background image, nullable.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties::backgroundImage" accessor="public" category="Variable" name="backgroundImage"><summary>The background image, nullable.</summary><signature><![CDATA[Ptr<IGuiGraphicsElement> backgroundImage;
+]]></signature></Document>

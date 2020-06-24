@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::functionIndex" accessor="public" category="Variable" name="functionIndex"><summary>The executing function.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::functionIndex" accessor="public" category="Variable" name="functionIndex"><summary>The executing function.</summary><signature><![CDATA[vint functionIndex;
+]]></signature></Document>

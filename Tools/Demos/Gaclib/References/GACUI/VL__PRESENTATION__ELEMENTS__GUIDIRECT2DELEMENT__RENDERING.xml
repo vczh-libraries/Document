@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiDirect2DElement::Rendering" accessor="public" category="Variable" name="Rendering"><summary>Rendering event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::GuiDirect2DElement::Rendering" accessor="public" category="Variable" name="Rendering"><summary>Rendering event.</summary><signature><![CDATA[compositions::GuiGraphicsEvent<GuiDirect2DElementEventArgs> Rendering;
+]]></signature></Document>

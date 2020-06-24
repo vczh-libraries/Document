@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeExceptionInfo::fatal" accessor="public" category="Variable" name="fatal"><summary>Fatal error flag.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeExceptionInfo::fatal" accessor="public" category="Variable" name="fatal"><summary>Fatal error flag.</summary><signature><![CDATA[bool fatal;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::AxisChanged" accessor="public" category="Variable" name="AxisChanged"><summary>Coordinate transformer changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiListControl::AxisChanged" accessor="public" category="Variable" name="AxisChanged"><summary>Coordinate transformer changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent AxisChanged;
+]]></signature></Document>

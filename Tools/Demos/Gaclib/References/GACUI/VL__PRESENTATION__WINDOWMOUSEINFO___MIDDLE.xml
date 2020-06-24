@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_::middle" accessor="public" category="Variable" name="middle"><summary>True if the middle mouse button is pressed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::WindowMouseInfo_::middle" accessor="public" category="Variable" name="middle"><summary>True if the middle mouse button is pressed.</summary><signature><![CDATA[bool middle;
+]]></signature></Document>

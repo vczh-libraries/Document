@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLine::att" accessor="public" category="Variable" name="att"><summary>
  A extra information buffer starts from the first character of this line.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[CharAtt * att;
+]]></signature></Document>

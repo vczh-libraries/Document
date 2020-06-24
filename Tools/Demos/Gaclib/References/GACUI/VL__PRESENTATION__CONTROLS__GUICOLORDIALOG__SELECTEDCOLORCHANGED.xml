@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiColorDialog::SelectedColorChanged" accessor="public" category="Variable" name="SelectedColorChanged"><summary>Selected color changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiColorDialog::SelectedColorChanged" accessor="public" category="Variable" name="SelectedColorChanged"><summary>Selected color changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectedColorChanged;
+]]></signature></Document>

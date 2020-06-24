@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::LargeImageChanged" accessor="public" category="Variable" name="LargeImageChanged"><summary>Large image changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiMenuButton::LargeImageChanged" accessor="public" category="Variable" name="LargeImageChanged"><summary>Large image changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent LargeImageChanged;
+]]></signature></Document>

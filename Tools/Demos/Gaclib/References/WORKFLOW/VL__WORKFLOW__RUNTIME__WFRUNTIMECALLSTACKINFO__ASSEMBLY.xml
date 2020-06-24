@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::assembly" accessor="public" category="Variable" name="assembly"><summary>The executing assembly.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::assembly" accessor="public" category="Variable" name="assembly"><summary>The executing assembly.</summary><signature><![CDATA[Ptr<WfAssembly> assembly;
+]]></signature></Document>

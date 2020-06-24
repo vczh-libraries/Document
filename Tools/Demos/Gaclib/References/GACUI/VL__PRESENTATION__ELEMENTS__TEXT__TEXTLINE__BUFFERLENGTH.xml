@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLine::bufferLength" accessor="public" category="Variable" name="bufferLength"><summary>
  The number of elements in the allocated buffer memory.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[vint bufferLength;
+]]></signature></Document>

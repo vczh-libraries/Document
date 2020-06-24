@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::ModifiedChanged" accessor="public" category="Variable" name="ModifiedChanged"><summary>Modified status changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::ModifiedChanged" accessor="public" category="Variable" name="ModifiedChanged"><summary>Modified status changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ModifiedChanged;
+]]></signature></Document>

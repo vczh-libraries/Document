@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::FontProperties::fontFamily" accessor="public" category="Variable" name="fontFamily"><summary>
  Font family (or font name, usually).
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[WString fontFamily;
+]]></signature></Document>

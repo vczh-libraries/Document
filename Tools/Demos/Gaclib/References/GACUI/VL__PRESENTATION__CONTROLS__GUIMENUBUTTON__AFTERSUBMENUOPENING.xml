@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::AfterSubMenuOpening" accessor="public" category="Variable" name="AfterSubMenuOpening"><summary>After sub menu opening event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiMenuButton::AfterSubMenuOpening" accessor="public" category="Variable" name="AfterSubMenuOpening"><summary>After sub menu opening event.</summary><signature><![CDATA[compositions::GuiNotifyEvent AfterSubMenuOpening;
+]]></signature></Document>

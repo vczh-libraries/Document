@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::instruction" accessor="public" category="Variable" name="instruction"><summary>The executing instruction.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::instruction" accessor="public" category="Variable" name="instruction"><summary>The executing instruction.</summary><signature><![CDATA[vint instruction;
+]]></signature></Document>

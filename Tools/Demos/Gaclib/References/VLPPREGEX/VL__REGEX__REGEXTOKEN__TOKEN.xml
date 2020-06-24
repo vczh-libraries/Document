@@ -1,1 +1,2 @@
-<Document symbolId="vl::regex::RegexToken::token" accessor="public" category="Variable" name="token"><summary>The token id, begins at 0, represents the regular expression in the list that matches this token. -1 means this token is produced by an error.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::regex::RegexToken::token" accessor="public" category="Variable" name="token"><summary>The token id, begins at 0, represents the regular expression in the list that matches this token. -1 means this token is produced by an error.</summary><signature><![CDATA[vint token;
+]]></signature></Document>

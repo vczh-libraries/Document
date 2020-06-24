@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListViewBase::ColumnClicked" accessor="public" category="Variable" name="ColumnClicked"><summary>Column clicked event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiListViewBase::ColumnClicked" accessor="public" category="Variable" name="ColumnClicked"><summary>Column clicked event.</summary><signature><![CDATA[compositions::GuiItemNotifyEvent ColumnClicked;
+]]></signature></Document>

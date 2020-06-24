@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::TreeViewItem::text" accessor="public" category="Variable" name="text"><summary>The text of this item.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::tree::TreeViewItem::text" accessor="public" category="Variable" name="text"><summary>The text of this item.</summary><signature><![CDATA[WString text;
+]]></signature></Document>

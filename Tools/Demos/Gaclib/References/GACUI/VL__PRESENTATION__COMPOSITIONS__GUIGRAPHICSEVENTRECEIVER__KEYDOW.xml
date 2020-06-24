@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::keyDown" accessor="public" category="Variable" name="keyDown"><summary>Key down event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::keyDown" accessor="public" category="Variable" name="keyDown"><summary>Key down event.</summary><signature><![CDATA[GuiKeyEvent keyDown;
+]]></signature></Document>

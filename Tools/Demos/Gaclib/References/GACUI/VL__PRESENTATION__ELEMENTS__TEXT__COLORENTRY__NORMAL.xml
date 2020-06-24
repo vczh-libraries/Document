@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::ColorEntry::normal" accessor="public" category="Variable" name="normal"><summary>
  Colors in normal state.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[ColorItem normal;
+]]></signature></Document>

@@ -354,8 +354,8 @@ void WriteTemplateSpecInSignature(Ptr<TemplateSpec> spec, const WString& indent,
 			writer.WriteString(indent);
 			writer.WriteString(L"    ");
 			{
-				WString name = argument.name.name;
-				if (argument.ellipsis) name = L"... " + name;
+				WString name = L" " + argument.name.name;
+				if (argument.ellipsis) name = L"..." + name;
 				writer.WriteString(GetTypeDisplayNameInSignature(argument.type, name, argument.ellipsis));
 			}
 			if (argument.expr) writer.WriteString(L" /* optional */");
@@ -448,7 +448,7 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 				WriteTemplateSpecInSignature(decl->templateSpec, L"", writer);
 			}
 			if (decl->decoratorConstexpr) writer.WriteString(L"constexpr ");
-			writer.WriteString(GetTypeDisplayNameInSignature(decl->type, decl->name.name, false));
+			writer.WriteString(GetTypeDisplayNameInSignature(decl->type, L" " + decl->name.name, false));
 			writer.WriteLine(L" = expr;");
 		});
 	case symbol_component::SymbolKind::Namespace:
@@ -459,7 +459,27 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			writer.WriteLine(L";");
 		});
 	case symbol_component::SymbolKind::Variable:
-		return L"";
+		return GenerateToStream([=](StreamWriter& writer)
+		{
+			auto fdecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
+			{
+				bool declaratorStatic = false;
+
+				if (auto decl = symbol->GetImplDecl_NFb<ForwardVariableDeclaration>())
+				{
+					declaratorStatic |= decl->decoratorStatic;
+				}
+				for (vint i = 0; i < symbol->GetForwardDecls_N().Count(); i++)
+				{
+					declaratorStatic |= symbol->GetForwardDecls_N()[i].Cast<ForwardVariableDeclaration>()->decoratorStatic;
+				}
+
+				if (declaratorStatic) writer.WriteString(L"static ");
+			}
+
+			writer.WriteString(GetTypeDisplayNameInSignature(fdecl->type, L" " + fdecl->name.name, false));
+			writer.WriteLine(L";");
+		});
 	case symbol_component::SymbolKind::FunctionSymbol:
 		return L"";
 	default:

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonGallery::ScrollUpEnabledChanged" accessor="public" category="Variable" name="ScrollUpEnabledChanged"><summary>Scroll up enabled changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiRibbonGallery::ScrollUpEnabledChanged" accessor="public" category="Variable" name="ScrollUpEnabledChanged"><summary>Scroll up enabled changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ScrollUpEnabledChanged;
+]]></signature></Document>

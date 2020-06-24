@@ -1,1 +1,2 @@
-<Document symbolId="vl::HttpRequest::method" accessor="public" category="Variable" name="method"><summary>HTTP method, like &quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, etc.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::HttpRequest::method" accessor="public" category="Variable" name="method"><summary>HTTP method, like &quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, etc.</summary><signature><![CDATA[WString method;
+]]></signature></Document>

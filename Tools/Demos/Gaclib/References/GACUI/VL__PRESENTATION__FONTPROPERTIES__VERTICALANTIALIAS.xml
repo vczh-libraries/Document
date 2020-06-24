@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::FontProperties::verticalAntialias" accessor="public" category="Variable" name="verticalAntialias"><summary>
  True if the font has anti alias rendering in vertical direction.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[bool verticalAntialias;
+]]></signature></Document>

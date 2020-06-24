@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::PageSizeChanged" accessor="public" category="Variable" name="PageSizeChanged"><summary>Page size changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::PageSizeChanged" accessor="public" category="Variable" name="PageSizeChanged"><summary>Page size changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent PageSizeChanged;
+]]></signature></Document>

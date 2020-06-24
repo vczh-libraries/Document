@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::Margin_::left" accessor="public" category="Variable" name="left"><summary>
  The left margin.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[T left;
+]]></signature></Document>

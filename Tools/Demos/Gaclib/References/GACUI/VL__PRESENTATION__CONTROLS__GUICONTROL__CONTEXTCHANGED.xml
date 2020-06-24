@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::ContextChanged" accessor="public" category="Variable" name="ContextChanged"><summary>Context changed event. This event will be raised when the font of the control is changed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::ContextChanged" accessor="public" category="Variable" name="ContextChanged"><summary>Context changed event. This event will be raised when the font of the control is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent ContextChanged;
+]]></signature></Document>

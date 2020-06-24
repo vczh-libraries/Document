@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::tree::ITreeViewItemView::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier of this view.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::tree::ITreeViewItemView::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier of this view.</summary><signature><![CDATA[static wchar_t const * const ITreeViewItemView:: Identifier;
+]]></signature></Document>

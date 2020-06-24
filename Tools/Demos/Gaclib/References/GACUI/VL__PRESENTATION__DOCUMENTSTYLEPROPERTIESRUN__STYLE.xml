@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStylePropertiesRun::style" accessor="public" category="Variable" name="style"><summary>Style properties.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentStylePropertiesRun::style" accessor="public" category="Variable" name="style"><summary>Style properties.</summary><signature><![CDATA[Ptr<DocumentStyleProperties> style;
+]]></signature></Document>

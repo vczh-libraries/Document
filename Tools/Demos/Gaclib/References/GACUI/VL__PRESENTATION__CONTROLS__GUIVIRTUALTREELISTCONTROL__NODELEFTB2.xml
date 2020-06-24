@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeLeftButtonDown" accessor="public" category="Variable" name="NodeLeftButtonDown"><summary>Node left mouse button down event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeLeftButtonDown" accessor="public" category="Variable" name="NodeLeftButtonDown"><summary>Node left mouse button down event.</summary><signature><![CDATA[compositions::GuiNodeMouseEvent NodeLeftButtonDown;
+]]></signature></Document>

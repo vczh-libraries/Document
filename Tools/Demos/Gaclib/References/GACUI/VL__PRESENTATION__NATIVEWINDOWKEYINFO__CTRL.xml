@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::NativeWindowKeyInfo::ctrl" accessor="public" category="Variable" name="ctrl"><summary>True if the control button is pressed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::NativeWindowKeyInfo::ctrl" accessor="public" category="Variable" name="ctrl"><summary>True if the control button is pressed.</summary><signature><![CDATA[bool ctrl;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiGDIElementEventArgs::bounds" accessor="public" category="Variable" name="bounds"><summary>The range for rendering.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::GuiGDIElementEventArgs::bounds" accessor="public" category="Variable" name="bounds"><summary>The range for rendering.</summary><signature><![CDATA[Rect bounds;
+]]></signature></Document>

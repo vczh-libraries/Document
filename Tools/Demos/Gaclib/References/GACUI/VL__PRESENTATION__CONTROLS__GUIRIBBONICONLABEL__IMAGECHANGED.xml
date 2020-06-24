@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonIconLabel::ImageChanged" accessor="public" category="Variable" name="ImageChanged"><summary>Image changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiRibbonIconLabel::ImageChanged" accessor="public" category="Variable" name="ImageChanged"><summary>Image changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ImageChanged;
+]]></signature></Document>

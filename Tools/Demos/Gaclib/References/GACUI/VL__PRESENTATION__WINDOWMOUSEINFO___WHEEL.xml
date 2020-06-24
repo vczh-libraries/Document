@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_::wheel" accessor="public" category="Variable" name="wheel"><summary>The delta of the wheel.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::WindowMouseInfo_::wheel" accessor="public" category="Variable" name="wheel"><summary>The delta of the wheel.</summary><signature><![CDATA[vint wheel;
+]]></signature></Document>

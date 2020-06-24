@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::GridPos::row" accessor="public" category="Variable" name="row"><summary>
  Row number.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[vint row;
+]]></signature></Document>

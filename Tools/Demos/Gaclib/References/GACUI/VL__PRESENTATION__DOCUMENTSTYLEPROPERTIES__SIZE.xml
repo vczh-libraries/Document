@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyleProperties::size" accessor="public" category="Variable" name="size"><summary>Font size.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentStyleProperties::size" accessor="public" category="Variable" name="size"><summary>Font size.</summary><signature><![CDATA[Nullable<DocumentFontSize> size;
+]]></signature></Document>

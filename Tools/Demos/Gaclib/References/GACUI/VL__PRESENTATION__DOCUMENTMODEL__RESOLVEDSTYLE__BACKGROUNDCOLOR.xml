@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentModel::ResolvedStyle::backgroundColor" accessor="public" category="Variable" name="backgroundColor"><summary>The background color of the text.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentModel::ResolvedStyle::backgroundColor" accessor="public" category="Variable" name="backgroundColor"><summary>The background color of the text.</summary><signature><![CDATA[Color backgroundColor;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::DateChanged" accessor="public" category="Variable" name="DateChanged"><summary>Date changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDatePicker::DateChanged" accessor="public" category="Variable" name="DateChanged"><summary>Date changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateChanged;
+]]></signature></Document>

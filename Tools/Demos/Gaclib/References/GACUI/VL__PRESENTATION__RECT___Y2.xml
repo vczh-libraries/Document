@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::Rect_::y2" accessor="public" category="Variable" name="y2"><summary>
  Top + Height.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[T y2;
+]]></signature></Document>

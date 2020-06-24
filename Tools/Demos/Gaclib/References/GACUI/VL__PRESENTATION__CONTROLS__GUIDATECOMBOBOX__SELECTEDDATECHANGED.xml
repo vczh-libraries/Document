@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDateComboBox::SelectedDateChanged" accessor="public" category="Variable" name="SelectedDateChanged"><summary>Selected data changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDateComboBox::SelectedDateChanged" accessor="public" category="Variable" name="SelectedDateChanged"><summary>Selected data changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectedDateChanged;
+]]></signature></Document>

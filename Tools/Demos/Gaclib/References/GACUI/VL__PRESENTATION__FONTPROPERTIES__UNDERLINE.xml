@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::FontProperties::underline" accessor="public" category="Variable" name="underline"><summary>
  True if the font has a underline.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[bool underline;
+]]></signature></Document>

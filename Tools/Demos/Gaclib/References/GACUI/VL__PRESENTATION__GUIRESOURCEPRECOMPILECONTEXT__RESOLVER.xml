@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourcePrecompileContext::resolver" accessor="public" category="Variable" name="resolver"><summary>The path resolver. This is only for delay load resource.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::GuiResourcePrecompileContext::resolver" accessor="public" category="Variable" name="resolver"><summary>The path resolver. This is only for delay load resource.</summary><signature><![CDATA[Ptr<GuiResourcePathResolver> resolver;
+]]></signature></Document>

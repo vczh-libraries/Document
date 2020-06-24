@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiRequestEventArgs::cancel" accessor="public" category="Variable" name="cancel"><summary>Set this field to false in event handlers will stop the corresponding action.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiRequestEventArgs::cancel" accessor="public" category="Variable" name="cancel"><summary>Set this field to false in event handlers will stop the corresponding action.</summary><signature><![CDATA[bool cancel;
+]]></signature></Document>

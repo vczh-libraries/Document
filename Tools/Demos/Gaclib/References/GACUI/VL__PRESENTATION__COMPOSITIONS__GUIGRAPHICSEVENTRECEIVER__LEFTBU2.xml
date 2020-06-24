@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::leftButtonDown" accessor="public" category="Variable" name="leftButtonDown"><summary>Left mouse button down event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::leftButtonDown" accessor="public" category="Variable" name="leftButtonDown"><summary>Left mouse button down event.</summary><signature><![CDATA[GuiMouseEvent leftButtonDown;
+]]></signature></Document>

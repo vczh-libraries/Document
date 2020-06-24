@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::renderTargetChanged" accessor="public" category="Variable" name="renderTargetChanged"><summary>Render target changed event. This event is raised when the render target of this composition is changed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::renderTargetChanged" accessor="public" category="Variable" name="renderTargetChanged"><summary>Render target changed event. This event is raised when the render target of this composition is changed.</summary><signature><![CDATA[GuiNotifyEvent renderTargetChanged;
+]]></signature></Document>

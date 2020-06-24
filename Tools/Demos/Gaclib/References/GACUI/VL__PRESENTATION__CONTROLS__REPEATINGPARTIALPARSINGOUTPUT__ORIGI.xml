@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::RepeatingPartialParsingOutput::originalNode" accessor="public" category="Variable" name="originalNode"><summary>The original context in the syntax tree.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::RepeatingPartialParsingOutput::originalNode" accessor="public" category="Variable" name="originalNode"><summary>The original context in the syntax tree.</summary><signature><![CDATA[Ptr<parsing::ParsingTreeObject> originalNode;
+]]></signature></Document>

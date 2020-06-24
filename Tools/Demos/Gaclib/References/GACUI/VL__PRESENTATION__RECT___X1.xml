@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::Rect_::x1" accessor="public" category="Variable" name="x1"><summary>
  Left.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[T x1;
+]]></signature></Document>

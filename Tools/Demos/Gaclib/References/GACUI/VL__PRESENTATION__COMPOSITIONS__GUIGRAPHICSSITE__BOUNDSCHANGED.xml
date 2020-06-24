@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsSite::BoundsChanged" accessor="public" category="Variable" name="BoundsChanged"><summary>Event that will be raised when the final bounds is changed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsSite::BoundsChanged" accessor="public" category="Variable" name="BoundsChanged"><summary>Event that will be raised when the final bounds is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent BoundsChanged;
+]]></signature></Document>

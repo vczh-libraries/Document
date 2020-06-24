@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::SelectedIndexChanged" accessor="public" category="Variable" name="SelectedIndexChanged"><summary>Selected index changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiComboBoxListControl::SelectedIndexChanged" accessor="public" category="Variable" name="SelectedIndexChanged"><summary>Selected index changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectedIndexChanged;
+]]></signature></Document>

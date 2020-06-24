@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_::right" accessor="public" category="Variable" name="right"><summary>True if the right mouse button is pressed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::WindowMouseInfo_::right" accessor="public" category="Variable" name="right"><summary>True if the right mouse button is pressed.</summary><signature><![CDATA[bool right;
+]]></signature></Document>

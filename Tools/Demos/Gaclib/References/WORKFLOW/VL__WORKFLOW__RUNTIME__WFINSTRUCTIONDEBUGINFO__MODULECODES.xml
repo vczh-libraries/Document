@@ -1,1 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfInstructionDebugInfo::moduleCodes" accessor="public" category="Variable" name="moduleCodes"><summary>Module codes.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::workflow::runtime::WfInstructionDebugInfo::moduleCodes" accessor="public" category="Variable" name="moduleCodes"><summary>Module codes.</summary><signature><![CDATA[collections::List<WString> moduleCodes;
+]]></signature></Document>

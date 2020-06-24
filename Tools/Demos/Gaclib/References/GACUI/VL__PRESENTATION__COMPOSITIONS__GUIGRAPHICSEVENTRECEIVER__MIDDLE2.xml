@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::middleButtonDown" accessor="public" category="Variable" name="middleButtonDown"><summary>Middle mouse button down event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::middleButtonDown" accessor="public" category="Variable" name="middleButtonDown"><summary>Middle mouse button down event.</summary><signature><![CDATA[GuiMouseEvent middleButtonDown;
+]]></signature></Document>

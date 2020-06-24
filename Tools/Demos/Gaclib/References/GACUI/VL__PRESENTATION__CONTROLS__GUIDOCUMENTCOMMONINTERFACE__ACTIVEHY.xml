@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::ActiveHyperlinkChanged" accessor="public" category="Variable" name="ActiveHyperlinkChanged"><summary>Active hyperlink changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::ActiveHyperlinkChanged" accessor="public" category="Variable" name="ActiveHyperlinkChanged"><summary>Active hyperlink changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ActiveHyperlinkChanged;
+]]></signature></Document>

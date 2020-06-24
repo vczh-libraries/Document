@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::Margin_::bottom" accessor="public" category="Variable" name="bottom"><summary>
  The bottom margin.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[T bottom;
+]]></signature></Document>

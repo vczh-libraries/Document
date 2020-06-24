@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLine::dataLength" accessor="public" category="Variable" name="dataLength"><summary>
  The number of available characters in the buffer.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[vint dataLength;
+]]></signature></Document>

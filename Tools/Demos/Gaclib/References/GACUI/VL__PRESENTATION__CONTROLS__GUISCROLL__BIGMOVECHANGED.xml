@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::BigMoveChanged" accessor="public" category="Variable" name="BigMoveChanged"><summary>Big move changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiScroll::BigMoveChanged" accessor="public" category="Variable" name="BigMoveChanged"><summary>Big move changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent BigMoveChanged;
+]]></signature></Document>

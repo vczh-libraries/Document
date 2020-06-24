@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowOption::baseline" accessor="public" category="Variable" name="baseline"><summary>The base line calculation algorithm.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiFlowOption::baseline" accessor="public" category="Variable" name="baseline"><summary>The base line calculation algorithm.</summary><signature><![CDATA[BaselineType baseline;
+]]></signature></Document>

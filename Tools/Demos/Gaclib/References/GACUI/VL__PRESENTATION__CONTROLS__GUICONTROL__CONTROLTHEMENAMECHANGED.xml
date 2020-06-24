@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiControl::ControlThemeNameChanged" accessor="public" category="Variable" name="ControlThemeNameChanged"><summary>Theme name changed event. This event will be raised when the theme name is changed.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiControl::ControlThemeNameChanged" accessor="public" category="Variable" name="ControlThemeNameChanged"><summary>Theme name changed event. This event will be raised when the theme name is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent ControlThemeNameChanged;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::previewKey" accessor="public" category="Variable" name="previewKey"><summary>Preview key event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::previewKey" accessor="public" category="Variable" name="previewKey"><summary>Preview key event.</summary><signature><![CDATA[GuiKeyEvent previewKey;
+]]></signature></Document>

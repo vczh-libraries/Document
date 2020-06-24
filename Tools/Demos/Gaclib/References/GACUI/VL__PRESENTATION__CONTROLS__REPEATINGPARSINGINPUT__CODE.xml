@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingInput::code" accessor="public" category="Variable" name="code"><summary>The code.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::RepeatingParsingInput::code" accessor="public" category="Variable" name="code"><summary>The code.</summary><signature><![CDATA[WString code;
+]]></signature></Document>

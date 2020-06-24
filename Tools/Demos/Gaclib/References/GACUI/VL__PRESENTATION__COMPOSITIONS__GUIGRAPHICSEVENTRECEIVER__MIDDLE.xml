@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::middleButtonDoubleClick" accessor="public" category="Variable" name="middleButtonDoubleClick"><summary>Middle mouse button double click event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::middleButtonDoubleClick" accessor="public" category="Variable" name="middleButtonDoubleClick"><summary>Middle mouse button double click event.</summary><signature><![CDATA[GuiMouseEvent middleButtonDoubleClick;
+]]></signature></Document>

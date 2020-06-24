@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentParagraphRun::alignment" accessor="public" category="Variable" name="alignment"><summary>Paragraph alignment.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentParagraphRun::alignment" accessor="public" category="Variable" name="alignment"><summary>Paragraph alignment.</summary><signature><![CDATA[Nullable<Alignment> alignment;
+]]></signature></Document>

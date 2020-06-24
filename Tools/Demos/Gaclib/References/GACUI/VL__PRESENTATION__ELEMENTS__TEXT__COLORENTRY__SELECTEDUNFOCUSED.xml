@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::ColorEntry::selectedUnfocused" accessor="public" category="Variable" name="selectedUnfocused"><summary>
  Colors in not focused and selected state.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[ColorItem selectedUnfocused;
+]]></signature></Document>

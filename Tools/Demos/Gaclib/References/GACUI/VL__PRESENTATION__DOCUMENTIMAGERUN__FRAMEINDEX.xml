@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentImageRun::frameIndex" accessor="public" category="Variable" name="frameIndex"><summary>The frame index.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentImageRun::frameIndex" accessor="public" category="Variable" name="frameIndex"><summary>The frame index.</summary><signature><![CDATA[vint frameIndex;
+]]></signature></Document>

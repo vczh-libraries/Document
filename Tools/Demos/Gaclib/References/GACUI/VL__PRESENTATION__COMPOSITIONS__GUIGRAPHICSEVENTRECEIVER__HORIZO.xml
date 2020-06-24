@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::horizontalWheel" accessor="public" category="Variable" name="horizontalWheel"><summary>Horizontal wheel scrolling event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::horizontalWheel" accessor="public" category="Variable" name="horizontalWheel"><summary>Horizontal wheel scrolling event.</summary><signature><![CDATA[GuiMouseEvent horizontalWheel;
+]]></signature></Document>

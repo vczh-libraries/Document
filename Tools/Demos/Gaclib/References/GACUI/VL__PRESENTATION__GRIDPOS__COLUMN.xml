@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::GridPos::column" accessor="public" category="Variable" name="column"><summary>
  Column number. If a line has 4 characters, there are 5 available column numbers(from 0 to 4) in this line.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[vint column;
+]]></signature></Document>

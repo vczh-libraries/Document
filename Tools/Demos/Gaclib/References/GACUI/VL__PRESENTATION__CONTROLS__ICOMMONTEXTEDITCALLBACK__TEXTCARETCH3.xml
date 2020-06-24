@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct::editVersion" accessor="public" category="Variable" name="editVersion"><summary>The current edit version.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct::editVersion" accessor="public" category="Variable" name="editVersion"><summary>The current edit version.</summary><signature><![CDATA[vuint editVersion;
+]]></signature></Document>

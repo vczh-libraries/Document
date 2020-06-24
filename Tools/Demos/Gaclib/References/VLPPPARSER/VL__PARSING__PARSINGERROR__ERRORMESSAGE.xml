@@ -1,1 +1,2 @@
-<Document symbolId="vl::parsing::ParsingError::errorMessage" accessor="public" category="Variable" name="errorMessage"><summary>The error message.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::parsing::ParsingError::errorMessage" accessor="public" category="Variable" name="errorMessage"><summary>The error message.</summary><signature><![CDATA[WString errorMessage;
+]]></signature></Document>

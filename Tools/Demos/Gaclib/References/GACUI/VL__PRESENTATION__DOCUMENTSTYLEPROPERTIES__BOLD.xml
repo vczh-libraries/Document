@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyleProperties::bold" accessor="public" category="Variable" name="bold"><summary>Bold.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentStyleProperties::bold" accessor="public" category="Variable" name="bold"><summary>Bold.</summary><signature><![CDATA[Nullable<bool> bold;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentInlineObjectRun::size" accessor="public" category="Variable" name="size"><summary>Size of the inline object.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentInlineObjectRun::size" accessor="public" category="Variable" name="size"><summary>Size of the inline object.</summary><signature><![CDATA[Size size;
+]]></signature></Document>

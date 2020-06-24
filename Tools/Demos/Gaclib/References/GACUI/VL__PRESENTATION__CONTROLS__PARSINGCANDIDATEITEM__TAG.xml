@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::ParsingCandidateItem::tag" accessor="public" category="Variable" name="tag"><summary>Tag object for any purpose, e.g., data binding.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::ParsingCandidateItem::tag" accessor="public" category="Variable" name="tag"><summary>Tag object for any purpose, e.g., data binding.</summary><signature><![CDATA[description::Value tag;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiBindableTextList::TextPropertyChanged" accessor="public" category="Variable" name="TextPropertyChanged"><summary>Text property name changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiBindableTextList::TextPropertyChanged" accessor="public" category="Variable" name="TextPropertyChanged"><summary>Text property name changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent TextPropertyChanged;
+]]></signature></Document>

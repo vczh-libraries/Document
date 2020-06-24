@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SelectionChanged" accessor="public" category="Variable" name="SelectionChanged"><summary>Selection changed event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SelectionChanged" accessor="public" category="Variable" name="SelectionChanged"><summary>Selection changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectionChanged;
+]]></signature></Document>

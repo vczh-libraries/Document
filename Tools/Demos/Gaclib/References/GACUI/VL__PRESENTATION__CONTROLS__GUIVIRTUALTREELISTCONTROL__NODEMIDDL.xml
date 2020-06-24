@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeMiddleButtonDoubleClick" accessor="public" category="Variable" name="NodeMiddleButtonDoubleClick"><summary>Node middle mouse button double click event.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeMiddleButtonDoubleClick" accessor="public" category="Variable" name="NodeMiddleButtonDoubleClick"><summary>Node middle mouse button double click event.</summary><signature><![CDATA[compositions::GuiNodeMouseEvent NodeMiddleButtonDoubleClick;
+]]></signature></Document>

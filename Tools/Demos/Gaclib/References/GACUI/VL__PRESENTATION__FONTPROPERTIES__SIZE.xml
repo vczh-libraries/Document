@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::FontProperties::size" accessor="public" category="Variable" name="size"><summary>
  Font size in pixel.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[vint size;
+]]></signature></Document>

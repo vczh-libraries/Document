@@ -1,1 +1,2 @@
-<Document symbolId="vl::HttpRequest::username" accessor="public" category="Variable" name="username"><summary>User name to authorize. Set to empty if you don&apos;t want to provide it.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::HttpRequest::username" accessor="public" category="Variable" name="username"><summary>User name to authorize. Set to empty if you don&apos;t want to provide it.</summary><signature><![CDATA[WString username;
+]]></signature></Document>

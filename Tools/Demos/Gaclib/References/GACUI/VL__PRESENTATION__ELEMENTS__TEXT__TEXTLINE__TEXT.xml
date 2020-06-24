@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLine::text" accessor="public" category="Variable" name="text"><summary>
  A character buffer starts from the first character of this line.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[wchar_t * text;
+]]></signature></Document>

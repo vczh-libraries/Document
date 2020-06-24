@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties::baseline" accessor="public" category="Variable" name="baseline"><summary>The baseline of the inline object.If the baseline is at the bottom, then set the baseline to -1.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties::baseline" accessor="public" category="Variable" name="baseline"><summary>The baseline of the inline object.If the baseline is at the bottom, then set the baseline to -1.</summary><signature><![CDATA[vint baseline;
+]]></signature></Document>

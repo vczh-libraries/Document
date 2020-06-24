@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::FontProperties::bold" accessor="public" category="Variable" name="bold"><summary>
  True if the font is bold.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[bool bold;
+]]></signature></Document>

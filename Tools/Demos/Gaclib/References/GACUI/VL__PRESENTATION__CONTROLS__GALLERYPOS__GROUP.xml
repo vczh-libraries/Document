@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::controls::GalleryPos::group" accessor="public" category="Variable" name="group"><summary>Group index.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::controls::GalleryPos::group" accessor="public" category="Variable" name="group"><summary>Group index.</summary><signature><![CDATA[vint group;
+]]></signature></Document>

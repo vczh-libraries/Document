@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs::rt" accessor="public" category="Variable" name="rt"><summary>Direct2D render target object.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs::rt" accessor="public" category="Variable" name="rt"><summary>Direct2D render target object.</summary><signature><![CDATA[ID2D1RenderTarget * rt;
+]]></signature></Document>

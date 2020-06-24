@@ -1,3 +1,4 @@
 <Document symbolId="vl::presentation::FontProperties::antialias" accessor="public" category="Variable" name="antialias"><summary>
  True if the font has anti alias rendering.
- </summary><signature><![CDATA[]]></signature></Document>
+ </summary><signature><![CDATA[bool antialias;
+]]></signature></Document>

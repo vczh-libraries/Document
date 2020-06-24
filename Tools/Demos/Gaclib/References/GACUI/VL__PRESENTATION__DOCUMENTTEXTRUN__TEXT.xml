@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentTextRun::text" accessor="public" category="Variable" name="text"><summary>Run text.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentTextRun::text" accessor="public" category="Variable" name="text"><summary>Run text.</summary><signature><![CDATA[WString text;
+]]></signature></Document>

@@ -1,1 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyle::resolvedStyles" accessor="public" category="Variable" name="resolvedStyles"><summary>Resolved properties of this style using parent styles.</summary><signature><![CDATA[]]></signature></Document>
+<Document symbolId="vl::presentation::DocumentStyle::resolvedStyles" accessor="public" category="Variable" name="resolvedStyles"><summary>Resolved properties of this style using parent styles.</summary><signature><![CDATA[Ptr<DocumentStyleProperties> resolvedStyles;
+]]></signature></Document>
