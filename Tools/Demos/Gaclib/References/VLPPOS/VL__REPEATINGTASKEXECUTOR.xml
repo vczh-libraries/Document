@@ -1,4 +1,5 @@
 <Document symbolId="vl::RepeatingTaskExecutor" accessor="" category="Class" name="RepeatingTaskExecutor"><summary>Queued task executor. It is different from a thread pool by: 1) Task execution is single threaded, 2) If you queue a task, it will override the the unexecuted queued task.</summary><typeparam name="T">The type of the argument to run a task.</typeparam><signature><![CDATA[template <
-typename T>
+    typename T
+>
 class RepeatingTaskExecutor;
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::Nullable" accessor="" category="Class" name="Nullable"><summary>Type for optionally storing a value.</summary><typeparam name="T">Type of the value.</typeparam><signature><![CDATA[template <
-typename T>
+    typename T
+>
 class Nullable;
 ]]></signature></Document>

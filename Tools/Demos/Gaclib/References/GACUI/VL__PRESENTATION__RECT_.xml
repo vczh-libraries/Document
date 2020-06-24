@@ -1,6 +1,7 @@
 <Document symbolId="vl::presentation::Rect_" accessor="" category="Struct" name="Rect_"><summary>
  Represents a bounds in a two dimensions space.
  </summary><typeparam name="T">Type of the coordinate.</typeparam><signature><![CDATA[template <
-typename T>
+    typename T
+>
 struct Rect_;
 ]]></signature></Document>

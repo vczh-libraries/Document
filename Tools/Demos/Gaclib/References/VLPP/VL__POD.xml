@@ -1,4 +1,5 @@
 <Document symbolId="vl::POD" accessor="" category="Struct" name="POD"><summary>Test is a type a Plain-Old-Data type for containers.</summary><typeparam name="T">The type to test.</typeparam><signature><![CDATA[template <
-typename T>
+    typename T
+>
 struct POD;
 ]]></signature></Document>

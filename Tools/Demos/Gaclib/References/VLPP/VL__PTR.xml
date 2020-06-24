@@ -1,4 +1,5 @@
 <Document symbolId="vl::Ptr" accessor="" category="Class" name="Ptr"><summary>A smart pointer. It is always safe to convert a pointer to an object to a smart pointer once. If you do it multiple times, it may be wrong due to different implementation of <symbol docId="vl::ReferenceCounterOperator" declFile="Pointer.h" declId="NI$vl::ReferenceCounterOperator"/>. In case of wrong, disposing the smart pointer will cause an access violation.</summary><typeparam name="T">The type of the object.</typeparam><signature><![CDATA[template <
-typename T>
+    typename T
+>
 class Ptr;
 ]]></signature></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::KeyType" accessor="" category="Struct" name="KeyType"><summary>Get the index type of a value for containers.</summary><typeparam name="T">Type of the value.</typeparam><signature><![CDATA[template <
-typename T>
+    typename T
+>
 struct KeyType;
 ]]></signature></Document>

@@ -309,12 +309,20 @@ void WriteTemplateSpecInSignature(Ptr<TemplateSpec> spec, const WString& indent,
 			writer.WriteString(indent);
 			if (argument.name)
 			{
-				writer.WriteString(L"class ");
+				if (argument.ellipsis)
+				{
+					writer.WriteString(L"    class... ");
+				}
+				else
+				{
+					writer.WriteString(L"    class ");
+				}
 				writer.WriteString(argument.name.name);
 			}
 			else
 			{
-				writer.WriteString(L"class");
+				writer.WriteString(L"    class");
+				if (argument.ellipsis) writer.WriteString(L"...");
 			}
 			if (argument.type) writer.WriteString(L" /* optional */");
 			break;
@@ -322,30 +330,37 @@ void WriteTemplateSpecInSignature(Ptr<TemplateSpec> spec, const WString& indent,
 			writer.WriteString(indent);
 			if (argument.name)
 			{
-				writer.WriteString(L"typename ");
+				if (argument.ellipsis)
+				{
+					writer.WriteString(L"    typename... ");
+				}
+				else
+				{
+					writer.WriteString(L"    typename ");
+				}
 				writer.WriteString(argument.name.name);
 			}
 			else
 			{
-				writer.WriteString(L"typename");
+				writer.WriteString(L"    typename");
+				if (argument.ellipsis) writer.WriteString(L"...");
 			}
 			if (argument.type) writer.WriteString(L" /* optional */");
 			break;
 		case CppTemplateArgumentType::Value:
 			writer.WriteString(indent);
-			if (argument.name)
+			writer.WriteString(L"    ");
 			{
-				writer.WriteString(GetTypeDisplayNameInSignature(argument.type, argument.name.name, false));
-			}
-			else
-			{
-				writer.WriteString(GetTypeDisplayNameInSignature(argument.type));
+				WString name = argument.name.name;
+				if (argument.ellipsis) name = L"... " + name;
+				writer.WriteString(GetTypeDisplayNameInSignature(argument.type, name, false));
 			}
 			if (argument.expr) writer.WriteString(L" /* optional */");
 			break;
 		}
 
 		if (i < spec->arguments.Count() - 1) writer.WriteString(L", ");
+		writer.WriteLine(L"");
 	}
 
 	writer.WriteString(indent);

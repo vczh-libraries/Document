@@ -1,4 +1,5 @@
 <Document symbolId="vl::collections::IEnumerable" accessor="" category="Class" name="IEnumerable"><summary>Enumerable.</summary><typeparam name="T">Type of the elements in the enumerator.</typeparam><signature><![CDATA[template <
-typename T>
+    typename T
+>
 class IEnumerable;
 ]]></signature></Document>

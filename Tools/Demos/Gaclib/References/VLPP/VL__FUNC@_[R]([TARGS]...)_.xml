@@ -1,4 +1,6 @@
 <Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;" accessor="" category="Class" name="Func@&lt;[R]([TArgs]...)&gt;"><summary>A type representing a function reference.</summary><typeparam name="R">The return type.</typeparam><typeparam name="TArgs">Types of parameters.</typeparam><signature><![CDATA[template <
-typename R, typename TArgs>
+    typename R, 
+    typename... TArgs
+>
 class Func<R(TArgs...)>;
 ]]></signature></Document>

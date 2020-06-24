@@ -1,4 +1,6 @@
 <Document symbolId="vl::collections::Array" accessor="" category="Class" name="Array"><summary>Array.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam><signature><![CDATA[template <
-typename T, typename K /* optional */>
+    typename T, 
+    typename K /* optional */
+>
 class Array;
 ]]></signature></Document>

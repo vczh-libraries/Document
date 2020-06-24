@@ -238,6 +238,7 @@
 		vl::reflection::description::GetGlobalTypeManager()->AddTypeLoader(new MyTypeLoader);
 
  ]]></summary><typeparam name="T">Type of your created reflection class.</typeparam><signature><![CDATA[template <
-typename T>
+    typename T
+>
 class Description;
 ]]></signature></Document>

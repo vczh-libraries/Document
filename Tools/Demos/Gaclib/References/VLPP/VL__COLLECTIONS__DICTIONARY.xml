@@ -1,4 +1,8 @@
 <Document symbolId="vl::collections::Dictionary" accessor="" category="Class" name="Dictionary"><summary>Dictionary.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys.</typeparam><typeparam name="VK">Type of the key type of values.</typeparam><signature><![CDATA[template <
-typename KT, typename VT, typename KK /* optional */, typename VK /* optional */>
+    typename KT, 
+    typename VT, 
+    typename KK /* optional */, 
+    typename VK /* optional */
+>
 class Dictionary;
 ]]></signature></Document>
