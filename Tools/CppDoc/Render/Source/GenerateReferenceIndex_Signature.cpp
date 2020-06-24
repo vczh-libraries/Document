@@ -223,10 +223,13 @@ WString AppendFunctionParametersInSignature(FunctionType* funcType)
 	for (vint i = 0; i < funcType->parameters.Count(); i++)
 	{
 		if (i != 0) result += L", ";
-		result += GetTypeDisplayNameInSignature(funcType->parameters[i].item->type);
 		if (funcType->parameters[i].isVariadic)
 		{
-			result += L"...";
+			result += GetTypeDisplayNameInSignature(funcType->parameters[i].item->type, L"...", true);
+		}
+		else
+		{
+			result += GetTypeDisplayNameInSignature(funcType->parameters[i].item->type);
 		}
 	}
 	if (funcType->ellipsis)
@@ -353,7 +356,7 @@ void WriteTemplateSpecInSignature(Ptr<TemplateSpec> spec, const WString& indent,
 			{
 				WString name = argument.name.name;
 				if (argument.ellipsis) name = L"... " + name;
-				writer.WriteString(GetTypeDisplayNameInSignature(argument.type, name, false));
+				writer.WriteString(GetTypeDisplayNameInSignature(argument.type, name, argument.ellipsis));
 			}
 			if (argument.expr) writer.WriteString(L" /* optional */");
 			break;
