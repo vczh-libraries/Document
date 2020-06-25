@@ -35,10 +35,8 @@
 - [ ] Insert metadata to document comment.
   - [ ] `<seealsos>`.
     - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
-    - [ ] for classes, all documented direct/indirect base types and members are inserted to see also.
-  - [ ] `<signature>`.
-    - [ ] baes types for classes.
-  - [ ] `<basetypes>`: inheritance tree, generic types are written as `NAME<...>`.
+    - [ ] Base types are added to `<basetypes>`, if a base type is an generic class instance, only the generic class is added.
+    - [ ] All involved types are added to `<seealsos>`, except types that added to `<basetypes>`.
 - [ ] Update `WebsiteSource` to view references.
   - [ ] must interpret: `<summary>`, `<typeparam>`, `<param>`, `<enumitem>`, `<returns>`, `<remarks>`, `<seealsos>`, `<signature>`, `<basetypes>`.
   - [ ] must process: `<symbol>`.
