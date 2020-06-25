@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement::SetSize@void(::vl::presentation::Size)" accessor="public" category="Function" name="SetSize"><summary>
  Set a suggested size. The polygon element will be layouted to the center of the required bounds using this size.
  </summary><param name="value">The new size.</param><signature><![CDATA[void SetSize(
-    Size
+    Size value
 );
 ]]></signature></Document>

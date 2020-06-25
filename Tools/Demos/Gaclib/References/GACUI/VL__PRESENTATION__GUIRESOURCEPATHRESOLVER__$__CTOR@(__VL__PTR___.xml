@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::GuiResourcePathResolver::$__ctor@(::vl::Ptr&lt;::vl::presentation::GuiResource&gt;, ::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a resolver.</summary><param name="_resource">The resource context.</param><param name="_workingDirectory">The working directory context.</param><signature><![CDATA[ GuiResourcePathResolver(
-    Ptr<GuiResource>,
-    WString const &
+    Ptr<GuiResource> _resource,
+    WString const & _workingDirectory
 );
 ]]></signature></Document>

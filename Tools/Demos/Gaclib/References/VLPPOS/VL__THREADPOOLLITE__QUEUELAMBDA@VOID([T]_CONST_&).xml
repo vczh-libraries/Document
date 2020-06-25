@@ -2,6 +2,6 @@
     typename T
 >
 static void QueueLambda(
-    T const &
+    T const & proc
 );
 ]]></signature></Document>

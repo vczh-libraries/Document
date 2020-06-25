@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetSelected@void(bool)" accessor="public" category="Function" name="SetSelected"><summary>Set the selection for this command.</summary><param name="value">The selection for this command.</param><signature><![CDATA[void SetSelected(
-    bool
+    bool value
 );
 ]]></signature></Document>

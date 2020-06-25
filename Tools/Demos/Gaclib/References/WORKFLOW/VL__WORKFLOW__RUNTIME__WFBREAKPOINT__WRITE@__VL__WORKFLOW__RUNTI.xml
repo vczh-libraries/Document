@@ -1,5 +1,5 @@
 <Document symbolId="vl::workflow::runtime::WfBreakPoint::Write@::vl::workflow::runtime::WfBreakPoint(::vl::workflow::runtime::WfAssembly *, ::vl::vint)" accessor="public" category="Function" name="Write"><summary>Create an global variable writing break point.</summary><returns>The created break point.</returns><param name="assembly">The assembly that contains the instruction.</param><param name="variable">The index of the global variable.</param><signature><![CDATA[static WfBreakPoint Write(
-    WfAssembly *,
-    vint
+    WfAssembly * assembly,
+    vint variable
 );
 ]]></signature></Document>

@@ -1,8 +1,8 @@
 <Document symbolId="vl::presentation::INativeDialogService::ShowColorDialog@bool(::vl::presentation::INativeWindow *, ::vl::presentation::Color &amp;, bool, ::vl::presentation::INativeDialogService::ColorDialogCustomColorOptions, ::vl::presentation::Color *)" accessor="public" category="Function" name="ShowColorDialog"><summary>Show a color dialog.</summary><returns>Returns true if the user selected the OK button.</returns><param name="window">The current window.</param><param name="selection">The color that the user selected.</param><param name="selected">Make the color dialog selected the color specified in the &quot;selection&quot; parameter at the beginning.</param><param name="customColorOptions">Custom color panel options.</param><param name="customColors">The initial 16 colors in custom color boxes. This argument can be null.</param><signature><![CDATA[bool ShowColorDialog(
-    INativeWindow *,
-    Color &,
-    bool /* optional */,
-    ColorDialogCustomColorOptions /* optional */,
-    Color * /* optional */
+    INativeWindow * window,
+    Color & selection,
+    bool selected /* optional */,
+    ColorDialogCustomColorOptions customColorOptions /* optional */,
+    Color * customColors /* optional */
 );
 ]]></signature></Document>

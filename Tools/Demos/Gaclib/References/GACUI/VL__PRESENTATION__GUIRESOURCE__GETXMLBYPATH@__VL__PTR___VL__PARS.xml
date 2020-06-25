@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::GuiResource::GetXmlByPath@::vl::Ptr&lt;::vl::parsing::xml::XmlDocument&gt;(::vl::WString const &amp;)" accessor="public" category="Function" name="GetXmlByPath"><summary>Get a contained xml using a path like &quot;Packages\Application\Name&quot;. If the path does not exists or the type does not match, an exception will be thrown.</summary><returns>The containd resource object.</returns><param name="path">The path.</param><signature><![CDATA[Ptr<parsing::xml::XmlDocument> GetXmlByPath(
-    WString const &
+    WString const & path
 );
 ]]></signature></Document>

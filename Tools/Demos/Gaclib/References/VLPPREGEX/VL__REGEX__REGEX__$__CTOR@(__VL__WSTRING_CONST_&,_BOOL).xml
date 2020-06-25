@@ -1,5 +1,5 @@
 <Document symbolId="vl::regex::Regex::$__ctor@(::vl::WString const &amp;, bool)" accessor="public" category="Function" name="$__ctor"><summary>Create a regular expression.</summary><param name="code">The regular expression in a string.</param><param name="preferPure">Set to true to tell the Regex to use DFA if possible.</param><signature><![CDATA[ Regex(
-    WString const &,
-    bool /* optional */
+    WString const & code,
+    bool preferPure /* optional */
 );
 ]]></signature></Document>

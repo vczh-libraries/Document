@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::InsertChild@bool(::vl::vint, ::vl::presentation::compositions::GuiGraphicsComposition *)" accessor="public" category="Function" name="InsertChild"><summary>Add a composition as a child with a specified z-order.</summary><returns>Returns true if this operation succeeded.</returns><param name="index">The z-order. 0 means the lowest position.</param><param name="child">The child composition to add.</param><signature><![CDATA[bool InsertChild(
-    vint,
-    GuiGraphicsComposition *
+    vint index,
+    GuiGraphicsComposition * child
 );
 ]]></signature></Document>

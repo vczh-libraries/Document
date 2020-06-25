@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::GetFileName@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="GetFileName"><summary>Get the file name from a file path.</summary><returns>The file name.</returns><param name="filePath">The file path.</param><signature><![CDATA[WString GetFileName(
-    WString const &
+    WString const & filePath
 );
 ]]></signature></Document>

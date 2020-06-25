@@ -1,4 +1,4 @@
 <Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::operator ()@[R]([TArgs]...)" accessor="public" category="Function" name="operator ()"><summary>Invoke the function.</summary><returns>Returns the function result.</returns><param name="args">Arguments to invoke the function.</param><signature><![CDATA[R operator ()(
-    TArgs...
+    TArgs... args
 ) const;
 ]]></signature></Document>

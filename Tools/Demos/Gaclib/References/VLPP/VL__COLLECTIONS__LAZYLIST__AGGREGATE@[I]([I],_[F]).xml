@@ -3,7 +3,7 @@
     typename F
 >
 I Aggregate(
-    I,
-    F
+    I init,
+    F f
 ) const;
 ]]></signature></Document>

@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetFont"><summary>
  Set the text font.
  </summary><param name="value">The new text font.</param><signature><![CDATA[void SetFont(
-    FontProperties const &
+    FontProperties const & value
 );
 ]]></signature></Document>

@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::compositions::IGuiAxis::RealRectToVirtualRect@::vl::presentation::Rect(::vl::presentation::Size, ::vl::presentation::Rect)" accessor="public" category="Function" name="RealRectToVirtualRect"><summary>Translate real bounds to virtual bounds.</summary><returns>The virtual bounds.</returns><param name="realFullSize">The real full size.</param><param name="rect">The real bounds.</param><signature><![CDATA[Rect RealRectToVirtualRect(
-    Size,
-    Rect
+    Size realFullSize,
+    Rect rect
 );
 ]]></signature></Document>

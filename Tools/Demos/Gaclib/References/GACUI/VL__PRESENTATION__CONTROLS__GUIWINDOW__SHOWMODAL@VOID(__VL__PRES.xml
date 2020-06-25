@@ -1,8 +1,8 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::ShowModal@void(::vl::presentation::controls::GuiWindow *, ::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="ShowModal"><summary>
  Show a model window, get a callback when the window is closed.
  </summary><param name="owner">The window to disable as a parent window.</param><param name="callback">The callback to call after the window is closed.</param><signature><![CDATA[void ShowModal(
-    GuiWindow *,
+    GuiWindow * owner,
     Func<void(
-)> const &
+)> const & callback
 );
 ]]></signature></Document>

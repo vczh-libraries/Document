@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::FindComposition@::vl::presentation::compositions::GuiGraphicsComposition *(::vl::presentation::Point, bool)" accessor="public" category="Function" name="FindComposition"><summary>Find a deepest composition that under a specified location. If the location is inside a compsition but not hit any sub composition, this function will return this composition.</summary><returns>The deepest composition that under a specified location.</returns><param name="location">The specified location.</param><param name="forMouseEvent">Find a composition for mouse event, it will ignore all compositions that are transparent to mouse events.</param><signature><![CDATA[GuiGraphicsComposition * FindComposition(
-    Point,
-    bool
+    Point location,
+    bool forMouseEvent
 );
 ]]></signature></Document>

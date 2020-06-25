@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::AddToken@::vl::vint(::vl::WString const &amp;, ::vl::presentation::elements::text::ColorEntry)" accessor="public" category="Function" name="AddToken"><summary>Add a token type. Call <symbol docId="vl::presentation::controls::GuiTextBoxRegexColorizer::Setup@void()" declFile="GuiTextColorizer.h" declId="FB$vl::presentation::controls::GuiTextBoxRegexColorizer::Setup@void()[decl0]"/> after finishing all configuration.</summary><returns>Returns the token index of this token. Returns -1 if this operation failed.</returns><param name="regex">The regular expression for this token type.</param><param name="color">The color for this token type.</param><signature><![CDATA[vint AddToken(
-    WString const &,
-    elements::text::ColorEntry
+    WString const & regex,
+    elements::text::ColorEntry color
 );
 ]]></signature></Document>

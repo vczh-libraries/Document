@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetAlignment@void(::vl::presentation::compositions::FlowAlignment)" accessor="public" category="Function" name="SetAlignment"><summary>Set the alignment for rows.</summary><param name="value">The alignment.</param><signature><![CDATA[void SetAlignment(
-    FlowAlignment
+    FlowAlignment value
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTooltip::SetTemporaryContentControl@void(::vl::presentation::controls::GuiControl *)" accessor="public" category="Function" name="SetTemporaryContentControl"><summary>Set the temporary content control.</summary><param name="control">The temporary content control.</param><signature><![CDATA[void SetTemporaryContentControl(
-    GuiControl *
+    GuiControl * control
 );
 ]]></signature></Document>

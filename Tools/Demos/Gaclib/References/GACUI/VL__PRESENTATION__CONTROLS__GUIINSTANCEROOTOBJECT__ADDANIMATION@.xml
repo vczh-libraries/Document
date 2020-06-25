@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiInstanceRootObject::AddAnimation@bool(::vl::Ptr&lt;::vl::presentation::controls::IGuiAnimation&gt;)" accessor="public" category="Function" name="AddAnimation"><summary>Add an animation. The animation will be paused if the root object is removed from a window.</summary><returns>Returns true if this operation succeeded.</returns><param name="animation">The animation.</param><signature><![CDATA[bool AddAnimation(
-    Ptr<IGuiAnimation>
+    Ptr<IGuiAnimation> animation
 );
 ]]></signature></Document>

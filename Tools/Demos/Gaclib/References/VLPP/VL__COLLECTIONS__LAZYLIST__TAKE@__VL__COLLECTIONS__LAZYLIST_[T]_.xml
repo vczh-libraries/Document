@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::LazyList::Take@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Take"><summary>Create a new lazy list with some prefix elements.</summary><returns>The created lazy list.</returns><param name="count">The size of the prefix.</param><signature><![CDATA[LazyList<T> Take(
-    vint
+    vint count
 ) const;
 ]]></signature></Document>

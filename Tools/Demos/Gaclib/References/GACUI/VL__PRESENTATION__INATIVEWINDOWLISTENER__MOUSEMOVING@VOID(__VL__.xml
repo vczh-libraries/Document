@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowListener::MouseMoving@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="MouseMoving"><summary>
  Called when the mouse is moving on the window.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void MouseMoving(
-    NativeWindowMouseInfo const &
+    NativeWindowMouseInfo const & info
 );
 ]]></signature></Document>

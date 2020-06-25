@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement::SetParagraphAlignment@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, ::vl::collections::Array&lt;::vl::Nullable&lt;::vl::presentation::Alignment&gt;&gt; const &amp;)" accessor="public" category="Function" name="SetParagraphAlignment"><summary>Set the alignment of paragraphs in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="alignments">The alignment for each paragraph.</param><signature><![CDATA[void SetParagraphAlignment(
-    TextPos,
-    TextPos,
-    collections::Array<Nullable<Alignment>> const &
+    TextPos begin,
+    TextPos end,
+    collections::Array<Nullable<Alignment>> const & alignments
 );
 ]]></signature></Document>

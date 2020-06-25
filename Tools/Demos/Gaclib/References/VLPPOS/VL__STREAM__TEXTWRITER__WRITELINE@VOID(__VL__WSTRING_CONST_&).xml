@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::TextWriter::WriteLine@void(::vl::WString const &amp;)" accessor="public" category="Function" name="WriteLine"><summary>Write a string with a CRLF.</summary><param name="string">The string to write.</param><signature><![CDATA[void WriteLine(
-    WString const &
+    WString const & string
 );
 ]]></signature></Document>

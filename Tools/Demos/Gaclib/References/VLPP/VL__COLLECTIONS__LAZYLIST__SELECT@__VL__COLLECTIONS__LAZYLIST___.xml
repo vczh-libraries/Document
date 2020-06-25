@@ -2,6 +2,6 @@
     typename F
 >
 LazyList<vl::function_lambda::FunctionObjectRetriveType<F>::ResultType> Select(
-    F
+    F f
 ) const;
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::SortedList::IndexOf@::vl::vint([K] const &amp;)" accessor="public" category="Function" name="IndexOf"><summary>Get the position of an item in this list.</summary><returns>Returns the position. Returns -1 if not exists</returns><param name="item">The item to find.</param><signature><![CDATA[vint IndexOf(
-    K const &
+    K const & item
 ) const;
 ]]></signature></Document>

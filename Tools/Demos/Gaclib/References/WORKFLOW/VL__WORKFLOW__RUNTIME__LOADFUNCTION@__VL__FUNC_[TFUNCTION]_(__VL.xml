@@ -2,7 +2,7 @@
     typename TFunction
 >
 Func<TFunction> LoadFunction(
-    Ptr<WfRuntimeGlobalContext>,
-    WString const &
+    Ptr<WfRuntimeGlobalContext> context,
+    WString const & name
 );
 ]]></signature></Document>

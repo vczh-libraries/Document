@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::IStream::SeekFromBegin@void(::vl::pos_t)" accessor="public" category="Function" name="SeekFromBegin"><summary>Step fowward from the beginning. Will throw exception if the stream is not seekable or not available.</summary><param name="_size">The length of the step.</param><signature><![CDATA[void SeekFromBegin(
-    pos_t
+    pos_t _size
 );
 ]]></signature></Document>

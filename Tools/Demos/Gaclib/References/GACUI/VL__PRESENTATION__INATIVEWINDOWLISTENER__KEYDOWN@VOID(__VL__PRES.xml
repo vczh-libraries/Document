@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowListener::KeyDown@void(::vl::presentation::NativeWindowKeyInfo const &amp;)" accessor="public" category="Function" name="KeyDown"><summary>
  Called a key is pressed.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void KeyDown(
-    NativeWindowKeyInfo const &
+    NativeWindowKeyInfo const & info
 );
 ]]></signature></Document>

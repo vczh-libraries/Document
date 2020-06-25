@@ -1,4 +1,4 @@
 <Document symbolId="vl::parsing::ParsingTreeNode::FindSubNode@::vl::parsing::ParsingTreeNode *(::vl::parsing::ParsingTextPos const &amp;)" accessor="public" category="Function" name="FindSubNode"><summary>Find a direct child node at the position. Using this function requires running <symbol docId="vl::parsing::ParsingTreeNode::InitializeQueryCache@void()" declFile="ParsingTree.h" declId="FB$vl::parsing::ParsingTreeNode::InitializeQueryCache@void()[decl0]"/> before.</summary><returns>The found node.</returns><param name="position">The position.</param><signature><![CDATA[ParsingTreeNode * FindSubNode(
-    ParsingTextPos const &
+    ParsingTextPos const & position
 );
 ]]></signature></Document>

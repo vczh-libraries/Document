@@ -231,7 +231,7 @@ WString AppendFunctionParametersInSignature(FunctionType* funcType, bool topLeve
 			auto param = funcType->parameters[i];
 			if (topLevel && param.item->name)
 			{
-				name = L" " + param.item->name;
+				name = L" " + param.item->name.name;
 			}
 
 			if (param.isVariadic)

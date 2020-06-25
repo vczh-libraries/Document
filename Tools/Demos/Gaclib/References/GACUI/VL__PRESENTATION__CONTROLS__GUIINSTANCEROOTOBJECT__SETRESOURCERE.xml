@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiInstanceRootObject::SetResourceResolver@void(::vl::Ptr&lt;::vl::presentation::GuiResourcePathResolver&gt;)" accessor="public" category="Function" name="SetResourceResolver"><summary>Set the resource resolver to connect the current root object to the resource creating it.</summary><param name="resolver">The resource resolver</param><signature><![CDATA[void SetResourceResolver(
-    Ptr<GuiResourcePathResolver>
+    Ptr<GuiResourcePathResolver> resolver
 );
 ]]></signature></Document>

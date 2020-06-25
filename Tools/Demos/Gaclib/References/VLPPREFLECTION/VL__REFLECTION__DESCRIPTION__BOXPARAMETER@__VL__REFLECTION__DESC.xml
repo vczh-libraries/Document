@@ -2,7 +2,7 @@
     typename T
 >
 Value BoxParameter(
-    TypeInfoRetriver<T>::ResultReferenceType,
-    ITypeDescriptor * /* optional */
+    TypeInfoRetriver<T>::ResultReferenceType object,
+    ITypeDescriptor * typeDescriptor /* optional */
 );
 ]]></signature></Document>

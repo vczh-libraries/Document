@@ -2,6 +2,6 @@
     typename F
 >
 bool Any(
-    F
+    F f
 ) const;
 ]]></signature></Document>

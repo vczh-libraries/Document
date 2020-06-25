@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::List::Contains@bool([K] const &amp;)" accessor="public" category="Function" name="Contains"><summary>Test does the list contain an item or not.</summary><returns>Returns true if the list contains the specified item.</returns><param name="item">The item to test.</param><signature><![CDATA[bool Contains(
-    K const &
+    K const & item
 ) const;
 ]]></signature></Document>

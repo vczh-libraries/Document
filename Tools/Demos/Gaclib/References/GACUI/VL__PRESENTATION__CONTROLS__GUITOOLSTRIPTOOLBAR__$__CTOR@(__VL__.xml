@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiToolstripToolBar::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiToolstripToolBar(
-    theme::ThemeName
+    theme::ThemeName themeName
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::TextWriter::WriteLine@void(wchar_t const *)" accessor="public" category="Function" name="WriteLine"><summary>Write a string with a CRLF.</summary><param name="string">Buffer to the zero terminated string to write.</param><signature><![CDATA[void WriteLine(
-    wchar_t const *
+    wchar_t const * string
 );
 ]]></signature></Document>

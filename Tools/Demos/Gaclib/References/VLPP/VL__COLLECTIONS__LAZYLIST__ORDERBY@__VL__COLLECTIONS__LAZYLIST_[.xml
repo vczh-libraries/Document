@@ -2,6 +2,6 @@
     typename F
 >
 LazyList<T> OrderBy(
-    F
+    F f
 ) const;
 ]]></signature></Document>

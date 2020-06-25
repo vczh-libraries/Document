@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControl::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Set the text to display on the control.</summary><param name="value">The text to display on the control.</param><signature><![CDATA[void SetText(
-    WString const &
+    WString const & value
 );
 ]]></signature></Document>

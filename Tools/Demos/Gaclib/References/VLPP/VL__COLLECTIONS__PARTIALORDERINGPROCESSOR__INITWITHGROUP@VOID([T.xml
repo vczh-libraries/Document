@@ -2,7 +2,7 @@
     typename TList
 >
 void InitWithGroup(
-    TList const &,
-    GroupOf<TList> const &
+    TList const & items,
+    GroupOf<TList> const & depGroup
 );
 ]]></signature></Document>

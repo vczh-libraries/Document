@@ -1,4 +1,4 @@
 <Document symbolId="vl::workflow::runtime::SetDebuggerForCurrentThread@void(::vl::Ptr&lt;::vl::workflow::runtime::WfDebugger&gt;)" accessor="" category="Function" name="SetDebuggerForCurrentThread"><summary>Set the debugger for the current thread.</summary><param name="debugger">The debugger.</param><signature><![CDATA[void SetDebuggerForCurrentThread(
-    Ptr<WfDebugger>
+    Ptr<WfDebugger> debugger
 );
 ]]></signature></Document>

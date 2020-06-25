@@ -1,5 +1,5 @@
 <Document symbolId="vl::workflow::runtime::WfBreakPoint::Invoke@::vl::workflow::runtime::WfBreakPoint(::vl::reflection::DescriptableObject *, ::vl::reflection::description::IMethodInfo *)" accessor="public" category="Function" name="Invoke"><summary>Create an function invoking break point.</summary><returns>The created break point.</returns><param name="thisObject">The target object. Set to null to apply to every object.</param><param name="methodInfo">The function.</param><signature><![CDATA[static WfBreakPoint Invoke(
-    reflection::DescriptableObject *,
-    reflection::description::IMethodInfo *
+    reflection::DescriptableObject * thisObject,
+    reflection::description::IMethodInfo * methodInfo
 );
 ]]></signature></Document>

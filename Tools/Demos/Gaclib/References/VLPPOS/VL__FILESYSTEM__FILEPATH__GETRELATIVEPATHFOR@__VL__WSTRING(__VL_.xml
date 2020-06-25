@@ -1,4 +1,4 @@
 <Document symbolId="vl::filesystem::FilePath::GetRelativePathFor@::vl::WString(::vl::filesystem::FilePath const &amp;)" accessor="public" category="Function" name="GetRelativePathFor"><summary>Calculate the relative path using a referencing folder.</summary><returns>The relative path.</returns><param name="_filePath">The referencing folder.</param><signature><![CDATA[WString GetRelativePathFor(
-    FilePath const &
+    FilePath const & _filePath
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::DataMultipleSorter::SetRightSorter@bool(::vl::Ptr&lt;::vl::presentation::controls::list::IDataSorter&gt;)" accessor="public" category="Function" name="SetRightSorter"><summary>Set the second sub sorter.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The sub sorter.</param><signature><![CDATA[bool SetRightSorter(
-    Ptr<IDataSorter>
+    Ptr<IDataSorter> value
 );
 ]]></signature></Document>

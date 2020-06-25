@@ -2,8 +2,8 @@
     typename T
 >
 T UnboxValue(
-    Value const &,
-    ITypeDescriptor * /* optional */,
-    WString const & /* optional */
+    Value const & value,
+    ITypeDescriptor * typeDescriptor /* optional */,
+    WString const & valueName /* optional */
 );
 ]]></signature></Document>

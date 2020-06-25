@@ -3,8 +3,8 @@
     typename TSubClass
 >
 void InitWithSubClass(
-    TList const &,
-    GroupOf<TList> const &,
-    Dictionary<TList::ElementType, TSubClass> const &
+    TList const & items,
+    GroupOf<TList> const & depGroup,
+    Dictionary<TList::ElementType, TSubClass> const & subClasses
 );
 ]]></signature></Document>

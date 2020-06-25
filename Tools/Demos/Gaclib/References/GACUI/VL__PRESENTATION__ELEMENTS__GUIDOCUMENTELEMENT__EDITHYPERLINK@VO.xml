@@ -1,9 +1,9 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement::EditHyperlink@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::WString const &amp;)" accessor="public" category="Function" name="EditHyperlink"><summary>Set hyperlink in a specified range.</summary><param name="paragraphIndex">The index of the paragraph to edit.</param><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="reference">The reference of the hyperlink.</param><param name="normalStyleName">The normal style name of the hyperlink.</param><param name="activeStyleName">The active style name of the hyperlink.</param><signature><![CDATA[void EditHyperlink(
-    vint,
-    vint,
-    vint,
-    WString const &,
-    WString const & /* optional */,
-    WString const & /* optional */
+    vint paragraphIndex,
+    vint begin,
+    vint end,
+    WString const & reference,
+    WString const & normalStyleName /* optional */,
+    WString const & activeStyleName /* optional */
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::NotifyFinalizeInstance@void(::vl::presentation::controls::GuiControl *)" accessor="" category="Function" name="NotifyFinalizeInstance"><summary>Call <symbol docId="vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()[decl0]"/> in all child root objects.</summary><param name="value">The container control to notify.</param><signature><![CDATA[void NotifyFinalizeInstance(
-    controls::GuiControl *
+    controls::GuiControl * value
 );
 ]]></signature></Document>

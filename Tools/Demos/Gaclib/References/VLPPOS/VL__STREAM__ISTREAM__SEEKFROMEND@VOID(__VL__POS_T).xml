@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::IStream::SeekFromEnd@void(::vl::pos_t)" accessor="public" category="Function" name="SeekFromEnd"><summary>Step backward from the end. Will throw exception if the stream is not seekable or not available.</summary><param name="_size">The length of the step.</param><signature><![CDATA[void SeekFromEnd(
-    pos_t
+    pos_t _size
 );
 ]]></signature></Document>

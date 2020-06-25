@@ -1,4 +1,4 @@
 <Document symbolId="vl::Locale::GetShortDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetShortDateFormats"><summary>Get all short date formats for the locale.</summary><param name="formats">The formats.</param><signature><![CDATA[void GetShortDateFormats(
-    collections::List<WString> &
+    collections::List<WString> & formats
 ) const;
 ]]></signature></Document>

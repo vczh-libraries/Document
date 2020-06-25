@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiRepeatCompositionBase::SetItemSource@void(::vl::Ptr&lt;::vl::presentation::compositions::GuiRepeatCompositionBase::IValueEnumerable&gt;)" accessor="public" category="Function" name="SetItemSource"><summary>Set the item source.</summary><param name="value">The item source. Null is acceptable if you want to clear all data.</param><signature><![CDATA[void SetItemSource(
-    Ptr<IValueEnumerable>
+    Ptr<IValueEnumerable> value
 );
 ]]></signature></Document>

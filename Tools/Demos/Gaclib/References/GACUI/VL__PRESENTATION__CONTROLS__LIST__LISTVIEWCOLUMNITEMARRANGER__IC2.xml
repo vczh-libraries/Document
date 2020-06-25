@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemView::AttachCallback@bool(::vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemViewCallback *)" accessor="public" category="Function" name="AttachCallback"><summary>Attach an column item view callback to this view.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The column item view callback.</param><signature><![CDATA[bool AttachCallback(
-    IColumnItemViewCallback *
+    IColumnItemViewCallback * value
 );
 ]]></signature></Document>

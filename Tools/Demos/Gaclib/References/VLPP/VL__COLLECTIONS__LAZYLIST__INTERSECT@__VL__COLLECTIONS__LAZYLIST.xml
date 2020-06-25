@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::LazyList::Intersect@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Intersect"><summary>Create a new lazy list with only elements that appear in both containers.</summary><returns>The created lazy list.</returns><param name="remains">The second container.</param><signature><![CDATA[LazyList<T> Intersect(
-    IEnumerable<T> const &
+    IEnumerable<T> const & remains
 ) const;
 ]]></signature></Document>

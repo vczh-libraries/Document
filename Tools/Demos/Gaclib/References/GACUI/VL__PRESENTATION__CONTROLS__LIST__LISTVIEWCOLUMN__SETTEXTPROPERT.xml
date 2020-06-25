@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::ListViewColumn::SetTextProperty@void(::vl::presentation::ItemProperty&lt;::vl::WString&gt; const &amp;)" accessor="public" category="Function" name="SetTextProperty"><summary>Set the text property of this item.</summary><param name="value">The text property of this item.</param><signature><![CDATA[void SetTextProperty(
-    ItemProperty<WString> const &
+    ItemProperty<WString> const & value
 );
 ]]></signature></Document>

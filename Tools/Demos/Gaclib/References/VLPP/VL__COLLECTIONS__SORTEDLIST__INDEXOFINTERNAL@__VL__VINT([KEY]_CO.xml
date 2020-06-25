@@ -2,7 +2,7 @@
     typename Key
 >
 vint IndexOfInternal(
-    Key const &,
-    vint &
+    Key const & item,
+    vint & index
 ) const;
 ]]></signature></Document>

@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowListener::LeftButtonUp@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="LeftButtonUp"><summary>
  Called when the left mouse button is released.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void LeftButtonUp(
-    NativeWindowMouseInfo const &
+    NativeWindowMouseInfo const & info
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::wlower@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="wlower"><summary>Convert all letters to lower case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[WString wlower(
-    WString const &
+    WString const & string
 );
 ]]></signature></Document>

@@ -1,7 +1,7 @@
 <Document symbolId="vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" accessor="public" category="Function" name="Parse"><summary>Parse an input and get an abstract syntax tree if no error happens or all errors are recovered.</summary><returns>The abstract syntax tree.</returns><param name="input">The input to parse.</param><param name="rule">The name of the rule that used to parse the input.</param><param name="errors">Returns all errors.</param><param name="codeIndex">The code index to differentiate each input. This value will be stored in every tokens and abstract syntax nodes.</param><signature><![CDATA[Ptr<ParsingTreeNode> Parse(
-    WString const &,
-    WString const &,
-    collections::List<Ptr<ParsingError>> &,
-    vint /* optional */
+    WString const & input,
+    WString const & rule,
+    collections::List<Ptr<ParsingError>> & errors,
+    vint codeIndex /* optional */
 );
 ]]></signature></Document>

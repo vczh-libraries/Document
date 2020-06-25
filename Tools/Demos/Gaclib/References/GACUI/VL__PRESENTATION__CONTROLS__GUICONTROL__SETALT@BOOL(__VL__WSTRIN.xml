@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControl::SetAlt@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="SetAlt"><summary>Associate a Alt-combined shortcut key with this control.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The Alt-combined shortcut key to associate. The key should contain only upper-case letters or digits.</param><signature><![CDATA[bool SetAlt(
-    WString const &
+    WString const & value
 );
 ]]></signature></Document>

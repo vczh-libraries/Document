@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::OnContextFinishedAsync@void(::vl::presentation::controls::RepeatingParsingOutput &amp;)" accessor="protected" category="Function" name="OnContextFinishedAsync"><summary>Called when semantic analyzing is needed. It is encouraged to set the &quot;cache&quot; fields in &quot;context&quot; argument. If there is an <symbol docId="vl::presentation::controls::RepeatingParsingExecutor::IParsingAnalyzer" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingExecutor::IParsingAnalyzer"/> binded to the <symbol docId="vl::presentation::controls::RepeatingParsingExecutor" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingExecutor"/>, this function can be automatically done.</summary><param name="context">The parsing result.</param><signature><![CDATA[void OnContextFinishedAsync(
-    RepeatingParsingOutput &
+    RepeatingParsingOutput & context
 );
 ]]></signature></Document>

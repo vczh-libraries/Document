@@ -2,8 +2,8 @@
     typename C
 >
 Ptr<EventHandler> Add(
-    C *,
-    void( C:: *)(
+    C * sender,
+    void( C:: * function)(
 TArgs...)
 );
 ]]></signature></Document>

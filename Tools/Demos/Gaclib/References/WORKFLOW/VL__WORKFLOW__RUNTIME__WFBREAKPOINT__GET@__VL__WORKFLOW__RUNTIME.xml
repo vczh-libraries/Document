@@ -1,5 +1,5 @@
 <Document symbolId="vl::workflow::runtime::WfBreakPoint::Get@::vl::workflow::runtime::WfBreakPoint(::vl::reflection::DescriptableObject *, ::vl::reflection::description::IPropertyInfo *)" accessor="public" category="Function" name="Get"><summary>Create an property reading break point.</summary><returns>The created break point.</returns><param name="thisObject">The target object. Set to null to apply to every object.</param><param name="propertyInfo">The property.</param><signature><![CDATA[static WfBreakPoint Get(
-    reflection::DescriptableObject *,
-    reflection::description::IPropertyInfo *
+    reflection::DescriptableObject * thisObject,
+    reflection::description::IPropertyInfo * propertyInfo
 );
 ]]></signature></Document>

@@ -1,5 +1,5 @@
 <Document symbolId="vl::collections::Group::Remove@bool([KK] const &amp;, [VK] const &amp;)" accessor="public" category="Function" name="Remove"><summary>Remove a key with the associated values.</summary><returns>Returns true if the key and the associated values are removed. If there are multiple values associated with the key, only the value will be removed.</returns><param name="key">The key.</param><param name="value">The value.</param><signature><![CDATA[bool Remove(
-    KK const &,
-    VK const &
+    KK const & key,
+    VK const & value
 );
 ]]></signature></Document>

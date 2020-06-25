@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::LazyList::First@[T]([T])" accessor="public" category="Function" name="First"><summary>Get the first value in the lazy list.</summary><returns>The first value.</returns><param name="defaultValue">Returns this argument if the lazy list is empty.</param><signature><![CDATA[T First(
-    T
+    T defaultValue
 ) const;
 ]]></signature></Document>

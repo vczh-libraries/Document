@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::controls::list::IDataEditor::BeforeEditCell@void(::vl::presentation::controls::GuiListControl::IItemProvider *, ::vl::vint, ::vl::vint)" accessor="public" category="Function" name="BeforeEditCell"><summary>Called before editing a cell.</summary><param name="itemProvider">The item provider.</param><param name="row">The row number of the cell.</param><param name="column">The column number of the cell.</param><signature><![CDATA[void BeforeEditCell(
-    GuiListControl::IItemProvider *,
-    vint,
-    vint
+    GuiListControl::IItemProvider * itemProvider,
+    vint row,
+    vint column
 );
 ]]></signature></Document>

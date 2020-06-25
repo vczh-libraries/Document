@@ -1,6 +1,6 @@
 <Document symbolId="vl::filesystem::File::WriteAllLines@bool(::vl::collections::List&lt;::vl::WString&gt; &amp;, bool, ::vl::stream::BomEncoder::Encoding)" accessor="public" category="Function" name="WriteAllLines"><summary>Write text to the file.</summary><returns>Returns false if this operation succeeded.</returns><param name="lines">The text to write.</param><param name="bom">Set to true to add a corresponding BOM at the beginning of the file according to the encoding.</param><param name="encoding">The text encoding.</param><signature><![CDATA[bool WriteAllLines(
-    collections::List<WString> &,
-    bool /* optional */,
-    stream::BomEncoder::Encoding /* optional */
+    collections::List<WString> & lines,
+    bool bom /* optional */,
+    stream::BomEncoder::Encoding encoding /* optional */
 );
 ]]></signature></Document>

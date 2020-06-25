@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiGrammarAutoComplete::$__ctor@(::vl::Ptr&lt;::vl::presentation::controls::RepeatingParsingExecutor&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create the auto complete controller with a created parsing executor.</summary><param name="_parsingExecutor">The parsing executor.</param><signature><![CDATA[ GuiGrammarAutoComplete(
-    Ptr<RepeatingParsingExecutor>
+    Ptr<RepeatingParsingExecutor> _parsingExecutor
 );
 ]]></signature></Document>

@@ -3,9 +3,9 @@
     typename S
 >
 void CopyFrom(
-    Ds &,
-    S const *,
-    vint,
-    bool /* optional */
+    Ds & ds,
+    S const * buffer,
+    vint count,
+    bool append /* optional */
 );
 ]]></signature></Document>

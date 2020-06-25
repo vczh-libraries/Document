@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::GetFolderPath@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="GetFolderPath"><summary>Get the folder path from a file path. The result folder path is ended with a separator.</summary><returns>The folder path.</returns><param name="filePath">The file path.</param><signature><![CDATA[WString GetFolderPath(
-    WString const &
+    WString const & filePath
 );
 ]]></signature></Document>

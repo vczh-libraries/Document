@@ -1,6 +1,6 @@
 <Document symbolId="vl::regex::RegexTokens::ReadToEnd@void(::vl::collections::List&lt;::vl::regex::RegexToken&gt; &amp;, bool(::vl::vint) *)" accessor="public" category="Function" name="ReadToEnd"><summary>Copy all tokens.</summary><param name="tokens">Returns all tokens.</param><param name="discard">A callback to decide which kind of tokens to discard. The input is <symbol docId="vl::regex::RegexToken::token" declFile="Regex.h" declId="NI$vl::regex::RegexToken::token"/>. Returns true to discard this kind of tokens.</param><signature><![CDATA[void ReadToEnd(
-    collections::List<RegexToken> &,
-    bool( *)(
+    collections::List<RegexToken> & tokens,
+    bool( * discard)(
 vint) /* optional */
 ) const;
 ]]></signature></Document>

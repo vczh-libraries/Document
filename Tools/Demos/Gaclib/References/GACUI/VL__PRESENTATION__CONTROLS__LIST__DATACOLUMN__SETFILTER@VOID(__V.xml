@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::DataColumn::SetFilter@void(::vl::Ptr&lt;::vl::presentation::controls::list::IDataFilter&gt;)" accessor="public" category="Function" name="SetFilter"><summary>Set the filter for the column.</summary><param name="value">The filter.</param><signature><![CDATA[void SetFilter(
-    Ptr<IDataFilter>
+    Ptr<IDataFilter> value
 );
 ]]></signature></Document>

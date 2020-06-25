@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::DocumentRun::IVisitor::Visit@void(::vl::presentation::DocumentImageRun *)" accessor="public" category="Function" name="Visit"><summary>Visit operation for <symbol docId="vl::presentation::DocumentImageRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentImageRun"/>.</summary><param name="run">The run object.</param><signature><![CDATA[void Visit(
-    DocumentImageRun *
+    DocumentImageRun * run
 );
 ]]></signature></Document>

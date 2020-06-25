@@ -1,5 +1,5 @@
 <Document symbolId="vl::wtof_test@double(::vl::WString const &amp;, bool &amp;)" accessor="" category="Function" name="wtof_test"><summary>Convert a string to 64-bits floating point number.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[double wtof_test(
-    WString const &,
-    bool &
+    WString const & string,
+    bool & success
 );
 ]]></signature></Document>

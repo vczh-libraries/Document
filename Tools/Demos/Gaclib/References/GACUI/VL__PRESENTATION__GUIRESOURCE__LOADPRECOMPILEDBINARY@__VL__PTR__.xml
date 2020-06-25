@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::GuiResource::LoadPrecompiledBinary@::vl::Ptr&lt;::vl::presentation::GuiResource&gt;(::vl::stream::IStream &amp;, ::vl::presentation::GuiResourceError::List &amp;)" accessor="public" category="Function" name="LoadPrecompiledBinary"><summary>Load a precompiled resource from a stream.</summary><returns>The loaded resource.</returns><param name="binaryStream">The stream.</param><param name="errors">All collected errors during loading a resource.</param><signature><![CDATA[static Ptr<GuiResource> LoadPrecompiledBinary(
-    stream::IStream &,
-    GuiResourceError::List &
+    stream::IStream & binaryStream,
+    GuiResourceError::List & errors
 );
 ]]></signature></Document>

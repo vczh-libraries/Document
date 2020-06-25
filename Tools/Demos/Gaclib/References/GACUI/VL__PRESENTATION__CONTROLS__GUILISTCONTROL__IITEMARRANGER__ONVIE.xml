@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::OnViewChanged@void(::vl::presentation::Rect)" accessor="public" category="Function" name="OnViewChanged"><summary>Called when the visible area of item container is changed.</summary><param name="bounds">The new visible area.</param><signature><![CDATA[void OnViewChanged(
-    Rect
+    Rect bounds
 );
 ]]></signature></Document>

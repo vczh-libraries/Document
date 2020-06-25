@@ -1,4 +1,4 @@
 <Document symbolId="vl::atow@::vl::WString(::vl::AString const &amp;)" accessor="" category="Function" name="atow"><summary>Convert an Ansi string to an Unicode string.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[WString atow(
-    AString const &
+    AString const & string
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiListViewColumnHeader::SetColumnSortingState@void(::vl::presentation::controls::ColumnSortingState)" accessor="public" category="Function" name="SetColumnSortingState"><summary>Set the column sorting state.</summary><param name="value">The new column sorting state.</param><signature><![CDATA[void SetColumnSortingState(
-    ColumnSortingState
+    ColumnSortingState value
 );
 ]]></signature></Document>

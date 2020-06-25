@@ -1,5 +1,5 @@
 <Document symbolId="vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &amp;, ::vl::WString const &amp;)" accessor="public" category="Function" name="CompareOrdinalIgnoreCase"><summary>Compare two strings to test binary equivalence, ignoring case.</summary><returns>Returns 0 if two strings are equal. Returns a positive number if the first string is larger. Returns a negative number if the second string is larger. When sorting strings, larger strings are put after then smaller strings.</returns><param name="s1">The first string to compare.</param><param name="s2">The second string to compare.</param><signature><![CDATA[vint CompareOrdinalIgnoreCase(
-    WString const &,
-    WString const &
+    WString const & s1,
+    WString const & s2
 ) const;
 ]]></signature></Document>

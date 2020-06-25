@@ -3,6 +3,6 @@
     typename /* optional */
 >
  Func(
-    C &&
+    C && function
 );
 ]]></signature></Document>

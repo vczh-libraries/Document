@@ -1,4 +1,4 @@
 <Document symbolId="vl::atou64@::vl::vuint64_t(::vl::AString const &amp;)" accessor="" category="Function" name="atou64"><summary>Convert a string to a 64-bits unsigned integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><signature><![CDATA[vuint64_t atou64(
-    AString const &
+    AString const & string
 );
 ]]></signature></Document>

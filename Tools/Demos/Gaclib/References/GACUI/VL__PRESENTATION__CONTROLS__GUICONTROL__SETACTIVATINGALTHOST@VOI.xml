@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControl::SetActivatingAltHost@void(::vl::presentation::compositions::IGuiAltActionHost *)" accessor="public" category="Function" name="SetActivatingAltHost"><summary>Make the control as the parent of multiple Alt-combined shortcut key activatable controls.</summary><param name="host">The alt action host object.</param><signature><![CDATA[void SetActivatingAltHost(
-    compositions::IGuiAltActionHost *
+    compositions::IGuiAltActionHost * host
 );
 ]]></signature></Document>

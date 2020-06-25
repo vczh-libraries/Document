@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindow::SetBounds@void(::vl::presentation::NativeRect const &amp;)" accessor="public" category="Function" name="SetBounds"><summary>
  Set the bounds of the window.
  </summary><param name="bounds">The bounds of the window.</param><signature><![CDATA[void SetBounds(
-    NativeRect const &
+    NativeRect const & bounds
 );
 ]]></signature></Document>

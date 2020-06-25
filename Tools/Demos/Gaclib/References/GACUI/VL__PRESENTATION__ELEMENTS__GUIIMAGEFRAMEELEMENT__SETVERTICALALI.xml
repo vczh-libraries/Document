@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiImageFrameElement::SetVerticalAlignment@void(::vl::presentation::Alignment)" accessor="public" category="Function" name="SetVerticalAlignment"><summary>
  Set the vertical alignment of the text.
  </summary><param name="value">The vertical alignment of the text.</param><signature><![CDATA[void SetVerticalAlignment(
-    Alignment
+    Alignment value
 );
 ]]></signature></Document>

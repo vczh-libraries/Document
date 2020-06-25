@@ -2,6 +2,6 @@
     typename F
 >
 T Aggregate(
-    F
+    F f
 ) const;
 ]]></signature></Document>

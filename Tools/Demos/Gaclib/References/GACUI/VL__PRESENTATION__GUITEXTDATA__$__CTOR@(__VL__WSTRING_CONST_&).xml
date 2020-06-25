@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::GuiTextData::$__ctor@(::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a text data with a specified text.</summary><param name="_text">The specified text.</param><signature><![CDATA[ GuiTextData(
-    WString const &
+    WString const & _text
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetMaxWidth@void(::vl::vint)" accessor="public" category="Function" name="SetMaxWidth"><summary>Set the max width for this paragraph. If the max width is set to -1, the max width limitation will be removed.</summary><param name="value">The max width.</param><signature><![CDATA[void SetMaxWidth(
-    vint
+    vint value
 );
 ]]></signature></Document>

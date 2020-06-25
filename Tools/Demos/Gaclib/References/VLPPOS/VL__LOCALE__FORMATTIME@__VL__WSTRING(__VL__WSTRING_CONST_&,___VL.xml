@@ -1,5 +1,5 @@
 <Document symbolId="vl::Locale::FormatTime@::vl::WString(::vl::WString const &amp;, ::vl::DateTime)" accessor="public" category="Function" name="FormatTime"><summary>Convert a time to a formatted string.</summary><returns>The formatted string.</returns><param name="format">The format to use.</param><param name="time">The time to convert.</param><signature><![CDATA[WString FormatTime(
-    WString const &,
-    DateTime
+    WString const & format,
+    DateTime time
 ) const;
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::DataReverseSorter::SetSubSorter@bool(::vl::Ptr&lt;::vl::presentation::controls::list::IDataSorter&gt;)" accessor="public" category="Function" name="SetSubSorter"><summary>Set the sub sorter.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The sub sorter.</param><signature><![CDATA[bool SetSubSorter(
-    Ptr<IDataSorter>
+    Ptr<IDataSorter> value
 );
 ]]></signature></Document>

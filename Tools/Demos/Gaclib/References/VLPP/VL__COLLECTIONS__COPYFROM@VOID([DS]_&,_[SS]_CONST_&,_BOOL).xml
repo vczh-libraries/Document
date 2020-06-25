@@ -3,8 +3,8 @@
     typename Ss
 >
 void CopyFrom(
-    Ds &,
-    Ss const &,
-    bool /* optional */
+    Ds & ds,
+    Ss const & ss,
+    bool append /* optional */
 );
 ]]></signature></Document>

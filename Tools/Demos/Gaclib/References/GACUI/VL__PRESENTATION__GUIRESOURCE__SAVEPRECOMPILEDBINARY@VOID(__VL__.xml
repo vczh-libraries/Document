@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::GuiResource::SavePrecompiledBinary@void(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="SavePrecompiledBinary"><summary>Save the precompiled resource to a stream.</summary><param name="binaryStream">The stream.</param><signature><![CDATA[void SavePrecompiledBinary(
-    stream::IStream &
+    stream::IStream & binaryStream
 );
 ]]></signature></Document>

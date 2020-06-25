@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiSharedSizeItemComposition::SetSharedWidth@void(bool)" accessor="public" category="Function" name="SetSharedWidth"><summary>Enable or disable sharing the width of this item.</summary><param name="value">Set to true to share the width of this item.</param><signature><![CDATA[void SetSharedWidth(
-    bool
+    bool value
 );
 ]]></signature></Document>

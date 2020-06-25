@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::SetListContent@void(::vl::collections::List&lt;::vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem&gt; const &amp;)" accessor="public" category="Function" name="SetListContent"><summary>Set the content of the list.</summary><param name="items">The content of the list.</param><signature><![CDATA[void SetListContent(
-    collections::List<AutoCompleteItem> const &
+    collections::List<AutoCompleteItem> const & items
 );
 ]]></signature></Document>

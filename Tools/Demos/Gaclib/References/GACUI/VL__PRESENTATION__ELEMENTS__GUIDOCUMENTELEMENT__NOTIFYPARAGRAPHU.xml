@@ -1,7 +1,7 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement::NotifyParagraphUpdated@void(::vl::vint, ::vl::vint, ::vl::vint, bool)" accessor="public" category="Function" name="NotifyParagraphUpdated"><summary>Notify that some paragraphs are updated.</summary><param name="index">The start paragraph index.</param><param name="oldCount">The number of paragraphs to be updated.</param><param name="newCount">The number of updated paragraphs.</param><param name="updatedText">Set to true to notify that the text is updated.</param><signature><![CDATA[void NotifyParagraphUpdated(
-    vint,
-    vint,
-    vint,
-    bool
+    vint index,
+    vint oldCount,
+    vint newCount,
+    bool updatedText
 );
 ]]></signature></Document>

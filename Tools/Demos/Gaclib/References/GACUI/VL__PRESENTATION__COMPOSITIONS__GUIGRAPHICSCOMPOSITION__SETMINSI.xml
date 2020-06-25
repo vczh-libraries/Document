@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetMinSizeLimitation@void(::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation)" accessor="public" category="Function" name="SetMinSizeLimitation"><summary>Set the minimum size limitation of the composition.</summary><param name="value">The minimum size limitation of the composition.</param><signature><![CDATA[void SetMinSizeLimitation(
-    MinSizeLimitation
+    MinSizeLimitation value
 );
 ]]></signature></Document>

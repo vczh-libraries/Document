@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowService::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="DestroyNativeWindow"><summary>
  Destroy a window.
  </summary><param name="window">The window to destroy.</param><signature><![CDATA[void DestroyNativeWindow(
-    INativeWindow *
+    INativeWindow * window
 );
 ]]></signature></Document>

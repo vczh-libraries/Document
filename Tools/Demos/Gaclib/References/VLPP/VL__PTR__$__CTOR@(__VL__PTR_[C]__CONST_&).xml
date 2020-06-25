@@ -3,6 +3,6 @@
     typename /* optional */
 >
  Ptr(
-    Ptr<C> const &
+    Ptr<C> const & pointer
 );
 ]]></signature></Document>

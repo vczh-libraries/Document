@@ -1,4 +1,4 @@
 <Document symbolId="vl::filesystem::Folder::Delete@bool(bool)" accessor="public" category="Function" name="Delete"><summary>Delete the folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="recursively">Set to true to delete everything in the folder.</param><signature><![CDATA[bool Delete(
-    bool
+    bool recursively
 ) const;
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::filesystem::File::Rename@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="Rename"><summary>Rename the file in the same folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="newName">The new file name.</param><signature><![CDATA[bool Rename(
-    WString const &
+    WString const & newName
 ) const;
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::IGuiResourcePathResolver::ResolveResource@::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;(::vl::WString const &amp;)" accessor="public" category="Function" name="ResolveResource"><summary>Load a resource when the descriptor is something like a protocol-prefixed uri.</summary><returns>The loaded resource. Returns null if failed to load.</returns><param name="path">The path.</param><signature><![CDATA[Ptr<DescriptableObject> ResolveResource(
-    WString const &
+    WString const & path
 );
 ]]></signature></Document>

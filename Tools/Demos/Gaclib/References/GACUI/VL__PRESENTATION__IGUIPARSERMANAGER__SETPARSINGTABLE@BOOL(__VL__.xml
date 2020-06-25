@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::IGuiParserManager::SetParsingTable@bool(::vl::WString const &amp;, ::vl::Func&lt;::vl::Ptr&lt;::vl::presentation::IGuiParserManager::Table&gt;()&gt;)" accessor="public" category="Function" name="SetParsingTable"><summary>Set a parsing table loader by name.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name.</param><param name="loader">The parsing table loader.</param><signature><![CDATA[bool SetParsingTable(
-    WString const &,
+    WString const & name,
     Func<Ptr<Table>(
-)>
+)> loader
 );
 ]]></signature></Document>

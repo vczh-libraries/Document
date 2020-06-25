@@ -1,6 +1,6 @@
 <Document symbolId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfAttribute&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" accessor="" category="Function" name="WfPrint"><summary>Print a Workflow attribute.</summary><param name="node">The Workflow attribute.</param><param name="indent">The indentation.</param><param name="writer">The target writer.</param><signature><![CDATA[void WfPrint(
-    Ptr<WfAttribute>,
-    WString const &,
-    parsing::ParsingWriter &
+    Ptr<WfAttribute> node,
+    WString const & indent,
+    parsing::ParsingWriter & writer
 );
 ]]></signature></Document>

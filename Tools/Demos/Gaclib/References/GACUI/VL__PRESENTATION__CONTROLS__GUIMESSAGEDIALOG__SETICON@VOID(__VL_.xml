@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiMessageDialog::SetIcon@void(::vl::presentation::INativeDialogService::MessageBoxIcons)" accessor="public" category="Function" name="SetIcon"><summary>Set the icon that appears on the dialog.</summary><param name="value">The icon.</param><signature><![CDATA[void SetIcon(
-    INativeDialogService::MessageBoxIcons
+    INativeDialogService::MessageBoxIcons value
 );
 ]]></signature></Document>

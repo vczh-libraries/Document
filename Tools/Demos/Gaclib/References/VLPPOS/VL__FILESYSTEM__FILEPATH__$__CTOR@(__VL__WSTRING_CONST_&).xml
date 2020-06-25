@@ -1,4 +1,4 @@
 <Document symbolId="vl::filesystem::FilePath::$__ctor@(::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a file path.</summary><param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param><signature><![CDATA[ FilePath(
-    WString const &
+    WString const & _filePath
 );
 ]]></signature></Document>

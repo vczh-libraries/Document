@@ -3,7 +3,7 @@
     typename TFunc
 >
 void InitWithFunc(
-    TList const &,
-    TFunc &&
+    TList const & items,
+    TFunc && depFunc
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IAutoCompleteControlProvider::GetItemText@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetItemText"><summary>Get the text of a specified item.</summary><param name="index">The index of the item.</param><returns>The text of the item.</returns><signature><![CDATA[WString GetItemText(
-    vint
+    vint index
 );
 ]]></signature></Document>

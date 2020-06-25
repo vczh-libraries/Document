@@ -1,5 +1,5 @@
 <Document symbolId="vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a stream.</summary><param name="_in">The stream to read.</param><param name="_out">The stream to write what is read from &quot;_in&quot;.</param><signature><![CDATA[ RecorderStream(
-    IStream &,
-    IStream &
+    IStream & _in,
+    IStream & _out
 );
 ]]></signature></Document>

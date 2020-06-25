@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::LzwDecoder::$__ctor@(bool [*] &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create an decoder and tell it which byte will never appear in the data before compression.</summary><param name="existingBytes">An array to tell the encoder which byte will never appear in the data before compression.</param><signature><![CDATA[ LzwDecoder(
-    bool( &)[expr]
+    bool( & existingBytes)[expr]
 );
 ]]></signature></Document>

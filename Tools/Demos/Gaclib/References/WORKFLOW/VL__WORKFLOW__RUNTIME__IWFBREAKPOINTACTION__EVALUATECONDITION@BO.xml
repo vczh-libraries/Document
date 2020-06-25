@@ -1,4 +1,4 @@
 <Document symbolId="vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)" accessor="public" category="Function" name="EvaluateCondition"><summary>Called a break point is about to activate.</summary><returns>Returns false to skip this break point.</returns><param name="debugger">The current attached debugger.</param><signature><![CDATA[bool EvaluateCondition(
-    WfDebugger *
+    WfDebugger * debugger
 );
 ]]></signature></Document>

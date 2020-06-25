@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetCallback@void(::vl::presentation::elements::GuiColorizedTextElement::ICallback *)" accessor="public" category="Function" name="SetCallback"><summary>
  Bind a callback object.
  </summary><param name="value">The callback object to bind.</param><signature><![CDATA[void SetCallback(
-    ICallback *
+    ICallback * value
 );
 ]]></signature></Document>

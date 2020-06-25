@@ -1,5 +1,5 @@
 <Document symbolId="vl::collections::Dictionary::Set@bool([KT] const &amp;, [VT] const &amp;)" accessor="public" category="Function" name="Set"><summary>Replace the value associated with a key.</summary><returns>Returns true if the value is replaced.</returns><param name="key">The key to find.</param><param name="value">The key to replace.</param><signature><![CDATA[bool Set(
-    KT const &,
-    VT const &
+    KT const & key,
+    VT const & value
 );
 ]]></signature></Document>

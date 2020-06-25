@@ -1,5 +1,5 @@
 <Document symbolId="vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)" accessor="public" category="Function" name="RunAndDisposeTests"><summary>Run all test cases.</summary><returns>The return value for the main function.</returns><param name="argc">Accept the first argument of the main function.</param><param name="argv">Accept the second argument of the main function.</param><signature><![CDATA[static int RunAndDisposeTests(
-    int,
-    wchar_t * *
+    int argc,
+    wchar_t * * argv
 );
 ]]></signature></Document>

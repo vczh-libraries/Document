@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::LoadTextFile@bool(::vl::WString const &amp;, ::vl::WString &amp;)" accessor="" category="Function" name="LoadTextFile"><summary>Load a text file.</summary><returns>Returns true if the operation succeeded.</returns><param name="filePath">The text file path.</param><param name="text">The text file content, if succeeded.</param><signature><![CDATA[bool LoadTextFile(
-    WString const &,
-    WString &
+    WString const & filePath,
+    WString & text
 );
 ]]></signature></Document>

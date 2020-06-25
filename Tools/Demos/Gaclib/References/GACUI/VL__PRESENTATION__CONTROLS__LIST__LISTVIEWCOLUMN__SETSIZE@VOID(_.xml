@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::ListViewColumn::SetSize@void(::vl::vint)" accessor="public" category="Function" name="SetSize"><summary>Set the size of this item.</summary><param name="value">The size of this item.</param><signature><![CDATA[void SetSize(
-    vint
+    vint value
 );
 ]]></signature></Document>

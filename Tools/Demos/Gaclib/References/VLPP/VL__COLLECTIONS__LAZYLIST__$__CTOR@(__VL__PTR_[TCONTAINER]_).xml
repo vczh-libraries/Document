@@ -2,6 +2,6 @@
     typename TContainer
 >
  LazyList(
-    Ptr<TContainer>
+    Ptr<TContainer> container
 );
 ]]></signature></Document>

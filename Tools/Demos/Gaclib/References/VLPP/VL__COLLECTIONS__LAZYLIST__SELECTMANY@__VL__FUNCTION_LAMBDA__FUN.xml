@@ -2,6 +2,6 @@
     typename F
 >
 vl::function_lambda::FunctionObjectRetriveType<F>::ResultType SelectMany(
-    F
+    F f
 ) const;
 ]]></signature></Document>

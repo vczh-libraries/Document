@@ -2,6 +2,6 @@
     typename T
 >
 LambdaRetriveType<decltype(expr)>::Type Lambda(
-    T
+    T functionObject
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::LazyList::$__ctor@(::vl::collections::LazyList&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a lazy list with an lazy list.</summary><param name="lazyList">The lazy list.</param><signature><![CDATA[ LazyList(
-    LazyList<T> const &
+    LazyList<T> const & lazyList
 );
 ]]></signature></Document>

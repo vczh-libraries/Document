@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::GetNearestCaretFromTextPos@::vl::vint(::vl::vint, bool)" accessor="public" category="Function" name="GetNearestCaretFromTextPos"><summary>Get the nearest caret from a text position.</summary><returns>The caret. Returns -1 if failed. If the text position is a caret, then the result will be the text position itself without considering the frontSide argument.</returns><param name="textPos">The caret to compare. If the position is CaretFirst or CaretLast, this argument is ignored.</param><param name="frontSide">Set to true to search in front of the text position, otherwise the opposite position.</param><signature><![CDATA[vint GetNearestCaretFromTextPos(
-    vint,
-    bool
+    vint textPos,
+    bool frontSide
 );
 ]]></signature></Document>

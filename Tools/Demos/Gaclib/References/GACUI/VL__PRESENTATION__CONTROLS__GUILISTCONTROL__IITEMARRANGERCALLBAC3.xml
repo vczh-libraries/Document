@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds@::vl::presentation::Rect(::vl::presentation::compositions::GuiBoundsComposition *)" accessor="public" category="Function" name="GetStyleBounds"><summary>Get the bounds of an item control.</summary><returns>The bounds of an item control.</returns><param name="style">The item control.</param><signature><![CDATA[Rect GetStyleBounds(
-    compositions::GuiBoundsComposition *
+    compositions::GuiBoundsComposition * style
 );
 ]]></signature></Document>

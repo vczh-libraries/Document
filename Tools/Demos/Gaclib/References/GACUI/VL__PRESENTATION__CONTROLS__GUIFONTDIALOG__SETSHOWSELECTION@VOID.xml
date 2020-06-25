@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiFontDialog::SetShowSelection@void(bool)" accessor="public" category="Function" name="SetShowSelection"><summary>Set if the selected font is already selected on the dialog when it is opened.</summary><param name="value">Set to true to select the selected font when the dialog is opened.</param><signature><![CDATA[void SetShowSelection(
-    bool
+    bool value
 );
 ]]></signature></Document>

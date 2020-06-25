@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::IGuiShortcutKeyManager::Execute@bool(::vl::presentation::NativeWindowKeyInfo const &amp;)" accessor="public" category="Function" name="Execute"><summary>Execute shortcut key items using a key event info.</summary><returns>Returns true if at least one shortcut key item is executed.</returns><param name="info">The key event info.</param><signature><![CDATA[bool Execute(
-    NativeWindowKeyInfo const &
+    NativeWindowKeyInfo const & info
 );
 ]]></signature></Document>

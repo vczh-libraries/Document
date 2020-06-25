@@ -1,4 +1,4 @@
 <Document symbolId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;([T] *)" accessor="public" category="Function" name="operator ="><summary>Convert a pointer to an object to a smart pointer.</summary><returns>The converted smart pointer.</returns><param name="pointer">The pointer to the object.</param><signature><![CDATA[Ptr<T> & operator =(
-    T *
+    T * pointer
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::ObjectBox::$__ctor@([T] &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Box a movable value.</summary><param name="_object">The value to box.</param><signature><![CDATA[ ObjectBox(
-    T &&
+    T && _object
 );
 ]]></signature></Document>

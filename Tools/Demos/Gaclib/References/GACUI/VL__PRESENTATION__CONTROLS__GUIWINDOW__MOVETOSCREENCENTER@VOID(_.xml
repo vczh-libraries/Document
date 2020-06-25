@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::MoveToScreenCenter@void(::vl::presentation::INativeScreen *)" accessor="public" category="Function" name="MoveToScreenCenter"><summary>Move the window to the center of the specified screen.</summary><param name="screen">The screen.</param><signature><![CDATA[void MoveToScreenCenter(
-    INativeScreen *
+    INativeScreen * screen
 );
 ]]></signature></Document>

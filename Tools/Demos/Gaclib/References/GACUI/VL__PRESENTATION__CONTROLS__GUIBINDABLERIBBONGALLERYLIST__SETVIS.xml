@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::SetVisibleItemCount@void(::vl::vint)" accessor="public" category="Function" name="SetVisibleItemCount"><summary>Set minimum items visible in the drop down menu.</summary><param name="value">The minimum items visible in the drop down menu.</param><signature><![CDATA[void SetVisibleItemCount(
-    vint
+    vint value
 );
 ]]></signature></Document>

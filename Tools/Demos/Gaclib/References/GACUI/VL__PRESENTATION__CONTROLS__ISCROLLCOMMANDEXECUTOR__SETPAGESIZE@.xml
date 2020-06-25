@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SetPageSize@void(::vl::vint)" accessor="public" category="Function" name="SetPageSize"><summary>Change to page size of the scroll.</summary><param name="value">The page size.</param><signature><![CDATA[void SetPageSize(
-    vint
+    vint value
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiColorDialog::SetOpenedCustomColor@void(bool)" accessor="public" category="Function" name="SetOpenedCustomColor"><summary>Set if the custom color panel is opened by default when it is enabled.</summary><param name="value">Set to true to open custom color panel by default if it is enabled.</param><signature><![CDATA[void SetOpenedCustomColor(
-    bool
+    bool value
 );
 ]]></signature></Document>

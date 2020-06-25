@@ -2,6 +2,6 @@
     typename U
 >
 LazyList<Pair<T, U>> Pairwise(
-    IEnumerable<U> const &
+    IEnumerable<U> const & remains
 ) const;
 ]]></signature></Document>

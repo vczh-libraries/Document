@@ -1,4 +1,4 @@
 <Document symbolId="vl::atof@double(::vl::AString const &amp;)" accessor="" category="Function" name="atof"><summary>Convert a string to a 64-bits floating point number.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><signature><![CDATA[double atof(
-    AString const &
+    AString const & string
 );
 ]]></signature></Document>

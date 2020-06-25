@@ -1,7 +1,7 @@
 <Document symbolId="vl::presentation::controls::GuiApplication::ShowTooltip@void(::vl::presentation::controls::GuiControl *, ::vl::presentation::controls::GuiControl *, ::vl::vint, ::vl::presentation::Point)" accessor="public" category="Function" name="ShowTooltip"><summary>Show a tooltip.</summary><param name="owner">The control that owns this tooltip temporary.</param><param name="tooltip">The control as the tooltip content. This control is not owned by the tooltip. User should manually release this control if no longer needed (usually when the application exit).</param><param name="preferredContentWidth">The preferred content width for this tooltip.</param><param name="location">The relative location to specify the left-top position of the tooltip.</param><signature><![CDATA[void ShowTooltip(
-    GuiControl *,
-    GuiControl *,
-    vint,
-    Point
+    GuiControl * owner,
+    GuiControl * tooltip,
+    vint preferredContentWidth,
+    Point location
 );
 ]]></signature></Document>

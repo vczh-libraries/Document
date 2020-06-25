@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Closing@void(bool &amp;)" accessor="public" category="Function" name="Closing"><summary>
  Called when the window is closing.
  </summary><param name="cancel">Change the value to true to prevent the windows from being closed.</param><signature><![CDATA[void Closing(
-    bool &
+    bool & cancel
 );
 ]]></signature></Document>

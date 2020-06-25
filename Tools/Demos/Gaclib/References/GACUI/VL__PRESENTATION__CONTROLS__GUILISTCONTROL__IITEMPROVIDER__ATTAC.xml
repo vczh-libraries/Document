@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::IItemProvider::AttachCallback@bool(::vl::presentation::controls::GuiListControl::IItemProviderCallback *)" accessor="public" category="Function" name="AttachCallback"><summary>Attach an item provider callback to this item provider.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The item provider callback.</param><signature><![CDATA[bool AttachCallback(
-    IItemProviderCallback *
+    IItemProviderCallback * value
 );
 ]]></signature></Document>

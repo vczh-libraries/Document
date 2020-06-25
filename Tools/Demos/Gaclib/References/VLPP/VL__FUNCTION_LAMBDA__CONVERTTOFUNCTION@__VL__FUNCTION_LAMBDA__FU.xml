@@ -2,6 +2,6 @@
     typename T
 >
 FunctionObjectRetriveType<T>::Type ConvertToFunction(
-    T
+    T functionObject
 );
 ]]></signature></Document>

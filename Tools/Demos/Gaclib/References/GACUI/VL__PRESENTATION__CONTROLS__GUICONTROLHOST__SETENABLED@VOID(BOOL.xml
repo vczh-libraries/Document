@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::SetEnabled@void(bool)" accessor="public" category="Function" name="SetEnabled"><summary>Enable or disable the window.</summary><param name="value">Set to true to enable the window.</param><signature><![CDATA[void SetEnabled(
-    bool
+    bool value
 );
 ]]></signature></Document>

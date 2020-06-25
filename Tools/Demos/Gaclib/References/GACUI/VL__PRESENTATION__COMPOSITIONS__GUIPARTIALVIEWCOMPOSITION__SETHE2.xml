@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::SetHeightRatio@void(double)" accessor="public" category="Function" name="SetHeightRatio"><summary>Set the height ratio to decided the vertical location. Value in [0, 1-pageSize].</summary><param name="value">The height ratio to decided the vertical location.</param><signature><![CDATA[void SetHeightRatio(
-    double
+    double value
 );
 ]]></signature></Document>

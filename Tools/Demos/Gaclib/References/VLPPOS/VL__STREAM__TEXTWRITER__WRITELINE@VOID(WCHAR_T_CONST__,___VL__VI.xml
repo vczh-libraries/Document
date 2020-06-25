@@ -1,5 +1,5 @@
 <Document symbolId="vl::stream::TextWriter::WriteLine@void(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="WriteLine"><summary>Write a string with a CRLF.</summary><param name="string">Buffer to the string to write.</param><param name="charCount">Size of the string in characters not including the zero terminator.</param><signature><![CDATA[void WriteLine(
-    wchar_t const *,
-    vint
+    wchar_t const * string,
+    vint charCount
 );
 ]]></signature></Document>

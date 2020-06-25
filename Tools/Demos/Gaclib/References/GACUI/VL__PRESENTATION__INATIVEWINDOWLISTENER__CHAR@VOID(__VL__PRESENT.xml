@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindowListener::Char@void(::vl::presentation::NativeWindowCharInfo const &amp;)" accessor="public" category="Function" name="Char"><summary>
  Called an input character is generated.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void Char(
-    NativeWindowCharInfo const &
+    NativeWindowCharInfo const & info
 );
 ]]></signature></Document>

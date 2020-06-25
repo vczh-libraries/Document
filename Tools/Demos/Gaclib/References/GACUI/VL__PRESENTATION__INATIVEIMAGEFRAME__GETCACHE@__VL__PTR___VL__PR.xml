@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::INativeImageFrame::GetCache@::vl::Ptr&lt;::vl::presentation::INativeImageFrameCache&gt;(void *)" accessor="public" category="Function" name="GetCache"><summary>
  Get the attached customized cache object that is already binded to a key.
  </summary><returns>The attached customized cache object.</returns><param name="key">The key binded with the customized cache object.</param><signature><![CDATA[Ptr<INativeImageFrameCache> GetCache(
-    void *
+    void * key
 );
 ]]></signature></Document>

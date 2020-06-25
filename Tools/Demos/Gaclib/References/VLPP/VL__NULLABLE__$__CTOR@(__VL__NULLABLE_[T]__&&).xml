@@ -1,4 +1,4 @@
 <Document symbolId="vl::Nullable::$__ctor@(::vl::Nullable&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Move a nullable value.</summary><param name="nullable">The nullable value to move.</param><signature><![CDATA[ Nullable(
-    Nullable<T> &&
+    Nullable<T> && nullable
 );
 ]]></signature></Document>

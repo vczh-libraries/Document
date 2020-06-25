@@ -1,4 +1,4 @@
 <Document symbolId="vl::utow@::vl::WString(::vl::vuint)" accessor="" category="Function" name="utow"><summary>Convert an unsigned interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString utow(
-    vuint
+    vuint number
 );
 ]]></signature></Document>

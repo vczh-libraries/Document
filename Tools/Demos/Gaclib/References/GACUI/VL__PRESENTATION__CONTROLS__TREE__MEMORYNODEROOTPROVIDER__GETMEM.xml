@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::tree::MemoryNodeRootProvider::GetMemoryNode@::vl::presentation::controls::tree::MemoryNodeProvider *(::vl::presentation::controls::tree::INodeProvider *)" accessor="public" category="Function" name="GetMemoryNode"><summary>Get the <symbol docId="vl::presentation::controls::tree::MemoryNodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::MemoryNodeProvider"/> object from an <symbol docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/> object.</summary><returns>The corresponding <symbol docId="vl::presentation::controls::tree::MemoryNodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::MemoryNodeProvider"/> object.</returns><param name="node">The node to get the memory node.</param><signature><![CDATA[MemoryNodeProvider * GetMemoryNode(
-    INodeProvider *
+    INodeProvider * node
 );
 ]]></signature></Document>

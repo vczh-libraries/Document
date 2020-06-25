@@ -1,5 +1,5 @@
 <Document symbolId="vl::ObjectString::Remove@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="Remove"><summary>Copy the beginning and the end of the string.</summary><returns>The copied string.</returns><param name="index">Position of characters NOT to copy.</param><param name="count">Size of characters NOT to copy.</param><signature><![CDATA[ObjectString<T> Remove(
-    vint,
-    vint
+    vint index,
+    vint count
 ) const;
 ]]></signature></Document>

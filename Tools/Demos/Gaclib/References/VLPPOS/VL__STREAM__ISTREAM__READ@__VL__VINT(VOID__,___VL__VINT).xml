@@ -1,5 +1,5 @@
 <Document symbolId="vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)" accessor="public" category="Function" name="Read"><summary>Read from the current position and step forward. Will throw exception if the stream is not readable or not available.</summary><returns>Returns the actual size of the content that is read. Returns 0 indicates that the stream reaches the end if the stream is limited.</returns><param name="_buffer">A buffer to store the content.</param><param name="_size">The size of the content that is expected to read.</param><signature><![CDATA[vint Read(
-    void *,
-    vint
+    void * _buffer,
+    vint _size
 );
 ]]></signature></Document>

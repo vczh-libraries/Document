@@ -2,9 +2,9 @@
     typename T
 >
 void UnboxParameter(
-    Value const &,
-    T &,
-    ITypeDescriptor * /* optional */,
-    WString const & /* optional */
+    Value const & value,
+    T & result,
+    ITypeDescriptor * typeDescriptor /* optional */,
+    WString const & valueName /* optional */
 );
 ]]></signature></Document>

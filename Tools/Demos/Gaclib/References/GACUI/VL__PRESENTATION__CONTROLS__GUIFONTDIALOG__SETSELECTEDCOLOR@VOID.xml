@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiFontDialog::SetSelectedColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetSelectedColor"><summary>Set the selected color.</summary><param name="value">The selected color.</param><signature><![CDATA[void SetSelectedColor(
-    Color
+    Color value
 );
 ]]></signature></Document>

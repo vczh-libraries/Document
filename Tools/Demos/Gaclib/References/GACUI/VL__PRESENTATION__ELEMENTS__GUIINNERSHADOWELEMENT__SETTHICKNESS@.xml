@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiInnerShadowElement::SetThickness@void(::vl::vint)" accessor="public" category="Function" name="SetThickness"><summary>
  Set the thickness.
  </summary><param name="value">The new thickness.</param><signature><![CDATA[void SetThickness(
-    vint
+    vint value
 );
 ]]></signature></Document>

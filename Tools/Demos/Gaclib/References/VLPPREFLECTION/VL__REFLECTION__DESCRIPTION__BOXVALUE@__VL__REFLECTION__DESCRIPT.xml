@@ -2,7 +2,7 @@
     typename T
 >
 Value BoxValue(
-    T const &,
-    ITypeDescriptor * /* optional */
+    T const & object,
+    ITypeDescriptor * typeDescriptor /* optional */
 );
 ]]></signature></Document>

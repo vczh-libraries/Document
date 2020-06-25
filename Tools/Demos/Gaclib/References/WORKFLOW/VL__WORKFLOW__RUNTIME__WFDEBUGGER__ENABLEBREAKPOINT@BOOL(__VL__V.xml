@@ -1,5 +1,5 @@
 <Document symbolId="vl::workflow::runtime::WfDebugger::EnableBreakPoint@bool(::vl::vint, bool)" accessor="public" category="Function" name="EnableBreakPoint"><summary>Enable or disable a specified break point.</summary><returns>Returns true if this operation is succeeded.</returns><param name="index">The index of the break point.</param><param name="enabled">Set to true to enable a break point.</param><signature><![CDATA[bool EnableBreakPoint(
-    vint,
-    bool
+    vint index,
+    bool enabled
 );
 ]]></signature></Document>

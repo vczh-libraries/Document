@@ -4,8 +4,8 @@
     typename C
 >
 Func<function_combining::Combining<F1, F2, C>::FinalFunctionType> Combine(
-    Func<C>,
-    Func<F1>,
-    Func<F2>
+    Func<C> converter,
+    Func<F1> function1,
+    Func<F2> function2
 );
 ]]></signature></Document>

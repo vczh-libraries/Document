@@ -1,4 +1,4 @@
 <Document symbolId="vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;(::vl::Nullable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="operator ="><summary>Copy a nullable value.</summary><returns>The created nullable value.</returns><param name="nullable">The nullable value to copy.</param><signature><![CDATA[Nullable<T> & operator =(
-    Nullable<T> const &
+    Nullable<T> const & nullable
 );
 ]]></signature></Document>

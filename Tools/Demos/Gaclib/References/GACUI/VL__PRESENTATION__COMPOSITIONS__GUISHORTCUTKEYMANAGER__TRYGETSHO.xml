@@ -1,7 +1,7 @@
 <Document symbolId="vl::presentation::compositions::GuiShortcutKeyManager::TryGetShortcut@::vl::presentation::compositions::IGuiShortcutKeyItem *(bool, bool, bool, ::vl::presentation::VKEY)" accessor="public" category="Function" name="TryGetShortcut"><summary>Get a shortcut key item using a key combination. If the item for the key combination does not exist, this function returns null.</summary><returns>The shortcut key item.</returns><param name="ctrl">Set to true if the CTRL key is required.</param><param name="shift">Set to true if the SHIFT key is required.</param><param name="alt">Set to true if the ALT key is required.</param><param name="key">The non-control key.</param><signature><![CDATA[IGuiShortcutKeyItem * TryGetShortcut(
-    bool,
-    bool,
-    bool,
-    VKEY
+    bool ctrl,
+    bool shift,
+    bool alt,
+    VKEY key
 );
 ]]></signature></Document>

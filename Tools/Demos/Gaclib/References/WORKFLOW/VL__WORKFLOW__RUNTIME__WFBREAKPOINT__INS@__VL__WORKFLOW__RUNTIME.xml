@@ -1,5 +1,5 @@
 <Document symbolId="vl::workflow::runtime::WfBreakPoint::Ins@::vl::workflow::runtime::WfBreakPoint(::vl::workflow::runtime::WfAssembly *, ::vl::vint)" accessor="public" category="Function" name="Ins"><summary>Create an instruction break point.</summary><returns>The created break point.</returns><param name="assembly">The assembly that contains the instruction.</param><param name="instruction">The index of the instruction.</param><signature><![CDATA[static WfBreakPoint Ins(
-    WfAssembly *,
-    vint
+    WfAssembly * assembly,
+    vint instruction
 );
 ]]></signature></Document>

@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::compositions::GuiTableComposition::GetSitedCell@::vl::presentation::compositions::GuiCellComposition *(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="GetSitedCell"><summary>Get the cell composition that covers the specified cell location.</summary><returns>The cell composition that covers the specified cell location.</returns><param name="_row">The number of rows.</param><param name="_column">The number of columns.</param><signature><![CDATA[GuiCellComposition * GetSitedCell(
-    vint,
-    vint
+    vint _row,
+    vint _column
 );
 ]]></signature></Document>

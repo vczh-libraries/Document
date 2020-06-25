@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::IDataGridView::IsColumnSortable@bool(::vl::vint)" accessor="public" category="Function" name="IsColumnSortable"><summary>Test is a column sortable.</summary><returns>Returns true if this column is sortable.</returns><param name="column">The index of the column.</param><signature><![CDATA[bool IsColumnSortable(
-    vint
+    vint column
 );
 ]]></signature></Document>

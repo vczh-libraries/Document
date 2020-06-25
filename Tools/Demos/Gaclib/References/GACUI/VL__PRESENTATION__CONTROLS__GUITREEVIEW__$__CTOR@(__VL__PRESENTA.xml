@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTreeView::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor"><summary>Create a tree view control.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiTreeView(
-    theme::ThemeName
+    theme::ThemeName themeName
 );
 ]]></signature></Document>
