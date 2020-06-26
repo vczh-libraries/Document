@@ -1,5 +1,6 @@
 <Document symbolId="vl::collections::IEnumerator" accessor="" category="Class" name="IEnumerator"><summary>Enumerator.</summary><typeparam name="T">Type of the elements in the enumerator.</typeparam><signature><![CDATA[template <
     typename T
 >
-class IEnumerator;
+class IEnumerator
+    : Interface;
 ]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

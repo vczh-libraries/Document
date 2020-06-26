@@ -2,5 +2,7 @@
  A cache stream. Features (readable, writable, seekable, peekable) are enabled according to the target stream.
  When you read from the cache strema, it will read a specified size of content from the target stream first and cache, reducing the numbers of operations on the target stream.
  When you write to the cache strema, it will save them to a buffer, and write to the target stream until the buffer reaches a specified size, reducing the numbers of operations on the target stream.
- </summary><signature><![CDATA[class CacheStream;
+ </summary><signature><![CDATA[class CacheStream
+    : Object
+    , IStream;
 ]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>

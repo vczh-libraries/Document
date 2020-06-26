@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer" accessor="" category="Class" name="GuiTextBoxRegexColorizer"><summary>Regex based colorizer.</summary><signature><![CDATA[class GuiTextBoxRegexColorizer;
+<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer" accessor="" category="Class" name="GuiTextBoxRegexColorizer"><summary>Regex based colorizer.</summary><signature><![CDATA[class GuiTextBoxRegexColorizer
+    : GuiTextBoxColorizerBase;
 ]]></signature><basetypes><symbol docId="vl::presentation::controls::GuiTextBoxColorizerBase" declFile="GuiTextColorizer.h" declId="NI$vl::presentation::controls::GuiTextBoxColorizerBase"/></basetypes></Document>

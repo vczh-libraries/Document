@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::GuiResourceItem" accessor="" category="Class" name="GuiResourceItem"><summary>Resource item.</summary><signature><![CDATA[class GuiResourceItem;
+<Document symbolId="vl::presentation::GuiResourceItem" accessor="" category="Class" name="GuiResourceItem"><summary>Resource item.</summary><signature><![CDATA[class GuiResourceItem
+    : GuiResourceNodeBase
+    , Description<GuiResourceItem>;
 ]]></signature><seealsos><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::GuiResourceNodeBase" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceNodeBase"/></basetypes></Document>

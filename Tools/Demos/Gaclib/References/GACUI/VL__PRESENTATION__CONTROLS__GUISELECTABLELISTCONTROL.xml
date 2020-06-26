@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl" accessor="" category="Class" name="GuiSelectableListControl"><summary>Represents a list control that each item is selectable.</summary><signature><![CDATA[class GuiSelectableListControl;
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl" accessor="" category="Class" name="GuiSelectableListControl"><summary>Represents a list control that each item is selectable.</summary><signature><![CDATA[class GuiSelectableListControl
+    : GuiListControl
+    , Description<GuiSelectableListControl>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiSelectableListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiSelectableListControl"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl"/></basetypes></Document>

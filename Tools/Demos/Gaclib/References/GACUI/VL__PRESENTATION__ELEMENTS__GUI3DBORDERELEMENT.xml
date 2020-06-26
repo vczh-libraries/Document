@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::Gui3DBorderElement" accessor="" category="Class" name="Gui3DBorderElement"><summary>
  Defines a 3D-like rectangle element with a thickness of two pixels.
- </summary><signature><![CDATA[class Gui3DBorderElement;
+ </summary><signature><![CDATA[class Gui3DBorderElement
+    : GuiElementBase<Gui3DBorderElement>;
 ]]></signature><seealsos><symbol docId="vl::presentation::elements::Gui3DBorderElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DBorderElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

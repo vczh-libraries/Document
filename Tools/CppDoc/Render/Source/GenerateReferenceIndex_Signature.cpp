@@ -610,6 +610,10 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol, SortedList<Symbol*>& see
 				{
 					auto baseType = decl->baseTypes[i].item.f1;
 					CollectSignatureHyperlinks(baseType, seeAlsos, baseTypes);
+					writer.WriteLine(L"");
+					writer.WriteString(L"    ");
+					writer.WriteString(i == 0 ? L": " : L", ");
+					writer.WriteString(GetTypeDisplayNameInSignature(baseType));
 				}
 			}
 			writer.WriteLine(L";");

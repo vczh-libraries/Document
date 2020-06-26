@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::controls::GuiPopup" accessor="" category="Class" name="GuiPopup"><summary>
  Represents a popup window. When the mouse click on other window or the desktop, the popup window will be closed automatically.
- </summary><signature><![CDATA[class GuiPopup;
+ </summary><signature><![CDATA[class GuiPopup
+    : GuiWindow
+    , Description<GuiPopup>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiPopup" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiPopup"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/></basetypes></Document>

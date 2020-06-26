@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn" accessor="" category="Class" name="DataColumn"><summary>Datagrid Column.</summary><signature><![CDATA[class DataColumn;
+<Document symbolId="vl::presentation::controls::list::DataColumn" accessor="" category="Class" name="DataColumn"><summary>Datagrid Column.</summary><signature><![CDATA[class DataColumn
+    : Object
+    , Description<DataColumn>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::list::DataColumn" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataColumn"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

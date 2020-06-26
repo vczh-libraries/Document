@@ -4,4 +4,4 @@
 FunctionObjectRetriveType<T>::Type ConvertToFunction(
     T functionObject
 );
-]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::Type"/><symbol declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::Type"/></seealsos></Document>
+]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::Type"/><symbol declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::Type"/></seealsos></Document>

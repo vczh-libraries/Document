@@ -1,2 +1,5 @@
-<Document symbolId="vl::presentation::compositions::GuiAxis" accessor="" category="Class" name="GuiAxis"><summary>Axis aligned item coordinate transformer. This transformer transforms coordinates by changing the axis direction.</summary><signature><![CDATA[class GuiAxis;
+<Document symbolId="vl::presentation::compositions::GuiAxis" accessor="" category="Class" name="GuiAxis"><summary>Axis aligned item coordinate transformer. This transformer transforms coordinates by changing the axis direction.</summary><signature><![CDATA[class GuiAxis
+    : Object
+    , IGuiAxis
+    , Description<GuiAxis>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiAxis" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::GuiAxis"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::IGuiAxis" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::IGuiAxis"/></basetypes></Document>

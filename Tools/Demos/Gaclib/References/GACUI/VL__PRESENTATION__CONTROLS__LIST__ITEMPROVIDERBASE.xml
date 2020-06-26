@@ -1,2 +1,5 @@
-<Document symbolId="vl::presentation::controls::list::ItemProviderBase" accessor="" category="Class" name="ItemProviderBase"><summary>Item provider base. This class provider common functionalities for item providers.</summary><signature><![CDATA[class ItemProviderBase;
+<Document symbolId="vl::presentation::controls::list::ItemProviderBase" accessor="" category="Class" name="ItemProviderBase"><summary>Item provider base. This class provider common functionalities for item providers.</summary><signature><![CDATA[class ItemProviderBase
+    : Object
+    , GuiListControl::IItemProvider
+    , Description<ItemProviderBase>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::list::ItemProviderBase" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::list::ItemProviderBase"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/></basetypes></Document>

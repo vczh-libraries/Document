@@ -1,5 +1,6 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRendererFactory" accessor="" category="Class" name="IGuiGraphicsRendererFactory"><summary>
  This is the interface for graphics renderer factories.
  Graphics renderers should be registered using <symbol docId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &amp;, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &amp;, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[decl0]"/>. 
- </summary><signature><![CDATA[class IGuiGraphicsRendererFactory;
+ </summary><signature><![CDATA[class IGuiGraphicsRendererFactory
+    : Interface;
 ]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

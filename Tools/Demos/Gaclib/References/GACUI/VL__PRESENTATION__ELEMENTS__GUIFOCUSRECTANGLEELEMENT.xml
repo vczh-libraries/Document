@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiFocusRectangleElement" accessor="" category="Class" name="GuiFocusRectangleElement"><summary>
  Defines a focus rectangle with a thickness of one pixel.
- </summary><signature><![CDATA[class GuiFocusRectangleElement;
+ </summary><signature><![CDATA[class GuiFocusRectangleElement
+    : GuiElementBase<GuiFocusRectangleElement>;
 ]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiFocusRectangleElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiFocusRectangleElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::IGuiResourcePathResolver" accessor="" category="Class" name="IGuiResourcePathResolver"><summary>Represents a symbol resolver for loading a resource of a certain protocol.</summary><signature><![CDATA[class IGuiResourcePathResolver;
+<Document symbolId="vl::presentation::IGuiResourcePathResolver" accessor="" category="Class" name="IGuiResourcePathResolver"><summary>Represents a symbol resolver for loading a resource of a certain protocol.</summary><signature><![CDATA[class IGuiResourcePathResolver
+    : IDescriptable
+    , Description<IGuiResourcePathResolver>;
 ]]></signature><seealsos><symbol docId="vl::presentation::IGuiResourcePathResolver" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourcePathResolver"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

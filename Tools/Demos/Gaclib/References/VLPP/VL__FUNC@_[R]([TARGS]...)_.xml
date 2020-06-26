@@ -3,5 +3,6 @@
     typename... TArgs
 >
 class Func<R(
-TArgs...)>;
+TArgs...)>
+    : Object;
 ]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

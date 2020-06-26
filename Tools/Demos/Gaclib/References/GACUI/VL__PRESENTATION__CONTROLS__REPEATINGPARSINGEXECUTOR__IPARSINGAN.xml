@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::IParsingAnalyzer" accessor="public" category="Class" name="IParsingAnalyzer"><summary>Parsing analyzer.</summary><signature><![CDATA[class IParsingAnalyzer;
+<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::IParsingAnalyzer" accessor="public" category="Class" name="IParsingAnalyzer"><summary>Parsing analyzer.</summary><signature><![CDATA[class IParsingAnalyzer
+    : Interface;
 ]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::IToolstripUpdateLayout" accessor="" category="Class" name="IToolstripUpdateLayout"><summary>IToolstripUpdateLayout is a required service for all menu item container.</summary><signature><![CDATA[class IToolstripUpdateLayout;
+<Document symbolId="vl::presentation::controls::IToolstripUpdateLayout" accessor="" category="Class" name="IToolstripUpdateLayout"><summary>IToolstripUpdateLayout is a required service for all menu item container.</summary><signature><![CDATA[class IToolstripUpdateLayout
+    : IDescriptable;
 ]]></signature><basetypes><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

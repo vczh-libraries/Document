@@ -1,2 +1,3 @@
-<Document symbolId="vl::stream::IDecoder" accessor="" category="Class" name="IDecoder"><summary>Decoder interface. This interface defines a readable transformation from one stream to another stream. You can create a <symbol docId="vl::stream::DecoderStream" declFile="Accessor.h" declId="NI$vl::stream::DecoderStream"/> after you have an decoder.</summary><signature><![CDATA[class IDecoder;
+<Document symbolId="vl::stream::IDecoder" accessor="" category="Class" name="IDecoder"><summary>Decoder interface. This interface defines a readable transformation from one stream to another stream. You can create a <symbol docId="vl::stream::DecoderStream" declFile="Accessor.h" declId="NI$vl::stream::DecoderStream"/> after you have an decoder.</summary><signature><![CDATA[class IDecoder
+    : Interface;
 ]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

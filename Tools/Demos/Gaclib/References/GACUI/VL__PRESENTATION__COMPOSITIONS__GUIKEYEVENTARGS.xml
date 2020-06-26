@@ -1,2 +1,5 @@
-<Document symbolId="vl::presentation::compositions::GuiKeyEventArgs" accessor="" category="Struct" name="GuiKeyEventArgs"><summary>Keyboard event arguments.</summary><signature><![CDATA[struct GuiKeyEventArgs;
+<Document symbolId="vl::presentation::compositions::GuiKeyEventArgs" accessor="" category="Struct" name="GuiKeyEventArgs"><summary>Keyboard event arguments.</summary><signature><![CDATA[struct GuiKeyEventArgs
+    : GuiEventArgs
+    , WindowKeyInfo
+    , Description<GuiKeyEventArgs>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiKeyEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiKeyEventArgs"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowKeyInfo"/><symbol docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></basetypes></Document>

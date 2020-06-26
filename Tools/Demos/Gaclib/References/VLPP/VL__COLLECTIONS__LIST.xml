@@ -2,5 +2,6 @@
     typename T, 
     typename K /* optional */
 >
-class List;
+class List
+    : ListBase<T, K>;
 ]]></signature><basetypes><symbol docId="vl::collections::ListBase" declFile="List.h" declId="NI$vl::collections::ListBase"/></basetypes></Document>

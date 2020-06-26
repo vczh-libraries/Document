@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::compositions::GuiPartialViewComposition" accessor="" category="Class" name="GuiPartialViewComposition"><summary>
  Represents a composition that its location and size are decided by the client area of the parent composition by setting ratios.
- </summary><signature><![CDATA[class GuiPartialViewComposition;
+ </summary><signature><![CDATA[class GuiPartialViewComposition
+    : GuiGraphicsSite
+    , Description<GuiPartialViewComposition>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiPartialViewComposition" declFile="GuiGraphicsSpecializedComposition.h" declId="NI$vl::presentation::compositions::GuiPartialViewComposition"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiGraphicsSite" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsSite"/></basetypes></Document>

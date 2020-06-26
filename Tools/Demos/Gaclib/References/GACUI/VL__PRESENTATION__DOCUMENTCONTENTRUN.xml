@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::DocumentContentRun" accessor="" category="Class" name="DocumentContentRun"><summary>Pepresents a content run.</summary><signature><![CDATA[class DocumentContentRun;
+<Document symbolId="vl::presentation::DocumentContentRun" accessor="" category="Class" name="DocumentContentRun"><summary>Pepresents a content run.</summary><signature><![CDATA[class DocumentContentRun
+    : DocumentRun
+    , Description<DocumentContentRun>;
 ]]></signature><seealsos><symbol docId="vl::presentation::DocumentContentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentContentRun"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::DocumentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun"/></basetypes></Document>

@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::ICallback" accessor="public" category="Class" name="ICallback"><summary>Callback.</summary><signature><![CDATA[class ICallback;
+<Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::ICallback" accessor="public" category="Class" name="ICallback"><summary>Callback.</summary><signature><![CDATA[class ICallback
+    : Interface;
 ]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

@@ -3,5 +3,9 @@
  When the control is destroyed, it automatically destroys sub controls, and the bounds composition from the style controller.
  If you want to manually destroy a control, you should first remove it from its parent.
  The only way to remove a control from a parent control, is to remove the bounds composition from its parent composition. The same to inserting a control.
- </summary><signature><![CDATA[class GuiControl;
+ </summary><signature><![CDATA[class GuiControl
+    : Object
+    , compositions::IGuiAltAction
+    , compositions::IGuiTabAction
+    , Description<GuiControl>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::IGuiAltAction" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltAction"/><symbol docId="vl::presentation::compositions::IGuiTabAction" declFile="GuiGraphicsHost_Tab.h" declId="NI$vl::presentation::compositions::IGuiTabAction"/></basetypes></Document>

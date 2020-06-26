@@ -46,5 +46,7 @@
 		(!regex): Any prefix of the following text should not match the regex, and it is not counted in the whole match (DFA incompatible)
 		(<#name>regex): Name the regex "name", and it applies here
 		(<&name>): Copy the named regex "name" here and apply
- ]]></summary><signature><![CDATA[class Regex;
-]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/></basetypes></Document>
+ ]]></summary><signature><![CDATA[class Regex
+    : Object
+    , NotCopyable;
+]]></signature><basetypes><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

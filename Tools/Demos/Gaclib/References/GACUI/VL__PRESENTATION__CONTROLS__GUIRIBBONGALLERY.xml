@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonGallery" accessor="" category="Class" name="GuiRibbonGallery"><summary>Ribbon gallery, with scroll up, scroll down, dropdown buttons.</summary><signature><![CDATA[class GuiRibbonGallery;
+<Document symbolId="vl::presentation::controls::GuiRibbonGallery" accessor="" category="Class" name="GuiRibbonGallery"><summary>Ribbon gallery, with scroll up, scroll down, dropdown buttons.</summary><signature><![CDATA[class GuiRibbonGallery
+    : GuiControl
+    , Description<GuiRibbonGallery>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiRibbonGallery" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonGallery"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></basetypes></Document>

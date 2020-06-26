@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::ICommonTextEditCallback" accessor="" category="Class" name="ICommonTextEditCallback"><summary>An text edit callback for text box controls.</summary><signature><![CDATA[class ICommonTextEditCallback;
+<Document symbolId="vl::presentation::controls::ICommonTextEditCallback" accessor="" category="Class" name="ICommonTextEditCallback"><summary>An text edit callback for text box controls.</summary><signature><![CDATA[class ICommonTextEditCallback
+    : IDescriptable
+    , Description<ICommonTextEditCallback>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::ICommonTextEditCallback" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

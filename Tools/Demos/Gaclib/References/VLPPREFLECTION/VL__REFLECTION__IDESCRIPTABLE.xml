@@ -1,2 +1,4 @@
-<Document symbolId="vl::reflection::IDescriptable" accessor="" category="Class" name="IDescriptable"><summary>Base types of all reflectable interfaces. All reflectable interface types should be virtual inherited.</summary><signature><![CDATA[class IDescriptable;
+<Document symbolId="vl::reflection::IDescriptable" accessor="" category="Class" name="IDescriptable"><summary>Base types of all reflectable interfaces. All reflectable interface types should be virtual inherited.</summary><signature><![CDATA[class IDescriptable
+    : Interface
+    , Description<IDescriptable>;
 ]]></signature><seealsos><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></seealsos><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeClipboardWriter" accessor="" category="Class" name="INativeClipboardWriter"><summary>
  Clipboard writer.
- </summary><signature><![CDATA[class INativeClipboardWriter;
+ </summary><signature><![CDATA[class INativeClipboardWriter
+    : IDescriptable
+    , Description<INativeClipboardWriter>;
 ]]></signature><seealsos><symbol docId="vl::presentation::INativeClipboardWriter" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardWriter"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

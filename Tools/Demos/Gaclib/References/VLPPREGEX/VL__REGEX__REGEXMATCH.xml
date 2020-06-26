@@ -1,2 +1,4 @@
-<Document symbolId="vl::regex::RegexMatch" accessor="" category="Class" name="RegexMatch"><summary>A type representing a match of the input string.</summary><signature><![CDATA[class RegexMatch;
-]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/></basetypes></Document>
+<Document symbolId="vl::regex::RegexMatch" accessor="" category="Class" name="RegexMatch"><summary>A type representing a match of the input string.</summary><signature><![CDATA[class RegexMatch
+    : Object
+    , NotCopyable;
+]]></signature><basetypes><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

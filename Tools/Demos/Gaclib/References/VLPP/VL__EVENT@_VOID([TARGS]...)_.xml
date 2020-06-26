@@ -2,5 +2,7 @@
     typename... TArgs
 >
 class Event<void(
-TArgs...)>;
-]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/></basetypes></Document>
+TArgs...)>
+    : Object
+    , NotCopyable;
+]]></signature><basetypes><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

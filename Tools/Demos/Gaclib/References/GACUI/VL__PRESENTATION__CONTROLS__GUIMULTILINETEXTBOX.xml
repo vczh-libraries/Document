@@ -1,2 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiMultilineTextBox" accessor="" category="Class" name="GuiMultilineTextBox"><summary>Multiline text box control.</summary><signature><![CDATA[class GuiMultilineTextBox;
+<Document symbolId="vl::presentation::controls::GuiMultilineTextBox" accessor="" category="Class" name="GuiMultilineTextBox"><summary>Multiline text box control.</summary><signature><![CDATA[class GuiMultilineTextBox
+    : GuiScrollView
+    , GuiTextBoxCommonInterface
+    , Description<GuiMultilineTextBox>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiMultilineTextBox" declFile="GuiTextControls.h" declId="NI$vl::presentation::controls::GuiMultilineTextBox"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiScrollView" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiScrollView"/><symbol docId="vl::presentation::controls::GuiTextBoxCommonInterface" declFile="GuiTextCommonInterface.h" declId="NI$vl::presentation::controls::GuiTextBoxCommonInterface"/></basetypes></Document>

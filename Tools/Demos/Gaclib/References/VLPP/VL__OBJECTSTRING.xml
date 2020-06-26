@@ -1,5 +1,6 @@
 <Document symbolId="vl::ObjectString" accessor="" category="Class" name="ObjectString"><summary>A type representing a string.</summary><typeparam name="T">Type of a character.</typeparam><signature><![CDATA[template <
     typename T
 >
-class ObjectString;
+class ObjectString
+    : Object;
 ]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

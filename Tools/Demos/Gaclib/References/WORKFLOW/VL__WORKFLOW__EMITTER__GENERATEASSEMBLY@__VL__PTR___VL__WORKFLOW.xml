@@ -2,4 +2,4 @@
     analyzer::WfLexicalScopeManager * manager,
     IWfCompilerCallback * callback /* optional */
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::workflow::runtime::WfAssembly" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly"/><symbol docId="vl::workflow::analyzer::WfLexicalScopeManager" declFile="WfAnalyzer.h" declId="NI$vl::workflow::analyzer::WfLexicalScopeManager"/><symbol declFile="WfAnalyzer.h" declId="NI$vl::workflow::IWfCompilerCallback"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::workflow::runtime::WfAssembly" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly"/><symbol declFile="WfAnalyzer.h" declId="NI$vl::workflow::IWfCompilerCallback"/><symbol docId="vl::workflow::analyzer::WfLexicalScopeManager" declFile="WfAnalyzer.h" declId="NI$vl::workflow::analyzer::WfLexicalScopeManager"/></seealsos></Document>

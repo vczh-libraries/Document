@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor" accessor="" category="Class" name="IDatePickerCommandExecutor"><summary>A command executor for the style controller to change the control state.</summary><signature><![CDATA[class IDatePickerCommandExecutor;
+<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor" accessor="" category="Class" name="IDatePickerCommandExecutor"><summary>A command executor for the style controller to change the control state.</summary><signature><![CDATA[class IDatePickerCommandExecutor
+    : IDescriptable
+    , Description<IDatePickerCommandExecutor>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::IDatePickerCommandExecutor" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IDatePickerCommandExecutor"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement" accessor="" category="Class" name="GuiColorizedTextElement"><summary>
  Defines a text element with separate color configuration for each character.
- </summary><signature><![CDATA[class GuiColorizedTextElement;
+ </summary><signature><![CDATA[class GuiColorizedTextElement
+    : GuiElementBase<GuiColorizedTextElement>;
 ]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiColorizedTextElement" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiNodeMouseEventArgs" accessor="" category="Struct" name="GuiNodeMouseEventArgs"><summary>Node mouse event arguments.</summary><signature><![CDATA[struct GuiNodeMouseEventArgs;
+<Document symbolId="vl::presentation::compositions::GuiNodeMouseEventArgs" accessor="" category="Struct" name="GuiNodeMouseEventArgs"><summary>Node mouse event arguments.</summary><signature><![CDATA[struct GuiNodeMouseEventArgs
+    : GuiMouseEventArgs
+    , Description<GuiNodeMouseEventArgs>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiNodeMouseEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeMouseEventArgs"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiMouseEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEventArgs"/></basetypes></Document>

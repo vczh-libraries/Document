@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsSite" accessor="" category="Class" name="GuiGraphicsSite"><summary>
  A general implementation for <symbol docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/>.
- </summary><signature><![CDATA[class GuiGraphicsSite;
+ </summary><signature><![CDATA[class GuiGraphicsSite
+    : GuiGraphicsComposition
+    , Description<GuiGraphicsSite>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsSite" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsSite"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/></basetypes></Document>

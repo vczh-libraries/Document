@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeScreen" accessor="" category="Class" name="INativeScreen"><summary>
  Represents a screen.
- </summary><signature><![CDATA[class INativeScreen;
+ </summary><signature><![CDATA[class INativeScreen
+    : IDescriptable
+    , Description<INativeScreen>;
 ]]></signature><seealsos><symbol docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

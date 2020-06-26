@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiSaveFileDialog" accessor="" category="Class" name="GuiSaveFileDialog"><summary>Save file dialog.</summary><signature><![CDATA[class GuiSaveFileDialog;
+<Document symbolId="vl::presentation::controls::GuiSaveFileDialog" accessor="" category="Class" name="GuiSaveFileDialog"><summary>Save file dialog.</summary><signature><![CDATA[class GuiSaveFileDialog
+    : GuiFileDialogBase
+    , Description<GuiSaveFileDialog>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiSaveFileDialog" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiSaveFileDialog"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiFileDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiFileDialogBase"/></basetypes></Document>

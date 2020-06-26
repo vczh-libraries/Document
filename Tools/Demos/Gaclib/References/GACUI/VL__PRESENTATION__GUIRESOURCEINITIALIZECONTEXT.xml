@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::GuiResourceInitializeContext" accessor="" category="Struct" name="GuiResourceInitializeContext"><summary>Provide a context for resource initializing</summary><signature><![CDATA[struct GuiResourceInitializeContext;
+<Document symbolId="vl::presentation::GuiResourceInitializeContext" accessor="" category="Struct" name="GuiResourceInitializeContext"><summary>Provide a context for resource initializing</summary><signature><![CDATA[struct GuiResourceInitializeContext
+    : GuiResourcePrecompileContext;
 ]]></signature><basetypes><symbol docId="vl::presentation::GuiResourcePrecompileContext" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext"/></basetypes></Document>

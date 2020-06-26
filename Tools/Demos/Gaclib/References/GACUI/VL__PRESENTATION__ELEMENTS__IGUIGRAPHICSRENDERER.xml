@@ -1,4 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer" accessor="" category="Class" name="IGuiGraphicsRenderer"><summary>
  This is the interface for graphics renderers.
- </summary><signature><![CDATA[class IGuiGraphicsRenderer;
+ </summary><signature><![CDATA[class IGuiGraphicsRenderer
+    : Interface;
 ]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

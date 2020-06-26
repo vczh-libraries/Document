@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::IGuiParserManager" accessor="" category="Class" name="IGuiParserManager"><summary>Parser manager for caching parsing table globally.</summary><signature><![CDATA[class IGuiParserManager;
+<Document symbolId="vl::presentation::IGuiParserManager" accessor="" category="Class" name="IGuiParserManager"><summary>Parser manager for caching parsing table globally.</summary><signature><![CDATA[class IGuiParserManager
+    : IDescriptable
+    , Description<IGuiParserManager>;
 ]]></signature><seealsos><symbol docId="vl::presentation::IGuiParserManager" declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiParserManager"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

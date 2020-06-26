@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_DirectLoadXml" accessor="" category="Class" name="IGuiResourceTypeResolver_DirectLoadXml"><summary>Represents a symbol type for loading a resource without a preload type.</summary><signature><![CDATA[class IGuiResourceTypeResolver_DirectLoadXml;
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver_DirectLoadXml" accessor="" category="Class" name="IGuiResourceTypeResolver_DirectLoadXml"><summary>Represents a symbol type for loading a resource without a preload type.</summary><signature><![CDATA[class IGuiResourceTypeResolver_DirectLoadXml
+    : IDescriptable
+    , Description<IGuiResourceTypeResolver_DirectLoadXml>;
 ]]></signature><seealsos><symbol docId="vl::presentation::IGuiResourceTypeResolver_DirectLoadXml" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_DirectLoadXml"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

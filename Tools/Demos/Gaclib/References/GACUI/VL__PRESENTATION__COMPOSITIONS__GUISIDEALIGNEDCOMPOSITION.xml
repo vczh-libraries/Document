@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition" accessor="" category="Class" name="GuiSideAlignedComposition"><summary>
  Represents a composition that is aligned to one border of the parent composition.
- </summary><signature><![CDATA[class GuiSideAlignedComposition;
+ </summary><signature><![CDATA[class GuiSideAlignedComposition
+    : GuiGraphicsSite
+    , Description<GuiSideAlignedComposition>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiSideAlignedComposition" declFile="GuiGraphicsSpecializedComposition.h" declId="NI$vl::presentation::compositions::GuiSideAlignedComposition"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiGraphicsSite" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsSite"/></basetypes></Document>

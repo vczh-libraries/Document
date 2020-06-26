@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::DocumentStyleProperties" accessor="" category="Class" name="DocumentStyleProperties"><summary>Represents a text style.</summary><signature><![CDATA[class DocumentStyleProperties;
+<Document symbolId="vl::presentation::DocumentStyleProperties" accessor="" category="Class" name="DocumentStyleProperties"><summary>Represents a text style.</summary><signature><![CDATA[class DocumentStyleProperties
+    : Object
+    , Description<DocumentStyleProperties>;
 ]]></signature><seealsos><symbol docId="vl::presentation::DocumentStyleProperties" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

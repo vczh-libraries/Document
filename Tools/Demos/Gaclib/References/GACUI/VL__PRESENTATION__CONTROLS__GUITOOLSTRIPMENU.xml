@@ -1,2 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripMenu" accessor="" category="Class" name="GuiToolstripMenu"><summary>Toolstrip menu.</summary><signature><![CDATA[class GuiToolstripMenu;
+<Document symbolId="vl::presentation::controls::GuiToolstripMenu" accessor="" category="Class" name="GuiToolstripMenu"><summary>Toolstrip menu.</summary><signature><![CDATA[class GuiToolstripMenu
+    : GuiMenu
+    , IToolstripUpdateLayout
+    , Description<GuiToolstripMenu>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiToolstripMenu" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripMenu"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiMenu" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenu"/><symbol docId="vl::presentation::controls::IToolstripUpdateLayout" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::IToolstripUpdateLayout"/></basetypes></Document>

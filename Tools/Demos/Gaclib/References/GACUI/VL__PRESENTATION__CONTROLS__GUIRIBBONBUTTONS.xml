@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonButtons" accessor="" category="Class" name="GuiRibbonButtons"><summary>Auto resizable ribbon buttons.</summary><signature><![CDATA[class GuiRibbonButtons;
+<Document symbolId="vl::presentation::controls::GuiRibbonButtons" accessor="" category="Class" name="GuiRibbonButtons"><summary>Auto resizable ribbon buttons.</summary><signature><![CDATA[class GuiRibbonButtons
+    : GuiControl
+    , Description<GuiRibbonButtons>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiRibbonButtons" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonButtons"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></basetypes></Document>

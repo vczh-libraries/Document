@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph" accessor="" category="Class" name="IGuiGraphicsParagraph"><summary>Represents a paragraph of a layouted rich text content.</summary><signature><![CDATA[class IGuiGraphicsParagraph;
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph" accessor="" category="Class" name="IGuiGraphicsParagraph"><summary>Represents a paragraph of a layouted rich text content.</summary><signature><![CDATA[class IGuiGraphicsParagraph
+    : IDescriptable
+    , Description<IGuiGraphicsParagraph>;
 ]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsParagraph" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::IRibbonGalleryCommandExecutor" accessor="" category="Class" name="IRibbonGalleryCommandExecutor"><summary>A command executor for the style controller to change the control state.</summary><signature><![CDATA[class IRibbonGalleryCommandExecutor;
+<Document symbolId="vl::presentation::controls::IRibbonGalleryCommandExecutor" accessor="" category="Class" name="IRibbonGalleryCommandExecutor"><summary>A command executor for the style controller to change the control state.</summary><signature><![CDATA[class IRibbonGalleryCommandExecutor
+    : IDescriptable
+    , Description<IRibbonGalleryCommandExecutor>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::IRibbonGalleryCommandExecutor" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IRibbonGalleryCommandExecutor"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

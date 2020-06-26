@@ -1,2 +1,3 @@
-<Document symbolId="vl::stream::DecoderStream" accessor="" category="Class" name="DecoderStream"><summary>Decoder stream, a readable stream using an <symbol docId="vl::stream::IDecoder" declFile="Interfaces.h2" declId="NI$vl::stream::IDecoder"/> to transform content.</summary><signature><![CDATA[class DecoderStream;
+<Document symbolId="vl::stream::DecoderStream" accessor="" category="Class" name="DecoderStream"><summary>Decoder stream, a readable stream using an <symbol docId="vl::stream::IDecoder" declFile="Interfaces.h2" declId="NI$vl::stream::IDecoder"/> to transform content.</summary><signature><![CDATA[class DecoderStream
+    : IStream;
 ]]></signature><basetypes><symbol docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>

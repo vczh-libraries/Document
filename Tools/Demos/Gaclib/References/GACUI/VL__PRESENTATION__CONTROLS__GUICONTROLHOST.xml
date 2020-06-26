@@ -1,4 +1,8 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost" accessor="" category="Class" name="GuiControlHost"><summary>
  Represents a control that host by a <symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>.
- </summary><signature><![CDATA[class GuiControlHost;
+ </summary><signature><![CDATA[class GuiControlHost
+    : GuiControl
+    , GuiInstanceRootObject
+    , INativeWindowListener
+    , Description<GuiControlHost>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::INativeWindowListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener"/><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/><symbol docId="vl::presentation::controls::GuiInstanceRootObject" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::GuiInstanceRootObject"/></basetypes></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTabPage" accessor="" category="Class" name="GuiTabPage"><summary>Represnets a tab page control.</summary><signature><![CDATA[class GuiTabPage;
+<Document symbolId="vl::presentation::controls::GuiTabPage" accessor="" category="Class" name="GuiTabPage"><summary>Represnets a tab page control.</summary><signature><![CDATA[class GuiTabPage
+    : GuiCustomControl
+    , AggregatableDescription<GuiTabPage>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiTabPage" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiTabPage"/></seealsos><basetypes><symbol declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"/><symbol docId="vl::presentation::controls::GuiCustomControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiCustomControl"/></basetypes></Document>

@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand" accessor="" category="Class" name="GuiToolstripCommand"><summary>A command for toolstrip controls.</summary><signature><![CDATA[class GuiToolstripCommand;
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand" accessor="" category="Class" name="GuiToolstripCommand"><summary>A command for toolstrip controls.</summary><signature><![CDATA[class GuiToolstripCommand
+    : GuiComponent
+    , Description<GuiToolstripCommand>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiToolstripCommand" declFile="GuiToolstripCommand.h" declId="NI$vl::presentation::controls::GuiToolstripCommand"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiComponent" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::GuiComponent"/></basetypes></Document>

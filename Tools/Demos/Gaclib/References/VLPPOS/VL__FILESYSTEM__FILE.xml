@@ -1,2 +1,3 @@
-<Document symbolId="vl::filesystem::File" accessor="" category="Class" name="File"><summary>Representing a file reference.</summary><signature><![CDATA[class File;
+<Document symbolId="vl::filesystem::File" accessor="" category="Class" name="File"><summary>Representing a file reference.</summary><signature><![CDATA[class File
+    : Object;
 ]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

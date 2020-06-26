@@ -1,5 +1,7 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition" accessor="" category="Class" name="GuiGraphicsComposition"><summary>
  Represents a composition for <symbol docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/>. A composition is a way to define the size and the position using the information from graphics elements and sub compositions.
  When a graphics composition is destroyed, all sub composition will be destroyed. The life cycle of the contained graphics element is partially controlled by the smart pointer to the graphics element inside the composition.
- </summary><signature><![CDATA[class GuiGraphicsComposition;
+ </summary><signature><![CDATA[class GuiGraphicsComposition
+    : Object
+    , Description<GuiGraphicsComposition>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

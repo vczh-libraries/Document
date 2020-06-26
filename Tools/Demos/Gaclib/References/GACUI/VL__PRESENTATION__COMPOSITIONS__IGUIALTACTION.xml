@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::compositions::IGuiAltAction" accessor="" category="Class" name="IGuiAltAction"><summary>IGuiAltAction is the handler when an alt-combined shortcut key is activated.</summary><signature><![CDATA[class IGuiAltAction;
+<Document symbolId="vl::presentation::compositions::IGuiAltAction" accessor="" category="Class" name="IGuiAltAction"><summary>IGuiAltAction is the handler when an alt-combined shortcut key is activated.</summary><signature><![CDATA[class IGuiAltAction
+    : IDescriptable;
 ]]></signature><basetypes><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

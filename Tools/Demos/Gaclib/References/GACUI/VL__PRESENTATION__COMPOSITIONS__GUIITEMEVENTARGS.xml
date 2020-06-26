@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiItemEventArgs" accessor="" category="Struct" name="GuiItemEventArgs"><summary>Item event arguments.</summary><signature><![CDATA[struct GuiItemEventArgs;
+<Document symbolId="vl::presentation::compositions::GuiItemEventArgs" accessor="" category="Struct" name="GuiItemEventArgs"><summary>Item event arguments.</summary><signature><![CDATA[struct GuiItemEventArgs
+    : GuiEventArgs
+    , Description<GuiItemEventArgs>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiItemEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemEventArgs"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></basetypes></Document>

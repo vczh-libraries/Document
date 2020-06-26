@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiControlSignalEventArgs" accessor="" category="Struct" name="GuiControlSignalEventArgs"><summary>Control signal event arguments.</summary><signature><![CDATA[struct GuiControlSignalEventArgs;
+<Document symbolId="vl::presentation::compositions::GuiControlSignalEventArgs" accessor="" category="Struct" name="GuiControlSignalEventArgs"><summary>Control signal event arguments.</summary><signature><![CDATA[struct GuiControlSignalEventArgs
+    : GuiEventArgs
+    , Description<GuiControlSignalEventArgs>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiControlSignalEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiControlSignalEventArgs"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></basetypes></Document>

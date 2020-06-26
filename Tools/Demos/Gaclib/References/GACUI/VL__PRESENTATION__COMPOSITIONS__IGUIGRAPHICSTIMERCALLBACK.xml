@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::compositions::IGuiGraphicsTimerCallback" accessor="" category="Class" name="IGuiGraphicsTimerCallback"><summary>
  Represents a timer callback object.
- </summary><signature><![CDATA[class IGuiGraphicsTimerCallback;
+ </summary><signature><![CDATA[class IGuiGraphicsTimerCallback
+    : IDescriptable
+    , Description<IGuiGraphicsTimerCallback>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::IGuiGraphicsTimerCallback" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::IGuiGraphicsTimerCallback"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

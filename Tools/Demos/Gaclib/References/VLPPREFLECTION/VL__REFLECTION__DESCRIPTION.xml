@@ -240,5 +240,6 @@
  ]]></summary><typeparam name="T">Type of your created reflection class.</typeparam><signature><![CDATA[template <
     typename T
 >
-class Description;
+class Description
+    : DescriptableObject;
 ]]></signature><basetypes><symbol docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></basetypes></Document>

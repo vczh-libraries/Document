@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataNotFilter" accessor="" category="Class" name="DataNotFilter"><summary>A filter that keep a row if the sub filter not agrees.</summary><signature><![CDATA[class DataNotFilter;
+<Document symbolId="vl::presentation::controls::list::DataNotFilter" accessor="" category="Class" name="DataNotFilter"><summary>A filter that keep a row if the sub filter not agrees.</summary><signature><![CDATA[class DataNotFilter
+    : DataFilterBase
+    , Description<DataNotFilter>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::list::DataNotFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataNotFilter"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::list::DataFilterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataFilterBase"/></basetypes></Document>

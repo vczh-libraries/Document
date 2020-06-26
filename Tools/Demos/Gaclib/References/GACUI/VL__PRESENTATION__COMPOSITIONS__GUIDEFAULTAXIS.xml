@@ -1,2 +1,5 @@
-<Document symbolId="vl::presentation::compositions::GuiDefaultAxis" accessor="" category="Class" name="GuiDefaultAxis"><summary>Default item coordinate transformer. This transformer doesn&apos;t transform any coordinate.</summary><signature><![CDATA[class GuiDefaultAxis;
+<Document symbolId="vl::presentation::compositions::GuiDefaultAxis" accessor="" category="Class" name="GuiDefaultAxis"><summary>Default item coordinate transformer. This transformer doesn&apos;t transform any coordinate.</summary><signature><![CDATA[class GuiDefaultAxis
+    : Object
+    , IGuiAxis
+    , Description<GuiDefaultAxis>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiDefaultAxis" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::GuiDefaultAxis"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::IGuiAxis" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::IGuiAxis"/></basetypes></Document>

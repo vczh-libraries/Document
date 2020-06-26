@@ -1,5 +1,7 @@
 <Document symbolId="vl::ThreadVariable" accessor="" category="Class" name="ThreadVariable"><summary>Thread local variable. This type can only be used to define global variables. Different threads can store different values to and obtain differnt values from a thread local variable.</summary><typeparam name="T">Type of the storage.</typeparam><signature><![CDATA[template <
     typename T
 >
-class ThreadVariable;
-]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/></basetypes></Document>
+class ThreadVariable
+    : Object
+    , NotCopyable;
+]]></signature><basetypes><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

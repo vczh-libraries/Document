@@ -1,5 +1,6 @@
 <Document symbolId="vl::Lazy" accessor="" category="Class" name="Lazy"><summary>A type representing a lazy evaluation.</summary><typeparam name="T">The type of the evaluation result.</typeparam><signature><![CDATA[template <
     typename T
 >
-class Lazy;
+class Lazy
+    : Object;
 ]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

@@ -1,2 +1,5 @@
-<Document symbolId="vl::presentation::compositions::GuiMouseEventArgs" accessor="" category="Struct" name="GuiMouseEventArgs"><summary>Mouse event arguments.</summary><signature><![CDATA[struct GuiMouseEventArgs;
+<Document symbolId="vl::presentation::compositions::GuiMouseEventArgs" accessor="" category="Struct" name="GuiMouseEventArgs"><summary>Mouse event arguments.</summary><signature><![CDATA[struct GuiMouseEventArgs
+    : GuiEventArgs
+    , WindowMouseInfo
+    , Description<GuiMouseEventArgs>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiMouseEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEventArgs"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo"/><symbol docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></basetypes></Document>

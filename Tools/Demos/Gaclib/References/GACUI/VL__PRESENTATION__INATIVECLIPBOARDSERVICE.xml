@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeClipboardService" accessor="" category="Class" name="INativeClipboardService"><summary>
  Clipboard service. To access this service, use <symbol docId="vl::presentation::INativeController::ClipboardService@::vl::presentation::INativeClipboardService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::ClipboardService@::vl::presentation::INativeClipboardService *()[decl0]"/>.
- </summary><signature><![CDATA[class INativeClipboardService;
+ </summary><signature><![CDATA[class INativeClipboardService
+    : IDescriptable
+    , Description<INativeClipboardService>;
 ]]></signature><seealsos><symbol docId="vl::presentation::INativeClipboardService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardService"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

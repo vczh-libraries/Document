@@ -1,4 +1,8 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsHost" accessor="" category="Class" name="GuiGraphicsHost"><summary>
  GuiGraphicsHost hosts an <symbol docId="vl::presentation::compositions::GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"/> in an <symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>. The composition will fill the whole window.
- </summary><signature><![CDATA[class GuiGraphicsHost;
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsHost" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsHost"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::INativeWindowListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener"/><symbol docId="vl::presentation::INativeControllerListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeControllerListener"/></basetypes></Document>
+ </summary><signature><![CDATA[class GuiGraphicsHost
+    : Object
+    , INativeWindowListener
+    , INativeControllerListener
+    , Description<GuiGraphicsHost>;
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsHost" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsHost"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::INativeControllerListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeControllerListener"/><symbol docId="vl::presentation::INativeWindowListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener"/></basetypes></Document>

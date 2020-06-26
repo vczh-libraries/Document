@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::INativeCursor" accessor="" category="Class" name="INativeCursor"><summary>
  Represents a cursor.
- </summary><signature><![CDATA[class INativeCursor;
+ </summary><signature><![CDATA[class INativeCursor
+    : IDescriptable
+    , Description<INativeCursor>;
 ]]></signature><seealsos><symbol docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

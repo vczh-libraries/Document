@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCollection" accessor="" category="Class" name="GuiToolstripCollection"><summary>Toolstrip item collection.</summary><signature><![CDATA[class GuiToolstripCollection;
+<Document symbolId="vl::presentation::controls::GuiToolstripCollection" accessor="" category="Class" name="GuiToolstripCollection"><summary>Toolstrip item collection.</summary><signature><![CDATA[class GuiToolstripCollection
+    : GuiToolstripCollectionBase;
 ]]></signature><basetypes><symbol docId="vl::presentation::controls::GuiToolstripCollectionBase" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripCollectionBase"/></basetypes></Document>

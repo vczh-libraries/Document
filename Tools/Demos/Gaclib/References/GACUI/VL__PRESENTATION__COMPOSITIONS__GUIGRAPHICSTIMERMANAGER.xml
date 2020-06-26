@@ -1,4 +1,6 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsTimerManager" accessor="" category="Class" name="GuiGraphicsTimerManager"><summary>
  Timer callback manager.
- </summary><signature><![CDATA[class GuiGraphicsTimerManager;
+ </summary><signature><![CDATA[class GuiGraphicsTimerManager
+    : Object
+    , Description<GuiGraphicsTimerManager>;
 ]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsTimerManager" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsTimerManager"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

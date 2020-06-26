@@ -1,2 +1,3 @@
-<Document symbolId="vl::workflow::runtime::IWfBreakPointAction" accessor="" category="Class" name="IWfBreakPointAction"><summary>Break point action.</summary><signature><![CDATA[class IWfBreakPointAction;
+<Document symbolId="vl::workflow::runtime::IWfBreakPointAction" accessor="" category="Class" name="IWfBreakPointAction"><summary>Break point action.</summary><signature><![CDATA[class IWfBreakPointAction
+    : Interface;
 ]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

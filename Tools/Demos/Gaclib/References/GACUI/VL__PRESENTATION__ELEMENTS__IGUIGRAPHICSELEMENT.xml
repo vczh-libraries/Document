@@ -2,5 +2,7 @@
  This is the interface for graphics elements.
  Graphics elements usually contains some information and helper functions for visible things.
  An graphics elements should be created using ElementType::Create.
- </summary><signature><![CDATA[class IGuiGraphicsElement;
+ </summary><signature><![CDATA[class IGuiGraphicsElement
+    : IDescriptable
+    , Description<IGuiGraphicsElement>;
 ]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

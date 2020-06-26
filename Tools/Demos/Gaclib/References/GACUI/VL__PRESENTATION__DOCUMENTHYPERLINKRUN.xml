@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::DocumentHyperlinkRun" accessor="" category="Class" name="DocumentHyperlinkRun"><summary>Pepresents a hyperlink text run.</summary><signature><![CDATA[class DocumentHyperlinkRun;
+<Document symbolId="vl::presentation::DocumentHyperlinkRun" accessor="" category="Class" name="DocumentHyperlinkRun"><summary>Pepresents a hyperlink text run.</summary><signature><![CDATA[class DocumentHyperlinkRun
+    : DocumentStyleApplicationRun
+    , Description<DocumentHyperlinkRun>;
 ]]></signature><seealsos><symbol docId="vl::presentation::DocumentHyperlinkRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentHyperlinkRun"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::DocumentStyleApplicationRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleApplicationRun"/></basetypes></Document>

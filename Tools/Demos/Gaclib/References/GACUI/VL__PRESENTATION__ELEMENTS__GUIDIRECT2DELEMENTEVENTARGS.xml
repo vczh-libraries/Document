@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs" accessor="" category="Struct" name="GuiDirect2DElementEventArgs"><summary>Direct2D Rendering event arguments.</summary><signature><![CDATA[struct GuiDirect2DElementEventArgs;
+<Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs" accessor="" category="Struct" name="GuiDirect2DElementEventArgs"><summary>Direct2D Rendering event arguments.</summary><signature><![CDATA[struct GuiDirect2DElementEventArgs
+    : compositions::GuiEventArgs;
 ]]></signature><basetypes><symbol docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></basetypes></Document>

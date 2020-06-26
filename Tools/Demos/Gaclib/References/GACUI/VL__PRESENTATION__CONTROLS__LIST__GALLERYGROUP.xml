@@ -1,2 +1,3 @@
-<Document symbolId="vl::presentation::controls::list::GalleryGroup" accessor="" category="Class" name="GalleryGroup"><summary>A gallery group.</summary><signature><![CDATA[class GalleryGroup;
+<Document symbolId="vl::presentation::controls::list::GalleryGroup" accessor="" category="Class" name="GalleryGroup"><summary>A gallery group.</summary><signature><![CDATA[class GalleryGroup
+    : Description<GalleryGroup>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::list::GalleryGroup" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::list::GalleryGroup"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

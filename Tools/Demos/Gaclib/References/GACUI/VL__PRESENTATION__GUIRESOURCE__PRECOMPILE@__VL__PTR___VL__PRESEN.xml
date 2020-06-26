@@ -2,4 +2,4 @@
     IGuiResourcePrecompileCallback * callback,
     GuiResourceError::List & errors
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiResourceFolder" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceFolder"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourcePrecompileCallback"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiResourceFolder" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceFolder"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourcePrecompileCallback"/></seealsos></Document>

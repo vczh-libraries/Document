@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::tree::INodeProvider" accessor="" category="Class" name="INodeProvider"><summary>Represents a node.</summary><signature><![CDATA[class INodeProvider;
+<Document symbolId="vl::presentation::controls::tree::INodeProvider" accessor="" category="Class" name="INodeProvider"><summary>Represents a node.</summary><signature><![CDATA[class INodeProvider
+    : IDescriptable
+    , Description<INodeProvider>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

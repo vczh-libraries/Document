@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::DocumentContainerRun" accessor="" category="Class" name="DocumentContainerRun"><summary>Pepresents a container run.</summary><signature><![CDATA[class DocumentContainerRun;
+<Document symbolId="vl::presentation::DocumentContainerRun" accessor="" category="Class" name="DocumentContainerRun"><summary>Pepresents a container run.</summary><signature><![CDATA[class DocumentContainerRun
+    : DocumentRun
+    , Description<DocumentContainerRun>;
 ]]></signature><seealsos><symbol docId="vl::presentation::DocumentContainerRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentContainerRun"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::DocumentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun"/></basetypes></Document>

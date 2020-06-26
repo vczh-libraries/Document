@@ -1,2 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton" accessor="" category="Class" name="GuiMenuButton"><summary>Menu item.</summary><signature><![CDATA[class GuiMenuButton;
+<Document symbolId="vl::presentation::controls::GuiMenuButton" accessor="" category="Class" name="GuiMenuButton"><summary>Menu item.</summary><signature><![CDATA[class GuiMenuButton
+    : GuiSelectableButton
+    , IGuiMenuDropdownProvider
+    , Description<GuiMenuButton>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiMenuButton" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenuButton"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiSelectableButton" declFile="GuiButtonControls.h" declId="NI$vl::presentation::controls::GuiSelectableButton"/><symbol docId="vl::presentation::controls::IGuiMenuDropdownProvider" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::IGuiMenuDropdownProvider"/></basetypes></Document>

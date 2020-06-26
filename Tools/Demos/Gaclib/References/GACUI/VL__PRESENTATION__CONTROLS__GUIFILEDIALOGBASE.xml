@@ -1,2 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase" accessor="" category="Class" name="GuiFileDialogBase"><summary>Base class for file dialogs.</summary><signature><![CDATA[class GuiFileDialogBase;
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase" accessor="" category="Class" name="GuiFileDialogBase"><summary>Base class for file dialogs.</summary><signature><![CDATA[class GuiFileDialogBase
+    : GuiDialogBase
+    , Description<GuiFileDialogBase>;
 ]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiFileDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiFileDialogBase"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiDialogBase"/></basetypes></Document>

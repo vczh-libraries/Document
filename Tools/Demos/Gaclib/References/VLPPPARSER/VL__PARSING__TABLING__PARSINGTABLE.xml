@@ -233,5 +233,6 @@
 				return result;
 			}
 
- ]]></summary><signature><![CDATA[class ParsingTable;
+ ]]></summary><signature><![CDATA[class ParsingTable
+    : Object;
 ]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
