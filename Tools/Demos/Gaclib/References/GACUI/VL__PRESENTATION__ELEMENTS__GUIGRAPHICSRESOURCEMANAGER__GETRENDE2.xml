@@ -3,4 +3,4 @@
  </summary><returns>Returns the renderer factory.</returns><param name="elementTypeName">The element type to get a corresponding graphics renderer factory.</param><signature><![CDATA[IGuiGraphicsRendererFactory * GetRendererFactory(
     WString const & elementTypeName
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::presentation::elements::IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"/></seealsos></Document>

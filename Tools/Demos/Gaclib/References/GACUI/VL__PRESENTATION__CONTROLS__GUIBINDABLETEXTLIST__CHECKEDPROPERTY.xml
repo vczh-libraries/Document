@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiBindableTextList::CheckedPropertyChanged" accessor="public" category="Variable" name="CheckedPropertyChanged"><summary>Checked property name changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent CheckedPropertyChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

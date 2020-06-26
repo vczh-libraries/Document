@@ -2,4 +2,4 @@
     Func<void(
 TArgs...)> const & function
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol declFile="Event.h" declId="NI$vl::EventHandler"/></seealsos></Document>

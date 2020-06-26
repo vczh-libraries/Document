@@ -3,4 +3,4 @@
  </summary><returns>The height in pixel.</returns><param name="renderTarget">The render target which the character is going to be rendered.</param><signature><![CDATA[vint GetRowHeightInternal(
     IGuiGraphicsRenderTarget * renderTarget
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>

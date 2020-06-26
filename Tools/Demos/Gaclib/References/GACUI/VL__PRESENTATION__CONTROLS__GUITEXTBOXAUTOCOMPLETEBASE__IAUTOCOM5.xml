@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IAutoCompleteControlProvider::GetListControl@::vl::presentation::controls::GuiSelectableListControl *()" accessor="public" category="Function" name="GetListControl"><summary>Get the list control storing candidate items.</summary><returns>The list control. It should be inside the auto complete control, or the auto complete control itself.</returns><signature><![CDATA[GuiSelectableListControl * GetListControl(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiSelectableListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiSelectableListControl"/></seealsos></Document>

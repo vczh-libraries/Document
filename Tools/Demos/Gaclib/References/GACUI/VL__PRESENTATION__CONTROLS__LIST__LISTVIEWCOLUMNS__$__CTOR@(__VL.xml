@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::ListViewColumns::$__ctor@(::vl::presentation::controls::list::IListViewItemProvider *)" accessor="public" category="Function" name="$__ctor"><summary>Create a container.</summary><param name="_itemProvider">The item provider in the same control to receive notifications.</param><signature><![CDATA[ ListViewColumns(
     IListViewItemProvider * _itemProvider
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::IListViewItemProvider"/></seealsos></Document>

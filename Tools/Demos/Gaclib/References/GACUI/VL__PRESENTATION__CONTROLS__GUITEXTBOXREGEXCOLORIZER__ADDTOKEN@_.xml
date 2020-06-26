@@ -2,4 +2,4 @@
     WString const & regex,
     elements::text::ColorEntry color
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::presentation::elements::text::ColorEntry" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::ColorEntry"/></seealsos></Document>

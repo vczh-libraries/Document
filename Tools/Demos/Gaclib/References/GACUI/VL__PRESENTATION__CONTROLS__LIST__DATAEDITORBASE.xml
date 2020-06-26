@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::list::DataEditorBase" accessor="" category="Class" name="DataEditorBase"><summary>Base class for all data editors.</summary><signature><![CDATA[class DataEditorBase;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::presentation::controls::list::IDataEditor" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataEditor"/></basetypes></Document>

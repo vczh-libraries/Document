@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::ItemMiddleButtonDown" accessor="public" category="Variable" name="ItemMiddleButtonDown"><summary>Item middle mouse button down event.</summary><signature><![CDATA[compositions::GuiItemMouseEvent ItemMiddleButtonDown;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemMouseEvent"/></seealsos></Document>

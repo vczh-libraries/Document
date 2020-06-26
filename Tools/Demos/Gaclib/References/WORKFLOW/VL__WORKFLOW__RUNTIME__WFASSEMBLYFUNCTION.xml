@@ -1,2 +1,2 @@
 <Document symbolId="vl::workflow::runtime::WfAssemblyFunction" accessor="" category="Class" name="WfAssemblyFunction"><summary>Representing a compiled function.</summary><signature><![CDATA[class WfAssemblyFunction;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiVirtualTreeView" accessor="" category="Class" name="GuiVirtualTreeView"><summary>Tree view control in virtual mode.</summary><signature><![CDATA[class GuiVirtualTreeView;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiVirtualTreeView" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::GuiVirtualTreeView"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiVirtualTreeListControl" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::GuiVirtualTreeListControl"/></basetypes></Document>

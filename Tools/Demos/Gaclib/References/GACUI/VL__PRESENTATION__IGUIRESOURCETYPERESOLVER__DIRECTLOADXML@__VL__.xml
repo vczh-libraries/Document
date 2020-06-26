@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::IGuiResourceTypeResolver::DirectLoadXml@::vl::presentation::IGuiResourceTypeResolver_DirectLoadXml *()" accessor="public" category="Function" name="DirectLoadXml"><summary>Get the object for convert the resource between xml and object.</summary><returns>Returns null if the type resolver does not have this ability.</returns><signature><![CDATA[IGuiResourceTypeResolver_DirectLoadXml * DirectLoadXml(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::IGuiResourceTypeResolver_DirectLoadXml" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_DirectLoadXml"/></seealsos></Document>

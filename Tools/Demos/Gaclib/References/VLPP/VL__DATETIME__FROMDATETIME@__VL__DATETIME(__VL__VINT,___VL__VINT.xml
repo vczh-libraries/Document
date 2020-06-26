@@ -7,4 +7,4 @@
     vint _second /* optional */,
     vint _milliseconds /* optional */
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/></seealsos></Document>

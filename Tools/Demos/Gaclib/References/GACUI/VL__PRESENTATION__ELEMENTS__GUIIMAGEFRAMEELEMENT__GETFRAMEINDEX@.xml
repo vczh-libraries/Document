@@ -2,4 +2,4 @@
  Get the index of the frame in the containing image.
  </summary><returns>The index of the frame in the containing image</returns><signature><![CDATA[vint GetFrameIndex(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiBindableDataGrid::SetSmallImageProperty@void(::vl::presentation::ItemProperty&lt;::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;&gt; const &amp;)" accessor="public" category="Function" name="SetSmallImageProperty"><summary>Set the small image property name to get the small image from an item.</summary><param name="value">The small image property name.</param><signature><![CDATA[void SetSmallImageProperty(
     ItemProperty<Ptr<GuiImageData>> const & value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/><symbol declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::ItemProperty"/></seealsos></Document>

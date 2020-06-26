@@ -6,4 +6,4 @@ Func<T>, Func<T>)> Combiner(
     Func<Func<T>::ResultType(
 Func<T>::ResultType, Func<T>::ResultType)> const & converter
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol declFile="Function.h" declId="NI$vl::Func@&lt;[R]([TArgs]...)&gt;::ResultType"/></seealsos></Document>

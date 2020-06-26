@@ -2,4 +2,4 @@
  Get the horizontal alignment of the image.
  </summary><returns>The horizontal alignment of the image.</returns><signature><![CDATA[Alignment GetHorizontalAlignment(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/></seealsos></Document>

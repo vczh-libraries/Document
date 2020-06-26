@@ -4,4 +4,4 @@
     Color value1,
     Color value2
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

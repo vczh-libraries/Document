@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::WindowDestroying" accessor="public" category="Variable" name="WindowDestroying"><summary>Window destroying event.</summary><signature><![CDATA[compositions::GuiNotifyEvent WindowDestroying;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

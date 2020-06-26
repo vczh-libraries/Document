@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRowHeight@::vl::vint()" accessor="public" category="Function" name="GetRowHeight"><summary>Get the height of a row.</summary><returns>The height of a row in pixel.</returns><signature><![CDATA[vint GetRowHeight(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

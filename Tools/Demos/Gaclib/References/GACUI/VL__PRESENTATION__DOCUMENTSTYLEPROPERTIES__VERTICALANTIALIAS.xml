@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentStyleProperties::verticalAntialias" accessor="public" category="Variable" name="verticalAntialias"><summary>Vertical antialias.</summary><signature><![CDATA[Nullable<bool> verticalAntialias;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

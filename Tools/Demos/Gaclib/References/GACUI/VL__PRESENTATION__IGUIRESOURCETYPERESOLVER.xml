@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::IGuiResourceTypeResolver" accessor="" category="Class" name="IGuiResourceTypeResolver"><summary>Represents a symbol type for loading a resource.</summary><signature><![CDATA[class IGuiResourceTypeResolver;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::IGuiResourceTypeResolver" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

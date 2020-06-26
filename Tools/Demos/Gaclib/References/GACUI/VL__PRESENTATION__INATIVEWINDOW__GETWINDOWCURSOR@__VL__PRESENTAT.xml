@@ -2,4 +2,4 @@
  Get the mouse cursor of the window. When the mouse is on the window, the mouse cursor will be rendered.
  </summary><returns>The mouse cursor of the window.</returns><signature><![CDATA[INativeCursor * GetWindowCursor(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos></Document>

@@ -3,4 +3,4 @@
     IGuiGraphicsParagraph::CaretRelativePosition position,
     bool & preferFrontSide
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol docId="vl::presentation::elements::IGuiGraphicsParagraph::CaretRelativePosition" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::CaretRelativePosition"/></seealsos></Document>

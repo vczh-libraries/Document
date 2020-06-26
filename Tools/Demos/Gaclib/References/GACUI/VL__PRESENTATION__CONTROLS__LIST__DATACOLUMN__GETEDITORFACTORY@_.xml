@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::list::DataColumn::GetEditorFactory@::vl::Ptr&lt;::vl::presentation::controls::list::IDataEditorFactory&gt;()" accessor="public" category="Function" name="GetEditorFactory"><summary>Get the editor factory for the column.</summary><returns>The the editor factory for the column.</returns><signature><![CDATA[Ptr<IDataEditorFactory> GetEditorFactory(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::list::IDataEditorFactory" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataEditorFactory"/></seealsos></Document>

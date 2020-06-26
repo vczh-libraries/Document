@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiStackItemComposition::SetExtraMargin@void(::vl::presentation::Margin)" accessor="public" category="Function" name="SetExtraMargin"><summary>Set the extra margin for this stack item. An extra margin is used to enlarge the bounds of the stack item, but only the non-extra part will be used for deciding the stack item layout.</summary><param name="value">The extra margin for this stack item.</param><signature><![CDATA[void SetExtraMargin(
     Margin value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>

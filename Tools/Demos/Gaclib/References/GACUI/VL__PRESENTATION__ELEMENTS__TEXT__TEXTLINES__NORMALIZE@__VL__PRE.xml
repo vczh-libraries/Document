@@ -3,4 +3,4 @@
  </summary><returns>The normalized text position.</returns><param name="pos">The text position to normalize.</param><signature><![CDATA[TextPos Normalize(
     TextPos pos
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

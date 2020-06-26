@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ITextBoxCommandExecutor" accessor="" category="Class" name="ITextBoxCommandExecutor"><summary>A command executor for the combo box to change the control state.</summary><signature><![CDATA[class ITextBoxCommandExecutor;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::ITextBoxCommandExecutor" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::ITextBoxCommandExecutor"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

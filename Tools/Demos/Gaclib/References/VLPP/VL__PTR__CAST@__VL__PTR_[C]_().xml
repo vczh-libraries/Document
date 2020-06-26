@@ -3,4 +3,4 @@
 >
 Ptr<C> Cast(
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

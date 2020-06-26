@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::SelectionChanged" accessor="public" category="Variable" name="SelectionChanged"><summary>Selection changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectionChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

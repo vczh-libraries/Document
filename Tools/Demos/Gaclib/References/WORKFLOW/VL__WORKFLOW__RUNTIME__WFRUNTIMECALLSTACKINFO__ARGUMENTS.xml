@@ -1,2 +1,2 @@
 <Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::arguments" accessor="public" category="Variable" name="arguments"><summary>Argument values.</summary><signature><![CDATA[Ptr<WfRuntimeVariableContext> arguments;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeVariableContext"/></seealsos></Document>

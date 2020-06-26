@@ -5,4 +5,4 @@
     Func<void(
 )> const & proc
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::GuiDirect2DElement::AfterRenderTargetChanged" accessor="public" category="Variable" name="AfterRenderTargetChanged"><summary>Render target changed (after) event. Resources that binded to the render target can be recreated at this moment.</summary><signature><![CDATA[compositions::GuiGraphicsEvent<GuiDirect2DElementEventArgs> AfterRenderTargetChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiGraphicsEvent"/><symbol docId="vl::presentation::elements::GuiDirect2DElementEventArgs" declFile="GuiGraphicsWindowsDirect2D.h" declId="NI$vl::presentation::elements::GuiDirect2DElementEventArgs"/></seealsos></Document>

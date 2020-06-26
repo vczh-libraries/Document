@@ -2,4 +2,4 @@
     GuiResourcePrecompileContext & context,
     GuiResourceError::List & errors
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::GuiResourcePrecompileContext" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/></seealsos></Document>

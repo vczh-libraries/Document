@@ -2,4 +2,4 @@
     GuiMenu * value,
     bool owned
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiMenu" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenu"/></seealsos></Document>

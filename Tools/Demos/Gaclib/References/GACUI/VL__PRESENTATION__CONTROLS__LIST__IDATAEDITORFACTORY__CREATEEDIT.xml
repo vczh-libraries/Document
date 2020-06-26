@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::IDataEditorFactory::CreateEditor@::vl::Ptr&lt;::vl::presentation::controls::list::IDataEditor&gt;(::vl::presentation::controls::list::IDataGridContext *)" accessor="public" category="Function" name="CreateEditor"><summary>Create a data editor.</summary><returns>The created data editor.</returns><param name="dataGridContext">Context information of the data grid.</param><signature><![CDATA[Ptr<IDataEditor> CreateEditor(
     IDataGridContext * dataGridContext
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::list::IDataEditor" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataEditor"/><symbol docId="vl::presentation::controls::list::IDataGridContext" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataGridContext"/></seealsos></Document>

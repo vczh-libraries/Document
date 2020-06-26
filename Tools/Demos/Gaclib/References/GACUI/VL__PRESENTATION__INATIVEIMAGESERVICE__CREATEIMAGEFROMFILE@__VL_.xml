@@ -3,4 +3,4 @@
  </summary><returns>The created image.</returns><param name="path">The file path.</param><signature><![CDATA[Ptr<INativeImage> CreateImageFromFile(
     WString const & path
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/></seealsos></Document>

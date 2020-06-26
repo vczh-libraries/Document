@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiScroll::PositionChanged" accessor="public" category="Variable" name="PositionChanged"><summary>Position changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent PositionChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

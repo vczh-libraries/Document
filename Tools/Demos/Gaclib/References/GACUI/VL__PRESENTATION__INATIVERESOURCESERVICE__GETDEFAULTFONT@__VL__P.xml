@@ -2,4 +2,4 @@
  Get the default font configuration of the system.
  </summary><returns>The default font configuration of the system.</returns><signature><![CDATA[FontProperties GetDefaultFont(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>

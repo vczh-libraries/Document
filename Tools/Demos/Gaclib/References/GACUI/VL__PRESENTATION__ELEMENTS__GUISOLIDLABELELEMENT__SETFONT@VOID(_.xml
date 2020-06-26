@@ -3,4 +3,4 @@
  </summary><param name="value">The new text font.</param><signature><![CDATA[void SetFont(
     FontProperties const & value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>

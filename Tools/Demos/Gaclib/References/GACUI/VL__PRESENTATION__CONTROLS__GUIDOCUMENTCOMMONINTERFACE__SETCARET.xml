@@ -4,4 +4,4 @@
     TextPos begin,
     TextPos end
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

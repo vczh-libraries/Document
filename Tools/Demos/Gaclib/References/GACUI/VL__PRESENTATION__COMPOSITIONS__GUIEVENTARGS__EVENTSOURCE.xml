@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiEventArgs::eventSource" accessor="public" category="Variable" name="eventSource"><summary>The nearest parent of the event raiser composition that contains an event receiver. If the event raiser composition contains an event receiver, it will be the event raiser composition.</summary><signature><![CDATA[GuiGraphicsComposition * eventSource;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/></seealsos></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::SetLocation@void(::vl::presentation::NativePoint)" accessor="public" category="Function" name="SetLocation"><summary>Set the location of the window in screen space.</summary><param name="value">The location of the window.</param><signature><![CDATA[void SetLocation(
     NativePoint value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>

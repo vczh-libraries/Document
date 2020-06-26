@@ -3,4 +3,4 @@
  </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The global message listener to uninstall.</param><signature><![CDATA[bool UninstallListener(
     INativeControllerListener * listener
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeControllerListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeControllerListener"/></seealsos></Document>

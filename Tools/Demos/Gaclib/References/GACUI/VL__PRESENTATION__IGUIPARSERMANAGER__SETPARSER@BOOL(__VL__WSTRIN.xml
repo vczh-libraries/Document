@@ -2,4 +2,4 @@
     WString const & name,
     Ptr<IGuiGeneralParser> parser
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::presentation::IGuiGeneralParser" declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiGeneralParser"/></seealsos></Document>

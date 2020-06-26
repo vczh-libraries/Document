@@ -4,4 +4,4 @@
     bool alt,
     VKEY key
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>

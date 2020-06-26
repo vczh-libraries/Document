@@ -2,4 +2,4 @@
  Get the renderer awared rich text document layout engine provider object.
  </summary><returns>Returns the layout provider.</returns><signature><![CDATA[IGuiGraphicsLayoutProvider * GetLayoutProvider(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsLayoutProvider" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsLayoutProvider"/></seealsos></Document>

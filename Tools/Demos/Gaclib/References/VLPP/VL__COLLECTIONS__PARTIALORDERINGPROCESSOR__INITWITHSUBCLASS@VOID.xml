@@ -7,4 +7,4 @@ void InitWithSubClass(
     GroupOf<TList> const & depGroup,
     Dictionary<TList::ElementType, TSubClass> const & subClasses
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::collections::Dictionary" declFile="Dictionary.h" declId="NI$vl::collections::Dictionary"/><symbol declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor::GroupOf"/></seealsos></Document>

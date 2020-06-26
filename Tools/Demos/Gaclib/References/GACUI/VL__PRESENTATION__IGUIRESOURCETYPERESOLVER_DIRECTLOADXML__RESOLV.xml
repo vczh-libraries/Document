@@ -3,4 +3,4 @@
     Ptr<parsing::xml::XmlElement> element,
     GuiResourceError::List & errors
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/><symbol declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlElement"/><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/></seealsos></Document>

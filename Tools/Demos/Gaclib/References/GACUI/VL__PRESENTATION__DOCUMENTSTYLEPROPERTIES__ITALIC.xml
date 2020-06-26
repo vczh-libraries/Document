@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentStyleProperties::italic" accessor="public" category="Variable" name="italic"><summary>Italic.</summary><signature><![CDATA[Nullable<bool> italic;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ParsingCandidateItem::name" accessor="public" category="Variable" name="name"><summary>Display name.</summary><signature><![CDATA[WString name;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

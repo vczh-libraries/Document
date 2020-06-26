@@ -2,4 +2,4 @@
  Create a <symbol docId="vl::presentation::elements::IGuiGraphicsRenderer" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderer"/>.
  </summary><returns>Returns the created graphics renderer.</returns><signature><![CDATA[IGuiGraphicsRenderer * Create(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsRenderer" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderer"/></seealsos></Document>

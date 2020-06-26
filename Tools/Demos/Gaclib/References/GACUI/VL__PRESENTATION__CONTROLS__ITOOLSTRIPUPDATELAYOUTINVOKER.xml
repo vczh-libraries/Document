@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::IToolstripUpdateLayoutInvoker" accessor="" category="Class" name="IToolstripUpdateLayoutInvoker"><summary>IToolstripUpdateLayout is a required service for a menu item which want to force the container to redo layout.</summary><signature><![CDATA[class IToolstripUpdateLayoutInvoker;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

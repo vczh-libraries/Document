@@ -2,4 +2,4 @@
     HttpRequest const & request,
     HttpResponse & response
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::HttpRequest" declFile="HttpUtility.h" declId="NI$vl::HttpRequest"/><symbol docId="vl::HttpResponse" declFile="HttpUtility.h" declId="NI$vl::HttpResponse"/></seealsos></Document>

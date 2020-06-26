@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement::ICallback" accessor="public" category="Class" name="ICallback"><summary>Callback interface for this element.</summary><signature><![CDATA[class ICallback;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiDocumentElement::ICallback" declFile="GuiGraphicsDocumentElement.h" declId="NI$vl::presentation::elements::GuiDocumentElement::ICallback"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

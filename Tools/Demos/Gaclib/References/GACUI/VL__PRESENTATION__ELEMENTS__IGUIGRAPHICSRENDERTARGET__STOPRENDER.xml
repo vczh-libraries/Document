@@ -2,4 +2,4 @@
  Notify the target to stop rendering.
  </summary><returns>Returns false to recreate render target.</returns><signature><![CDATA[RenderTargetFailure StopRendering(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::RenderTargetFailure"/></seealsos></Document>

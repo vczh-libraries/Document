@@ -3,4 +3,4 @@
     typename K /* optional */
 >
 class List;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::collections::ListBase" declFile="List.h" declId="NI$vl::collections::ListBase"/></basetypes></Document>

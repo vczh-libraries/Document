@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiApplication::GetWindow@::vl::presentation::controls::GuiWindow *(::vl::presentation::NativePoint)" accessor="public" category="Function" name="GetWindow"><summary>Get the <symbol docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/> instance that the mouse cursor are directly in.</summary><returns>The <symbol docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/> instance that the mouse cursor are directly in.</returns><param name="location">The mouse cursor.</param><signature><![CDATA[GuiWindow * GetWindow(
     NativePoint location
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/><symbol docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/></seealsos></Document>

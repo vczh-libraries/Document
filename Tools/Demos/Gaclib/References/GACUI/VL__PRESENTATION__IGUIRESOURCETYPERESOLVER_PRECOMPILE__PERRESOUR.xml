@@ -3,4 +3,4 @@
     GuiResourcePrecompileContext & context,
     GuiResourceError::List & errors
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/><symbol docId="vl::presentation::GuiResourcePrecompileContext" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/></seealsos></Document>

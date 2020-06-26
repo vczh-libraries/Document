@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::GuiResource::SaveToXml@::vl::Ptr&lt;::vl::parsing::xml::XmlDocument&gt;()" accessor="public" category="Function" name="SaveToXml"><summary>Save the resource to xml.</summary><returns>The xml.</returns><signature><![CDATA[Ptr<parsing::xml::XmlDocument> SaveToXml(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlDocument"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ParsingTokenContext::tokenParent" accessor="public" category="Variable" name="tokenParent"><summary>The object syntax tree parent of the token.</summary><signature><![CDATA[parsing::ParsingTreeObject * tokenParent;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::parsing::ParsingTreeObject" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeObject"/></seealsos></Document>

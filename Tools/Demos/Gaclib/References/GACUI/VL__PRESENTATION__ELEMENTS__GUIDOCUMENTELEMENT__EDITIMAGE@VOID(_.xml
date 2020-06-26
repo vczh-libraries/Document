@@ -3,4 +3,4 @@
     TextPos end,
     Ptr<GuiImageData> image
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos></Document>

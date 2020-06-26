@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::GuiRepeatCompositionBase::GetItemSource@::vl::Ptr&lt;::vl::presentation::compositions::GuiRepeatCompositionBase::IValueEnumerable&gt;()" accessor="public" category="Function" name="GetItemSource"><summary>Get the item source.</summary><returns>The item source.</returns><signature><![CDATA[Ptr<IValueEnumerable> GetItemSource(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="GuiGraphicsRepeatComposition.h" declId="NI$vl::presentation::compositions::GuiRepeatCompositionBase::IValueEnumerable"/></seealsos></Document>

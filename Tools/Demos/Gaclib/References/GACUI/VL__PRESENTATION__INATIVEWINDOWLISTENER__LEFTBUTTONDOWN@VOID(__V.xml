@@ -3,4 +3,4 @@
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void LeftButtonDown(
     NativeWindowMouseInfo const & info
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowMouseInfo"/></seealsos></Document>

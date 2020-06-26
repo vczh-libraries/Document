@@ -2,4 +2,4 @@
     WString const & fileName,
     AccessRight _accessRight
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::stream::FileStream::AccessRight" declFile="FileStream.h" declId="NI$vl::stream::FileStream::AccessRight"/></seealsos></Document>

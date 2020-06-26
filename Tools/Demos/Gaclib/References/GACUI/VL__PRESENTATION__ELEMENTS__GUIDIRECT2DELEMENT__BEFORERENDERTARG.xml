@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::GuiDirect2DElement::BeforeRenderTargetChanged" accessor="public" category="Variable" name="BeforeRenderTargetChanged"><summary>Render target changed (before) event. Resources that binded to the render target can be released at this moment.</summary><signature><![CDATA[compositions::GuiGraphicsEvent<GuiDirect2DElementEventArgs> BeforeRenderTargetChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiGraphicsEvent"/><symbol docId="vl::presentation::elements::GuiDirect2DElementEventArgs" declFile="GuiGraphicsWindowsDirect2D.h" declId="NI$vl::presentation::elements::GuiDirect2DElementEventArgs"/></seealsos></Document>

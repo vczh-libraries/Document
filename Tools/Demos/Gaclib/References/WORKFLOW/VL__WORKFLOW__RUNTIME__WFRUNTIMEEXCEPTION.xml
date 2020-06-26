@@ -1,2 +1,2 @@
 <Document symbolId="vl::workflow::runtime::WfRuntimeException" accessor="" category="Class" name="WfRuntimeException"><summary>Representing an raised exception object for upper level C++ code.</summary><signature><![CDATA[class WfRuntimeException;
-]]></signature></Document>
+]]></signature><basetypes><symbol declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::TypeDescriptorException"/></basetypes></Document>

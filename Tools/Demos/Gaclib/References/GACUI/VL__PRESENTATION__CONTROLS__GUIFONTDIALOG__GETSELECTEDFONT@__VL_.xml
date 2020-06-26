@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiFontDialog::GetSelectedFont@::vl::presentation::FontProperties const &amp;()" accessor="public" category="Function" name="GetSelectedFont"><summary>Get the selected font.</summary><returns>The selected font.</returns><signature><![CDATA[FontProperties const & GetSelectedFont(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>

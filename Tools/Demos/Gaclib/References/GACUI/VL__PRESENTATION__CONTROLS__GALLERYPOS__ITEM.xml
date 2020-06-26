@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GalleryPos::item" accessor="public" category="Variable" name="item"><summary>Item index.</summary><signature><![CDATA[vint item;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

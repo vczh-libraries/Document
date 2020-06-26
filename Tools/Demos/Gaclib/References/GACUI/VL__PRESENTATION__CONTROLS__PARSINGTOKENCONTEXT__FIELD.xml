@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ParsingTokenContext::field" accessor="public" category="Variable" name="field"><summary>Field of the parent that contains the token.</summary><signature><![CDATA[WString field;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

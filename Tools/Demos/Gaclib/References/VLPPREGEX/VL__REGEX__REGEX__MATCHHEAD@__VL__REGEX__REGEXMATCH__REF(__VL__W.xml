@@ -1,4 +1,4 @@
 <Document symbolId="vl::regex::Regex::MatchHead@::vl::regex::RegexMatch::Ref(::vl::WString const &amp;)" accessor="public" category="Function" name="MatchHead"><summary>Match a prefix of the text.</summary><returns>Returns the match. Returns null if failed.</returns><param name="text">The text to match.</param><signature><![CDATA[RegexMatch::Ref MatchHead(
     WString const & text
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol declFile="Regex.h" declId="NI$vl::regex::RegexMatch::Ref"/></seealsos></Document>

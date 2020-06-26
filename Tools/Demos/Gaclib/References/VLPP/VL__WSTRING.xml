@@ -1,2 +1,2 @@
 <Document symbolId="vl::WString" accessor="" category="TypeAlias" name="WString"><summary>Unicode string.</summary><signature><![CDATA[using WString = ObjectString<wchar_t>;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/></seealsos></Document>

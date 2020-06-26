@@ -2,4 +2,4 @@
  Get the border color.
  </summary><returns>The border color.</returns><signature><![CDATA[Color GetBorderColor(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

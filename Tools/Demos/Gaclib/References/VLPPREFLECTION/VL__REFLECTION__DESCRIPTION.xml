@@ -241,4 +241,4 @@
     typename T
 >
 class Description;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></basetypes></Document>

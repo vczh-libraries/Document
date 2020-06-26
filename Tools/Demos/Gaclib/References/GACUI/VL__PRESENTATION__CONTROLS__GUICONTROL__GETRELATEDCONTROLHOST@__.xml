@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiControl::GetRelatedControlHost@::vl::presentation::controls::GuiControlHost *()" accessor="public" category="Function" name="GetRelatedControlHost"><summary>Get the <symbol docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/> that contains this control.</summary><returns>The <symbol docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/> that contains this control.</returns><signature><![CDATA[GuiControlHost * GetRelatedControlHost(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/></seealsos></Document>

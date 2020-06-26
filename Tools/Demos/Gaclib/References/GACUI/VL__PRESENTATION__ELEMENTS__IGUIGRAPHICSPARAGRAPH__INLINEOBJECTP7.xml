@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties::size" accessor="public" category="Variable" name="size"><summary>The size of the inline object.</summary><signature><![CDATA[Size size;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

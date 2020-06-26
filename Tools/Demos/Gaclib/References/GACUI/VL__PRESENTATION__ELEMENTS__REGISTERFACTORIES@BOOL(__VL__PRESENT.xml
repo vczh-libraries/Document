@@ -4,4 +4,4 @@
     IGuiGraphicsElementFactory * elementFactory,
     IGuiGraphicsRendererFactory * rendererFactory
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"/><symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/></seealsos></Document>

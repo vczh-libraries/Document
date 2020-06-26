@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiInstanceRootObject::AddControlHostComponent@bool(::vl::presentation::controls::GuiControlHost *)" accessor="public" category="Function" name="AddControlHostComponent"><summary>Add a control host as a component. When this control host is disposing, all attached components will be deleted.</summary><returns>Returns true if this operation succeeded.</returns><param name="controlHost">The controlHost to add.</param><signature><![CDATA[bool AddControlHostComponent(
     GuiControlHost * controlHost
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/></seealsos></Document>

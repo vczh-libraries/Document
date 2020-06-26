@@ -2,4 +2,4 @@
  Get the callback service.
  </summary><returns>The callback service</returns><signature><![CDATA[INativeCallbackService * CallbackService(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeCallbackService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCallbackService"/></seealsos></Document>

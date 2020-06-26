@@ -1,4 +1,4 @@
 <Document symbolId="vl::Locale::GetLongDayOfWeekName@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetLongDayOfWeekName"><summary>Get the long display string of a day of week.</summary><returns>The display string.</returns><param name="dayOfWeek">Day of week, begins from 0 as Sunday.</param><signature><![CDATA[WString GetLongDayOfWeekName(
     vint dayOfWeek
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

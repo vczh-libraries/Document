@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::charInput" accessor="public" category="Variable" name="charInput"><summary>Char input event.</summary><signature><![CDATA[GuiCharEvent charInput;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiCharEvent"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::stream::MbcsEncoder" accessor="" category="Class" name="MbcsEncoder"><summary>Encoder to transform text in a local code page from wchar_t.</summary><signature><![CDATA[class MbcsEncoder;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::stream::CharEncoder" declFile="CharFormat.h" declId="NI$vl::stream::CharEncoder"/></basetypes></Document>

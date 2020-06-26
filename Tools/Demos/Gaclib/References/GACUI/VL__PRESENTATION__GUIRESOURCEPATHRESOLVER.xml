@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::GuiResourcePathResolver" accessor="" category="Class" name="GuiResourcePathResolver"><summary>Represents a symbol resolver for loading a resource.</summary><signature><![CDATA[class GuiResourcePathResolver;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::GuiResourcePathResolver" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePathResolver"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

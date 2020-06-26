@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetRelatedControlHost@::vl::presentation::controls::GuiControlHost *()" accessor="public" category="Function" name="GetRelatedControlHost"><summary>Get the related control host. A related control host is the control host that contains this composition.</summary><returns>The related control host.</returns><signature><![CDATA[controls::GuiControlHost * GetRelatedControlHost(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/></seealsos></Document>

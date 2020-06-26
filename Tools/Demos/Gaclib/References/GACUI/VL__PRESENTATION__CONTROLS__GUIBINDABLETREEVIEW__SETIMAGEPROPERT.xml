@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiBindableTreeView::SetImageProperty@void(::vl::presentation::ItemProperty&lt;::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;&gt; const &amp;)" accessor="public" category="Function" name="SetImageProperty"><summary>Set the image property name to get the image from an item.</summary><param name="value">The image property name.</param><signature><![CDATA[void SetImageProperty(
     ItemProperty<Ptr<GuiImageData>> const & value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/><symbol declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::ItemProperty"/></seealsos></Document>

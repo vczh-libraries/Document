@@ -1,3 +1,3 @@
 <Document symbolId="vl::regex::RegexMatch::Result@::vl::regex::RegexString const &amp;()" accessor="public" category="Function" name="Result"><summary>Get the whole fragment that matches.</summary><returns>The whole fragment.</returns><signature><![CDATA[RegexString const & Result(
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::regex::RegexString" declFile="Regex.h" declId="NI$vl::regex::RegexString"/></seealsos></Document>

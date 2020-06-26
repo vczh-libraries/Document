@@ -3,4 +3,4 @@
     RepeatingPartialParsingOutput const & partialOutput,
     collections::List<ParsingCandidateItem> & candidateItems
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol docId="vl::presentation::controls::RepeatingPartialParsingOutput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingPartialParsingOutput"/><symbol docId="vl::presentation::controls::ParsingCandidateItem" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingCandidateItem"/><symbol docId="vl::presentation::controls::ParsingTokenContext" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingTokenContext"/></seealsos></Document>

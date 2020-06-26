@@ -2,4 +2,4 @@
     NativePoint location,
     Size size
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

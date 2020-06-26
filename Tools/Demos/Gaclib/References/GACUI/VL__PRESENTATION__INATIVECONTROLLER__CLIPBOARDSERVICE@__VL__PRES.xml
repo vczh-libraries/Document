@@ -2,4 +2,4 @@
  Get the clipboard service.
  </summary><returns>The clipboard service</returns><signature><![CDATA[INativeClipboardService * ClipboardService(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeClipboardService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardService"/></seealsos></Document>

@@ -4,4 +4,4 @@
     bool frontSide,
     collections::Array<WString> const & text
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::collections::Array" declFile="List.h" declId="NI$vl::collections::Array"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

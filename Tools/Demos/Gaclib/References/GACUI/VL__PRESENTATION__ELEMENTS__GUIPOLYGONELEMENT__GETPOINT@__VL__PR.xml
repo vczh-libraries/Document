@@ -3,4 +3,4 @@
  </summary><param name="index">The index to access a point.</param><returns>The point of the polygon element associated with the index.</returns><signature><![CDATA[Point const & GetPoint(
     vint index
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>

@@ -2,4 +2,4 @@
  Get the dialog service.
  </summary><returns>The user dialog service</returns><signature><![CDATA[INativeDialogService * DialogService(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeDialogService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService"/></seealsos></Document>

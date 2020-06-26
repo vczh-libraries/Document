@@ -3,4 +3,4 @@
     bool bom /* optional */,
     stream::BomEncoder::Encoding encoding /* optional */
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/></seealsos></Document>

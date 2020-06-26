@@ -5,4 +5,4 @@
 			Pass 1: Script		(initialize shared scripts)
 			Pass 2: Script		(initialize instance scripts)
  </summary><signature><![CDATA[class IGuiResourceTypeResolver_Initialize;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::IGuiResourceTypeResolver_Initialize" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Initialize"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

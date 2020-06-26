@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::SafeDeleteControl@void(::vl::presentation::controls::GuiControl *)" accessor="" category="Function" name="SafeDeleteControl"><summary>Safely remove and delete a control.</summary><param name="value">The control to delete.</param><signature><![CDATA[void SafeDeleteControl(
     controls::GuiControl * value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos></Document>

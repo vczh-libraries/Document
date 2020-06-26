@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::DetachCallback@bool(::vl::presentation::controls::RepeatingParsingExecutor::ICallback *)" accessor="public" category="Function" name="DetachCallback"><summary>Detach callback.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The callback.</param><signature><![CDATA[bool DetachCallback(
     ICallback * value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::RepeatingParsingExecutor::ICallback" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingExecutor::ICallback"/></seealsos></Document>

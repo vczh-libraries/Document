@@ -4,4 +4,4 @@
 >
 class Func<R(
 TArgs...)>;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

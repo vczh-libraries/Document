@@ -1,2 +1,2 @@
 <Document symbolId="vl::Mutex" accessor="" category="Class" name="Mutex"><summary>Mutex.</summary><signature><![CDATA[class Mutex;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/></basetypes></Document>

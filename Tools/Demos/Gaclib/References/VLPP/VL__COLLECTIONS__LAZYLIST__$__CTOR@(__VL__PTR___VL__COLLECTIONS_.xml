@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::LazyList::$__ctor@(::vl::Ptr&lt;::vl::collections::IEnumerator&lt;[T]&gt;&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create a lazy list with an enumerator.</summary><param name="enumerator">The enumerator.</param><signature><![CDATA[ LazyList(
     Ptr<IEnumerator<T>> enumerator
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::collections::IEnumerator" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerator"/><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

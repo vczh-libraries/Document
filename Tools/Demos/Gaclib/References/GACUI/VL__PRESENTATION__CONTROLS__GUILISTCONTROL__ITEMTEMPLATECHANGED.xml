@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::ItemTemplateChanged" accessor="public" category="Variable" name="ItemTemplateChanged"><summary>Style provider changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ItemTemplateChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

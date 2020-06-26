@@ -3,4 +3,4 @@
  </summary><param name="value">The color table to bind.</param><signature><![CDATA[void SetColors(
     ColorArray const & value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ColorArray"/></seealsos></Document>

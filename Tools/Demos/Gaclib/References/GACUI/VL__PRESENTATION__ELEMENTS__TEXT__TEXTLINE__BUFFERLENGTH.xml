@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::TextLine::bufferLength" accessor="public" category="Variable" name="bufferLength"><summary>
  The number of elements in the allocated buffer memory.
  </summary><signature><![CDATA[vint bufferLength;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

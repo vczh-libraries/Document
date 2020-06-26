@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::list::ListViewItem::GetTag@::vl::reflection::description::Value()" accessor="public" category="Function" name="GetTag"><summary>Get the tag of this item.</summary><returns>The tag of this item.</returns><signature><![CDATA[description::Value GetTag(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

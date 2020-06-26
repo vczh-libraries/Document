@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiRibbonIconLabel" accessor="" category="Class" name="GuiRibbonIconLabel"><summary>Auto resizable ribbon icon label.</summary><signature><![CDATA[class GuiRibbonIconLabel;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiRibbonIconLabel" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonIconLabel"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></basetypes></Document>

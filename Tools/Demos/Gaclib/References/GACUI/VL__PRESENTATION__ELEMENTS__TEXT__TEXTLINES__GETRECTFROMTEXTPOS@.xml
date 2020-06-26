@@ -3,4 +3,4 @@
  </summary><returns>The bounds, in pixel. Returns (-1, -1, -1, -1) if the text position is not available.</returns><param name="pos">The specified text position.</param><signature><![CDATA[Rect GetRectFromTextPos(
     TextPos pos
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>

@@ -3,4 +3,4 @@
  </summary><param name="value">The string to set into the text lines.</param><signature><![CDATA[void SetText(
     WString const & value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

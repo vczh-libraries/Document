@@ -4,4 +4,4 @@
     Ptr<INativeImage> _image,
     vint _frameIndex
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/></seealsos></Document>

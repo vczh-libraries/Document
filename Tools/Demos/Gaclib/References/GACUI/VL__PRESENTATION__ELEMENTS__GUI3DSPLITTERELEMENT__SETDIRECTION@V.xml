@@ -3,4 +3,4 @@
  </summary><param name="value">The new direction.</param><signature><![CDATA[void SetDirection(
     Direction value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::Gui3DSplitterElement::Direction" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DSplitterElement::Direction"/></seealsos></Document>

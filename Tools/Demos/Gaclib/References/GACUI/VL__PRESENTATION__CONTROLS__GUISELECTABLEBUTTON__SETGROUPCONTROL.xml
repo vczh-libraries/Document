@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiSelectableButton::SetGroupController@void(::vl::presentation::controls::GuiSelectableButton::GroupController *)" accessor="public" category="Function" name="SetGroupController"><summary>Set the attached group controller.</summary><param name="value">The attached group controller.</param><signature><![CDATA[void SetGroupController(
     GroupController * value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiSelectableButton::GroupController" declFile="GuiButtonControls.h" declId="NI$vl::presentation::controls::GuiSelectableButton::GroupController"/></seealsos></Document>

@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiSelectableListControl::GetSelectedItemIndex@::vl::vint()" accessor="public" category="Function" name="GetSelectedItemIndex"><summary>Get the index of the selected item.</summary><returns>Returns the index of the selected item. If there are multiple selected items, or there is no selected item, -1 will be returned.</returns><signature><![CDATA[vint GetSelectedItemIndex(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

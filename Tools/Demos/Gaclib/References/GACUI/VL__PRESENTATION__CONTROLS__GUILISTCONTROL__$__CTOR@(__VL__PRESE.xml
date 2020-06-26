@@ -3,4 +3,4 @@
     IItemProvider * _itemProvider,
     bool acceptFocus /* optional */
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/><symbol docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/></seealsos></Document>

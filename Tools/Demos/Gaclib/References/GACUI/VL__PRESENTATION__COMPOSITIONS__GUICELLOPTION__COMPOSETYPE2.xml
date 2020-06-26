@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiCellOption::composeType" accessor="public" category="Variable" name="composeType"><summary>Sizing algorithm</summary><signature><![CDATA[ComposeType composeType;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiCellOption::ComposeType" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption::ComposeType"/></seealsos></Document>

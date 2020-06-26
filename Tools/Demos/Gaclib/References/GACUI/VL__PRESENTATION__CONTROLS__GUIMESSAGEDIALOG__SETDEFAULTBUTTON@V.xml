@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiMessageDialog::SetDefaultButton@void(::vl::presentation::INativeDialogService::MessageBoxDefaultButton)" accessor="public" category="Function" name="SetDefaultButton"><summary>Set the default button for the selected button combination.</summary><param name="value">The default button.</param><signature><![CDATA[void SetDefaultButton(
     INativeDialogService::MessageBoxDefaultButton value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeDialogService::MessageBoxDefaultButton" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::MessageBoxDefaultButton"/></seealsos></Document>

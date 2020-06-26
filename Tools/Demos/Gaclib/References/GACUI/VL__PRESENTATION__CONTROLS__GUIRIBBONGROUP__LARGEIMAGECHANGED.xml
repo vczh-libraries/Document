@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiRibbonGroup::LargeImageChanged" accessor="public" category="Variable" name="LargeImageChanged"><summary>Large image changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent LargeImageChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

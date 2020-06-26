@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiButton::Clicked" accessor="public" category="Variable" name="Clicked"><summary>Mouse click event.</summary><signature><![CDATA[compositions::GuiNotifyEvent Clicked;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiFileDialogBase::FilterIndexChanged" accessor="public" category="Variable" name="FilterIndexChanged"><summary>Filter index changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent FilterIndexChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

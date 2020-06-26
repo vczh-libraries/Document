@@ -2,4 +2,4 @@
  Get the main window.
  </summary><returns>The main window.</returns><signature><![CDATA[INativeWindow * GetMainWindow(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

@@ -3,4 +3,4 @@
  </summary><param name="window">The created window.</param><signature><![CDATA[void NativeWindowCreated(
     INativeWindow * window
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

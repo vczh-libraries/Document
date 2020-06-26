@@ -3,4 +3,4 @@
  </summary><param name="value">The font configuration to override.</param><signature><![CDATA[void SetDefaultFont(
     FontProperties const & value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>

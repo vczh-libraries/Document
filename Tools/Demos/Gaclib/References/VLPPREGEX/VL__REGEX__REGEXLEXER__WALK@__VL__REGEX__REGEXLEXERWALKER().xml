@@ -1,3 +1,3 @@
 <Document symbolId="vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()" accessor="public" category="Function" name="Walk"><summary>Create a equivalence walker from this lexical analyzer.</summary><returns>The walker.</returns><signature><![CDATA[RegexLexerWalker Walk(
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::regex::RegexLexerWalker" declFile="Regex.h" declId="NI$vl::regex::RegexLexerWalker"/></seealsos></Document>

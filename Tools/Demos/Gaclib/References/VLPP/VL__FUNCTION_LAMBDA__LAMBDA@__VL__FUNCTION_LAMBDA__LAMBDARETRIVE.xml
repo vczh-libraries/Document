@@ -4,4 +4,4 @@
 LambdaRetriveType<decltype(expr)>::Type Lambda(
     T functionObject
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::function_lambda::LambdaRetriveType@&lt;[R]([TArgs]...) ([TObject] ::) *&gt;::Type"/><symbol declFile="Function.h" declId="NI$vl::function_lambda::LambdaRetriveType@&lt;[R]([TArgs]...) ([TObject] ::) *&gt;2::Type"/></seealsos></Document>

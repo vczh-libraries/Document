@@ -8,4 +8,4 @@ Func<function_combining::Combining<F1, F2, C>::FinalFunctionType> Combine(
     Func<F1> function1,
     Func<F2> function2
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol declFile="Function.h" declId="NI$vl::function_combining::Combining@&lt;[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])&gt;::FinalFunctionType"/></seealsos></Document>

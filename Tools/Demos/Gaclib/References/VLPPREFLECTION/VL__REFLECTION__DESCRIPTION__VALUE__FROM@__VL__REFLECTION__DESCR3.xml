@@ -2,4 +2,4 @@
     Ptr<IBoxedValue> value,
     ITypeDescriptor * type
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"/><symbol docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/><symbol declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::IBoxedValue"/></seealsos></Document>

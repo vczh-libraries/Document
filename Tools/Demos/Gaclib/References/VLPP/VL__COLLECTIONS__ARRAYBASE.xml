@@ -2,4 +2,4 @@
     typename T
 >
 class ArrayBase;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol declFile="List.h" declId="NI$vl::collections::ListStore"/></basetypes></Document>

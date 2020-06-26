@@ -1,4 +1,4 @@
 <Document symbolId="vl::ObjectString::$__ctor@(::vl::ObjectString&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy a string.</summary><param name="string">The string to copy.</param><signature><![CDATA[ ObjectString(
     ObjectString<T> const & string
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/></seealsos></Document>

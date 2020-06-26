@@ -2,4 +2,4 @@
  Get the text color.
  </summary><returns>The text color.</returns><signature><![CDATA[Color GetColor(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

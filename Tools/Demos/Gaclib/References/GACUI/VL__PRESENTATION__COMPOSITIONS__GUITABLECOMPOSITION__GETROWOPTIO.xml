@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiTableComposition::GetRowOption@::vl::presentation::compositions::GuiCellOption(::vl::vint)" accessor="public" category="Function" name="GetRowOption"><summary>Get the sizing option of the specified row.</summary><returns>The sizing option of the specified row.</returns><param name="_row">The specified row number.</param><signature><![CDATA[GuiCellOption GetRowOption(
     vint _row
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::presentation::compositions::GuiCellOption" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption"/></seealsos></Document>

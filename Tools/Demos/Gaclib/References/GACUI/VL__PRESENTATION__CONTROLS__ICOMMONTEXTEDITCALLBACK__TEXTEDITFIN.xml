@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditFinished@void(::vl::vuint)" accessor="public" category="Function" name="TextEditFinished"><summary>Called after the text is edited and after the caret is changed.</summary><param name="editVersion">The current edit version.</param><signature><![CDATA[void TextEditFinished(
     vuint editVersion
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>

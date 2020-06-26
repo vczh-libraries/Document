@@ -2,4 +2,4 @@
     WString const & text,
     RegexMatch::List & matches
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol declFile="Regex.h" declId="NI$vl::regex::RegexMatch::List"/></seealsos></Document>

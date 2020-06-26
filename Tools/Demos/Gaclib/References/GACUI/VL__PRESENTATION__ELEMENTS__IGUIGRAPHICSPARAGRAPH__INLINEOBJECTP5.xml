@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties::breakCondition" accessor="public" category="Variable" name="breakCondition"><summary>The break condition of the inline object.</summary><signature><![CDATA[BreakCondition breakCondition;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsParagraph::BreakCondition" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::BreakCondition"/></seealsos></Document>

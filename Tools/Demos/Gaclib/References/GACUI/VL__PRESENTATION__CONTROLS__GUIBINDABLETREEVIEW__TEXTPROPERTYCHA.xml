@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiBindableTreeView::TextPropertyChanged" accessor="public" category="Variable" name="TextPropertyChanged"><summary>Text property name changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent TextPropertyChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

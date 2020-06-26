@@ -1,3 +1,3 @@
 <Document symbolId="vl::reflection::description::Value::GetBoxedValue@::vl::Ptr&lt;::vl::reflection::description::IBoxedValue&gt;()" accessor="public" category="Function" name="GetBoxedValue"><summary>Get the stored text if possible.</summary><returns>The stored text. Returns empty if failed.</returns><signature><![CDATA[Ptr<IBoxedValue> GetBoxedValue(
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::IBoxedValue"/></seealsos></Document>

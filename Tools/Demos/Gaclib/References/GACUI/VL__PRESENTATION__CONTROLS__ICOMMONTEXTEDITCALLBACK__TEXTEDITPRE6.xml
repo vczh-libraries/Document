@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct::originalEnd" accessor="public" category="Variable" name="originalEnd"><summary>The end position of the selection before replacing. This field can be modified.</summary><signature><![CDATA[TextPos originalEnd;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

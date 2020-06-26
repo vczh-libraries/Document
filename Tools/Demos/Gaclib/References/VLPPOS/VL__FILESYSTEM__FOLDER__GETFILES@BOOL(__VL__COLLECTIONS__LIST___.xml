@@ -1,4 +1,4 @@
 <Document symbolId="vl::filesystem::Folder::GetFiles@bool(::vl::collections::List&lt;::vl::filesystem::File&gt; &amp;)" accessor="public" category="Function" name="GetFiles"><summary>Get all files in this folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="files">All files.</param><signature><![CDATA[bool GetFiles(
     collections::List<File> & files
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol docId="vl::filesystem::File" declFile="FileSystem.h" declId="NI$vl::filesystem::File"/></seealsos></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetNearestTextPos@::vl::presentation::TextPos(::vl::presentation::Point)" accessor="public" category="Function" name="GetNearestTextPos"><summary>Get the nearest text position from a specified display position.</summary><returns>Get the nearest text position.</returns><param name="point">The specified display position.</param><signature><![CDATA[TextPos GetNearestTextPos(
     Point point
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>

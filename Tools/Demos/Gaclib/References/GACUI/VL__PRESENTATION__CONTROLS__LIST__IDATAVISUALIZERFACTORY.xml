@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::list::IDataVisualizerFactory" accessor="" category="Class" name="IDataVisualizerFactory"><summary>The visualizer factory.</summary><signature><![CDATA[class IDataVisualizerFactory;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::list::IDataVisualizerFactory" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataVisualizerFactory"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

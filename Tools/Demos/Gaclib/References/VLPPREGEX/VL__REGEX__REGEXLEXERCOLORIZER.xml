@@ -1,2 +1,2 @@
 <Document symbolId="vl::regex::RegexLexerColorizer" accessor="" category="Class" name="RegexLexerColorizer"><summary>Lexical colorizer.</summary><signature><![CDATA[class RegexLexerColorizer;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiInstanceRootObject" accessor="" category="Class" name="GuiInstanceRootObject"><summary>Represnets a root GUI object.</summary><signature><![CDATA[class GuiInstanceRootObject;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiInstanceRootObject" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::GuiInstanceRootObject"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

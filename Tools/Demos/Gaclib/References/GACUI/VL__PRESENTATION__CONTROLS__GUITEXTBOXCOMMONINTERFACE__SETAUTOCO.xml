@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SetAutoComplete@void(::vl::Ptr&lt;::vl::presentation::controls::GuiTextBoxAutoCompleteBase&gt;)" accessor="public" category="Function" name="SetAutoComplete"><summary>Set the current auto complete controller.</summary><param name="value">The current auto complete controller.</param><signature><![CDATA[void SetAutoComplete(
     Ptr<GuiTextBoxAutoCompleteBase> value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::GuiTextBoxAutoCompleteBase" declFile="GuiTextAutoComplete.h" declId="NI$vl::presentation::controls::GuiTextBoxAutoCompleteBase"/></seealsos></Document>

@@ -2,4 +2,4 @@
     typename T
 >
 class IEnumerator;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

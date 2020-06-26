@@ -1,2 +1,2 @@
 <Document symbolId="vl::stream::IEncoder" accessor="" category="Class" name="IEncoder"><summary>Encoder interface. This interface defines a writable transformation from one stream to another stream. You can create a <symbol docId="vl::stream::EncoderStream" declFile="Accessor.h" declId="NI$vl::stream::EncoderStream"/> after you have an encoder.</summary><signature><![CDATA[class IEncoder;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

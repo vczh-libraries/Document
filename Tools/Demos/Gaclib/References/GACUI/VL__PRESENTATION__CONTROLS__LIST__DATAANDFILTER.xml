@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::list::DataAndFilter" accessor="" category="Class" name="DataAndFilter"><summary>A filter that keep a row if all sub filters agree.</summary><signature><![CDATA[class DataAndFilter;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::list::DataAndFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataAndFilter"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::list::DataMultipleFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataMultipleFilter"/></basetypes></Document>

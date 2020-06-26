@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiFlowComposition" accessor="" category="Class" name="GuiFlowComposition"><summary>
  Represents a flow composition.
  </summary><signature><![CDATA[class GuiFlowComposition;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiFlowComposition" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowComposition"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></basetypes></Document>

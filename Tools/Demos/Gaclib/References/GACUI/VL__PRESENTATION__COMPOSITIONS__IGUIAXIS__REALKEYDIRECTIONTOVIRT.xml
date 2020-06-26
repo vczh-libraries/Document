@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::IGuiAxis::RealKeyDirectionToVirtualKeyDirection@::vl::presentation::compositions::KeyDirection(::vl::presentation::compositions::KeyDirection)" accessor="public" category="Function" name="RealKeyDirectionToVirtualKeyDirection"><summary>Translate real key direction to virtual key direction.</summary><returns>The virtual key direction.</returns><param name="key">The real key direction.</param><signature><![CDATA[KeyDirection RealKeyDirectionToVirtualKeyDirection(
     KeyDirection key
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::KeyDirection" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::KeyDirection"/></seealsos></Document>

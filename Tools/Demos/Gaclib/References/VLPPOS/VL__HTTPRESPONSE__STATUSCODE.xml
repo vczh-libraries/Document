@@ -1,2 +1,2 @@
 <Document symbolId="vl::HttpResponse::statusCode" accessor="public" category="Variable" name="statusCode"><summary>Status code, like 200.</summary><signature><![CDATA[vint statusCode;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

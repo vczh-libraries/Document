@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiGrammarAutoComplete::AutoCompleteData::startPosition" accessor="public" category="Variable" name="startPosition"><summary>The start position of the editing token in global coordination.</summary><signature><![CDATA[TextPos startPosition;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

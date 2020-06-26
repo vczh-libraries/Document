@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::TextReader::ReadString@::vl::WString(::vl::vint)" accessor="public" category="Function" name="ReadString"><summary>Read a string of a specified size.</summary><returns>The string.</returns><param name="length">Expected length of the string to read.</param><signature><![CDATA[WString ReadString(
     vint length
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

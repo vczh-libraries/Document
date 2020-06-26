@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControl::SetContext@void(::vl::reflection::description::Value const &amp;)" accessor="public" category="Function" name="SetContext"><summary>Set the context of this control.</summary><param name="value">The context of this control.</param><signature><![CDATA[void SetContext(
     description::Value const & value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

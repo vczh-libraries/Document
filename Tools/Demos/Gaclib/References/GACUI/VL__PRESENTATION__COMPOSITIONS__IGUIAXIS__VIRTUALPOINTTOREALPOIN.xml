@@ -2,4 +2,4 @@
     Size realFullSize,
     Point point
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

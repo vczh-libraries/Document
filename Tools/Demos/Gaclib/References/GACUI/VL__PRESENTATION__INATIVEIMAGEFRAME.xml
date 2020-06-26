@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeImageFrame" accessor="" category="Class" name="INativeImageFrame"><summary>
  Represents an image frame.
  </summary><signature><![CDATA[class INativeImageFrame;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

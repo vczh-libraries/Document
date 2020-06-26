@@ -1,2 +1,2 @@
 <Document symbolId="vl::regex::RegexLexerWalker" accessor="" category="Class" name="RegexLexerWalker"><summary>Lexical walker.</summary><signature><![CDATA[class RegexLexerWalker;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

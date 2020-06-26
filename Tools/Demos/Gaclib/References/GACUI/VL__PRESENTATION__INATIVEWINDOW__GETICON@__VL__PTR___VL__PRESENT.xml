@@ -2,4 +2,4 @@
  Get the icon.
  </summary><returns>Returns the icon.</returns><signature><![CDATA[Ptr<GuiImageData> GetIcon(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos></Document>

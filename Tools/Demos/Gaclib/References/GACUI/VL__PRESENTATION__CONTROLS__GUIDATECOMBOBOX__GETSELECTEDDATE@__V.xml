@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiDateComboBox::GetSelectedDate@::vl::DateTime const &amp;()" accessor="public" category="Function" name="GetSelectedDate"><summary>Get the displayed date.</summary><returns>The date.</returns><signature><![CDATA[DateTime const & GetSelectedDate(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::ThreadLocalStorage" accessor="" category="Class" name="ThreadLocalStorage"><summary>Thread local storage operations.</summary><signature><![CDATA[class ThreadLocalStorage;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/></basetypes></Document>

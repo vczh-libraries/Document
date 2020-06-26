@@ -2,4 +2,4 @@
  Get the end position of the selection area.
  </summary><returns>The end position of the selection area.</returns><signature><![CDATA[TextPos GetCaretEnd(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

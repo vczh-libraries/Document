@@ -3,4 +3,4 @@
  </summary><returns>The window that under a specified position in screen space.</returns><param name="location">The specified position in screen space.</param><signature><![CDATA[INativeWindow * GetWindow(
     NativePoint location
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

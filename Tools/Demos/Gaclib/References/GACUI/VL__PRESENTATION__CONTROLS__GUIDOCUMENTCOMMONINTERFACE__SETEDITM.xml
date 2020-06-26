@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SetEditMode@void(::vl::presentation::controls::GuiDocumentCommonInterface::EditMode)" accessor="public" category="Function" name="SetEditMode"><summary>Set the edit mode of this control.</summary><param name="value">The edit mode.</param><signature><![CDATA[void SetEditMode(
     EditMode value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiDocumentCommonInterface::EditMode" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentCommonInterface::EditMode"/></seealsos></Document>

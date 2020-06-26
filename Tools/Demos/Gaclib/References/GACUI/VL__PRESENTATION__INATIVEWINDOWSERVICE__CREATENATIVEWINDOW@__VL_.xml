@@ -2,4 +2,4 @@
  Create a window.
  </summary><returns>The created window.</returns><signature><![CDATA[INativeWindow * CreateNativeWindow(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

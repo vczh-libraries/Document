@@ -3,4 +3,4 @@
     Func<Ptr<Table>(
 )> loader
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiParserManager::Table"/></seealsos></Document>

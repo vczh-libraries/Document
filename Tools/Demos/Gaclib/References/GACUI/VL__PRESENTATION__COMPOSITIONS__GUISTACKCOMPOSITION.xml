@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiStackComposition" accessor="" category="Class" name="GuiStackComposition"><summary>
  Represents a stack composition.
  </summary><signature><![CDATA[class GuiStackComposition;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiStackComposition" declFile="GuiGraphicsStackComposition.h" declId="NI$vl::presentation::compositions::GuiStackComposition"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></basetypes></Document>

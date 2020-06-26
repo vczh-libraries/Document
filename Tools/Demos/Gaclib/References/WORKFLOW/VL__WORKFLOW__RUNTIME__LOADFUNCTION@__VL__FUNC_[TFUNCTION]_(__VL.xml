@@ -5,4 +5,4 @@ Func<TFunction> LoadFunction(
     Ptr<WfRuntimeGlobalContext> context,
     WString const & name
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::workflow::runtime::WfRuntimeGlobalContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeGlobalContext"/></seealsos></Document>

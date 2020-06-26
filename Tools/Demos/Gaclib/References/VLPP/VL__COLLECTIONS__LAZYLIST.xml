@@ -2,4 +2,4 @@
     typename T
 >
 class LazyList;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

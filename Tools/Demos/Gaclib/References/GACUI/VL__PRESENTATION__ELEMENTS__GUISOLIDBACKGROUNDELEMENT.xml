@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiSolidBackgroundElement" accessor="" category="Class" name="GuiSolidBackgroundElement"><summary>
  Defines a color-filled element without border.
  </summary><signature><![CDATA[class GuiSolidBackgroundElement;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiSolidBackgroundElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiSolidBackgroundElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

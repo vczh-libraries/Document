@@ -1,2 +1,2 @@
 <Document symbolId="vl::workflow::runtime::WfAssembly::instructions" accessor="public" category="Variable" name="instructions"><summary>Instructions.</summary><signature><![CDATA[collections::List<WfInstruction> instructions;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol declFile="WfRuntimeInstruction.h" declId="NI$vl::workflow::runtime::WfInstruction"/></seealsos></Document>

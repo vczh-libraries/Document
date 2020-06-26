@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::GuiResourcePrecompileContext::resolver" accessor="public" category="Variable" name="resolver"><summary>The path resolver. This is only for delay load resource.</summary><signature><![CDATA[Ptr<GuiResourcePathResolver> resolver;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiResourcePathResolver" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePathResolver"/></seealsos></Document>

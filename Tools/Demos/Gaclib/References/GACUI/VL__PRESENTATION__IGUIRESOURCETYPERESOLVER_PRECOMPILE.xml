@@ -12,4 +12,4 @@
 			Pass  6: Generate instance types with everything to InstanceCtor				/ Compile animation types
 			Pass  7: Compile
  </summary><signature><![CDATA[class IGuiResourceTypeResolver_Precompile;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::IGuiResourceTypeResolver_Precompile" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Precompile"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

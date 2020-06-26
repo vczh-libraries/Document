@@ -3,4 +3,4 @@
     void * argument /* optional */,
     bool deleteAfterStopped /* optional */
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Thread" declFile="Threading.h" declId="NI$vl::Thread"/><symbol declFile="Threading.h" declId="NI$vl::Thread::ThreadProcedure"/></seealsos></Document>

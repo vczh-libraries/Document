@@ -2,4 +2,4 @@
     WString const & filePath,
     GuiResourceError::List & errors
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::presentation::GuiResource" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResource"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/></seealsos></Document>

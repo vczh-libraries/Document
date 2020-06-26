@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTooltip::SetPreferredContentWidth@void(::vl::vint)" accessor="public" category="Function" name="SetPreferredContentWidth"><summary>Set the preferred content width.</summary><param name="value">The preferred content width.</param><signature><![CDATA[void SetPreferredContentWidth(
     vint value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

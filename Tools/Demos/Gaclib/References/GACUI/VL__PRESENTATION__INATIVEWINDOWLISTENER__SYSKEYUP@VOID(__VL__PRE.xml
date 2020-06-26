@@ -3,4 +3,4 @@
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void SysKeyUp(
     NativeWindowKeyInfo const & info
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::NativeWindowKeyInfo" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowKeyInfo"/></seealsos></Document>

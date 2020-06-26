@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiFontDialog" accessor="" category="Class" name="GuiFontDialog"><summary>Font dialog.</summary><signature><![CDATA[class GuiFontDialog;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiFontDialog" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiFontDialog"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiDialogBase"/></basetypes></Document>

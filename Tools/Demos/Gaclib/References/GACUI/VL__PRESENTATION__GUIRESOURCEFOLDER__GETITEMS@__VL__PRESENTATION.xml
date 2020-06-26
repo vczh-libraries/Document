@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::GuiResourceFolder::GetItems@::vl::presentation::GuiResourceFolder::ItemList const &amp;()" accessor="public" category="Function" name="GetItems"><summary>Get all sub items.</summary><returns>All sub items.</returns><signature><![CDATA[ItemList const & GetItems(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceFolder::ItemList"/></seealsos></Document>

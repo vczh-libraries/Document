@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface" accessor="" category="Class" name="GuiTextBoxCommonInterface"><summary>Common interface for text box controls.</summary><signature><![CDATA[class GuiTextBoxCommonInterface;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiTextBoxCommonInterface" declFile="GuiTextCommonInterface.h" declId="NI$vl::presentation::controls::GuiTextBoxCommonInterface"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::ThreadPoolLite" accessor="" category="Class" name="ThreadPoolLite"><summary>A light-weight thread pool.</summary><signature><![CDATA[class ThreadPoolLite;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

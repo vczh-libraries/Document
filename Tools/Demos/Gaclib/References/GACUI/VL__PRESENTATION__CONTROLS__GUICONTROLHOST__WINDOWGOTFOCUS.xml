@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::WindowGotFocus" accessor="public" category="Variable" name="WindowGotFocus"><summary>Window got focus event.</summary><signature><![CDATA[compositions::GuiNotifyEvent WindowGotFocus;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

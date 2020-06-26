@@ -3,4 +3,4 @@
  </summary><param name="renderTarget">The graphics render target. It can be NULL.</param><signature><![CDATA[void SetRenderTarget(
     IGuiGraphicsRenderTarget * renderTarget
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>

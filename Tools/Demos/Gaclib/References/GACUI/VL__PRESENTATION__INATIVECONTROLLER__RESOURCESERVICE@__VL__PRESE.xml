@@ -2,4 +2,4 @@
  Get the system resource service.
  </summary><returns>The system resource service</returns><signature><![CDATA[INativeResourceService * ResourceService(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeResourceService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeResourceService"/></seealsos></Document>

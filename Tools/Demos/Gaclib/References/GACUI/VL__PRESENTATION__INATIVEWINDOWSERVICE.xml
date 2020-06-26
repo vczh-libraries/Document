@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeWindowService" accessor="" category="Class" name="INativeWindowService"><summary>
  Window service. To access this service, use <symbol docId="vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()[decl0]"/>.
  </summary><signature><![CDATA[class INativeWindowService;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

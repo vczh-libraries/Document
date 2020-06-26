@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::WindowClosing" accessor="public" category="Variable" name="WindowClosing"><summary>Window closing event.</summary><signature><![CDATA[compositions::GuiRequestEvent WindowClosing;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiRequestEvent"/></seealsos></Document>

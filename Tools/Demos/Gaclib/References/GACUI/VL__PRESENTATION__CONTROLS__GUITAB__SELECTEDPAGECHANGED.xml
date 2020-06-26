@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiTab::SelectedPageChanged" accessor="public" category="Variable" name="SelectedPageChanged"><summary>Selected page changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectedPageChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

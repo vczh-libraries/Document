@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::IGuiAltActionContainer::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this service.</summary><signature><![CDATA[static wchar_t const * const Identifier;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::IGuiAltActionContainer" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltActionContainer"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::lostFocus" accessor="public" category="Variable" name="lostFocus"><summary>Lost focus event.</summary><signature><![CDATA[GuiNotifyEvent lostFocus;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiLabel" accessor="" category="Class" name="GuiLabel"><summary>A control to display a text.</summary><signature><![CDATA[class GuiLabel;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiLabel" declFile="GuiLabelControls.h" declId="NI$vl::presentation::controls::GuiLabel"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></basetypes></Document>

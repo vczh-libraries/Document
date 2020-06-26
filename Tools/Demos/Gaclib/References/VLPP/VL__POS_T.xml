@@ -1,2 +1,2 @@
 <Document symbolId="vl::pos_t" accessor="" category="TypeAlias" name="pos_t"><summary>Signed interger representing position.</summary><signature><![CDATA[using pos_t = vint64_t;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint64_t" declFile="Basic.h" declId="NI$vl::vint64_t"/></seealsos></Document>

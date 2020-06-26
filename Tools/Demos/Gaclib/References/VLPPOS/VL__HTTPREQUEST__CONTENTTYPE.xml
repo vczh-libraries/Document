@@ -1,2 +1,2 @@
 <Document symbolId="vl::HttpRequest::contentType" accessor="public" category="Variable" name="contentType"><summary>Content type, like &quot;text/xml&quot;.</summary><signature><![CDATA[WString contentType;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

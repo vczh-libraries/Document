@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControl::SetControlThemeName@void(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="SetControlThemeName"><summary>Set the associated control theme name.</summary><param name="value">The theme name.</param><signature><![CDATA[void SetControlThemeName(
     theme::ThemeName value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>

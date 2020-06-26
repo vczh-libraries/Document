@@ -1,2 +1,2 @@
 <Document symbolId="vl::vint" accessor="" category="TypeAlias" name="vint"><summary>Signed interface whose size is equal to sizeof(void*).</summary><signature><![CDATA[using vint = vint32_t;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint32_t" declFile="Basic.h" declId="NI$vl::vint32_t"/></seealsos></Document>

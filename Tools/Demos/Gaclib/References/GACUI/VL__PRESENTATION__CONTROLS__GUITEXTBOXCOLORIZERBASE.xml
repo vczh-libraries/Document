@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase" accessor="" category="Class" name="GuiTextBoxColorizerBase"><summary>The base class of text box colorizer.</summary><signature><![CDATA[class GuiTextBoxColorizerBase;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::presentation::controls::ICommonTextEditCallback" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback"/></basetypes></Document>

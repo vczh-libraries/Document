@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::ICallback" accessor="public" category="Class" name="ICallback"><summary>
  An callback interface. Member functions will be called when colors or fonts of a <symbol docId="vl::presentation::elements::GuiColorizedTextElement" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement"/> changed.
  </summary><signature><![CDATA[class ICallback;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiColorizedTextElement::ICallback" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ICallback"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

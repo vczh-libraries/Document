@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetImage@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetImage"><summary>Set the image for this command.</summary><param name="value">The image for this command.</param><signature><![CDATA[void SetImage(
     Ptr<GuiImageData> value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos></Document>

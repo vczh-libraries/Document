@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::GuiResponsiveViewComposition::GetViews@::vl::collections::ObservableListBase&lt;::vl::presentation::compositions::GuiResponsiveCompositionBase *&gt; &amp;()" accessor="public" category="Function" name="GetViews"><summary>Get all individual views to switch.</summary><returns>All individual views to switch.</returns><signature><![CDATA[collections::ObservableListBase<GuiResponsiveCompositionBase *> & GetViews(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypeDescriptorBuilder_Container.h" declId="NI$vl::collections::ObservableListBase"/><symbol docId="vl::presentation::compositions::GuiResponsiveCompositionBase" declFile="GuiGraphicsResponsiveComposition.h" declId="NI$vl::presentation::compositions::GuiResponsiveCompositionBase"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::parsing::ParsingTreeArray" accessor="" category="Class" name="ParsingTreeArray"><summary>Representing an array node in a abstract syntax tree.</summary><signature><![CDATA[class ParsingTreeArray;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::parsing::ParsingTreeArray" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeArray"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::parsing::ParsingTreeNode" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeNode"/></basetypes></Document>

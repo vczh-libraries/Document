@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::IGuiMenuService" accessor="" category="Class" name="IGuiMenuService"><summary>IGuiMenuService is a required service for menu item container.</summary><signature><![CDATA[class IGuiMenuService;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::IGuiMenuService" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::IGuiMenuService"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

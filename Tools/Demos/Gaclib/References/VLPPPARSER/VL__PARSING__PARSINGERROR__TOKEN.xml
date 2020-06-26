@@ -1,2 +1,2 @@
 <Document symbolId="vl::parsing::ParsingError::token" accessor="public" category="Variable" name="token"><summary>Token at which the error happens.</summary><signature><![CDATA[regex::RegexToken const * token;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::regex::RegexToken" declFile="Regex.h" declId="NI$vl::regex::RegexToken"/></seealsos></Document>

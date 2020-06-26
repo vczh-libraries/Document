@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex@::vl::vint(::vl::presentation::controls::GuiListControl::ItemStyle *)" accessor="public" category="Function" name="GetVisibleIndex"><summary>Get the item index for an visible item style controller. If an item is not visible, it returns -1.</summary><returns>The item index.</returns><param name="style">The item style controller.</param><signature><![CDATA[vint GetVisibleIndex(
     ItemStyle * style
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ItemStyle"/></seealsos></Document>

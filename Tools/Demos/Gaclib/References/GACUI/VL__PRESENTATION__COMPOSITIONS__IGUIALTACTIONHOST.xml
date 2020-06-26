@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::IGuiAltActionHost" accessor="" category="Class" name="IGuiAltActionHost"><summary>IGuiAltActionHost is an alt-combined shortcut key host. A host can also be entered or leaved, with multiple sub actions enabled or disabled.</summary><signature><![CDATA[class IGuiAltActionHost;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

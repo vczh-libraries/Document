@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiItemMouseEventArgs::itemIndex" accessor="public" category="Variable" name="itemIndex"><summary>Item index.</summary><signature><![CDATA[vint itemIndex;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

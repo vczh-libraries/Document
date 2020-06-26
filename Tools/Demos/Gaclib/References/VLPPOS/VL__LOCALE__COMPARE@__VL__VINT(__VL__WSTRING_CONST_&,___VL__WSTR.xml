@@ -3,4 +3,4 @@
     WString const & s2,
     Normalization normalization
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::Locale::Normalization" declFile="Locale.h" declId="NI$vl::Locale::Normalization"/></seealsos></Document>

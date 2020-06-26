@@ -2,4 +2,4 @@
  Get the cursor type if the cursor a system provided cursor.
  </summary><returns>The cursor type.</returns><signature><![CDATA[SystemCursorType GetSystemCursorType(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/></seealsos></Document>

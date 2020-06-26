@@ -1,2 +1,2 @@
 <Document symbolId="vl::stream::Utf16BEDecoder" accessor="" category="Class" name="Utf16BEDecoder"><summary>Decoder to transform big endian UTF-16 text to wchar_t.</summary><signature><![CDATA[class Utf16BEDecoder;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::stream::CharDecoder" declFile="CharFormat.h" declId="NI$vl::stream::CharDecoder"/></basetypes></Document>

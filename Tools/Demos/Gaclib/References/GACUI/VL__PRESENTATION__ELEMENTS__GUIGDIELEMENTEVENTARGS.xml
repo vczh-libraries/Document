@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::GuiGDIElementEventArgs" accessor="" category="Struct" name="GuiGDIElementEventArgs"><summary>GDI Rendering event arguments.</summary><signature><![CDATA[struct GuiGDIElementEventArgs;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></basetypes></Document>

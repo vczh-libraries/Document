@@ -4,4 +4,4 @@
     Alignment horizontal,
     Alignment vertical
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/></seealsos></Document>

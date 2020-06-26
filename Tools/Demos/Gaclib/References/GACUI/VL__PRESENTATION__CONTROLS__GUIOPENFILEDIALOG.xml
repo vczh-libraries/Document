@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiOpenFileDialog" accessor="" category="Class" name="GuiOpenFileDialog"><summary>Open file dialog.</summary><signature><![CDATA[class GuiOpenFileDialog;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiOpenFileDialog" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiOpenFileDialog"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiFileDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiFileDialogBase"/></basetypes></Document>

@@ -2,4 +2,4 @@
  Get the image that owns this frame.
  </summary><returns>The image that owns this frame.</returns><signature><![CDATA[INativeImage * GetImage(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/></seealsos></Document>

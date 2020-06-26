@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiToolstripCommand::Executed" accessor="public" category="Variable" name="Executed"><summary>Executed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent Executed;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

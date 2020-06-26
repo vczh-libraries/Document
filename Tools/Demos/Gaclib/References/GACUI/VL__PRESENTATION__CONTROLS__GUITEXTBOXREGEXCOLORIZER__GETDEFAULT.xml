@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::GetDefaultColor@::vl::presentation::elements::text::ColorEntry()" accessor="public" category="Function" name="GetDefaultColor"><summary>Get the default color.</summary><returns>The default color.</returns><signature><![CDATA[elements::text::ColorEntry GetDefaultColor(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::text::ColorEntry" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::ColorEntry"/></seealsos></Document>

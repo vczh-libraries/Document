@@ -3,4 +3,4 @@
  </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The listener to uninstall.</param><signature><![CDATA[bool UninstallListener(
     INativeWindowListener * listener
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindowListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener"/></seealsos></Document>

@@ -2,4 +2,4 @@
  Get the owner composition.
  </summary><returns>The owner composition.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetOwnerComposition(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/></seealsos></Document>

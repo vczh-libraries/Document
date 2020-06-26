@@ -2,4 +2,4 @@
     TextPos begin,
     TextPos end
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol docId="vl::presentation::DocumentStyleProperties" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties"/></seealsos></Document>

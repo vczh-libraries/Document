@@ -2,4 +2,4 @@
  Access the <symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/> that is used to create this graphics elements.
  </summary><returns>Returns the related factory.</returns><signature><![CDATA[IGuiGraphicsElementFactory * GetFactory(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/></seealsos></Document>

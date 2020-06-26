@@ -5,4 +5,4 @@
     typename VK /* optional */
 >
 class Dictionary;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/></seealsos><basetypes><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

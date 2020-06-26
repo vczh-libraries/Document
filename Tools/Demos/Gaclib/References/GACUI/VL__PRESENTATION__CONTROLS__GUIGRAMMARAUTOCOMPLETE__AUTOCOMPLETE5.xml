@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiGrammarAutoComplete::AutoCompleteData::candidateItems" accessor="public" category="Variable" name="candidateItems"><summary>Candidate items.</summary><signature><![CDATA[collections::List<ParsingCandidateItem> candidateItems;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol docId="vl::presentation::controls::ParsingCandidateItem" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingCandidateItem"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement" accessor="" category="Class" name="GuiDocumentElement"><summary>Defines a rich text document element for rendering complex styled document.</summary><signature><![CDATA[class GuiDocumentElement;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiDocumentElement" declFile="GuiGraphicsDocumentElement.h" declId="NI$vl::presentation::elements::GuiDocumentElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

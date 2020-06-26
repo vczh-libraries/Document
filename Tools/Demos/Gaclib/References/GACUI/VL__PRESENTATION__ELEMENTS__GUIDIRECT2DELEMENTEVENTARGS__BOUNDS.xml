@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs::bounds" accessor="public" category="Variable" name="bounds"><summary>The range for rendering.</summary><signature><![CDATA[Rect bounds;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>

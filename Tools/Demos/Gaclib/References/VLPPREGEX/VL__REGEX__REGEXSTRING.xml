@@ -1,2 +1,2 @@
 <Document symbolId="vl::regex::RegexString" accessor="" category="Class" name="RegexString"><summary>A type representing a fragment of the input string.</summary><signature><![CDATA[class RegexString;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

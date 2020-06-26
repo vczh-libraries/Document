@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::IGuiAltActionContainer" accessor="" category="Class" name="IGuiAltActionContainer"><summary>IGuiAltActionContainer enumerates multiple <symbol docId="vl::presentation::compositions::IGuiAltAction" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltAction"/>.</summary><signature><![CDATA[class IGuiAltActionContainer;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

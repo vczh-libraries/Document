@@ -3,4 +3,4 @@
  </summary><returns>The new text line.</returns><param name="index">.</param><signature><![CDATA[TextLine Split(
     vint index
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::presentation::elements::text::TextLine" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine"/></seealsos></Document>

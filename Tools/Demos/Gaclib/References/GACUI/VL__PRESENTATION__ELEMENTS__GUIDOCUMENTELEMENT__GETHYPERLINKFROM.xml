@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiDocumentElement::GetHyperlinkFromPoint@::vl::Ptr&lt;::vl::presentation::DocumentHyperlinkRun::Package&gt;(::vl::presentation::Point)" accessor="public" category="Function" name="GetHyperlinkFromPoint"><summary>Get hyperlink from point.</summary><returns>Corressponding hyperlink id. Returns -1 indicates that the point is not in a hyperlink.</returns><param name="point">The point to get the hyperlink id.</param><signature><![CDATA[Ptr<DocumentHyperlinkRun::Package> GetHyperlinkFromPoint(
     Point point
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentHyperlinkRun::Package"/></seealsos></Document>

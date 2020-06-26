@@ -1,2 +1,2 @@
 <Document symbolId="vl::stream::StreamReader" accessor="" category="Class" name="StreamReader"><summary>Text reader from a stream.</summary><signature><![CDATA[class StreamReader;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::stream::TextReader" declFile="Accessor.h" declId="NI$vl::stream::TextReader"/></basetypes></Document>

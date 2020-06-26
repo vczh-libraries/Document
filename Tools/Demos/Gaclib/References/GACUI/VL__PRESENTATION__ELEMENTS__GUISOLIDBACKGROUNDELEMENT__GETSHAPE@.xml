@@ -2,4 +2,4 @@
  Get the shape.
  </summary><returns>The shape.</returns><signature><![CDATA[ElementShape GetShape(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::ElementShape" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::ElementShape"/></seealsos></Document>

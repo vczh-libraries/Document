@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiListViewColumnHeader" accessor="" category="Class" name="GuiListViewColumnHeader"><summary>List view column header control for detailed view.</summary><signature><![CDATA[class GuiListViewColumnHeader;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiListViewColumnHeader" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::GuiListViewColumnHeader"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiMenuButton" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenuButton"/></basetypes></Document>

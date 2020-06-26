@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeController" accessor="" category="Class" name="INativeController"><summary>
  Global native system service controller. Use <symbol docId="vl::presentation::GetCurrentController@::vl::presentation::INativeController *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::GetCurrentController@::vl::presentation::INativeController *()[decl0]"/> to access this controller.
  </summary><signature><![CDATA[class INativeController;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeController" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeController"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

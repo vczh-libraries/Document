@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiRibbonTabPage::HighlightedChanged" accessor="public" category="Variable" name="HighlightedChanged"><summary>Highlighted changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent HighlightedChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

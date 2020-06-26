@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs::factoryDWrite" accessor="public" category="Variable" name="factoryDWrite"><summary>DirectWrite factory object.</summary><signature><![CDATA[IDWriteFactory * factoryDWrite;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="IDWriteFactory" declFile="dwrite.h" declId="NI$IDWriteFactory"/></seealsos></Document>

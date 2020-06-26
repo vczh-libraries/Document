@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiDatePicker::DateChanged" accessor="public" category="Variable" name="DateChanged"><summary>Date changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

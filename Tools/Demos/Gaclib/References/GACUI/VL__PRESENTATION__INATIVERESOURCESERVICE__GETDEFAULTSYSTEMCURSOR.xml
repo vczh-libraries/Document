@@ -2,4 +2,4 @@
  Get a cached cursor object using a default system cursor type;
  </summary><returns>The cached cursor object.</returns><signature><![CDATA[INativeCursor * GetDefaultSystemCursor(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos></Document>

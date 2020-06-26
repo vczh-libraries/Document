@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::GuiPolygonElement" accessor="" category="Class" name="GuiPolygonElement"><summary>
  Defines a polygon element with a thickness of one pixel.
  </summary><signature><![CDATA[class GuiPolygonElement;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiPolygonElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiPolygonElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

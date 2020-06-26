@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiComboBoxListControl::GetItemProvider@::vl::presentation::controls::GuiListControl::IItemProvider *()" accessor="public" category="Function" name="GetItemProvider"><summary>Get the item provider in the list control.</summary><returns>The item provider in the list control.</returns><signature><![CDATA[GuiListControl::IItemProvider * GetItemProvider(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/></seealsos></Document>

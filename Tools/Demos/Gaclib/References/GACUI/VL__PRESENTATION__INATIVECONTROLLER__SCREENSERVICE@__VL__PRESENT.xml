@@ -2,4 +2,4 @@
  Get the screen information service.
  </summary><returns>The screen information service</returns><signature><![CDATA[INativeScreenService * ScreenService(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeScreenService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreenService"/></seealsos></Document>

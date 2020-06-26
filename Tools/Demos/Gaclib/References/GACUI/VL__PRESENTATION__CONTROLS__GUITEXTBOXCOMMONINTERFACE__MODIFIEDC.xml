@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::ModifiedChanged" accessor="public" category="Variable" name="ModifiedChanged"><summary>Modified status changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ModifiedChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

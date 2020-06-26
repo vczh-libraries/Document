@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiRibbonButtons::GetButtons@::vl::collections::ObservableListBase&lt;::vl::presentation::controls::GuiControl *&gt; &amp;()" accessor="public" category="Function" name="GetButtons"><summary>Get the collection of buttons. <symbol docId="vl::presentation::controls::GuiToolstripButton" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripButton"/> is expected.</summary><returns>The collection of buttons.</returns><signature><![CDATA[collections::ObservableListBase<GuiControl *> & GetButtons(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypeDescriptorBuilder_Container.h" declId="NI$vl::collections::ObservableListBase"/><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos></Document>

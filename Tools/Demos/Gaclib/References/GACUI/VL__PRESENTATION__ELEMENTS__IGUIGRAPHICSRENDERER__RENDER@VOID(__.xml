@@ -3,4 +3,4 @@
  </summary><param name="bounds">Bounds to decide the size and position of the binded graphics element.</param><signature><![CDATA[void Render(
     Rect bounds
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>

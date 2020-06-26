@@ -4,4 +4,4 @@
     WString const & elementTypeName,
     IGuiGraphicsRendererFactory * factory
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::presentation::elements::IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"/></seealsos></Document>

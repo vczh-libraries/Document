@@ -1,4 +1,4 @@
 <Document symbolId="vl::Locale::GetShortMonthName@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetShortMonthName"><summary>Get the short display string of a month.</summary><returns>The display string.</returns><param name="month">Month, begins from 1 as January.</param><signature><![CDATA[WString GetShortMonthName(
     vint month
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

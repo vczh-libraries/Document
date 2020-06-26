@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiRibbonTab::GetAfterHeaders@::vl::presentation::compositions::GuiGraphicsComposition *()" accessor="public" category="Function" name="GetAfterHeaders"><summary>Get the composition representing the space after tabs.</summary><returns>The composition representing the space after tabs.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetAfterHeaders(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/></seealsos></Document>

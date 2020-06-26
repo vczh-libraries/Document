@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiGrammarAutoComplete::AutoCompleteContext" accessor="public" category="Struct" name="AutoCompleteContext"><summary>The analysed data from an input code.</summary><signature><![CDATA[struct AutoCompleteContext;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::presentation::controls::RepeatingPartialParsingOutput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingPartialParsingOutput"/></basetypes></Document>

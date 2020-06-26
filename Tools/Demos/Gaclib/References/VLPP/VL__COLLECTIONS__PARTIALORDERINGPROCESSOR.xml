@@ -7,4 +7,4 @@
  If a depends on b, then the component containing a appears after the component containing b.
  Node could represent a sub class if InitWithSubClass is called.
  </summary><signature><![CDATA[class PartialOrderingProcessor;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

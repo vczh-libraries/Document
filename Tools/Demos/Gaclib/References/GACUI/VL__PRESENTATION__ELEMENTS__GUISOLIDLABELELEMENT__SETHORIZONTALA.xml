@@ -3,4 +3,4 @@
  </summary><param name="value">The new horizontal alignment of the text.</param><signature><![CDATA[void SetHorizontalAlignment(
     Alignment value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/></seealsos></Document>

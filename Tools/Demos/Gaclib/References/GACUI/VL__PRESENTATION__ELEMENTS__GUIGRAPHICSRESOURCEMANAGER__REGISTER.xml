@@ -3,4 +3,4 @@
  </summary><param name="factory">The instance of the graphics element factory to register.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool RegisterElementFactory(
     IGuiGraphicsElementFactory * factory
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/></seealsos></Document>

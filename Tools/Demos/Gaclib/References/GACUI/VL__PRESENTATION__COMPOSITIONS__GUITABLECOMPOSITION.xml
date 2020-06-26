@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiTableComposition" accessor="" category="Class" name="GuiTableComposition"><summary>
  Represents a table composition.
  </summary><signature><![CDATA[class GuiTableComposition;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiTableComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableComposition"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></basetypes></Document>

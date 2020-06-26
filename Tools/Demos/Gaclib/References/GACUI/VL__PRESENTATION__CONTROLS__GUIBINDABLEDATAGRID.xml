@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiBindableDataGrid" accessor="" category="Class" name="GuiBindableDataGrid"><summary>A bindable Data grid control.</summary><signature><![CDATA[class GuiBindableDataGrid;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiBindableDataGrid" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::GuiBindableDataGrid"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiVirtualDataGrid" declFile="GuiDataGridControls.h" declId="NI$vl::presentation::controls::GuiVirtualDataGrid"/></basetypes></Document>

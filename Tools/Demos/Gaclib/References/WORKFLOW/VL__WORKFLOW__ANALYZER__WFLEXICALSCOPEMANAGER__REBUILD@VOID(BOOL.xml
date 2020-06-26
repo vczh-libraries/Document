@@ -2,4 +2,4 @@
     bool keepTypeDescriptorNames,
     IWfCompilerCallback * callback /* optional */
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="WfAnalyzer.h" declId="NI$vl::workflow::IWfCompilerCallback"/></seealsos></Document>

@@ -3,4 +3,4 @@
     CaretRelativePosition position,
     bool & preferFrontSide
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::presentation::elements::IGuiGraphicsParagraph::CaretRelativePosition" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::CaretRelativePosition"/></seealsos></Document>

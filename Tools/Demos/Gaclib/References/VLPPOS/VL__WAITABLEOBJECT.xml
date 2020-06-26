@@ -1,2 +1,2 @@
 <Document symbolId="vl::WaitableObject" accessor="" category="Class" name="WaitableObject"><summary>Base type of all synchronization objects.</summary><signature><![CDATA[class WaitableObject;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/></basetypes></Document>

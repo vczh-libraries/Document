@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiBindableTreeView::SetItemSource@void(::vl::reflection::description::Value)" accessor="public" category="Function" name="SetItemSource"><summary>Set the item source.</summary><param name="_itemSource">The item source. Null is acceptable if you want to clear all data.</param><signature><![CDATA[void SetItemSource(
     description::Value _itemSource
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

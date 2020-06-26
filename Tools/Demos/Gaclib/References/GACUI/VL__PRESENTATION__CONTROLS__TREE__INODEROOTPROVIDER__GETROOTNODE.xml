@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::tree::INodeRootProvider::GetRootNode@::vl::Ptr&lt;::vl::presentation::controls::tree::INodeProvider&gt;()" accessor="public" category="Function" name="GetRootNode"><summary>Get the instance of the root node.</summary><returns>Returns the instance of the root node.</returns><signature><![CDATA[Ptr<INodeProvider> GetRootNode(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/></seealsos></Document>

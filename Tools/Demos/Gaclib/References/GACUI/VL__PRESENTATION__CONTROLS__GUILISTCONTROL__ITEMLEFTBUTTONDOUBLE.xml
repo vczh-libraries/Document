@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::ItemLeftButtonDoubleClick" accessor="public" category="Variable" name="ItemLeftButtonDoubleClick"><summary>Item left mouse button double click event.</summary><signature><![CDATA[compositions::GuiItemMouseEvent ItemLeftButtonDoubleClick;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemMouseEvent"/></seealsos></Document>

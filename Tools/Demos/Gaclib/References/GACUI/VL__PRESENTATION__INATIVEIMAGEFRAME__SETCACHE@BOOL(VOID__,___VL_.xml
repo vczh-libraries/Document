@@ -4,4 +4,4 @@
     void * key,
     Ptr<INativeImageFrameCache> cache
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::INativeImageFrameCache" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrameCache"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::rightButtonUp" accessor="public" category="Variable" name="rightButtonUp"><summary>Right mouse button up event.</summary><signature><![CDATA[GuiMouseEvent rightButtonUp;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEvent"/></seealsos></Document>

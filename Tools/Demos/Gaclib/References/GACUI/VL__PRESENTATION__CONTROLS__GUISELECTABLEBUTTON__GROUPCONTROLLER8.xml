@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiSelectableButton::GroupControllerChanged" accessor="public" category="Variable" name="GroupControllerChanged"><summary>Group controller changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent GroupControllerChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

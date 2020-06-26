@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::INativeImageService" accessor="" category="Class" name="INativeImageService"><summary>
  Image service. To access this service, use <symbol docId="vl::presentation::INativeController::ImageService@::vl::presentation::INativeImageService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::ImageService@::vl::presentation::INativeImageService *()[decl0]"/>.
  </summary><signature><![CDATA[class INativeImageService;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeImageService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageService"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

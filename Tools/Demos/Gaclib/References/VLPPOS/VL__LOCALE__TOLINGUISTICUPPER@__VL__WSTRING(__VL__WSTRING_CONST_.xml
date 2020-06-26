@@ -1,4 +1,4 @@
 <Document symbolId="vl::Locale::ToLinguisticUpper@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToLinguisticUpper"><summary>Convert characters to the upper case using the linguistic rule.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param><signature><![CDATA[WString ToLinguisticUpper(
     WString const & str
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

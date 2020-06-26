@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct::oldEnd" accessor="public" category="Variable" name="oldEnd"><summary>The end position of the selection before caret changing.</summary><signature><![CDATA[TextPos oldEnd;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

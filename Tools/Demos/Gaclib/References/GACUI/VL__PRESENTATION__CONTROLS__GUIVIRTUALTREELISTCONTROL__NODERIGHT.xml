@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeRightButtonDoubleClick" accessor="public" category="Variable" name="NodeRightButtonDoubleClick"><summary>Node right mouse button double click event.</summary><signature><![CDATA[compositions::GuiNodeMouseEvent NodeRightButtonDoubleClick;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeMouseEvent"/></seealsos></Document>

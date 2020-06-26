@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::list::ListViewItem::GetSubItems@::vl::presentation::controls::list::ListViewSubItems &amp;()" accessor="public" category="Function" name="GetSubItems"><summary>Get all sub items of this item.</summary><returns>All sub items of this item.</returns><signature><![CDATA[ListViewSubItems & GetSubItems(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewSubItems"/></seealsos></Document>

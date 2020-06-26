@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::SetClientSize@void(::vl::presentation::Size)" accessor="public" category="Function" name="SetClientSize"><summary>Set the client size of the window.</summary><param name="value">The client size of the window.</param><signature><![CDATA[void SetClientSize(
     Size value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

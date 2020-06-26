@@ -1,2 +1,2 @@
 <Document symbolId="vl::parsing::ParsingError::codeRange" accessor="public" category="Variable" name="codeRange"><summary>Range where the error happens.</summary><signature><![CDATA[ParsingTextRange codeRange;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::parsing::ParsingTextRange" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextRange"/></seealsos></Document>

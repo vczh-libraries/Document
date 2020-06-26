@@ -1,4 +1,4 @@
 <Document symbolId="vl::i64toa@::vl::AString(::vl::vint64_t)" accessor="" category="Function" name="i64toa"><summary>Convert a 64-bits signed interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[AString i64toa(
     vint64_t number
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint64_t" declFile="Basic.h" declId="NI$vl::vint64_t"/><symbol docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/></seealsos></Document>

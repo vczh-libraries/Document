@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GetApplication@::vl::presentation::controls::GuiApplication *()" accessor="" category="Function" name="GetApplication"><summary>Get the global <symbol docId="vl::presentation::controls::GuiApplication" declFile="GuiApplication.h" declId="NI$vl::presentation::controls::GuiApplication"/> object.</summary><returns>The global <symbol docId="vl::presentation::controls::GuiApplication" declFile="GuiApplication.h" declId="NI$vl::presentation::controls::GuiApplication"/> object.</returns><signature><![CDATA[GuiApplication * GetApplication(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiApplication" declFile="GuiApplication.h" declId="NI$vl::presentation::controls::GuiApplication"/></seealsos></Document>

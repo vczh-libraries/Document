@@ -3,4 +3,4 @@
  </summary><returns>The name of a key.</returns><param name="code">The key code.</param><signature><![CDATA[WString GetKeyName(
     VKEY code
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>

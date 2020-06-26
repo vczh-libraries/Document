@@ -1,2 +1,2 @@
 <Document symbolId="vl::stream::Utf8Encoder" accessor="" category="Class" name="Utf8Encoder"><summary>Encoder to transform UTF-8 text from wchar_t.</summary><signature><![CDATA[class Utf8Encoder;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::stream::CharEncoder" declFile="CharFormat.h" declId="NI$vl::stream::CharEncoder"/></basetypes></Document>

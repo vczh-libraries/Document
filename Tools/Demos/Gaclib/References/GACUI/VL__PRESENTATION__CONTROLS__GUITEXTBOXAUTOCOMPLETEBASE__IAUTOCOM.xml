@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::IAutoCompleteControlProvider" accessor="public" category="Class" name="IAutoCompleteControlProvider"><summary>Auto complete control provider.</summary><signature><![CDATA[class IAutoCompleteControlProvider;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::list::ListViewColumns" accessor="" category="Class" name="ListViewColumns"><summary>List view column container.</summary><signature><![CDATA[class ListViewColumns;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::list::ListViewColumn" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewColumn"/></seealsos><basetypes><symbol declFile="GuiTypeDescriptorBuilder_Container.h" declId="NI$vl::collections::ObservableListBase"/></basetypes></Document>

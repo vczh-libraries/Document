@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentTextRun" accessor="" category="Class" name="DocumentTextRun"><summary>Pepresents a text run.</summary><signature><![CDATA[class DocumentTextRun;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::DocumentTextRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentTextRun"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::DocumentContentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentContentRun"/></basetypes></Document>

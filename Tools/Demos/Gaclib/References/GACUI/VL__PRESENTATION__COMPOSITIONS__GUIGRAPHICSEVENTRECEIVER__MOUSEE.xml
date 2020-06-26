@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::mouseEnter" accessor="public" category="Variable" name="mouseEnter"><summary>Mouse enter event.</summary><signature><![CDATA[GuiNotifyEvent mouseEnter;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

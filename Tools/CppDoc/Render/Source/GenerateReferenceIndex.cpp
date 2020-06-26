@@ -758,12 +758,16 @@ void ValidateAndFixDocumentRecord(
 			auto xmlSeeAlsos = MakePtr<XmlElement>();
 			xmlSeeAlsos->name.value = L"seealsos";
 			CopyFrom(xmlSeeAlsos->subNodes, From(seeAlsos).Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); }));
+
+			xmlDocument->rootElement->subNodes.Add(xmlSeeAlsos);
 		}
 		if (baseTypes.Count() > 0)
 		{
-			auto xmlSeeAlsos = MakePtr<XmlElement>();
-			xmlSeeAlsos->name.value = L"basetypes";
-			CopyFrom(xmlSeeAlsos->subNodes, From(baseTypes).Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); }));
+			auto xmlBaseTypes = MakePtr<XmlElement>();
+			xmlBaseTypes->name.value = L"basetypes";
+			CopyFrom(xmlBaseTypes->subNodes, From(baseTypes).Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); }));
+
+			xmlDocument->rootElement->subNodes.Add(xmlBaseTypes);
 		}
 
 		XmlPrint(xmlDocument, writer);

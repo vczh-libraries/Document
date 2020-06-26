@@ -1,4 +1,4 @@
 <Document symbolId="vl::Locale::GetShortTimeFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetShortTimeFormats"><summary>Get all short time formats for the locale.</summary><param name="formats">The formats.</param><signature><![CDATA[void GetShortTimeFormats(
     collections::List<WString> & formats
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/></seealsos></Document>

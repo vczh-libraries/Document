@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiGrammarColorizer::SemanticColorizeContext::semanticId" accessor="public" category="Variable" name="semanticId"><summary>Output semantic id that comes from one the argument in the @Semantic attribute.</summary><signature><![CDATA[vint semanticId;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

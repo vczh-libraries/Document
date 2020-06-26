@@ -2,4 +2,4 @@
  Get the title of the window. A title will be displayed as a name of this window.
  </summary><returns>The title of the window.</returns><signature><![CDATA[WString GetTitle(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

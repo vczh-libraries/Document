@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::SetShortcutKeyManager@void(::vl::presentation::compositions::IGuiShortcutKeyManager *)" accessor="public" category="Function" name="SetShortcutKeyManager"><summary>Attach or detach the <symbol docId="vl::presentation::compositions::IGuiShortcutKeyManager" declFile="GuiGraphicsHost_ShortcutKey.h" declId="NI$vl::presentation::compositions::IGuiShortcutKeyManager"/> associated with this control host. When this control host is disposing, the associated shortcut key manager will be deleted if exists.</summary><param name="value">The shortcut key manager. Set to null to detach the previous shortcut key manager from this control host.</param><signature><![CDATA[void SetShortcutKeyManager(
     compositions::IGuiShortcutKeyManager * value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::IGuiShortcutKeyManager" declFile="GuiGraphicsHost_ShortcutKey.h" declId="NI$vl::presentation::compositions::IGuiShortcutKeyManager"/></seealsos></Document>

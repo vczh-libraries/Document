@@ -6,4 +6,4 @@
     vint & lexerState,
     vint & contextState
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vuint32_t" declFile="Basic.h" declId="NI$vl::vuint32_t"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

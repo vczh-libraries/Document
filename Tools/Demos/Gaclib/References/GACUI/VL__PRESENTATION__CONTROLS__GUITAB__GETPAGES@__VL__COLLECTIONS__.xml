@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiTab::GetPages@::vl::collections::ObservableList&lt;::vl::presentation::controls::GuiTabPage *&gt; &amp;()" accessor="public" category="Function" name="GetPages"><summary>Get all pages.</summary><returns>All pages.</returns><signature><![CDATA[collections::ObservableList<GuiTabPage *> & GetPages(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypeDescriptorBuilder_Container.h" declId="NI$vl::collections::ObservableList"/><symbol docId="vl::presentation::controls::GuiTabPage" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiTabPage"/></seealsos></Document>

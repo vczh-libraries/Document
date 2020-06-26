@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiControl::TextChanged" accessor="public" category="Variable" name="TextChanged"><summary>Text changed event. This event will be raised when the text of the control is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent TextChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

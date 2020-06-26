@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::AddDocumentItem@bool(::vl::Ptr&lt;::vl::presentation::controls::GuiDocumentItem&gt;)" accessor="public" category="Function" name="AddDocumentItem"><summary>Add a document item. The name of the document item will display in the position of the &lt;object&gt; element with the same name in the document.</summary><param name="value">The document item.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool AddDocumentItem(
     Ptr<GuiDocumentItem> value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::GuiDocumentItem" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentItem"/></seealsos></Document>

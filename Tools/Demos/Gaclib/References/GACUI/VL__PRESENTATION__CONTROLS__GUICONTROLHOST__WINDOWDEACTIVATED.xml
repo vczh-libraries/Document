@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::WindowDeactivated" accessor="public" category="Variable" name="WindowDeactivated"><summary>Window deactivated event.</summary><signature><![CDATA[compositions::GuiNotifyEvent WindowDeactivated;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

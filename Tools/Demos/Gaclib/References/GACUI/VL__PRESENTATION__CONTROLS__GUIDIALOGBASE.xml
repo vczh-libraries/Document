@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiDialogBase" accessor="" category="Class" name="GuiDialogBase"><summary>Base class for dialogs.</summary><signature><![CDATA[class GuiDialogBase;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiDialogBase"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiComponent" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::GuiComponent"/></basetypes></Document>

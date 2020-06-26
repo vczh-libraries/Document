@@ -4,4 +4,4 @@
     vint ms,
     bool * abandoned
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/></seealsos></Document>

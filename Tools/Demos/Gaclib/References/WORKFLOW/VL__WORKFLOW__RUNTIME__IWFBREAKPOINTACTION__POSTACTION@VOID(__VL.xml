@@ -1,4 +1,4 @@
 <Document symbolId="vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)" accessor="public" category="Function" name="PostAction"><summary>Called when a break point is about to activate, even <symbol docId="vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)[decl0]"/> returns false.</summary><param name="debugger">The current attached debugger.</param><signature><![CDATA[void PostAction(
     WfDebugger * debugger
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::workflow::runtime::WfDebugger" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::WfDebugger"/></seealsos></Document>

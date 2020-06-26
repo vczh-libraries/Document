@@ -1,2 +1,2 @@
 <Document symbolId="vl::stream::StringReader" accessor="" category="Class" name="StringReader"><summary>Text reader from a string.</summary><signature><![CDATA[class StringReader;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::stream::TextReader" declFile="Accessor.h" declId="NI$vl::stream::TextReader"/></basetypes></Document>

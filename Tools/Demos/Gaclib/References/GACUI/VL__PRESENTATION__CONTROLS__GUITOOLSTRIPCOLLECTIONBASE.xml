@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiToolstripCollectionBase" accessor="" category="Class" name="GuiToolstripCollectionBase"><summary>Toolstrip item collection.</summary><signature><![CDATA[class GuiToolstripCollectionBase;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos><basetypes><symbol declFile="GuiTypeDescriptorBuilder_Container.h" declId="NI$vl::collections::ObservableListBase"/></basetypes></Document>

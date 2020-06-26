@@ -1,2 +1,2 @@
 <Document symbolId="vl::stream::StreamWriter" accessor="" category="Class" name="StreamWriter"><summary>Text writer to a stream.</summary><signature><![CDATA[class StreamWriter;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::stream::TextWriter" declFile="Accessor.h" declId="NI$vl::stream::TextWriter"/></basetypes></Document>

@@ -4,4 +4,4 @@
 vl::function_lambda::FunctionObjectRetriveType<F>::ResultType SelectMany(
     F f
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::ResultType"/><symbol declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::ResultType"/></seealsos></Document>

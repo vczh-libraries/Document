@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::originalText" accessor="public" category="Variable" name="originalText"><summary>The text of the selection before replacing.</summary><signature><![CDATA[WString originalText;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

@@ -2,4 +2,4 @@
     WString const & name,
     ColorEntry const & entry
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol declFile="GuiLanguageColorizer.h" declId="NI$vl::presentation::controls::GuiGrammarColorizer::ColorEntry"/></seealsos></Document>

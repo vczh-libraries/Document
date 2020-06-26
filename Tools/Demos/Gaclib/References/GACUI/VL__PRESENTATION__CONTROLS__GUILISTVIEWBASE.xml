@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiListViewBase" accessor="" category="Class" name="GuiListViewBase"><summary>List view base control. All list view controls inherit from this class.</summary><signature><![CDATA[class GuiListViewBase;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiListViewBase" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::GuiListViewBase"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiSelectableListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiSelectableListControl"/></basetypes></Document>

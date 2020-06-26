@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiSelectableButton::AutoSelectionChanged" accessor="public" category="Variable" name="AutoSelectionChanged"><summary>Auto selection changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent AutoSelectionChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

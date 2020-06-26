@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::ArrayBase::operator []@[T] const &amp;(::vl::vint)" accessor="public" category="Function" name="operator []"><summary>Get the reference to the specified element.</summary><returns>The reference to the specified element.</returns><param name="index">The index of the element.</param><signature><![CDATA[T const & operator [](
     vint index
 ) const;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

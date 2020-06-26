@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentHyperlinkRun::reference" accessor="public" category="Variable" name="reference"><summary>The reference of the hyperlink.</summary><signature><![CDATA[WString reference;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

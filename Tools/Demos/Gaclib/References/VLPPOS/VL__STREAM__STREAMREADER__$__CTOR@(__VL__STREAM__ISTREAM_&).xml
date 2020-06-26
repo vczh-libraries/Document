@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::StreamReader::$__ctor@(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a text reader.</summary><param name="_stream">The stream to read.</param><signature><![CDATA[ StreamReader(
     IStream & _stream
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>

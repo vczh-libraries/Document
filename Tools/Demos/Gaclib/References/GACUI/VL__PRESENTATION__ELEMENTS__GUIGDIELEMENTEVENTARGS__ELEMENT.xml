@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::elements::GuiGDIElementEventArgs::element" accessor="public" category="Variable" name="element"><summary>The element that raised this event.</summary><signature><![CDATA[GuiGDIElement * element;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiGDIElement" declFile="GuiGraphicsWindowsGDI.h" declId="NI$vl::presentation::elements::GuiGDIElement"/></seealsos></Document>

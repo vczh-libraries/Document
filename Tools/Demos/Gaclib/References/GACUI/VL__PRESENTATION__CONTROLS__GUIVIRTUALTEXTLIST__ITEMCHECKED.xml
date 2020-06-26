@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiVirtualTextList::ItemChecked" accessor="public" category="Variable" name="ItemChecked"><summary>Item checked changed event.</summary><signature><![CDATA[compositions::GuiItemNotifyEvent ItemChecked;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemNotifyEvent"/></seealsos></Document>

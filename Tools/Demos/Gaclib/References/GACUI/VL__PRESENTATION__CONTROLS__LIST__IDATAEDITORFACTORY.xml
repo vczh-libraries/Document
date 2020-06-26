@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::list::IDataEditorFactory" accessor="" category="Class" name="IDataEditorFactory"><summary>The editor factory.</summary><signature><![CDATA[class IDataEditorFactory;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::list::IDataEditorFactory" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataEditorFactory"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

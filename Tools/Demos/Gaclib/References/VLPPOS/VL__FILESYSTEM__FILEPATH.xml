@@ -1,2 +1,2 @@
 <Document symbolId="vl::filesystem::FilePath" accessor="" category="Class" name="FilePath"><summary>A type representing a file path.</summary><signature><![CDATA[class FilePath;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::atoi64@::vl::vint64_t(::vl::AString const &amp;)" accessor="" category="Function" name="atoi64"><summary>Convert a string to an signed 64-bits integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><signature><![CDATA[vint64_t atoi64(
     AString const & string
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint64_t" declFile="Basic.h" declId="NI$vl::vint64_t"/><symbol docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/></seealsos></Document>

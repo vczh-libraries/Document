@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem::text" accessor="public" category="Variable" name="text"><summary>Display text for the item.</summary><signature><![CDATA[WString text;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

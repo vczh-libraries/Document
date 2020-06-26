@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetAssociatedHitTestResult@void(::vl::presentation::INativeWindowListener::HitTestResult)" accessor="public" category="Function" name="SetAssociatedHitTestResult"><summary>Set the associated hit test result.</summary><param name="value">The associated hit test result.</param><signature><![CDATA[void SetAssociatedHitTestResult(
     INativeWindowListener::HitTestResult value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindowListener::HitTestResult" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener::HitTestResult"/></seealsos></Document>

@@ -3,4 +3,4 @@
  </summary><param name="position">The mouse position in the screen space.</param><signature><![CDATA[void LeftButtonDown(
     NativePoint position
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>

@@ -4,4 +4,4 @@
     Ptr<GuiResourcePathResolver> resolver,
     GuiResourceError::List & errors
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlDocument"/><symbol docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/><symbol docId="vl::presentation::GuiResourcePathResolver" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePathResolver"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/></seealsos></Document>

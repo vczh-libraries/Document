@@ -1,2 +1,2 @@
 <Document symbolId="vl::filesystem::Folder" accessor="" category="Class" name="Folder"><summary>Representing a folder reference.</summary><signature><![CDATA[class Folder;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

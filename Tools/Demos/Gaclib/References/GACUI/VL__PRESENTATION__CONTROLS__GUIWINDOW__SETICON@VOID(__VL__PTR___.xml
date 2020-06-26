@@ -3,4 +3,4 @@
  </summary><param name="value">The icon that replaces the default one.</param><signature><![CDATA[void SetIcon(
     Ptr<GuiImageData> value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos></Document>

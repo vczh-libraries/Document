@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ParsingTokenContext::foundToken" accessor="public" category="Variable" name="foundToken"><summary>Token syntax tree for the selected token.</summary><signature><![CDATA[parsing::ParsingTreeToken * foundToken;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::parsing::ParsingTreeToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeToken"/></seealsos></Document>

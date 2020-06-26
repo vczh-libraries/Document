@@ -3,4 +3,4 @@
  </summary><returns>The cached cursor object.</returns><param name="type">The predefined system cursor type.</param><signature><![CDATA[INativeCursor * GetSystemCursor(
     INativeCursor::SystemCursorType type
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/><symbol docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/></seealsos></Document>

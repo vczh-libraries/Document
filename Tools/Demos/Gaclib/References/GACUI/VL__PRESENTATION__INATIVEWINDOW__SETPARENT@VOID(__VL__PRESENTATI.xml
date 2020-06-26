@@ -3,4 +3,4 @@
  </summary><param name="parent">The parent window.</param><signature><![CDATA[void SetParent(
     INativeWindow * parent
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::elements::text::ColorItem::background" accessor="public" category="Variable" name="background"><summary>
  Background color.
  </summary><signature><![CDATA[Color background;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

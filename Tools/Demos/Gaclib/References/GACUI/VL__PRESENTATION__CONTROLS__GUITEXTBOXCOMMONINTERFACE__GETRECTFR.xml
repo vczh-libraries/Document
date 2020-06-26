@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRectFromTextPos@::vl::presentation::Rect(::vl::presentation::TextPos)" accessor="public" category="Function" name="GetRectFromTextPos"><summary>Get the display bounds of a character from a specified text position.</summary><returns>Get the display bounds of a character.</returns><param name="pos">The specified text position.</param><signature><![CDATA[Rect GetRectFromTextPos(
     TextPos pos
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>

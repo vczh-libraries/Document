@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::tree::TreeViewItem::tag" accessor="public" category="Variable" name="tag"><summary>Tag object.</summary><signature><![CDATA[description::Value tag;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

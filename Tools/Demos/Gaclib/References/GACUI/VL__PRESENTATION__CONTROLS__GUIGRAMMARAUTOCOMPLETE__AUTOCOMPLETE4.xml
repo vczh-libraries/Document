@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiGrammarAutoComplete::AutoCompleteData" accessor="public" category="Struct" name="AutoCompleteData"><summary>The auto complete list data.</summary><signature><![CDATA[struct AutoCompleteData;
-]]></signature></Document>
+]]></signature><basetypes><symbol docId="vl::presentation::controls::ParsingTokenContext" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingTokenContext"/></basetypes></Document>

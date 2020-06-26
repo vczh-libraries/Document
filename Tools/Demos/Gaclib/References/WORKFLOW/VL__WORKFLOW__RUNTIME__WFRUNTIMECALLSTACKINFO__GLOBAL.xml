@@ -1,2 +1,2 @@
 <Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::global" accessor="public" category="Variable" name="global"><summary>Global variable values.</summary><signature><![CDATA[Ptr<WfRuntimeVariableContext> global;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeVariableContext"/></seealsos></Document>

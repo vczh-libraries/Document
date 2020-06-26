@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::list::IDataVisualizer::GetTemplate@::vl::presentation::templates::GuiGridVisualizerTemplate *()" accessor="public" category="Function" name="GetTemplate"><summary>Get the template that renders the data. The data visualizer should maintain this template, and delete it when necessary.</summary><returns>The template.</returns><signature><![CDATA[templates::GuiGridVisualizerTemplate * GetTemplate(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiControlTemplates.h" declId="NI$vl::presentation::templates::GuiGridVisualizerTemplate"/></seealsos></Document>

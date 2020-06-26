@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiToolstripGroup" accessor="" category="Class" name="GuiToolstripGroup"><summary>A toolstrip item, which is also a toolstrip item container.</summary><signature><![CDATA[class GuiToolstripGroup;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiToolstripGroup" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripGroup"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripNestedContainer"/></basetypes></Document>

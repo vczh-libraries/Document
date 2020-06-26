@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::systemKeyDown" accessor="public" category="Variable" name="systemKeyDown"><summary>System key down event.</summary><signature><![CDATA[GuiKeyEvent systemKeyDown;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiKeyEvent"/></seealsos></Document>

@@ -2,4 +2,4 @@
  Get the binded callback object.
  </summary><returns>The binded callback object.</returns><signature><![CDATA[ICallback * GetCallback(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiColorizedTextElement::ICallback" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ICallback"/></seealsos></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::atoi@::vl::vint(::vl::AString const &amp;)" accessor="" category="Function" name="atoi"><summary>Convert a string to an signed integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><signature><![CDATA[vint atoi(
     AString const & string
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/></seealsos></Document>

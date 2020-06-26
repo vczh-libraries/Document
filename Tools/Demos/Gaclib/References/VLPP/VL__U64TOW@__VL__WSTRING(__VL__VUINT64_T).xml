@@ -1,4 +1,4 @@
 <Document symbolId="vl::u64tow@::vl::WString(::vl::vuint64_t)" accessor="" category="Function" name="u64tow"><summary>Convert a 64-bits unsigned interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString u64tow(
     vuint64_t number
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

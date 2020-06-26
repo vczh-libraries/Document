@@ -1,4 +1,4 @@
 <Document symbolId="vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;([T] const &amp;)" accessor="public" category="Function" name="operator ="><summary>Box a value.</summary><returns>The boxed value.</returns><param name="_object">The value to box.</param><signature><![CDATA[ObjectBox<T> & operator =(
     T const & _object
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::ObjectBox" declFile="Basic.h" declId="NI$vl::ObjectBox"/></seealsos></Document>

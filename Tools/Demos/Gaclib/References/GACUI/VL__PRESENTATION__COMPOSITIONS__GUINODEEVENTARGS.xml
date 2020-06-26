@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiNodeEventArgs" accessor="" category="Struct" name="GuiNodeEventArgs"><summary>Node event arguments.</summary><signature><![CDATA[struct GuiNodeEventArgs;
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiNodeEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeEventArgs"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></basetypes></Document>

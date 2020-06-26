@@ -2,4 +2,4 @@
  Returns the binded <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.
  </summary><returns>The binded <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.</returns><signature><![CDATA[CharMeasurer * GetCharMeasurer(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/></seealsos></Document>

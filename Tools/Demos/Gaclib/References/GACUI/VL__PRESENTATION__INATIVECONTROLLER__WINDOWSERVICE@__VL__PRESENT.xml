@@ -2,4 +2,4 @@
  Get the window service.
  </summary><returns>The window service</returns><signature><![CDATA[INativeWindowService * WindowService(
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindowService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowService"/></seealsos></Document>

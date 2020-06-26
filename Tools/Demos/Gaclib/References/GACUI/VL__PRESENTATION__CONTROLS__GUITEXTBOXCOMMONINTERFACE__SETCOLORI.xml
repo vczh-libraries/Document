@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SetColorizer@void(::vl::Ptr&lt;::vl::presentation::controls::GuiTextBoxColorizerBase&gt;)" accessor="public" category="Function" name="SetColorizer"><summary>Set the current colorizer.</summary><param name="value">The current colorizer.</param><signature><![CDATA[void SetColorizer(
     Ptr<GuiTextBoxColorizerBase> value
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::GuiTextBoxColorizerBase" declFile="GuiTextColorizer.h" declId="NI$vl::presentation::controls::GuiTextBoxColorizerBase"/></seealsos></Document>

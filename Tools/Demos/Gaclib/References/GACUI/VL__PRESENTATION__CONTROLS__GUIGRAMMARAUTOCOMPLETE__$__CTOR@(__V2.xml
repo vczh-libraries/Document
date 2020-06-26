@@ -2,4 +2,4 @@
     Ptr<parsing::tabling::ParsingGeneralParser> _grammarParser,
     WString const & _grammarRule
 );
-]]></signature></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::parsing::tabling::ParsingGeneralParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingGeneralParser"/></seealsos></Document>

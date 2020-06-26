@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiControl::DisplayFontChanged" accessor="public" category="Variable" name="DisplayFontChanged"><summary>Display font changed event. This event will be raised when the display font of the control is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent DisplayFontChanged;
-]]></signature></Document>
+]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
