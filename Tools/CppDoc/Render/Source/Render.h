@@ -215,7 +215,7 @@ extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 
 extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type);
 extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type, const WString& signature, bool needParenthesesForFuncArray, FunctionType* topLevelFunctionType = nullptr);
-extern WString										GetSymbolDisplayNameInSignature(Symbol* symbol);
+extern WString										GetSymbolDisplayNameInSignature(Symbol* symbol, SortedList<Symbol*>& seeAlsos, SortedList<Symbol*>& baseTypes);
 
 /***********************************************************************
 Index Collecting

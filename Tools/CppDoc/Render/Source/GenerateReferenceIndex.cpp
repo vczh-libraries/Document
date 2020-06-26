@@ -741,15 +741,29 @@ void ValidateAndFixDocumentRecord(
 			att->value.value = symbol->name;
 			xmlDocument->rootElement->attributes.Add(att);
 		}
+
+		SortedList<Symbol*> seeAlsos, baseTypes;
 		{
 			auto cdata = MakePtr<XmlCData>();
-			cdata->content.value = GetSymbolDisplayNameInSignature(symbol);
+			cdata->content.value = GetSymbolDisplayNameInSignature(symbol, seeAlsos, baseTypes);
 
 			auto xmlSignature = MakePtr<XmlElement>();
 			xmlSignature->name.value = L"signature";
 			xmlSignature->subNodes.Add(cdata);
 
 			xmlDocument->rootElement->subNodes.Add(xmlSignature);
+		}
+		if (seeAlsos.Count() > 0)
+		{
+			auto xmlSeeAlsos = MakePtr<XmlElement>();
+			xmlSeeAlsos->name.value = L"seealsos";
+			CopyFrom(xmlSeeAlsos->subNodes, From(seeAlsos).Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); }));
+		}
+		if (baseTypes.Count() > 0)
+		{
+			auto xmlSeeAlsos = MakePtr<XmlElement>();
+			xmlSeeAlsos->name.value = L"basetypes";
+			CopyFrom(xmlSeeAlsos->subNodes, From(baseTypes).Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); }));
 		}
 
 		XmlPrint(xmlDocument, writer);

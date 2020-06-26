@@ -6,6 +6,121 @@ WString AppendGenericArgumentsInSignature(VariadicList<GenericArgument>& argumen
 WString GetUnscopedSymbolDisplayNameInSignature(Symbol* symbol);
 
 /***********************************************************************
+CollectSignatureHyperlinks
+***********************************************************************/
+
+class CollectSignatureHyperlinksTypeVisitor : public Object, public ITypeVisitor
+{
+public:
+	SortedList<Symbol*>&						seeAlsos;
+	SortedList<Symbol*>&						baseTypes;
+
+	CollectSignatureHyperlinksTypeVisitor(SortedList<Symbol*>& _seeAlsos, SortedList<Symbol*>& _baseTypes)
+		:seeAlsos(_seeAlsos)
+		, baseTypes(_baseTypes)
+	{
+	}
+
+	void Visit(PrimitiveType* self)override
+	{
+	}
+
+	void Visit(ReferenceType* self)override
+	{
+		self->type->Accept(this);
+	}
+
+	void Visit(ArrayType* self)override
+	{
+		self->type->Accept(this);
+	}
+
+	void Visit(DecorateType* self)override
+	{
+		self->type->Accept(this);
+	}
+
+	void Visit(CallingConventionType* self)override
+	{
+		self->type->Accept(this);
+	}
+
+	void Visit(FunctionType* self)override
+	{
+		if (self->returnType) self->returnType->Accept(this);
+		if (self->decoratorReturnType) self->decoratorReturnType->Accept(this);
+		for (vint i = 0; i < self->parameters.Count(); i++)
+		{
+			self->parameters[i].item->type->Accept(this);
+		}
+	}
+
+	void Visit(MemberType* self)override
+	{
+		self->classType->Accept(this);
+		self->type->Accept(this);
+	}
+
+	void Visit(DeclType* self)override
+	{
+	}
+
+	void Visit(RootType* self)override
+	{
+	}
+
+	void VisitIdChildType(Category_Id_Child_Type* self)
+	{
+		if (self->resolving)
+		{
+			for (vint i = 0; i < self->resolving->items.Count(); i++)
+			{
+				auto symbol = self->resolving->items[i].symbol;
+				switch (symbol->kind)
+				{
+				case CLASS_SYMBOL_KIND:
+				case symbol_component::SymbolKind::Enum:
+				case symbol_component::SymbolKind::TypeAlias:
+					if (!seeAlsos.Contains(symbol) && !baseTypes.Contains(symbol))
+					{
+						seeAlsos.Add(symbol);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	void Visit(IdType* self)override
+	{
+		VisitIdChildType(self);
+	}
+
+	void Visit(ChildType* self)override
+	{
+		VisitIdChildType(self);
+	}
+
+	void Visit(GenericType* self)override
+	{
+		self->type->Accept(this);
+		for (vint i = 0; i < self->arguments.Count(); i++)
+		{
+			if (auto type = self->arguments[i].item.type)
+			{
+				type->Accept(this);
+			}
+		}
+	}
+};
+
+void CollectSignatureHyperlinks(Ptr<Type> type, SortedList<Symbol*>& seeAlsos, SortedList<Symbol*>& baseTypes)
+{
+	CollectSignatureHyperlinksTypeVisitor visitor(seeAlsos, baseTypes);
+	type->Accept(&visitor);
+}
+
+/***********************************************************************
 GetTypeDisplayNameInSignature
 ***********************************************************************/
 
@@ -400,12 +515,12 @@ void WriteTemplateSpecInSignature(Ptr<TemplateSpec> spec, const WString& indent,
 	writer.WriteLine(L">");
 }
 
-WString GetSymbolDisplayNameInSignature(Symbol* symbol)
+WString GetSymbolDisplayNameInSignature(Symbol* symbol, SortedList<Symbol*>& seeAlsos, SortedList<Symbol*>& baseTypes)
 {
 	switch (symbol->kind)
 	{
 	case symbol_component::SymbolKind::Enum:
-		return GenerateToStream([=](StreamWriter& writer)
+		return GenerateToStream([&](StreamWriter& writer)
 		{
 			auto fdecl = symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
 			auto decl = fdecl.Cast<EnumDeclaration>();
@@ -431,7 +546,7 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			}
 		});
 	case CLASS_SYMBOL_KIND:
-		return GenerateToStream([=](StreamWriter& writer)
+		return GenerateToStream([&](StreamWriter& writer)
 		{
 			auto fdecl = symbol->GetAnyForwardDecl<ForwardClassDeclaration>();
 			if (fdecl->templateSpec)
@@ -452,13 +567,60 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			}
 			if (fdecl->name) writer.WriteString(fdecl->name.name);
 			if (fdecl->specializationSpec) writer.WriteString(AppendGenericArgumentsInSignature(fdecl->specializationSpec->arguments));
+
+			if (auto decl = symbol->GetImplDecl_NFb<ClassDeclaration>())
+			{
+				for (vint i = 0; i < decl->baseTypes.Count(); i++)
+				{
+					auto baseType = decl->baseTypes[i].item.f1;
+					Category_Id_Child_Type* catEntity = nullptr;
+
+					if (auto catType = baseType.Cast<Category_Id_Child_Generic_Root_Type>())
+					{
+						MatchCategoryType(
+							catType,
+							[&](Ptr<IdType> idType) {catEntity = idType.Obj(); },
+							[&](Ptr<ChildType> childType) {catEntity = childType.Obj(); },
+							[&](Ptr<GenericType> genericType) {catEntity = genericType->type.Obj(); },
+							[&](Ptr<RootType>) {}
+							);
+					}
+
+					if (catEntity && catEntity->resolving)
+					{
+						for (vint j = 0; j < catEntity->resolving->items.Count(); j++)
+						{
+							auto baseSymbol = catEntity->resolving->items[j].symbol;
+							switch (baseSymbol->kind)
+							{
+							case CLASS_SYMBOL_KIND:
+							case symbol_component::SymbolKind::Enum:
+							case symbol_component::SymbolKind::TypeAlias:
+								if (!baseTypes.Contains(baseSymbol))
+								{
+									baseTypes.Add(baseSymbol);
+								}
+								break;
+							}
+						}
+					}
+				}
+
+				for (vint i = 0; i < decl->baseTypes.Count(); i++)
+				{
+					auto baseType = decl->baseTypes[i].item.f1;
+					CollectSignatureHyperlinks(baseType, seeAlsos, baseTypes);
+				}
+			}
 			writer.WriteLine(L";");
 			// TODO: write base class
 		});
 	case symbol_component::SymbolKind::TypeAlias:
-		return GenerateToStream([=](StreamWriter& writer)
+		return GenerateToStream([&](StreamWriter& writer)
 		{
 			auto decl = symbol->GetImplDecl_NFb<TypeAliasDeclaration>();
+			CollectSignatureHyperlinks(decl->type, seeAlsos, baseTypes);
+
 			if (decl->templateSpec)
 			{
 				WriteTemplateSpecInSignature(decl->templateSpec, L"", writer);
@@ -470,9 +632,11 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			writer.WriteLine(L";");
 		});
 	case symbol_component::SymbolKind::ValueAlias:
-		return GenerateToStream([=](StreamWriter& writer)
+		return GenerateToStream([&](StreamWriter& writer)
 		{
 			auto decl = symbol->GetImplDecl_NFb<ValueAliasDeclaration>();
+			CollectSignatureHyperlinks(decl->type, seeAlsos, baseTypes);
+
 			if (decl->templateSpec)
 			{
 				WriteTemplateSpecInSignature(decl->templateSpec, L"", writer);
@@ -482,16 +646,18 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			writer.WriteLine(L" = expr;");
 		});
 	case symbol_component::SymbolKind::Namespace:
-		return GenerateToStream([=](StreamWriter& writer)
+		return GenerateToStream([&](StreamWriter& writer)
 		{
 			writer.WriteString(L"namespace ");
 			writer.WriteString(symbol->name);
 			writer.WriteLine(L";");
 		});
 	case symbol_component::SymbolKind::Variable:
-		return GenerateToStream([=](StreamWriter& writer)
+		return GenerateToStream([&](StreamWriter& writer)
 		{
 			auto fdecl = symbol->GetAnyForwardDecl<ForwardVariableDeclaration>();
+			CollectSignatureHyperlinks(fdecl->type, seeAlsos, baseTypes);
+
 			bool decoratorStatic = false;
 
 			if (auto decl = symbol->GetImplDecl_NFb<ForwardVariableDeclaration>())
@@ -510,9 +676,10 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol)
 			writer.WriteLine(L";");
 		});
 	case symbol_component::SymbolKind::FunctionSymbol:
-		return GenerateToStream([=](StreamWriter& writer)
+		return GenerateToStream([&](StreamWriter& writer)
 		{
 			auto fdecl = symbol->GetAnyForwardDecl<ForwardFunctionDeclaration>();
+			CollectSignatureHyperlinks(fdecl->type, seeAlsos, baseTypes);
 
 			bool decoratorStatic = false;
 			bool decoratorConstexpr = false;
