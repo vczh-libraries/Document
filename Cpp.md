@@ -45,6 +45,7 @@
   - [ ] `Sources/Source.txt`: copied colorized source file
   - [ ] `Sources/Source.xml`: hyper-links in `Source.txt`
 - [ ] Update `WebsiteSource` to view references.
+  - [ ] consume input from Document project directly, instead of copying xml files, use relative path as a temporary solution.
   - [ ] must interpret: `<summary>`, `<typeparam>`, `<param>`, `<enumitem>`, `<returns>`, `<remarks>`, `<seealsos>`, `<signature>`, `<basetypes>`.
   - [ ] must process: `<symbol>`.
   - [ ] remove `<a anchor="ANCHOR">`.
