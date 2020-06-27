@@ -35,6 +35,15 @@
 - [ ] Insert metadata to document comment.
   - [ ] `<seealsos>`.
     - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
+- [ ] Structurize and remove HTML (HTML will be generated in `WebsiteSource`)
+  - [ ] `ReferenceIndex.xml`: reference tree view
+  - [x] `References/Category/DocId.xml`: document
+  - [ ] `FileIndex.xml`: file tree view
+  - [ ] `SymbolIndex.xml`: symbol tree view
+  - [ ] `IdDecls.xml`: mapping DeclId to files
+  - [ ] `IdSymbols.xml`: mapping SymbolId to multiple DeclIds with colorized text
+  - [ ] `Sources/Source.txt`: copied colorized source file
+  - [ ] `Sources/Source.xml`: hyper-links in `Source.txt`
 - [ ] Update `WebsiteSource` to view references.
   - [ ] must interpret: `<summary>`, `<typeparam>`, `<param>`, `<enumitem>`, `<returns>`, `<remarks>`, `<seealsos>`, `<signature>`, `<basetypes>`.
   - [ ] must process: `<symbol>`.
