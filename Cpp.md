@@ -32,18 +32,9 @@
     - [ ] automatically hardcode document page path for root and category pages
   - [ ] tree nodes only record id and file paths to reference fragment XML files.
   - [ ] URL will be `/references/ID.html`.
-- [ ] Insert metadata to document comment.
-  - [ ] `<seealsos>`.
-    - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
 - [ ] Structurize and remove HTML (HTML will be generated in `WebsiteSource`)
   - [ ] `ReferenceIndex.xml`: reference tree view
   - [x] `References/Category/DocId.xml`: document
-  - [ ] `FileIndex.xml`: file tree view
-  - [ ] `SymbolIndex.xml`: symbol tree view
-  - [ ] `IdDecls.xml`: mapping DeclId to files
-  - [ ] `IdSymbols.xml`: mapping SymbolId to multiple DeclIds with colorized text
-  - [ ] `Sources/Source.txt`: copied colorized source file
-  - [ ] `Sources/Source.xml`: hyper-links in `Source.txt`
 - [ ] Update `WebsiteSource` to view references.
   - [ ] consume input from Document project directly, instead of copying xml files, use relative path as a temporary solution.
   - [ ] must interpret: `<summary>`, `<typeparam>`, `<param>`, `<enumitem>`, `<returns>`, `<remarks>`, `<seealsos>`, `<signature>`, `<basetypes>`.
@@ -54,7 +45,24 @@
   - [ ] no dynamic tree node for document pages, instead only hardcode indented parents and a list of children or sibiling (when no children) on the left panel.
     - [ ] the left panel will be automatically added if this xml is read from a tree node xml file.
   - [ ] generate a completed list of article pages to a text file for `npm run download`.
+- [ ] Improve `WebsiteSource`
   - [ ] try `Remove Comments` in [here](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/) to remove comments in webpacked javascript files.
+  - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
+  - [ ] Convert `<example>` to `<program>`
+  - [ ] `FileIndex.xml`: file tree view
+  - [ ] `SymbolIndex.xml`: symbol tree view, fragments will be generated in `WebsiteSource`
+  - [ ] `Sources/Source.html`: HTML fragment for source files, hyper links are converted to numbers
+  - [ ] `Sources/Source.js`: hyper link information for `Source.html`
+  - [ ] generate a completed list of article pages to a text file for `npm run download`.
+- [ ] Build script for document
+  - [ ] New projects in Document
+    - [ ] reprocess of GacUI files
+    - [ ] build GacUI files
+  - [ ] Assign unique id to `<example>`.
+  - [ ] Powershell script to build and execute all `<example>` to get output
+  - [ ] Combine source and output and convert `<example>` to `<program>`
+  - [ ] Call `WebsiteSource` to generate website
+  - [ ] Copy website to `vczh-libraries.github.io`
 - [ ] Refine document comment
   - [ ] Vlpp
   - [ ] VlppOS
