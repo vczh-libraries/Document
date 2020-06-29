@@ -913,54 +913,57 @@ void GenerateReferenceIndex(
 		for (vint i = 0; i < rootGroup->children.Count(); i++)
 		{
 			auto fileGroup = rootGroup->children[i];
-			Dictionary<Symbol*, Ptr<SymbolGroup>> nss;
-			FlagDocumentedSymbolGroups(global, fileGroup, nss);
-
-			Dictionary<WString, Symbol*> nsNames;
-			for (vint i = 0; i < nss.Count(); i++)
+			if (predefinedGroups.Contains(fileGroup->name))
 			{
-				if (auto symbol = nss.Keys()[i])
+				Dictionary<Symbol*, Ptr<SymbolGroup>> nss;
+				FlagDocumentedSymbolGroups(global, fileGroup, nss);
+
+				Dictionary<WString, Symbol*> nsNames;
+				for (vint i = 0; i < nss.Count(); i++)
 				{
-					WString name;
-					auto current = symbol;
-					while (current)
+					if (auto symbol = nss.Keys()[i])
 					{
-						if (current->kind == symbol_component::SymbolKind::Namespace)
+						WString name;
+						auto current = symbol;
+						while (current)
 						{
-							name = L"::" + current->name + name;
-							current = current->GetParentScope();
+							if (current->kind == symbol_component::SymbolKind::Namespace)
+							{
+								name = L"::" + current->name + name;
+								current = current->GetParentScope();
+							}
+							else
+							{
+								break;
+							}
 						}
-						else
-						{
-							break;
-						}
+						nsNames.Add(name, symbol);
 					}
-					nsNames.Add(name, symbol);
+					else
+					{
+						nsNames.Add(L"::", nullptr);
+					}
 				}
-				else
-				{
-					nsNames.Add(L"::", nullptr);
-				}
-			}
 
-			FileStream fileStream((pathReference / (fileGroup->name + L".xml")).GetFullPath(), FileStream::WriteOnly);
-			Utf8Encoder encoder;
-			EncoderStream encoderStream(fileStream, encoder);
-			StreamWriter writer(encoderStream);
+				FileStream fileStream((pathReference / (fileGroup->name + L".xml")).GetFullPath(), FileStream::WriteOnly);
+				Utf8Encoder encoder;
+				EncoderStream encoderStream(fileStream, encoder);
+				StreamWriter writer(encoderStream);
 
-			writer.WriteLine(L"<Reference>");
-			for (vint i = 0; i < nsNames.Count(); i++)
-			{
-				auto group = nss[nsNames.Values()[i]];
-				if (group->hasDocument)
+				writer.WriteLine(L"<Reference>");
+				for (vint i = 0; i < nsNames.Count(); i++)
 				{
-					writer.WriteString(L"  <Namespace name=\"");
-					writer.WriteString(nsNames.Keys()[i]);
-					writer.WriteLine(L"\">");
-					writer.WriteLine(L"  </Namespaces>");
+					auto group = nss[nsNames.Values()[i]];
+					if (group->hasDocument)
+					{
+						writer.WriteString(L"  <Namespace name=\"");
+						writer.WriteString(nsNames.Keys()[i]);
+						writer.WriteLine(L"\">");
+						writer.WriteLine(L"  </Namespaces>");
+					}
 				}
+				writer.WriteLine(L"</Reference>");
 			}
-			writer.WriteLine(L"</Reference>");
 		}
 	}
 }

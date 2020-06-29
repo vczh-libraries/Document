@@ -28,11 +28,8 @@
 
 - [ ] Temporary `ReferenceIndex.xml` for viewing extracted XML content and the folder structure.
   - [ ] namespaces are flattened, no document for namespace.
-    - [ ] automatically generate document pages for namespaces.
-    - [ ] automatically hardcode document page path for root and category pages
   - [ ] tree nodes only record id and file paths to reference fragment XML files.
   - [ ] URL will be `/references/ID.html`.
-- [ ] Structurize and remove HTML (HTML will be generated in `WebsiteSource`)
   - [ ] `ReferenceIndex.xml`: reference tree view
   - [x] `References/Category/DocId.xml`: document
 - [ ] Update `WebsiteSource` to view references.
