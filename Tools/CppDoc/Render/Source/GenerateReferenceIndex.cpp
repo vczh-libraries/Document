@@ -888,4 +888,23 @@ void GenerateReferenceIndex(
 		xmlDocument->rootElement = xmlCategories;
 		XmlPrint(xmlDocument, referenceWriter);
 	}
+
+	{
+		for (vint i = 0; i < rootGroup->children.Count(); i++)
+		{
+			auto fileGroup = rootGroup->children[i];
+
+			FileStream fileStream((pathReference / (fileGroup->name + L".xml")).GetFullPath(), FileStream::WriteOnly);
+			Utf8Encoder encoder;
+			EncoderStream encoderStream(fileStream, encoder);
+			StreamWriter referenceWriter(encoderStream);
+
+			auto xmlReference = MakePtr<XmlElement>();
+			xmlReference->name.value = L"Reference";
+
+			auto xmlDocument = MakePtr<XmlDocument>();
+			xmlDocument->rootElement = xmlReference;
+			XmlPrint(xmlDocument, referenceWriter);
+		}
+	}
 }
