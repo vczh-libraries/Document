@@ -1,8 +1,4 @@
 <reference>
-  <namespace name="::">
-  </namespace>
-  <namespace name="::vl">
-  </namespace>
   <namespace name="::vl::workflow">
     <document name="function WfPrint" file="VL__WORKFLOW__WFPRINT@VOID(__VL__PTR___VL__WORKFLOW__WFATTRIBUTE"/>
     <document name="function WfPrint" file="VL__WORKFLOW__WFPRINT@VOID(__VL__PTR___VL__WORKFLOW__WFTYPE_,___"/>

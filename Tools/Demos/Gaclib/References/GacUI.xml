@@ -1,8 +1,4 @@
 <reference>
-  <namespace name="::">
-  </namespace>
-  <namespace name="::vl">
-  </namespace>
   <namespace name="::vl::presentation">
     <document name="enum class Alignment" file="VL__PRESENTATION__ALIGNMENT"/>
     <document name="enum class AxisDirection" file="VL__PRESENTATION__AXISDIRECTION"/>

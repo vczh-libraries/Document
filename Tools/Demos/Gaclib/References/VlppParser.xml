@@ -1,8 +1,4 @@
 <reference>
-  <namespace name="::">
-  </namespace>
-  <namespace name="::vl">
-  </namespace>
   <namespace name="::vl::parsing">
     <document name="class ParsingError" file="VL__PARSING__PARSINGERROR">
       <document name="variable codeRange" file="VL__PARSING__PARSINGERROR__CODERANGE"/>

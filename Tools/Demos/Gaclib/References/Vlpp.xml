@@ -1,6 +1,4 @@
 <reference>
-  <namespace name="::">
-  </namespace>
   <namespace name="::vl">
     <document name="typedef AString" file="VL__ASTRING"/>
     <document name="function Combine" file="VL__COMBINE@__VL__FUNC___VL__FUNCTION_COMBINING__COMBINING@_[R1]"/>

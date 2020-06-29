@@ -1,8 +1,4 @@
 <reference>
-  <namespace name="::">
-  </namespace>
-  <namespace name="::vl">
-  </namespace>
   <namespace name="::vl::reflection">
     <document name="class DescriptableObject" file="VL__REFLECTION__DESCRIPTABLEOBJECT">
       <document name="function Dispose" file="VL__REFLECTION__DESCRIPTABLEOBJECT__DISPOSE@BOOL(BOOL)"/>

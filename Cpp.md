@@ -26,12 +26,6 @@
 
 ### Document Generation
 
-- [ ] Temporary `ReferenceIndex.xml` for viewing extracted XML content and the folder structure.
-  - [ ] namespaces are flattened, no document for namespace.
-  - [ ] tree nodes only record id and file paths to reference fragment XML files.
-  - [ ] URL will be `/references/ID.html`.
-  - [ ] `ReferenceIndex.xml`: reference tree view
-  - [x] `References/Category/DocId.xml`: document
 - [ ] Update `WebsiteSource` to view references.
   - [ ] consume input from Document project directly, instead of copying xml files, use relative path as a temporary solution.
   - [ ] must interpret: `<summary>`, `<typeparam>`, `<param>`, `<enumitem>`, `<returns>`, `<remarks>`, `<seealsos>`, `<signature>`, `<basetypes>`.

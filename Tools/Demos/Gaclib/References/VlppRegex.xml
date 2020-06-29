@@ -1,8 +1,4 @@
 <reference>
-  <namespace name="::">
-  </namespace>
-  <namespace name="::vl">
-  </namespace>
   <namespace name="::vl::regex">
     <document name="class Regex" file="VL__REGEX__REGEX">
       <document name="function $__ctor" file="VL__REGEX__REGEX__$__CTOR@(__VL__WSTRING_CONST_&amp;,_BOOL)"/>

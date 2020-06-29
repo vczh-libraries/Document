@@ -862,7 +862,14 @@ void FlagDocumentedSymbolGroups(
 	{
 		auto child = group->children[i];
 		FlagDocumentedSymbolGroups(global, child, nss);
-		if (child->hasDocument) group->hasDocument = true;
+		if (child->hasDocument)
+		{
+			if (child->kind == SymbolGroupKind::Symbol && child->symbol->kind == symbol_component::SymbolKind::Namespace)
+			{
+				continue;
+			}
+			group->hasDocument = true;
+		}
 	}
 }
 

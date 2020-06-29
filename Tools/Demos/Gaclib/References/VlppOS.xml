@@ -1,6 +1,4 @@
 <reference>
-  <namespace name="::">
-  </namespace>
   <namespace name="::vl">
     <document name="class ConditionVariable" file="VL__CONDITIONVARIABLE">
       <document name="function $__ctor" file="VL__CONDITIONVARIABLE__$__CTOR@()"/>
