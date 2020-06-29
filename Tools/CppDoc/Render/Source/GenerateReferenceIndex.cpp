@@ -860,7 +860,9 @@ void FlagDocumentedSymbolGroups(
 
 	for (vint i = 0; i < group->children.Count(); i++)
 	{
-		FlagDocumentedSymbolGroups(global, group->children[i], nss);
+		auto child = group->children[i];
+		FlagDocumentedSymbolGroups(global, child, nss);
+		if (child->hasDocument) group->hasDocument = true;
 	}
 }
 
@@ -949,10 +951,14 @@ void GenerateReferenceIndex(
 			writer.WriteLine(L"<Reference>");
 			for (vint i = 0; i < nsNames.Count(); i++)
 			{
-				writer.WriteString(L"  <Namespace name=\"");
-				writer.WriteString(nsNames.Keys()[i]);
-				writer.WriteLine(L"\">");
-				writer.WriteLine(L"  </Namespaces>");
+				auto group = nss[nsNames.Values()[i]];
+				if (group->hasDocument)
+				{
+					writer.WriteString(L"  <Namespace name=\"");
+					writer.WriteString(nsNames.Keys()[i]);
+					writer.WriteLine(L"\">");
+					writer.WriteLine(L"  </Namespaces>");
+				}
 			}
 			writer.WriteLine(L"</Reference>");
 		}

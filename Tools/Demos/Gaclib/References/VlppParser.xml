@@ -5,22 +5,6 @@
   </Namespaces>
   <Namespace name="::vl::parsing">
   </Namespaces>
-  <Namespace name="::vl::parsing::analyzing">
-  </Namespaces>
-  <Namespace name="::vl::parsing::definitions">
-  </Namespaces>
-  <Namespace name="::vl::parsing::json">
-  </Namespaces>
   <Namespace name="::vl::parsing::tabling">
-  </Namespaces>
-  <Namespace name="::vl::parsing::xml">
-  </Namespaces>
-  <Namespace name="::vl::reflection">
-  </Namespaces>
-  <Namespace name="::vl::reflection::description">
-  </Namespaces>
-  <Namespace name="::vl::stream">
-  </Namespaces>
-  <Namespace name="::vl::stream::internal">
   </Namespaces>
 </Reference>

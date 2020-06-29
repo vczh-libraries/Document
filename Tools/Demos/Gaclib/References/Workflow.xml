@@ -3,34 +3,12 @@
   </Namespaces>
   <Namespace name="::vl">
   </Namespaces>
-  <Namespace name="::vl::__vwsn">
-  </Namespaces>
-  <Namespace name="::vl::reflection">
-  </Namespaces>
-  <Namespace name="::vl::reflection::description">
-  </Namespaces>
-  <Namespace name="::vl::reflection::description::system_sys">
-  </Namespaces>
-  <Namespace name="::vl::stream">
-  </Namespaces>
-  <Namespace name="::vl::stream::internal">
-  </Namespaces>
   <Namespace name="::vl::workflow">
   </Namespaces>
   <Namespace name="::vl::workflow::analyzer">
   </Namespaces>
-  <Namespace name="::vl::workflow::copy_visitor">
-  </Namespaces>
-  <Namespace name="::vl::workflow::cppcodegen">
-  </Namespaces>
   <Namespace name="::vl::workflow::emitter">
   </Namespaces>
-  <Namespace name="::vl::workflow::empty_visitor">
-  </Namespaces>
   <Namespace name="::vl::workflow::runtime">
-  </Namespaces>
-  <Namespace name="::vl::workflow::traverse_visitor">
-  </Namespaces>
-  <Namespace name="::vl::workflow::typeimpl">
   </Namespaces>
 </Reference>

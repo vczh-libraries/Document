@@ -5,6 +5,4 @@
   </Namespaces>
   <Namespace name="::vl::regex">
   </Namespaces>
-  <Namespace name="::vl::regex_internal">
-  </Namespaces>
 </Reference>
