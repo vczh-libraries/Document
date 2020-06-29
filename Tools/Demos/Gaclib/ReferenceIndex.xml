@@ -1,9 +1,9 @@
-<Categories>
-  <Category name="Vlpp"/>
-  <Category name="VlppOS"/>
-  <Category name="VlppRegex"/>
-  <Category name="VlppReflection"/>
-  <Category name="VlppParser"/>
-  <Category name="Workflow"/>
-  <Category name="GacUI"/>
-</Categories>
+<categories>
+  <category name="Vlpp"/>
+  <category name="VlppOS"/>
+  <category name="VlppRegex"/>
+  <category name="VlppReflection"/>
+  <category name="VlppParser"/>
+  <category name="Workflow"/>
+  <category name="GacUI"/>
+</categories>

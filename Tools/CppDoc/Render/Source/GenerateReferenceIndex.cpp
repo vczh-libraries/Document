@@ -866,6 +866,135 @@ void FlagDocumentedSymbolGroups(
 	}
 }
 
+void WriteSymbolGroupInReferenceIndex(
+	WString indent,
+	Ptr<SymbolGroup> group,
+	StreamWriter& writer
+)
+{
+	if (!group->hasDocument) return;
+
+	bool hasChild = false;
+	for (vint i = 0; i < group->children.Count(); i++)
+	{
+		auto child = group->children[i];
+		if (child->kind == SymbolGroupKind::Symbol && child->symbol->kind == symbol_component::SymbolKind::Namespace)
+		{
+			continue;
+		}
+		if (child->hasDocument)
+		{
+			hasChild = true;
+			break;
+		}
+	}
+
+	auto xmlText = GenerateToStream([&group](StreamWriter& textWriter)
+	{
+		auto xmlElement = MakePtr<XmlElement>();
+		xmlElement->name.value = L"document";
+		{
+			auto attr = MakePtr<XmlAttribute>();
+			attr->name.value = L"name";
+			xmlElement->attributes.Add(attr);
+
+			switch (group->kind)
+			{
+			case SymbolGroupKind::Text:
+				attr->value.value = group->name;
+				break;
+			case SymbolGroupKind::Symbol:
+			case SymbolGroupKind::SymbolAndText:
+				{
+					const wchar_t* keyword = nullptr;
+					switch (group->symbol->kind)
+					{
+					case symbol_component::SymbolKind::Enum:
+						{
+							auto decl = group->symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
+							if (decl->enumClass)
+							{
+								keyword = L"enum class";
+							}
+							else
+							{
+								keyword = L"enum";
+							}
+						}
+						break;
+					case symbol_component::SymbolKind::Class:
+						keyword = L"class";
+						break;
+					case symbol_component::SymbolKind::Struct:
+						keyword = L"struct";
+						break;
+					case symbol_component::SymbolKind::Union:
+						keyword = L"union";
+						break;
+					case symbol_component::SymbolKind::TypeAlias:
+						keyword = L"typedef";
+						break;
+					case symbol_component::SymbolKind::FunctionSymbol:
+						keyword = L"function";
+						break;
+					case symbol_component::SymbolKind::Variable:
+						keyword = L"variable";
+						break;
+					case symbol_component::SymbolKind::ValueAlias:
+						keyword = L"constexpr";
+						break;
+					default:
+						throw UnexpectedSymbolCategoryException();
+					}
+
+					attr->value.value = WString(keyword) + L" " + group->symbol->GetAnyForwardDecl<Declaration>()->name.name;
+
+					if (group->kind == SymbolGroupKind::SymbolAndText)
+					{
+						attr->value.value += L" " + group->name;
+					}
+				}
+				break;
+			}
+		}
+		if (group->assignedDocument)
+		{
+			auto attr = MakePtr<XmlAttribute>();
+			attr->name.value = L"file";
+			attr->value.value = group->uniqueId;
+			xmlElement->attributes.Add(attr);
+		}
+
+		XmlPrint(xmlElement, textWriter);
+	});
+
+	if (hasChild)
+	{
+		writer.WriteString(indent);
+		writer.WriteString(xmlText.Left(xmlText.Length() - 2));
+		writer.WriteLine(L">");
+
+		WString newIndent = indent + L"  ";
+		for (vint i = 0; i < group->children.Count(); i++)
+		{
+			auto child = group->children[i];
+			if (child->kind == SymbolGroupKind::Symbol && child->symbol->kind == symbol_component::SymbolKind::Namespace)
+			{
+				continue;
+			}
+			WriteSymbolGroupInReferenceIndex(newIndent, child, writer);
+		}
+
+		writer.WriteString(indent);
+		writer.WriteLine(L"</document>");
+	}
+	else
+	{
+		writer.WriteString(indent);
+		writer.WriteLine(xmlText);
+	}
+}
+
 void GenerateReferenceIndex(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
@@ -895,18 +1024,18 @@ void GenerateReferenceIndex(
 		EncoderStream encoderStream(fileStream, encoder);
 		StreamWriter writer(encoderStream);
 
-		writer.WriteLine(L"<Categories>");
+		writer.WriteLine(L"<categories>");
 		for (vint i = 0; i < rootGroup->children.Count(); i++)
 		{
 			auto fileGroup = rootGroup->children[i];
 			if (predefinedGroups.Contains(fileGroup->name))
 			{
-				writer.WriteString(L"  <Category name=\"");
+				writer.WriteString(L"  <category name=\"");
 				writer.WriteString(fileGroup->name);
 				writer.WriteLine(L"\"/>");
 			}
 		}
-		writer.WriteLine(L"</Categories>");
+		writer.WriteLine(L"</categories>");
 	}
 
 	{
@@ -950,19 +1079,30 @@ void GenerateReferenceIndex(
 				EncoderStream encoderStream(fileStream, encoder);
 				StreamWriter writer(encoderStream);
 
-				writer.WriteLine(L"<Reference>");
+				writer.WriteLine(L"<reference>");
 				for (vint i = 0; i < nsNames.Count(); i++)
 				{
 					auto group = nss[nsNames.Values()[i]];
 					if (group->hasDocument)
 					{
-						writer.WriteString(L"  <Namespace name=\"");
+						writer.WriteString(L"  <namespace name=\"");
 						writer.WriteString(nsNames.Keys()[i]);
 						writer.WriteLine(L"\">");
-						writer.WriteLine(L"  </Namespaces>");
+
+						for (vint j = 0; j < group->children.Count(); j++)
+						{
+							auto child = group->children[j];
+							if (child->kind == SymbolGroupKind::Symbol && child->symbol->kind == symbol_component::SymbolKind::Namespace)
+							{
+								continue;
+							}
+							WriteSymbolGroupInReferenceIndex(L"    ", child, writer);
+						}
+
+						writer.WriteLine(L"  </namespace>");
 					}
 				}
-				writer.WriteLine(L"</Reference>");
+				writer.WriteLine(L"</reference>");
 			}
 		}
 	}
