@@ -1,1 +1,18 @@
-<Reference/>
+<Reference>
+  <Namespace name="::">
+  </Namespaces>
+  <Namespace name="::vl">
+  </Namespaces>
+  <Namespace name="::vl::collections">
+  </Namespaces>
+  <Namespace name="::vl::collections::randomaccess_internal">
+  </Namespaces>
+  <Namespace name="::vl::reflection">
+  </Namespaces>
+  <Namespace name="::vl::reflection::description">
+  </Namespaces>
+  <Namespace name="::vl::reflection::description::internal_helper">
+  </Namespaces>
+  <Namespace name="::vl::reflection::description::trait_helper">
+  </Namespaces>
+</Reference>

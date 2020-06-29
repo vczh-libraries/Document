@@ -836,6 +836,34 @@ void RenderDocumentRecord(
 GenerateReferenceIndex
 ***********************************************************************/
 
+void FlagDocumentedSymbolGroups(
+	Ptr<GlobalLinesRecord> global,
+	Ptr<SymbolGroup> group,
+	Dictionary<Symbol*, Ptr<SymbolGroup>>& nss
+)
+{
+	switch (group->kind)
+	{
+	case SymbolGroupKind::Group:
+		nss.Add(nullptr, group);
+		break;
+	case SymbolGroupKind::Symbol:
+		group->assignedDocument = global->declComments.Keys().Contains(group->symbol);
+		if (group->symbol->kind == symbol_component::SymbolKind::Namespace)
+		{
+			nss.Add(group->symbol, group);
+		}
+		break;
+	}
+
+	if (group->assignedDocument) group->hasDocument = true;
+
+	for (vint i = 0; i < group->children.Count(); i++)
+	{
+		FlagDocumentedSymbolGroups(global, group->children[i], nss);
+	}
+}
+
 void GenerateReferenceIndex(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
@@ -863,48 +891,70 @@ void GenerateReferenceIndex(
 		FileStream fileStream(pathXml.GetFullPath(), FileStream::WriteOnly);
 		Utf8Encoder encoder;
 		EncoderStream encoderStream(fileStream, encoder);
-		StreamWriter referenceWriter(encoderStream);
+		StreamWriter writer(encoderStream);
 
-		auto xmlCategories = MakePtr<XmlElement>();
-		xmlCategories->name.value = L"Categories";
-
+		writer.WriteLine(L"<Categories>");
 		for (vint i = 0; i < rootGroup->children.Count(); i++)
 		{
 			auto fileGroup = rootGroup->children[i];
 			if (predefinedGroups.Contains(fileGroup->name))
 			{
-				auto xmlCategory = MakePtr<XmlElement>();
-				xmlCategory->name.value = L"Category";
-				xmlCategories->subNodes.Add(xmlCategory);
-
-				auto attr = MakePtr<XmlAttribute>();
-				attr->name.value = L"Name";
-				attr->value.value = fileGroup->name;
-				xmlCategory->attributes.Add(attr);
+				writer.WriteString(L"  <Category name=\"");
+				writer.WriteString(fileGroup->name);
+				writer.WriteLine(L"\"/>");
 			}
 		}
-
-		auto xmlDocument = MakePtr<XmlDocument>();
-		xmlDocument->rootElement = xmlCategories;
-		XmlPrint(xmlDocument, referenceWriter);
+		writer.WriteLine(L"</Categories>");
 	}
 
 	{
 		for (vint i = 0; i < rootGroup->children.Count(); i++)
 		{
 			auto fileGroup = rootGroup->children[i];
+			Dictionary<Symbol*, Ptr<SymbolGroup>> nss;
+			FlagDocumentedSymbolGroups(global, fileGroup, nss);
+
+			Dictionary<WString, Symbol*> nsNames;
+			for (vint i = 0; i < nss.Count(); i++)
+			{
+				if (auto symbol = nss.Keys()[i])
+				{
+					WString name;
+					auto current = symbol;
+					while (current)
+					{
+						if (current->kind == symbol_component::SymbolKind::Namespace)
+						{
+							name = L"::" + current->name + name;
+							current = current->GetParentScope();
+						}
+						else
+						{
+							break;
+						}
+					}
+					nsNames.Add(name, symbol);
+				}
+				else
+				{
+					nsNames.Add(L"::", nullptr);
+				}
+			}
 
 			FileStream fileStream((pathReference / (fileGroup->name + L".xml")).GetFullPath(), FileStream::WriteOnly);
 			Utf8Encoder encoder;
 			EncoderStream encoderStream(fileStream, encoder);
-			StreamWriter referenceWriter(encoderStream);
+			StreamWriter writer(encoderStream);
 
-			auto xmlReference = MakePtr<XmlElement>();
-			xmlReference->name.value = L"Reference";
-
-			auto xmlDocument = MakePtr<XmlDocument>();
-			xmlDocument->rootElement = xmlReference;
-			XmlPrint(xmlDocument, referenceWriter);
+			writer.WriteLine(L"<Reference>");
+			for (vint i = 0; i < nsNames.Count(); i++)
+			{
+				writer.WriteString(L"  <Namespace name=\"");
+				writer.WriteString(nsNames.Keys()[i]);
+				writer.WriteLine(L"\">");
+				writer.WriteLine(L"  </Namespaces>");
+			}
+			writer.WriteLine(L"</Reference>");
 		}
 	}
 }

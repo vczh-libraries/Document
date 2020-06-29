@@ -1,1 +1,30 @@
-<Reference/>
+<Reference>
+  <Namespace name="::">
+  </Namespaces>
+  <Namespace name="::vl">
+  </Namespaces>
+  <Namespace name="::vl::collections">
+  </Namespaces>
+  <Namespace name="::vl::collections::bom_helper">
+  </Namespaces>
+  <Namespace name="::vl::collections::copyfrom_internal">
+  </Namespaces>
+  <Namespace name="::vl::collections::po">
+  </Namespaces>
+  <Namespace name="::vl::collections::randomaccess_internal">
+  </Namespaces>
+  <Namespace name="::vl::console">
+  </Namespaces>
+  <Namespace name="::vl::function_binding">
+  </Namespaces>
+  <Namespace name="::vl::function_combining">
+  </Namespaces>
+  <Namespace name="::vl::function_lambda">
+  </Namespaces>
+  <Namespace name="::vl::internal_invokers">
+  </Namespaces>
+  <Namespace name="::vl::unittest">
+  </Namespaces>
+  <Namespace name="::vl::unittest::execution_impl">
+  </Namespaces>
+</Reference>

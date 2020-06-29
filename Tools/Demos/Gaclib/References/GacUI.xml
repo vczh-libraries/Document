@@ -1,1 +1,68 @@
-<Reference/>
+<Reference>
+  <Namespace name="::">
+  </Namespaces>
+  <Namespace name="::darkskin">
+  </Namespaces>
+  <Namespace name="::vl">
+  </Namespaces>
+  <Namespace name="::vl::__vwsn">
+  </Namespaces>
+  <Namespace name="::vl::collections">
+  </Namespaces>
+  <Namespace name="::vl::collections::randomaccess_internal">
+  </Namespaces>
+  <Namespace name="::vl::presentation">
+  </Namespaces>
+  <Namespace name="::vl::presentation::compositions">
+  </Namespaces>
+  <Namespace name="::vl::presentation::compositions::tab_focus">
+  </Namespaces>
+  <Namespace name="::vl::presentation::compositions::update_cell_bounds_helpers">
+  </Namespaces>
+  <Namespace name="::vl::presentation::controls">
+  </Namespaces>
+  <Namespace name="::vl::presentation::controls::list">
+  </Namespaces>
+  <Namespace name="::vl::presentation::controls::ribbon_impl">
+  </Namespaces>
+  <Namespace name="::vl::presentation::controls::tree">
+  </Namespaces>
+  <Namespace name="::vl::presentation::document_clipboard_visitors">
+  </Namespaces>
+  <Namespace name="::vl::presentation::document_editor">
+  </Namespaces>
+  <Namespace name="::vl::presentation::document_operation_visitors">
+  </Namespaces>
+  <Namespace name="::vl::presentation::elements">
+  </Namespaces>
+  <Namespace name="::vl::presentation::elements::text">
+  </Namespaces>
+  <Namespace name="::vl::presentation::elements::visitors">
+  </Namespaces>
+  <Namespace name="::vl::presentation::elements_windows_d2d">
+  </Namespaces>
+  <Namespace name="::vl::presentation::elements_windows_gdi">
+  </Namespaces>
+  <Namespace name="::vl::presentation::helper_types">
+  </Namespaces>
+  <Namespace name="::vl::presentation::instance_loaders">
+  </Namespaces>
+  <Namespace name="::vl::presentation::templates">
+  </Namespaces>
+  <Namespace name="::vl::presentation::theme">
+  </Namespaces>
+  <Namespace name="::vl::presentation::types">
+  </Namespaces>
+  <Namespace name="::vl::presentation::user_resource">
+  </Namespaces>
+  <Namespace name="::vl::presentation::visitors">
+  </Namespaces>
+  <Namespace name="::vl::presentation::windows">
+  </Namespaces>
+  <Namespace name="::vl::reflection">
+  </Namespaces>
+  <Namespace name="::vl::reflection::description">
+  </Namespaces>
+  <Namespace name="::vl_workflow_global">
+  </Namespaces>
+</Reference>

@@ -1,1 +1,10 @@
-<Reference/>
+<Reference>
+  <Namespace name="::">
+  </Namespaces>
+  <Namespace name="::vl">
+  </Namespaces>
+  <Namespace name="::vl::regex">
+  </Namespaces>
+  <Namespace name="::vl::regex_internal">
+  </Namespaces>
+</Reference>

@@ -1,1 +1,18 @@
-<Reference/>
+<Reference>
+  <Namespace name="::">
+  </Namespaces>
+  <Namespace name="::vl">
+  </Namespaces>
+  <Namespace name="::vl::filesystem">
+  </Namespaces>
+  <Namespace name="::vl::stream">
+  </Namespaces>
+  <Namespace name="::vl::stream::internal">
+  </Namespaces>
+  <Namespace name="::vl::stream::lzw">
+  </Namespaces>
+  <Namespace name="::vl::stream::monospace_tabling">
+  </Namespaces>
+  <Namespace name="::vl::threading_internal">
+  </Namespaces>
+</Reference>
