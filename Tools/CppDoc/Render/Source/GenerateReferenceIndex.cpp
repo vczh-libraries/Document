@@ -1039,6 +1039,8 @@ void GenerateReferenceIndex(
 			{
 				writer.WriteString(L"  <category name=\"");
 				writer.WriteString(fileGroup->name);
+				writer.WriteLine(L"\" file=\"");
+				writer.WriteString(fileGroup->uniqueId);
 				writer.WriteLine(L"\"/>");
 			}
 		}
@@ -1081,7 +1083,7 @@ void GenerateReferenceIndex(
 					}
 				}
 
-				FileStream fileStream((pathReference / (fileGroup->name + L".xml")).GetFullPath(), FileStream::WriteOnly);
+				FileStream fileStream((pathReference / (fileGroup->uniqueId + L".xml")).GetFullPath(), FileStream::WriteOnly);
 				Utf8Encoder encoder;
 				EncoderStream encoderStream(fileStream, encoder);
 				StreamWriter writer(encoderStream);
