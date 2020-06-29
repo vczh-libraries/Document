@@ -6,4 +6,4 @@ Ptr<EventHandler> Add(
     void( C:: * function)(
 TArgs...)
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="Event.h" declId="NI$vl::EventHandler"/></seealsos></Document>
+]]></signature><seealsos><symbol declFile="Event.h" declId="NI$vl::EventHandler"/><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

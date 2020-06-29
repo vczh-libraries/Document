@@ -3,4 +3,4 @@
     WString const & find,
     Normalization normalization
 ) const;
-]]></signature><seealsos><symbol docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::Locale::Normalization" declFile="Locale.h" declId="NI$vl::Locale::Normalization"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::Locale::Normalization" declFile="Locale.h" declId="NI$vl::Locale::Normalization"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

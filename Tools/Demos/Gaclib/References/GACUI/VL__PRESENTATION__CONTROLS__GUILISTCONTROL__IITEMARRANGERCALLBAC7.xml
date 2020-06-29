@@ -2,4 +2,4 @@
     vint itemIndex,
     compositions::GuiBoundsComposition * itemComposition
 );
-]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/><symbol declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ItemStyle"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/><symbol declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ItemStyle"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

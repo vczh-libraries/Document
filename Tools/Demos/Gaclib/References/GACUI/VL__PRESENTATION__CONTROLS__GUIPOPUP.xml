@@ -3,4 +3,4 @@
  </summary><signature><![CDATA[class GuiPopup
     : GuiWindow
     , Description<GuiPopup>;
-]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiPopup" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiPopup"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/></basetypes></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiPopup" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiPopup"/></seealsos><basetypes><symbol docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

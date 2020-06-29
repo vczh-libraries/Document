@@ -2,4 +2,4 @@
     TextPos caret,
     bool frontSide
 );
-]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

@@ -205,12 +205,12 @@ void IndexCppCode(
 	);
 	progressReporter.FinishPhase();
 
-	Console::WriteLine(L"        ReferenceIndex.html");
+	Console::WriteLine(L"        ReferenceIndex.xml");
 	GenerateReferenceIndex(
 		global,
 		indexResult,
 		rootGroup,
-		folderOutput.GetFilePath() / L"ReferenceIndex.html",
+		folderOutput.GetFilePath() / L"ReferenceIndex.xml",
 		folderReference.GetFilePath(),
 		fileGroups,
 		predefinedFileGroups,

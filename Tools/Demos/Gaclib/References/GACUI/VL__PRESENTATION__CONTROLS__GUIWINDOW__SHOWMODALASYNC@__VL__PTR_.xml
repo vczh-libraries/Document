@@ -3,4 +3,4 @@
  </summary><returns>Returns true if the size box is visible.</returns><param name="owner">The window to disable as a parent window.</param><signature><![CDATA[Ptr<reflection::description::IAsync> ShowModalAsync(
     GuiWindow * owner
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IAsync"/><symbol docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/><symbol declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IAsync"/></seealsos></Document>

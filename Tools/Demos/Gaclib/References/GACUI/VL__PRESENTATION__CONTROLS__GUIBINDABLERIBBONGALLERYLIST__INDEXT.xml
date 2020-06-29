@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::IndexToGalleryPos@::vl::presentation::controls::GalleryPos(::vl::vint)" accessor="public" category="Function" name="IndexToGalleryPos"><summary>Convert an item index to a gallery item position.</summary><returns>The gallery item position.</returns><param name="index">The item index.</param><signature><![CDATA[GalleryPos IndexToGalleryPos(
     vint index
 );
-]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::presentation::controls::GalleryPos" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GalleryPos"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GalleryPos" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GalleryPos"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

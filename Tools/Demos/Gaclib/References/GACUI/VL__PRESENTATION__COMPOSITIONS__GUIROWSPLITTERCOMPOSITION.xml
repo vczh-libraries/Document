@@ -3,4 +3,4 @@
  </summary><signature><![CDATA[class GuiRowSplitterComposition
     : GuiTableSplitterCompositionBase
     , Description<GuiRowSplitterComposition>;
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiRowSplitterComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiRowSplitterComposition"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableSplitterCompositionBase"/></basetypes></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiRowSplitterComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiRowSplitterComposition"/></seealsos><basetypes><symbol declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableSplitterCompositionBase"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

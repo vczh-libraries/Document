@@ -2,4 +2,4 @@
     collections::IEnumerable<WString> const & tokens,
     RegexProc _proc
 );
-]]></signature><seealsos><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::regex::RegexProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol docId="vl::regex::RegexProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc"/></seealsos></Document>

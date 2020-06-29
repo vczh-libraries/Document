@@ -3,4 +3,4 @@
  </summary><returns>The screen object.</returns><param name="index">The specified screen index.</param><signature><![CDATA[INativeScreen * GetScreen(
     vint index
 );
-]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

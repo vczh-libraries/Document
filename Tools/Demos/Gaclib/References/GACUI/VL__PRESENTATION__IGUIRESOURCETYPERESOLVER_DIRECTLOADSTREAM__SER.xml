@@ -3,4 +3,4 @@
     Ptr<DescriptableObject> content,
     stream::IStream & binaryStream
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/><symbol docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/><symbol docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/><symbol docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>

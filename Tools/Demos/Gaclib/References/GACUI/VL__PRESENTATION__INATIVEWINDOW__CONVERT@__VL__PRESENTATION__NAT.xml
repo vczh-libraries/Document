@@ -3,4 +3,4 @@
  </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativePoint Convert(
     Point value
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>

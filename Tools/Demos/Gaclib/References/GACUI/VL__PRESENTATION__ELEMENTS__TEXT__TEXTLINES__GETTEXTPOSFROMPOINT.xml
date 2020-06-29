@@ -3,4 +3,4 @@
  </summary><returns>The text position.</returns><param name="point">The specified point, in pixel.</param><signature><![CDATA[TextPos GetTextPosFromPoint(
     Point point
 );
-]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

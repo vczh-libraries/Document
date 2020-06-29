@@ -2,4 +2,4 @@
     theme::ThemeName themeName,
     GuiListControl::IItemProvider * _itemProvider
 );
-]]></signature><seealsos><symbol declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/><symbol docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/><symbol declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>

@@ -2,4 +2,4 @@
     theme::ThemeName themeName,
     Ptr<tree::INodeRootProvider> _nodeRootProvider
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/><symbol docId="vl::presentation::controls::tree::INodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeRootProvider"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::tree::INodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeRootProvider"/><symbol declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>

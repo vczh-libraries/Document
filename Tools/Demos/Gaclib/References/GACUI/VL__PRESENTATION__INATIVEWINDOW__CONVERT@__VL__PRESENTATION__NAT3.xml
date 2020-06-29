@@ -3,4 +3,4 @@
  </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativeMargin Convert(
     Margin value
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativeMargin"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>
+]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativeMargin"/></seealsos></Document>

@@ -2,4 +2,4 @@
     : Object
     , IDataSorter
     , Description<DataSorterBase>;
-]]></signature><seealsos><symbol docId="vl::presentation::controls::list::DataSorterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataSorterBase"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataSorter"/></basetypes></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::list::DataSorterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataSorterBase"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataSorter"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

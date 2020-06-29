@@ -3,4 +3,4 @@
  </summary><param name="window">The specified window.</param><returns>Returns the render target.</returns><signature><![CDATA[IGuiGraphicsRenderTarget * GetRenderTarget(
     INativeWindow * window
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/><symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>

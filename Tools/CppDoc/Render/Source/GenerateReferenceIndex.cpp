@@ -757,7 +757,12 @@ void ValidateAndFixDocumentRecord(
 		{
 			auto xmlSeeAlsos = MakePtr<XmlElement>();
 			xmlSeeAlsos->name.value = L"seealsos";
-			CopyFrom(xmlSeeAlsos->subNodes, From(seeAlsos).Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); }));
+			CopyFrom(
+				xmlSeeAlsos->subNodes,
+				From(seeAlsos)
+					.OrderBy([](Symbol* a, Symbol* b) {return WString::Compare(a->uniqueId, b->uniqueId); })
+					.Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); })
+			);
 
 			xmlDocument->rootElement->subNodes.Add(xmlSeeAlsos);
 		}
@@ -765,7 +770,12 @@ void ValidateAndFixDocumentRecord(
 		{
 			auto xmlBaseTypes = MakePtr<XmlElement>();
 			xmlBaseTypes->name.value = L"basetypes";
-			CopyFrom(xmlBaseTypes->subNodes, From(baseTypes).Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); }));
+			CopyFrom(
+				xmlBaseTypes->subNodes,
+				From(baseTypes)
+					.OrderBy([](Symbol* a, Symbol* b) {return WString::Compare(a->uniqueId, b->uniqueId); })
+					.Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); })
+			);
 
 			xmlDocument->rootElement->subNodes.Add(xmlBaseTypes);
 		}
@@ -830,7 +840,7 @@ void GenerateReferenceIndex(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
 	Ptr<SymbolGroup> rootGroup,
-	FilePath pathHtml,
+	FilePath pathXml,
 	FilePath pathReference,
 	FileGroupConfig& fileGroups,
 	SortedList<WString>& predefinedGroups,
@@ -847,5 +857,35 @@ void GenerateReferenceIndex(
 			Folder(pathReference / fileGroup->uniqueId).Create(true);
 			RenderDocumentRecord(global, result, parsingTable, fileGroup, fileGroup->uniqueId, pathReference, progressReporter, writtenReferenceCount);
 		}
+	}
+
+	{
+		FileStream fileStream(pathXml.GetFullPath(), FileStream::WriteOnly);
+		Utf8Encoder encoder;
+		EncoderStream encoderStream(fileStream, encoder);
+		StreamWriter referenceWriter(encoderStream);
+
+		auto xmlCategories = MakePtr<XmlElement>();
+		xmlCategories->name.value = L"Categories";
+
+		for (vint i = 0; i < rootGroup->children.Count(); i++)
+		{
+			auto fileGroup = rootGroup->children[i];
+			if (predefinedGroups.Contains(fileGroup->name))
+			{
+				auto xmlCategory = MakePtr<XmlElement>();
+				xmlCategory->name.value = L"Category";
+				xmlCategories->subNodes.Add(xmlCategory);
+
+				auto attr = MakePtr<XmlAttribute>();
+				attr->name.value = L"Name";
+				attr->value.value = fileGroup->name;
+				xmlCategory->attributes.Add(attr);
+			}
+		}
+
+		auto xmlDocument = MakePtr<XmlDocument>();
+		xmlDocument->rootElement = xmlCategories;
+		XmlPrint(xmlDocument, referenceWriter);
 	}
 }

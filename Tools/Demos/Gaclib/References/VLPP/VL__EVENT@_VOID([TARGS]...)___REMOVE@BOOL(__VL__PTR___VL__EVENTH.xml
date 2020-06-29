@@ -1,4 +1,4 @@
 <Document symbolId="vl::Event@&lt;void([TArgs]...)&gt;::Remove@bool(::vl::Ptr&lt;::vl::EventHandler&gt;)" accessor="public" category="Function" name="Remove"><summary>Remove a callback.</summary><returns>Returns true if this operation succeeded.</returns><param name="handler">The event handler representing the callback.</param><signature><![CDATA[bool Remove(
     Ptr<EventHandler> handler
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="Event.h" declId="NI$vl::EventHandler"/></seealsos></Document>
+]]></signature><seealsos><symbol declFile="Event.h" declId="NI$vl::EventHandler"/><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

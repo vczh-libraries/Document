@@ -2,4 +2,4 @@
     SemanticColorizeContext & context,
     RepeatingParsingOutput const & input
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::RepeatingParsingOutput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingOutput"/><symbol docId="vl::presentation::controls::GuiGrammarColorizer::SemanticColorizeContext" declFile="GuiLanguageColorizer.h" declId="NI$vl::presentation::controls::GuiGrammarColorizer::SemanticColorizeContext"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiGrammarColorizer::SemanticColorizeContext" declFile="GuiLanguageColorizer.h" declId="NI$vl::presentation::controls::GuiGrammarColorizer::SemanticColorizeContext"/><symbol docId="vl::presentation::controls::RepeatingParsingOutput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingOutput"/></seealsos></Document>

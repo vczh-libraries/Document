@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::GuiResource" accessor="" category="Class" name="GuiResource"><summary>Resource. A resource is a root resource folder that does not have a name.</summary><signature><![CDATA[class GuiResource
     : GuiResourceFolder
     , Description<GuiResource>;
-]]></signature><seealsos><symbol docId="vl::presentation::GuiResource" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResource"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::presentation::GuiResourceFolder" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceFolder"/></basetypes></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::GuiResource" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResource"/></seealsos><basetypes><symbol docId="vl::presentation::GuiResourceFolder" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceFolder"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

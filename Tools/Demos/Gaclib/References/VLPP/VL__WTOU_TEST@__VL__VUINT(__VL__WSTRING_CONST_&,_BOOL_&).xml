@@ -2,4 +2,4 @@
     WString const & string,
     bool & success
 );
-]]></signature><seealsos><symbol docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>

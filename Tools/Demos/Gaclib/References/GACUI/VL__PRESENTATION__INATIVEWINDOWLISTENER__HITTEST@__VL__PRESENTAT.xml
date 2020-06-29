@@ -3,4 +3,4 @@
  </summary><returns>Returns the hit test result. If &quot;NoDecision&quot; is returned, the native window provider should call the OS window layer to do the hit test.</returns><param name="location">The location to do the hit test. This location is in the window space (not the client space).</param><signature><![CDATA[HitTestResult HitTest(
     NativePoint location
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/><symbol docId="vl::presentation::INativeWindowListener::HitTestResult" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener::HitTestResult"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::presentation::INativeWindowListener::HitTestResult" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener::HitTestResult"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>

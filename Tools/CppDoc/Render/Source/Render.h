@@ -249,6 +249,8 @@ struct SymbolGroup
 	WString							name;								// for SymbolGroupKind::Group/Text/SymbolAndText
 	Symbol*							symbol = nullptr;					// for SymbolGroupKind::Symbol/SymbolAndText
 	bool							braces = false;						// switch of generate braces in SymbolIndex.html
+	bool							hasDocument = false;				// true if assignedDocument is true or hasDocument in any children is true
+	bool							assignedDocument = false;			// true if a document is assigned to this node
 	List<Ptr<SymbolGroup>>			children;							// child symbols
 };
 
@@ -257,6 +259,6 @@ using FileGroupConfig = List<Tuple<WString, WString>>;
 
 extern void											GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGroupConfig& fileGroups);
 extern Ptr<SymbolGroup>								GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FilePath pathFragment, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
-extern void											GenerateReferenceIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Ptr<SymbolGroup> rootGroup, FilePath pathHtml, FilePath pathReference, FileGroupConfig& fileGroups, SortedList<WString>& predefinedGroups, IProgressReporter* progressReporter);
+extern void											GenerateReferenceIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Ptr<SymbolGroup> rootGroup, FilePath pathXml, FilePath pathReference, FileGroupConfig& fileGroups, SortedList<WString>& predefinedGroups, IProgressReporter* progressReporter);
 
 #endif

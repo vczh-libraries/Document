@@ -4,4 +4,4 @@
 LazyList<Pair<T, U>> Pairwise(
     IEnumerable<U> const & remains
 ) const;
-]]></signature><seealsos><symbol docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/></seealsos></Document>

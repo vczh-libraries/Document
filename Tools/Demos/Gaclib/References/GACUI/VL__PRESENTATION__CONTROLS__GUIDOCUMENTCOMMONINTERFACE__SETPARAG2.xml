@@ -3,4 +3,4 @@
     TextPos end,
     collections::Array<Nullable<Alignment>> const & alignments
 );
-]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol docId="vl::collections::Array" declFile="List.h" declId="NI$vl::collections::Array"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/><symbol docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/></seealsos></Document>
+]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol docId="vl::collections::Array" declFile="List.h" declId="NI$vl::collections::Array"/><symbol docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
