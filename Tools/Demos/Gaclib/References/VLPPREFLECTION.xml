@@ -1,0 +1,32 @@
+<reference>
+  <namespace name="::vl::reflection">
+    <document name="class DescriptableObject" file="VL__REFLECTION__DESCRIPTABLEOBJECT">
+      <document name="function Dispose" file="VL__REFLECTION__DESCRIPTABLEOBJECT__DISPOSE@BOOL(BOOL)"/>
+      <document name="function GetInternalProperty" file="VL__REFLECTION__DESCRIPTABLEOBJECT__GETINTERNALPROPERTY@__VL__PT"/>
+      <document name="function GetTypeDescriptor" file="VL__REFLECTION__DESCRIPTABLEOBJECT__GETTYPEDESCRIPTOR@__VL__REFL"/>
+      <document name="function SafeAggregationCast" file="VL__REFLECTION__DESCRIPTABLEOBJECT__SAFEAGGREGATIONCAST@[T]__()"/>
+      <document name="function SafeGetAggregationRoot" file="VL__REFLECTION__DESCRIPTABLEOBJECT__SAFEGETAGGREGATIONROOT@__VL_"/>
+      <document name="function SetInternalProperty" file="VL__REFLECTION__DESCRIPTABLEOBJECT__SETINTERNALPROPERTY@VOID(__V"/>
+    </document>
+    <document name="class Description" file="VL__REFLECTION__DESCRIPTION"/>
+    <document name="class IDescriptable" file="VL__REFLECTION__IDESCRIPTABLE"/>
+  </namespace>
+  <namespace name="::vl::reflection::description">
+    <document name="function BoxParameter" file="VL__REFLECTION__DESCRIPTION__BOXPARAMETER@__VL__REFLECTION__DESC"/>
+    <document name="function BoxValue" file="VL__REFLECTION__DESCRIPTION__BOXVALUE@__VL__REFLECTION__DESCRIPT"/>
+    <document name="function UnboxParameter" file="VL__REFLECTION__DESCRIPTION__UNBOXPARAMETER@VOID(__VL__REFLECTIO"/>
+    <document name="function UnboxValue" file="VL__REFLECTION__DESCRIPTION__UNBOXVALUE@[T](__VL__REFLECTION__DE"/>
+    <document name="class Value" file="VL__REFLECTION__DESCRIPTION__VALUE">
+      <document name="function DeleteRawPtr" file="VL__REFLECTION__DESCRIPTION__VALUE__DELETERAWPTR@BOOL()"/>
+      <document name="function From" file="VL__REFLECTION__DESCRIPTION__VALUE__FROM@__VL__REFLECTION__DESCR"/>
+      <document name="function From" file="VL__REFLECTION__DESCRIPTION__VALUE__FROM@__VL__REFLECTION__DESCR2"/>
+      <document name="function From" file="VL__REFLECTION__DESCRIPTION__VALUE__FROM@__VL__REFLECTION__DESCR3"/>
+      <document name="function GetBoxedValue" file="VL__REFLECTION__DESCRIPTION__VALUE__GETBOXEDVALUE@__VL__PTR___VL"/>
+      <document name="function GetRawPtr" file="VL__REFLECTION__DESCRIPTION__VALUE__GETRAWPTR@__VL__REFLECTION__"/>
+      <document name="function GetSharedPtr" file="VL__REFLECTION__DESCRIPTION__VALUE__GETSHAREDPTR@__VL__PTR___VL_"/>
+      <document name="function GetValueType" file="VL__REFLECTION__DESCRIPTION__VALUE__GETVALUETYPE@__VL__REFLECTIO"/>
+      <document name="function IsNull" file="VL__REFLECTION__DESCRIPTION__VALUE__ISNULL@BOOL()"/>
+      <document name="enum ValueType" file="VL__REFLECTION__DESCRIPTION__VALUE__VALUETYPE"/>
+    </document>
+  </namespace>
+</reference>

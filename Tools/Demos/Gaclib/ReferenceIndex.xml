@@ -1,9 +1,9 @@
 <categories>
-  <category name="Vlpp"/>
-  <category name="VlppOS"/>
-  <category name="VlppRegex"/>
-  <category name="VlppReflection"/>
-  <category name="VlppParser"/>
-  <category name="Workflow"/>
-  <category name="GacUI"/>
+  <category name="Vlpp" file="VLPP"/>
+  <category name="VlppOS" file="VLPPOS"/>
+  <category name="VlppRegex" file="VLPPREGEX"/>
+  <category name="VlppReflection" file="VLPPREFLECTION"/>
+  <category name="VlppParser" file="VLPPPARSER"/>
+  <category name="Workflow" file="WORKFLOW"/>
+  <category name="GacUI" file="GACUI"/>
 </categories>

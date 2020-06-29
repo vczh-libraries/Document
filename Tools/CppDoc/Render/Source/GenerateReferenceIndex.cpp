@@ -1039,7 +1039,7 @@ void GenerateReferenceIndex(
 			{
 				writer.WriteString(L"  <category name=\"");
 				writer.WriteString(fileGroup->name);
-				writer.WriteLine(L"\" file=\"");
+				writer.WriteString(L"\" file=\"");
 				writer.WriteString(fileGroup->uniqueId);
 				writer.WriteLine(L"\"/>");
 			}
