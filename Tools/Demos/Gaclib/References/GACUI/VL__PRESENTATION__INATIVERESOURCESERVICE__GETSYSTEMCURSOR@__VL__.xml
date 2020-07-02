@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeResourceService::GetSystemCursor@::vl::presentation::INativeCursor *(::vl::presentation::INativeCursor::SystemCursorType)" accessor="public" category="Function" name="GetSystemCursor"><summary>
+<Document symbolId="vl::presentation::INativeResourceService::GetSystemCursor@::vl::presentation::INativeCursor *(::vl::presentation::INativeCursor::SystemCursorType)" accessor="public" category="Function" name="GetSystemCursor" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeResourceService::GetSystemCursor@::vl::presentation::INativeCursor *(::vl::presentation::INativeCursor::SystemCursorType)[decl0]"><summary>
  Get a cached cursor object using a predefined system cursor type;
  </summary><returns>The cached cursor object.</returns><param name="type">The predefined system cursor type.</param><signature><![CDATA[INativeCursor * GetSystemCursor(
     INativeCursor::SystemCursorType type

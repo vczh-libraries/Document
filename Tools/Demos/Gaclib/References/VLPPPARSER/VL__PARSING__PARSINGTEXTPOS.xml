@@ -1,2 +1,2 @@
-<Document symbolId="vl::parsing::ParsingTextPos" accessor="" category="Struct" name="ParsingTextPos"><summary>A type representing text position.</summary><signature><![CDATA[struct ParsingTextPos;
+<Document symbolId="vl::parsing::ParsingTextPos" accessor="" category="Struct" name="ParsingTextPos" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextPos"><summary>A type representing text position.</summary><signature><![CDATA[struct ParsingTextPos;
 ]]></signature></Document>

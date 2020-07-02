@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor"><summary>
+<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetColor@::vl::presentation::Color()[decl0]"><summary>
  Get the text color.
  </summary><returns>The text color.</returns><signature><![CDATA[Color GetColor(
 );

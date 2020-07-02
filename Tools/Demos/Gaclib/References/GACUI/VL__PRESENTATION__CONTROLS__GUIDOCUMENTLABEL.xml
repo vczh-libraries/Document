@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentLabel" accessor="" category="Class" name="GuiDocumentLabel"><summary>Static document viewer for displaying <symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/>.</summary><signature><![CDATA[class GuiDocumentLabel
+<Document symbolId="vl::presentation::controls::GuiDocumentLabel" accessor="" category="Class" name="GuiDocumentLabel" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentLabel"><summary>Static document viewer for displaying <symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/>.</summary><signature><![CDATA[class GuiDocumentLabel
     : GuiControl
     , GuiDocumentCommonInterface
     , Description<GuiDocumentLabel>;

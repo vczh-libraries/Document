@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::ArrangerChanged" accessor="public" category="Variable" name="ArrangerChanged"><summary>Arranger changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ArrangerChanged;
+<Document symbolId="vl::presentation::controls::GuiListControl::ArrangerChanged" accessor="public" category="Variable" name="ArrangerChanged" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ArrangerChanged"><summary>Arranger changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ArrangerChanged;
 ]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

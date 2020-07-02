@@ -1,3 +1,3 @@
-<Document symbolId="vl::collections::LazyList::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create an empty lazy list.</summary><signature><![CDATA[ LazyList(
+<Document symbolId="vl::collections::LazyList::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Operation.h" declId="FB$vl::collections::LazyList::$__ctor@()[impl0]"><summary>Create an empty lazy list.</summary><signature><![CDATA[ LazyList(
 );
 ]]></signature></Document>

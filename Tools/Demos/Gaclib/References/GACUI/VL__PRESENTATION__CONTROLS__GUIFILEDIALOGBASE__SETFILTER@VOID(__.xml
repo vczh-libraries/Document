@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetFilter@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetFilter"><summary>Set the filter. The filter is formed by pairs of filter name and wildcard concatenated by &quot;|&quot;, like &quot;Text Files (*.txt)|*.txt|All Files (*.*)|*.*&quot;.</summary><param name="value">The filter.</param><signature><![CDATA[void SetFilter(
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetFilter@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetFilter" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFileDialogBase::SetFilter@void(::vl::WString const &amp;)[decl0]"><summary>Set the filter. The filter is formed by pairs of filter name and wildcard concatenated by &quot;|&quot;, like &quot;Text Files (*.txt)|*.txt|All Files (*.*)|*.*&quot;.</summary><param name="value">The filter.</param><signature><![CDATA[void SetFilter(
     WString const & value
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &amp;)" accessor="public" category="Function" name="ReadAllTextByBom"><summary>Get the content of the file as text.</summary><returns>Returns false if this operation succeeded.</returns><param name="text">The content of the file.</param><signature><![CDATA[bool ReadAllTextByBom(
+<Document symbolId="vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &amp;)" accessor="public" category="Function" name="ReadAllTextByBom" declFile="FileSystem.h" declId="FB$vl::filesystem::File::ReadAllTextByBom@bool(::vl::WString &amp;)[decl0]"><summary>Get the content of the file as text.</summary><returns>Returns false if this operation succeeded.</returns><param name="text">The content of the file.</param><signature><![CDATA[bool ReadAllTextByBom(
     WString & text
 ) const;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

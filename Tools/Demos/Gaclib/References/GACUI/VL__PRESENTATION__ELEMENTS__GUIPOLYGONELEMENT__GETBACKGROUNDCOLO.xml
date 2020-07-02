@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiPolygonElement::GetBackgroundColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetBackgroundColor"><summary>
+<Document symbolId="vl::presentation::elements::GuiPolygonElement::GetBackgroundColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetBackgroundColor" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::GetBackgroundColor@::vl::presentation::Color()[decl0]"><summary>
  Get the background color.
  </summary><returns>The background color.</returns><signature><![CDATA[Color GetBackgroundColor(
 );

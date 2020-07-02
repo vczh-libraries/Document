@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::ListViewItem" accessor="" category="Class" name="ListViewItem"><summary>List view item.</summary><signature><![CDATA[class ListViewItem
+<Document symbolId="vl::presentation::controls::list::ListViewItem" accessor="" category="Class" name="ListViewItem" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewItem"><summary>List view item.</summary><signature><![CDATA[class ListViewItem
     : Object
     , Description<ListViewItem>;
 ]]></signature><seealsos><symbol name="ListViewItem" docId="vl::presentation::controls::list::ListViewItem" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewItem"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

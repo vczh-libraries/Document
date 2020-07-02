@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::Closing@void(bool &amp;)" accessor="public" category="Function" name="Closing"><summary>
+<Document symbolId="vl::presentation::INativeWindowListener::Closing@void(bool &amp;)" accessor="public" category="Function" name="Closing" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Closing@void(bool &amp;)[decl0]"><summary>
  Called when the window is closing.
  </summary><param name="cancel">Change the value to true to prevent the windows from being closed.</param><signature><![CDATA[void Closing(
     bool & cancel

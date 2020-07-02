@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::GetMaxLength@::vl::vint()" accessor="public" category="Function" name="GetMaxLength"><summary>Get the maximum length of this composition.</summary><returns>The maximum length of this composition.</returns><signature><![CDATA[vint GetMaxLength(
+<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::GetMaxLength@::vl::vint()" accessor="public" category="Function" name="GetMaxLength" declFile="GuiGraphicsSpecializedComposition.h" declId="FB$vl::presentation::compositions::GuiSideAlignedComposition::GetMaxLength@::vl::vint()[decl0]"><summary>Get the maximum length of this composition.</summary><returns>The maximum length of this composition.</returns><signature><![CDATA[vint GetMaxLength(
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

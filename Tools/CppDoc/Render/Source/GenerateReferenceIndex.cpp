@@ -824,6 +824,21 @@ void ValidateAndFixDocumentRecord(
 			att->value.value = symbol->name;
 			xmlDocument->rootElement->attributes.Add(att);
 		}
+		{
+			auto decl = symbol->GetAnyForwardDecl<Declaration>();
+			{
+				auto attr = MakePtr<XmlAttribute>();
+				attr->name.value = L"declFile";
+				attr->value.value = global->fileLines[global->declToFiles[{decl, nullptr}]]->htmlFileName;
+				xmlDocument->rootElement->attributes.Add(attr);
+			}
+			{
+				auto attr = MakePtr<XmlAttribute>();
+				attr->name.value = L"declId";
+				attr->value.value = GetDeclId({ decl,nullptr });
+				xmlDocument->rootElement->attributes.Add(attr);
+			}
+		}
 
 		SortedList<Symbol*> seeAlsos, baseTypes;
 		{

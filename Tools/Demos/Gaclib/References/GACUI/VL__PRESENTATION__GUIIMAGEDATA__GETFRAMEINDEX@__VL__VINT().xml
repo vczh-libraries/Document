@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::GuiImageData::GetFrameIndex@::vl::vint()" accessor="public" category="Function" name="GetFrameIndex"><summary>Get the specified frame index.</summary><returns>The specified frame index.</returns><signature><![CDATA[vint GetFrameIndex(
+<Document symbolId="vl::presentation::GuiImageData::GetFrameIndex@::vl::vint()" accessor="public" category="Function" name="GetFrameIndex" declFile="GuiResource.h" declId="FB$vl::presentation::GuiImageData::GetFrameIndex@::vl::vint()[decl0]"><summary>Get the specified frame index.</summary><returns>The specified frame index.</returns><signature><![CDATA[vint GetFrameIndex(
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

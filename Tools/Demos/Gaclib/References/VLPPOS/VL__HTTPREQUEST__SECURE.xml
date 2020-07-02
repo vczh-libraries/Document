@@ -1,2 +1,2 @@
-<Document symbolId="vl::HttpRequest::secure" accessor="public" category="Variable" name="secure"><summary>Set to true if the request uses SSL.</summary><signature><![CDATA[bool secure;
+<Document symbolId="vl::HttpRequest::secure" accessor="public" category="Variable" name="secure" declFile="HttpUtility.h" declId="NI$vl::HttpRequest::secure"><summary>Set to true if the request uses SSL.</summary><signature><![CDATA[bool secure;
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTab::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiTab(
+<Document symbolId="vl::presentation::controls::GuiTab::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiTab::$__ctor@(::vl::presentation::theme::ThemeName)[decl0]"><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiTab(
     theme::ThemeName themeName
 );
 ]]></signature><seealsos><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>

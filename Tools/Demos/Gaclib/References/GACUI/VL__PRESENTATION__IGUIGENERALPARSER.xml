@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::IGuiGeneralParser" accessor="" category="Class" name="IGuiGeneralParser"><summary>Represents a parser.</summary><signature><![CDATA[class IGuiGeneralParser
+<Document symbolId="vl::presentation::IGuiGeneralParser" accessor="" category="Class" name="IGuiGeneralParser" declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiGeneralParser"><summary>Represents a parser.</summary><signature><![CDATA[class IGuiGeneralParser
     : IDescriptable
     , Description<IGuiGeneralParser>;
 ]]></signature><seealsos><symbol name="IGuiGeneralParser" docId="vl::presentation::IGuiGeneralParser" declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiGeneralParser"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::IStream" accessor="" category="Class" name="IStream"><summary>
+<Document symbolId="vl::stream::IStream" accessor="" category="Class" name="IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"><summary>
  Interface for streams. Stream functions are grouped into 5 categories:
  1) Feature testing functions.
  2) Read functions, available only if <symbol name="CanRead" docId="vl::stream::IStream::CanRead@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanRead@bool()[decl0]"/> returns true.

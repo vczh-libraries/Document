@@ -1,3 +1,3 @@
-<Document symbolId="vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()" accessor="public" category="Function" name="GetFolder"><summary>Get the containing folder of this file path.</summary><returns>The containing folder.</returns><signature><![CDATA[FilePath GetFolder(
+<Document symbolId="vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()" accessor="public" category="Function" name="GetFolder" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()[decl0]"><summary>Get the containing folder of this file path.</summary><returns>The containing folder.</returns><signature><![CDATA[FilePath GetFolder(
 ) const;
 ]]></signature><seealsos><symbol name="FilePath" docId="vl::filesystem::FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"/></seealsos></Document>

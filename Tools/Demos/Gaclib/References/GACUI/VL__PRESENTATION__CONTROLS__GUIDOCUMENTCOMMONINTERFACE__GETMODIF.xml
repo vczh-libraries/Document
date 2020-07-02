@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetModified@bool()" accessor="public" category="Function" name="GetModified"><summary>Test is the text box modified.</summary><returns>Returns true if the text box is modified.</returns><signature><![CDATA[bool GetModified(
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetModified@bool()" accessor="public" category="Function" name="GetModified" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::GetModified@bool()[decl0]"><summary>Test is the text box modified.</summary><returns>Returns true if the text box is modified.</returns><signature><![CDATA[bool GetModified(
 );
 ]]></signature></Document>

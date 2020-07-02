@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::GetWidthPageSize@double()" accessor="public" category="Function" name="GetWidthPageSize"><summary>Get the page size to decide the horizontal size. Value in [0, 1].</summary><returns>The page size to decide the horizontal size.</returns><signature><![CDATA[double GetWidthPageSize(
+<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition::GetWidthPageSize@double()" accessor="public" category="Function" name="GetWidthPageSize" declFile="GuiGraphicsSpecializedComposition.h" declId="FB$vl::presentation::compositions::GuiPartialViewComposition::GetWidthPageSize@double()[decl0]"><summary>Get the page size to decide the horizontal size. Value in [0, 1].</summary><returns>The page size to decide the horizontal size.</returns><signature><![CDATA[double GetWidthPageSize(
 );
 ]]></signature></Document>

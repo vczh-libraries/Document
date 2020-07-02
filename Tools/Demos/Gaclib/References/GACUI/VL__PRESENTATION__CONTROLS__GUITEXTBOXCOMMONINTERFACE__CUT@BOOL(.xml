@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Cut@bool()" accessor="public" category="Function" name="Cut"><summary>Cut the selection text.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Cut(
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::Cut@bool()" accessor="public" category="Function" name="Cut" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::Cut@bool()[decl0]"><summary>Cut the selection text.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Cut(
 );
 ]]></signature></Document>

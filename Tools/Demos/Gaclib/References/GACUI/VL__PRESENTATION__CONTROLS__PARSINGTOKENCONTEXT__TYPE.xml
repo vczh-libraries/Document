@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::ParsingTokenContext::type" accessor="public" category="Variable" name="type"><summary>Type of the parent.</summary><signature><![CDATA[WString type;
+<Document symbolId="vl::presentation::controls::ParsingTokenContext::type" accessor="public" category="Variable" name="type" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingTokenContext::type"><summary>Type of the parent.</summary><signature><![CDATA[WString type;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

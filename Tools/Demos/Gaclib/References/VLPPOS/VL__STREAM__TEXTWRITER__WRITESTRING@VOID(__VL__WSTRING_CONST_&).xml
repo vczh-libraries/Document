@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::TextWriter::WriteString@void(::vl::WString const &amp;)" accessor="public" category="Function" name="WriteString"><summary>Write a string.</summary><param name="string">The string to write.</param><signature><![CDATA[void WriteString(
+<Document symbolId="vl::stream::TextWriter::WriteString@void(::vl::WString const &amp;)" accessor="public" category="Function" name="WriteString" declFile="Accessor.h" declId="FB$vl::stream::TextWriter::WriteString@void(::vl::WString const &amp;)[decl0]"><summary>Write a string.</summary><param name="string">The string to write.</param><signature><![CDATA[void WriteString(
     WString const & string
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

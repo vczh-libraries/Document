@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetFocused@void(bool)" accessor="public" category="Function" name="SetFocused"><summary>
+<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetFocused@void(bool)" accessor="public" category="Function" name="SetFocused" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetFocused@void(bool)[decl0]"><summary>
  Set the focused state.
  </summary><param name="value">True if the element will be rendered as a focused element.</param><signature><![CDATA[void SetFocused(
     bool value

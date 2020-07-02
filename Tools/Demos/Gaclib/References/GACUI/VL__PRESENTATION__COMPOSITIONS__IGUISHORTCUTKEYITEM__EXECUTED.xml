@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyItem::Executed" accessor="public" category="Variable" name="Executed"><summary>Shortcut key executed event.</summary><signature><![CDATA[GuiNotifyEvent Executed;
+<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyItem::Executed" accessor="public" category="Variable" name="Executed" declFile="GuiGraphicsHost_ShortcutKey.h" declId="NI$vl::presentation::compositions::IGuiShortcutKeyItem::Executed"><summary>Shortcut key executed event.</summary><signature><![CDATA[GuiNotifyEvent Executed;
 ]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

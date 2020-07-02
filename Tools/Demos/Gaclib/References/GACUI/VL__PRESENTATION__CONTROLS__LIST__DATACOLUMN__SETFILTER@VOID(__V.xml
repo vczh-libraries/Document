@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::SetFilter@void(::vl::Ptr&lt;::vl::presentation::controls::list::IDataFilter&gt;)" accessor="public" category="Function" name="SetFilter"><summary>Set the filter for the column.</summary><param name="value">The filter.</param><signature><![CDATA[void SetFilter(
+<Document symbolId="vl::presentation::controls::list::DataColumn::SetFilter@void(::vl::Ptr&lt;::vl::presentation::controls::list::IDataFilter&gt;)" accessor="public" category="Function" name="SetFilter" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataColumn::SetFilter@void(::vl::Ptr&lt;::vl::presentation::controls::list::IDataFilter&gt;)[decl0]"><summary>Set the filter for the column.</summary><param name="value">The filter.</param><signature><![CDATA[void SetFilter(
     Ptr<IDataFilter> value
 );
 ]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IDataFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/></seealsos></Document>

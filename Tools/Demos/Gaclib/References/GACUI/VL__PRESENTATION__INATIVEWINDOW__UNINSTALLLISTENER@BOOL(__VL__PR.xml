@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)" accessor="public" category="Function" name="UninstallListener"><summary>
+<Document symbolId="vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)" accessor="public" category="Function" name="UninstallListener" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)[decl0]"><summary>
  Uninstall an message listener.
  </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The listener to uninstall.</param><signature><![CDATA[bool UninstallListener(
     INativeWindowListener * listener

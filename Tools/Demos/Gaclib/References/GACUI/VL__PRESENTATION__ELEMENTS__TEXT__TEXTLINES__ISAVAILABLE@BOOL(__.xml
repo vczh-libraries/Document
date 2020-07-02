@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines::IsAvailable@bool(::vl::presentation::TextPos)" accessor="public" category="Function" name="IsAvailable"><summary>
+<Document symbolId="vl::presentation::elements::text::TextLines::IsAvailable@bool(::vl::presentation::TextPos)" accessor="public" category="Function" name="IsAvailable" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::IsAvailable@bool(::vl::presentation::TextPos)[decl0]"><summary>
  Test is a text position available in the text lines.
  </summary><returns>Returns true if this position is available.</returns><param name="pos">The text position to test.</param><signature><![CDATA[bool IsAvailable(
     TextPos pos

@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexLexer" accessor="" category="Class" name="RegexLexer"><summary>Lexical analyzer.</summary><signature><![CDATA[class RegexLexer
+<Document symbolId="vl::regex::RegexLexer" accessor="" category="Class" name="RegexLexer" declFile="Regex.h" declId="NI$vl::regex::RegexLexer"><summary>Lexical analyzer.</summary><signature><![CDATA[class RegexLexer
     : Object
     , NotCopyable;
 ]]></signature><basetypes><symbol name="NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

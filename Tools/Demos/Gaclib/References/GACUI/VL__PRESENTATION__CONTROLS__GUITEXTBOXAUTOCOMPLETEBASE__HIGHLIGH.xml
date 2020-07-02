@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::HighlightList@void(::vl::WString const &amp;)" accessor="public" category="Function" name="HighlightList"><summary>Highlight a candidate item in the list.</summary><param name="editingText">The text to match an item.</param><signature><![CDATA[void HighlightList(
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::HighlightList@void(::vl::WString const &amp;)" accessor="public" category="Function" name="HighlightList" declFile="GuiTextAutoComplete.h" declId="FB$vl::presentation::controls::GuiTextBoxAutoCompleteBase::HighlightList@void(::vl::WString const &amp;)[decl0]"><summary>Highlight a candidate item in the list.</summary><param name="editingText">The text to match an item.</param><signature><![CDATA[void HighlightList(
     WString const & editingText
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

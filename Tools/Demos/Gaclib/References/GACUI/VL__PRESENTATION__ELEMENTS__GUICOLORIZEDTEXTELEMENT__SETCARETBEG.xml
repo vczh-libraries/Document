@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetCaretBegin@void(::vl::presentation::TextPos)" accessor="public" category="Function" name="SetCaretBegin"><summary>
+<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetCaretBegin@void(::vl::presentation::TextPos)" accessor="public" category="Function" name="SetCaretBegin" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetCaretBegin@void(::vl::presentation::TextPos)[decl0]"><summary>
  Set the begin position of the selection area.
  </summary><param name="value">The begin position of the selection area.</param><signature><![CDATA[void SetCaretBegin(
     TextPos value

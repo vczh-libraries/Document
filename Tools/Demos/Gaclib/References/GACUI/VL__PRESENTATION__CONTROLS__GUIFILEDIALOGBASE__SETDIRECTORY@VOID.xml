@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetDirectory@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetDirectory"><summary>Set the default folder.</summary><param name="value">The default folder.</param><signature><![CDATA[void SetDirectory(
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetDirectory@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetDirectory" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFileDialogBase::SetDirectory@void(::vl::WString const &amp;)[decl0]"><summary>Set the default folder.</summary><param name="value">The default folder.</param><signature><![CDATA[void SetDirectory(
     WString const & value
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

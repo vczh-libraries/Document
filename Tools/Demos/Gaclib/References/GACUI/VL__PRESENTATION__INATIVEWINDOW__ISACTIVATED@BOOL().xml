@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::IsActivated@bool()" accessor="public" category="Function" name="IsActivated"><summary>
+<Document symbolId="vl::presentation::INativeWindow::IsActivated@bool()" accessor="public" category="Function" name="IsActivated" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::IsActivated@bool()[decl0]"><summary>
  Test is the window activated.
  </summary><returns>Returns true if the window is activated.</returns><signature><![CDATA[bool IsActivated(
 );

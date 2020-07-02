@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::SetClientSize@void(::vl::presentation::NativeSize)" accessor="public" category="Function" name="SetClientSize"><summary>
+<Document symbolId="vl::presentation::INativeWindow::SetClientSize@void(::vl::presentation::NativeSize)" accessor="public" category="Function" name="SetClientSize" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetClientSize@void(::vl::presentation::NativeSize)[decl0]"><summary>
  Set the client size of the window.
  </summary><param name="size">The client size of the window.</param><signature><![CDATA[void SetClientSize(
     NativeSize size

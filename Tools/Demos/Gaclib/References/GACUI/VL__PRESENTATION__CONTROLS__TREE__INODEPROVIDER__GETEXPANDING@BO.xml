@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::tree::INodeProvider::GetExpanding@bool()" accessor="public" category="Function" name="GetExpanding"><summary>Get the expanding state of this node.</summary><returns>Returns true if this node is expanded.</returns><signature><![CDATA[bool GetExpanding(
+<Document symbolId="vl::presentation::controls::tree::INodeProvider::GetExpanding@bool()" accessor="public" category="Function" name="GetExpanding" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::tree::INodeProvider::GetExpanding@bool()[decl0]"><summary>Get the expanding state of this node.</summary><returns>Returns true if this node is expanded.</returns><signature><![CDATA[bool GetExpanding(
 );
 ]]></signature></Document>

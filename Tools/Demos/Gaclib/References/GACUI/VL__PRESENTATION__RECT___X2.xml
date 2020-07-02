@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::Rect_::x2" accessor="public" category="Variable" name="x2"><summary>
+<Document symbolId="vl::presentation::Rect_::x2" accessor="public" category="Variable" name="x2" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect_::x2"><summary>
  Left + Width.
  </summary><signature><![CDATA[T x2;
 ]]></signature></Document>

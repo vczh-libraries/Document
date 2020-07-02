@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)" accessor="public" category="Function" name="MouseMoving"><summary>
+<Document symbolId="vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)" accessor="public" category="Function" name="MouseMoving" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[decl0]"><summary>
  Called when the mouse is moving. To receive or not receive this message, use <symbol name="StartHookMouse" docId="vl::presentation::INativeInputService::StartHookMouse@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::StartHookMouse@void()[decl0]"/> or <symbol name="StopHookMouse" docId="vl::presentation::INativeInputService::StopHookMouse@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::StopHookMouse@void()[decl0]"/></summary><param name="position">The mouse position in the screen space.</param><signature><![CDATA[void MouseMoving(
     NativePoint position
 );

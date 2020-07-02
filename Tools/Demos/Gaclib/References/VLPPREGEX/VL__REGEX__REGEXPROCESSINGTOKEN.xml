@@ -1,2 +1,2 @@
-<Document symbolId="vl::regex::RegexProcessingToken" accessor="" category="Struct" name="RegexProcessingToken"><summary>Token information for <symbol name="extendProc" docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/>.</summary><signature><![CDATA[struct RegexProcessingToken;
+<Document symbolId="vl::regex::RegexProcessingToken" accessor="" category="Struct" name="RegexProcessingToken" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken"><summary>Token information for <symbol name="extendProc" docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/>.</summary><signature><![CDATA[struct RegexProcessingToken;
 ]]></signature></Document>

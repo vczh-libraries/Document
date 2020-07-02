@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::FontProperties::strikeline" accessor="public" category="Variable" name="strikeline"><summary>
+<Document symbolId="vl::presentation::FontProperties::strikeline" accessor="public" category="Variable" name="strikeline" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties::strikeline"><summary>
  True if the font has a strikeline.
  </summary><signature><![CDATA[bool strikeline;
 ]]></signature></Document>

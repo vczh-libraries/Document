@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiShortcutKeyManager::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the shortcut key manager.</summary><signature><![CDATA[ GuiShortcutKeyManager(
+<Document symbolId="vl::presentation::compositions::GuiShortcutKeyManager::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="GuiGraphicsHost_ShortcutKey.h" declId="FB$vl::presentation::compositions::GuiShortcutKeyManager::$__ctor@()[decl0]"><summary>Create the shortcut key manager.</summary><signature><![CDATA[ GuiShortcutKeyManager(
 );
 ]]></signature></Document>

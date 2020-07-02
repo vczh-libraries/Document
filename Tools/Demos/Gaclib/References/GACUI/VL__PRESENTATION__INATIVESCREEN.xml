@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeScreen" accessor="" category="Class" name="INativeScreen"><summary>
+<Document symbolId="vl::presentation::INativeScreen" accessor="" category="Class" name="INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"><summary>
  Represents a screen.
  </summary><signature><![CDATA[class INativeScreen
     : IDescriptable

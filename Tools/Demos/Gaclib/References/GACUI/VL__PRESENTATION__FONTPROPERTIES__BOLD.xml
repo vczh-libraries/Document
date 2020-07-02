@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::FontProperties::bold" accessor="public" category="Variable" name="bold"><summary>
+<Document symbolId="vl::presentation::FontProperties::bold" accessor="public" category="Variable" name="bold" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties::bold"><summary>
  True if the font is bold.
  </summary><signature><![CDATA[bool bold;
 ]]></signature></Document>

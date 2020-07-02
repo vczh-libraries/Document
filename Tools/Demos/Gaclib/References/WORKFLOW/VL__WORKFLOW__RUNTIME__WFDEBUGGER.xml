@@ -1,4 +1,4 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger" accessor="" category="Class" name="WfDebugger"><summary>Workflow debugger.</summary><signature><![CDATA[class WfDebugger
+<Document symbolId="vl::workflow::runtime::WfDebugger" accessor="" category="Class" name="WfDebugger" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::WfDebugger"><summary>Workflow debugger.</summary><signature><![CDATA[class WfDebugger
     : Object
     , IWfDebuggerCallback;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IWfDebuggerCallback" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::IWfDebuggerCallback"/></basetypes></Document>

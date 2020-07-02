@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::GetLayoutProvider@::vl::presentation::elements::IGuiGraphicsLayoutProvider *()" accessor="public" category="Function" name="GetLayoutProvider"><summary>
+<Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::GetLayoutProvider@::vl::presentation::elements::IGuiGraphicsLayoutProvider *()" accessor="public" category="Function" name="GetLayoutProvider" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::GetLayoutProvider@::vl::presentation::elements::IGuiGraphicsLayoutProvider *()[decl0]"><summary>
  Get the renderer awared rich text document layout engine provider object.
  </summary><returns>Returns the layout provider.</returns><signature><![CDATA[IGuiGraphicsLayoutProvider * GetLayoutProvider(
 );

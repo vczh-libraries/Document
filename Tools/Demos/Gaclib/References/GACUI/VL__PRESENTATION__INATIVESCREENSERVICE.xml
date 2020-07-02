@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeScreenService" accessor="" category="Class" name="INativeScreenService"><summary>
+<Document symbolId="vl::presentation::INativeScreenService" accessor="" category="Class" name="INativeScreenService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreenService"><summary>
  Screen information service. To access this service, use <symbol name="ScreenService" docId="vl::presentation::INativeController::ScreenService@::vl::presentation::INativeScreenService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::ScreenService@::vl::presentation::INativeScreenService *()[decl0]"/>.
  </summary><signature><![CDATA[class INativeScreenService
     : IDescriptable

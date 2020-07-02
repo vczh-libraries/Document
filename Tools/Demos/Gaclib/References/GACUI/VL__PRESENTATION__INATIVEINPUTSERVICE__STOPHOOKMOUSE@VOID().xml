@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeInputService::StopHookMouse@void()" accessor="public" category="Function" name="StopHookMouse"><summary>
+<Document symbolId="vl::presentation::INativeInputService::StopHookMouse@void()" accessor="public" category="Function" name="StopHookMouse" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::StopHookMouse@void()[decl0]"><summary>
  Stop to receive global mouse message.
  </summary><signature><![CDATA[void StopHookMouse(
 );

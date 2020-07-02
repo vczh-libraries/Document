@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::Object&gt;)" accessor="public" category="Function" name="SetInternalProperty"><summary>Set an internal property of this object. This map is totally for customization.</summary><param name="name">Name of the property.</param><param name="value">Value of the internal property of this object.</param><signature><![CDATA[void SetInternalProperty(
+<Document symbolId="vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::Object&gt;)" accessor="public" category="Function" name="SetInternalProperty" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::Object&gt;)[decl0]"><summary>Set an internal property of this object. This map is totally for customization.</summary><param name="name">Name of the property.</param><param name="value">Value of the internal property of this object.</param><signature><![CDATA[void SetInternalProperty(
     WString const & name,
     Ptr<Object> value
 );

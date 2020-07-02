@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetParent@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetParent"><summary>Get the parent control.</summary><returns>The parent control.</returns><signature><![CDATA[GuiControl * GetParent(
+<Document symbolId="vl::presentation::controls::GuiControl::GetParent@::vl::presentation::controls::GuiControl *()" accessor="public" category="Function" name="GetParent" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::GetParent@::vl::presentation::controls::GuiControl *()[decl0]"><summary>Get the parent control.</summary><returns>The parent control.</returns><signature><![CDATA[GuiControl * GetParent(
 );
 ]]></signature><seealsos><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos></Document>

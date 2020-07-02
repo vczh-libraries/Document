@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl::ClearSelection@void()" accessor="public" category="Function" name="ClearSelection"><summary>Unselect all items.</summary><signature><![CDATA[void ClearSelection(
+<Document symbolId="vl::presentation::controls::GuiSelectableListControl::ClearSelection@void()" accessor="public" category="Function" name="ClearSelection" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiSelectableListControl::ClearSelection@void()[decl0]"><summary>Unselect all items.</summary><signature><![CDATA[void ClearSelection(
 );
 ]]></signature></Document>

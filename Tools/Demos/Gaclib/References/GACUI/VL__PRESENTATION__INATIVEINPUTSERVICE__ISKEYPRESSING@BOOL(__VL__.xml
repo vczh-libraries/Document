@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeInputService::IsKeyPressing@bool(::vl::presentation::VKEY)" accessor="public" category="Function" name="IsKeyPressing"><summary>
+<Document symbolId="vl::presentation::INativeInputService::IsKeyPressing@bool(::vl::presentation::VKEY)" accessor="public" category="Function" name="IsKeyPressing" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::IsKeyPressing@bool(::vl::presentation::VKEY)[decl0]"><summary>
  Test is the specified key pressing.
  </summary><returns>Returns true if the specified key is pressing.</returns><param name="code">The key code to test.</param><signature><![CDATA[bool IsKeyPressing(
     VKEY code

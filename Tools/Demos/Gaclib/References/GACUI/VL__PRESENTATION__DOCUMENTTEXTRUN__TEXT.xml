@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentTextRun::text" accessor="public" category="Variable" name="text"><summary>Run text.</summary><signature><![CDATA[WString text;
+<Document symbolId="vl::presentation::DocumentTextRun::text" accessor="public" category="Variable" name="text" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentTextRun::text"><summary>Run text.</summary><signature><![CDATA[WString text;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

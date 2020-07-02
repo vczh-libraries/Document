@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_::shift" accessor="public" category="Variable" name="shift"><summary>True if the shift button is pressed.</summary><signature><![CDATA[bool shift;
+<Document symbolId="vl::presentation::WindowMouseInfo_::shift" accessor="public" category="Variable" name="shift" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::shift"><summary>True if the shift button is pressed.</summary><signature><![CDATA[bool shift;
 ]]></signature></Document>

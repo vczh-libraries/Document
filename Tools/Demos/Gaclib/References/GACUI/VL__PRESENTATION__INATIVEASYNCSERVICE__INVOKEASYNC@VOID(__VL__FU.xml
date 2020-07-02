@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeAsyncService::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeAsync"><summary>
+<Document symbolId="vl::presentation::INativeAsyncService::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeAsync" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeAsyncService::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>
  Invoke a specified function with an specified argument asynchronisly.
  </summary><param name="proc">The specified function.</param><signature><![CDATA[void InvokeAsync(
     Func<void(

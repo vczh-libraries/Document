@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::ShowMaximized@void()" accessor="public" category="Function" name="ShowMaximized"><summary>
+<Document symbolId="vl::presentation::INativeWindow::ShowMaximized@void()" accessor="public" category="Function" name="ShowMaximized" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::ShowMaximized@void()[decl0]"><summary>
  Maximize the window.
  </summary><signature><![CDATA[void ShowMaximized(
 );

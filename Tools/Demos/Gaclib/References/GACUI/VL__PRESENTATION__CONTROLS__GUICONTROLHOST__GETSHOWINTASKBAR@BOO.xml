@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::GetShowInTaskBar@bool()" accessor="public" category="Function" name="GetShowInTaskBar"><summary>Test is the window icon shown in the task bar.</summary><returns>Returns true if the window is icon shown in the task bar.</returns><signature><![CDATA[bool GetShowInTaskBar(
+<Document symbolId="vl::presentation::controls::GuiControlHost::GetShowInTaskBar@bool()" accessor="public" category="Function" name="GetShowInTaskBar" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::GetShowInTaskBar@bool()[decl0]"><summary>Test is the window icon shown in the task bar.</summary><returns>Returns true if the window is icon shown in the task bar.</returns><signature><![CDATA[bool GetShowInTaskBar(
 );
 ]]></signature></Document>

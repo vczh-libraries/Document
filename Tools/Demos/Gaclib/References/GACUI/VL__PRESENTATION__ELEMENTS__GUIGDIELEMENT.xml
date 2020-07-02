@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiGDIElement" accessor="" category="Class" name="GuiGDIElement"><summary>
+<Document symbolId="vl::presentation::elements::GuiGDIElement" accessor="" category="Class" name="GuiGDIElement" declFile="GuiGraphicsWindowsGDI.h" declId="NI$vl::presentation::elements::GuiGDIElement"><summary>
  Defines an element for customized rendering using GDI.
  </summary><signature><![CDATA[class GuiGDIElement
     : GuiElementBase<GuiGDIElement>;

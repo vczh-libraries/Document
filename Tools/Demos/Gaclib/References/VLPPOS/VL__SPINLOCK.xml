@@ -1,4 +1,4 @@
-<Document symbolId="vl::SpinLock" accessor="" category="Class" name="SpinLock"><summary><![CDATA[
+<Document symbolId="vl::SpinLock" accessor="" category="Class" name="SpinLock" declFile="Threading.h" declId="NI$vl::SpinLock"><summary><![CDATA[
  Spin lock. It is similar to mutex.
  The macro "SPIN_LOCK" is encouraged to use instead of calling ]]><symbol name="Enter" docId="vl::SpinLock::Enter@void()" declFile="Threading.h" declId="FB$vl::SpinLock::Enter@void()[decl0]"/><![CDATA[ and ]]><symbol name="Leave" docId="vl::SpinLock::Leave@void()" declFile="Threading.h" declId="FB$vl::SpinLock::Leave@void()[decl0]"/><![CDATA[ like this:
  SPIN_LOCK(yourLock)

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::SetColor@void(::vl::WString const &amp;, ::vl::presentation::Color const &amp;)" accessor="public" category="Function" name="SetColor"><summary>Set a color for a token theme name (@Color or @ContextColor(&quot;theme-name&quot;) in the grammar).</summary><param name="name">The token theme name.</param><param name="color">The color.</param><signature><![CDATA[void SetColor(
+<Document symbolId="vl::presentation::controls::GuiGrammarColorizer::SetColor@void(::vl::WString const &amp;, ::vl::presentation::Color const &amp;)" accessor="public" category="Function" name="SetColor" declFile="GuiLanguageColorizer.h" declId="FB$vl::presentation::controls::GuiGrammarColorizer::SetColor@void(::vl::WString const &amp;, ::vl::presentation::Color const &amp;)[decl0]"><summary>Set a color for a token theme name (@Color or @ContextColor(&quot;theme-name&quot;) in the grammar).</summary><param name="name">The token theme name.</param><param name="color">The color.</param><signature><![CDATA[void SetColor(
     WString const & name,
     Color const & color
 );

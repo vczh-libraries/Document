@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsTimerManager" accessor="" category="Class" name="GuiGraphicsTimerManager"><summary>
+<Document symbolId="vl::presentation::compositions::GuiGraphicsTimerManager" accessor="" category="Class" name="GuiGraphicsTimerManager" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsTimerManager"><summary>
  Timer callback manager.
  </summary><signature><![CDATA[class GuiGraphicsTimerManager
     : Object

@@ -1,4 +1,4 @@
-<Document symbolId="vl::filesystem::File::Rename@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="Rename"><summary>Rename the file in the same folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="newName">The new file name.</param><signature><![CDATA[bool Rename(
+<Document symbolId="vl::filesystem::File::Rename@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="Rename" declFile="FileSystem.h" declId="FB$vl::filesystem::File::Rename@bool(::vl::WString const &amp;)[decl0]"><summary>Rename the file in the same folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="newName">The new file name.</param><signature><![CDATA[bool Rename(
     WString const & newName
 ) const;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeDialogService::MessageBoxButtonsOutput" accessor="public" category="Enum" name="MessageBoxButtonsOutput"><summary>
+<Document symbolId="vl::presentation::INativeDialogService::MessageBoxButtonsOutput" accessor="public" category="Enum" name="MessageBoxButtonsOutput" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::MessageBoxButtonsOutput"><summary>
  Message box button to indicate what the user selected.
  </summary><enumitem name="SelectAbort">Select Abort.</enumitem><enumitem name="SelectCancel">Select Cancel.</enumitem><enumitem name="SelectContinue">Select Continue.</enumitem><enumitem name="SelectIgnore">Select Ignore.</enumitem><enumitem name="SelectNo">Select No.</enumitem><enumitem name="SelectOK">Select OK.</enumitem><enumitem name="SelectRetry">Select Retry.</enumitem><enumitem name="SelectTryAgain">Select TryAgain.</enumitem><enumitem name="SelectYes">Select Yes.</enumitem><signature><![CDATA[enum MessageBoxButtonsOutput
 {

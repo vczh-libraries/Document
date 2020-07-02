@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControl::DisplayTooltip@bool(::vl::presentation::Point)" accessor="public" category="Function" name="DisplayTooltip"><summary>Display the tooltip.</summary><returns>Returns true if this operation succeeded.</returns><param name="location">The relative location to specify the left-top position of the tooltip.</param><signature><![CDATA[bool DisplayTooltip(
+<Document symbolId="vl::presentation::controls::GuiControl::DisplayTooltip@bool(::vl::presentation::Point)" accessor="public" category="Function" name="DisplayTooltip" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::DisplayTooltip@bool(::vl::presentation::Point)[decl0]"><summary>Display the tooltip.</summary><returns>Returns true if this operation succeeded.</returns><param name="location">The relative location to specify the left-top position of the tooltip.</param><signature><![CDATA[bool DisplayTooltip(
     Point location
 );
 ]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>

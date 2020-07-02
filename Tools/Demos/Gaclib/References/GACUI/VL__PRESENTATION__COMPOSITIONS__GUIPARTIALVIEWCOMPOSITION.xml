@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition" accessor="" category="Class" name="GuiPartialViewComposition"><summary>
+<Document symbolId="vl::presentation::compositions::GuiPartialViewComposition" accessor="" category="Class" name="GuiPartialViewComposition" declFile="GuiGraphicsSpecializedComposition.h" declId="NI$vl::presentation::compositions::GuiPartialViewComposition"><summary>
  Represents a composition that its location and size are decided by the client area of the parent composition by setting ratios.
  </summary><signature><![CDATA[class GuiPartialViewComposition
     : GuiGraphicsSite

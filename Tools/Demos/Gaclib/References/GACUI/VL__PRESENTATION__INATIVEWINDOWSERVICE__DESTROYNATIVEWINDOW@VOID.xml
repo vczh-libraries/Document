@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowService::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="DestroyNativeWindow"><summary>
+<Document symbolId="vl::presentation::INativeWindowService::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="DestroyNativeWindow" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowService::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
  Destroy a window.
  </summary><param name="window">The window to destroy.</param><signature><![CDATA[void DestroyNativeWindow(
     INativeWindow * window

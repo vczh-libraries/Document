@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeImageFrameCache::OnAttach@void(::vl::presentation::INativeImageFrame *)" accessor="public" category="Function" name="OnAttach"><summary>
+<Document symbolId="vl::presentation::INativeImageFrameCache::OnAttach@void(::vl::presentation::INativeImageFrame *)" accessor="public" category="Function" name="OnAttach" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeImageFrameCache::OnAttach@void(::vl::presentation::INativeImageFrame *)[decl0]"><summary>
  Called when this cache object is attached to an image frame.
  </summary><param name="frame">The image frame that attached to.</param><signature><![CDATA[void OnAttach(
     INativeImageFrame * frame

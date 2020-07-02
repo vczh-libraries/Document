@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeCursor::SystemCursorType" accessor="public" category="Enum" name="SystemCursorType"><summary>
+<Document symbolId="vl::presentation::INativeCursor::SystemCursorType" accessor="public" category="Enum" name="SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"><summary>
  Represents a predefined cursor type.
  </summary><enumitem name="Arrow">
  Arrow cursor.

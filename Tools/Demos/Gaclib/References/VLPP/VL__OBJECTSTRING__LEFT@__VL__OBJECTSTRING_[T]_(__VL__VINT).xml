@@ -1,4 +1,4 @@
-<Document symbolId="vl::ObjectString::Left@::vl::ObjectString&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Left"><summary>Copy the beginning of the string.</summary><returns>The copied string.</returns><param name="count">Size of characters to copy.</param><signature><![CDATA[ObjectString<T> Left(
+<Document symbolId="vl::ObjectString::Left@::vl::ObjectString&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Left" declFile="String.h" declId="FB$vl::ObjectString::Left@::vl::ObjectString&lt;[T]&gt;(::vl::vint)[impl0]"><summary>Copy the beginning of the string.</summary><returns>The copied string.</returns><param name="count">Size of characters to copy.</param><signature><![CDATA[ObjectString<T> Left(
     vint count
 ) const;
 ]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

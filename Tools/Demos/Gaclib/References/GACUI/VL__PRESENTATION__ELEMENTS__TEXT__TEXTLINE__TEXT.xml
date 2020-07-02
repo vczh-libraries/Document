@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLine::text" accessor="public" category="Variable" name="text"><summary>
+<Document symbolId="vl::presentation::elements::text::TextLine::text" accessor="public" category="Variable" name="text" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine::text"><summary>
  A character buffer starts from the first character of this line.
  </summary><signature><![CDATA[wchar_t * text;
 ]]></signature></Document>

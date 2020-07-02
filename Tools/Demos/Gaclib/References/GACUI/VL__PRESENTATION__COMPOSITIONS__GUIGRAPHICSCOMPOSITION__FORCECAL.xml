@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::ForceCalculateSizeImmediately@void()" accessor="public" category="Function" name="ForceCalculateSizeImmediately"><summary>Force to calculate layout and size immediately</summary><signature><![CDATA[void ForceCalculateSizeImmediately(
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::ForceCalculateSizeImmediately@void()" accessor="public" category="Function" name="ForceCalculateSizeImmediately" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::ForceCalculateSizeImmediately@void()[decl0]"><summary>Force to calculate layout and size immediately</summary><signature><![CDATA[void ForceCalculateSizeImmediately(
 );
 ]]></signature></Document>

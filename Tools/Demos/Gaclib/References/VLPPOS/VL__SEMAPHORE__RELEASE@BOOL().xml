@@ -1,3 +1,3 @@
-<Document symbolId="vl::Semaphore::Release@bool()" accessor="public" category="Function" name="Release"><summary> Release the semaphore once. </summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Release(
+<Document symbolId="vl::Semaphore::Release@bool()" accessor="public" category="Function" name="Release" declFile="Threading.h" declId="FB$vl::Semaphore::Release@bool()[decl0]"><summary> Release the semaphore once. </summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Release(
 );
 ]]></signature></Document>

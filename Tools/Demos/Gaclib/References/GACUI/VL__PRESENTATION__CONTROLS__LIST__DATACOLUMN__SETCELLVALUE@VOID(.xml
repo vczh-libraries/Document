@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::SetCellValue@void(::vl::vint, ::vl::reflection::description::Value)" accessor="public" category="Function" name="SetCellValue"><summary>Set the cell value to an item.</summary><param name="row">The row index of the item.</param><param name="value">The value property name.</param><signature><![CDATA[void SetCellValue(
+<Document symbolId="vl::presentation::controls::list::DataColumn::SetCellValue@void(::vl::vint, ::vl::reflection::description::Value)" accessor="public" category="Function" name="SetCellValue" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataColumn::SetCellValue@void(::vl::vint, ::vl::reflection::description::Value)[decl0]"><summary>Set the cell value to an item.</summary><param name="row">The row index of the item.</param><param name="value">The value property name.</param><signature><![CDATA[void SetCellValue(
     vint row,
     description::Value value
 );

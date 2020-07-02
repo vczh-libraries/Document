@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetAssociatedCursor@void(::vl::presentation::INativeCursor *)" accessor="public" category="Function" name="SetAssociatedCursor"><summary>Set the associated cursor.</summary><param name="cursor">The associated cursor.</param><signature><![CDATA[void SetAssociatedCursor(
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetAssociatedCursor@void(::vl::presentation::INativeCursor *)" accessor="public" category="Function" name="SetAssociatedCursor" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::SetAssociatedCursor@void(::vl::presentation::INativeCursor *)[decl0]"><summary>Set the associated cursor.</summary><param name="cursor">The associated cursor.</param><signature><![CDATA[void SetAssociatedCursor(
     INativeCursor * cursor
 );
 ]]></signature><seealsos><symbol name="INativeCursor" docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos></Document>

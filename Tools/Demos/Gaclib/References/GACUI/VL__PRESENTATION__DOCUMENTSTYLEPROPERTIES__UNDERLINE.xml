@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyleProperties::underline" accessor="public" category="Variable" name="underline"><summary>Underline.</summary><signature><![CDATA[Nullable<bool> underline;
+<Document symbolId="vl::presentation::DocumentStyleProperties::underline" accessor="public" category="Variable" name="underline" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::underline"><summary>Underline.</summary><signature><![CDATA[Nullable<bool> underline;
 ]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

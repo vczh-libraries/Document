@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::mouseLeave" accessor="public" category="Variable" name="mouseLeave"><summary>Mouse leave event.</summary><signature><![CDATA[GuiNotifyEvent mouseLeave;
+<Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::mouseLeave" accessor="public" category="Variable" name="mouseLeave" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiGraphicsEventReceiver::mouseLeave"><summary>Mouse leave event.</summary><signature><![CDATA[GuiNotifyEvent mouseLeave;
 ]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()" accessor="public" category="Function" name="CallbackService"><summary>
+<Document symbolId="vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()" accessor="public" category="Function" name="CallbackService" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()[decl0]"><summary>
  Get the callback service.
  </summary><returns>The callback service</returns><signature><![CDATA[INativeCallbackService * CallbackService(
 );

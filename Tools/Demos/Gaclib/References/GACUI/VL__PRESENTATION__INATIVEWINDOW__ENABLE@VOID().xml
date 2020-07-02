@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::Enable@void()" accessor="public" category="Function" name="Enable"><summary>
+<Document symbolId="vl::presentation::INativeWindow::Enable@void()" accessor="public" category="Function" name="Enable" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::Enable@void()[decl0]"><summary>
  Enable the window.
  </summary><signature><![CDATA[void Enable(
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiBindableListView" accessor="" category="Class" name="GuiBindableListView"><summary>A bindable List view control.</summary><signature><![CDATA[class GuiBindableListView
+<Document symbolId="vl::presentation::controls::GuiBindableListView" accessor="" category="Class" name="GuiBindableListView" declFile="GuiBindableListControls.h" declId="NI$vl::presentation::controls::GuiBindableListView"><summary>A bindable List view control.</summary><signature><![CDATA[class GuiBindableListView
     : GuiVirtualListView
     , Description<GuiBindableListView>;
 ]]></signature><seealsos><symbol name="GuiBindableListView" docId="vl::presentation::controls::GuiBindableListView" declFile="GuiBindableListControls.h" declId="NI$vl::presentation::controls::GuiBindableListView"/></seealsos><basetypes><symbol name="GuiVirtualListView" docId="vl::presentation::controls::GuiVirtualListView" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::GuiVirtualListView"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

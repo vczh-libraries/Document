@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsElement" accessor="" category="Class" name="IGuiGraphicsElement"><summary>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsElement" accessor="" category="Class" name="IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"><summary>
  This is the interface for graphics elements.
  Graphics elements usually contains some information and helper functions for visible things.
  An graphics elements should be created using ElementType::Create.

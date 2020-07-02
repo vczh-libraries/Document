@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetTransparentToMouse@void(bool)" accessor="public" category="Function" name="SetTransparentToMouse"><summary>Set is the composition transparent to mouse events.</summary><param name="value">Set to true to make this composition transparent to mouse events.</param><signature><![CDATA[void SetTransparentToMouse(
+<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetTransparentToMouse@void(bool)" accessor="public" category="Function" name="SetTransparentToMouse" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::SetTransparentToMouse@void(bool)[decl0]"><summary>Set is the composition transparent to mouse events.</summary><param name="value">Set to true to make this composition transparent to mouse events.</param><signature><![CDATA[void SetTransparentToMouse(
     bool value
 );
 ]]></signature></Document>

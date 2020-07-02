@@ -1,4 +1,4 @@
-<Document symbolId="vl::Thread::Sleep@void(::vl::vint)" accessor="public" category="Function" name="Sleep"><summary>Pause the caller thread for a period of time.</summary><param name="ms">Time in milliseconds.</param><signature><![CDATA[static void Sleep(
+<Document symbolId="vl::Thread::Sleep@void(::vl::vint)" accessor="public" category="Function" name="Sleep" declFile="Threading.h" declId="FB$vl::Thread::Sleep@void(::vl::vint)[decl0]"><summary>Pause the caller thread for a period of time.</summary><param name="ms">Time in milliseconds.</param><signature><![CDATA[static void Sleep(
     vint ms
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

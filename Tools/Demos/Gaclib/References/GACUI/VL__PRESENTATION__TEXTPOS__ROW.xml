@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::TextPos::row" accessor="public" category="Variable" name="row"><summary>
+<Document symbolId="vl::presentation::TextPos::row" accessor="public" category="Variable" name="row" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos::row"><summary>
  Row number.
  </summary><signature><![CDATA[vint row;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

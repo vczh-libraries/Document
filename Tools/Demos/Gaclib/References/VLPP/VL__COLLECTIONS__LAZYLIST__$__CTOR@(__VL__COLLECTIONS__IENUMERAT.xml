@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerator&lt;[T]&gt; *)" accessor="public" category="Function" name="$__ctor"><summary>Create a lazy list with an enumerator.</summary><param name="enumerator">The enumerator.</param><signature><![CDATA[ LazyList(
+<Document symbolId="vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerator&lt;[T]&gt; *)" accessor="public" category="Function" name="$__ctor" declFile="Operation.h" declId="FB$vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerator&lt;[T]&gt; *)[impl0]"><summary>Create a lazy list with an enumerator.</summary><param name="enumerator">The enumerator.</param><signature><![CDATA[ LazyList(
     IEnumerator<T> * enumerator
 );
 ]]></signature><seealsos><symbol name="IEnumerator" docId="vl::collections::IEnumerator" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerator"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::tree::MemoryNodeRootProvider" accessor="" category="Class" name="MemoryNodeRootProvider"><summary>An in-memory <symbol name="INodeRootProvider" docId="vl::presentation::controls::tree::INodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeRootProvider"/> implementation.</summary><signature><![CDATA[class MemoryNodeRootProvider
+<Document symbolId="vl::presentation::controls::tree::MemoryNodeRootProvider" accessor="" category="Class" name="MemoryNodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::MemoryNodeRootProvider"><summary>An in-memory <symbol name="INodeRootProvider" docId="vl::presentation::controls::tree::INodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeRootProvider"/> implementation.</summary><signature><![CDATA[class MemoryNodeRootProvider
     : MemoryNodeProvider
     , NodeRootProviderBase
     , Description<MemoryNodeRootProvider>;

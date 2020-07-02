@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowOption::distance" accessor="public" category="Variable" name="distance"><summary>The distance value.</summary><signature><![CDATA[vint distance;
+<Document symbolId="vl::presentation::compositions::GuiFlowOption::distance" accessor="public" category="Variable" name="distance" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption::distance"><summary>The distance value.</summary><signature><![CDATA[vint distance;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

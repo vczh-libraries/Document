@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::StartRendering@void()" accessor="public" category="Function" name="StartRendering"><summary>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::StartRendering@void()" accessor="public" category="Function" name="StartRendering" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderTarget::StartRendering@void()[decl0]"><summary>
  Notify the target to prepare for rendering.
  </summary><signature><![CDATA[void StartRendering(
 );

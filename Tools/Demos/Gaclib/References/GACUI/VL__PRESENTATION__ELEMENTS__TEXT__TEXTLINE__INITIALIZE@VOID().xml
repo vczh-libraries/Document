@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLine::Initialize@void()" accessor="public" category="Function" name="Initialize"><summary>
+<Document symbolId="vl::presentation::elements::text::TextLine::Initialize@void()" accessor="public" category="Function" name="Initialize" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLine::Initialize@void()[decl0]"><summary>
  Initialize the <symbol name="TextLine" docId="vl::presentation::elements::text::TextLine" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine"/> instance to be an empty line.
  </summary><signature><![CDATA[void Initialize(
 );

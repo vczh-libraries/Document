@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeController::ClipboardService@::vl::presentation::INativeClipboardService *()" accessor="public" category="Function" name="ClipboardService"><summary>
+<Document symbolId="vl::presentation::INativeController::ClipboardService@::vl::presentation::INativeClipboardService *()" accessor="public" category="Function" name="ClipboardService" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::ClipboardService@::vl::presentation::INativeClipboardService *()[decl0]"><summary>
  Get the clipboard service.
  </summary><returns>The clipboard service</returns><signature><![CDATA[INativeClipboardService * ClipboardService(
 );

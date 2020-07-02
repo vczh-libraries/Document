@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::GetSmallMove@::vl::vint()" accessor="protected" category="Function" name="GetSmallMove"><summary>Calculate the small move of the scroll bar.</summary><returns>The small move of the scroll bar.</returns><signature><![CDATA[vint GetSmallMove(
+<Document symbolId="vl::presentation::controls::GuiScrollView::GetSmallMove@::vl::vint()" accessor="protected" category="Function" name="GetSmallMove" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiScrollView::GetSmallMove@::vl::vint()[decl0]"><summary>Calculate the small move of the scroll bar.</summary><returns>The small move of the scroll bar.</returns><signature><![CDATA[vint GetSmallMove(
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

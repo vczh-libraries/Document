@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeAsyncService::InvokeInMainThread@void(::vl::presentation::INativeWindow *, ::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeInMainThread"><summary>
+<Document symbolId="vl::presentation::INativeAsyncService::InvokeInMainThread@void(::vl::presentation::INativeWindow *, ::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeInMainThread" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeAsyncService::InvokeInMainThread@void(::vl::presentation::INativeWindow *, ::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>
  Invoke a specified function with an specified argument in the main thread.
  </summary><param name="window">A window to access the corressponding main thread.</param><param name="proc">The specified function.</param><signature><![CDATA[void InvokeInMainThread(
     INativeWindow * window,

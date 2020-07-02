@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::DocumentImageRun" accessor="" category="Class" name="DocumentImageRun"><summary>Pepresents a image run.</summary><signature><![CDATA[class DocumentImageRun
+<Document symbolId="vl::presentation::DocumentImageRun" accessor="" category="Class" name="DocumentImageRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentImageRun"><summary>Pepresents a image run.</summary><signature><![CDATA[class DocumentImageRun
     : DocumentInlineObjectRun
     , Description<DocumentImageRun>;
 ]]></signature><seealsos><symbol name="DocumentImageRun" docId="vl::presentation::DocumentImageRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentImageRun"/></seealsos><basetypes><symbol name="DocumentInlineObjectRun" docId="vl::presentation::DocumentInlineObjectRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentInlineObjectRun"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

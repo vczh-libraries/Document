@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::RightButtonUp@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="RightButtonUp"><summary>
+<Document symbolId="vl::presentation::INativeWindowListener::RightButtonUp@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="RightButtonUp" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::RightButtonUp@void(::vl::presentation::NativeWindowMouseInfo const &amp;)[decl0]"><summary>
  Called when the right mouse button is released.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void RightButtonUp(
     NativeWindowMouseInfo const & info

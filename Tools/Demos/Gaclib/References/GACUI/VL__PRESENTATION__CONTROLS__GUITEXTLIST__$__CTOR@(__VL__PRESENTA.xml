@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTextList::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor"><summary>Create a Text list control.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiTextList(
+<Document symbolId="vl::presentation::controls::GuiTextList::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor" declFile="GuiTextListControls.h" declId="FB$vl::presentation::controls::GuiTextList::$__ctor@(::vl::presentation::theme::ThemeName)[decl0]"><summary>Create a Text list control.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiTextList(
     theme::ThemeName themeName
 );
 ]]></signature><seealsos><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>

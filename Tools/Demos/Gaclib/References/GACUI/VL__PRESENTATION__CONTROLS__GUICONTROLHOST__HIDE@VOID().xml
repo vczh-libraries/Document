@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::Hide@void()" accessor="public" category="Function" name="Hide"><summary>
+<Document symbolId="vl::presentation::controls::GuiControlHost::Hide@void()" accessor="public" category="Function" name="Hide" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::Hide@void()[decl0]"><summary>
  Hide the window.
  </summary><signature><![CDATA[void Hide(
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToSimplifiedChinese"><summary>Convert characters to Simplified Chinese.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param><signature><![CDATA[WString ToSimplifiedChinese(
+<Document symbolId="vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToSimplifiedChinese" declFile="Locale.h" declId="FB$vl::Locale::ToSimplifiedChinese@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Convert characters to Simplified Chinese.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param><signature><![CDATA[WString ToSimplifiedChinese(
     WString const & str
 ) const;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

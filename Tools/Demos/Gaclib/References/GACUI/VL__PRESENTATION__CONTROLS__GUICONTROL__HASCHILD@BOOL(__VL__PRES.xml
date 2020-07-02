@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControl::HasChild@bool(::vl::presentation::controls::GuiControl *)" accessor="public" category="Function" name="HasChild"><summary>Test if a control owned by this control.</summary><returns>Returns true if the control is owned by this control.</returns><param name="control">The control to test.</param><signature><![CDATA[bool HasChild(
+<Document symbolId="vl::presentation::controls::GuiControl::HasChild@bool(::vl::presentation::controls::GuiControl *)" accessor="public" category="Function" name="HasChild" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::HasChild@bool(::vl::presentation::controls::GuiControl *)[decl0]"><summary>Test if a control owned by this control.</summary><returns>Returns true if the control is owned by this control.</returns><param name="control">The control to test.</param><signature><![CDATA[bool HasChild(
     GuiControl * control
 );
 ]]></signature><seealsos><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiApplication::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeAsync"><summary>Invoke a specified function asynchronously.</summary><param name="proc">The specified function.</param><signature><![CDATA[void InvokeAsync(
+<Document symbolId="vl::presentation::controls::GuiApplication::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="InvokeAsync" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::GuiApplication::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>Invoke a specified function asynchronously.</summary><param name="proc">The specified function.</param><signature><![CDATA[void InvokeAsync(
     Func<void(
 )> const & proc
 );

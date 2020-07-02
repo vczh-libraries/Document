@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetFont"><summary>
+<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetFont" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::SetFont@void(::vl::presentation::FontProperties const &amp;)[decl0]"><summary>
  Set the text font.
  </summary><param name="value">The new text font.</param><signature><![CDATA[void SetFont(
     FontProperties const & value

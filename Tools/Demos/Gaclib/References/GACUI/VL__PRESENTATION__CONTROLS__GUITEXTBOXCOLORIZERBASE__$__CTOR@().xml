@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a colorrizer.</summary><signature><![CDATA[ GuiTextBoxColorizerBase(
+<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="GuiTextColorizer.h" declId="FB$vl::presentation::controls::GuiTextBoxColorizerBase::$__ctor@()[decl0]"><summary>Create a colorrizer.</summary><signature><![CDATA[ GuiTextBoxColorizerBase(
 );
 ]]></signature></Document>

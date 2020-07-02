@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::RepeatingPartialParsingOutput::modifiedCode" accessor="public" category="Variable" name="modifiedCode"><summary>The modified code of the selected context.</summary><signature><![CDATA[WString modifiedCode;
+<Document symbolId="vl::presentation::controls::RepeatingPartialParsingOutput::modifiedCode" accessor="public" category="Variable" name="modifiedCode" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingPartialParsingOutput::modifiedCode"><summary>The modified code of the selected context.</summary><signature><![CDATA[WString modifiedCode;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

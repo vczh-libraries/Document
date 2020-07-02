@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines::Clear@void()" accessor="public" category="Function" name="Clear"><summary>
+<Document symbolId="vl::presentation::elements::text::TextLines::Clear@void()" accessor="public" category="Function" name="Clear" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::Clear@void()[decl0]"><summary>
  Remove every text lines.
  </summary><signature><![CDATA[void Clear(
 );

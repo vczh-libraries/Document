@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::IGuiAnimation::Resume@void()" accessor="public" category="Function" name="Resume"><summary>Called when the animation is about to resume.</summary><signature><![CDATA[void Resume(
+<Document symbolId="vl::presentation::controls::IGuiAnimation::Resume@void()" accessor="public" category="Function" name="Resume" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IGuiAnimation::Resume@void()[decl0]"><summary>Called when the animation is about to resume.</summary><signature><![CDATA[void Resume(
 );
 ]]></signature></Document>

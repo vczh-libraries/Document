@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiAxis::$__ctor@(::vl::presentation::AxisDirection)" accessor="public" category="Function" name="$__ctor"><summary>Create the transformer with a specified axis direction.</summary><param name="_axisDirection">The specified axis direction.</param><signature><![CDATA[ GuiAxis(
+<Document symbolId="vl::presentation::compositions::GuiAxis::$__ctor@(::vl::presentation::AxisDirection)" accessor="public" category="Function" name="$__ctor" declFile="GuiGraphicsAxis.h" declId="FB$vl::presentation::compositions::GuiAxis::$__ctor@(::vl::presentation::AxisDirection)[decl0]"><summary>Create the transformer with a specified axis direction.</summary><param name="_axisDirection">The specified axis direction.</param><signature><![CDATA[ GuiAxis(
     AxisDirection _axisDirection
 );
 ]]></signature><seealsos><symbol name="AxisDirection" docId="vl::presentation::AxisDirection" declFile="GuiTypes.h" declId="NI$vl::presentation::AxisDirection"/></seealsos></Document>

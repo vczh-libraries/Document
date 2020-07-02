@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiCellOption" accessor="" category="Struct" name="GuiCellOption"><summary>
+<Document symbolId="vl::presentation::compositions::GuiCellOption" accessor="" category="Struct" name="GuiCellOption" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption"><summary>
  Represnets a sizing configuration for a row or a column.
  </summary><signature><![CDATA[struct GuiCellOption;
 ]]></signature></Document>

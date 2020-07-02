@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiPolygonElement::GetSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetSize"><summary>
+<Document symbolId="vl::presentation::elements::GuiPolygonElement::GetSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetSize" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::GetSize@::vl::presentation::Size()[decl0]"><summary>
  Get a suggested size. The polygon element will be layouted to the center of the required bounds using this size.
  </summary><returns>The suggested size.</returns><signature><![CDATA[Size GetSize(
 );

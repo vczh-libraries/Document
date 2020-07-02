@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::ShowMinimized@void()" accessor="public" category="Function" name="ShowMinimized"><summary>
+<Document symbolId="vl::presentation::controls::GuiControlHost::ShowMinimized@void()" accessor="public" category="Function" name="ShowMinimized" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::ShowMinimized@void()[decl0]"><summary>
  Minimize the window.
  </summary><signature><![CDATA[void ShowMinimized(
 );

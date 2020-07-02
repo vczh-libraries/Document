@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::GetMinSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetMinSize"><summary>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::GetMinSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetMinSize" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderer::GetMinSize@::vl::presentation::Size()[decl0]"><summary>
  Calculate the minimum size using the binded graphics element and its state.
  </summary><returns>The minimum size.</returns><signature><![CDATA[Size GetMinSize(
 );

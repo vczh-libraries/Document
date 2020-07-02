@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::SelectPreviousListItem@bool()" accessor="public" category="Function" name="SelectPreviousListItem"><summary>Select the previous item.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool SelectPreviousListItem(
+<Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::SelectPreviousListItem@bool()" accessor="public" category="Function" name="SelectPreviousListItem" declFile="GuiTextAutoComplete.h" declId="FB$vl::presentation::controls::GuiTextBoxAutoCompleteBase::SelectPreviousListItem@bool()[decl0]"><summary>Select the previous item.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool SelectPreviousListItem(
 );
 ]]></signature></Document>

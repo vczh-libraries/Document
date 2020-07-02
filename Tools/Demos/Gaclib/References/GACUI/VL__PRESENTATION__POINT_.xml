@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::Point_" accessor="" category="Struct" name="Point_"><summary>
+<Document symbolId="vl::presentation::Point_" accessor="" category="Struct" name="Point_" declFile="GuiTypes.h" declId="NI$vl::presentation::Point_"><summary>
  Represents a position in a two dimensions space.
  </summary><typeparam name="T">Type of the coordinate.</typeparam><signature><![CDATA[template <
     typename T

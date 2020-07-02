@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SetTotalSize@void(::vl::vint)" accessor="public" category="Function" name="SetTotalSize"><summary>Change to total size of the scroll.</summary><param name="value">The total size.</param><signature><![CDATA[void SetTotalSize(
+<Document symbolId="vl::presentation::controls::IScrollCommandExecutor::SetTotalSize@void(::vl::vint)" accessor="public" category="Function" name="SetTotalSize" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IScrollCommandExecutor::SetTotalSize@void(::vl::vint)[decl0]"><summary>Change to total size of the scroll.</summary><param name="value">The total size.</param><signature><![CDATA[void SetTotalSize(
     vint value
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

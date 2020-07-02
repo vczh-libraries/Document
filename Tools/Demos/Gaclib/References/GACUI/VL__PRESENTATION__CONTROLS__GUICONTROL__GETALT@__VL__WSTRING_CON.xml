@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetAlt@::vl::WString const &amp;()" accessor="public" category="Function" name="GetAlt"><summary>Get the Alt-combined shortcut key associated with this control.</summary><returns>The Alt-combined shortcut key associated with this control.</returns><signature><![CDATA[WString const & GetAlt(
+<Document symbolId="vl::presentation::controls::GuiControl::GetAlt@::vl::WString const &amp;()" accessor="public" category="Function" name="GetAlt" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::GetAlt@::vl::WString const &amp;()[decl0]"><summary>Get the Alt-combined shortcut key associated with this control.</summary><returns>The Alt-combined shortcut key associated with this control.</returns><signature><![CDATA[WString const & GetAlt(
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

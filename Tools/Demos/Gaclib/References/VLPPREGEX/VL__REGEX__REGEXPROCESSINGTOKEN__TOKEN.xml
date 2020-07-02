@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexProcessingToken::token" accessor="public" category="Variable" name="token"><summary>
+<Document symbolId="vl::regex::RegexProcessingToken::token" accessor="public" category="Variable" name="token" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::token"><summary>
  The id of the token, could be modified after the callback.
  </summary><signature><![CDATA[vint token;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetOptions@void(::vl::presentation::INativeDialogService::FileDialogOptions)" accessor="public" category="Function" name="SetOptions"><summary>Set the dialog options.</summary><param name="value">The dialog options.</param><signature><![CDATA[void SetOptions(
+<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetOptions@void(::vl::presentation::INativeDialogService::FileDialogOptions)" accessor="public" category="Function" name="SetOptions" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFileDialogBase::SetOptions@void(::vl::presentation::INativeDialogService::FileDialogOptions)[decl0]"><summary>Set the dialog options.</summary><param name="value">The dialog options.</param><signature><![CDATA[void SetOptions(
     INativeDialogService::FileDialogOptions value
 );
 ]]></signature><seealsos><symbol name="FileDialogOptions" docId="vl::presentation::INativeDialogService::FileDialogOptions" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::FileDialogOptions"/></seealsos></Document>

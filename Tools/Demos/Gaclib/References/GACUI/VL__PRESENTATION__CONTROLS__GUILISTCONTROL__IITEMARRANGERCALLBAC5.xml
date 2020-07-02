@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::IItemArrangerCallback::OnTotalSizeChanged@void()" accessor="public" category="Function" name="OnTotalSizeChanged"><summary>Notify the list control that the total size of all item controls are changed.</summary><signature><![CDATA[void OnTotalSizeChanged(
+<Document symbolId="vl::presentation::controls::GuiListControl::IItemArrangerCallback::OnTotalSizeChanged@void()" accessor="public" category="Function" name="OnTotalSizeChanged" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::IItemArrangerCallback::OnTotalSizeChanged@void()[decl0]"><summary>Notify the list control that the total size of all item controls are changed.</summary><signature><![CDATA[void OnTotalSizeChanged(
 );
 ]]></signature></Document>

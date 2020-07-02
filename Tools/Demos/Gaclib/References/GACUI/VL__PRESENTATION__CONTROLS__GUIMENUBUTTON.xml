@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton" accessor="" category="Class" name="GuiMenuButton"><summary>Menu item.</summary><signature><![CDATA[class GuiMenuButton
+<Document symbolId="vl::presentation::controls::GuiMenuButton" accessor="" category="Class" name="GuiMenuButton" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenuButton"><summary>Menu item.</summary><signature><![CDATA[class GuiMenuButton
     : GuiSelectableButton
     , IGuiMenuDropdownProvider
     , Description<GuiMenuButton>;

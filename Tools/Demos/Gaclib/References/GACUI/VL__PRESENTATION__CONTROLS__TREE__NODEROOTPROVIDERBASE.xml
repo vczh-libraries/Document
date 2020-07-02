@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::tree::NodeRootProviderBase" accessor="" category="Class" name="NodeRootProviderBase"><summary>A general implementation for <symbol name="INodeRootProvider" docId="vl::presentation::controls::tree::INodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeRootProvider"/>.</summary><signature><![CDATA[class NodeRootProviderBase
+<Document symbolId="vl::presentation::controls::tree::NodeRootProviderBase" accessor="" category="Class" name="NodeRootProviderBase" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::NodeRootProviderBase"><summary>A general implementation for <symbol name="INodeRootProvider" docId="vl::presentation::controls::tree::INodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeRootProvider"/>.</summary><signature><![CDATA[class NodeRootProviderBase
     : INodeRootProvider
     , INodeProviderCallback
     , Description<NodeRootProviderBase>;

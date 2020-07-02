@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SelectAll@void()" accessor="public" category="Function" name="SelectAll"><summary>Select all text.</summary><signature><![CDATA[void SelectAll(
+<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::SelectAll@void()" accessor="public" category="Function" name="SelectAll" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::SelectAll@void()[decl0]"><summary>Select all text.</summary><signature><![CDATA[void SelectAll(
 );
 ]]></signature></Document>

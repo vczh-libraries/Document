@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::Char@void(::vl::presentation::NativeWindowCharInfo const &amp;)" accessor="public" category="Function" name="Char"><summary>
+<Document symbolId="vl::presentation::INativeWindowListener::Char@void(::vl::presentation::NativeWindowCharInfo const &amp;)" accessor="public" category="Function" name="Char" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Char@void(::vl::presentation::NativeWindowCharInfo const &amp;)[decl0]"><summary>
  Called an input character is generated.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void Char(
     NativeWindowCharInfo const & info

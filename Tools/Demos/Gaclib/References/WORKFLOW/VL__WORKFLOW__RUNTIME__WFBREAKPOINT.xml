@@ -1,2 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfBreakPoint" accessor="" category="Struct" name="WfBreakPoint"><summary>Break point.</summary><signature><![CDATA[struct WfBreakPoint;
+<Document symbolId="vl::workflow::runtime::WfBreakPoint" accessor="" category="Struct" name="WfBreakPoint" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::WfBreakPoint"><summary>Break point.</summary><signature><![CDATA[struct WfBreakPoint;
 ]]></signature></Document>

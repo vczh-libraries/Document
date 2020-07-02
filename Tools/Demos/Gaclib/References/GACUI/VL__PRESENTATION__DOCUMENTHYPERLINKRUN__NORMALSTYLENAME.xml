@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentHyperlinkRun::normalStyleName" accessor="public" category="Variable" name="normalStyleName"><summary>Style name for normal state.</summary><signature><![CDATA[WString normalStyleName;
+<Document symbolId="vl::presentation::DocumentHyperlinkRun::normalStyleName" accessor="public" category="Variable" name="normalStyleName" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentHyperlinkRun::normalStyleName"><summary>Style name for normal state.</summary><signature><![CDATA[WString normalStyleName;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

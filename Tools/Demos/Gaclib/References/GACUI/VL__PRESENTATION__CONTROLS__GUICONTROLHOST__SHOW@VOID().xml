@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::Show@void()" accessor="public" category="Function" name="Show"><summary>
+<Document symbolId="vl::presentation::controls::GuiControlHost::Show@void()" accessor="public" category="Function" name="Show" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::Show@void()[decl0]"><summary>
  Show the window.
  </summary><signature><![CDATA[void Show(
 );

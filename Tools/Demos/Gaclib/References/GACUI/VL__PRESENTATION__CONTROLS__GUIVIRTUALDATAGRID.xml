@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualDataGrid" accessor="" category="Class" name="GuiVirtualDataGrid"><summary>Data grid control in virtual mode.</summary><signature><![CDATA[class GuiVirtualDataGrid
+<Document symbolId="vl::presentation::controls::GuiVirtualDataGrid" accessor="" category="Class" name="GuiVirtualDataGrid" declFile="GuiDataGridControls.h" declId="NI$vl::presentation::controls::GuiVirtualDataGrid"><summary>Data grid control in virtual mode.</summary><signature><![CDATA[class GuiVirtualDataGrid
     : GuiVirtualListView
     , compositions::GuiAltActionHostBase
     , list::IDataGridContext

@@ -1,4 +1,4 @@
-<Document symbolId="vl::wtou64@::vl::vuint64_t(::vl::WString const &amp;)" accessor="" category="Function" name="wtou64"><summary>Convert a string to a 64-bits unsigned integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><signature><![CDATA[vuint64_t wtou64(
+<Document symbolId="vl::wtou64@::vl::vuint64_t(::vl::WString const &amp;)" accessor="" category="Function" name="wtou64" declFile="String.h" declId="FB$vl::wtou64@::vl::vuint64_t(::vl::WString const &amp;)[decl0]"><summary>Convert a string to a 64-bits unsigned integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><signature><![CDATA[vuint64_t wtou64(
     WString const & string
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>

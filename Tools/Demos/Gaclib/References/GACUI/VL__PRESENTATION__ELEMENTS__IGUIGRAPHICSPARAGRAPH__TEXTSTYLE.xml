@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::TextStyle" accessor="public" category="Enum" name="TextStyle"><summary>Text style. Items in this enumeration type can be combined.</summary><enumitem name="Bold">Bold.</enumitem><enumitem name="Italic">Italic.</enumitem><enumitem name="Strikeline">Strikeline.</enumitem><enumitem name="Underline">Underline.</enumitem><signature><![CDATA[enum TextStyle
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::TextStyle" accessor="public" category="Enum" name="TextStyle" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::TextStyle"><summary>Text style. Items in this enumeration type can be combined.</summary><enumitem name="Bold">Bold.</enumitem><enumitem name="Italic">Italic.</enumitem><enumitem name="Strikeline">Strikeline.</enumitem><enumitem name="Underline">Underline.</enumitem><signature><![CDATA[enum TextStyle
 {
     Bold,
     Italic,

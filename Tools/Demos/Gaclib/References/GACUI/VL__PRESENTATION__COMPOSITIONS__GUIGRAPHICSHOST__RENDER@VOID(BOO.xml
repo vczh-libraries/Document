@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::Render@void(bool)" accessor="public" category="Function" name="Render"><summary>Render the main composition and all content to the associated window.</summary><param name="forceUpdate">Set to true to force updating layout and then render.</param><signature><![CDATA[void Render(
+<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::Render@void(bool)" accessor="public" category="Function" name="Render" declFile="GuiGraphicsHost.h" declId="FB$vl::presentation::compositions::GuiGraphicsHost::Render@void(bool)[decl0]"><summary>Render the main composition and all content to the associated window.</summary><param name="forceUpdate">Set to true to force updating layout and then render.</param><signature><![CDATA[void Render(
     bool forceUpdate
 );
 ]]></signature></Document>

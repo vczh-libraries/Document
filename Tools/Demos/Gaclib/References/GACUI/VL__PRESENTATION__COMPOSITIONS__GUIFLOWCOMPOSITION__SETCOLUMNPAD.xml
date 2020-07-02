@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetColumnPadding@void(::vl::vint)" accessor="public" category="Function" name="SetColumnPadding"><summary>Set the distance between columns.</summary><param name="value">The distance between columns.</param><signature><![CDATA[void SetColumnPadding(
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetColumnPadding@void(::vl::vint)" accessor="public" category="Function" name="SetColumnPadding" declFile="GuiGraphicsFlowComposition.h" declId="FB$vl::presentation::compositions::GuiFlowComposition::SetColumnPadding@void(::vl::vint)[decl0]"><summary>Set the distance between columns.</summary><param name="value">The distance between columns.</param><signature><![CDATA[void SetColumnPadding(
     vint value
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

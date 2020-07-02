@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetTopMost@bool()" accessor="public" category="Function" name="GetTopMost"><summary>
+<Document symbolId="vl::presentation::INativeWindow::GetTopMost@bool()" accessor="public" category="Function" name="GetTopMost" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetTopMost@bool()[decl0]"><summary>
  Test is the window always on top of the desktop.
  </summary><returns>Returns true if the window is always on top of the desktop.</returns><signature><![CDATA[bool GetTopMost(
 );

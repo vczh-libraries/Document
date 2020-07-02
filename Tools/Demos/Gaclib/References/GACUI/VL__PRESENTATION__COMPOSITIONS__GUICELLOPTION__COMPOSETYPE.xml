@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiCellOption::ComposeType" accessor="public" category="Enum" name="ComposeType"><summary>Sizing algorithm</summary><enumitem name="Absolute">Set the size to an absolute value.</enumitem><enumitem name="MinSize">Set the size to the minimum size of the cell element.</enumitem><enumitem name="Percentage">Set the size to a percentage number of the whole table.</enumitem><signature><![CDATA[enum ComposeType
+<Document symbolId="vl::presentation::compositions::GuiCellOption::ComposeType" accessor="public" category="Enum" name="ComposeType" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption::ComposeType"><summary>Sizing algorithm</summary><enumitem name="Absolute">Set the size to an absolute value.</enumitem><enumitem name="MinSize">Set the size to the minimum size of the cell element.</enumitem><enumitem name="Percentage">Set the size to a percentage number of the whole table.</enumitem><signature><![CDATA[enum ComposeType
 {
     Absolute,
     Percentage,

@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::BomEncoder::Encoding" accessor="public" category="Enum" name="Encoding"><summary>Text encoding.</summary><enumitem name="Mbcs">Multi-bytes character string.</enumitem><enumitem name="Utf16">UTF-16.</enumitem><enumitem name="Utf16BE">Big endian UTF-16.</enumitem><enumitem name="Utf8">UTF-8.</enumitem><signature><![CDATA[enum Encoding
+<Document symbolId="vl::stream::BomEncoder::Encoding" accessor="public" category="Enum" name="Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"><summary>Text encoding.</summary><enumitem name="Mbcs">Multi-bytes character string.</enumitem><enumitem name="Utf16">UTF-16.</enumitem><enumitem name="Utf16BE">Big endian UTF-16.</enumitem><enumitem name="Utf8">UTF-8.</enumitem><signature><![CDATA[enum Encoding
 {
     Mbcs,
     Utf8,

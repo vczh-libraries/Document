@@ -1,2 +1,2 @@
-<Document symbolId="vl::parsing::ParsingTextRange::end" accessor="public" category="Variable" name="end"><summary>Text position for the last character.</summary><signature><![CDATA[ParsingTextPos end;
+<Document symbolId="vl::parsing::ParsingTextRange::end" accessor="public" category="Variable" name="end" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextRange::end"><summary>Text position for the last character.</summary><signature><![CDATA[ParsingTextPos end;
 ]]></signature><seealsos><symbol name="ParsingTextPos" docId="vl::parsing::ParsingTextPos" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextPos"/></seealsos></Document>

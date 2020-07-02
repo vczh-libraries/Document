@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::RemoveHyperlink@void(::vl::vint, ::vl::vint, ::vl::vint)" accessor="public" category="Function" name="RemoveHyperlink"><summary>Remove hyperlink in a specified range.</summary><param name="paragraphIndex">The index of the paragraph to edit.</param><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><signature><![CDATA[void RemoveHyperlink(
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::RemoveHyperlink@void(::vl::vint, ::vl::vint, ::vl::vint)" accessor="public" category="Function" name="RemoveHyperlink" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::RemoveHyperlink@void(::vl::vint, ::vl::vint, ::vl::vint)[decl0]"><summary>Remove hyperlink in a specified range.</summary><param name="paragraphIndex">The index of the paragraph to edit.</param><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><signature><![CDATA[void RemoveHyperlink(
     vint paragraphIndex,
     vint begin,
     vint end

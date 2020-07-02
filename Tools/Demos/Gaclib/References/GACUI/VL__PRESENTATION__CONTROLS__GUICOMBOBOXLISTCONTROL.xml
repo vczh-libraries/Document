@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiComboBoxListControl" accessor="" category="Class" name="GuiComboBoxListControl"><summary>Combo box list control. This control is a combo box with a list control in its popup.</summary><signature><![CDATA[class GuiComboBoxListControl
+<Document symbolId="vl::presentation::controls::GuiComboBoxListControl" accessor="" category="Class" name="GuiComboBoxListControl" declFile="GuiComboControls.h" declId="NI$vl::presentation::controls::GuiComboBoxListControl"><summary>Combo box list control. This control is a combo box with a list control in its popup.</summary><signature><![CDATA[class GuiComboBoxListControl
     : GuiComboBoxBase
     , GuiListControl::IItemProviderCallback
     , Description<GuiComboBoxListControl>;

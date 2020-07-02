@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::SortedList::Remove@bool([K] const &amp;)" accessor="public" category="Function" name="Remove"><summary>Remove an item.</summary><returns>Returns true if the item is removed.</returns><param name="item">The item to remove.</param><signature><![CDATA[bool Remove(
+<Document symbolId="vl::collections::SortedList::Remove@bool([K] const &amp;)" accessor="public" category="Function" name="Remove" declFile="List.h" declId="FB$vl::collections::SortedList::Remove@bool([K] const &amp;)[impl0]"><summary>Remove an item.</summary><returns>Returns true if the item is removed.</returns><param name="item">The item to remove.</param><signature><![CDATA[bool Remove(
     K const & item
 );
 ]]></signature></Document>

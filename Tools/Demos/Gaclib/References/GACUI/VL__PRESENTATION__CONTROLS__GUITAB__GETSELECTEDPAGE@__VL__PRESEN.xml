@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTab::GetSelectedPage@::vl::presentation::controls::GuiTabPage *()" accessor="public" category="Function" name="GetSelectedPage"><summary>Get the selected page.</summary><returns>The selected page.</returns><signature><![CDATA[GuiTabPage * GetSelectedPage(
+<Document symbolId="vl::presentation::controls::GuiTab::GetSelectedPage@::vl::presentation::controls::GuiTabPage *()" accessor="public" category="Function" name="GetSelectedPage" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiTab::GetSelectedPage@::vl::presentation::controls::GuiTabPage *()[decl0]"><summary>Get the selected page.</summary><returns>The selected page.</returns><signature><![CDATA[GuiTabPage * GetSelectedPage(
 );
 ]]></signature><seealsos><symbol name="GuiTabPage" docId="vl::presentation::controls::GuiTabPage" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiTabPage"/></seealsos></Document>

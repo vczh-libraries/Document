@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeImageService::CreateImageFromMemory@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;(void *, ::vl::vint)" accessor="public" category="Function" name="CreateImageFromMemory"><summary>
+<Document symbolId="vl::presentation::INativeImageService::CreateImageFromMemory@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;(void *, ::vl::vint)" accessor="public" category="Function" name="CreateImageFromMemory" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeImageService::CreateImageFromMemory@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;(void *, ::vl::vint)[decl0]"><summary>
  Create an image from memory.
  </summary><returns>The created image.</returns><param name="buffer">The memory pointer.</param><param name="length">The memory length.</param><signature><![CDATA[Ptr<INativeImage> CreateImageFromMemory(
     void * buffer,

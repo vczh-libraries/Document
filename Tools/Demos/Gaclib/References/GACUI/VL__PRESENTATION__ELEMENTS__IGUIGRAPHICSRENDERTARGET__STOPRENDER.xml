@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::StopRendering@::vl::presentation::elements::RenderTargetFailure()" accessor="public" category="Function" name="StopRendering"><summary>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::StopRendering@::vl::presentation::elements::RenderTargetFailure()" accessor="public" category="Function" name="StopRendering" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderTarget::StopRendering@::vl::presentation::elements::RenderTargetFailure()[decl0]"><summary>
  Notify the target to stop rendering.
  </summary><returns>Returns false to recreate render target.</returns><signature><![CDATA[RenderTargetFailure StopRendering(
 );

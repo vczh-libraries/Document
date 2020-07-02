@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog::SetForceFontExist@void(bool)" accessor="public" category="Function" name="SetForceFontExist"><summary>Set if the dialog only accepts an existing font.</summary><param name="value">Set to true to let the dialog only accept an existing font.</param><signature><![CDATA[void SetForceFontExist(
+<Document symbolId="vl::presentation::controls::GuiFontDialog::SetForceFontExist@void(bool)" accessor="public" category="Function" name="SetForceFontExist" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFontDialog::SetForceFontExist@void(bool)[decl0]"><summary>Set if the dialog only accepts an existing font.</summary><param name="value">Set to true to let the dialog only accept an existing font.</param><signature><![CDATA[void SetForceFontExist(
     bool value
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiRepeatFlowComposition" accessor="" category="Class" name="GuiRepeatFlowComposition"><summary>Bindable flow composition.</summary><signature><![CDATA[class GuiRepeatFlowComposition
+<Document symbolId="vl::presentation::compositions::GuiRepeatFlowComposition" accessor="" category="Class" name="GuiRepeatFlowComposition" declFile="GuiGraphicsRepeatComposition.h" declId="NI$vl::presentation::compositions::GuiRepeatFlowComposition"><summary>Bindable flow composition.</summary><signature><![CDATA[class GuiRepeatFlowComposition
     : GuiFlowComposition
     , GuiRepeatCompositionBase
     , Description<GuiRepeatFlowComposition>;

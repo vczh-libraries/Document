@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeScreen::GetScalingY@double()" accessor="public" category="Function" name="GetScalingY"><summary>
+<Document symbolId="vl::presentation::INativeScreen::GetScalingY@double()" accessor="public" category="Function" name="GetScalingY" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeScreen::GetScalingY@double()[decl0]"><summary>
  Get the scaling for the screen&apos;s vertical edge.
  </summary><returns>The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.</returns><signature><![CDATA[double GetScalingY(
 );

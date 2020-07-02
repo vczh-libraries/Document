@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetEnabled@void(bool)" accessor="public" category="Function" name="SetEnabled"><summary>Set the enablility for this command.</summary><param name="value">The enablility for this command.</param><signature><![CDATA[void SetEnabled(
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::SetEnabled@void(bool)" accessor="public" category="Function" name="SetEnabled" declFile="GuiToolstripCommand.h" declId="FB$vl::presentation::controls::GuiToolstripCommand::SetEnabled@void(bool)[decl0]"><summary>Set the enablility for this command.</summary><param name="value">The enablility for this command.</param><signature><![CDATA[void SetEnabled(
     bool value
 );
 ]]></signature></Document>

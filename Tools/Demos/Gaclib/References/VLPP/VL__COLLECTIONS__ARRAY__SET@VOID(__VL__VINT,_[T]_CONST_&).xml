@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::Array::Set@void(::vl::vint, [T] const &amp;)" accessor="public" category="Function" name="Set"><summary>Replace an item.</summary><param name="index">The position of the item.</param><param name="item">The new item to put into the array.</param><signature><![CDATA[void Set(
+<Document symbolId="vl::collections::Array::Set@void(::vl::vint, [T] const &amp;)" accessor="public" category="Function" name="Set" declFile="List.h" declId="FB$vl::collections::Array::Set@void(::vl::vint, [T] const &amp;)[impl0]"><summary>Replace an item.</summary><param name="index">The position of the item.</param><param name="item">The new item to put into the array.</param><signature><![CDATA[void Set(
     vint index,
     T const & item
 );

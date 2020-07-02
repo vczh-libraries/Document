@@ -1,2 +1,2 @@
-<Document symbolId="vl::KeyType::Type" accessor="public" category="TypeAlias" name="Type"><summary>The index type of a value for containers.</summary><signature><![CDATA[using Type = T;
+<Document symbolId="vl::KeyType::Type" accessor="public" category="TypeAlias" name="Type" declFile="Basic.h" declId="NI$vl::KeyType::Type"><summary>The index type of a value for containers.</summary><signature><![CDATA[using Type = T;
 ]]></signature></Document>

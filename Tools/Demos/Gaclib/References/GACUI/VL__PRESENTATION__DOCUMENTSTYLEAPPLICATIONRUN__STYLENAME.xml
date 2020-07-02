@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyleApplicationRun::styleName" accessor="public" category="Variable" name="styleName"><summary>Style name.</summary><signature><![CDATA[WString styleName;
+<Document symbolId="vl::presentation::DocumentStyleApplicationRun::styleName" accessor="public" category="Variable" name="styleName" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleApplicationRun::styleName"><summary>Style name.</summary><signature><![CDATA[WString styleName;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

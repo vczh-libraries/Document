@@ -1,4 +1,4 @@
-<Document symbolId="vl::Locale::ToKatagana@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToKatagana"><summary>Convert characters to the Katagana.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param><signature><![CDATA[WString ToKatagana(
+<Document symbolId="vl::Locale::ToKatagana@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToKatagana" declFile="Locale.h" declId="FB$vl::Locale::ToKatagana@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Convert characters to the Katagana.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param><signature><![CDATA[WString ToKatagana(
     WString const & str
 ) const;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

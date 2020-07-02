@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker" accessor="" category="Class" name="GuiDatePicker"><summary>Date picker control that display a calendar.</summary><signature><![CDATA[class GuiDatePicker
+<Document symbolId="vl::presentation::controls::GuiDatePicker" accessor="" category="Class" name="GuiDatePicker" declFile="GuiDateTimeControls.h" declId="NI$vl::presentation::controls::GuiDatePicker"><summary>Date picker control that display a calendar.</summary><signature><![CDATA[class GuiDatePicker
     : GuiControl
     , compositions::GuiAltActionHostBase
     , Description<GuiDatePicker>;

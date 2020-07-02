@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::SetActivate@void()" accessor="public" category="Function" name="SetActivate"><summary>
+<Document symbolId="vl::presentation::INativeWindow::SetActivate@void()" accessor="public" category="Function" name="SetActivate" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetActivate@void()[decl0]"><summary>
  Activate to the window.
  </summary><signature><![CDATA[void SetActivate(
 );

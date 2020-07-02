@@ -1,4 +1,4 @@
-<Document symbolId="vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &amp;, ::vl::unittest::UnitTest::MessageKind)" accessor="public" category="Function" name="PrintMessage"><summary>Print a message with specified color.</summary><param name="string">The content.</param><param name="kind">The kind of the content.</param><signature><![CDATA[static void PrintMessage(
+<Document symbolId="vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &amp;, ::vl::unittest::UnitTest::MessageKind)" accessor="public" category="Function" name="PrintMessage" declFile="UnitTest.h" declId="FB$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &amp;, ::vl::unittest::UnitTest::MessageKind)[decl0]"><summary>Print a message with specified color.</summary><param name="string">The content.</param><param name="kind">The kind of the content.</param><signature><![CDATA[static void PrintMessage(
     WString const & string,
     MessageKind kind
 );

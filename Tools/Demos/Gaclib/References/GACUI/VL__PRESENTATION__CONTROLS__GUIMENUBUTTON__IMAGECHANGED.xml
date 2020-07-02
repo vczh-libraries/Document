@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiMenuButton::ImageChanged" accessor="public" category="Variable" name="ImageChanged"><summary>Image changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ImageChanged;
+<Document symbolId="vl::presentation::controls::GuiMenuButton::ImageChanged" accessor="public" category="Variable" name="ImageChanged" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenuButton::ImageChanged"><summary>Image changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ImageChanged;
 ]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

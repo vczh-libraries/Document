@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiNodeEventArgs::node" accessor="public" category="Variable" name="node"><summary>Tree node.</summary><signature><![CDATA[controls::tree::INodeProvider * node;
+<Document symbolId="vl::presentation::compositions::GuiNodeEventArgs::node" accessor="public" category="Variable" name="node" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeEventArgs::node"><summary>Tree node.</summary><signature><![CDATA[controls::tree::INodeProvider * node;
 ]]></signature><seealsos><symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/></seealsos></Document>

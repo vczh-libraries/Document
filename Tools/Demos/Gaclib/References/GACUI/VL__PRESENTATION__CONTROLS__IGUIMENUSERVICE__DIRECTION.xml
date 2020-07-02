@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::IGuiMenuService::Direction" accessor="public" category="Enum" name="Direction"><summary>Direction to decide the position for a menu with specified control.</summary><enumitem name="Horizontal">Aligned to the top or bottom side.</enumitem><enumitem name="Vertical">Aligned to the left or right side.</enumitem><signature><![CDATA[enum Direction
+<Document symbolId="vl::presentation::controls::IGuiMenuService::Direction" accessor="public" category="Enum" name="Direction" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::IGuiMenuService::Direction"><summary>Direction to decide the position for a menu with specified control.</summary><enumitem name="Horizontal">Aligned to the top or bottom side.</enumitem><enumitem name="Vertical">Aligned to the left or right side.</enumitem><signature><![CDATA[enum Direction
 {
     Horizontal,
     Vertical,

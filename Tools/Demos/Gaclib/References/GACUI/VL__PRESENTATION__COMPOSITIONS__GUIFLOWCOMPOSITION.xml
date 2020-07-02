@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition" accessor="" category="Class" name="GuiFlowComposition"><summary>
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition" accessor="" category="Class" name="GuiFlowComposition" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowComposition"><summary>
  Represents a flow composition.
  </summary><signature><![CDATA[class GuiFlowComposition
     : GuiBoundsComposition

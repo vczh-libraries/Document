@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiSharedSizeItemComposition::GetSharedHeight@bool()" accessor="public" category="Function" name="GetSharedHeight"><summary>Test is the height of this item is shared.</summary><returns>Returns true if the height of this item is shared.</returns><signature><![CDATA[bool GetSharedHeight(
+<Document symbolId="vl::presentation::compositions::GuiSharedSizeItemComposition::GetSharedHeight@bool()" accessor="public" category="Function" name="GetSharedHeight" declFile="GuiGraphicsSharedSizeComposition.h" declId="FB$vl::presentation::compositions::GuiSharedSizeItemComposition::GetSharedHeight@bool()[decl0]"><summary>Test is the height of this item is shared.</summary><returns>Returns true if the height of this item is shared.</returns><signature><![CDATA[bool GetSharedHeight(
 );
 ]]></signature></Document>

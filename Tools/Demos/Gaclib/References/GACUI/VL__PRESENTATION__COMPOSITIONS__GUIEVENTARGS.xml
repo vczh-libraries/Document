@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiEventArgs" accessor="" category="Struct" name="GuiEventArgs"><summary>Notify event arguments.</summary><signature><![CDATA[struct GuiEventArgs
+<Document symbolId="vl::presentation::compositions::GuiEventArgs" accessor="" category="Struct" name="GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"><summary>Notify event arguments.</summary><signature><![CDATA[struct GuiEventArgs
     : Object
     , AggregatableDescription<GuiEventArgs>;
 ]]></signature><seealsos><symbol name="GuiEventArgs" docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"/></basetypes></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetMultiline@void(bool)" accessor="public" category="Function" name="SetMultiline"><summary>
+<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetMultiline@void(bool)" accessor="public" category="Function" name="SetMultiline" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::SetMultiline@void(bool)[decl0]"><summary>
  Set if multiple lines is enabled for this text.
  </summary><param name="value">True if multiple lines is enabled for this text.</param><signature><![CDATA[void SetMultiline(
     bool value

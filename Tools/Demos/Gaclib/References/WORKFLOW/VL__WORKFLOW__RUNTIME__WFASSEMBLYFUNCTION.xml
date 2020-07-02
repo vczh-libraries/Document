@@ -1,3 +1,3 @@
-<Document symbolId="vl::workflow::runtime::WfAssemblyFunction" accessor="" category="Class" name="WfAssemblyFunction"><summary>Representing a compiled function.</summary><signature><![CDATA[class WfAssemblyFunction
+<Document symbolId="vl::workflow::runtime::WfAssemblyFunction" accessor="" category="Class" name="WfAssemblyFunction" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssemblyFunction"><summary>Representing a compiled function.</summary><signature><![CDATA[class WfAssemblyFunction
     : Object;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

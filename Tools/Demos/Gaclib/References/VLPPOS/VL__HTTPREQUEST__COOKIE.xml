@@ -1,2 +1,2 @@
-<Document symbolId="vl::HttpRequest::cookie" accessor="public" category="Variable" name="cookie"><summary>Cookie. Set to empty if you don&apos;t want to provide it.</summary><signature><![CDATA[WString cookie;
+<Document symbolId="vl::HttpRequest::cookie" accessor="public" category="Variable" name="cookie" declFile="HttpUtility.h" declId="NI$vl::HttpRequest::cookie"><summary>Cookie. Set to empty if you don&apos;t want to provide it.</summary><signature><![CDATA[WString cookie;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

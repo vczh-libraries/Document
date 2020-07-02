@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiImageFrameElement::SetFrameIndex@void(::vl::vint)" accessor="public" category="Function" name="SetFrameIndex"><summary>
+<Document symbolId="vl::presentation::elements::GuiImageFrameElement::SetFrameIndex@void(::vl::vint)" accessor="public" category="Function" name="SetFrameIndex" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::SetFrameIndex@void(::vl::vint)[decl0]"><summary>
  Set  the frame index.
  </summary><param name="value">The new frameIndex.</param><signature><![CDATA[void SetFrameIndex(
     vint value

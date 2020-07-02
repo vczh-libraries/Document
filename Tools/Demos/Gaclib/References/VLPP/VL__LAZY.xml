@@ -1,4 +1,4 @@
-<Document symbolId="vl::Lazy" accessor="" category="Class" name="Lazy"><summary>A type representing a lazy evaluation.</summary><typeparam name="T">The type of the evaluation result.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::Lazy" accessor="" category="Class" name="Lazy" declFile="Lazy.h" declId="NI$vl::Lazy"><summary>A type representing a lazy evaluation.</summary><typeparam name="T">The type of the evaluation result.</typeparam><signature><![CDATA[template <
     typename T
 >
 class Lazy

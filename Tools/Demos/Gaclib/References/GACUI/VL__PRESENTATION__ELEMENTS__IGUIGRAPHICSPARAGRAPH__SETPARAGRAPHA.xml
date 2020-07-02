@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetParagraphAlignment@void(::vl::presentation::Alignment)" accessor="public" category="Function" name="SetParagraphAlignment"><summary>Set the horizontal alignment for this paragraph.</summary><param name="value">The alignment.</param><signature><![CDATA[void SetParagraphAlignment(
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetParagraphAlignment@void(::vl::presentation::Alignment)" accessor="public" category="Function" name="SetParagraphAlignment" declFile="GuiGraphicsDocumentInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsParagraph::SetParagraphAlignment@void(::vl::presentation::Alignment)[decl0]"><summary>Set the horizontal alignment for this paragraph.</summary><param name="value">The alignment.</param><signature><![CDATA[void SetParagraphAlignment(
     Alignment value
 );
 ]]></signature><seealsos><symbol name="Alignment" docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/></seealsos></Document>

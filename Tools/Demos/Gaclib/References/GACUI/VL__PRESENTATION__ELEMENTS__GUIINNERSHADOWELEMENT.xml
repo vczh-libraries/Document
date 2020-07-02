@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiInnerShadowElement" accessor="" category="Class" name="GuiInnerShadowElement"><summary>
+<Document symbolId="vl::presentation::elements::GuiInnerShadowElement" accessor="" category="Class" name="GuiInnerShadowElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiInnerShadowElement"><summary>
  Defines a gradient border for shadow.
  </summary><signature><![CDATA[class GuiInnerShadowElement
     : GuiElementBase<GuiInnerShadowElement>;

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTextList" accessor="" category="Class" name="GuiTextList"><summary>Text list control.</summary><signature><![CDATA[class GuiTextList
+<Document symbolId="vl::presentation::controls::GuiTextList" accessor="" category="Class" name="GuiTextList" declFile="GuiTextListControls.h" declId="NI$vl::presentation::controls::GuiTextList"><summary>Text list control.</summary><signature><![CDATA[class GuiTextList
     : GuiVirtualTextList
     , Description<GuiTextList>;
 ]]></signature><seealsos><symbol name="GuiTextList" docId="vl::presentation::controls::GuiTextList" declFile="GuiTextListControls.h" declId="NI$vl::presentation::controls::GuiTextList"/></seealsos><basetypes><symbol name="GuiVirtualTextList" docId="vl::presentation::controls::GuiVirtualTextList" declFile="GuiTextListControls.h" declId="NI$vl::presentation::controls::GuiVirtualTextList"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

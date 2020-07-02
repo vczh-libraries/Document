@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDialogBase" accessor="" category="Class" name="GuiDialogBase"><summary>Base class for dialogs.</summary><signature><![CDATA[class GuiDialogBase
+<Document symbolId="vl::presentation::controls::GuiDialogBase" accessor="" category="Class" name="GuiDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiDialogBase"><summary>Base class for dialogs.</summary><signature><![CDATA[class GuiDialogBase
     : GuiComponent
     , Description<GuiDialogBase>;
 ]]></signature><seealsos><symbol name="GuiDialogBase" docId="vl::presentation::controls::GuiDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiDialogBase"/></seealsos><basetypes><symbol name="GuiComponent" docId="vl::presentation::controls::GuiComponent" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::GuiComponent"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

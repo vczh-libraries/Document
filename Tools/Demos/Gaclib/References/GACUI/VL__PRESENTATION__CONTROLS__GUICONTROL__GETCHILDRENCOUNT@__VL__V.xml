@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControl::GetChildrenCount@::vl::vint()" accessor="public" category="Function" name="GetChildrenCount"><summary>Get the number of child controls.</summary><returns>The number of child controls.</returns><signature><![CDATA[vint GetChildrenCount(
+<Document symbolId="vl::presentation::controls::GuiControl::GetChildrenCount@::vl::vint()" accessor="public" category="Function" name="GetChildrenCount" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::GetChildrenCount@::vl::vint()[decl0]"><summary>Get the number of child controls.</summary><returns>The number of child controls.</returns><signature><![CDATA[vint GetChildrenCount(
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

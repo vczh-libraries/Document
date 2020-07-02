@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()" accessor="public" category="Function" name="GetBounds"><summary>
+<Document symbolId="vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()" accessor="public" category="Function" name="GetBounds" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()[decl0]"><summary>
  Get the bounds of the window.
  </summary><returns>The bounds of the window.</returns><signature><![CDATA[NativeRect GetBounds(
 );

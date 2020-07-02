@@ -1,4 +1,4 @@
-<Document symbolId="vl::ObjectString" accessor="" category="Class" name="ObjectString"><summary>A type representing a string.</summary><typeparam name="T">Type of a character.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::ObjectString" accessor="" category="Class" name="ObjectString" declFile="String.h" declId="NI$vl::ObjectString"><summary>A type representing a string.</summary><typeparam name="T">Type of a character.</typeparam><signature><![CDATA[template <
     typename T
 >
 class ObjectString

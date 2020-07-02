@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourcePrecompileContext::passIndex" accessor="public" category="Variable" name="passIndex"><summary>Indicate the pass index of this precompiling pass.</summary><signature><![CDATA[vint passIndex;
+<Document symbolId="vl::presentation::GuiResourcePrecompileContext::passIndex" accessor="public" category="Variable" name="passIndex" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext::passIndex"><summary>Indicate the pass index of this precompiling pass.</summary><signature><![CDATA[vint passIndex;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

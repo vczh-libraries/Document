@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::Destroyed@void()" accessor="public" category="Function" name="Destroyed"><summary>
+<Document symbolId="vl::presentation::INativeWindowListener::Destroyed@void()" accessor="public" category="Function" name="Destroyed" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Destroyed@void()[decl0]"><summary>
  Called when the window is destroyed.
  </summary><signature><![CDATA[void Destroyed(
 );

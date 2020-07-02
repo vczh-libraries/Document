@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDateComboBox::SetSelectedDate@void(::vl::DateTime const &amp;)" accessor="public" category="Function" name="SetSelectedDate"><summary>Display a date.</summary><param name="value">The date.</param><signature><![CDATA[void SetSelectedDate(
+<Document symbolId="vl::presentation::controls::GuiDateComboBox::SetSelectedDate@void(::vl::DateTime const &amp;)" accessor="public" category="Function" name="SetSelectedDate" declFile="GuiDateTimeControls.h" declId="FB$vl::presentation::controls::GuiDateComboBox::SetSelectedDate@void(::vl::DateTime const &amp;)[decl0]"><summary>Display a date.</summary><param name="value">The date.</param><signature><![CDATA[void SetSelectedDate(
     DateTime const & value
 );
 ]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/></seealsos></Document>

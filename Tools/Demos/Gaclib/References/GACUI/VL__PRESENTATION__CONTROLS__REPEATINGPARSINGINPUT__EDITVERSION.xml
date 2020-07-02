@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingInput::editVersion" accessor="public" category="Variable" name="editVersion"><summary>The text box edit version of the code.</summary><signature><![CDATA[vuint editVersion;
+<Document symbolId="vl::presentation::controls::RepeatingParsingInput::editVersion" accessor="public" category="Variable" name="editVersion" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingInput::editVersion"><summary>The text box edit version of the code.</summary><signature><![CDATA[vuint editVersion;
 ]]></signature><seealsos><symbol name="vuint" docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>

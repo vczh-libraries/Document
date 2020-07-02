@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::ClearUndoRedo@void()" accessor="public" category="Function" name="ClearUndoRedo"><summary>Clear all undo and redo information.</summary><signature><![CDATA[void ClearUndoRedo(
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::ClearUndoRedo@void()" accessor="public" category="Function" name="ClearUndoRedo" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::ClearUndoRedo@void()[decl0]"><summary>Clear all undo and redo information.</summary><signature><![CDATA[void ClearUndoRedo(
 );
 ]]></signature></Document>

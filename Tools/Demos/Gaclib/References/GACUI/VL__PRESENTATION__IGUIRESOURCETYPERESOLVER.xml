@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver" accessor="" category="Class" name="IGuiResourceTypeResolver"><summary>Represents a symbol type for loading a resource.</summary><signature><![CDATA[class IGuiResourceTypeResolver
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver" accessor="" category="Class" name="IGuiResourceTypeResolver" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver"><summary>Represents a symbol type for loading a resource.</summary><signature><![CDATA[class IGuiResourceTypeResolver
     : IDescriptable
     , Description<IGuiResourceTypeResolver>;
 ]]></signature><seealsos><symbol name="IGuiResourceTypeResolver" docId="vl::presentation::IGuiResourceTypeResolver" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

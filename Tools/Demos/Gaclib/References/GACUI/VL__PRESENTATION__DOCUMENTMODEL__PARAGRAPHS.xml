@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentModel::paragraphs" accessor="public" category="Variable" name="paragraphs"><summary>All paragraphs.</summary><signature><![CDATA[ParagraphList paragraphs;
+<Document symbolId="vl::presentation::DocumentModel::paragraphs" accessor="public" category="Variable" name="paragraphs" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::paragraphs"><summary>All paragraphs.</summary><signature><![CDATA[ParagraphList paragraphs;
 ]]></signature><seealsos><symbol name="ParagraphList" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::ParagraphList"/></seealsos></Document>

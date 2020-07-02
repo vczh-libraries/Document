@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeController::InputService@::vl::presentation::INativeInputService *()" accessor="public" category="Function" name="InputService"><summary>
+<Document symbolId="vl::presentation::INativeController::InputService@::vl::presentation::INativeInputService *()" accessor="public" category="Function" name="InputService" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::InputService@::vl::presentation::INativeInputService *()[decl0]"><summary>
  Get the user input service.
  </summary><returns>The user input service</returns><signature><![CDATA[INativeInputService * InputService(
 );

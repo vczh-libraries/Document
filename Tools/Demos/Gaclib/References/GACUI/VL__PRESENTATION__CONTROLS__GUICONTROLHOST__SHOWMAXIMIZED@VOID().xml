@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::ShowMaximized@void()" accessor="public" category="Function" name="ShowMaximized"><summary>
+<Document symbolId="vl::presentation::controls::GuiControlHost::ShowMaximized@void()" accessor="public" category="Function" name="ShowMaximized" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::ShowMaximized@void()[decl0]"><summary>
  Maximize the window.
  </summary><signature><![CDATA[void ShowMaximized(
 );

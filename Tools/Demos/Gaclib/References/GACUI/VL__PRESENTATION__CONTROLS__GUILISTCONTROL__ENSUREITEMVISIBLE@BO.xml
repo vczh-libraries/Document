@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::EnsureItemVisible@bool(::vl::vint)" accessor="public" category="Function" name="EnsureItemVisible"><summary>Adjust the view location to make an item visible.</summary><returns>Returns true if this operation succeeded.</returns><param name="itemIndex">The item index of the item to be made visible.</param><signature><![CDATA[bool EnsureItemVisible(
+<Document symbolId="vl::presentation::controls::GuiListControl::EnsureItemVisible@bool(::vl::vint)" accessor="public" category="Function" name="EnsureItemVisible" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::EnsureItemVisible@bool(::vl::vint)[decl0]"><summary>Adjust the view location to make an item visible.</summary><returns>Returns true if this operation succeeded.</returns><param name="itemIndex">The item index of the item to be made visible.</param><signature><![CDATA[bool EnsureItemVisible(
     vint itemIndex
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

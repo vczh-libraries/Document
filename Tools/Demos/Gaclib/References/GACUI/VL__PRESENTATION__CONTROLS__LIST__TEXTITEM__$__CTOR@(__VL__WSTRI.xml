@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::TextItem::$__ctor@(::vl::WString const &amp;, bool)" accessor="public" category="Function" name="$__ctor"><summary>Create a text item with specified text and check state.</summary><param name="_text">The text.</param><param name="_checked">The check state.</param><signature><![CDATA[ TextItem(
+<Document symbolId="vl::presentation::controls::list::TextItem::$__ctor@(::vl::WString const &amp;, bool)" accessor="public" category="Function" name="$__ctor" declFile="GuiTextListControls.h" declId="FB$vl::presentation::controls::list::TextItem::$__ctor@(::vl::WString const &amp;, bool)[decl0]"><summary>Create a text item with specified text and check state.</summary><param name="_text">The text.</param><param name="_checked">The check state.</param><signature><![CDATA[ TextItem(
     WString const & _text,
     bool _checked /* optional */
 );

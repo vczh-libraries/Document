@@ -1,2 +1,2 @@
-<Document symbolId="vl::Object" accessor="" category="Class" name="Object"><summary>Base type of all classes.</summary><signature><![CDATA[class Object;
+<Document symbolId="vl::Object" accessor="" category="Class" name="Object" declFile="Basic.h" declId="NI$vl::Object"><summary>Base type of all classes.</summary><signature><![CDATA[class Object;
 ]]></signature></Document>

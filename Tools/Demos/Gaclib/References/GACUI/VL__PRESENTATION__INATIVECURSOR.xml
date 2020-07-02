@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeCursor" accessor="" category="Class" name="INativeCursor"><summary>
+<Document symbolId="vl::presentation::INativeCursor" accessor="" category="Class" name="INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"><summary>
  Represents a cursor.
  </summary><signature><![CDATA[class INativeCursor
     : IDescriptable

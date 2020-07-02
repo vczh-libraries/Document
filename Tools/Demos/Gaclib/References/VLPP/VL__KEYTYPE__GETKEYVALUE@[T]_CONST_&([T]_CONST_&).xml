@@ -1,4 +1,4 @@
-<Document symbolId="vl::KeyType::GetKeyValue@[T] const &amp;([T] const &amp;)" accessor="public" category="Function" name="GetKeyValue"><summary>Convert a value to its index type.</summary><returns>The corresponding index value.</returns><param name="value">The value.</param><signature><![CDATA[static T const & GetKeyValue(
+<Document symbolId="vl::KeyType::GetKeyValue@[T] const &amp;([T] const &amp;)" accessor="public" category="Function" name="GetKeyValue" declFile="Basic.h" declId="FB$vl::KeyType::GetKeyValue@[T] const &amp;([T] const &amp;)[impl0]"><summary>Convert a value to its index type.</summary><returns>The corresponding index value.</returns><param name="value">The value.</param><signature><![CDATA[static T const & GetKeyValue(
     T const & value
 );
 ]]></signature></Document>

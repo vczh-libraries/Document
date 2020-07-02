@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiMultilineTextBox" accessor="" category="Class" name="GuiMultilineTextBox"><summary>Multiline text box control.</summary><signature><![CDATA[class GuiMultilineTextBox
+<Document symbolId="vl::presentation::controls::GuiMultilineTextBox" accessor="" category="Class" name="GuiMultilineTextBox" declFile="GuiTextControls.h" declId="NI$vl::presentation::controls::GuiMultilineTextBox"><summary>Multiline text box control.</summary><signature><![CDATA[class GuiMultilineTextBox
     : GuiScrollView
     , GuiTextBoxCommonInterface
     , Description<GuiMultilineTextBox>;

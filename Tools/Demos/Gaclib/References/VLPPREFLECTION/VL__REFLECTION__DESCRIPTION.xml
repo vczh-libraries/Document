@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::Description" accessor="" category="Class" name="Description"><summary><![CDATA[
+<Document symbolId="vl::reflection::Description" accessor="" category="Class" name="Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"><summary><![CDATA[
  Inherit from this class when you want to create a reflectable class. It should be used like this:
  class YourClass : public Description<YourClass>
  {

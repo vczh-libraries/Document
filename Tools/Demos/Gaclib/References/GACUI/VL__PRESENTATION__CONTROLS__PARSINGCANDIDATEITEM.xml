@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::ParsingCandidateItem" accessor="" category="Struct" name="ParsingCandidateItem"><summary>A data structure storing the information for a candidate item.</summary><signature><![CDATA[struct ParsingCandidateItem;
+<Document symbolId="vl::presentation::controls::ParsingCandidateItem" accessor="" category="Struct" name="ParsingCandidateItem" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingCandidateItem"><summary>A data structure storing the information for a candidate item.</summary><signature><![CDATA[struct ParsingCandidateItem;
 ]]></signature></Document>

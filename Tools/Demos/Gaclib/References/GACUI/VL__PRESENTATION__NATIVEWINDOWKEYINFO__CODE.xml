@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::NativeWindowKeyInfo::code" accessor="public" category="Variable" name="code"><summary>Key code of the key that sends this message.</summary><signature><![CDATA[VKEY code;
+<Document symbolId="vl::presentation::NativeWindowKeyInfo::code" accessor="public" category="Variable" name="code" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowKeyInfo::code"><summary>Key code of the key that sends this message.</summary><signature><![CDATA[VKEY code;
 ]]></signature><seealsos><symbol name="VKEY" declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>

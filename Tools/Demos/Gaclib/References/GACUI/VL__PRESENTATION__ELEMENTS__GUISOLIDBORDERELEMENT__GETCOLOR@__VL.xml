@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidBorderElement::GetColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor"><summary>
+<Document symbolId="vl::presentation::elements::GuiSolidBorderElement::GetColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidBorderElement::GetColor@::vl::presentation::Color()[decl0]"><summary>
  Get the border color.
  </summary><returns>The border color.</returns><signature><![CDATA[Color GetColor(
 );

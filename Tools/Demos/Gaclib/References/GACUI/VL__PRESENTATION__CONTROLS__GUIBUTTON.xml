@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiButton" accessor="" category="Class" name="GuiButton"><summary>A control with 3 phases state transffering when mouse click happens.</summary><signature><![CDATA[class GuiButton
+<Document symbolId="vl::presentation::controls::GuiButton" accessor="" category="Class" name="GuiButton" declFile="GuiButtonControls.h" declId="NI$vl::presentation::controls::GuiButton"><summary>A control with 3 phases state transffering when mouse click happens.</summary><signature><![CDATA[class GuiButton
     : GuiControl
     , Description<GuiButton>;
 ]]></signature><seealsos><symbol name="GuiButton" docId="vl::presentation::controls::GuiButton" declFile="GuiButtonControls.h" declId="NI$vl::presentation::controls::GuiButton"/></seealsos><basetypes><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines::GetCount@::vl::vint()" accessor="public" category="Function" name="GetCount"><summary>
+<Document symbolId="vl::presentation::elements::text::TextLines::GetCount@::vl::vint()" accessor="public" category="Function" name="GetCount" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetCount@::vl::vint()[decl0]"><summary>
  Returns the number of text lines.
  </summary><returns>The number of text lines.</returns><signature><![CDATA[vint GetCount(
 );

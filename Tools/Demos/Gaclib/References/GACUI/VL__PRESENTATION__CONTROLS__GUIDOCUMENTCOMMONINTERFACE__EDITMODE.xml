@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::EditMode" accessor="public" category="Enum" name="EditMode"><summary>Represents the edit mode.</summary><enumitem name="Editable">The rich text is editable.</enumitem><enumitem name="Selectable">The rich text is selectable.</enumitem><enumitem name="ViewOnly">View the rich text only.</enumitem><signature><![CDATA[enum EditMode
+<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::EditMode" accessor="public" category="Enum" name="EditMode" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentCommonInterface::EditMode"><summary>Represents the edit mode.</summary><enumitem name="Editable">The rich text is editable.</enumitem><enumitem name="Selectable">The rich text is selectable.</enumitem><enumitem name="ViewOnly">View the rich text only.</enumitem><signature><![CDATA[enum EditMode
 {
     ViewOnly,
     Selectable,

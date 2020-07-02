@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeImageFrame::GetImage@::vl::presentation::INativeImage *()" accessor="public" category="Function" name="GetImage"><summary>
+<Document symbolId="vl::presentation::INativeImageFrame::GetImage@::vl::presentation::INativeImage *()" accessor="public" category="Function" name="GetImage" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeImageFrame::GetImage@::vl::presentation::INativeImage *()[decl0]"><summary>
  Get the image that owns this frame.
  </summary><returns>The image that owns this frame.</returns><signature><![CDATA[INativeImage * GetImage(
 );

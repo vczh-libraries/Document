@@ -1,3 +1,3 @@
-<Document symbolId="vl::RepeatingTaskExecutor::EnsureTaskFinished@void()" accessor="public" category="Function" name="EnsureTaskFinished"><summary>Wait for all tasks to finish.</summary><signature><![CDATA[void EnsureTaskFinished(
+<Document symbolId="vl::RepeatingTaskExecutor::EnsureTaskFinished@void()" accessor="public" category="Function" name="EnsureTaskFinished" declFile="Threading.h" declId="FB$vl::RepeatingTaskExecutor::EnsureTaskFinished@void()[impl0]"><summary>Wait for all tasks to finish.</summary><signature><![CDATA[void EnsureTaskFinished(
 );
 ]]></signature></Document>

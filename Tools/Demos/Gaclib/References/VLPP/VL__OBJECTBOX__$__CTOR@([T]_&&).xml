@@ -1,4 +1,4 @@
-<Document symbolId="vl::ObjectBox::$__ctor@([T] &amp;&amp;)" accessor="public" category="Function" name="$__ctor"><summary>Box a movable value.</summary><param name="_object">The value to box.</param><signature><![CDATA[ ObjectBox(
+<Document symbolId="vl::ObjectBox::$__ctor@([T] &amp;&amp;)" accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::ObjectBox::$__ctor@([T] &amp;&amp;)[impl0]"><summary>Box a movable value.</summary><param name="_object">The value to box.</param><signature><![CDATA[ ObjectBox(
     T && _object
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiMouseEventArgs" accessor="" category="Struct" name="GuiMouseEventArgs"><summary>Mouse event arguments.</summary><signature><![CDATA[struct GuiMouseEventArgs
+<Document symbolId="vl::presentation::compositions::GuiMouseEventArgs" accessor="" category="Struct" name="GuiMouseEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEventArgs"><summary>Mouse event arguments.</summary><signature><![CDATA[struct GuiMouseEventArgs
     : GuiEventArgs
     , WindowMouseInfo
     , Description<GuiMouseEventArgs>;

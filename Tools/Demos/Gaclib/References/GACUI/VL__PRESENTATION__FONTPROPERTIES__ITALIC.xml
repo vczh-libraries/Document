@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::FontProperties::italic" accessor="public" category="Variable" name="italic"><summary>
+<Document symbolId="vl::presentation::FontProperties::italic" accessor="public" category="Variable" name="italic" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties::italic"><summary>
  True if the font is italic.
  </summary><signature><![CDATA[bool italic;
 ]]></signature></Document>

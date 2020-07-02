@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines::ClearMeasurement@void()" accessor="public" category="Function" name="ClearMeasurement"><summary>
+<Document symbolId="vl::presentation::elements::text::TextLines::ClearMeasurement@void()" accessor="public" category="Function" name="ClearMeasurement" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::ClearMeasurement@void()[decl0]"><summary>
  Clear all cached <symbol name="rightOffset" docId="vl::presentation::elements::text::CharAtt::rightOffset" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt::rightOffset"/>.
  </summary><signature><![CDATA[void ClearMeasurement(
 );

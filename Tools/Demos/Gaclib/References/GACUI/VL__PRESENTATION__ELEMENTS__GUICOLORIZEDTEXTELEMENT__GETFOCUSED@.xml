@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetFocused@bool()" accessor="public" category="Function" name="GetFocused"><summary>
+<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetFocused@bool()" accessor="public" category="Function" name="GetFocused" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::GetFocused@bool()[decl0]"><summary>
  Get the focused state.
  </summary><returns>Returns true if the element will be rendered as a focused element.</returns><signature><![CDATA[bool GetFocused(
 );

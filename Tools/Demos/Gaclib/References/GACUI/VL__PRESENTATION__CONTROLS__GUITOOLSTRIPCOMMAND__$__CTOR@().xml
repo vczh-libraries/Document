@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripCommand::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create the command.</summary><signature><![CDATA[ GuiToolstripCommand(
+<Document symbolId="vl::presentation::controls::GuiToolstripCommand::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="GuiToolstripCommand.h" declId="FB$vl::presentation::controls::GuiToolstripCommand::$__ctor@()[decl0]"><summary>Create the command.</summary><signature><![CDATA[ GuiToolstripCommand(
 );
 ]]></signature></Document>

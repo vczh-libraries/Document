@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::GetClipper@::vl::presentation::Rect()" accessor="public" category="Function" name="GetClipper"><summary>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderTarget::GetClipper@::vl::presentation::Rect()" accessor="public" category="Function" name="GetClipper" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderTarget::GetClipper@::vl::presentation::Rect()[decl0]"><summary>
  Get the combined clipper
  </summary><returns>The combined clipper</returns><signature><![CDATA[Rect GetClipper(
 );

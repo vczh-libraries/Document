@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::Finalize@void()" accessor="public" category="Function" name="Finalize"><summary>
+<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::Finalize@void()" accessor="public" category="Function" name="Finalize" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderer::Finalize@void()[decl0]"><summary>
  Release all resources that used by this renderer.
  </summary><signature><![CDATA[void Finalize(
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeImageFrame::SetCache@bool(void *, ::vl::Ptr&lt;::vl::presentation::INativeImageFrameCache&gt;)" accessor="public" category="Function" name="SetCache"><summary>
+<Document symbolId="vl::presentation::INativeImageFrame::SetCache@bool(void *, ::vl::Ptr&lt;::vl::presentation::INativeImageFrameCache&gt;)" accessor="public" category="Function" name="SetCache" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeImageFrame::SetCache@bool(void *, ::vl::Ptr&lt;::vl::presentation::INativeImageFrameCache&gt;)[decl0]"><summary>
  Attach a customized cache object to this image frame and bind to a key.
  </summary><returns>Returns true if this operation succeeded.</returns><param name="key">The key binded with the customized cache object.</param><param name="cache">The customized cache object.</param><signature><![CDATA[bool SetCache(
     void * key,

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentInlineObjectRun::size" accessor="public" category="Variable" name="size"><summary>Size of the inline object.</summary><signature><![CDATA[Size size;
+<Document symbolId="vl::presentation::DocumentInlineObjectRun::size" accessor="public" category="Variable" name="size" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentInlineObjectRun::size"><summary>Size of the inline object.</summary><signature><![CDATA[Size size;
 ]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

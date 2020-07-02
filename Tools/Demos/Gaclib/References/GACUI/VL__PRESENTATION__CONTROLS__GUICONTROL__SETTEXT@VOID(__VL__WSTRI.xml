@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControl::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Set the text to display on the control.</summary><param name="value">The text to display on the control.</param><signature><![CDATA[void SetText(
+<Document symbolId="vl::presentation::controls::GuiControl::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::SetText@void(::vl::WString const &amp;)[decl0]"><summary>Set the text to display on the control.</summary><param name="value">The text to display on the control.</param><signature><![CDATA[void SetText(
     WString const & value
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

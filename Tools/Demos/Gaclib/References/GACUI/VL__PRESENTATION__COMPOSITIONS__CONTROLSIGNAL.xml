@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::ControlSignal" accessor="" category="Enum" name="ControlSignal"><summary>Control signal.</summary><enumitem name="ParentLineChanged">Render target changed.</enumitem><enumitem name="RenderTargetChanged">Render target changed.</enumitem><enumitem name="ServiceAdded">Service added changed.</enumitem><signature><![CDATA[enum class ControlSignal
+<Document symbolId="vl::presentation::compositions::ControlSignal" accessor="" category="Enum" name="ControlSignal" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::ControlSignal"><summary>Control signal.</summary><enumitem name="ParentLineChanged">Render target changed.</enumitem><enumitem name="RenderTargetChanged">Render target changed.</enumitem><enumitem name="ServiceAdded">Service added changed.</enumitem><signature><![CDATA[enum class ControlSignal
 {
     RenderTargetChanged,
     ParentLineChanged,

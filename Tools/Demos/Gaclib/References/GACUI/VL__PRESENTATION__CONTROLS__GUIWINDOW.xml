@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiWindow" accessor="" category="Class" name="GuiWindow"><summary>
+<Document symbolId="vl::presentation::controls::GuiWindow" accessor="" category="Class" name="GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"><summary>
  Represents a normal window.
  </summary><signature><![CDATA[class GuiWindow
     : GuiControlHost

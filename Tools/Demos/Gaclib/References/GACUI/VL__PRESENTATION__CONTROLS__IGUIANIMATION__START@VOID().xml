@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::IGuiAnimation::Start@void()" accessor="public" category="Function" name="Start"><summary>Called when the animation is about to play the first frame.</summary><signature><![CDATA[void Start(
+<Document symbolId="vl::presentation::controls::IGuiAnimation::Start@void()" accessor="public" category="Function" name="Start" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IGuiAnimation::Start@void()[decl0]"><summary>Called when the animation is about to play the first frame.</summary><signature><![CDATA[void Start(
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::IGuiAxis::VirtualRectToRealRect@::vl::presentation::Rect(::vl::presentation::Size, ::vl::presentation::Rect)" accessor="public" category="Function" name="VirtualRectToRealRect"><summary>Translate virtual bounds to real bounds.</summary><returns>The real bounds.</returns><param name="realFullSize">The real full size.</param><param name="rect">The virtual bounds.</param><signature><![CDATA[Rect VirtualRectToRealRect(
+<Document symbolId="vl::presentation::compositions::IGuiAxis::VirtualRectToRealRect@::vl::presentation::Rect(::vl::presentation::Size, ::vl::presentation::Rect)" accessor="public" category="Function" name="VirtualRectToRealRect" declFile="GuiGraphicsAxis.h" declId="FB$vl::presentation::compositions::IGuiAxis::VirtualRectToRealRect@::vl::presentation::Rect(::vl::presentation::Size, ::vl::presentation::Rect)[decl0]"><summary>Translate virtual bounds to real bounds.</summary><returns>The real bounds.</returns><param name="realFullSize">The real full size.</param><param name="rect">The virtual bounds.</param><signature><![CDATA[Rect VirtualRectToRealRect(
     Size realFullSize,
     Rect rect
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetWrapLine@bool()" accessor="public" category="Function" name="GetWrapLine"><summary>
+<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetWrapLine@bool()" accessor="public" category="Function" name="GetWrapLine" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetWrapLine@bool()[decl0]"><summary>
  Get if line auto-wrapping is enabled for this text.
  </summary><returns>Return true if line auto-wrapping is enabled for this text.</returns><signature><![CDATA[bool GetWrapLine(
 );

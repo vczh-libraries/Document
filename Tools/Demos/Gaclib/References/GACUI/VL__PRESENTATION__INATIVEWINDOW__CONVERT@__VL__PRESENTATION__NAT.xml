@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)" accessor="public" category="Function" name="Convert"><summary>
+<Document symbolId="vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)" accessor="public" category="Function" name="Convert" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)[decl0]"><summary>
  Convert point from GUI coordinate to native coordinate.
  </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativePoint Convert(
     Point value

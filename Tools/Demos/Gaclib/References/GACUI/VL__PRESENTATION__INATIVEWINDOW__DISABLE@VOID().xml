@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::Disable@void()" accessor="public" category="Function" name="Disable"><summary>
+<Document symbolId="vl::presentation::INativeWindow::Disable@void()" accessor="public" category="Function" name="Disable" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::Disable@void()[decl0]"><summary>
  Disable the window.
  </summary><signature><![CDATA[void Disable(
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiApplication::SetLocale@void(::vl::Locale)" accessor="public" category="Function" name="SetLocale"><summary>Set the locale for all windows.</summary><param name="value">The selected locale.</param><signature><![CDATA[void SetLocale(
+<Document symbolId="vl::presentation::controls::GuiApplication::SetLocale@void(::vl::Locale)" accessor="public" category="Function" name="SetLocale" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::GuiApplication::SetLocale@void(::vl::Locale)[decl0]"><summary>Set the locale for all windows.</summary><param name="value">The selected locale.</param><signature><![CDATA[void SetLocale(
     Locale value
 );
 ]]></signature><seealsos><symbol name="Locale" docId="vl::Locale" declFile="Locale.h" declId="NI$vl::Locale"/></seealsos></Document>

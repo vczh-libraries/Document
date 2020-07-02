@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::MemoryStream::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor"><summary>Create a stream.</summary><param name="_block">Size for each allocation. The stream will only allocate new memory of size &quot;_block&quot; when it reaches the end and has to extend.</param><signature><![CDATA[ MemoryStream(
+<Document symbolId="vl::stream::MemoryStream::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="MemoryStream.h" declId="FB$vl::stream::MemoryStream::$__ctor@(::vl::vint)[decl0]"><summary>Create a stream.</summary><param name="_block">Size for each allocation. The stream will only allocate new memory of size &quot;_block&quot; when it reaches the end and has to extend.</param><signature><![CDATA[ MemoryStream(
     vint _block /* optional */
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

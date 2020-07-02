@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::CharAtt::rightOffset" accessor="public" category="Variable" name="rightOffset"><summary>
+<Document symbolId="vl::presentation::elements::text::CharAtt::rightOffset" accessor="public" category="Variable" name="rightOffset" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt::rightOffset"><summary>
  The distance from the head of the line to the right side of this character in pixel.
  </summary><signature><![CDATA[vuint32_t rightOffset;
 ]]></signature><seealsos><symbol name="vuint32_t" docId="vl::vuint32_t" declFile="Basic.h" declId="NI$vl::vuint32_t"/></seealsos></Document>

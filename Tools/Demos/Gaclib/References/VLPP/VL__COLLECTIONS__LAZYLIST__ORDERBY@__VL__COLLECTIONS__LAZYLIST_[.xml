@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::LazyList::OrderBy@::vl::collections::LazyList&lt;[T]&gt;([F])" accessor="public" category="Function" name="OrderBy"><summary>Create a new lazy list with all elements sorted.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a comparing function.</param><signature><![CDATA[template <
+<Document symbolId="vl::collections::LazyList::OrderBy@::vl::collections::LazyList&lt;[T]&gt;([F])" accessor="public" category="Function" name="OrderBy" declFile="Operation.h" declId="FB$vl::collections::LazyList::OrderBy@::vl::collections::LazyList&lt;[T]&gt;([F])[impl0]"><summary>Create a new lazy list with all elements sorted.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a comparing function.</param><signature><![CDATA[template <
     typename F
 >
 LazyList<T> OrderBy(

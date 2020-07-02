@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingInput" accessor="" category="Struct" name="RepeatingParsingInput"><summary>A data structure storing the parsing input for text box control.</summary><signature><![CDATA[struct RepeatingParsingInput;
+<Document symbolId="vl::presentation::controls::RepeatingParsingInput" accessor="" category="Struct" name="RepeatingParsingInput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingInput"><summary>A data structure storing the parsing input for text box control.</summary><signature><![CDATA[struct RepeatingParsingInput;
 ]]></signature></Document>

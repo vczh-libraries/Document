@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::LazyList::FindType@::vl::collections::LazyList&lt;::vl::Ptr&lt;[U]&gt;&gt;()" accessor="public" category="Function" name="FindType"><summary>Create a new lazy list with only elements that successfully casted to a new type.</summary><typeparam name="U">The new type.</typeparam><returns>The created lazy list.</returns><signature><![CDATA[template <
+<Document symbolId="vl::collections::LazyList::FindType@::vl::collections::LazyList&lt;::vl::Ptr&lt;[U]&gt;&gt;()" accessor="public" category="Function" name="FindType" declFile="Operation.h" declId="FB$vl::collections::LazyList::FindType@::vl::collections::LazyList&lt;::vl::Ptr&lt;[U]&gt;&gt;()[impl0]"><summary>Create a new lazy list with only elements that successfully casted to a new type.</summary><typeparam name="U">The new type.</typeparam><returns>The created lazy list.</returns><signature><![CDATA[template <
     typename U
 >
 LazyList<Ptr<U>> FindType(

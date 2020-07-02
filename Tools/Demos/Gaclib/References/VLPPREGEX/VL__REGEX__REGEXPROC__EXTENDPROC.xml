@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexProc::extendProc" accessor="public" category="Variable" name="extendProc"><summary>
+<Document symbolId="vl::regex::RegexProc::extendProc" accessor="public" category="Variable" name="extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"><summary>
  The token extend callback. It is called after recognizing any token, and run a customized procedure to modify the token based on the given context.
  If the length parameter is -1, it means the caller does not measure the incoming text buffer, which automatically indicates that the buffer is null-terminated.
  If the length parameter is not -1, it means the number of available characters in the buffer.

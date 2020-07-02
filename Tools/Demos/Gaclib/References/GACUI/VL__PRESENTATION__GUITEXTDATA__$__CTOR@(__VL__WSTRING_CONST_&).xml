@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::GuiTextData::$__ctor@(::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a text data with a specified text.</summary><param name="_text">The specified text.</param><signature><![CDATA[ GuiTextData(
+<Document symbolId="vl::presentation::GuiTextData::$__ctor@(::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="GuiResource.h" declId="FB$vl::presentation::GuiTextData::$__ctor@(::vl::WString const &amp;)[decl0]"><summary>Create a text data with a specified text.</summary><param name="_text">The specified text.</param><signature><![CDATA[ GuiTextData(
     WString const & _text
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

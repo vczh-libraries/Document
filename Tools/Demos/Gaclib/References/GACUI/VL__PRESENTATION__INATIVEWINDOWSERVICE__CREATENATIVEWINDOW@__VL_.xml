@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()" accessor="public" category="Function" name="CreateNativeWindow"><summary>
+<Document symbolId="vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()" accessor="public" category="Function" name="CreateNativeWindow" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()[decl0]"><summary>
  Create a window.
  </summary><returns>The created window.</returns><signature><![CDATA[INativeWindow * CreateNativeWindow(
 );

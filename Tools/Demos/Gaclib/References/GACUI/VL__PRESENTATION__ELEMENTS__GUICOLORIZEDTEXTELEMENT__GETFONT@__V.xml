@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetFont@::vl::presentation::FontProperties const &amp;()" accessor="public" category="Function" name="GetFont"><summary>
+<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetFont@::vl::presentation::FontProperties const &amp;()" accessor="public" category="Function" name="GetFont" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::GetFont@::vl::presentation::FontProperties const &amp;()[decl0]"><summary>
  Get the font configuration for all characters.
  </summary><returns>The font configuration.</returns><signature><![CDATA[FontProperties const & GetFont(
 );

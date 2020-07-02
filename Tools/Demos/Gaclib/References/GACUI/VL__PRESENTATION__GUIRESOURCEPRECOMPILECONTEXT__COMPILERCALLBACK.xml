@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::GuiResourcePrecompileContext::compilerCallback" accessor="public" category="Variable" name="compilerCallback"><summary>Progress callback.</summary><signature><![CDATA[workflow::IWfCompilerCallback * compilerCallback;
+<Document symbolId="vl::presentation::GuiResourcePrecompileContext::compilerCallback" accessor="public" category="Variable" name="compilerCallback" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext::compilerCallback"><summary>Progress callback.</summary><signature><![CDATA[workflow::IWfCompilerCallback * compilerCallback;
 ]]></signature><seealsos><symbol name="IWfCompilerCallback" declFile="WfAnalyzer.h" declId="NI$vl::workflow::IWfCompilerCallback"/></seealsos></Document>

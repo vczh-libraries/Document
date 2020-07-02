@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetAxis@void(::vl::Ptr&lt;::vl::presentation::compositions::IGuiAxis&gt;)" accessor="public" category="Function" name="SetAxis"><summary>Set the axis of the layout.</summary><param name="value">The axis.</param><signature><![CDATA[void SetAxis(
+<Document symbolId="vl::presentation::compositions::GuiFlowComposition::SetAxis@void(::vl::Ptr&lt;::vl::presentation::compositions::IGuiAxis&gt;)" accessor="public" category="Function" name="SetAxis" declFile="GuiGraphicsFlowComposition.h" declId="FB$vl::presentation::compositions::GuiFlowComposition::SetAxis@void(::vl::Ptr&lt;::vl::presentation::compositions::IGuiAxis&gt;)[decl0]"><summary>Set the axis of the layout.</summary><param name="value">The axis.</param><signature><![CDATA[void SetAxis(
     Ptr<IGuiAxis> value
 );
 ]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IGuiAxis" docId="vl::presentation::compositions::IGuiAxis" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::IGuiAxis"/></seealsos></Document>

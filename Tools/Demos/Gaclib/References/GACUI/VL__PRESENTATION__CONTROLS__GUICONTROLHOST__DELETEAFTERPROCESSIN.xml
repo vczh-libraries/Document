@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::DeleteAfterProcessingAllEvents@void()" accessor="public" category="Function" name="DeleteAfterProcessingAllEvents"><summary>Delete this control host after processing all events.</summary><signature><![CDATA[void DeleteAfterProcessingAllEvents(
+<Document symbolId="vl::presentation::controls::GuiControlHost::DeleteAfterProcessingAllEvents@void()" accessor="public" category="Function" name="DeleteAfterProcessingAllEvents" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::DeleteAfterProcessingAllEvents@void()[decl0]"><summary>Delete this control host after processing all events.</summary><signature><![CDATA[void DeleteAfterProcessingAllEvents(
 );
 ]]></signature></Document>

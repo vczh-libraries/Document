@@ -1,4 +1,4 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::RemoveBreakPoint@bool(::vl::vint)" accessor="public" category="Function" name="RemoveBreakPoint"><summary>Delete a specified break point.</summary><returns>Returns true if this operation is succeeded.</returns><param name="index">The index of the break point.</param><signature><![CDATA[bool RemoveBreakPoint(
+<Document symbolId="vl::workflow::runtime::WfDebugger::RemoveBreakPoint@bool(::vl::vint)" accessor="public" category="Function" name="RemoveBreakPoint" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::RemoveBreakPoint@bool(::vl::vint)[decl0]"><summary>Delete a specified break point.</summary><returns>Returns true if this operation is succeeded.</returns><param name="index">The index of the break point.</param><signature><![CDATA[bool RemoveBreakPoint(
     vint index
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

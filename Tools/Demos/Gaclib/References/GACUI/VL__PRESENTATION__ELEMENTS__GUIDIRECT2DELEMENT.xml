@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiDirect2DElement" accessor="" category="Class" name="GuiDirect2DElement"><summary>
+<Document symbolId="vl::presentation::elements::GuiDirect2DElement" accessor="" category="Class" name="GuiDirect2DElement" declFile="GuiGraphicsWindowsDirect2D.h" declId="NI$vl::presentation::elements::GuiDirect2DElement"><summary>
  Defines an element for customized rendering using Direct2D.
  </summary><signature><![CDATA[class GuiDirect2DElement
     : GuiElementBase<GuiDirect2DElement>;

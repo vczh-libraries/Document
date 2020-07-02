@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::ColorItem" accessor="" category="Struct" name="ColorItem"><summary>
+<Document symbolId="vl::presentation::elements::text::ColorItem" accessor="" category="Struct" name="ColorItem" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::ColorItem"><summary>
  Represents colors of a character.
  </summary><signature><![CDATA[struct ColorItem;
 ]]></signature></Document>

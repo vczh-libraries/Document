@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::ArrayBase" accessor="" category="Class" name="ArrayBase"><summary>Base type of all linear container.</summary><typeparam name="T">Type of elements.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::collections::ArrayBase" accessor="" category="Class" name="ArrayBase" declFile="List.h" declId="NI$vl::collections::ArrayBase"><summary>Base type of all linear container.</summary><typeparam name="T">Type of elements.</typeparam><signature><![CDATA[template <
     typename T
 >
 class ArrayBase

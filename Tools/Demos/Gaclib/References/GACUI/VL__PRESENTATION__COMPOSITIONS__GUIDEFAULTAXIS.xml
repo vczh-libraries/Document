@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiDefaultAxis" accessor="" category="Class" name="GuiDefaultAxis"><summary>Default item coordinate transformer. This transformer doesn&apos;t transform any coordinate.</summary><signature><![CDATA[class GuiDefaultAxis
+<Document symbolId="vl::presentation::compositions::GuiDefaultAxis" accessor="" category="Class" name="GuiDefaultAxis" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::GuiDefaultAxis"><summary>Default item coordinate transformer. This transformer doesn&apos;t transform any coordinate.</summary><signature><![CDATA[class GuiDefaultAxis
     : Object
     , IGuiAxis
     , Description<GuiDefaultAxis>;

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeResourceService" accessor="" category="Class" name="INativeResourceService"><summary>
+<Document symbolId="vl::presentation::INativeResourceService" accessor="" category="Class" name="INativeResourceService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeResourceService"><summary>
  System resource service. To access this service, use <symbol name="ResourceService" docId="vl::presentation::INativeController::ResourceService@::vl::presentation::INativeResourceService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::ResourceService@::vl::presentation::INativeResourceService *()[decl0]"/>.
  </summary><signature><![CDATA[class INativeResourceService
     : IDescriptable

@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::PartialOrderingProcessor" accessor="" category="Class" name="PartialOrderingProcessor"><summary>
+<Document symbolId="vl::collections::PartialOrderingProcessor" accessor="" category="Class" name="PartialOrderingProcessor" declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor"><summary>
  Partial ordering item sorter.
  This class sorts items in a partial order using the given dependency information.
  Node stored in this class using the index of items.

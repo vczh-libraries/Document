@@ -1,3 +1,3 @@
-<Document symbolId="vl::collections::List::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a list.</summary><signature><![CDATA[ List(
+<Document symbolId="vl::collections::List::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="List.h" declId="FB$vl::collections::List::$__ctor@()[impl0]"><summary>Create a list.</summary><signature><![CDATA[ List(
 );
 ]]></signature></Document>

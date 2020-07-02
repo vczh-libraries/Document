@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Precompile" accessor="" category="Class" name="IGuiResourceTypeResolver_Precompile"><summary>
+<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Precompile" accessor="" category="Class" name="IGuiResourceTypeResolver_Precompile" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Precompile"><summary>
 		Represents a precompiler for resources of a specified type.
 		Current resources that needs precompiling:
 		Workflow:

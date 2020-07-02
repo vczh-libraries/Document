@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::GuiResourceFolder" accessor="" category="Class" name="GuiResourceFolder"><summary>Resource folder. A resource folder contains many sub folders and sub items.</summary><signature><![CDATA[class GuiResourceFolder
+<Document symbolId="vl::presentation::GuiResourceFolder" accessor="" category="Class" name="GuiResourceFolder" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceFolder"><summary>Resource folder. A resource folder contains many sub folders and sub items.</summary><signature><![CDATA[class GuiResourceFolder
     : GuiResourceNodeBase
     , Description<GuiResourceFolder>;
 ]]></signature><seealsos><symbol name="GuiResourceFolder" docId="vl::presentation::GuiResourceFolder" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceFolder"/></seealsos><basetypes><symbol name="GuiResourceNodeBase" docId="vl::presentation::GuiResourceNodeBase" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceNodeBase"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

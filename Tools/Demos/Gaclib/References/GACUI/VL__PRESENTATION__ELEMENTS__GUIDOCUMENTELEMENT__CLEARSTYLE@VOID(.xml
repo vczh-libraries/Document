@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::ClearStyle@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="ClearStyle"><summary>Clear all styles in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><signature><![CDATA[void ClearStyle(
+<Document symbolId="vl::presentation::elements::GuiDocumentElement::ClearStyle@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="ClearStyle" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::ClearStyle@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)[decl0]"><summary>Clear all styles in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><signature><![CDATA[void ClearStyle(
     TextPos begin,
     TextPos end
 );

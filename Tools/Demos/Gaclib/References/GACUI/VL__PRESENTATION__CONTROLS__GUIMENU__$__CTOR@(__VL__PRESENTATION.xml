@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiMenu::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiControl *)" accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_owner">The owner menu item of the parent menu.</param><signature><![CDATA[ GuiMenu(
+<Document symbolId="vl::presentation::controls::GuiMenu::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiControl *)" accessor="public" category="Function" name="$__ctor" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenu::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiControl *)[decl0]"><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_owner">The owner menu item of the parent menu.</param><signature><![CDATA[ GuiMenu(
     theme::ThemeName themeName,
     GuiControl * _owner
 );

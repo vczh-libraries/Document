@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::TotalSizeChanged" accessor="public" category="Variable" name="TotalSizeChanged"><summary>Total size changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent TotalSizeChanged;
+<Document symbolId="vl::presentation::controls::GuiScroll::TotalSizeChanged" accessor="public" category="Variable" name="TotalSizeChanged" declFile="GuiScrollControls.h" declId="NI$vl::presentation::controls::GuiScroll::TotalSizeChanged"><summary>Total size changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent TotalSizeChanged;
 ]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

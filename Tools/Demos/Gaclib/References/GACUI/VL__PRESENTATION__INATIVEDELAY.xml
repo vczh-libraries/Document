@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeDelay" accessor="" category="Class" name="INativeDelay"><summary>
+<Document symbolId="vl::presentation::INativeDelay" accessor="" category="Class" name="INativeDelay" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDelay"><summary>
  Delay execution controller.
  </summary><signature><![CDATA[class INativeDelay
     : IDescriptable

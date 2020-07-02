@@ -1,4 +1,4 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;)" accessor="public" category="Function" name="$__ctor"><summary>Create a global context for executing a Workflow program.</summary><param name="_assembly">The assembly.</param><signature><![CDATA[ WfRuntimeGlobalContext(
+<Document symbolId="vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;)" accessor="public" category="Function" name="$__ctor" declFile="WfRuntime.h" declId="FB$vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;)[decl0]"><summary>Create a global context for executing a Workflow program.</summary><param name="_assembly">The assembly.</param><signature><![CDATA[ WfRuntimeGlobalContext(
     Ptr<WfAssembly> _assembly
 );
 ]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WfAssembly" docId="vl::workflow::runtime::WfAssembly" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly"/></seealsos></Document>

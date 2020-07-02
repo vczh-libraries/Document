@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::RecorderStream" accessor="" category="Class" name="RecorderStream"><summary>A readable stream that, read from an stream, and write everything that is read to another stream.</summary><signature><![CDATA[class RecorderStream
+<Document symbolId="vl::stream::RecorderStream" accessor="" category="Class" name="RecorderStream" declFile="RecorderStream.h" declId="NI$vl::stream::RecorderStream"><summary>A readable stream that, read from an stream, and write everything that is read to another stream.</summary><signature><![CDATA[class RecorderStream
     : Object
     , IStream;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>

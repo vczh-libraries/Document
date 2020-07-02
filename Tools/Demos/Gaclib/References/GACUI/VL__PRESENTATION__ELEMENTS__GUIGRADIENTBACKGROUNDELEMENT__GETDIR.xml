@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiGradientBackgroundElement::GetDirection@::vl::presentation::elements::GuiGradientBackgroundElement::Direction()" accessor="public" category="Function" name="GetDirection"><summary>
+<Document symbolId="vl::presentation::elements::GuiGradientBackgroundElement::GetDirection@::vl::presentation::elements::GuiGradientBackgroundElement::Direction()" accessor="public" category="Function" name="GetDirection" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiGradientBackgroundElement::GetDirection@::vl::presentation::elements::GuiGradientBackgroundElement::Direction()[decl0]"><summary>
  Get the direction.
  </summary><returns>The direction.</returns><signature><![CDATA[Direction GetDirection(
 );

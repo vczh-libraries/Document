@@ -1,3 +1,3 @@
-<Document symbolId="vl::WaitableObject::Wait@bool()" accessor="public" category="Function" name="Wait"><summary>Wait for this object to signal.</summary><returns>Returns true if the object is signaled. Returns false if this operation failed.</returns><signature><![CDATA[bool Wait(
+<Document symbolId="vl::WaitableObject::Wait@bool()" accessor="public" category="Function" name="Wait" declFile="Threading.h" declId="FB$vl::WaitableObject::Wait@bool()[decl0]"><summary>Wait for this object to signal.</summary><returns>Returns true if the object is signaled. Returns false if this operation failed.</returns><signature><![CDATA[bool Wait(
 );
 ]]></signature></Document>

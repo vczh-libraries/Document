@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiBoundsComposition" accessor="" category="Class" name="GuiBoundsComposition"><summary>
+<Document symbolId="vl::presentation::compositions::GuiBoundsComposition" accessor="" category="Class" name="GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"><summary>
  Represents a composition that is free to change the expected bounds.
  </summary><signature><![CDATA[class GuiBoundsComposition
     : GuiGraphicsSite

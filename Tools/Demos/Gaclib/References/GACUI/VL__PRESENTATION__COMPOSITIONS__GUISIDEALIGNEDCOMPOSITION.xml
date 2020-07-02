@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition" accessor="" category="Class" name="GuiSideAlignedComposition"><summary>
+<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition" accessor="" category="Class" name="GuiSideAlignedComposition" declFile="GuiGraphicsSpecializedComposition.h" declId="NI$vl::presentation::compositions::GuiSideAlignedComposition"><summary>
  Represents a composition that is aligned to one border of the parent composition.
  </summary><signature><![CDATA[class GuiSideAlignedComposition
     : GuiGraphicsSite

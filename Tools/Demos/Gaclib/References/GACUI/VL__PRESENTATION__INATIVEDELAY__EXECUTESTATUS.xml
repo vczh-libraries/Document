@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeDelay::ExecuteStatus" accessor="public" category="Enum" name="ExecuteStatus"><summary>Delay execution controller status.</summary><enumitem name="Canceled">Canceled.</enumitem><enumitem name="Executed">Executed.</enumitem><enumitem name="Executing">Executing.</enumitem><enumitem name="Pending">Pending.</enumitem><signature><![CDATA[enum ExecuteStatus
+<Document symbolId="vl::presentation::INativeDelay::ExecuteStatus" accessor="public" category="Enum" name="ExecuteStatus" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDelay::ExecuteStatus"><summary>Delay execution controller status.</summary><enumitem name="Canceled">Canceled.</enumitem><enumitem name="Executed">Executed.</enumitem><enumitem name="Executing">Executing.</enumitem><enumitem name="Pending">Pending.</enumitem><signature><![CDATA[enum ExecuteStatus
 {
     Pending,
     Executing,

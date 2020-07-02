@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::ColorItem::text" accessor="public" category="Variable" name="text"><summary>
+<Document symbolId="vl::presentation::elements::text::ColorItem::text" accessor="public" category="Variable" name="text" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::ColorItem::text"><summary>
  Text color.
  </summary><signature><![CDATA[Color text;
 ]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

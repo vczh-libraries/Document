@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::ItemProviderBase" accessor="" category="Class" name="ItemProviderBase"><summary>Item provider base. This class provider common functionalities for item providers.</summary><signature><![CDATA[class ItemProviderBase
+<Document symbolId="vl::presentation::controls::list::ItemProviderBase" accessor="" category="Class" name="ItemProviderBase" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::list::ItemProviderBase"><summary>Item provider base. This class provider common functionalities for item providers.</summary><signature><![CDATA[class ItemProviderBase
     : Object
     , GuiListControl::IItemProvider
     , Description<ItemProviderBase>;

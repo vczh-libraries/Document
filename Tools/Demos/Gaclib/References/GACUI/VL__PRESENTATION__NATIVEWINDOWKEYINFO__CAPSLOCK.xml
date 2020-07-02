@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::NativeWindowKeyInfo::capslock" accessor="public" category="Variable" name="capslock"><summary>True if the capslock button is pressed.</summary><signature><![CDATA[bool capslock;
+<Document symbolId="vl::presentation::NativeWindowKeyInfo::capslock" accessor="public" category="Variable" name="capslock" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowKeyInfo::capslock"><summary>True if the capslock button is pressed.</summary><signature><![CDATA[bool capslock;
 ]]></signature></Document>

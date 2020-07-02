@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::ClearTokens@void()" accessor="public" category="Function" name="ClearTokens"><summary>Clear all token color settings.</summary><signature><![CDATA[void ClearTokens(
+<Document symbolId="vl::presentation::controls::GuiTextBoxRegexColorizer::ClearTokens@void()" accessor="public" category="Function" name="ClearTokens" declFile="GuiTextColorizer.h" declId="FB$vl::presentation::controls::GuiTextBoxRegexColorizer::ClearTokens@void()[decl0]"><summary>Clear all token color settings.</summary><signature><![CDATA[void ClearTokens(
 );
 ]]></signature></Document>

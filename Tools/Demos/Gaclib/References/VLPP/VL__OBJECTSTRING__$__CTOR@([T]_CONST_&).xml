@@ -1,4 +1,4 @@
-<Document symbolId="vl::ObjectString::$__ctor@([T] const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a string continaing one character.</summary><param name="_char">The character.</param><signature><![CDATA[ ObjectString(
+<Document symbolId="vl::ObjectString::$__ctor@([T] const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="String.h" declId="FB$vl::ObjectString::$__ctor@([T] const &amp;)[impl0]"><summary>Create a string continaing one character.</summary><param name="_char">The character.</param><signature><![CDATA[ ObjectString(
     T const & _char
 );
 ]]></signature></Document>

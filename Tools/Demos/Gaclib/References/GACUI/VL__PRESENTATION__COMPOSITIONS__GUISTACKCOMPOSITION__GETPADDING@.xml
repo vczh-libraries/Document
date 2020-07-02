@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiStackComposition::GetPadding@::vl::vint()" accessor="public" category="Function" name="GetPadding"><summary>Get the stack item padding.</summary><returns>The stack item padding.</returns><signature><![CDATA[vint GetPadding(
+<Document symbolId="vl::presentation::compositions::GuiStackComposition::GetPadding@::vl::vint()" accessor="public" category="Function" name="GetPadding" declFile="GuiGraphicsStackComposition.h" declId="FB$vl::presentation::compositions::GuiStackComposition::GetPadding@::vl::vint()[decl0]"><summary>Get the stack item padding.</summary><returns>The stack item padding.</returns><signature><![CDATA[vint GetPadding(
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::description::Value::ValueType" accessor="public" category="Enum" name="ValueType"><summary>Representing how the value is stored.</summary><enumitem name="BoxedValue">The value stored using a boxed value.</enumitem><enumitem name="Null">The value is null.</enumitem><enumitem name="RawPtr">The value stored using a raw pointer.</enumitem><enumitem name="SharedPtr">The value stored using a smart pointer.</enumitem><signature><![CDATA[enum ValueType
+<Document symbolId="vl::reflection::description::Value::ValueType" accessor="public" category="Enum" name="ValueType" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value::ValueType"><summary>Representing how the value is stored.</summary><enumitem name="BoxedValue">The value stored using a boxed value.</enumitem><enumitem name="Null">The value is null.</enumitem><enumitem name="RawPtr">The value stored using a raw pointer.</enumitem><enumitem name="SharedPtr">The value stored using a smart pointer.</enumitem><signature><![CDATA[enum ValueType
 {
     Null,
     RawPtr,

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetIcon"><summary>
+<Document symbolId="vl::presentation::controls::GuiWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetIcon" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()[decl0]"><summary>
  Get the icon which replaces the default one.
  </summary><returns>Returns the icon that replaces the default one.</returns><signature><![CDATA[Ptr<GuiImageData> GetIcon(
 );

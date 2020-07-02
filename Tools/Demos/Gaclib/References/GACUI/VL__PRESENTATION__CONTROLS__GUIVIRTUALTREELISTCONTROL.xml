@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl" accessor="" category="Class" name="GuiVirtualTreeListControl"><summary>Tree list control in virtual node.</summary><signature><![CDATA[class GuiVirtualTreeListControl
+<Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl" accessor="" category="Class" name="GuiVirtualTreeListControl" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::GuiVirtualTreeListControl"><summary>Tree list control in virtual node.</summary><signature><![CDATA[class GuiVirtualTreeListControl
     : GuiSelectableListControl
     , tree::INodeProviderCallback
     , Description<GuiVirtualTreeListControl>;

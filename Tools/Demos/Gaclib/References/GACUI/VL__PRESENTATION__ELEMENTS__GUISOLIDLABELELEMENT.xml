@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement" accessor="" category="Class" name="GuiSolidLabelElement"><summary>
+<Document symbolId="vl::presentation::elements::GuiSolidLabelElement" accessor="" category="Class" name="GuiSolidLabelElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiSolidLabelElement"><summary>
  Defines an element of a plain text.
  </summary><signature><![CDATA[class GuiSolidLabelElement
     : GuiElementBase<GuiSolidLabelElement>;

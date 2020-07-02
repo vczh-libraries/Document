@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines::MeasureRow@void(::vl::vint)" accessor="public" category="Function" name="MeasureRow"><summary>
+<Document symbolId="vl::presentation::elements::text::TextLines::MeasureRow@void(::vl::vint)" accessor="public" category="Function" name="MeasureRow" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::MeasureRow@void(::vl::vint)[decl0]"><summary>
  Measure all characters in a specified row.
  </summary><param name="row">The specified row number.</param><signature><![CDATA[void MeasureRow(
     vint row

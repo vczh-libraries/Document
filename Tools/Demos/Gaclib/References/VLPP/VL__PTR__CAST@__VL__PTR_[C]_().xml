@@ -1,4 +1,4 @@
-<Document symbolId="vl::Ptr::Cast@::vl::Ptr&lt;[C]&gt;()" accessor="public" category="Function" name="Cast"><summary>Cast a smart pointer.</summary><typeparam name="C">The type of the object after casting.</typeparam><returns>The casted smart pointer. Returns null if failed.</returns><signature><![CDATA[template <
+<Document symbolId="vl::Ptr::Cast@::vl::Ptr&lt;[C]&gt;()" accessor="public" category="Function" name="Cast" declFile="Pointer.h" declId="FB$vl::Ptr::Cast@::vl::Ptr&lt;[C]&gt;()[impl0]"><summary>Cast a smart pointer.</summary><typeparam name="C">The type of the object after casting.</typeparam><returns>The casted smart pointer. Returns null if failed.</returns><signature><![CDATA[template <
     typename C
 >
 Ptr<C> Cast(

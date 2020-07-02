@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::ListViewColumn::SetSortingState@void(::vl::presentation::controls::ColumnSortingState)" accessor="public" category="Function" name="SetSortingState"><summary>Set the sorting state of this item.</summary><param name="value">The sorting state of this item.</param><signature><![CDATA[void SetSortingState(
+<Document symbolId="vl::presentation::controls::list::ListViewColumn::SetSortingState@void(::vl::presentation::controls::ColumnSortingState)" accessor="public" category="Function" name="SetSortingState" declFile="GuiListViewControls.h" declId="FB$vl::presentation::controls::list::ListViewColumn::SetSortingState@void(::vl::presentation::controls::ColumnSortingState)[decl0]"><summary>Set the sorting state of this item.</summary><param name="value">The sorting state of this item.</param><signature><![CDATA[void SetSortingState(
     ColumnSortingState value
 );
 ]]></signature><seealsos><symbol name="ColumnSortingState" docId="vl::presentation::controls::ColumnSortingState" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::ColumnSortingState"/></seealsos></Document>

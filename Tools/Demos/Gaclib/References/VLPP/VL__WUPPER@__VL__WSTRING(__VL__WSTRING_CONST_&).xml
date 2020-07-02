@@ -1,4 +1,4 @@
-<Document symbolId="vl::wupper@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="wupper"><summary>Convert all letters to upper case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[WString wupper(
+<Document symbolId="vl::wupper@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="wupper" declFile="String.h" declId="FB$vl::wupper@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Convert all letters to upper case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[WString wupper(
     WString const & string
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

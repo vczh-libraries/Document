@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetMaxWidth@void(::vl::vint)" accessor="public" category="Function" name="SetMaxWidth"><summary>Set the max width for this paragraph. If the max width is set to -1, the max width limitation will be removed.</summary><param name="value">The max width.</param><signature><![CDATA[void SetMaxWidth(
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::SetMaxWidth@void(::vl::vint)" accessor="public" category="Function" name="SetMaxWidth" declFile="GuiGraphicsDocumentInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsParagraph::SetMaxWidth@void(::vl::vint)[decl0]"><summary>Set the max width for this paragraph. If the max width is set to -1, the max width limitation will be removed.</summary><param name="value">The max width.</param><signature><![CDATA[void SetMaxWidth(
     vint value
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

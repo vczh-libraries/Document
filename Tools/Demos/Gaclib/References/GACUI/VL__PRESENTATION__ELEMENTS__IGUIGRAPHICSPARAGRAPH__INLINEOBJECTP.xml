@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties" accessor="public" category="Struct" name="InlineObjectProperties"><summary>Inline object properties.</summary><signature><![CDATA[struct InlineObjectProperties;
+<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties" accessor="public" category="Struct" name="InlineObjectProperties" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties"><summary>Inline object properties.</summary><signature><![CDATA[struct InlineObjectProperties;
 ]]></signature></Document>

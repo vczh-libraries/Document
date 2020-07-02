@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetWrapLineHeightCalculation@bool()" accessor="public" category="Function" name="GetWrapLineHeightCalculation"><summary>
+<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetWrapLineHeightCalculation@bool()" accessor="public" category="Function" name="GetWrapLineHeightCalculation" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetWrapLineHeightCalculation@bool()[decl0]"><summary>
  Get if the element calculates the min height when wrap line is enabled.
  </summary><returns>Return true if the element calculates the min height when wrap line is enabled.</returns><signature><![CDATA[bool GetWrapLineHeightCalculation(
 );

@@ -1,3 +1,3 @@
-<Document symbolId="vl::filesystem::FilePath::$__ctor@()" accessor="public" category="Function" name="$__ctor"><summary>Create a root path.</summary><signature><![CDATA[ FilePath(
+<Document symbolId="vl::filesystem::FilePath::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::$__ctor@()[decl0]"><summary>Create a root path.</summary><signature><![CDATA[ FilePath(
 );
 ]]></signature></Document>

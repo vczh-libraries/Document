@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeClipboardWriter" accessor="" category="Class" name="INativeClipboardWriter"><summary>
+<Document symbolId="vl::presentation::INativeClipboardWriter" accessor="" category="Class" name="INativeClipboardWriter" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardWriter"><summary>
  Clipboard writer.
  </summary><signature><![CDATA[class INativeClipboardWriter
     : IDescriptable

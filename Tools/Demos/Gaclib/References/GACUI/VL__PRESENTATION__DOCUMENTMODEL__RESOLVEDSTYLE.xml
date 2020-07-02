@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentModel::ResolvedStyle" accessor="public" category="Struct" name="ResolvedStyle"><summary>Represents a resolved style.</summary><signature><![CDATA[struct ResolvedStyle;
+<Document symbolId="vl::presentation::DocumentModel::ResolvedStyle" accessor="public" category="Struct" name="ResolvedStyle" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::ResolvedStyle"><summary>Represents a resolved style.</summary><signature><![CDATA[struct ResolvedStyle;
 ]]></signature></Document>

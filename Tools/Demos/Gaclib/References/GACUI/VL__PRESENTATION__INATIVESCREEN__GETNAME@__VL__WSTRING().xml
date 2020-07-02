@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeScreen::GetName@::vl::WString()" accessor="public" category="Function" name="GetName"><summary>
+<Document symbolId="vl::presentation::INativeScreen::GetName@::vl::WString()" accessor="public" category="Function" name="GetName" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeScreen::GetName@::vl::WString()[decl0]"><summary>
  Get the name of the screen.
  </summary><returns>The name of the screen.</returns><signature><![CDATA[WString GetName(
 );

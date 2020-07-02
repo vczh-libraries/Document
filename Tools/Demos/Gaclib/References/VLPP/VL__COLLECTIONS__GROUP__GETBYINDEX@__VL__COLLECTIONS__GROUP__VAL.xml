@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &amp;(::vl::vint)" accessor="public" category="Function" name="GetByIndex"><summary>Get all values associated with a key.</summary><returns>All values.</returns><param name="index">The position of a the key.</param><signature><![CDATA[ValueContainer const & GetByIndex(
+<Document symbolId="vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &amp;(::vl::vint)" accessor="public" category="Function" name="GetByIndex" declFile="Dictionary.h" declId="FB$vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &amp;(::vl::vint)[impl0]"><summary>Get all values associated with a key.</summary><returns>All values.</returns><param name="index">The position of a the key.</param><signature><![CDATA[ValueContainer const & GetByIndex(
     vint index
 ) const;
 ]]></signature><seealsos><symbol name="ValueContainer" declFile="Dictionary.h" declId="NI$vl::collections::Group::ValueContainer"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

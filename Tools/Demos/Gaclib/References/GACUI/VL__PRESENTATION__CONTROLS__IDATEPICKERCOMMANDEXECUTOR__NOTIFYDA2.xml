@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateNavigated@void()" accessor="public" category="Function" name="NotifyDateNavigated"><summary>Called when navigated to a date.</summary><signature><![CDATA[void NotifyDateNavigated(
+<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateNavigated@void()" accessor="public" category="Function" name="NotifyDateNavigated" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateNavigated@void()[decl0]"><summary>Called when navigated to a date.</summary><signature><![CDATA[void NotifyDateNavigated(
 );
 ]]></signature></Document>

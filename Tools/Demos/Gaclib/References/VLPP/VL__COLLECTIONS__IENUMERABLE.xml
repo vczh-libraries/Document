@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::IEnumerable" accessor="" category="Class" name="IEnumerable"><summary>Enumerable.</summary><typeparam name="T">Type of the elements in the enumerator.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::collections::IEnumerable" accessor="" category="Class" name="IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"><summary>Enumerable.</summary><typeparam name="T">Type of the elements in the enumerator.</typeparam><signature><![CDATA[template <
     typename T
 >
 class IEnumerable

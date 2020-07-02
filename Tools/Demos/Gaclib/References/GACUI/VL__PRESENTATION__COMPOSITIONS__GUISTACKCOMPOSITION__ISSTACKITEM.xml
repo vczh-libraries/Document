@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiStackComposition::IsStackItemClipped@bool()" accessor="public" category="Function" name="IsStackItemClipped"><summary>Test is any stack item clipped in the stack direction.</summary><returns>Returns true if any stack item is clipped.</returns><signature><![CDATA[bool IsStackItemClipped(
+<Document symbolId="vl::presentation::compositions::GuiStackComposition::IsStackItemClipped@bool()" accessor="public" category="Function" name="IsStackItemClipped" declFile="GuiGraphicsStackComposition.h" declId="FB$vl::presentation::compositions::GuiStackComposition::IsStackItemClipped@bool()[decl0]"><summary>Test is any stack item clipped in the stack direction.</summary><returns>Returns true if any stack item is clipped.</returns><signature><![CDATA[bool IsStackItemClipped(
 );
 ]]></signature></Document>

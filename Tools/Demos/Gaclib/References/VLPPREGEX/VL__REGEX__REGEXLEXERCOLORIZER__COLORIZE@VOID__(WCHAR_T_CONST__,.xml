@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="Colorize"><summary>Colorize a text.</summary>	GetCurrentState()const;
+<Document symbolId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="Colorize" declFile="Regex.h" declId="FB$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[decl0]"><summary>Colorize a text.</summary>	GetCurrentState()const;
  <returns>An inter token state at the end of this line. It could be the same object which is returned from the previous call.</returns><param name="input">The text to colorize.</param><param name="length">Size of the text in characters.</param><signature><![CDATA[void * Colorize(
     wchar_t const * input,
     vint length

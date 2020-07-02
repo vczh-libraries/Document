@@ -1,3 +1,3 @@
-<Document symbolId="vl::Locale" accessor="" category="Class" name="Locale"><summary>Locale awared operations. Macro &quot;INVLOC&quot; is a shortcut to get a invariant locale.</summary><signature><![CDATA[class Locale
+<Document symbolId="vl::Locale" accessor="" category="Class" name="Locale" declFile="Locale.h" declId="NI$vl::Locale"><summary>Locale awared operations. Macro &quot;INVLOC&quot; is a shortcut to get a invariant locale.</summary><signature><![CDATA[class Locale
     : Object;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

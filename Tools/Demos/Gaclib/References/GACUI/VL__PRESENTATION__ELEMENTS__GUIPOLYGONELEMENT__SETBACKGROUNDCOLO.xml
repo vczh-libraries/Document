@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiPolygonElement::SetBackgroundColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetBackgroundColor"><summary>
+<Document symbolId="vl::presentation::elements::GuiPolygonElement::SetBackgroundColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetBackgroundColor" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::SetBackgroundColor@void(::vl::presentation::Color)[decl0]"><summary>
  Set the background color.
  </summary><param name="value">The new background color.</param><signature><![CDATA[void SetBackgroundColor(
     Color value
