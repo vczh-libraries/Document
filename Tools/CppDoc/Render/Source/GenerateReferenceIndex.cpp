@@ -954,7 +954,27 @@ void WriteSymbolGroupInReferenceIndex(
 						throw UnexpectedSymbolCategoryException();
 					}
 
-					attr->value.value = WString(keyword) + L" " + group->symbol->GetAnyForwardDecl<Declaration>()->name.name;
+					auto decl = group->symbol->GetAnyForwardDecl<Declaration>();
+					Ptr<SpecializationSpec> sspec;
+
+					attr->value.value = WString(keyword) + L" " + decl->name.name;
+					if (auto classDecl = decl.Cast<ForwardClassDeclaration>())
+					{
+						sspec = classDecl->specializationSpec;
+					}
+					else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
+					{
+						sspec = funcDecl->specializationSpec;
+					}
+					else if (auto valueDecl = decl.Cast<ValueAliasDeclaration>())
+					{
+						sspec = valueDecl->specializationSpec;
+					}
+
+					if (sspec)
+					{
+						attr->value.value += AppendGenericArgumentsInSignature(sspec->arguments);
+					}
 
 					if (group->kind == SymbolGroupKind::SymbolAndText)
 					{

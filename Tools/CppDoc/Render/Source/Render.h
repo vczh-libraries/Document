@@ -213,6 +213,7 @@ extern WString										AppendFunctionParametersInHtml(FunctionType* funcType);
 extern WString										GetUnscopedSymbolDisplayNameInHtml(Symbol* symbol, bool renderTypeArguments);
 extern WString										GetSymbolDisplayNameInHtml(Symbol* symbol);
 
+extern WString										AppendGenericArgumentsInSignature(VariadicList<GenericArgument>& arguments);
 extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type);
 extern WString										GetTypeDisplayNameInSignature(Ptr<Type> type, const WString& signature, bool needParenthesesForFuncArray, FunctionType* topLevelFunctionType = nullptr);
 extern WString										GetSymbolDisplayNameInSignature(Symbol* symbol, SortedList<Symbol*>& seeAlsos, SortedList<Symbol*>& baseTypes);

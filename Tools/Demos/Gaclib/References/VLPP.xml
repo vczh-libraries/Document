@@ -18,7 +18,8 @@
     <document name="class Error" file="VL__ERROR"/>
     <document name="class Event">
       <document name="Partial Specializations">
-        <document name="class Event" file="VL__EVENT@_VOID([TARGS]...)_">
+        <document name="class Event&lt;void(
+TArgs...)&gt;" file="VL__EVENT@_VOID([TARGS]...)_">
           <document name="function Add" file="VL__EVENT@_VOID([TARGS]...)___ADD@__VL__PTR___VL__EVENTHANDLER_("/>
           <document name="function Add" file="VL__EVENT@_VOID([TARGS]...)___ADD@__VL__PTR___VL__EVENTHANDLER_(2"/>
           <document name="function Add" file="VL__EVENT@_VOID([TARGS]...)___ADD@__VL__PTR___VL__EVENTHANDLER_(3"/>
@@ -31,7 +32,8 @@
     <document name="function FinalizeGlobalStorage" file="VL__FINALIZEGLOBALSTORAGE@VOID()"/>
     <document name="class Func">
       <document name="Partial Specializations">
-        <document name="class Func" file="VL__FUNC@_[R]([TARGS]...)_">
+        <document name="class Func&lt;R(
+TArgs...)&gt;" file="VL__FUNC@_[R]([TARGS]...)_">
           <document name="function $__ctor" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@()"/>
           <document name="function $__ctor" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@(__VL__FUNC@_[R]([TARGS]...)"/>
           <document name="function $__ctor" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@(__VL__FUNC@_[R]([TARGS]...)2"/>

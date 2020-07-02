@@ -2,7 +2,6 @@
 #include <Symbol_TemplateSpec.h>
 
 WString AppendFunctionParametersInSignature(FunctionType* funcType, bool topLevel);
-WString AppendGenericArgumentsInSignature(VariadicList<GenericArgument>& arguments);
 WString GetUnscopedSymbolDisplayNameInSignature(Symbol* symbol);
 
 /***********************************************************************
