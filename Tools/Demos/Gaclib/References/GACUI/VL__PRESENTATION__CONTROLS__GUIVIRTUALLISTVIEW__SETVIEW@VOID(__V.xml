@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiVirtualListView::SetView@void(::vl::presentation::controls::ListViewView)" accessor="public" category="Function" name="SetView"><summary>Set the current view.</summary><param name="_view">The current view.</param><signature><![CDATA[void SetView(
     ListViewView _view
 );
-]]></signature><seealsos><symbol declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::ListViewView"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ListViewView" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::ListViewView"/></seealsos></Document>

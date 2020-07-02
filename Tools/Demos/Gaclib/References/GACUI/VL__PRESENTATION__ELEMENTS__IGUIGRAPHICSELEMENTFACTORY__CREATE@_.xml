@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsElementFactory::Create@::vl::presentation::elements::IGuiGraphicsElement *()" accessor="public" category="Function" name="Create"><summary>
- Create a <symbol docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/>.
+ Create a <symbol name="IGuiGraphicsElement" docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/>.
  </summary><returns>Returns the created graphics elements.</returns><signature><![CDATA[IGuiGraphicsElement * Create(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiGraphicsElement" docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/></seealsos></Document>

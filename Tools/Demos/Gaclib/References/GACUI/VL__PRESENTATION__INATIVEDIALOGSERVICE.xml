@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::INativeDialogService" accessor="" category="Class" name="INativeDialogService"><summary>
- Dialog service. To access this service, use <symbol docId="vl::presentation::INativeController::DialogService@::vl::presentation::INativeDialogService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::DialogService@::vl::presentation::INativeDialogService *()[decl0]"/>.
+ Dialog service. To access this service, use <symbol name="DialogService" docId="vl::presentation::INativeController::DialogService@::vl::presentation::INativeDialogService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::DialogService@::vl::presentation::INativeDialogService *()[decl0]"/>.
  </summary><signature><![CDATA[class INativeDialogService
     : Interface;
-]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

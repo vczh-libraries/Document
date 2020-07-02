@@ -2,4 +2,4 @@
     GridPos const & value,
     bool openEditor
 );
-]]></signature><seealsos><symbol docId="vl::presentation::GridPos" declFile="GuiTypes.h" declId="NI$vl::presentation::GridPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GridPos" docId="vl::presentation::GridPos" declFile="GuiTypes.h" declId="NI$vl::presentation::GridPos"/></seealsos></Document>

@@ -3,4 +3,4 @@
     vint & start,
     vint & length
 );
-]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol docId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol name="InlineObjectProperties" docId="vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::InlineObjectProperties"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

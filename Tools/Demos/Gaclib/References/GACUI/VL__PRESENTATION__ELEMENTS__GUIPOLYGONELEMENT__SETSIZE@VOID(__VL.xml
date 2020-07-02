@@ -3,4 +3,4 @@
  </summary><param name="value">The new size.</param><signature><![CDATA[void SetSize(
     Size value
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

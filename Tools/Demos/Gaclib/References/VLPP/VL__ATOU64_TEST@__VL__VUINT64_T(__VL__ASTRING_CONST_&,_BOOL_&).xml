@@ -2,4 +2,4 @@
     AString const & string,
     bool & success
 );
-]]></signature><seealsos><symbol docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/><symbol docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>

@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetLines@::vl::presentation::elements::text::TextLines &amp;()" accessor="public" category="Function" name="GetLines"><summary>
- Get the internal <symbol docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/> object that stores all characters and colors.
- </summary><returns>The internal <symbol docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/> object.</returns><signature><![CDATA[text::TextLines & GetLines(
+ Get the internal <symbol name="TextLines" docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/> object that stores all characters and colors.
+ </summary><returns>The internal <symbol name="TextLines" docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/> object.</returns><signature><![CDATA[text::TextLines & GetLines(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextLines" docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/></seealsos></Document>

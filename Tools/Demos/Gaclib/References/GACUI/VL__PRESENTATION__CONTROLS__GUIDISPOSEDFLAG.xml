@@ -3,4 +3,4 @@
  </summary><signature><![CDATA[class GuiDisposedFlag
     : Object
     , Description<GuiDisposedFlag>;
-]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiDisposedFlag" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiDisposedFlag"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiDisposedFlag" docId="vl::presentation::controls::GuiDisposedFlag" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiDisposedFlag"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::workflow::runtime::WfRuntimeExceptionInfo::message" accessor="public" category="Variable" name="message"><summary>Exception message.</summary><signature><![CDATA[WString message;
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

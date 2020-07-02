@@ -2,4 +2,4 @@
  Get the direction.
  </summary><returns>The direction.</returns><signature><![CDATA[Direction GetDirection(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::Gui3DSplitterElement::Direction" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DSplitterElement::Direction"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Direction" docId="vl::presentation::elements::Gui3DSplitterElement::Direction" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DSplitterElement::Direction"/></seealsos></Document>

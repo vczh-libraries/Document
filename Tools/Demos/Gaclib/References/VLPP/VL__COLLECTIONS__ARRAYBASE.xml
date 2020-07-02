@@ -4,4 +4,4 @@
 class ArrayBase
     : ListStore<T, expr>
     , IEnumerable<T>;
-]]></signature><basetypes><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol declFile="List.h" declId="NI$vl::collections::ListStore"/></basetypes></Document>
+]]></signature><basetypes><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol name="ListStore" declFile="List.h" declId="NI$vl::collections::ListStore"/></basetypes></Document>

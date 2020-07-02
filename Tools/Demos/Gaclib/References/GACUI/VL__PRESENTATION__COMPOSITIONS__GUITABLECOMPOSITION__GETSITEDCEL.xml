@@ -2,4 +2,4 @@
     vint _row,
     vint _column
 );
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiCellComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellComposition"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiCellComposition" docId="vl::presentation::compositions::GuiCellComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellComposition"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

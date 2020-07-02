@@ -3,4 +3,4 @@
  </summary><param name="value">The new direction.</param><signature><![CDATA[void SetDirection(
     Direction value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiGradientBackgroundElement::Direction" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiGradientBackgroundElement::Direction"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Direction" docId="vl::presentation::elements::GuiGradientBackgroundElement::Direction" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiGradientBackgroundElement::Direction"/></seealsos></Document>

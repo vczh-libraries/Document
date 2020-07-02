@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::GuiFlowItemComposition::GetExtraMargin@::vl::presentation::Margin()" accessor="public" category="Function" name="GetExtraMargin"><summary>Get the extra margin for this flow item. An extra margin is used to enlarge the bounds of the flow item, but only the non-extra part will be used for deciding the flow item layout.</summary><returns>The extra margin for this flow item.</returns><signature><![CDATA[Margin GetExtraMargin(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Margin" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>

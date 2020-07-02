@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::mouseMove" accessor="public" category="Variable" name="mouseMove"><summary>Mouse move event.</summary><signature><![CDATA[GuiMouseEvent mouseMove;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiMouseEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEvent"/></seealsos></Document>

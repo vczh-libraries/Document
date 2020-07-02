@@ -3,4 +3,4 @@
  </summary><signature><![CDATA[class INativeDelay
     : IDescriptable
     , Description<INativeDelay>;
-]]></signature><seealsos><symbol docId="vl::presentation::INativeDelay" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDelay"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="INativeDelay" docId="vl::presentation::INativeDelay" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDelay"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

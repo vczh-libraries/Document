@@ -2,4 +2,4 @@
  Get a suggested size. The polygon element will be layouted to the center of the required bounds using this size.
  </summary><returns>The suggested size.</returns><signature><![CDATA[Size GetSize(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

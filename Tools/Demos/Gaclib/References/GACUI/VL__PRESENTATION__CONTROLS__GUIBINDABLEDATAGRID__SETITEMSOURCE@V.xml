@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiBindableDataGrid::SetItemSource@void(::vl::Ptr&lt;::vl::reflection::description::IValueEnumerable&gt;)" accessor="public" category="Function" name="SetItemSource"><summary>Set the item source.</summary><param name="_itemSource">The item source. Null is acceptable if you want to clear all data.</param><signature><![CDATA[void SetItemSource(
     Ptr<description::IValueEnumerable> _itemSource
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueEnumerable"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IValueEnumerable" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueEnumerable"/></seealsos></Document>

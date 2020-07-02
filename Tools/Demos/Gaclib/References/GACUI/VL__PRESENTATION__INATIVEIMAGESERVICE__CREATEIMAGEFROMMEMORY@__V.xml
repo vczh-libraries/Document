@@ -4,4 +4,4 @@
     void * buffer,
     vint length
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeImage" docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

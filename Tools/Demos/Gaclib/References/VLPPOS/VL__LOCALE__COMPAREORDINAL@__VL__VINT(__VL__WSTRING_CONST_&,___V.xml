@@ -2,4 +2,4 @@
     WString const & s1,
     WString const & s2
 ) const;
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

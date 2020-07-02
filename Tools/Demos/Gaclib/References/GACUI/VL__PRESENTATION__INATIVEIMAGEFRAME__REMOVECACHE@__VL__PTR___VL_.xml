@@ -3,4 +3,4 @@
  </summary><returns>The detached customized cache object.</returns><param name="key">The key binded with the customized cache object.</param><signature><![CDATA[Ptr<INativeImageFrameCache> RemoveCache(
     void * key
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::INativeImageFrameCache" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrameCache"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeImageFrameCache" docId="vl::presentation::INativeImageFrameCache" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrameCache"/></seealsos></Document>

@@ -2,4 +2,4 @@
     vint callbackId,
     Rect location
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::IGuiTabAction" accessor="" category="Class" name="IGuiTabAction"><summary>IGuiTabAction is the handler when an tab-combined shortcut key is activated.</summary><signature><![CDATA[class IGuiTabAction
     : IDescriptable;
-]]></signature><basetypes><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><basetypes><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

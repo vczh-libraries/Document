@@ -2,4 +2,4 @@
  Enabled event. This event will be raised when the visually enabling state of the control is changed. A visually enabling is combined by the enabling state and the parent&apos;s visually enabling state.
  A control is rendered as disabled, not only when the control itself is disabled, but also when the parent control is rendered as disabled.
  </summary><signature><![CDATA[compositions::GuiNotifyEvent VisuallyEnabledChanged;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

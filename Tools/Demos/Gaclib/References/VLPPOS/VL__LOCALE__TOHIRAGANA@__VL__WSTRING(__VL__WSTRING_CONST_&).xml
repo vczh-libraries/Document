@@ -1,4 +1,4 @@
 <Document symbolId="vl::Locale::ToHiragana@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="ToHiragana"><summary>Convert characters to the Hiragana.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param><signature><![CDATA[WString ToHiragana(
     WString const & str
 ) const;
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

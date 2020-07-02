@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiRepeatCompositionBase::SetItemTemplate@void(::vl::presentation::compositions::GuiRepeatCompositionBase::ItemStyleProperty)" accessor="public" category="Function" name="SetItemTemplate"><summary>Set the item style provider</summary><param name="value">The new item style provider</param><signature><![CDATA[void SetItemTemplate(
     ItemStyleProperty value
 );
-]]></signature><seealsos><symbol declFile="GuiGraphicsRepeatComposition.h" declId="NI$vl::presentation::compositions::GuiRepeatCompositionBase::ItemStyleProperty"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ItemStyleProperty" declFile="GuiGraphicsRepeatComposition.h" declId="NI$vl::presentation::compositions::GuiRepeatCompositionBase::ItemStyleProperty"/></seealsos></Document>

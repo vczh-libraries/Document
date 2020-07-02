@@ -3,4 +3,4 @@
  </summary><param name="point">The caret point of the window.</param><signature><![CDATA[void SetCaretPoint(
     NativePoint point
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativePoint" declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>

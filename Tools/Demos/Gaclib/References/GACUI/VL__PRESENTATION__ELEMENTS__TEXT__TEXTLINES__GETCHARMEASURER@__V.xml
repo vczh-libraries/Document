@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::text::TextLines::GetCharMeasurer@::vl::presentation::elements::text::CharMeasurer *()" accessor="public" category="Function" name="GetCharMeasurer"><summary>
- Returns the binded <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.
- </summary><returns>The binded <symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.</returns><signature><![CDATA[CharMeasurer * GetCharMeasurer(
+ Returns the binded <symbol name="CharMeasurer" docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.
+ </summary><returns>The binded <symbol name="CharMeasurer" docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/>.</returns><signature><![CDATA[CharMeasurer * GetCharMeasurer(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/></seealsos></Document>
+]]></signature><seealsos><symbol name="CharMeasurer" docId="vl::presentation::elements::text::CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"/></seealsos></Document>

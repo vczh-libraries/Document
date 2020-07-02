@@ -2,4 +2,4 @@
  Get the left-top color.
  </summary><returns>The left-top color.</returns><signature><![CDATA[Color GetColor1(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

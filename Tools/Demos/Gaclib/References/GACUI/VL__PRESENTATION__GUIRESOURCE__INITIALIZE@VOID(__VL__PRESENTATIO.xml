@@ -2,4 +2,4 @@
     GuiResourceUsage usage,
     GuiResourceError::List & errors
 );
-]]></signature><seealsos><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceUsage"/></seealsos></Document>
+]]></signature><seealsos><symbol name="List" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/><symbol name="GuiResourceUsage" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceUsage"/></seealsos></Document>

@@ -2,4 +2,4 @@
     WString const & name,
     Ptr<GuiResourceItem> item
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="GuiResourceItem" docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/></seealsos></Document>

@@ -2,4 +2,4 @@
  Calculate the minimum size using the binded graphics element and its state.
  </summary><returns>The minimum size.</returns><signature><![CDATA[Size GetMinSize(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

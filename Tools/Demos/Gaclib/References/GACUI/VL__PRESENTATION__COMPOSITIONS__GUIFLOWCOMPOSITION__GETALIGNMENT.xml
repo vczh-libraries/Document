@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::GuiFlowComposition::GetAlignment@::vl::presentation::compositions::FlowAlignment()" accessor="public" category="Function" name="GetAlignment"><summary>Get the alignment for rows.</summary><returns>The alignment.</returns><signature><![CDATA[FlowAlignment GetAlignment(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::FlowAlignment" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::FlowAlignment"/></seealsos></Document>
+]]></signature><seealsos><symbol name="FlowAlignment" docId="vl::presentation::compositions::FlowAlignment" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::FlowAlignment"/></seealsos></Document>

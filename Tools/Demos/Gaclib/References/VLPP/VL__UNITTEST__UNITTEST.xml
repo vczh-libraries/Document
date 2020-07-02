@@ -15,7 +15,7 @@
  3) Other functions
    TEST_PRINT(message); Print neutral message.
  4)
-   You should call ]]><symbol docId="vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)" declFile="UnitTest.h" declId="FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]"/><![CDATA[ in your main function to run all test cases, and return the value from this function.
+   You should call ]]><symbol name="RunAndDisposeTests" docId="vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)" declFile="UnitTest.h" declId="FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]"/><![CDATA[ in your main function to run all test cases, and return the value from this function.
    When "/D" is provided, the test program crashes at any failed assertiong.
    When "/R" is provided, the test program consumes all failed assertions and run all cases. A test case stopped at the first failed assertion. Exit code will be 1 when any case fails.
    When no argument is provided

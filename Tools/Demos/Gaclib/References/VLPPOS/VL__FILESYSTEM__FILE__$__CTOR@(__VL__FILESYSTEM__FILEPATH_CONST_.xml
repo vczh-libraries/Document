@@ -1,4 +1,4 @@
 <Document symbolId="vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Create a reference to a specified file.</summary><param name="_filePath">The specified file.</param><signature><![CDATA[ File(
     FilePath const & _filePath
 );
-]]></signature><seealsos><symbol docId="vl::filesystem::FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"/></seealsos></Document>
+]]></signature><seealsos><symbol name="FilePath" docId="vl::filesystem::FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"/></seealsos></Document>

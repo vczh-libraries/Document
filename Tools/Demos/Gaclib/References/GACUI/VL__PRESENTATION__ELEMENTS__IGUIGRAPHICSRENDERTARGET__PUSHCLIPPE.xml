@@ -4,4 +4,4 @@
  </summary><param name="clipper">The clipper to push.</param><signature><![CDATA[void PushClipper(
     Rect clipper
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>

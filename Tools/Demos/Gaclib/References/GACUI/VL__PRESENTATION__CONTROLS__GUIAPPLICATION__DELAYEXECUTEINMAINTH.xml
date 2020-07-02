@@ -3,4 +3,4 @@
 )> const & proc,
     vint milliseconds
 );
-]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::INativeDelay" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDelay"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NI$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeDelay" docId="vl::presentation::INativeDelay" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDelay"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

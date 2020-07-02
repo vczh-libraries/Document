@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiFlowOption::baseline" accessor="public" category="Variable" name="baseline"><summary>The base line calculation algorithm.</summary><signature><![CDATA[BaselineType baseline;
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiFlowOption::BaselineType" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption::BaselineType"/></seealsos></Document>
+]]></signature><seealsos><symbol name="BaselineType" docId="vl::presentation::compositions::GuiFlowOption::BaselineType" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption::BaselineType"/></seealsos></Document>

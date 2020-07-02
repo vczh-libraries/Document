@@ -2,4 +2,4 @@
  Get the combined clipper
  </summary><returns>The combined clipper</returns><signature><![CDATA[Rect GetClipper(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>

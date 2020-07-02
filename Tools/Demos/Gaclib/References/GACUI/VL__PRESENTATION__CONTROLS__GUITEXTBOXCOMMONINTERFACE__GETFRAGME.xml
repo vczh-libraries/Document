@@ -2,4 +2,4 @@
     TextPos start,
     TextPos end
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

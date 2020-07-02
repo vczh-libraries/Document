@@ -2,4 +2,4 @@
  Get the image service.
  </summary><returns>The image service</returns><signature><![CDATA[INativeImageService * ImageService(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeImageService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageService"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeImageService" docId="vl::presentation::INativeImageService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageService"/></seealsos></Document>

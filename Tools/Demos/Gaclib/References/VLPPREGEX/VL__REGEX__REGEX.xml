@@ -49,4 +49,4 @@
  ]]></summary><signature><![CDATA[class Regex
     : Object
     , NotCopyable;
-]]></signature><basetypes><symbol declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

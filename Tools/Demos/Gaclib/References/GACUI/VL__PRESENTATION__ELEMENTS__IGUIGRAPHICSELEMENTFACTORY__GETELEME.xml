@@ -2,4 +2,4 @@
  Get the name representing the kind of graphics element to be created.
  </summary><returns>Returns the name of graphics elements.</returns><signature><![CDATA[WString GetElementTypeName(
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

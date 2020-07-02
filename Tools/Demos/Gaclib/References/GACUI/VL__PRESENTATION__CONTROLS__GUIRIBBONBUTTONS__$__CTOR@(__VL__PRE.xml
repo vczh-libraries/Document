@@ -3,4 +3,4 @@
     RibbonButtonSize _maxSize,
     RibbonButtonSize _minSize
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::RibbonButtonSize" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::RibbonButtonSize"/><symbol declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
+]]></signature><seealsos><symbol name="RibbonButtonSize" docId="vl::presentation::controls::RibbonButtonSize" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::RibbonButtonSize"/><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>

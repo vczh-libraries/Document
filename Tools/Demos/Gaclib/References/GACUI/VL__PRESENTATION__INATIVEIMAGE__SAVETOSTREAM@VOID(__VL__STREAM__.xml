@@ -4,4 +4,4 @@
     stream::IStream & imageStream,
     FormatType formatType /* optional */
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/><symbol docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>
+]]></signature><seealsos><symbol name="FormatType" docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>

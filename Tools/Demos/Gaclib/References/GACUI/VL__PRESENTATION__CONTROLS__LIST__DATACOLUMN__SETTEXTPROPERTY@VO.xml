@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::DataColumn::SetTextProperty@void(::vl::presentation::ItemProperty&lt;::vl::WString&gt; const &amp;)" accessor="public" category="Function" name="SetTextProperty"><summary>Set the text property name to get the cell text from an item.</summary><param name="value">The text property name.</param><signature><![CDATA[void SetTextProperty(
     ItemProperty<WString> const & value
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::ItemProperty"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="ItemProperty" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::ItemProperty"/></seealsos></Document>

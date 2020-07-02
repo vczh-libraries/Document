@@ -3,4 +3,4 @@
  </summary><param name="value">The callback object to bind.</param><signature><![CDATA[void SetCallback(
     ICallback * value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiColorizedTextElement::ICallback" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ICallback"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ICallback" docId="vl::presentation::elements::GuiColorizedTextElement::ICallback" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ICallback"/></seealsos></Document>

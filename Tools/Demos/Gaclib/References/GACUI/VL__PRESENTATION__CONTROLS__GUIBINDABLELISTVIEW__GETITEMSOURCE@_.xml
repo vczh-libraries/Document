@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiBindableListView::GetItemSource@::vl::Ptr&lt;::vl::reflection::description::IValueEnumerable&gt;()" accessor="public" category="Function" name="GetItemSource"><summary>Get the item source.</summary><returns>The item source.</returns><signature><![CDATA[Ptr<description::IValueEnumerable> GetItemSource(
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueEnumerable"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IValueEnumerable" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueEnumerable"/></seealsos></Document>

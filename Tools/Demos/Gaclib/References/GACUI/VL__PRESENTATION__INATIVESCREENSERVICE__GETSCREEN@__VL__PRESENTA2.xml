@@ -3,4 +3,4 @@
  </summary><returns>The screen object.</returns><param name="window">The specified window.</param><signature><![CDATA[INativeScreen * GetScreen(
     INativeWindow * window
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeScreen" docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

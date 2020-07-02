@@ -2,4 +2,4 @@
     ReaderWriterLock & lock,
     vint ms
 );
-]]></signature><seealsos><symbol docId="vl::ReaderWriterLock" declFile="Threading.h" declId="NI$vl::ReaderWriterLock"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ReaderWriterLock" docId="vl::ReaderWriterLock" declFile="Threading.h" declId="NI$vl::ReaderWriterLock"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

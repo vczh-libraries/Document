@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::clipboardNotify" accessor="public" category="Variable" name="clipboardNotify"><summary>Clipboard notify event. This event is raised when the content in the system clipboard is changed.</summary><signature><![CDATA[GuiNotifyEvent clipboardNotify;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

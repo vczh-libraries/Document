@@ -2,4 +2,4 @@
  Get the file path of the current executable.
  </summary><returns>The file path of the current executable.</returns><signature><![CDATA[WString GetExecutablePath(
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

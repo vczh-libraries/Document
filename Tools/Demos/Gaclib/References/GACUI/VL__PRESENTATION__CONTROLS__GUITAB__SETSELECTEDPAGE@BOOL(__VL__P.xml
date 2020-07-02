@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiTab::SetSelectedPage@bool(::vl::presentation::controls::GuiTabPage *)" accessor="public" category="Function" name="SetSelectedPage"><summary>Set the selected page.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The selected page.</param><signature><![CDATA[bool SetSelectedPage(
     GuiTabPage * value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiTabPage" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiTabPage"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiTabPage" docId="vl::presentation::controls::GuiTabPage" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiTabPage"/></seealsos></Document>

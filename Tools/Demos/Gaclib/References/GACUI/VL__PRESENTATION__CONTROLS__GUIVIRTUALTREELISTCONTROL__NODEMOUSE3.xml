@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeMouseMove" accessor="public" category="Variable" name="NodeMouseMove"><summary>Node mouse move event.</summary><signature><![CDATA[compositions::GuiNodeMouseEvent NodeMouseMove;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeMouseEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNodeMouseEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeMouseEvent"/></seealsos></Document>

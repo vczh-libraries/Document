@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::GuiResourcePrecompileContext::additionalProperties" accessor="public" category="Variable" name="additionalProperties"><summary>Additional properties for resource item contents</summary><signature><![CDATA[PropertyMap additionalProperties;
-]]></signature><seealsos><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext::PropertyMap"/></seealsos></Document>
+]]></signature><seealsos><symbol name="PropertyMap" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext::PropertyMap"/></seealsos></Document>

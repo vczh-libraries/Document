@@ -2,4 +2,4 @@
  Get the font configuration for all characters.
  </summary><returns>The font configuration.</returns><signature><![CDATA[FontProperties const & GetFont(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>
+]]></signature><seealsos><symbol name="FontProperties" docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>

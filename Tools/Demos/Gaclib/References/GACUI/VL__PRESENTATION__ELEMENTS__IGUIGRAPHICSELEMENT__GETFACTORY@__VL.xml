@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::IGuiGraphicsElement::GetFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *()" accessor="public" category="Function" name="GetFactory"><summary>
- Access the <symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/> that is used to create this graphics elements.
+ Access the <symbol name="IGuiGraphicsElementFactory" docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/> that is used to create this graphics elements.
  </summary><returns>Returns the related factory.</returns><signature><![CDATA[IGuiGraphicsElementFactory * GetFactory(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiGraphicsElementFactory" docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/></seealsos></Document>

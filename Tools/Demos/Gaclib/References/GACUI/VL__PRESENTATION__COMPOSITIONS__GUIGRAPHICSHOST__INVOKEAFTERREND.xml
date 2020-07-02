@@ -3,4 +3,4 @@
 )> const & proc,
     ProcKey key /* optional */
 );
-]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsHost::ProcKey"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NI$vl::Func"/><symbol name="ProcKey" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsHost::ProcKey"/></seealsos></Document>

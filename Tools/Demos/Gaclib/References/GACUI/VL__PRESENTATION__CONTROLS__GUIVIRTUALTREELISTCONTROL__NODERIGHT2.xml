@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeRightButtonDown" accessor="public" category="Variable" name="NodeRightButtonDown"><summary>Node right mouse button down event.</summary><signature><![CDATA[compositions::GuiNodeMouseEvent NodeRightButtonDown;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeMouseEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNodeMouseEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeMouseEvent"/></seealsos></Document>

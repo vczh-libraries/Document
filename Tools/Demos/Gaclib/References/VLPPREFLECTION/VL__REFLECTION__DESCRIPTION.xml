@@ -16,10 +16,10 @@
 
  After you have complete your type, use the following macros and functions to register your class into the global type table. Everything should be defined in vl::reflection::description namespaces.
 	Some of the predefined type has already been registered, if your types depend on these types, you should load those types by calling some or all of them:
-	]]><symbol declFile="GuiTypeDescriptorReflection.cpp" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[impl0]"/><![CDATA[
-	]]><symbol declFile="Parsing.cpp" declId="FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]"/><![CDATA[
-	]]><symbol declFile="ParsingJson_Ast.cpp" declId="FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]"/><![CDATA[
-	]]><symbol declFile="ParsingXml_Ast.cpp" declId="FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]"/><![CDATA[
+	]]><symbol name="LoadPredefinedTypes" declFile="GuiTypeDescriptorReflection.cpp" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[impl0]"/><![CDATA[
+	]]><symbol name="LoadParsingTypes" declFile="Parsing.cpp" declId="FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]"/><![CDATA[
+	]]><symbol name="JsonLoadTypes" declFile="ParsingJson_Ast.cpp" declId="FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]"/><![CDATA[
+	]]><symbol name="XmlLoadTypes" declFile="ParsingXml_Ast.cpp" declId="FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]"/><![CDATA[
 
  1) (in header files) Create a macro that contains all types that you want to register. Content in the list will become the registered type names, so it is strongly recommended to use the full name.
 		#define MY_TYPELIST(F)\
@@ -181,8 +181,8 @@
 
 		e) interface:
 			An interface is defined by
-			I) Directly or indirectly inherits ]]><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/><![CDATA[
-			II) The only registered constructor (if exists) should use Ptr<]]><symbol declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueInterfaceProxy"/><![CDATA[> as a parameter
+			I) Directly or indirectly inherits ]]><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/><![CDATA[
+			II) The only registered constructor (if exists) should use Ptr<]]><symbol name="IValueInterfaceProxy" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueInterfaceProxy"/><![CDATA[> as a parameter
 
 			Suppose you have an interface like this:
 			class IMyInterface : public virtual IDescriptable, public Description<IMyInterface>
@@ -242,4 +242,4 @@
 >
 class Description
     : DescriptableObject;
-]]></signature><basetypes><symbol docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></basetypes></Document>
+]]></signature><basetypes><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></basetypes></Document>

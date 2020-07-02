@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetColors@void(::vl::presentation::elements::GuiColorizedTextElement::ColorArray const &amp;)" accessor="public" category="Function" name="SetColors"><summary>
- Bind a color table. Use <symbol docId="vl::presentation::elements::text::CharAtt::colorIndex" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt::colorIndex"/> to use colors in this color table. <symbol docId="vl::presentation::elements::GuiColorizedTextElement::ICallback::ColorChanged@void()" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::ICallback::ColorChanged@void()[decl0]"/> will be called.
+ Bind a color table. Use <symbol name="colorIndex" docId="vl::presentation::elements::text::CharAtt::colorIndex" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt::colorIndex"/> to use colors in this color table. <symbol name="ColorChanged" docId="vl::presentation::elements::GuiColorizedTextElement::ICallback::ColorChanged@void()" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::ICallback::ColorChanged@void()[decl0]"/> will be called.
  </summary><param name="value">The color table to bind.</param><signature><![CDATA[void SetColors(
     ColorArray const & value
 );
-]]></signature><seealsos><symbol declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ColorArray"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ColorArray" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ColorArray"/></seealsos></Document>

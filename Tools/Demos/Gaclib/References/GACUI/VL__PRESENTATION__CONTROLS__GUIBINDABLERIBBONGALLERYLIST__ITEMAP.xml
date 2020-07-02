@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::ItemApplied" accessor="public" category="Variable" name="ItemApplied"><summary>Item applied event.</summary><signature><![CDATA[compositions::GuiItemNotifyEvent ItemApplied;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiItemNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemNotifyEvent"/></seealsos></Document>

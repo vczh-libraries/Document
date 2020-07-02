@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::IGuiTabAction::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this service.</summary><signature><![CDATA[static wchar_t const * const Identifier;
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::IGuiTabAction" declFile="GuiGraphicsHost_Tab.h" declId="NI$vl::presentation::compositions::IGuiTabAction"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiTabAction" docId="vl::presentation::compositions::IGuiTabAction" declFile="GuiGraphicsHost_Tab.h" declId="NI$vl::presentation::compositions::IGuiTabAction"/></seealsos></Document>

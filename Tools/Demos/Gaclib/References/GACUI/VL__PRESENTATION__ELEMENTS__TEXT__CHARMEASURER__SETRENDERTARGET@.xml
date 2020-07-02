@@ -3,4 +3,4 @@
  </summary><param name="value">The render target to bind.</param><signature><![CDATA[void SetRenderTarget(
     IGuiGraphicsRenderTarget * value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>

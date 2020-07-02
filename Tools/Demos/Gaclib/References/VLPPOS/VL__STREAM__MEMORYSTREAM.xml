@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::MemoryStream" accessor="" category="Class" name="MemoryStream"><summary>A readable, writable, seekable and peekable stream that stores everything in memory.</summary><signature><![CDATA[class MemoryStream
     : Object
     , IStream;
-]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>

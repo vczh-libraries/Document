@@ -3,4 +3,4 @@
  </summary><signature><![CDATA[class INativeCursor
     : IDescriptable
     , Description<INativeCursor>;
-]]></signature><seealsos><symbol docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos><basetypes><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="INativeCursor" docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

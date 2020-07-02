@@ -1,2 +1,2 @@
 <Document symbolId="vl::workflow::runtime::WfAssembly::typeImpl" accessor="public" category="Variable" name="typeImpl"><summary>Custom types.</summary><signature><![CDATA[Ptr<typeimpl::WfTypeImpl> typeImpl;
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="WfRuntimeTypeDescriptor.h" declId="NI$vl::workflow::typeimpl::WfTypeImpl"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WfTypeImpl" declFile="WfRuntimeTypeDescriptor.h" declId="NI$vl::workflow::typeimpl::WfTypeImpl"/></seealsos></Document>

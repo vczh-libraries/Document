@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetImage"><summary>Get the image for this command.</summary><returns>The image for this command.</returns><signature><![CDATA[Ptr<GuiImageData> GetImage(
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="GuiImageData" docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::AdoptedSizeInvalidated" accessor="public" category="Variable" name="AdoptedSizeInvalidated"><summary>Adopted size invalidated.</summary><signature><![CDATA[compositions::GuiNotifyEvent AdoptedSizeInvalidated;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

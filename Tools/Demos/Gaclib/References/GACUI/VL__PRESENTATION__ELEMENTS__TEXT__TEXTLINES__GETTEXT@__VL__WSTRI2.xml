@@ -2,4 +2,4 @@
  Returns the whole string in the text lines.
  </summary><returns>The string.</returns><signature><![CDATA[WString GetText(
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

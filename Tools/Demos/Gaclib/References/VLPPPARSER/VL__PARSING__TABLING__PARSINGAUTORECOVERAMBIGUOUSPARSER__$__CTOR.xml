@@ -2,4 +2,4 @@
     Ptr<ParsingTable> _table /* optional */,
     vint _maxInsertedTokenCount /* optional */
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::parsing::tabling::ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="ParsingTable" docId="vl::parsing::tabling::ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

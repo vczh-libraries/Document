@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::GetSubMenu@::vl::presentation::controls::GuiToolstripMenu *()" accessor="public" category="Function" name="GetSubMenu"><summary>Get the dropdown menu.</summary><returns>The dropdown menu.</returns><signature><![CDATA[GuiToolstripMenu * GetSubMenu(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiToolstripMenu" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripMenu"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiToolstripMenu" docId="vl::presentation::controls::GuiToolstripMenu" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripMenu"/></seealsos></Document>

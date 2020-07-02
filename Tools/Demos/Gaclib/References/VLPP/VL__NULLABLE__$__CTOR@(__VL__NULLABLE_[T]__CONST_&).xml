@@ -1,4 +1,4 @@
 <Document symbolId="vl::Nullable::$__ctor@(::vl::Nullable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Copy a nullable value.</summary><param name="nullable">The nullable value to copy.</param><signature><![CDATA[ Nullable(
     Nullable<T> const & nullable
 );
-]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

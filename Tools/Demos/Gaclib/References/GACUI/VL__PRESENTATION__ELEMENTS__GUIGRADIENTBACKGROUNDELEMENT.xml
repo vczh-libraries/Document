@@ -2,4 +2,4 @@
  Defines a color-filled gradient element without border.
  </summary><signature><![CDATA[class GuiGradientBackgroundElement
     : GuiElementBase<GuiGradientBackgroundElement>;
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiGradientBackgroundElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiGradientBackgroundElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiGradientBackgroundElement" docId="vl::presentation::elements::GuiGradientBackgroundElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiGradientBackgroundElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

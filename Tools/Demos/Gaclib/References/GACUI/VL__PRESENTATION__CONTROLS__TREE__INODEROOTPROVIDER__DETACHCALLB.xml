@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::tree::INodeRootProvider::DetachCallback@bool(::vl::presentation::controls::tree::INodeProviderCallback *)" accessor="public" category="Function" name="DetachCallback"><summary>Detach an node provider callback from this node provider.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The node provider callback.</param><signature><![CDATA[bool DetachCallback(
     INodeProviderCallback * value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::tree::INodeProviderCallback" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProviderCallback"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INodeProviderCallback" docId="vl::presentation::controls::tree::INodeProviderCallback" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProviderCallback"/></seealsos></Document>

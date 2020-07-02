@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::verticalWheel" accessor="public" category="Variable" name="verticalWheel"><summary>Vertical wheel scrolling event.</summary><signature><![CDATA[GuiMouseEvent verticalWheel;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiMouseEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEvent"/></seealsos></Document>

@@ -1,6 +1,6 @@
 <Document symbolId="vl::presentation::compositions::GuiWindowComposition" accessor="" category="Class" name="GuiWindowComposition"><summary>
- Represents a composition for the client area in an <symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>.
+ Represents a composition for the client area in an <symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>.
  </summary><signature><![CDATA[class GuiWindowComposition
     : GuiGraphicsSite
     , Description<GuiWindowComposition>;
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"/></seealsos><basetypes><symbol docId="vl::presentation::compositions::GuiGraphicsSite" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsSite"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiWindowComposition" docId="vl::presentation::compositions::GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"/></seealsos><basetypes><symbol name="GuiGraphicsSite" docId="vl::presentation::compositions::GuiGraphicsSite" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsSite"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

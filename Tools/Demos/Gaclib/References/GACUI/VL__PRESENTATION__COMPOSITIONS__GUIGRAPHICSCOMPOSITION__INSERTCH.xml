@@ -2,4 +2,4 @@
     vint index,
     GuiGraphicsComposition * child
 );
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiGraphicsComposition" docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

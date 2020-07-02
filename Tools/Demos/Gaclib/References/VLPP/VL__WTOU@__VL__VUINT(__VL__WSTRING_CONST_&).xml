@@ -1,4 +1,4 @@
 <Document symbolId="vl::wtou@::vl::vuint(::vl::WString const &amp;)" accessor="" category="Function" name="wtou"><summary>Convert a string to an unsigned integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><signature><![CDATA[vuint wtou(
     WString const & string
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vuint" docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>

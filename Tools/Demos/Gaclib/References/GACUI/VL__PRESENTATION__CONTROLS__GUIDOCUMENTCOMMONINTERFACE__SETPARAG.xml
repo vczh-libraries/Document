@@ -3,4 +3,4 @@
     TextPos end,
     Nullable<Alignment> alignment
 );
-]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="Alignment" docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

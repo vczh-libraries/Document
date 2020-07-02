@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiMessageDialog::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText"><summary>Set the text for the dialog.</summary><param name="value">The text.</param><signature><![CDATA[void SetText(
     WString const & value
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

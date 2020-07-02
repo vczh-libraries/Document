@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiControl::ControlTemplateChanged" accessor="public" category="Variable" name="ControlTemplateChanged"><summary>Control template changed event. This event will be raised when the control template is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent ControlTemplateChanged;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

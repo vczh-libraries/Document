@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiControlHost::WindowOpened" accessor="public" category="Variable" name="WindowOpened"><summary>Window opened event.</summary><signature><![CDATA[compositions::GuiNotifyEvent WindowOpened;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

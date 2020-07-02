@@ -3,4 +3,4 @@
     bool ctrl,
     bool shift
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>
+]]></signature><seealsos><symbol name="VKEY" declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>

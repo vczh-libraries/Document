@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::list::ListViewColumn::GetSize@::vl::vint()" accessor="public" category="Function" name="GetSize"><summary>Get the size of this item.</summary><returns>The size of this item.</returns><signature><![CDATA[vint GetSize(
 );
-]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

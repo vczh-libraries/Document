@@ -2,4 +2,4 @@
     Size realFullSize,
     Rect rect
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

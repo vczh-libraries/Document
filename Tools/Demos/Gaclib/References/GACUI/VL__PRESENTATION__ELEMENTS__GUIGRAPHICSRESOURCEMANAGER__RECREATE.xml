@@ -3,4 +3,4 @@
  </summary><param name="window">The specified window.</param><signature><![CDATA[void RecreateRenderTarget(
     INativeWindow * window
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

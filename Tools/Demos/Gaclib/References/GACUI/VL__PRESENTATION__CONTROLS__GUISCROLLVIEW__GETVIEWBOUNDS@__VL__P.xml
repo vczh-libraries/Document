@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiScrollView::GetViewBounds@::vl::presentation::Rect()" accessor="public" category="Function" name="GetViewBounds"><summary>Get the view bounds.</summary><returns>The view bounds.</returns><signature><![CDATA[Rect GetViewBounds(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>

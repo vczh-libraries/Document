@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemView::DetachCallback@bool(::vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemViewCallback *)" accessor="public" category="Function" name="DetachCallback"><summary>Detach an column item view callback from this view.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The column item view callback.</param><signature><![CDATA[bool DetachCallback(
     IColumnItemViewCallback * value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemViewCallback" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemViewCallback"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IColumnItemViewCallback" docId="vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemViewCallback" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemViewCallback"/></seealsos></Document>

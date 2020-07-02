@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::Group::operator []@::vl::collections::Group::ValueContainer const &amp;([KK] const &amp;)" accessor="public" category="Function" name="operator []"><summary>Get all values associated with a key.</summary><returns>All values.</returns><param name="key">The key to find.</param><signature><![CDATA[ValueContainer const & operator [](
     KK const & key
 ) const;
-]]></signature><seealsos><symbol declFile="Dictionary.h" declId="NI$vl::collections::Group::ValueContainer"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ValueContainer" declFile="Dictionary.h" declId="NI$vl::collections::Group::ValueContainer"/></seealsos></Document>

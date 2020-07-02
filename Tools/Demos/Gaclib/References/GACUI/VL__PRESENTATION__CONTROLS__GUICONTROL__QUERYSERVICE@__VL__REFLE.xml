@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControl::QueryService@::vl::reflection::IDescriptable *(::vl::WString const &amp;)" accessor="public" category="Function" name="QueryService"><summary>Query a service using an identifier. If you want to get a service of type IXXX, use IXXX::Identifier as the identifier.</summary><returns>The requested service. If the control doesn&apos;t support this service, it will be null.</returns><param name="identifier">The identifier.</param><signature><![CDATA[IDescriptable * QueryService(
     WString const & identifier
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></seealsos></Document>

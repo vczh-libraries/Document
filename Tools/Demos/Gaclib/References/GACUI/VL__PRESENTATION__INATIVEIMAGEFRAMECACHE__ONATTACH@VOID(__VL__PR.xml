@@ -3,4 +3,4 @@
  </summary><param name="frame">The image frame that attached to.</param><signature><![CDATA[void OnAttach(
     INativeImageFrame * frame
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeImageFrame" docId="vl::presentation::INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"/></seealsos></Document>

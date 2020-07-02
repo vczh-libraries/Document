@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetAssociatedCursor@::vl::presentation::INativeCursor *()" accessor="public" category="Function" name="GetAssociatedCursor"><summary>Get the associated cursor.</summary><returns>The associated cursor.</returns><signature><![CDATA[INativeCursor * GetAssociatedCursor(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeCursor" docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos></Document>

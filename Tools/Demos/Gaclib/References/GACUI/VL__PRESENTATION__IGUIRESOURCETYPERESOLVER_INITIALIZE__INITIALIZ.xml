@@ -3,4 +3,4 @@
     GuiResourceInitializeContext & context,
     GuiResourceError::List & errors
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/><symbol docId="vl::presentation::GuiResourceInitializeContext" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceInitializeContext"/><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="List" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceError::List"/><symbol name="GuiResourceInitializeContext" docId="vl::presentation::GuiResourceInitializeContext" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceInitializeContext"/><symbol name="GuiResourceItem" docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/></seealsos></Document>

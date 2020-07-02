@@ -1,4 +1,4 @@
 <Document symbolId="vl::regex::RegexTokens" accessor="" category="Class" name="RegexTokens"><summary>Token collection representing the result from the lexical analyzer.</summary><signature><![CDATA[class RegexTokens
     : Object
     , collections::IEnumerable<RegexToken>;
-]]></signature><seealsos><symbol docId="vl::regex::RegexToken" declFile="Regex.h" declId="NI$vl::regex::RegexToken"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="RegexToken" docId="vl::regex::RegexToken" declFile="Regex.h" declId="NI$vl::regex::RegexToken"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/></basetypes></Document>

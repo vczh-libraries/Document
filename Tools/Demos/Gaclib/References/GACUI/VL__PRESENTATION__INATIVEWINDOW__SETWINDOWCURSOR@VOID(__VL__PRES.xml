@@ -3,4 +3,4 @@
  </summary><param name="cursor">The mouse cursor of the window.</param><signature><![CDATA[void SetWindowCursor(
     INativeCursor * cursor
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeCursor" docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos></Document>

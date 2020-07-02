@@ -1,4 +1,4 @@
 <Document symbolId="vl::regex::RegexLexerWalker::IsClosedToken@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="IsClosedToken"><summary>Test if the input is a complete token.</summary><returns>Returns true if the input text is a complete token.</returns><param name="input">The input text.</param><signature><![CDATA[bool IsClosedToken(
     WString const & input
 ) const;
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

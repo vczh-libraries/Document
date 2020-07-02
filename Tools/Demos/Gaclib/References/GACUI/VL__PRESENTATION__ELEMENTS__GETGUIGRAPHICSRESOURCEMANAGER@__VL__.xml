@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::GetGuiGraphicsResourceManager@::vl::presentation::elements::GuiGraphicsResourceManager *()" accessor="" category="Function" name="GetGuiGraphicsResourceManager"><summary>
- Get the current <symbol docId="vl::presentation::elements::GuiGraphicsResourceManager" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiGraphicsResourceManager"/>.
+ Get the current <symbol name="GuiGraphicsResourceManager" docId="vl::presentation::elements::GuiGraphicsResourceManager" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiGraphicsResourceManager"/>.
  </summary><returns>Returns the current resource manager.</returns><signature><![CDATA[GuiGraphicsResourceManager * GetGuiGraphicsResourceManager(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiGraphicsResourceManager" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiGraphicsResourceManager"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiGraphicsResourceManager" docId="vl::presentation::elements::GuiGraphicsResourceManager" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiGraphicsResourceManager"/></seealsos></Document>

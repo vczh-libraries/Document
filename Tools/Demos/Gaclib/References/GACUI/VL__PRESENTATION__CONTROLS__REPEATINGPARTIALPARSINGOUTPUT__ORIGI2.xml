@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::RepeatingPartialParsingOutput::originalRange" accessor="public" category="Variable" name="originalRange"><summary>Range of the original context in the input.</summary><signature><![CDATA[parsing::ParsingTextRange originalRange;
-]]></signature><seealsos><symbol docId="vl::parsing::ParsingTextRange" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextRange"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ParsingTextRange" docId="vl::parsing::ParsingTextRange" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextRange"/></seealsos></Document>

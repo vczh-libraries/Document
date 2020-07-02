@@ -1,4 +1,4 @@
 <Document symbolId="vl::regex::Regex::TestHead@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="TestHead"><summary>Match a prefix of the text, ignoring all capturing requirements.</summary><returns>Returns true if succeeded.</returns><param name="text">The text to match.</param><signature><![CDATA[bool TestHead(
     WString const & text
 ) const;
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

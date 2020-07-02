@@ -3,4 +3,4 @@
  </summary><param name="bounds">The bounds of the window.</param><signature><![CDATA[void SetBounds(
     NativeRect const & bounds
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeRect" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>

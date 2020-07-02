@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiGrammarColorizer" accessor="" category="Class" name="GuiGrammarColorizer"><summary>Grammar based colorizer.</summary><signature><![CDATA[class GuiGrammarColorizer
     : GuiTextBoxRegexColorizer
     , RepeatingParsingExecutor::CallbackBase;
-]]></signature><basetypes><symbol docId="vl::presentation::controls::GuiTextBoxRegexColorizer" declFile="GuiTextColorizer.h" declId="NI$vl::presentation::controls::GuiTextBoxRegexColorizer"/><symbol docId="vl::presentation::controls::RepeatingParsingExecutor::CallbackBase" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingExecutor::CallbackBase"/></basetypes></Document>
+]]></signature><basetypes><symbol name="GuiTextBoxRegexColorizer" docId="vl::presentation::controls::GuiTextBoxRegexColorizer" declFile="GuiTextColorizer.h" declId="NI$vl::presentation::controls::GuiTextBoxRegexColorizer"/><symbol name="CallbackBase" docId="vl::presentation::controls::RepeatingParsingExecutor::CallbackBase" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingExecutor::CallbackBase"/></basetypes></Document>

@@ -3,4 +3,4 @@
  </summary><signature><![CDATA[class TextLines
     : Object
     , Description<TextLines>;
-]]></signature><seealsos><symbol docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="TextLines" docId="vl::presentation::elements::text::TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

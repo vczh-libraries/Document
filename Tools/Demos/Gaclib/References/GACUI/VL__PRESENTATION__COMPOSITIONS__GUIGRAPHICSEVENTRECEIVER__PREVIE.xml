@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsEventReceiver::previewCharInput" accessor="public" category="Variable" name="previewCharInput"><summary>Preview char input event.</summary><signature><![CDATA[GuiCharEvent previewCharInput;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiCharEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiCharEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiCharEvent"/></seealsos></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiFlowItemComposition::SetFlowOption@void(::vl::presentation::compositions::GuiFlowOption)" accessor="public" category="Function" name="SetFlowOption"><summary>Set the base line option for this flow item.</summary><param name="value">The base line option.</param><signature><![CDATA[void SetFlowOption(
     GuiFlowOption value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiFlowOption" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiFlowOption" docId="vl::presentation::compositions::GuiFlowOption" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption"/></seealsos></Document>

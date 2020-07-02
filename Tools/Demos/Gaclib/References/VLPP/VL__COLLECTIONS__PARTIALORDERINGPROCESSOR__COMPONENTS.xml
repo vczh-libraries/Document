@@ -1,2 +1,2 @@
 <Document symbolId="vl::collections::PartialOrderingProcessor::components" accessor="public" category="Variable" name="components"><summary>Strong connected components in order.</summary><signature><![CDATA[List<po::Component> components;
-]]></signature><seealsos><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol declFile="PartialOrdering.h" declId="NI$vl::collections::po::Component"/></seealsos></Document>
+]]></signature><seealsos><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol name="Component" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Component"/></seealsos></Document>

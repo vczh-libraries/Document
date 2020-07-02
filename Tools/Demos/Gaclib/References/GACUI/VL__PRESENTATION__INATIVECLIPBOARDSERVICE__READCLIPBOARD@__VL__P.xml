@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::INativeClipboardService::ReadClipboard@::vl::Ptr&lt;::vl::presentation::INativeClipboardReader&gt;()" accessor="public" category="Function" name="ReadClipboard"><summary>Read clipboard.</summary><returns>The clipboard reader.</returns><signature><![CDATA[Ptr<INativeClipboardReader> ReadClipboard(
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::INativeClipboardReader" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardReader"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeClipboardReader" docId="vl::presentation::INativeClipboardReader" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardReader"/></seealsos></Document>

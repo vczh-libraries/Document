@@ -3,4 +3,4 @@
  </summary><param name="value">All points</param><signature><![CDATA[void SetPointsArray(
     PointArray const & value
 );
-]]></signature><seealsos><symbol declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiPolygonElement::PointArray"/></seealsos></Document>
+]]></signature><seealsos><symbol name="PointArray" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiPolygonElement::PointArray"/></seealsos></Document>

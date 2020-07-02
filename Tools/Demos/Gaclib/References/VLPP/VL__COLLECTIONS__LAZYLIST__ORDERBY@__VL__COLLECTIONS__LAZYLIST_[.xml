@@ -4,4 +4,4 @@
 LazyList<T> OrderBy(
     F f
 ) const;
-]]></signature><seealsos><symbol docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>
+]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

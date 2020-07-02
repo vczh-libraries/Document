@@ -4,4 +4,4 @@
 LazyList<Pair<vl::function_lambda::FunctionObjectRetriveType<F>::ResultType, LazyList<T>>> GroupBy(
     F f
 ) const;
-]]></signature><seealsos><symbol docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/><symbol declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::ResultType"/><symbol declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::ResultType"/></seealsos></Document>
+]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="Pair" docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::ResultType"/><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::ResultType"/></seealsos></Document>

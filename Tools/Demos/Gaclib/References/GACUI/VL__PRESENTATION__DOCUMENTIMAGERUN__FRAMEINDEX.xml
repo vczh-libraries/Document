@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentImageRun::frameIndex" accessor="public" category="Variable" name="frameIndex"><summary>The frame index.</summary><signature><![CDATA[vint frameIndex;
-]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

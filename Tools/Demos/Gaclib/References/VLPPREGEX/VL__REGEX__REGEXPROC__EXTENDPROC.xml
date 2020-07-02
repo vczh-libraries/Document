@@ -4,4 +4,4 @@
  If the length parameter is not -1, it means the number of available characters in the buffer.
  The completeText parameter could be true or false. When it is false, it means that the buffer does not contain all the text.
  </summary><signature><![CDATA[RegexTokenExtendProc extendProc;
-]]></signature><seealsos><symbol declFile="Regex.h" declId="NI$vl::regex::RegexTokenExtendProc"/></seealsos></Document>
+]]></signature><seealsos><symbol name="RegexTokenExtendProc" declFile="Regex.h" declId="NI$vl::regex::RegexTokenExtendProc"/></seealsos></Document>

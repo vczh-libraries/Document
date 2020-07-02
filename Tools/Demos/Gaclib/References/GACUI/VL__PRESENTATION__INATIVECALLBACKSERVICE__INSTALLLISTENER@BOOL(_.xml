@@ -3,4 +3,4 @@
  </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The global message listener to install.</param><signature><![CDATA[bool InstallListener(
     INativeControllerListener * listener
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeControllerListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeControllerListener"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeControllerListener" docId="vl::presentation::INativeControllerListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeControllerListener"/></seealsos></Document>

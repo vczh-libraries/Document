@@ -2,4 +2,4 @@
     theme::ThemeName themeName,
     GuiSelectableListControl * _containedListControl
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiSelectableListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiSelectableListControl"/><symbol declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiSelectableListControl" docId="vl::presentation::controls::GuiSelectableListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiSelectableListControl"/><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>

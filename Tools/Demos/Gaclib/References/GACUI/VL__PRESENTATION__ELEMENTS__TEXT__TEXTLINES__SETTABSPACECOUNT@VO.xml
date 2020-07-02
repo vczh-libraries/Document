@@ -3,4 +3,4 @@
  </summary><param name="value">The number of spaces to replace a tab character for rendering.</param><signature><![CDATA[void SetTabSpaceCount(
     vint value
 );
-]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

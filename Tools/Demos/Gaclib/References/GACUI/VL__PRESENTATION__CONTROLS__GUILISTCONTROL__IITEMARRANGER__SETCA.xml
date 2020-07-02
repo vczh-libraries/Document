@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::IItemArranger::SetCallback@void(::vl::presentation::controls::GuiListControl::IItemArrangerCallback *)" accessor="public" category="Function" name="SetCallback"><summary>Bind the item arranger callback object.</summary><param name="value">The item arranger callback object to bind.</param><signature><![CDATA[void SetCallback(
     IItemArrangerCallback * value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiListControl::IItemArrangerCallback" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemArrangerCallback"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IItemArrangerCallback" docId="vl::presentation::controls::GuiListControl::IItemArrangerCallback" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemArrangerCallback"/></seealsos></Document>

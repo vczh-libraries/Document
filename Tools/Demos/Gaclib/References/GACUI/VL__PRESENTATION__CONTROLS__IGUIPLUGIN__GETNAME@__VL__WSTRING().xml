@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::IGuiPlugin::GetName@::vl::WString()" accessor="public" category="Function" name="GetName"><summary>Get the name of this plugin.</summary><returns>Returns the name of the plugin.</returns><signature><![CDATA[WString GetName(
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

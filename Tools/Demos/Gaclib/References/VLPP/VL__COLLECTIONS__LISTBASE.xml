@@ -4,4 +4,4 @@
 >
 class ListBase
     : ArrayBase<T>;
-]]></signature><basetypes><symbol docId="vl::collections::ArrayBase" declFile="List.h" declId="NI$vl::collections::ArrayBase"/></basetypes></Document>
+]]></signature><basetypes><symbol name="ArrayBase" docId="vl::collections::ArrayBase" declFile="List.h" declId="NI$vl::collections::ArrayBase"/></basetypes></Document>

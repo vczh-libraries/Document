@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentStyleProperties::backgroundColor" accessor="public" category="Variable" name="backgroundColor"><summary>Font color.</summary><signature><![CDATA[Nullable<Color> backgroundColor;
-]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

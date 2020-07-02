@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiScrollView::SetViewPosition@void(::vl::presentation::Point)" accessor="public" category="Function" name="SetViewPosition"><summary>Set the position of the left-top corner of the view bounds.</summary><param name="value">The position.</param><signature><![CDATA[void SetViewPosition(
     Point value
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>

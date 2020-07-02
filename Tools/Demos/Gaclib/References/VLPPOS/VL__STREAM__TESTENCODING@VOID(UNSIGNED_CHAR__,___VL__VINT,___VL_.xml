@@ -4,4 +4,4 @@
     BomEncoder::Encoding & encoding,
     bool & containsBom
 );
-]]></signature><seealsos><symbol docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Encoding" docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

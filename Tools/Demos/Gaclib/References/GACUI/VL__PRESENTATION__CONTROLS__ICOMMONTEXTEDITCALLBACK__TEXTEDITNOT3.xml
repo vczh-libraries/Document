@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::editVersion" accessor="public" category="Variable" name="editVersion"><summary>The created edit version.</summary><signature><![CDATA[vuint editVersion;
-]]></signature><seealsos><symbol docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vuint" docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>

@@ -1,3 +1,3 @@
 <Document symbolId="vl::filesystem::Folder" accessor="" category="Class" name="Folder"><summary>Representing a folder reference.</summary><signature><![CDATA[class Folder
     : Object;
-]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

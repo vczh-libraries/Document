@@ -2,4 +2,4 @@
     Ptr<WfRuntimeGlobalContext> context,
     WString const & name
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueFunctionProxy"/><symbol docId="vl::workflow::runtime::WfRuntimeGlobalContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeGlobalContext"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="IValueFunctionProxy" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueFunctionProxy"/><symbol name="WfRuntimeGlobalContext" docId="vl::workflow::runtime::WfRuntimeGlobalContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeGlobalContext"/></seealsos></Document>

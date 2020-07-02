@@ -1,2 +1,2 @@
 <Document symbolId="vl::collections::PartialOrderingProcessor::nodes" accessor="public" category="Variable" name="nodes"><summary>Nodes.</summary><signature><![CDATA[Array<po::Node> nodes;
-]]></signature><seealsos><symbol docId="vl::collections::Array" declFile="List.h" declId="NI$vl::collections::Array"/><symbol declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Array" docId="vl::collections::Array" declFile="List.h" declId="NI$vl::collections::Array"/><symbol name="Node" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node"/></seealsos></Document>

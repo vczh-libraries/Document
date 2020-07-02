@@ -2,4 +2,4 @@
     compositions::GuiBoundsComposition * style,
     Rect bounds
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/><symbol docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></seealsos></Document>

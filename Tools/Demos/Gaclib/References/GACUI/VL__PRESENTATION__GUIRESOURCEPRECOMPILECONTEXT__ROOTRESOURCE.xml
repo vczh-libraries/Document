@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::GuiResourcePrecompileContext::rootResource" accessor="public" category="Variable" name="rootResource"><summary>The root resource object.</summary><signature><![CDATA[GuiResource * rootResource;
-]]></signature><seealsos><symbol docId="vl::presentation::GuiResource" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResource"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiResource" docId="vl::presentation::GuiResource" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResource"/></seealsos></Document>

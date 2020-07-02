@@ -66,9 +66,9 @@
 
 		c) Type references:
 			Types can be defined globally or inside classes. Generic type is not supported. When you want to refer to a specific type, it could be:
-				token: Store a token, which will becomes ]]><symbol docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/><![CDATA[.
-				Type[]: Array, which will becomes ]]><symbol docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><![CDATA[ to the element type. Token cannot be the element of arrays.
-				ClassName: Instance of a specified type, which will becomes ]]><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><![CDATA[ to that type.
+				token: Store a token, which will becomes ]]><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/><![CDATA[.
+				Type[]: Array, which will becomes ]]><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><![CDATA[ to the element type. Token cannot be the element of arrays.
+				ClassName: Instance of a specified type, which will becomes ]]><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><![CDATA[ to that type.
 				OuterClass.InnerClass: Refer to the "InnerClass" defined inside the "OuterClass".
 
  2) Token definitions:
@@ -235,4 +235,4 @@
 
  ]]></summary><signature><![CDATA[class ParsingTable
     : Object;
-]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

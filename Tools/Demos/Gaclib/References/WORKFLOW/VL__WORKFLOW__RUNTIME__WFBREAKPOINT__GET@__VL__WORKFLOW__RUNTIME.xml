@@ -2,4 +2,4 @@
     reflection::DescriptableObject * thisObject,
     reflection::description::IPropertyInfo * propertyInfo
 );
-]]></signature><seealsos><symbol docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/><symbol declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::IPropertyInfo"/><symbol docId="vl::workflow::runtime::WfBreakPoint" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::WfBreakPoint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/><symbol name="IPropertyInfo" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::IPropertyInfo"/><symbol name="WfBreakPoint" docId="vl::workflow::runtime::WfBreakPoint" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::WfBreakPoint"/></seealsos></Document>

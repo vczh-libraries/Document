@@ -1,2 +1,2 @@
 <Document symbolId="vl::HttpRequest::username" accessor="public" category="Variable" name="username"><summary>User name to authorize. Set to empty if you don&apos;t want to provide it.</summary><signature><![CDATA[WString username;
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

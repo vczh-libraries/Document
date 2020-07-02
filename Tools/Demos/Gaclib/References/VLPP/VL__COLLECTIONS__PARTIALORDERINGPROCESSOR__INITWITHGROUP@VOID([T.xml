@@ -5,4 +5,4 @@ void InitWithGroup(
     TList const & items,
     GroupOf<TList> const & depGroup
 );
-]]></signature><seealsos><symbol declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor::GroupOf"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GroupOf" declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor::GroupOf"/></seealsos></Document>

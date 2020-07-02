@@ -1,4 +1,4 @@
 <Document symbolId="vl::ftow@::vl::WString(double)" accessor="" category="Function" name="ftow"><summary>Convert a 64-bits floating pointer number to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString ftow(
     double number
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

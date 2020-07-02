@@ -2,4 +2,4 @@
     NativePoint location,
     INativeScreen * screen /* optional */
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeScreen" docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/><symbol name="NativePoint" declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>

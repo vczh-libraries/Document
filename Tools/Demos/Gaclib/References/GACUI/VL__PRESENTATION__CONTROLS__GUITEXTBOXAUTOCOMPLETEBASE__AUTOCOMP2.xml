@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem::tag" accessor="public" category="Variable" name="tag"><summary>Tag object for any purpose, e.g., data binding.</summary><signature><![CDATA[description::Value tag;
-]]></signature><seealsos><symbol docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

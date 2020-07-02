@@ -2,4 +2,4 @@
  Represents a customized cache object for an image frame.
  </summary><signature><![CDATA[class INativeImageFrameCache
     : Interface;
-]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiCellOption::PercentageOption@::vl::presentation::compositions::GuiCellOption(double)" accessor="public" category="Function" name="PercentageOption"><summary>Creates an percantage sizing option</summary><returns>The created option.</returns><param name="value">The percentage number.</param><signature><![CDATA[static GuiCellOption PercentageOption(
     double value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiCellOption" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiCellOption" docId="vl::presentation::compositions::GuiCellOption" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption"/></seealsos></Document>

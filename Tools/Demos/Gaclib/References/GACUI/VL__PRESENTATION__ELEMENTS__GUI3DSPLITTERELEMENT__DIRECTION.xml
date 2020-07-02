@@ -1,5 +1,5 @@
 <Document symbolId="vl::presentation::elements::Gui3DSplitterElement::Direction" accessor="public" category="Enum" name="Direction"><summary>
- Defines a direction of the <symbol docId="vl::presentation::elements::Gui3DSplitterElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DSplitterElement"/>.
+ Defines a direction of the <symbol name="Gui3DSplitterElement" docId="vl::presentation::elements::Gui3DSplitterElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DSplitterElement"/>.
  </summary><enumitem name="Horizontal">Horizontal direction.</enumitem><enumitem name="Vertical">Vertical direction.</enumitem><signature><![CDATA[enum Direction
 {
     Horizontal,

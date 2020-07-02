@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::IGuiMenuService::Identifier" accessor="public" category="Variable" name="Identifier"><summary>The identifier for this service.</summary><signature><![CDATA[static wchar_t const * const Identifier;
-]]></signature><seealsos><symbol docId="vl::presentation::controls::IGuiMenuService" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::IGuiMenuService"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiMenuService" docId="vl::presentation::controls::IGuiMenuService" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::IGuiMenuService"/></seealsos></Document>

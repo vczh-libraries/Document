@@ -4,4 +4,4 @@
     NativeRect & bounds,
     bool fixSizeOnly
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeRect" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>

@@ -3,4 +3,4 @@
  </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[Size Convert(
     NativeSize value
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativeSize"/><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeSize" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeSize"/><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

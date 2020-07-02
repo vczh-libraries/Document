@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiWindow::ClipboardUpdated" accessor="public" category="Variable" name="ClipboardUpdated"><summary>Clipboard updated event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ClipboardUpdated;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

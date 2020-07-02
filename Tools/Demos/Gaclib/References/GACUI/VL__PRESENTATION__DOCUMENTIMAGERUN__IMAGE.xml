@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentImageRun::image" accessor="public" category="Variable" name="image"><summary>The image.</summary><signature><![CDATA[Ptr<INativeImage> image;
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeImage" docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/></seealsos></Document>

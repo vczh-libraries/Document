@@ -5,4 +5,4 @@
     ColorDialogCustomColorOptions customColorOptions /* optional */,
     Color * customColors /* optional */
 );
-]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/><symbol docId="vl::presentation::INativeDialogService::ColorDialogCustomColorOptions" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::ColorDialogCustomColorOptions"/><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/><symbol name="ColorDialogCustomColorOptions" docId="vl::presentation::INativeDialogService::ColorDialogCustomColorOptions" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::ColorDialogCustomColorOptions"/><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

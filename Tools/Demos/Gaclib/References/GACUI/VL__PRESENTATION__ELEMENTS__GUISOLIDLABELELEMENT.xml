@@ -2,4 +2,4 @@
  Defines an element of a plain text.
  </summary><signature><![CDATA[class GuiSolidLabelElement
     : GuiElementBase<GuiSolidLabelElement>;
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiSolidLabelElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiSolidLabelElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiSolidLabelElement" docId="vl::presentation::elements::GuiSolidLabelElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiSolidLabelElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

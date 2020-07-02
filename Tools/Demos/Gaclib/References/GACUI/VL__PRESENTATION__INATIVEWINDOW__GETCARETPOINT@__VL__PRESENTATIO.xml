@@ -2,4 +2,4 @@
  Get the caret point of the window. When an input method editor is opened, the input text box will be located to the caret point.
  </summary><returns>The caret point of the window.</returns><signature><![CDATA[NativePoint GetCaretPoint(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativePoint" declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>

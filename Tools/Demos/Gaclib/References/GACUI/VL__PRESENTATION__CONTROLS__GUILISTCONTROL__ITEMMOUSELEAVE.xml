@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::ItemMouseLeave" accessor="public" category="Variable" name="ItemMouseLeave"><summary>Item mouse leave event.</summary><signature><![CDATA[compositions::GuiItemNotifyEvent ItemMouseLeave;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiItemNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemNotifyEvent"/></seealsos></Document>

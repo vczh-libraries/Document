@@ -2,4 +2,4 @@
  Get the parent window. A parent window doesn&apos;t contain a child window. It always displayed below the child windows. When a parent window is minimized or restored, so as its child windows.
  </summary><returns>The parent window.</returns><signature><![CDATA[INativeWindow * GetParent(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

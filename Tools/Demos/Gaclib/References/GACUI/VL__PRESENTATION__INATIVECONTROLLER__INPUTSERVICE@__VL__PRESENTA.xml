@@ -2,4 +2,4 @@
  Get the user input service.
  </summary><returns>The user input service</returns><signature><![CDATA[INativeInputService * InputService(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeInputService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeInputService"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeInputService" docId="vl::presentation::INativeInputService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeInputService"/></seealsos></Document>

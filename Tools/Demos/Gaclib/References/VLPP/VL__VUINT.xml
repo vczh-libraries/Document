@@ -1,2 +1,2 @@
 <Document symbolId="vl::vuint" accessor="" category="TypeAlias" name="vuint"><summary>Unsigned interface whose size is equal to sizeof(void*).</summary><signature><![CDATA[using vuint = vuint32_t;
-]]></signature><seealsos><symbol docId="vl::vuint32_t" declFile="Basic.h" declId="NI$vl::vuint32_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vuint32_t" docId="vl::vuint32_t" declFile="Basic.h" declId="NI$vl::vuint32_t"/></seealsos></Document>

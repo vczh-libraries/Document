@@ -3,4 +3,4 @@
     vint length,
     TextStyle value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::IGuiGraphicsParagraph::TextStyle" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::TextStyle"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextStyle" docId="vl::presentation::elements::IGuiGraphicsParagraph::TextStyle" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::TextStyle"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

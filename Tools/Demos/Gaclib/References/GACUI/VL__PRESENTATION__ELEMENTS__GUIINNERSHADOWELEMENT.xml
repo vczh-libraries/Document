@@ -2,4 +2,4 @@
  Defines a gradient border for shadow.
  </summary><signature><![CDATA[class GuiInnerShadowElement
     : GuiElementBase<GuiInnerShadowElement>;
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiInnerShadowElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiInnerShadowElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiInnerShadowElement" docId="vl::presentation::elements::GuiInnerShadowElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiInnerShadowElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

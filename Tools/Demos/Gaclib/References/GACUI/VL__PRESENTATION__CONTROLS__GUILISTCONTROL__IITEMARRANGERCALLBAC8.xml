@@ -2,4 +2,4 @@
     compositions::GuiBoundsComposition * style,
     Margin margin
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/><symbol docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Margin" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></seealsos></Document>

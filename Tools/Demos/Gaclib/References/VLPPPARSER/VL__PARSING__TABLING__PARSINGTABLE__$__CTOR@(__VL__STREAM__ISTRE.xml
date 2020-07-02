@@ -1,4 +1,4 @@
-<Document symbolId="vl::parsing::tabling::ParsingTable::$__ctor@(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Deserialize the parsing table from a stream. <symbol docId="vl::parsing::tabling::ParsingTable::Initialize@void()" declFile="ParsingTable.h" declId="FB$vl::parsing::tabling::ParsingTable::Initialize@void()[decl0]"/> should be before using this table.</summary><param name="input">The stream.</param><signature><![CDATA[ ParsingTable(
+<Document symbolId="vl::parsing::tabling::ParsingTable::$__ctor@(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="$__ctor"><summary>Deserialize the parsing table from a stream. <symbol name="Initialize" docId="vl::parsing::tabling::ParsingTable::Initialize@void()" declFile="ParsingTable.h" declId="FB$vl::parsing::tabling::ParsingTable::Initialize@void()[decl0]"/> should be before using this table.</summary><param name="input">The stream.</param><signature><![CDATA[ ParsingTable(
     stream::IStream & input
 );
-]]></signature><seealsos><symbol docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>

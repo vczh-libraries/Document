@@ -2,4 +2,4 @@
  Get the background color.
  </summary><returns>The background color.</returns><signature><![CDATA[Color GetBackgroundColor(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::SetMinSizeLimitation@void(::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation)" accessor="public" category="Function" name="SetMinSizeLimitation"><summary>Set the minimum size limitation of the composition.</summary><param name="value">The minimum size limitation of the composition.</param><signature><![CDATA[void SetMinSizeLimitation(
     MinSizeLimitation value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation"/></seealsos></Document>
+]]></signature><seealsos><symbol name="MinSizeLimitation" docId="vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation"/></seealsos></Document>

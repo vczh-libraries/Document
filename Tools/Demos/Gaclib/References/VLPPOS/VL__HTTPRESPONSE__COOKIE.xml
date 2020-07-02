@@ -1,2 +1,2 @@
 <Document symbolId="vl::HttpResponse::cookie" accessor="public" category="Variable" name="cookie"><summary>Returned cookie from the server.</summary><signature><![CDATA[WString cookie;
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

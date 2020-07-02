@@ -3,4 +3,4 @@
  </summary><signature><![CDATA[class GuiImageData
     : Object
     , Description<GuiImageData>;
-]]></signature><seealsos><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiImageData" docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

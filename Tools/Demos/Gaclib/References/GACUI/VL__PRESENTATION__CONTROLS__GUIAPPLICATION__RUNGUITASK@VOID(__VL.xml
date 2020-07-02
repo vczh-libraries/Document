@@ -3,4 +3,4 @@
     Func<void(
 )> const & proc
 );
-]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NI$vl::Func"/><symbol name="GuiControlHost" docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/></seealsos></Document>

@@ -3,4 +3,4 @@
     vint length,
     Color value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

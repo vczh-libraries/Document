@@ -1,3 +1,3 @@
 <Document symbolId="vl::Mutex" accessor="" category="Class" name="Mutex"><summary>Mutex.</summary><signature><![CDATA[class Mutex
     : WaitableObject;
-]]></signature><basetypes><symbol docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/></basetypes></Document>
+]]></signature><basetypes><symbol name="WaitableObject" docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/></basetypes></Document>

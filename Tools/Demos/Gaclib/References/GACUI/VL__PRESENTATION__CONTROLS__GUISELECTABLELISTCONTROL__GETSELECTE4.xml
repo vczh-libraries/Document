@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiSelectableListControl::GetSelectedItems@::vl::collections::SortedList&lt;::vl::vint&gt; const &amp;()" accessor="public" category="Function" name="GetSelectedItems"><summary>Get indices of all selected items.</summary><returns>Indices of all selected items.</returns><signature><![CDATA[collections::SortedList<vint> const & GetSelectedItems(
 );
-]]></signature><seealsos><symbol docId="vl::collections::SortedList" declFile="List.h" declId="NI$vl::collections::SortedList"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="SortedList" docId="vl::collections::SortedList" declFile="List.h" declId="NI$vl::collections::SortedList"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

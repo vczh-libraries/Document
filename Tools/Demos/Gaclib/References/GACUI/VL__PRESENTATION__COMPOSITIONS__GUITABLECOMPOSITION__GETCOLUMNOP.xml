@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::compositions::GuiTableComposition::GetColumnOption@::vl::presentation::compositions::GuiCellOption(::vl::vint)" accessor="public" category="Function" name="GetColumnOption"><summary>Get the sizing option of the specified column.</summary><returns>The sizing option of the specified column.</returns><param name="_column">The specified column number.</param><signature><![CDATA[GuiCellOption GetColumnOption(
     vint _column
 );
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiCellOption" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiCellOption" docId="vl::presentation::compositions::GuiCellOption" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentParagraphRun::alignment" accessor="public" category="Variable" name="alignment"><summary>Paragraph alignment.</summary><signature><![CDATA[Nullable<Alignment> alignment;
-]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="Alignment" docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/></seealsos></Document>

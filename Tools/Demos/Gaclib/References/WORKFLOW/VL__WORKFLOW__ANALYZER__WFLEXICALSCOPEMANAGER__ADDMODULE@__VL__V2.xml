@@ -1,4 +1,4 @@
 <Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager::AddModule@::vl::vint(::vl::Ptr&lt;::vl::workflow::WfModule&gt;)" accessor="public" category="Function" name="AddModule"><summary>Add a Workflow module.</summary><param name="module">The syntax tree of a workflow module.</param><returns>Returns the code index, which is a number representing a module in data structured used in Workflow compiler, runtime and debugger.</returns><signature><![CDATA[vint AddModule(
     Ptr<WfModule> module
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfModule"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol name="WfModule" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfModule"/></seealsos></Document>

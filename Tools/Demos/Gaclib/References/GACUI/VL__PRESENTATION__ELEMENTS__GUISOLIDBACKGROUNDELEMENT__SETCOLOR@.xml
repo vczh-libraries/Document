@@ -3,4 +3,4 @@
  </summary><param name="value">The new border color.</param><signature><![CDATA[void SetColor(
     Color value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

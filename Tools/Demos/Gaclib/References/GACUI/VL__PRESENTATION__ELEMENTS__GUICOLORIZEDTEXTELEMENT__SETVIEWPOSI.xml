@@ -3,4 +3,4 @@
  </summary><param name="value">The left-top position of the visible bounds of characters.</param><signature><![CDATA[void SetViewPosition(
     Point value
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>

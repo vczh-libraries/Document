@@ -2,4 +2,4 @@
  Get the global native system service controller.
  </summary><returns>The global native system service controller.</returns><signature><![CDATA[INativeController * GetCurrentController(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeController" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeController"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeController" docId="vl::presentation::INativeController" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeController"/></seealsos></Document>

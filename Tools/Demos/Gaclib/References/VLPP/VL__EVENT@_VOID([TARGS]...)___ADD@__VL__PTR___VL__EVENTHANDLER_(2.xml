@@ -2,4 +2,4 @@
     void( * function)(
 TArgs...)
 );
-]]></signature><seealsos><symbol declFile="Event.h" declId="NI$vl::EventHandler"/><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>
+]]></signature><seealsos><symbol name="EventHandler" declFile="Event.h" declId="NI$vl::EventHandler"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

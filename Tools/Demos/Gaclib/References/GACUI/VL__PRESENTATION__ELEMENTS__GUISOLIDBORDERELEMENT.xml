@@ -2,4 +2,4 @@
  Defines a border element with a thickness of one pixel.
  </summary><signature><![CDATA[class GuiSolidBorderElement
     : GuiElementBase<GuiSolidBorderElement>;
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiSolidBorderElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiSolidBorderElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiSolidBorderElement" docId="vl::presentation::elements::GuiSolidBorderElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiSolidBorderElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

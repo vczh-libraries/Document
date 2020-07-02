@@ -2,4 +2,4 @@
  Get the name of the screen.
  </summary><returns>The name of the screen.</returns><signature><![CDATA[WString GetName(
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

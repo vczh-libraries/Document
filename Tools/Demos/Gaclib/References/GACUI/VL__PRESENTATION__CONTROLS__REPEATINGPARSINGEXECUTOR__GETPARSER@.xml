@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::RepeatingParsingExecutor::GetParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;()" accessor="public" category="Function" name="GetParser"><summary>Get the internal parser that parse the text.</summary><returns>The internal parser.</returns><signature><![CDATA[Ptr<parsing::tabling::ParsingGeneralParser> GetParser(
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::parsing::tabling::ParsingGeneralParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingGeneralParser"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="ParsingGeneralParser" docId="vl::parsing::tabling::ParsingGeneralParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingGeneralParser"/></seealsos></Document>

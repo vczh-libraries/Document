@@ -2,4 +2,4 @@
  Get the left-top position of the visible bounds of characters.
  </summary><returns>The left-top position of the visible bounds of characters.</returns><signature><![CDATA[Point GetViewPosition(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>

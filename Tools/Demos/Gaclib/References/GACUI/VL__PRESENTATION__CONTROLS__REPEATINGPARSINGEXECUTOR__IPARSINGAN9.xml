@@ -2,4 +2,4 @@
     parsing::ParsingTreeNode * node,
     RepeatingPartialParsingOutput const * output
 );
-]]></signature><seealsos><symbol docId="vl::parsing::ParsingTreeNode" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeNode"/><symbol docId="vl::presentation::controls::RepeatingPartialParsingOutput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingPartialParsingOutput"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ParsingTreeNode" docId="vl::parsing::ParsingTreeNode" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeNode"/><symbol name="RepeatingPartialParsingOutput" docId="vl::presentation::controls::RepeatingPartialParsingOutput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingPartialParsingOutput"/></seealsos></Document>

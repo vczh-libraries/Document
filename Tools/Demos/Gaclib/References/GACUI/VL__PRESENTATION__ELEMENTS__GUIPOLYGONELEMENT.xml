@@ -2,4 +2,4 @@
  Defines a polygon element with a thickness of one pixel.
  </summary><signature><![CDATA[class GuiPolygonElement
     : GuiElementBase<GuiPolygonElement>;
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiPolygonElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiPolygonElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiPolygonElement" docId="vl::presentation::elements::GuiPolygonElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiPolygonElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

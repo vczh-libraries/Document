@@ -1,3 +1,3 @@
-<Document symbolId="vl::ThreadLocalStorage::ClearStorages@void()" accessor="public" category="Function" name="ClearStorages"><summary>Clear all storages for the current thread. For threads that are created using <symbol docId="vl::Thread" declFile="Threading.h" declId="NI$vl::Thread"/>, this function will be automatically called when before the thread exit.</summary><signature><![CDATA[static void ClearStorages(
+<Document symbolId="vl::ThreadLocalStorage::ClearStorages@void()" accessor="public" category="Function" name="ClearStorages"><summary>Clear all storages for the current thread. For threads that are created using <symbol name="Thread" docId="vl::Thread" declFile="Threading.h" declId="NI$vl::Thread"/>, this function will be automatically called when before the thread exit.</summary><signature><![CDATA[static void ClearStorages(
 );
 ]]></signature></Document>

@@ -5,4 +5,4 @@ Func<Func<function_binding::Binding<T>::CurriedType>(
 function_binding::Binding<T>::FirstParameterType)> Curry(
     Func<T> const & function
 );
-]]></signature><seealsos><symbol declFile="Function.h" declId="NI$vl::Func"/><symbol declFile="Function.h" declId="NI$vl::function_binding::Binding@&lt;[R]([T0], [TArgs]...)&gt;::CurriedType"/><symbol declFile="Function.h" declId="NI$vl::function_binding::Binding@&lt;[R]([T0], [TArgs]...)&gt;::FirstParameterType"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NI$vl::Func"/><symbol name="CurriedType" declFile="Function.h" declId="NI$vl::function_binding::Binding@&lt;[R]([T0], [TArgs]...)&gt;::CurriedType"/><symbol name="FirstParameterType" declFile="Function.h" declId="NI$vl::function_binding::Binding@&lt;[R]([T0], [TArgs]...)&gt;::FirstParameterType"/></seealsos></Document>

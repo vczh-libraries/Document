@@ -2,4 +2,4 @@
  Get the size of this frame.
  </summary><returns>The size of this frame.</returns><signature><![CDATA[Size GetSize(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

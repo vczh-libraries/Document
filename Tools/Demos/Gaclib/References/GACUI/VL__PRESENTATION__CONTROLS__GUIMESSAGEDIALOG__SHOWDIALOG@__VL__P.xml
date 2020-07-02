@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiMessageDialog::ShowDialog@::vl::presentation::INativeDialogService::MessageBoxButtonsOutput()" accessor="public" category="Function" name="ShowDialog"><summary>Show the dialog.</summary><returns>Returns the clicked button.</returns><signature><![CDATA[INativeDialogService::MessageBoxButtonsOutput ShowDialog(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeDialogService::MessageBoxButtonsOutput" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::MessageBoxButtonsOutput"/></seealsos></Document>
+]]></signature><seealsos><symbol name="MessageBoxButtonsOutput" docId="vl::presentation::INativeDialogService::MessageBoxButtonsOutput" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::MessageBoxButtonsOutput"/></seealsos></Document>

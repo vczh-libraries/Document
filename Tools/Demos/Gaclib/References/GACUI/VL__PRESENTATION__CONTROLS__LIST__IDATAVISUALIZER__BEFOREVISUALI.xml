@@ -3,4 +3,4 @@
     vint row,
     vint column
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

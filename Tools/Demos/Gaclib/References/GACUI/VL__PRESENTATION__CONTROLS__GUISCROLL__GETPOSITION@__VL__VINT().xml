@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiScroll::GetPosition@::vl::vint()" accessor="public" category="Function" name="GetPosition"><summary>Get the position.</summary><returns>The position.</returns><signature><![CDATA[vint GetPosition(
 );
-]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

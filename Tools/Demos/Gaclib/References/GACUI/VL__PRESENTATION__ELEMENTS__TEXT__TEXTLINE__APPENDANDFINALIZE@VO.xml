@@ -3,4 +3,4 @@
  </summary><param name="line">The text line that contains all characters and color indices to append and be finalized.</param><signature><![CDATA[void AppendAndFinalize(
     TextLine & line
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::text::TextLine" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextLine" docId="vl::presentation::elements::text::TextLine" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine"/></seealsos></Document>

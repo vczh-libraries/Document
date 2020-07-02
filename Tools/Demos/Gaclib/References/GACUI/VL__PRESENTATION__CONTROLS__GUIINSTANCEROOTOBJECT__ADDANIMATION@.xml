@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiInstanceRootObject::AddAnimation@bool(::vl::Ptr&lt;::vl::presentation::controls::IGuiAnimation&gt;)" accessor="public" category="Function" name="AddAnimation"><summary>Add an animation. The animation will be paused if the root object is removed from a window.</summary><returns>Returns true if this operation succeeded.</returns><param name="animation">The animation.</param><signature><![CDATA[bool AddAnimation(
     Ptr<IGuiAnimation> animation
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::controls::IGuiAnimation" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IGuiAnimation"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IGuiAnimation"/></seealsos></Document>

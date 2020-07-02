@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::GetItemTemplate@::vl::presentation::controls::GuiListControl::ItemStyleProperty()" accessor="public" category="Function" name="GetItemTemplate"><summary>Get the item style provider.</summary><returns>The item style provider.</returns><signature><![CDATA[ItemStyleProperty GetItemTemplate(
 );
-]]></signature><seealsos><symbol declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ItemStyleProperty"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ItemStyleProperty" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ItemStyleProperty"/></seealsos></Document>

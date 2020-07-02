@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::IListViewItemView::GetDataColumn@::vl::vint(::vl::vint)" accessor="public" category="Function" name="GetDataColumn"><summary>Get the column index of the index-th data column.</summary><returns>The column index.</returns><param name="index">The order of the data column.</param><signature><![CDATA[vint GetDataColumn(
     vint index
 );
-]]></signature><seealsos><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

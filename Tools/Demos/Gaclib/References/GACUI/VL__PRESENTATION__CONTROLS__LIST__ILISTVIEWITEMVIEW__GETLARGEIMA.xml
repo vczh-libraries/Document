@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::IListViewItemView::GetLargeImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;(::vl::vint)" accessor="public" category="Function" name="GetLargeImage"><summary>Get the large image of an item.</summary><returns>The large image.</returns><param name="itemIndex">The index of the item.</param><signature><![CDATA[Ptr<GuiImageData> GetLargeImage(
     vint itemIndex
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="GuiImageData" docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::DocumentStyleProperties::strikeline" accessor="public" category="Variable" name="strikeline"><summary>Strikeline.</summary><signature><![CDATA[Nullable<bool> strikeline;
-]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

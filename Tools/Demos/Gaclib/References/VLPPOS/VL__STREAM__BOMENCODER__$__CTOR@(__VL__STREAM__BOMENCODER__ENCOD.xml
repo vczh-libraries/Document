@@ -1,4 +1,4 @@
 <Document symbolId="vl::stream::BomEncoder::$__ctor@(::vl::stream::BomEncoder::Encoding)" accessor="public" category="Function" name="$__ctor"><summary>Create an encoder.</summary><param name="_encoding">Specified encoding.</param><signature><![CDATA[ BomEncoder(
     Encoding _encoding
 );
-]]></signature><seealsos><symbol docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Encoding" docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/></seealsos></Document>

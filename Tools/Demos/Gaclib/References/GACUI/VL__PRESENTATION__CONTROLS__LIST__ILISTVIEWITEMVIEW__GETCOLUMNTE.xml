@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::list::IListViewItemView::GetColumnText@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetColumnText"><summary>Get the text of the column.</summary><returns>The text of the column.</returns><param name="index">The index of the column.</param><signature><![CDATA[WString GetColumnText(
     vint index
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

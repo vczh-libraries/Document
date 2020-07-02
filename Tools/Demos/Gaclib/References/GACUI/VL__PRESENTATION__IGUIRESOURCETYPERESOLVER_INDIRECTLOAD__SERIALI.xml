@@ -2,4 +2,4 @@
     Ptr<GuiResourceItem> resource,
     Ptr<DescriptableObject> content
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/><symbol docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="GuiResourceItem" docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></seealsos></Document>

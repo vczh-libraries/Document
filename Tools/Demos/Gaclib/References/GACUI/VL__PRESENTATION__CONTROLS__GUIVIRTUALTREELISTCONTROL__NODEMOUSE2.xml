@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiVirtualTreeListControl::NodeMouseLeave" accessor="public" category="Variable" name="NodeMouseLeave"><summary>Node mouse leave event.</summary><signature><![CDATA[compositions::GuiNodeNotifyEvent NodeMouseLeave;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNodeNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNodeNotifyEvent"/></seealsos></Document>

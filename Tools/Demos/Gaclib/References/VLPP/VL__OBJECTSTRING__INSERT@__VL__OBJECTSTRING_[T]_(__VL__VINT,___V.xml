@@ -2,4 +2,4 @@
     vint index,
     ObjectString<T> const & string
 ) const;
-]]></signature><seealsos><symbol docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

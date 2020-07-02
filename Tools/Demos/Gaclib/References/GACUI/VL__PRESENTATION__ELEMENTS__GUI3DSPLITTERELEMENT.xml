@@ -2,4 +2,4 @@
  Defines a 3D-like splitter element with a thickness of two pixels.
  </summary><signature><![CDATA[class Gui3DSplitterElement
     : GuiElementBase<Gui3DSplitterElement>;
-]]></signature><seealsos><symbol docId="vl::presentation::elements::Gui3DSplitterElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DSplitterElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="Gui3DSplitterElement" docId="vl::presentation::elements::Gui3DSplitterElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DSplitterElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

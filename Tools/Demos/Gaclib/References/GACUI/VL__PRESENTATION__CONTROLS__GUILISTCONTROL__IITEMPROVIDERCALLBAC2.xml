@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiListControl::IItemProviderCallback::OnAttached@void(::vl::presentation::controls::GuiListControl::IItemProvider *)" accessor="public" category="Function" name="OnAttached"><summary>Called when an item provider callback object is attached to an item provider.</summary><param name="provider">The item provider.</param><signature><![CDATA[void OnAttached(
     IItemProvider * provider
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/></seealsos></Document>

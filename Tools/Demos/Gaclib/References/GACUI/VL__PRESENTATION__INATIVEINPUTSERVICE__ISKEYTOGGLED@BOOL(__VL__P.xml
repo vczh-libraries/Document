@@ -3,4 +3,4 @@
  </summary><returns>Returns true if the specified key is toggled.</returns><param name="code">The key code to test.</param><signature><![CDATA[bool IsKeyToggled(
     VKEY code
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>
+]]></signature><seealsos><symbol name="VKEY" declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>

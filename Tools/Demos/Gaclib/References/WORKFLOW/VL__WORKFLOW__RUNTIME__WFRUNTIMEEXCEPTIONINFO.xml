@@ -1,4 +1,4 @@
 <Document symbolId="vl::workflow::runtime::WfRuntimeExceptionInfo" accessor="" category="Class" name="WfRuntimeExceptionInfo"><summary>Representing an raised exception.</summary><signature><![CDATA[class WfRuntimeExceptionInfo
     : Object
     , reflection::description::IValueException;
-]]></signature><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueException"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IValueException" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueException"/></basetypes></Document>

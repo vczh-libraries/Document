@@ -3,4 +3,4 @@
     WString const & indent,
     stream::TextWriter & writer
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol docId="vl::stream::TextWriter" declFile="Accessor.h" declId="NI$vl::stream::TextWriter"/><symbol declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfType"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="TextWriter" docId="vl::stream::TextWriter" declFile="Accessor.h" declId="NI$vl::stream::TextWriter"/><symbol name="WfType" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfType"/></seealsos></Document>

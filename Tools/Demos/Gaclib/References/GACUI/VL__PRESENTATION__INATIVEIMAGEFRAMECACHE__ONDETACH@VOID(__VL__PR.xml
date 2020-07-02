@@ -3,4 +3,4 @@
  </summary><param name="frame">The image frame that detached from.</param><signature><![CDATA[void OnDetach(
     INativeImageFrame * frame
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeImageFrame" docId="vl::presentation::INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"/></seealsos></Document>

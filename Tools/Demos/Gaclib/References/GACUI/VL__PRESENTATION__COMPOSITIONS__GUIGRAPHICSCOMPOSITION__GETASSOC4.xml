@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetAssociatedHost@::vl::presentation::compositions::GuiGraphicsHost *()" accessor="public" category="Function" name="GetAssociatedHost"><summary>Get the associated graphics host. A graphics host is associated to a composition only when the composition becomes the bounds of the graphics host.</summary><returns>The associated graphics host.</returns><signature><![CDATA[GuiGraphicsHost * GetAssociatedHost(
 );
-]]></signature><seealsos><symbol docId="vl::presentation::compositions::GuiGraphicsHost" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsHost"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiGraphicsHost" docId="vl::presentation::compositions::GuiGraphicsHost" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsHost"/></seealsos></Document>

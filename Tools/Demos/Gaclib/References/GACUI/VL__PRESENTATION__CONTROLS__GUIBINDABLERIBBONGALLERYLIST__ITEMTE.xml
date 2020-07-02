@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList::ItemTemplateChanged" accessor="public" category="Variable" name="ItemTemplateChanged"><summary>Item template changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ItemTemplateChanged;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

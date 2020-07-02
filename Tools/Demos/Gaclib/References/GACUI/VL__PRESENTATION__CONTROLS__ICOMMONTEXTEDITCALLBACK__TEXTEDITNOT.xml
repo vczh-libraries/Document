@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotify@void(::vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct const &amp;)" accessor="public" category="Function" name="TextEditNotify"><summary>Called after the text is edited and before the caret is changed.</summary><param name="arguments">The data for this callback.</param><signature><![CDATA[void TextEditNotify(
     TextEditNotifyStruct const & arguments
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextEditNotifyStruct" docId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct"/></seealsos></Document>

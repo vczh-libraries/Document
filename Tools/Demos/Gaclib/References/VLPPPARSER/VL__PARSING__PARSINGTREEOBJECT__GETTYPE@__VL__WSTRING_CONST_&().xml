@@ -1,3 +1,3 @@
 <Document symbolId="vl::parsing::ParsingTreeObject::GetType@::vl::WString const &amp;()" accessor="public" category="Function" name="GetType"><summary>Get the type name of the object.</summary><returns>The type name of the object.</returns><signature><![CDATA[WString const & GetType(
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

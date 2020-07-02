@@ -2,4 +2,4 @@
     vint row,
     vint column
 );
-]]></signature><seealsos><symbol docId="vl::presentation::controls::list::IDataVisualizerFactory" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataVisualizerFactory"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IDataVisualizerFactory" docId="vl::presentation::controls::list::IDataVisualizerFactory" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataVisualizerFactory"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

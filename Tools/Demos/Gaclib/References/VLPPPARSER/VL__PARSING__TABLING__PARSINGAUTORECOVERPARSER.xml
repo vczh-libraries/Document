@@ -1,3 +1,3 @@
 <Document symbolId="vl::parsing::tabling::ParsingAutoRecoverParser" accessor="" category="Class" name="ParsingAutoRecoverParser"><summary>A strict parse. It doesn&apos;t allow ambiguity but allows error recovery.</summary><signature><![CDATA[class ParsingAutoRecoverParser
     : ParsingStrictParser;
-]]></signature><basetypes><symbol docId="vl::parsing::tabling::ParsingStrictParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingStrictParser"/></basetypes></Document>
+]]></signature><basetypes><symbol name="ParsingStrictParser" docId="vl::parsing::tabling::ParsingStrictParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingStrictParser"/></basetypes></Document>

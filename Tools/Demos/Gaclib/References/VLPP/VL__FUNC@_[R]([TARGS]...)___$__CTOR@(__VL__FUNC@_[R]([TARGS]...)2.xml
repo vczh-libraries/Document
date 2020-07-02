@@ -2,4 +2,5 @@
     Func<R(
 TArgs...)> && function
 );
-]]></signature><seealsos><symbol docId="vl::Func@&lt;[R]([TArgs]...)&gt;" declFile="Function.h" declId="NI$vl::Func@&lt;[R]([TArgs]...)&gt;"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func&lt;R(
+TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" declFile="Function.h" declId="NI$vl::Func@&lt;[R]([TArgs]...)&gt;"/></seealsos></Document>

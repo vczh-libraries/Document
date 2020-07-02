@@ -1,4 +1,4 @@
 <Document symbolId="vl::presentation::controls::GuiControl::SetFont@void(::vl::Nullable&lt;::vl::presentation::FontProperties&gt; const &amp;)" accessor="public" category="Function" name="SetFont"><summary>Set the font of this control.</summary><param name="value">The font of this control.</param><signature><![CDATA[void SetFont(
     Nullable<FontProperties> const & value
 );
-]]></signature><seealsos><symbol docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="FontProperties" docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>

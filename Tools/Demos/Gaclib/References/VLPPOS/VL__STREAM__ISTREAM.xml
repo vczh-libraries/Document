@@ -1,11 +1,11 @@
 <Document symbolId="vl::stream::IStream" accessor="" category="Class" name="IStream"><summary>
  Interface for streams. Stream functions are grouped into 5 categories:
  1) Feature testing functions.
- 2) Read functions, available only if <symbol docId="vl::stream::IStream::CanRead@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanRead@bool()[decl0]"/> returns true.
- 3) Peek functions, available only if <symbol docId="vl::stream::IStream::CanPeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanPeek@bool()[decl0]"/> returns true.
- 4) Write functions, available only if <symbol docId="vl::stream::IStream::CanWrite@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanWrite@bool()[decl0]"/> returns true.
- 5) Seek functions, available only if <symbol docId="vl::stream::IStream::CanSeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanSeek@bool()[decl0]"/> returns true.
- 6) Size functions, available only if <symbol docId="vl::stream::IStream::IsLimited@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::IsLimited@bool()[decl0]"/> returns true. But there are still some streams knows that the content is limited, but the size is unknown. In this case, <symbol docId="vl::stream::IStream::Size@::vl::pos_t()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]"/> will return -1.
+ 2) Read functions, available only if <symbol name="CanRead" docId="vl::stream::IStream::CanRead@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanRead@bool()[decl0]"/> returns true.
+ 3) Peek functions, available only if <symbol name="CanPeek" docId="vl::stream::IStream::CanPeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanPeek@bool()[decl0]"/> returns true.
+ 4) Write functions, available only if <symbol name="CanWrite" docId="vl::stream::IStream::CanWrite@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanWrite@bool()[decl0]"/> returns true.
+ 5) Seek functions, available only if <symbol name="CanSeek" docId="vl::stream::IStream::CanSeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanSeek@bool()[decl0]"/> returns true.
+ 6) Size functions, available only if <symbol name="IsLimited" docId="vl::stream::IStream::IsLimited@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::IsLimited@bool()[decl0]"/> returns true. But there are still some streams knows that the content is limited, but the size is unknown. In this case, <symbol name="Size" docId="vl::stream::IStream::Size@::vl::pos_t()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]"/> will return -1.
  </summary><signature><![CDATA[class IStream
     : Interface;
-]]></signature><basetypes><symbol docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

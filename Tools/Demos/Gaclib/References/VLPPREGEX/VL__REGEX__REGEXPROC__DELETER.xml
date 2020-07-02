@@ -1,4 +1,4 @@
 <Document symbolId="vl::regex::RegexProc::deleter" accessor="public" category="Variable" name="deleter"><summary>
- The deleter which deletes inter token state objects created by <symbol docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/>. This callback is not called automatically.
+ The deleter which deletes inter token state objects created by <symbol name="extendProc" docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/>. This callback is not called automatically.
  </summary><signature><![CDATA[RegexInterTokenStateDeleter deleter;
-]]></signature><seealsos><symbol declFile="Regex.h" declId="NI$vl::regex::RegexInterTokenStateDeleter"/></seealsos></Document>
+]]></signature><seealsos><symbol name="RegexInterTokenStateDeleter" declFile="Regex.h" declId="NI$vl::regex::RegexInterTokenStateDeleter"/></seealsos></Document>

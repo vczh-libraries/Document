@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiGrammarColorizer::SemanticColorizeContext" accessor="public" category="Struct" name="SemanticColorizeContext"><summary>Context for doing semantic colorizing.</summary><signature><![CDATA[struct SemanticColorizeContext
     : ParsingTokenContext;
-]]></signature><basetypes><symbol docId="vl::presentation::controls::ParsingTokenContext" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingTokenContext"/></basetypes></Document>
+]]></signature><basetypes><symbol name="ParsingTokenContext" docId="vl::presentation::controls::ParsingTokenContext" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingTokenContext"/></basetypes></Document>

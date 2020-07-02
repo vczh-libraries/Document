@@ -1,3 +1,3 @@
 <Document symbolId="vl::DateTime::ToUtcTime@::vl::DateTime()" accessor="public" category="Function" name="ToUtcTime"><summary>Convert the local time to the UTC time.</summary><returns>The local time.</returns><signature><![CDATA[DateTime ToUtcTime(
 );
-]]></signature><seealsos><symbol docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/></seealsos></Document>
+]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/></seealsos></Document>

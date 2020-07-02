@@ -4,4 +4,4 @@
     Ptr<DocumentModel> model,
     bool copy
 );
-]]></signature><seealsos><symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

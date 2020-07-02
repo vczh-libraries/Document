@@ -2,4 +2,4 @@
  Get the client bounds in screen space.
  </summary><returns>The client bounds in screen space.</returns><signature><![CDATA[NativeRect GetClientBoundsInScreen(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeRect" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>

@@ -7,4 +7,4 @@
 class Group
     : Object
     , IEnumerable<Pair<KT, VT>>;
-]]></signature><seealsos><symbol docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/></seealsos><basetypes><symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="Pair" docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/></basetypes></Document>

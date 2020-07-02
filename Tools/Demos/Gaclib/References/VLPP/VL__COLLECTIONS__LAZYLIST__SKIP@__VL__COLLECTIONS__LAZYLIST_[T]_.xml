@@ -1,4 +1,4 @@
 <Document symbolId="vl::collections::LazyList::Skip@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Skip"><summary>Create a new lazy list without some prefix elements.</summary><returns>The created lazy list.</returns><param name="count">The size of the prefix.</param><signature><![CDATA[LazyList<T> Skip(
     vint count
 ) const;
-]]></signature><seealsos><symbol docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

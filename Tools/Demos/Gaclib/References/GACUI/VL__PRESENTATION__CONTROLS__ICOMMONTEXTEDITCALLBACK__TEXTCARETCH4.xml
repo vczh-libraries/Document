@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct::newBegin" accessor="public" category="Variable" name="newBegin"><summary>The start position of the selection after caret changing.</summary><signature><![CDATA[TextPos newBegin;
-]]></signature><seealsos><symbol docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>

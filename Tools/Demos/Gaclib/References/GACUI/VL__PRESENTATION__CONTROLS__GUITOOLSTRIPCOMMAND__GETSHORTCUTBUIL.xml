@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::controls::GuiToolstripCommand::GetShortcutBuilder@::vl::WString()" accessor="public" category="Function" name="GetShortcutBuilder"><summary>Get the shortcut builder for this command.</summary><returns>The shortcut builder for this command.</returns><signature><![CDATA[WString GetShortcutBuilder(
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

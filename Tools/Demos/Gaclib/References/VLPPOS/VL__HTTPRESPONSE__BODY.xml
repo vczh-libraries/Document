@@ -1,2 +1,2 @@
 <Document symbolId="vl::HttpResponse::body" accessor="public" category="Variable" name="body"><summary>Response body. This is a binary array using an array container to char.</summary><signature><![CDATA[BodyBuffer body;
-]]></signature><seealsos><symbol declFile="HttpUtility.h" declId="NI$vl::HttpResponse::BodyBuffer"/></seealsos></Document>
+]]></signature><seealsos><symbol name="BodyBuffer" declFile="HttpUtility.h" declId="NI$vl::HttpResponse::BodyBuffer"/></seealsos></Document>

@@ -1,4 +1,4 @@
 <Document symbolId="vl::UrlEncodeQuery@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="UrlEncodeQuery"><summary>Encode a text as part of the url. This function can be used to create arguments in an URL.</summary><returns>The encoded text.</returns><param name="query">The text to encode.</param><signature><![CDATA[WString UrlEncodeQuery(
     WString const & query
 );
-]]></signature><seealsos><symbol docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

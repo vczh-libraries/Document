@@ -177,6 +177,82 @@ void CheckDocumentRecordSubItem(
 ProcessDocumentRecordHyperLinks
 ***********************************************************************/
 
+WString BuildHyperlinkName(Symbol* symbol, bool needKeyword)
+{
+	const wchar_t* keyword = nullptr;
+	if (needKeyword)
+	{
+		switch (symbol->kind)
+		{
+		case symbol_component::SymbolKind::Enum:
+			{
+				auto decl = symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
+				if (decl->enumClass)
+				{
+					keyword = L"enum class ";
+				}
+				else
+				{
+					keyword = L"enum ";
+				}
+			}
+			break;
+		case symbol_component::SymbolKind::Class:
+			keyword = L"class ";
+			break;
+		case symbol_component::SymbolKind::Struct:
+			keyword = L"struct ";
+			break;
+		case symbol_component::SymbolKind::Union:
+			keyword = L"union ";
+			break;
+		case symbol_component::SymbolKind::TypeAlias:
+			keyword = L"typedef ";
+			break;
+		case symbol_component::SymbolKind::FunctionSymbol:
+			keyword = L"function ";
+			break;
+		case symbol_component::SymbolKind::Variable:
+			keyword = L"variable ";
+			break;
+		case symbol_component::SymbolKind::ValueAlias:
+			keyword = L"constexpr ";
+			break;
+		case symbol_component::SymbolKind::Namespace:
+			keyword = L"namespace ";
+			break;
+		default:
+			throw UnexpectedSymbolCategoryException();
+		}
+	}
+
+	auto decl = symbol->GetAnyForwardDecl<Declaration>();
+	Ptr<SpecializationSpec> sspec;
+
+	WString result;
+	if (keyword) result = keyword;
+	result += decl->name.name;
+
+	if (auto classDecl = decl.Cast<ForwardClassDeclaration>())
+	{
+		sspec = classDecl->specializationSpec;
+	}
+	else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
+	{
+		sspec = funcDecl->specializationSpec;
+	}
+	else if (auto valueDecl = decl.Cast<ValueAliasDeclaration>())
+	{
+		sspec = valueDecl->specializationSpec;
+	}
+
+	if (sspec)
+	{
+		result += AppendGenericArgumentsInSignature(sspec->arguments);
+	}
+	return result;
+}
+
 Ptr<XmlElement> BuildHyperlink(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
@@ -185,6 +261,13 @@ Ptr<XmlElement> BuildHyperlink(
 {
 	auto xmlSymbol = MakePtr<XmlElement>();
 	xmlSymbol->name.value = L"symbol";
+
+	{
+		auto attr = MakePtr<XmlAttribute>();
+		attr->name.value = L"name";
+		attr->value.value = BuildHyperlinkName(symbol, false);
+		xmlSymbol->attributes.Add(attr);
+	}
 	
 	Ptr<Declaration> decl;
 	vint index = global->declComments.Keys().IndexOf(symbol);
@@ -911,78 +994,19 @@ void WriteSymbolGroupInReferenceIndex(
 				attr->value.value = group->name;
 				break;
 			case SymbolGroupKind::Symbol:
+				attr->value.value = BuildHyperlinkName(group->symbol, true);
+				break;
 			case SymbolGroupKind::SymbolAndText:
-				{
-					const wchar_t* keyword = nullptr;
-					switch (group->symbol->kind)
-					{
-					case symbol_component::SymbolKind::Enum:
-						{
-							auto decl = group->symbol->GetAnyForwardDecl<ForwardEnumDeclaration>();
-							if (decl->enumClass)
-							{
-								keyword = L"enum class";
-							}
-							else
-							{
-								keyword = L"enum";
-							}
-						}
-						break;
-					case symbol_component::SymbolKind::Class:
-						keyword = L"class";
-						break;
-					case symbol_component::SymbolKind::Struct:
-						keyword = L"struct";
-						break;
-					case symbol_component::SymbolKind::Union:
-						keyword = L"union";
-						break;
-					case symbol_component::SymbolKind::TypeAlias:
-						keyword = L"typedef";
-						break;
-					case symbol_component::SymbolKind::FunctionSymbol:
-						keyword = L"function";
-						break;
-					case symbol_component::SymbolKind::Variable:
-						keyword = L"variable";
-						break;
-					case symbol_component::SymbolKind::ValueAlias:
-						keyword = L"constexpr";
-						break;
-					default:
-						throw UnexpectedSymbolCategoryException();
-					}
-
-					auto decl = group->symbol->GetAnyForwardDecl<Declaration>();
-					Ptr<SpecializationSpec> sspec;
-
-					attr->value.value = WString(keyword) + L" " + decl->name.name;
-					if (auto classDecl = decl.Cast<ForwardClassDeclaration>())
-					{
-						sspec = classDecl->specializationSpec;
-					}
-					else if (auto funcDecl = decl.Cast<ForwardFunctionDeclaration>())
-					{
-						sspec = funcDecl->specializationSpec;
-					}
-					else if (auto valueDecl = decl.Cast<ValueAliasDeclaration>())
-					{
-						sspec = valueDecl->specializationSpec;
-					}
-
-					if (sspec)
-					{
-						attr->value.value += AppendGenericArgumentsInSignature(sspec->arguments);
-					}
-
-					if (group->kind == SymbolGroupKind::SymbolAndText)
-					{
-						attr->value.value += L" " + group->name;
-					}
-				}
+				attr->value.value = BuildHyperlinkName(group->symbol, true) + L" " + group->name;
 				break;
 			}
+		}
+		if (group->assignedDocument)
+		{
+			auto attr = MakePtr<XmlAttribute>();
+			attr->name.value = L"docId";
+			attr->value.value = group->symbol->uniqueId;
+			xmlElement->attributes.Add(attr);
 		}
 		if (group->assignedDocument)
 		{

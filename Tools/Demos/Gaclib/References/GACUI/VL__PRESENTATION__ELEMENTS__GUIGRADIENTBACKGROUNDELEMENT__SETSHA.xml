@@ -3,4 +3,4 @@
  </summary><param name="value">The new shape.</param><signature><![CDATA[void SetShape(
     ElementShape value
 );
-]]></signature><seealsos><symbol docId="vl::presentation::elements::ElementShape" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::ElementShape"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ElementShape" docId="vl::presentation::elements::ElementShape" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::ElementShape"/></seealsos></Document>

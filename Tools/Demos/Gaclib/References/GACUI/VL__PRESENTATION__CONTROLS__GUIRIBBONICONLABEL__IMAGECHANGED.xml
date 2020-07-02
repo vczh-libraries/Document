@@ -1,2 +1,2 @@
 <Document symbolId="vl::presentation::controls::GuiRibbonIconLabel::ImageChanged" accessor="public" category="Variable" name="ImageChanged"><summary>Image changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ImageChanged;
-]]></signature><seealsos><symbol declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

@@ -2,4 +2,4 @@
  Defines an element containing an image.
  </summary><signature><![CDATA[class GuiImageFrameElement
     : GuiElementBase<GuiImageFrameElement>;
-]]></signature><seealsos><symbol docId="vl::presentation::elements::GuiImageFrameElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiImageFrameElement"/></seealsos><basetypes><symbol declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiImageFrameElement" docId="vl::presentation::elements::GuiImageFrameElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiImageFrameElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>

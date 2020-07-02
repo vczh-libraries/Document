@@ -1,4 +1,4 @@
 <Document symbolId="vl::regex::RegexProc::colorizeProc" accessor="public" category="Variable" name="colorizeProc"><summary>
  The colorizer callback. It is called when a token is recognized.
  </summary><signature><![CDATA[RegexTokenColorizeProc colorizeProc;
-]]></signature><seealsos><symbol declFile="Regex.h" declId="NI$vl::regex::RegexTokenColorizeProc"/></seealsos></Document>
+]]></signature><seealsos><symbol name="RegexTokenColorizeProc" declFile="Regex.h" declId="NI$vl::regex::RegexTokenColorizeProc"/></seealsos></Document>

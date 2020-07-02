@@ -3,4 +3,4 @@
  </summary><returns>Returns true if the current thread is the main thread.</returns><param name="window">A window to access the corressponding main thread.</param><signature><![CDATA[bool IsInMainThread(
     INativeWindow * window
 );
-]]></signature><seealsos><symbol docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>

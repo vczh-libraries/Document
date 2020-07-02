@@ -1,3 +1,3 @@
 <Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::GetInternalMargin@::vl::presentation::Margin()" accessor="public" category="Function" name="GetInternalMargin"><summary>Get the internal margin.</summary><returns>The internal margin.</returns><signature><![CDATA[Margin GetInternalMargin(
 );
-]]></signature><seealsos><symbol declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Margin" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>
