@@ -150,7 +150,7 @@ public:
 		case CppPrimitiveType::___int8:			signature = L"__int8" + signature;		break;
 		case CppPrimitiveType::___int16:		signature = L"__int16" + signature;		break;
 		case CppPrimitiveType::___int32:		signature = L"__int32" + signature;		break;
-		case CppPrimitiveType::___int64:		signature = L"__int64;" + signature;	break;
+		case CppPrimitiveType::___int64:		signature = L"__int64" + signature;	break;
 		case CppPrimitiveType::_long:			signature = L"long" + signature;		break;
 		case CppPrimitiveType::_long_int:		signature = L"long int" + signature;	break;
 		case CppPrimitiveType::_long_long:		signature = L"long long" + signature;	break;
@@ -161,8 +161,8 @@ public:
 
 		switch (self->prefix)
 		{
-		case CppPrimitivePrefix::_signed:		signature = L"signed" + signature;		break;
-		case CppPrimitivePrefix::_unsigned:		signature = L"unsigned" + signature;	break;
+		case CppPrimitivePrefix::_signed:		signature = L"signed " + signature;		break;
+		case CppPrimitivePrefix::_unsigned:		signature = L"unsigned " + signature;	break;
 		}
 	}
 
