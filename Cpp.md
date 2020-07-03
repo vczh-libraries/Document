@@ -26,6 +26,14 @@
 
 ### Document Generation
 
+- [ ] Refine document comment
+  - [ ] Vlpp
+  - [ ] VlppOS
+  - [ ] VlppRegex
+  - [ ] VlppReflection
+  - [ ] VlppParser
+  - [ ] Workflow
+  - [ ] GacUI
 - [ ] Improve `WebsiteSource`
   - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
   - [ ] Convert `<example>` to `<program>`
@@ -43,14 +51,6 @@
   - [ ] Combine source and output and convert `<example>` to `<program>`
   - [ ] Call `WebsiteSource` to generate website
   - [ ] Copy website to `vczh-libraries.github.io`
-- [ ] Refine document comment
-  - [ ] Vlpp
-  - [ ] VlppOS
-  - [ ] VlppRegex
-  - [ ] VlppReflection
-  - [ ] VlppParser
-  - [ ] Workflow
-  - [ ] GacUI
 - [ ] Connect reflection symbols to C++ symbols
 - [ ] Author document (Separate document tree and reference tree)
   - [ ] Vlpp
