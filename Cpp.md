@@ -49,6 +49,7 @@
   - [ ] Assign unique id to `<example>`.
   - [ ] Powershell script to build and execute all `<example>` to get output
   - [ ] Combine source and output and convert `<example>` to `<program>`
+    - [ ] Add necessary `#include` and `using namespace` according to which project the source code belongs to.
   - [ ] Call `WebsiteSource` to generate website
   - [ ] Copy website to `vczh-libraries.github.io`
 - [ ] Connect reflection symbols to C++ symbols
