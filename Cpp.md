@@ -28,12 +28,19 @@
 
 - [ ] Refine document comment
   - [ ] Vlpp
+    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppOS
+    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppRegex
+    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppReflection
+    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppParser
+    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] Workflow
+    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] GacUI
+    - [ ] Mark license on source files, generated files and codegen tools
 - [ ] Improve `WebsiteSource`
   - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
   - [ ] Convert `<example>` to `<program>`
