@@ -1,0 +1,3 @@
+<Document symbolId="vl::collections::IEnumerator::Evaluated@bool()" accessor="public" category="Function" name="Evaluated" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerator::Evaluated@bool()[impl0]"><summary>Test if all values of this enumerator have been evaluated.</summary><returns>Returns true if all values have been evaluated.</returns><remakrs>An evaluated enumerator typically means, there will be no more calculation happens in <symbol name="Next" docId="vl::collections::IEnumerator::Next@bool()" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerator::Next@bool()[decl0]"/> regardless if all values have been read or not.</remakrs><signature><![CDATA[bool Evaluated(
+) const;
+]]></signature></Document>

@@ -1,1 +1,4 @@
-<Document><summary>Move forward.</summary><returns>The moved time.</returns><param name="milliseconds">The delta in milliseconds.</param></Document>
+<Document symbolId="vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)" accessor="public" category="Function" name="Forward" declFile="Basic.h" declId="FB$vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)[decl0]"><summary>Move forward.</summary><returns>The moved time.</returns><param name="milliseconds">The delta in milliseconds.</param><signature><![CDATA[DateTime Forward(
+    vuint64_t milliseconds
+);
+]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>

@@ -12,13 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Data Structure::String
-
-Classes:
-	AString										: Mbcs using the code page of the current locale
-	WString										: UTF-16 (for Windows), or UTF-32 (for Linux and macOS)
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STRING</div>
@@ -29,8 +24,11 @@ Classes:
 
 <div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[4]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
 {
-	<div class="token cpp_comment ">/// &lt;summary&gt;A type representing a string.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of a character.&lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// Immutable string. &lt;see cref=&quot;AString&quot;/&gt; and &lt;see cref=&quot;WString&quot;/&gt; is recommended instead.</div>
+	<div class="token cpp_comment ">/// Locale awared operations are in [T:vl.Locale], typically by using the &quot;INVLOC&quot; macro.</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of code points.&lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::ObjectString::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::ObjectString"><div><div class="token cpp_type">ObjectString</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
 	{
@@ -165,8 +163,8 @@ Classes:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::realLength'], [], [])"><div class="token cpp_field">realLength</div></div>=<div class="token cpp_number ">0</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a string continaing one character.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;_char&quot;&gt;The character.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a string continaing one code point.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;_char&quot;&gt;The code point.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::ObjectString::$__ctor@([T] const &)[impl0]"><div><div class="token cpp_function">ObjectString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::ObjectString::$__ctor@([T] const &)[impl0]::_char"><div><div class="token cpp_argument">_char</div></div></div>)
 		{
 			<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::counter'], [], [])"><div class="token cpp_field">counter</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>(<div class="token cpp_number ">1</div>);
@@ -179,8 +177,8 @@ Classes:
 		}
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a string.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;Memory to copy. It does not have to contain the zero terminator.&lt;/param&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;_length&quot;&gt;Size of the content in characters.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;Memory to copy. It is not required to be zero terminated.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;_length&quot;&gt;Size of the content in code points.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::ObjectString::$__ctor@([T] const *, ::vl::vint)[impl0]"><div><div class="token cpp_function">ObjectString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::ObjectString::$__ctor@([T] const *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::$__ctor@([T] const *, ::vl::vint)[impl0]::_length"><div><div class="token cpp_argument">_length</div></div></div>)
 		{
 			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::$__ctor@([T] const *, ::vl::vint)[impl0]::_length'], [], [])"><div class="token cpp_argument">_length</div></div>&lt;=<div class="token cpp_number ">0</div>)
@@ -204,7 +202,7 @@ Classes:
 		}
 		
 		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a string.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;Memory to copy. It should have to contain the zero terminator.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;Memory to copy. It must be zero terminated.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;copy&quot;&gt;Set to true to copy the memory. Set to false to use the memory directly.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::ObjectString::$__ctor@([T] const *, bool)[impl0]"><div><div class="token cpp_function">ObjectString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::ObjectString::$__ctor@([T] const *, bool)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::ObjectString::$__ctor@([T] const *, bool)[impl0]::copy"><div><div class="token cpp_argument">copy</div></div></div> = <div class="token cpp_keyword ">true</div>)
 		{
@@ -263,8 +261,13 @@ Classes:
 			<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Dec@void()'], ['vl::ObjectString::Dec@void()'], [], [])"><div class="token cpp_function">Dec</div></div>();
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Get the zero-terminated buffer in the string. Copying parts of a string does not necessarily create a new buffer, so in some situation the string will not actually points to a zero-terminated buffer. In this case, this function will copy the content to a new buffer with a zero terminator and return.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;Returns the buffer.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// Get the zero terminated buffer in the string.</div>
+		<div class="token cpp_comment ">/// Copying parts of a string does not necessarily create a new buffer,</div>
+		<div class="token cpp_comment ">/// so in some situation the string will not actually points to a zero terminated buffer.</div>
+		<div class="token cpp_comment ">/// In this case, this function will copy the content to a new buffer with a zero terminator and return.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The zero terminated buffer.&lt;/returns&gt;</div>
 		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="FB$vl::ObjectString::Buffer@[T] const *()[impl0]"><div><div class="token cpp_function">Buffer</div></div></div>()<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::start'], [], [])"><div class="token cpp_field">start</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::length'], [], [])"><div class="token cpp_field">length</div></div>!=<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::realLength'], [], [])"><div class="token cpp_field">realLength</div></div>)
@@ -281,6 +284,9 @@ Classes:
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::start'], [], [])"><div class="token cpp_field">start</div></div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the string by copying another string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The string itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to copy.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)[impl0]::string"><div><div class="token cpp_argument">string</div></div></div>)
 		{
 			<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">this</div>!=&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)[impl0]::string'], [], [])"><div class="token cpp_argument">string</div></div>)
@@ -296,6 +302,9 @@ Classes:
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the string by moving another string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The string itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to move.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)[impl0]::string"><div><div class="token cpp_argument">string</div></div></div>)
 		{
 			<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">this</div>!=&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::operator =@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> &&)[impl0]::string'], [], [])"><div class="token cpp_argument">string</div></div>)
@@ -316,11 +325,17 @@ Classes:
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the string by appending another string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The string itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to append.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::ObjectString::operator +=@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">+</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::ObjectString::operator +=@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)[impl0]::string"><div><div class="token cpp_argument">string</div></div></div>)
 		{
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>=*<div class="token cpp_keyword ">this</div>+<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::operator +=@::vl::ObjectString<[T]> &(::vl::ObjectString<[T]> const &)[impl0]::string'], [], [])"><div class="token cpp_argument">string</div></div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a new string by concatenating two strings.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The new string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to append.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::ObjectString::operator +@::vl::ObjectString<[T]>(::vl::ObjectString<[T]> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">+</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::ObjectString::operator +@::vl::ObjectString<[T]>(::vl::ObjectString<[T]> const &)[impl0]::string"><div><div class="token cpp_argument">string</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::operator +@::vl::ObjectString<[T]>(::vl::ObjectString<[T]> const &)[impl0]::string'], [], [])"><div class="token cpp_argument">string</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::length'], [], [])"><div class="token cpp_field">length</div></div>, <div class="token cpp_number ">0</div>);
@@ -386,6 +401,9 @@ Classes:
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Compare@::vl::vint(::vl::ObjectString<[T]> const &, ::vl::ObjectString<[T]> const &)', 'vl::ObjectString::Compare@::vl::vint([T] const *, ::vl::ObjectString<[T]> const &)'], ['vl::ObjectString::Compare@::vl::vint(::vl::ObjectString<[T]> const &, ::vl::ObjectString<[T]> const &)', 'vl::ObjectString::Compare@::vl::vint([T] const *, ::vl::ObjectString<[T]> const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::operator <=@bool([T] const *)[impl0]::buffer'], [], [])"><div class="token cpp_argument">buffer</div></div>, *<div class="token cpp_keyword ">this</div>)&gt;=<div class="token cpp_number ">0</div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get a code point in the specified position.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns the code point. It will crash when the specified position is out of range.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="FB$vl::ObjectString::operator []@[T](::vl::vint)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::operator []@[T](::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
 <div class="expandable"><div class="disabled">			CHECK_ERROR(index&gt;=0 &amp;&amp; index&lt;length, L&quot;ObjectString:&lt;T&gt;:operator[](vint)#Argument index not in range.&quot;);</div>
@@ -393,16 +411,16 @@ Classes:
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::start'], [], [])"><div class="token cpp_field">start</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::operator []@[T](::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>];
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Get the size of the string in characters.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The size.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the size of the string in code points.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The size, not including the zero terminator.&lt;/returns&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::ObjectString::Length@::vl::vint()[impl0]"><div><div class="token cpp_function">Length</div></div></div>()<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::length'], [], [])"><div class="token cpp_field">length</div></div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Find a character.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The position of the character. Returns -1 if it doesn not exist.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;c&quot;&gt;The character to find.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Find a code point.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The position of the code point. Returns -1 if it does not exist.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;c&quot;&gt;The code point to find.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::ObjectString::IndexOf@::vl::vint([T])[impl0]"><div><div class="token cpp_function">IndexOf</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::ObjectString::IndexOf@::vl::vint([T])[impl0]::c"><div><div class="token cpp_argument">c</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::ObjectString::IndexOf@::vl::vint([T])[impl0]::reading"><div>reading</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::start'], [], [])"><div class="token cpp_field">start</div></div>;
@@ -414,9 +432,16 @@ Classes:
 			<div class="token cpp_keyword ">return</div> -<div class="token cpp_number ">1</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy the beginning of the string.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The copied string.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;Size of characters to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the prefix of the string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The prefix. It will crash when the specified size is out of range.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;Size of the prefix.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     WString s = L&quot;Hello, world!&quot;;</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(s.Left(5));</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::ObjectString::Left@::vl::ObjectString<[T]>(::vl::vint)[impl0]"><div><div class="token cpp_function">Left</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::Left@::vl::ObjectString<[T]>(::vl::vint)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
 <div class="expandable"><div class="disabled">			CHECK_ERROR(count&gt;=0 &amp;&amp; count&lt;=length, L&quot;ObjectString&lt;T&gt;::Left(vint)#Argument count not in range.&quot;);</div>
@@ -424,9 +449,16 @@ Classes:
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(*<div class="token cpp_keyword ">this</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Left@::vl::ObjectString<[T]>(::vl::vint)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>);
 		}
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy the ending of the string.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The copied string.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;Size of characters to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the postfix of the string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The postfix. It will crash when the specified size is out of range.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;Size of the prefix.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     WString s = L&quot;Hello, world!&quot;;</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(s.Right(6));</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::ObjectString::Right@::vl::ObjectString<[T]>(::vl::vint)[impl0]"><div><div class="token cpp_function">Right</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::Right@::vl::ObjectString<[T]>(::vl::vint)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
 <div class="expandable"><div class="disabled">			CHECK_ERROR(count&gt;=0 &amp;&amp; count&lt;=length, L&quot;ObjectString&lt;T&gt;::Right(vint)#Argument count not in range.&quot;);</div>
@@ -434,10 +466,17 @@ Classes:
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::length'], [], [])"><div class="token cpp_field">length</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Right@::vl::ObjectString<[T]>(::vl::vint)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Right@::vl::ObjectString<[T]>(::vl::vint)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>);
 		}
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy the middle of the string.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The copied string.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;Position of characters to copy.&lt;/param&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;Size of characters to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get a sub string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The sub string. It will crash when the specified position or size is out of range.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the first code point of the sub string.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The size of the sub string.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     WString s = L&quot;Hello, world!&quot;;</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(s.Sub(7, 5));</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]"><div><div class="token cpp_function">Sub</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
 <div class="expandable"><div class="disabled">			CHECK_ERROR(index&gt;=0 &amp;&amp; index&lt;=length, L&quot;ObjectString&lt;T&gt;::Sub(vint, vint)#Argument index not in range.&quot;);</div>
@@ -447,10 +486,17 @@ Classes:
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Sub@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>);
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy the beginning and the end of the string.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The copied string.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;Position of characters NOT to copy.&lt;/param&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;Size of characters NOT to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get a string by removing a sub string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The string without the sub string. It will crash when the specified position or size is out of range.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the first code point of the sub string.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The size of the sub string.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     WString s = L&quot;Hello, world!&quot;;</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(s.Remove(5, 7));</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::ObjectString::Remove@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::Remove@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::Remove@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
 <div class="expandable"><div class="disabled">			CHECK_ERROR(index&gt;=0 &amp;&amp; index&lt;length, L&quot;ObjectString&lt;T&gt;::Remove(vint, vint)#Argument index not in range.&quot;);</div>
@@ -460,10 +506,17 @@ Classes:
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(), <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Remove@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Remove@::vl::ObjectString<[T]>(::vl::vint, ::vl::vint)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>);
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Make a new string by inserting a string in this string.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The copied string.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;Position of characters to insert.&lt;/param&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to be inserted in this string.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get a string by inserting another string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The string with another string inserted. It will crash when the specified position is out of range.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position to insert.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to insert.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     WString s = L&quot;Hello, world!&quot;;</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(s.Insert(7, L&quot;a great &quot;));</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::ObjectString::Insert@::vl::ObjectString<[T]>(::vl::vint, ::vl::ObjectString<[T]> const &)[impl0]"><div><div class="token cpp_function">Insert</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ObjectString::Insert@::vl::ObjectString<[T]>(::vl::vint, ::vl::ObjectString<[T]> const &)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::ObjectString::Insert@::vl::ObjectString<[T]>(::vl::vint, ::vl::ObjectString<[T]> const &)[impl0]::string"><div><div class="token cpp_argument">string</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
 <div class="expandable"><div class="disabled">			CHECK_ERROR(index&gt;=0 &amp;&amp; index&lt;=length, L&quot;ObjectString&lt;T&gt;::Insert(vint)#Argument count not in range.&quot;);</div>
@@ -512,101 +565,113 @@ Classes:
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::ObjectString::zero::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::zero::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::zero::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="def" id="NI$vl::ObjectString::zero"><div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::zero'], [], [])"><div class="token cpp_field">zero</div></div></div>=<div class="token cpp_number ">0</div>;
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Ansi string.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Ansi string in local code page.&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt;		<div class="def" id="NI$vl::AString"><div><div class="token cpp_type">AString</div></div></div>;
-	<div class="token cpp_comment ">/// &lt;summary&gt;Unicode string.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// Unicode string, UTF-16 on Windows, UTF-32 on Linux and macOS.</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString'], [], [])"><div class="token cpp_type">ObjectString</div></div>&lt;<div class="token cpp_keyword ">wchar_t</div>&gt;	<div class="def" id="NI$vl::WString"><div><div class="token cpp_type">WString</div></div></div>;
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an signed integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a signed integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::atoi_test@::vl::vint(::vl::AString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atoi_test@::vl::vint(::vl::AString const &, bool &)'], [], [])"><div class="token cpp_function">atoi_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atoi_test@::vl::vint(::vl::AString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::atoi_test@::vl::vint(::vl::AString const &, bool &)[decl0]::success"><div>success</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an signed integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a signed integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::wtoi_test@::vl::vint(::vl::WString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtoi_test@::vl::vint(::vl::WString const &, bool &)'], [], [])"><div class="token cpp_function">wtoi_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtoi_test@::vl::vint(::vl::WString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::wtoi_test@::vl::vint(::vl::WString const &, bool &)[decl0]::success"><div>success</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an signed 64-bits integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a signed 64-bits integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint64_t'], [], [])"><div class="token cpp_type">vint64_t</div></div>				<div class="def" id="FB$vl::atoi64_test@::vl::vint64_t(::vl::AString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atoi64_test@::vl::vint64_t(::vl::AString const &, bool &)'], [], [])"><div class="token cpp_function">atoi64_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atoi64_test@::vl::vint64_t(::vl::AString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::atoi64_test@::vl::vint64_t(::vl::AString const &, bool &)[decl0]::success"><div>success</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an signed 64-bits integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a signed 64-bits integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint64_t'], [], [])"><div class="token cpp_type">vint64_t</div></div>				<div class="def" id="FB$vl::wtoi64_test@::vl::vint64_t(::vl::WString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtoi64_test@::vl::vint64_t(::vl::WString const &, bool &)'], [], [])"><div class="token cpp_function">wtoi64_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtoi64_test@::vl::vint64_t(::vl::WString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::wtoi64_test@::vl::vint64_t(::vl::WString const &, bool &)[decl0]::success"><div>success</div></div>);
 	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an unsigned integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint'], [], [])"><div class="token cpp_type">vuint</div></div>				<div class="def" id="FB$vl::atou_test@::vl::vuint(::vl::AString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atou_test@::vl::vuint(::vl::AString const &, bool &)'], [], [])"><div class="token cpp_function">atou_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atou_test@::vl::vuint(::vl::AString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::atou_test@::vl::vuint(::vl::AString const &, bool &)[decl0]::success"><div>success</div></div>);
 	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an unsigned integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint'], [], [])"><div class="token cpp_type">vuint</div></div>				<div class="def" id="FB$vl::wtou_test@::vl::vuint(::vl::WString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtou_test@::vl::vuint(::vl::WString const &, bool &)'], [], [])"><div class="token cpp_function">wtou_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtou_test@::vl::vuint(::vl::WString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::wtou_test@::vl::vuint(::vl::WString const &, bool &)[decl0]::success"><div>success</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a 64-bits unsigned integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an unsigned 64-bits integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>			<div class="def" id="FB$vl::atou64_test@::vl::vuint64_t(::vl::AString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atou64_test@::vl::vuint64_t(::vl::AString const &, bool &)'], [], [])"><div class="token cpp_function">atou64_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atou64_test@::vl::vuint64_t(::vl::AString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::atou64_test@::vl::vuint64_t(::vl::AString const &, bool &)[decl0]::success"><div>success</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a 64-bits unsigned integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an unsigned 64-bits integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>			<div class="def" id="FB$vl::wtou64_test@::vl::vuint64_t(::vl::WString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtou64_test@::vl::vuint64_t(::vl::WString const &, bool &)'], [], [])"><div class="token cpp_function">wtou64_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtou64_test@::vl::vuint64_t(::vl::WString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::wtou64_test@::vl::vuint64_t(::vl::WString const &, bool &)[decl0]::success"><div>success</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to 64-bits floating point number.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a 64-bits floating point number.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">double</div>				<div class="def" id="FB$vl::atof_test@double(::vl::AString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atof_test@double(::vl::AString const &, bool &)'], [], [])"><div class="token cpp_function">atof_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atof_test@double(::vl::AString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::atof_test@double(::vl::AString const &, bool &)[decl0]::success"><div>success</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to 64-bits floating point number.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a 64-bits floating point number.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;success&quot;&gt;Returns true if this operation succeeded.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">double</div>				<div class="def" id="FB$vl::wtof_test@double(::vl::WString const &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtof_test@double(::vl::WString const &, bool &)'], [], [])"><div class="token cpp_function">wtof_test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtof_test@double(::vl::WString const &, bool &)[decl0]::string"><div>string</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::wtof_test@double(::vl::WString const &, bool &)[decl0]::success"><div>success</div></div>);
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an signed integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a signed integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;atoi_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::atoi@::vl::vint(::vl::AString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atoi@::vl::vint(::vl::AString const &)'], [], [])"><div class="token cpp_function">atoi</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atoi@::vl::vint(::vl::AString const &)[decl0]::string"><div>string</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an signed integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a signed integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;wtoi_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::wtoi@::vl::vint(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtoi@::vl::vint(::vl::WString const &)'], [], [])"><div class="token cpp_function">wtoi</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtoi@::vl::vint(::vl::WString const &)[decl0]::string"><div>string</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an signed 64-bits integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a signed 64-bits integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;atoi64_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint64_t'], [], [])"><div class="token cpp_type">vint64_t</div></div>				<div class="def" id="FB$vl::atoi64@::vl::vint64_t(::vl::AString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atoi64@::vl::vint64_t(::vl::AString const &)'], [], [])"><div class="token cpp_function">atoi64</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atoi64@::vl::vint64_t(::vl::AString const &)[decl0]::string"><div>string</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an signed 64-bits integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a signed 64-bits integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;wtoi64_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint64_t'], [], [])"><div class="token cpp_type">vint64_t</div></div>				<div class="def" id="FB$vl::wtoi64@::vl::vint64_t(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtoi64@::vl::vint64_t(::vl::WString const &)'], [], [])"><div class="token cpp_function">wtoi64</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtoi64@::vl::vint64_t(::vl::WString const &)[decl0]::string"><div>string</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an unsigned integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an usigned integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;atou_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint'], [], [])"><div class="token cpp_type">vuint</div></div>				<div class="def" id="FB$vl::atou@::vl::vuint(::vl::AString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atou@::vl::vuint(::vl::AString const &)'], [], [])"><div class="token cpp_function">atou</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atou@::vl::vuint(::vl::AString const &)[decl0]::string"><div>string</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an unsigned integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an usigned integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;wtou_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint'], [], [])"><div class="token cpp_type">vuint</div></div>				<div class="def" id="FB$vl::wtou@::vl::vuint(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtou@::vl::vuint(::vl::WString const &)'], [], [])"><div class="token cpp_function">wtou</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtou@::vl::vuint(::vl::WString const &)[decl0]::string"><div>string</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a 64-bits unsigned integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an usigned 64-bits integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;atou64_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>			<div class="def" id="FB$vl::atou64@::vl::vuint64_t(::vl::AString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atou64@::vl::vuint64_t(::vl::AString const &)'], [], [])"><div class="token cpp_function">atou64</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atou64@::vl::vuint64_t(::vl::AString const &)[decl0]::string"><div>string</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a 64-bits unsigned integer.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to an usigned 64-bits integer.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;wtou64_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>			<div class="def" id="FB$vl::wtou64@::vl::vuint64_t(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtou64@::vl::vuint64_t(::vl::WString const &)'], [], [])"><div class="token cpp_function">wtou64</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtou64@::vl::vuint64_t(::vl::WString const &)[decl0]::string"><div>string</div></div>);
 	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a 64-bits floating point number.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;atof_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">double</div>				<div class="def" id="FB$vl::atof@double(::vl::AString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::atof@double(::vl::AString const &)'], [], [])"><div class="token cpp_function">atof</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>&amp; <div class="def" id="NI$vl::atof@double(::vl::AString const &)[decl0]::string"><div>string</div></div>);
 	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a string to a 64-bits floating point number.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the convert failed, the result is undefined.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The converted number. If the conversion failed, the result is undefined.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;If you need to know whether the conversion is succeeded or not, please use &lt;see cref=&quot;wtof_test&quot;/&gt; instead.&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">double</div>				<div class="def" id="FB$vl::wtof@double(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtof@double(::vl::WString const &)'], [], [])"><div class="token cpp_function">wtof</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtof@double(::vl::WString const &)[decl0]::string"><div>string</div></div>);
 
 	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a signed interger to a string.&lt;/summary&gt;</div>
@@ -617,11 +682,11 @@ Classes:
 	<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;number&quot;&gt;The number to convert.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::itow@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::itow@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">itow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::itow@::vl::WString(::vl::vint)[decl0]::number"><div>number</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a 64-bits signed interger to a string.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a signed 64-bits interger to a string.&lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;number&quot;&gt;The number to convert.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>				<div class="def" id="FB$vl::i64toa@::vl::AString(::vl::vint64_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::i64toa@::vl::AString(::vl::vint64_t)'], [], [])"><div class="token cpp_function">i64toa</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint64_t'], [], [])"><div class="token cpp_type">vint64_t</div></div> <div class="def" id="NI$vl::i64toa@::vl::AString(::vl::vint64_t)[decl0]::number"><div>number</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a 64-bits signed interger to a string.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a signed 64-bits interger to a string.&lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;number&quot;&gt;The number to convert.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::i64tow@::vl::WString(::vl::vint64_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::i64tow@::vl::WString(::vl::vint64_t)'], [], [])"><div class="token cpp_function">i64tow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint64_t'], [], [])"><div class="token cpp_type">vint64_t</div></div> <div class="def" id="NI$vl::i64tow@::vl::WString(::vl::vint64_t)[decl0]::number"><div>number</div></div>);
@@ -633,11 +698,11 @@ Classes:
 	<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;number&quot;&gt;The number to convert.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::utow@::vl::WString(::vl::vuint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::utow@::vl::WString(::vl::vuint)'], [], [])"><div class="token cpp_function">utow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint'], [], [])"><div class="token cpp_type">vuint</div></div> <div class="def" id="NI$vl::utow@::vl::WString(::vl::vuint)[decl0]::number"><div>number</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a 64-bits unsigned interger to a string.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert an unsigned 64-bits interger to a string.&lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;number&quot;&gt;The number to convert.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>				<div class="def" id="FB$vl::u64toa@::vl::AString(::vl::vuint64_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::u64toa@::vl::AString(::vl::vuint64_t)'], [], [])"><div class="token cpp_function">u64toa</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div> <div class="def" id="NI$vl::u64toa@::vl::AString(::vl::vuint64_t)[decl0]::number"><div>number</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a 64-bits unsigned interger to a string.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert an unsigned 64-bits interger to a string.&lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;number&quot;&gt;The number to convert.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::u64tow@::vl::WString(::vl::vuint64_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::u64tow@::vl::WString(::vl::vuint64_t)'], [], [])"><div class="token cpp_function">u64tow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div> <div class="def" id="NI$vl::u64tow@::vl::WString(::vl::vuint64_t)[decl0]::number"><div>number</div></div>);
@@ -651,7 +716,7 @@ Classes:
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::ftow@::vl::WString(double)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ftow@::vl::WString(double)'], [], [])"><div class="token cpp_function">ftow</div></div></div>(<div class="token cpp_keyword ">double</div> <div class="def" id="NI$vl::ftow@::vl::WString(double)[decl0]::number"><div>number</div></div>);
 
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::_wtoa@::vl::vint(wchar_t const *, char *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::_wtoa@::vl::vint(wchar_t const *, char *, ::vl::vint)'], [], [])"><div class="token cpp_function">_wtoa</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::_wtoa@::vl::vint(wchar_t const *, char *, ::vl::vint)[decl0]::w"><div>w</div></div>, <div class="token cpp_keyword ">char</div>* <div class="def" id="NI$vl::_wtoa@::vl::vint(wchar_t const *, char *, ::vl::vint)[decl0]::a"><div>a</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::_wtoa@::vl::vint(wchar_t const *, char *, ::vl::vint)[decl0]::chars"><div>chars</div></div>);
-	<div class="token cpp_comment ">/// &lt;summary&gt;Convert an Unicode string to an Ansi string.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Convert a Unicode string to an Ansi string.&lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;returns&gt;The converted string.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to convert.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::AString'], [], [])"><div class="token cpp_type">AString</div></div>				<div class="def" id="FB$vl::wtoa@::vl::AString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::wtoa@::vl::AString(::vl::WString const &)'], [], [])"><div class="token cpp_function">wtoa</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::wtoa@::vl::AString(::vl::WString const &)[decl0]::string"><div>string</div></div>);
@@ -694,16 +759,33 @@ Classes:
 <div class="disabled">	extern void					wcscpy_s(wchar_t* buffer, size_t size, const wchar_t* text);
 #endif</div>
 
+	<div class="token cpp_comment ">/// &lt;summary&gt;Style of the random text.&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">enum</div> <div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::LoremIpsumCasing"><div><div class="token cpp_type">LoremIpsumCasing</div></div></div>
 	{
+		<div class="token cpp_comment ">/// &lt;summary&gt;First letters of all words are lower cased.&lt;/summary&gt;</div>
 		<div class="def" id="NI$vl::LoremIpsumCasing::AllWordsLowerCase"><div><div class="token cpp_enum">AllWordsLowerCase</div></div></div>,
+		<div class="token cpp_comment ">/// &lt;summary&gt;first letters of first words of all sentences are upper cased.&lt;/summary&gt;</div>
 		<div class="def" id="NI$vl::LoremIpsumCasing::FirstWordUpperCase"><div><div class="token cpp_enum">FirstWordUpperCase</div></div></div>,
+		<div class="token cpp_comment ">/// &lt;summary&gt;First letters of all words are upper cased.&lt;/summary&gt;</div>
 		<div class="def" id="NI$vl::LoremIpsumCasing::AllWordsUpperCase"><div><div class="token cpp_enum">AllWordsUpperCase</div></div></div>,
 	};
 
+	<div class="token cpp_comment ">/// &lt;summary&gt;Get some random text.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The generated random text. It may not exactly in the expected size.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;param name=&quot;bestLength&quot;&gt;The expected size.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;param name=&quot;casing&quot;&gt;The expected casing.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::LoremIpsum@::vl::WString(::vl::vint, ::vl::LoremIpsumCasing)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::LoremIpsum@::vl::WString(::vl::vint, ::vl::LoremIpsumCasing)'], [], [])"><div class="token cpp_function">LoremIpsum</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::LoremIpsum@::vl::WString(::vl::vint, ::vl::LoremIpsumCasing)[decl0]::bestLength"><div>bestLength</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::LoremIpsumCasing'], [], [])"><div class="token cpp_type">LoremIpsumCasing</div></div> <div class="def" id="NI$vl::LoremIpsum@::vl::WString(::vl::vint, ::vl::LoremIpsumCasing)[decl0]::casing"><div>casing</div></div>);
+	<div class="token cpp_comment ">/// &lt;summary&gt;Get some random text for a title, first letters of all words are upper cased.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The generated random text. It may not be exactly in the expected size.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;param name=&quot;bestLength&quot;&gt;The expected size.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::LoremIpsumTitle@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::LoremIpsumTitle@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">LoremIpsumTitle</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::LoremIpsumTitle@::vl::WString(::vl::vint)[decl0]::bestLength"><div>bestLength</div></div>);
+	<div class="token cpp_comment ">/// &lt;summary&gt;Get some random sentences. The first letter of the first word is uppder cased.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The generated random text with a period character &quot;.&quot;. It may not be exactly in the expected size.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;param name=&quot;bestLength&quot;&gt;The expected size.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::LoremIpsumSentence@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::LoremIpsumSentence@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">LoremIpsumSentence</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::LoremIpsumSentence@::vl::WString(::vl::vint)[decl0]::bestLength"><div>bestLength</div></div>);
+	<div class="token cpp_comment ">/// &lt;summary&gt;Get some random paragraphs. First letters of first words of all sentences are upper cased.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The generated random text with multiple sentences ending with period characters &quot;.&quot;. It may not be exactly in the expected size.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;param name=&quot;bestLength&quot;&gt;The expected size.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::LoremIpsumParagraph@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::LoremIpsumParagraph@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">LoremIpsumParagraph</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::LoremIpsumParagraph@::vl::WString(::vl::vint)[decl0]::bestLength"><div>bestLength</div></div>);
 }
 
@@ -713,77 +795,77 @@ Classes:
 <script type="text/javascript">
 referencedSymbols = {
     '_InterlockedDecrement@::LONG(::LONG volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_type">LONG</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_type">LONG</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedDecrement@::LONG(::LONG volatile *)[decl0]'
         ]
     },
     '_InterlockedDecrement@long(long volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">long</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedDecrement@long(long volatile *)[decl0]'
         ]
     },
     '_InterlockedDecrement@unsigned __int64(unsigned __int64 volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedDecrement@unsigned __int64(unsigned __int64 volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedDecrement@unsigned int(unsigned int volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedDecrement@unsigned int(unsigned int volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedDecrement@unsigned long(unsigned long volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedDecrement@unsigned long(unsigned long volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedIncrement@::LONG(::LONG volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_type">LONG</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_type">LONG</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedIncrement@::LONG(::LONG volatile *)[decl0]'
         ]
     },
     '_InterlockedIncrement@long(long volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">long</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedIncrement@long(long volatile *)[decl0]'
         ]
     },
     '_InterlockedIncrement@unsigned __int64(unsigned __int64 volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedIncrement@unsigned __int64(unsigned __int64 volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedIncrement@unsigned int(unsigned int volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedIncrement@unsigned int(unsigned int volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedIncrement@unsigned long(unsigned long volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedIncrement@unsigned long(unsigned long volatile *)[impl0]'
         ],
         'decls': []
     },
     'memcpy@void *(void *, void const *, ::size_t)': {
-        'displayNameInHtml': '<span class="cpp_function">memcpy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'displayNameInHtml': '<span class="cpp_function">memcpy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
             'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]'
@@ -1006,7 +1088,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::ObjectString::CalculateLength@::vl::vint([T] const *)': {
-        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">CalculateLength</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> *)',
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">CalculateLength</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> *)',
         'impls': [
             'FB$vl::ObjectString::CalculateLength@::vl::vint([T] const *)[impl0]'
         ],
@@ -1027,7 +1109,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::ObjectString::Compare@::vl::vint(::vl::ObjectString<[T]> const &, ::vl::ObjectString<[T]> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Compare</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &, <span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Compare</span>(<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &, <span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::ObjectString::Compare@::vl::vint(::vl::ObjectString<[T]> const &, ::vl::ObjectString<[T]> const &)[impl0]'
         ],
@@ -1076,7 +1158,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::ObjectString::Compare@::vl::vint([T] const *, ::vl::ObjectString<[T]> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Compare</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Compare</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::ObjectString::Compare@::vl::vint([T] const *, ::vl::ObjectString<[T]> const &)[impl0]'
         ],
@@ -1514,7 +1596,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::_atow@::vl::vint(char const *, wchar_t *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_function">_atow</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_function">_atow</span>(<span class="cpp_keyword">char</span> <span class="cpp_keyword">const</span> *, <span class="cpp_keyword">wchar_t</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::_atow@::vl::vint(char const *, wchar_t *, ::vl::vint)[impl0]'
         ],
@@ -1523,7 +1605,7 @@ referencedSymbols = {
         ]
     },
     'vl::_wtoa@::vl::vint(wchar_t const *, char *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_function">_wtoa</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_function">_wtoa</span>(<span class="cpp_keyword">wchar_t</span> <span class="cpp_keyword">const</span> *, <span class="cpp_keyword">char</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::_wtoa@::vl::vint(wchar_t const *, char *, ::vl::vint)[impl0]'
         ],
@@ -1532,7 +1614,7 @@ referencedSymbols = {
         ]
     },
     'vl::alower@::vl::AString(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">alower</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">alower</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::alower@::vl::AString(::vl::AString const &)[impl0]'
         ],
@@ -1541,7 +1623,7 @@ referencedSymbols = {
         ]
     },
     'vl::atof@double(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">atof</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atof</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::atof@double(::vl::AString const &)[impl0]'
         ],
@@ -1550,7 +1632,7 @@ referencedSymbols = {
         ]
     },
     'vl::atof_test@double(::vl::AString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">atof_test</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atof_test</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::atof_test@double(::vl::AString const &, bool &)[impl0]'
         ],
@@ -1559,7 +1641,7 @@ referencedSymbols = {
         ]
     },
     'vl::atoi64@::vl::vint64_t(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">atoi64</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atoi64</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::atoi64@::vl::vint64_t(::vl::AString const &)[impl0]'
         ],
@@ -1568,7 +1650,7 @@ referencedSymbols = {
         ]
     },
     'vl::atoi64_test@::vl::vint64_t(::vl::AString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">atoi64_test</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atoi64_test</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::atoi64_test@::vl::vint64_t(::vl::AString const &, bool &)[impl0]'
         ],
@@ -1577,7 +1659,7 @@ referencedSymbols = {
         ]
     },
     'vl::atoi@::vl::vint(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">atoi</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atoi</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::atoi@::vl::vint(::vl::AString const &)[impl0]'
         ],
@@ -1586,7 +1668,7 @@ referencedSymbols = {
         ]
     },
     'vl::atoi_test@::vl::vint(::vl::AString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">atoi_test</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atoi_test</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::atoi_test@::vl::vint(::vl::AString const &, bool &)[impl0]'
         ],
@@ -1595,7 +1677,7 @@ referencedSymbols = {
         ]
     },
     'vl::atou64@::vl::vuint64_t(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">atou64</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atou64</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::atou64@::vl::vuint64_t(::vl::AString const &)[impl0]'
         ],
@@ -1604,7 +1686,7 @@ referencedSymbols = {
         ]
     },
     'vl::atou64_test@::vl::vuint64_t(::vl::AString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">atou64_test</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atou64_test</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::atou64_test@::vl::vuint64_t(::vl::AString const &, bool &)[impl0]'
         ],
@@ -1613,7 +1695,7 @@ referencedSymbols = {
         ]
     },
     'vl::atou@::vl::vuint(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">atou</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atou</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::atou@::vl::vuint(::vl::AString const &)[impl0]'
         ],
@@ -1622,7 +1704,7 @@ referencedSymbols = {
         ]
     },
     'vl::atou_test@::vl::vuint(::vl::AString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">atou_test</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atou_test</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::atou_test@::vl::vuint(::vl::AString const &, bool &)[impl0]'
         ],
@@ -1631,7 +1713,7 @@ referencedSymbols = {
         ]
     },
     'vl::atow@::vl::WString(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">atow</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atow</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::atow@::vl::WString(::vl::AString const &)[impl0]'
         ],
@@ -1640,7 +1722,7 @@ referencedSymbols = {
         ]
     },
     'vl::aupper@::vl::AString(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">aupper</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">aupper</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::aupper@::vl::AString(::vl::AString const &)[impl0]'
         ],
@@ -1767,7 +1849,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::wlower@::vl::WString(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">wlower</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wlower</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::wlower@::vl::WString(::vl::WString const &)[impl0]'
         ],
@@ -1776,7 +1858,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtoa@::vl::AString(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtoa</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtoa</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::wtoa@::vl::AString(::vl::WString const &)[impl0]'
         ],
@@ -1785,7 +1867,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtof@double(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtof</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtof</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::wtof@double(::vl::WString const &)[impl0]'
         ],
@@ -1794,7 +1876,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtof_test@double(::vl::WString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtof_test</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtof_test</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::wtof_test@double(::vl::WString const &, bool &)[impl0]'
         ],
@@ -1803,7 +1885,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtoi64@::vl::vint64_t(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtoi64</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtoi64</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::wtoi64@::vl::vint64_t(::vl::WString const &)[impl0]'
         ],
@@ -1812,7 +1894,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtoi64_test@::vl::vint64_t(::vl::WString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtoi64_test</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtoi64_test</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::wtoi64_test@::vl::vint64_t(::vl::WString const &, bool &)[impl0]'
         ],
@@ -1821,7 +1903,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtoi@::vl::vint(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtoi</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtoi</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::wtoi@::vl::vint(::vl::WString const &)[impl0]'
         ],
@@ -1830,7 +1912,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtoi_test@::vl::vint(::vl::WString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtoi_test</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtoi_test</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::wtoi_test@::vl::vint(::vl::WString const &, bool &)[impl0]'
         ],
@@ -1839,7 +1921,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtou64@::vl::vuint64_t(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtou64</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtou64</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::wtou64@::vl::vuint64_t(::vl::WString const &)[impl0]'
         ],
@@ -1848,7 +1930,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtou64_test@::vl::vuint64_t(::vl::WString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtou64_test</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtou64_test</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::wtou64_test@::vl::vuint64_t(::vl::WString const &, bool &)[impl0]'
         ],
@@ -1857,7 +1939,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtou@::vl::vuint(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtou</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtou</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::wtou@::vl::vuint(::vl::WString const &)[impl0]'
         ],
@@ -1866,7 +1948,7 @@ referencedSymbols = {
         ]
     },
     'vl::wtou_test@::vl::vuint(::vl::WString const &, bool &)': {
-        'displayNameInHtml': '<span class="cpp_function">wtou_test</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wtou_test</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span> &)',
         'impls': [
             'FB$vl::wtou_test@::vl::vuint(::vl::WString const &, bool &)[impl0]'
         ],
@@ -1875,7 +1957,7 @@ referencedSymbols = {
         ]
     },
     'vl::wupper@::vl::WString(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">wupper</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">wupper</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::wupper@::vl::WString(::vl::WString const &)[impl0]'
         ],

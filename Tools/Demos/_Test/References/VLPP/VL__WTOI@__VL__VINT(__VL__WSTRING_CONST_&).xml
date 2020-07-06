@@ -1,1 +1,4 @@
-<Document><summary>Convert a string to an signed integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param></Document>
+<Document symbolId="vl::wtoi@::vl::vint(::vl::WString const &amp;)" accessor="" category="Function" name="wtoi" declFile="String.h" declId="FB$vl::wtoi@::vl::vint(::vl::WString const &amp;)[decl0]"><summary>Convert a string to a signed integer.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><remarks>If you need to know whether the conversion is succeeded or not, please use <see cref="wtoi_test"/> instead.</remarks><signature><![CDATA[vint wtoi(
+    WString const & string
+);
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

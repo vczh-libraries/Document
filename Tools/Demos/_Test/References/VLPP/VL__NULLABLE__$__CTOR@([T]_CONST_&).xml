@@ -1,1 +1,4 @@
-<Document><summary>Create a non-null value.</summary><param name="value">The value to copy.</param></Document>
+<Document symbolId="vl::Nullable::$__ctor@([T] const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::Nullable::$__ctor@([T] const &amp;)[impl0]"><summary>Create a non-null value by copying data.</summary><param name="value">The data to copy.</param><signature><![CDATA[ Nullable(
+    T const & value
+);
+]]></signature></Document>

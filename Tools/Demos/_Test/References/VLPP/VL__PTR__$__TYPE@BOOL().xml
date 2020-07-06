@@ -1,1 +1,2 @@
-<Document><summary>Test if it is a null pointer.</summary><returns>Returns true if it is not null.</returns></Document>
+<Document symbolId="vl::Ptr::$__type@bool()" accessor="public" category="Function" name="$__type" declFile="Pointer.h" declId="FB$vl::Ptr::$__type@bool()[impl0]"><summary>Test if it is an empty shared pointer.</summary><returns>Returns true if it is non-null.</returns><signature><![CDATA[operator bool();
+]]></signature></Document>

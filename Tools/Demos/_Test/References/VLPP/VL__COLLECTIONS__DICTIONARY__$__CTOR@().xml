@@ -1,1 +1,3 @@
-<Document><summary>Create a dictionary.</summary></Document>
+<Document symbolId="vl::collections::Dictionary::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::$__ctor@()[decl0]"><summary>Create an empty dictionary.</summary><signature><![CDATA[ Dictionary(
+);
+]]></signature></Document>

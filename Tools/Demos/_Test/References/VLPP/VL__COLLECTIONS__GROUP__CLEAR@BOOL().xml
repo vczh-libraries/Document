@@ -1,1 +1,3 @@
-<Document><summary>Remove everything.</summary><returns>Returns true if all keys and values are removed.</returns></Document>
+<Document symbolId="vl::collections::Group::Clear@bool()" accessor="public" category="Function" name="Clear" declFile="Dictionary.h" declId="FB$vl::collections::Group::Clear@bool()[impl0]"><summary>Remove everything.</summary><returns>Returns true if all keys and values are removed.</returns><signature><![CDATA[bool Clear(
+);
+]]></signature></Document>

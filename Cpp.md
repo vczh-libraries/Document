@@ -27,9 +27,6 @@
 ### Document Generation
 
 - [ ] `DocGen.ps1`
-  - [ ] Complete XML comments for Vlpp.
-  - [ ] Write `<example>` for all functions if possible.
-  - [ ] Move `Gaclib` from `UnitTest_ExecuteCases` to a new project `DocIndex`.
   - [ ] `DocGen.ps1 docindex` builds `UnitTest_Cases` with x86 debug, and `DocIndex` for x64 release.
   - [ ] `DocGen.ps1 generate` execute `DocIndex` on preprocessed files from `UnitTest_Cases`.
   - [ ] `DocGen.ps1 verify` extract all `<example>` from XML documents, compile and run them with header code according to which project are they in.

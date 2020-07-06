@@ -1,1 +1,7 @@
-<Document><summary>List that keeps everything in order.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam></Document>
+<Document symbolId="vl::collections::SortedList" accessor="" category="Class" name="SortedList" declFile="List.h" declId="NI$vl::collections::SortedList"><summary>SortedList: linear container with dynamic size in runtime for ordered values. All elements are kept in order, and are contiguous in memory.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam><signature><![CDATA[template <
+    typename T, 
+    typename K /* optional */
+>
+class SortedList
+    : ListBase<T, K>;
+]]></signature><basetypes><symbol name="ListBase" docId="vl::collections::ListBase" declFile="List.h" declId="NI$vl::collections::ListBase"/></basetypes></Document>

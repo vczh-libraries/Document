@@ -1,1 +1,5 @@
-<Document><summary>Create an array.</summary><param name="_buffer">Pointer to an array to copy.</param><param name="size">The size of the array.</param></Document>
+<Document symbolId="vl::collections::Array::$__ctor@([T] const *, ::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="List.h" declId="FB$vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]"><summary>Create an array with elements provided.</summary><param name="_buffer">Pointer to values to copy.</param><param name="size">The number of values to copy.</param><remarks>It will crash when the size is a negative number.</remarks><signature><![CDATA[ Array(
+    T const * _buffer,
+    vint size
+);
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

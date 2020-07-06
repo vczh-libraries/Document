@@ -1,1 +1,6 @@
-<Document><summary>Detach the contained object from this smart pointer.</summary><returns>The detached object. Returns null if this smart pointer is empty.</returns></Document>
+<Document symbolId="vl::Ptr::Detach@[T] *()" accessor="public" category="Function" name="Detach" declFile="Pointer.h" declId="FB$vl::Ptr::Detach@[T] *()[impl0]"><summary>
+ Detach the contained object from this shared pointer.
+ When no <symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/> is referencing to the object because of a call to Detach, the object will not be deleted.
+ </summary><returns>The detached object. Returns null if this shared pointer is empty.</returns><signature><![CDATA[T * Detach(
+);
+]]></signature></Document>

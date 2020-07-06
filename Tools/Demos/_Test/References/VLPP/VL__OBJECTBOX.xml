@@ -1,1 +1,13 @@
-<Document><summary>Type for storing a value to wherever requiring a <symbol docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/> to <symbol docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/>.</summary><typeparam name="T">Type of the value.</typeparam></Document>
+<Document symbolId="vl::ObjectBox" accessor="" category="Class" name="ObjectBox" declFile="Basic.h" declId="NI$vl::ObjectBox"><summary>Store data of a value type in a reference type object. It is useful when the data is required to be stored in a pointer to <symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/>.</summary><example><![CDATA[
+ int main()
+ {
+     Ptr<Object> boxed = MakePtr<ObjectBox<vint>>(100);
+     vint unboxed = boxed.Cast<ObjectBox<vint>>().UnBox();
+     Console::WriteLine(itow(unboxed));
+ }
+ ]]></example><typeparam name="T">Value type to use.</typeparam><signature><![CDATA[template <
+    typename T
+>
+class ObjectBox
+    : Object;
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

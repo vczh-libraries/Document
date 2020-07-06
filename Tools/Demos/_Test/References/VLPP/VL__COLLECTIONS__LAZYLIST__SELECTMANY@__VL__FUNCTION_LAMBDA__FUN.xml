@@ -1,1 +1,7 @@
-<Document><summary>Create a new lazy list, whose elements are from transformed elements in this lazy list.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a transformation function to transform one element to multiple elements.</param></Document>
+<Document symbolId="vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])" accessor="public" category="Function" name="SelectMany" declFile="Operation.h" declId="FB$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]"><summary>Create a new lazy list, whose elements are from transformed elements in this lazy list.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a transformation function to transform one element to multiple elements.</param><signature><![CDATA[template <
+    typename F
+>
+vl::function_lambda::FunctionObjectRetriveType<F>::ResultType SelectMany(
+    F f
+) const;
+]]></signature><seealsos><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::ResultType"/><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::ResultType"/></seealsos></Document>

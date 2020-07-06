@@ -1,1 +1,3 @@
-<Document><summary>Create an empty date time value.</summary></Document>
+<Document symbolId="vl::DateTime::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::DateTime::$__ctor@()[decl0]"><summary>Create an empty date time value that is not meaningful.</summary><signature><![CDATA[ DateTime(
+);
+]]></signature></Document>

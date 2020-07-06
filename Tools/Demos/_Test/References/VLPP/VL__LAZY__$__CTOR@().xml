@@ -1,1 +1,3 @@
-<Document><summary>Create an empty evaluation.</summary></Document>
+<Document symbolId="vl::Lazy::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Lazy.h" declId="FB$vl::Lazy::$__ctor@()[decl0]"><summary>Create an empty evaluation.</summary><signature><![CDATA[ Lazy(
+);
+]]></signature></Document>

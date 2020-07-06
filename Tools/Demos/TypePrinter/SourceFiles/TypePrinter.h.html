@@ -162,14 +162,14 @@
 		}
 	};
 
+#pragma warning (push)
+#pragma warning (disable: <div class="token cpp_number ">4003</div>)
 <div class="disabled">#define MAKE_ARRAY_TYPE(QUALIFIER)															\</div>
 <div class="disabled">	template&lt;typename T, int Size&gt;															\</div>
 <div class="disabled">	struct TypePrinter&lt;T QUALIFIER[Size]&gt; : ArrayTypePrinter&lt;T QUALIFIER, Size&gt;				\</div>
 <div class="disabled">	{																						\</div>
 <div class="disabled">	}																						\</div>
 
-#pragma warning (push)
-#pragma warning (disable: <div class="token cpp_number ">4003</div>)
 <div class="expandable"><div class="disabled">	MAKE_ARRAY_TYPE();</div>
 <div class="expanded">	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$type_printer::TypePrinter@<[T] [*]>::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">int</div> <div class="def" id="TA$type_printer::TypePrinter@<[T] [*]>::Size"><div><div class="token cpp_enum">Size</div></div></div>&gt; <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$type_printer::TypePrinter@<[T] [*]>"><div class="ref" onclick="jumpToSymbol([], [], [], ['type_printer::TypePrinter'])"><div class="token cpp_type">TypePrinter</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] [*]>::T'], [], [])"><div class="token cpp_type">T</div></div> [<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] [*]>::Size'], [], [])"><div class="token cpp_enum">Size</div></div>]&gt; : <div class="ref" onclick="jumpToSymbol([], ['type_printer::ArrayTypePrinter'], [], [])"><div class="token cpp_type">ArrayTypePrinter</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] [*]>::T'], [], [])"><div class="token cpp_type">T</div></div> , <div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] [*]>::Size'], [], [])"><div class="token cpp_enum">Size</div></div>&gt; { };</div></div>
 #pragma warning (pop)
@@ -179,7 +179,6 @@
 <div class="expanded">	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$type_printer::TypePrinter@<[T] volatile [*]>::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">int</div> <div class="def" id="TA$type_printer::TypePrinter@<[T] volatile [*]>::Size"><div><div class="token cpp_enum">Size</div></div></div>&gt; <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$type_printer::TypePrinter@<[T] volatile [*]>"><div class="ref" onclick="jumpToSymbol([], [], [], ['type_printer::TypePrinter'])"><div class="token cpp_type">TypePrinter</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] volatile [*]>::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="token cpp_keyword ">volatile</div>[<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] volatile [*]>::Size'], [], [])"><div class="token cpp_enum">Size</div></div>]&gt; : <div class="ref" onclick="jumpToSymbol([], ['type_printer::ArrayTypePrinter'], [], [])"><div class="token cpp_type">ArrayTypePrinter</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] volatile [*]>::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="token cpp_keyword ">volatile</div>, <div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] volatile [*]>::Size'], [], [])"><div class="token cpp_enum">Size</div></div>&gt; { };</div></div>
 <div class="expandable"><div class="disabled">	MAKE_ARRAY_TYPE(const volatile);</div>
 <div class="expanded">	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$type_printer::TypePrinter@<[T] const volatile [*]>::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">int</div> <div class="def" id="TA$type_printer::TypePrinter@<[T] const volatile [*]>::Size"><div><div class="token cpp_enum">Size</div></div></div>&gt; <div class="token cpp_keyword ">struct</div> <div class="def" id="NI$type_printer::TypePrinter@<[T] const volatile [*]>"><div class="ref" onclick="jumpToSymbol([], [], [], ['type_printer::TypePrinter'])"><div class="token cpp_type">TypePrinter</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] const volatile [*]>::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">volatile</div>[<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] const volatile [*]>::Size'], [], [])"><div class="token cpp_enum">Size</div></div>]&gt; : <div class="ref" onclick="jumpToSymbol([], ['type_printer::ArrayTypePrinter'], [], [])"><div class="token cpp_type">ArrayTypePrinter</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] const volatile [*]>::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">volatile</div>, <div class="ref" onclick="jumpToSymbol([], ['type_printer::TypePrinter@<[T] const volatile [*]>::Size'], [], [])"><div class="token cpp_enum">Size</div></div>&gt; { };</div></div>
-
 <div class="disabled">#undef MAKE_ARRAY_TYPE</div>
 
 	<div class="token cpp_comment ">// functions</div>
@@ -238,7 +237,7 @@
 <script type="text/javascript">
 referencedSymbols = {
     'printf@int(char const * const ...)': {
-        'displayNameInHtml': '<span class="cpp_function">printf</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span>, ...)',
+        'displayNameInHtml': '<span class="cpp_function">printf</span>(<span class="cpp_keyword">char</span> <span class="cpp_keyword">const</span> * <span class="cpp_keyword">const</span>, ...)',
         'impls': [
             'FB$printf@int(char const * const ...)[impl0]'
         ],
@@ -253,14 +252,14 @@ referencedSymbols = {
         ]
     },
     'type_printer::ArrayTypePrinter': {
-        'displayNameInHtml': '<span class="cpp_type">ArrayTypePrinter</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">ArrayTypePrinter</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;',
         'impls': [
             'NI$type_printer::ArrayTypePrinter'
         ],
         'decls': []
     },
     'type_printer::ArrayTypePrinter::PrintPostfix@void(::type_printer::TypeSource)': {
-        'displayNameInHtml': '<span class="cpp_type">ArrayTypePrinter</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">PrintPostfix</span>(<span class="cpp_type">TypeSource</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ArrayTypePrinter</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">PrintPostfix</span>(<span class="cpp_type">TypeSource</span>)',
         'impls': [
             'FB$type_printer::ArrayTypePrinter::PrintPostfix@void(::type_printer::TypeSource)[impl0]'
         ],
@@ -274,7 +273,7 @@ referencedSymbols = {
         'decls': []
     },
     'type_printer::ArrayTypePrinter::PrintPrefix@void(::type_printer::TypeSource)': {
-        'displayNameInHtml': '<span class="cpp_type">ArrayTypePrinter</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">PrintPrefix</span>(<span class="cpp_type">TypeSource</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ArrayTypePrinter</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">PrintPrefix</span>(<span class="cpp_type">TypeSource</span>)',
         'impls': [
             'FB$type_printer::ArrayTypePrinter::PrintPrefix@void(::type_printer::TypeSource)[impl0]'
         ],
@@ -574,7 +573,7 @@ referencedSymbols = {
         'decls': []
     },
     'type_printer::TypePrinter@<[T] [*]>': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span>[<span class="cpp_keyword">(expr)</span>]&gt;',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span>[<span class="cpp_keyword">expr</span>]&gt;',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] [*]>'
         ],
@@ -595,7 +594,7 @@ referencedSymbols = {
         'decls': []
     },
     'type_printer::TypePrinter@<[T] const [*]>': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span>[<span class="cpp_keyword">(expr)</span>]&gt;',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span>[<span class="cpp_keyword">expr</span>]&gt;',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] const [*]>'
         ],
@@ -616,7 +615,7 @@ referencedSymbols = {
         'decls': []
     },
     'type_printer::TypePrinter@<[T] const volatile [*]>': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span>[<span class="cpp_keyword">(expr)</span>]&gt;',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> <span class="cpp_keyword">volatile</span>[<span class="cpp_keyword">expr</span>]&gt;',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] const volatile [*]>'
         ],
@@ -637,14 +636,14 @@ referencedSymbols = {
         'decls': []
     },
     'type_printer::TypePrinter@<[T] const volatile>': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> <span class="cpp_keyword">volatile</span>&gt;',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] const volatile>'
         ],
         'decls': []
     },
     'type_printer::TypePrinter@<[T] const volatile>::Qualifier': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span>&gt;::<span class="cpp_field">Qualifier</span>',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> <span class="cpp_keyword">volatile</span>&gt;::<span class="cpp_field">Qualifier</span>',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] const volatile>::Qualifier'
         ],
@@ -667,14 +666,14 @@ referencedSymbols = {
         'decls': []
     },
     'type_printer::TypePrinter@<[T] const>': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span>&gt;',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] const>'
         ],
         'decls': []
     },
     'type_printer::TypePrinter@<[T] const>::Qualifier': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span>&gt;::<span class="cpp_field">Qualifier</span>',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span>&gt;::<span class="cpp_field">Qualifier</span>',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] const>::Qualifier'
         ],
@@ -697,7 +696,7 @@ referencedSymbols = {
         'decls': []
     },
     'type_printer::TypePrinter@<[T] volatile [*]>': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> volatile</span>[<span class="cpp_keyword">(expr)</span>]&gt;',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">volatile</span>[<span class="cpp_keyword">expr</span>]&gt;',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] volatile [*]>'
         ],
@@ -718,14 +717,14 @@ referencedSymbols = {
         'decls': []
     },
     'type_printer::TypePrinter@<[T] volatile>': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> volatile</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">volatile</span>&gt;',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] volatile>'
         ],
         'decls': []
     },
     'type_printer::TypePrinter@<[T] volatile>::Qualifier': {
-        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> volatile</span>&gt;::<span class="cpp_field">Qualifier</span>',
+        'displayNameInHtml': '<span class="cpp_type">TypePrinter</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">volatile</span>&gt;::<span class="cpp_field">Qualifier</span>',
         'impls': [
             'NI$type_printer::TypePrinter@<[T] volatile>::Qualifier'
         ],

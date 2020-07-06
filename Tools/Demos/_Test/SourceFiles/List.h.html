@@ -12,16 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Data Structure::List
-
-Classes:
-	ListStore&lt;T,PODType&gt;				: Array copy helper functions
-	ListBase&lt;T,K&gt;						: Base class for array
-	Array&lt;T,K&gt;							: Array
-	List&lt;T,K&gt;							: List
-	SortedList&lt;T,K&gt;						: List with item order maintained
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_COLLECTIONS_LIST</div>
@@ -266,7 +258,7 @@ ArrayBase
 			}
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the specified element.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element. It will crash when the index is out of range.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::collections::ArrayBase::Get@[T] const &(::vl::vint)[impl0]"><div><div class="token cpp_function">Get</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::ArrayBase::Get@[T] const &(::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
@@ -276,7 +268,7 @@ ArrayBase
 			}
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the specified element.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element. It will crash when the index is out of range.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
@@ -290,27 +282,36 @@ ArrayBase
 Array
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Array.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Array: linear container with fixed size in runtime. All elements are contiguous in memory.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;K&quot;&gt;Type of the key type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;K&quot;&gt;Type of the key type of elements. It is recommended to use the default value.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::Array::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::Array::K"><div><div class="token cpp_type">K</div></div></div> = <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::KeyType', 'vl::KeyType@<::vl::ComPtr<[T]>>', 'vl::KeyType@<::vl::Ptr<[T]>>'], ['vl::KeyType'], [], [])"><div class="token cpp_type">KeyType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::KeyType::Type', 'vl::KeyType@<::vl::ComPtr<[T]>>::Type', 'vl::KeyType@<::vl::Ptr<[T]>>::Type'], [], [])"><div class="token cpp_type">Type</div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::Array"><div><div class="token cpp_type">Array</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase'], [], [])"><div class="token cpp_type">ArrayBase</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;
 		{
 		<div class="token cpp_keyword ">public</div>:
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create an array.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;size&quot;&gt;The size of the array.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// The default value is zero. &lt;see cref=&quot;Resize&quot;/&gt; can be called to determine the size later.</div>
+			<div class="token cpp_comment ">/// It will crash when the size is a negative number.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="def" id="FB$vl::collections::Array::$__ctor@(::vl::vint)[impl0]"><div><div class="token cpp_function">Array</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Array::$__ctor@(::vl::vint)[impl0]::size"><div><div class="token cpp_argument">size</div></div></div> = <div class="token cpp_number ">0</div>)
 			{
+<div class="expandable"><div class="disabled">				CHECK_ERROR(size &gt;= 0, L&quot;Array&lt;T&gt;::Array(vint)#Size should not be negative.&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div> &gt;= <div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;Array&lt;T&gt;::Array(vint)#Size should not be negative.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
 				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::buffer'], [], [])"><div class="token cpp_field">buffer</div></div> = <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ListStore@<[T], *>2::AllocateBuffer@void *(::vl::vint)', 'vl::collections::ListStore@<[T], *>::AllocateBuffer@void *(::vl::vint)'], ['vl::collections::ListStore@<[T], *>2::AllocateBuffer@void *(::vl::vint)', 'vl::collections::ListStore@<[T], *>::AllocateBuffer@void *(::vl::vint)'], [], [])"><div class="token cpp_function">AllocateBuffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>);
 				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ListStore@<[T], *>2::InitializeItemsByDefault@void(void *, ::vl::vint)', 'vl::collections::ListStore@<[T], *>::InitializeItemsByDefault@void(void *, ::vl::vint)'], ['vl::collections::ListStore@<[T], *>2::InitializeItemsByDefault@void(void *, ::vl::vint)', 'vl::collections::ListStore@<[T], *>::InitializeItemsByDefault@void(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">InitializeItemsByDefault</div></div>(<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>);
 				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create an array.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;Pointer to an array to copy.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;size&quot;&gt;The size of the array.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an array with elements provided.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;Pointer to values to copy.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;size&quot;&gt;The number of values to copy.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;It will crash when the size is a negative number.&lt;/remarks&gt;</div>
 			<div class="def" id="FB$vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]"><div><div class="token cpp_function">Array</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]::_buffer"><div><div class="token cpp_argument">_buffer</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]::size"><div><div class="token cpp_argument">size</div></div></div>)
 			{
+<div class="expandable"><div class="disabled">				CHECK_ERROR(size &gt;= 0, L&quot;Array&lt;T&gt;::Array(const T*, vint)#Size should not be negative.&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div> &gt;= <div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;Array&lt;T&gt;::Array(const T*, vint)#Size should not be negative.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
 				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::buffer'], [], [])"><div class="token cpp_field">buffer</div></div> = <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ListStore@<[T], *>2::AllocateBuffer@void *(::vl::vint)', 'vl::collections::ListStore@<[T], *>::AllocateBuffer@void *(::vl::vint)'], ['vl::collections::ListStore@<[T], *>2::AllocateBuffer@void *(::vl::vint)', 'vl::collections::ListStore@<[T], *>::AllocateBuffer@void *(::vl::vint)'], [], [])"><div class="token cpp_function">AllocateBuffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>);
 				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ListStore@<[T], *>2::InitializeItemsByCopy@void(void *, void *, ::vl::vint)', 'vl::collections::ListStore@<[T], *>::InitializeItemsByCopy@void(void *, void *, ::vl::vint)'], ['vl::collections::ListStore@<[T], *>2::InitializeItemsByCopy@void(void *, void *, ::vl::vint)', 'vl::collections::ListStore@<[T], *>::InitializeItemsByCopy@void(void *, void *, ::vl::vint)'], [], [])"><div class="token cpp_function">InitializeItemsByCopy</div></div>(<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>, (<div class="token cpp_keyword ">void</div>*)<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>);
 				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::$__ctor@([T] const *, ::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>;
@@ -322,17 +323,17 @@ Array
 				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ListStore@<[T], *>2::DeallocateBuffer@void(void *)', 'vl::collections::ListStore@<[T], *>::DeallocateBuffer@void(void *)'], ['vl::collections::ListStore@<[T], *>2::DeallocateBuffer@void(void *)', 'vl::collections::ListStore@<[T], *>::DeallocateBuffer@void(void *)'], [], [])"><div class="token cpp_function">DeallocateBuffer</div></div>(<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>);
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the array contain an item or not.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the array contains the specified item.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to test.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the array contain a value or not.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the array contains the specified value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to test.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Array::Contains@bool([K] const &)[impl0]"><div><div class="token cpp_function">Contains</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::K'], [], [])"><div class="token cpp_type">K</div></div>&amp; <div class="def" id="NI$vl::collections::Array::Contains@bool([K] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::Array::IndexOf@::vl::vint([K] const &)'], ['vl::collections::Array::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Contains@bool([K] const &)[impl0]::item'], [], [])"><div class="token cpp_argument">item</div></div>) != -<div class="token cpp_number ">1</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of an item in this array.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position. Returns -1 if not exists&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to find.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of a value in this array.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position of first element that equals to the specified value. Returns -1 if failed to find.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to find.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::Array::IndexOf@::vl::vint([K] const &)[impl0]"><div><div class="token cpp_function">IndexOf</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::K'], [], [])"><div class="token cpp_type">K</div></div>&amp; <div class="def" id="NI$vl::collections::Array::IndexOf@::vl::vint([K] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Array::IndexOf@::vl::vint([K] const &)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::IndexOf@::vl::vint([K] const &)[impl0]::i'], [], [])">i</div> &lt; <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div>; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::IndexOf@::vl::vint([K] const &)[impl0]::i'], [], [])">i</div>++)
@@ -345,20 +346,23 @@ Array
 				<div class="token cpp_keyword ">return</div> -<div class="token cpp_number ">1</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Replace an item.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the item.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The new item to put into the array.&lt;/param&gt;</div>
-			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]"><div><div class="token cpp_function">Set</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)
+			<div class="token cpp_comment ">/// &lt;summary&gt;Replace an element in the specified position.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded. It will crash when the index is out of range&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the element to replace.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The new value to replace.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]"><div><div class="token cpp_function">Set</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)
 			{
 <div class="expandable"><div class="disabled">				CHECK_ERROR(index &gt;= 0 &amp;&amp; index &lt; this-&gt;count, L&quot;Array&lt;T, K&gt;::Set(vint)#Argument index not in range.&quot;);</div>
-<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div> &gt;= <div class="token cpp_number ">0</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div> &lt; <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;Array&lt;T, K&gt;::Set(vint)#Argument index not in range.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
-				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::ItemOf@[T] &(::vl::vint)'], ['vl::collections::ArrayBase::ItemOf@[T] &(::vl::vint)', 'vl::collections::ArrayBase::ItemOf@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">ItemOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>) = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::item'], [], [])"><div class="token cpp_argument">item</div></div>;
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div> &gt;= <div class="token cpp_number ">0</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div> &lt; <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;Array&lt;T, K&gt;::Set(vint)#Argument index not in range.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::ItemOf@[T] &(::vl::vint)'], ['vl::collections::ArrayBase::ItemOf@[T] &(::vl::vint)', 'vl::collections::ArrayBase::ItemOf@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">ItemOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>) = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::item'], [], [])"><div class="token cpp_argument">item</div></div>;
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the specified element.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">using</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase'], [], [])"><div class="token cpp_type">ArrayBase</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div>;
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the specified element.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element. It will crash when the index is out of range.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)
 			{
 <div class="expandable"><div class="disabled">				CHECK_ERROR(index &gt;= 0 &amp;&amp; index &lt; this-&gt;count, L&quot;Array&lt;T, K&gt;::operator[](vint)#Argument index not in range.&quot;);</div>
@@ -366,10 +370,13 @@ Array
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::ItemOf@[T] &(::vl::vint)'], ['vl::collections::ArrayBase::ItemOf@[T] &(::vl::vint)', 'vl::collections::ArrayBase::ItemOf@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">ItemOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>);
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Change the size of the array.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Change the size of the array. This function can be called multiple times to change the size.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;size&quot;&gt;The new size of the array.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;It will crash when the size is a negative number.&lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]"><div><div class="token cpp_function">Resize</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Array::Resize@void(::vl::vint)[impl0]::size"><div><div class="token cpp_argument">size</div></div></div>)
 			{
+<div class="expandable"><div class="disabled">				CHECK_ERROR(size &gt;= 0, L&quot;Array&lt;T&gt;::Resize(vint)#Size should not be negative.&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Resize@void(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div> &gt;= <div class="token cpp_number ">0</div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;Array&lt;T&gt;::Resize(vint)#Size should not be negative.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
 				<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::collections::Array::Resize@void(::vl::vint)[impl0]::newBuffer"><div>newBuffer</div></div> = <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::ListStore@<[T], *>2::AllocateBuffer@void *(::vl::vint)', 'vl::collections::ListStore@<[T], *>::AllocateBuffer@void *(::vl::vint)'], ['vl::collections::ListStore@<[T], *>2::AllocateBuffer@void *(::vl::vint)', 'vl::collections::ListStore@<[T], *>::AllocateBuffer@void *(::vl::vint)'], [], [])"><div class="token cpp_function">AllocateBuffer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Resize@void(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>);
 				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array::Resize@void(::vl::vint)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div> &lt; <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div>)
 				{
@@ -392,9 +399,9 @@ Array
 ListBase
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Base type for a list container.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Base type for all list containers.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;K&quot;&gt;Type of the key type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;K&quot;&gt;Type of the key type of elements. It is recommended to use the default value.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::ListBase::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::ListBase::K"><div><div class="token cpp_type">K</div></div></div> = <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::KeyType', 'vl::KeyType@<::vl::ComPtr<[T]>>', 'vl::KeyType@<::vl::Ptr<[T]>>'], ['vl::KeyType'], [], [])"><div class="token cpp_type">KeyType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ListBase::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::KeyType::Type', 'vl::KeyType@<::vl::ComPtr<[T]>>::Type', 'vl::KeyType@<::vl::Ptr<[T]>>::Type'], [], [])"><div class="token cpp_type">Type</div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::ListBase"><div><div class="token cpp_type">ListBase</div></div></div> <div class="token cpp_keyword ">abstract</div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase'], [], [])"><div class="token cpp_type">ArrayBase</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ListBase::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;
 		{
@@ -478,14 +485,17 @@ ListBase
 			}
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Set a preference of using memory.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;mode&quot;&gt;Set to true (by default) to let the container efficiently reduce memory usage when necessary.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;mode&quot;&gt;</div>
+			<div class="token cpp_comment ">/// Set to true (by default) to let the container actively reduce memories when there is too much room for unused elements.</div>
+			<div class="token cpp_comment ">/// This could happen after removing a lot of elements.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::ListBase::SetLessMemoryMode@void(bool)[impl0]"><div><div class="token cpp_function">SetLessMemoryMode</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::ListBase::SetLessMemoryMode@void(bool)[impl0]::mode"><div><div class="token cpp_argument">mode</div></div></div>)
 			{
 				<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ListBase::lessMemoryMode'], [], [])"><div class="token cpp_field">lessMemoryMode</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ListBase::SetLessMemoryMode@void(bool)[impl0]::mode'], [], [])"><div class="token cpp_argument">mode</div></div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Remove an element.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the element is removed.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Remove an element at a specified position.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the element is removed. It will crash when the index is out of range.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element to remove.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::ListBase::RemoveAt@bool(::vl::vint)[impl0]"><div><div class="token cpp_function">RemoveAt</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::ListBase::RemoveAt@bool(::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)
 			{
@@ -498,8 +508,8 @@ ListBase
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Remove elements.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the element is removed.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Remove contiguous elements at a specified psition.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if elements are removed. It will crash when the index or the size is out of range.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the first element to remove.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;_count&quot;&gt;The number of elements to remove.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::ListBase::RemoveRange@bool(::vl::vint, ::vl::vint)[impl0]"><div><div class="token cpp_function">RemoveRange</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::ListBase::RemoveRange@bool(::vl::vint, ::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::ListBase::RemoveRange@bool(::vl::vint, ::vl::vint)[impl0]::_count"><div><div class="token cpp_argument">_count</div></div></div>)
@@ -540,29 +550,27 @@ ListBase
 List
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;List.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;List: linear container with dynamic size in runtime for unordered values. All elements are contiguous in memory.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;K&quot;&gt;Type of the key type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;K&quot;&gt;Type of the key type of elements. It is recommended to use the default value.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::List::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::List::K"><div><div class="token cpp_type">K</div></div></div> = <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::KeyType', 'vl::KeyType@<::vl::ComPtr<[T]>>', 'vl::KeyType@<::vl::Ptr<[T]>>'], ['vl::KeyType'], [], [])"><div class="token cpp_type">KeyType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::KeyType::Type', 'vl::KeyType@<::vl::ComPtr<[T]>>::Type', 'vl::KeyType@<::vl::Ptr<[T]>>::Type'], [], [])"><div class="token cpp_type">Type</div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::List"><div><div class="token cpp_type">List</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ListBase'], [], [])"><div class="token cpp_type">ListBase</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::K'], [], [])"><div class="token cpp_type">K</div></div>&gt;
 		{
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a list.&lt;/summary&gt;</div>
-			<div class="def" id="FB$vl::collections::List::$__ctor@()[impl0]"><div><div class="token cpp_function">List</div></div></div>()
-			{
-			}
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty list.&lt;/summary&gt;</div>
+			<div class="def" id="FB$vl::collections::List::$__ctor@()[decl0]"><div><div class="token cpp_function">List</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the list contain an item or not.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the list contains the specified item.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to test.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the list contain a value or not.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the list contains the specified value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to test.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::List::Contains@bool([K] const &)[impl0]"><div><div class="token cpp_function">Contains</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::K'], [], [])"><div class="token cpp_type">K</div></div>&amp; <div class="def" id="NI$vl::collections::List::Contains@bool([K] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::List::IndexOf@::vl::vint([K] const &)'], ['vl::collections::List::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::Contains@bool([K] const &)[impl0]::item'], [], [])"><div class="token cpp_argument">item</div></div>) != -<div class="token cpp_number ">1</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of an item in this list.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position. Returns -1 if not exists&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to find.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of a value in this list.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position of first element that equals to the specified value. Returns -1 if failed to find.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to find.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]"><div><div class="token cpp_function">IndexOf</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::K'], [], [])"><div class="token cpp_type">K</div></div>&amp; <div class="def" id="NI$vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]::i'], [], [])">i</div> &lt; <div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div>; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]::i'], [], [])">i</div>++)
@@ -575,18 +583,18 @@ List
 				<div class="token cpp_keyword ">return</div> -<div class="token cpp_number ">1</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Add an item at the end of the list.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Append a value at the end of the list.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The index of the added item.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to add.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to add.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::collections::List::Add@::vl::vint([T] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)'], ['vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)'], [], [])"><div class="token cpp_function">Insert</div></div>(<div class="token cpp_keyword ">this</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::Add@::vl::vint([T] const &)[impl0]::item'], [], [])"><div class="token cpp_argument">item</div></div>);
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Add an item at the specified position.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The index of the added item.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the item to add.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to add.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Insert a value at the specified position.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The index of the added item. It will crash if the index is out of range&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position to insert the value.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to add.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)[impl0]"><div><div class="token cpp_function">Insert</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)
 			{
 <div class="expandable"><div class="disabled">				CHECK_ERROR(index &gt;= 0 &amp;&amp; index &lt;= this-&gt;count, L&quot;List&lt;T, K&gt;::Insert(vint, const T&amp;)#Argument index not in range.&quot;);</div>
@@ -604,8 +612,8 @@ List
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Remove an item.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the item is removed.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Remove an element from the list. If multiple elements equal to the specified value, only the first one will be removed&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the element is removed.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to remove.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::List::Remove@bool([K] const &)[impl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::K'], [], [])"><div class="token cpp_type">K</div></div>&amp; <div class="def" id="NI$vl::collections::List::Remove@bool([K] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)
 			{
@@ -621,10 +629,10 @@ List
 				}
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Replace an item.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the item.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The new item to put into the array.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Replace an element in the specified position.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded. It will crash when the index is out of range&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the element to replace.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The new value to replace.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::List::Set@bool(::vl::vint, [T] const &)[impl0]"><div><div class="token cpp_function">Set</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::List::Set@bool(::vl::vint, [T] const &)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::collections::List::Set@bool(::vl::vint, [T] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)
 			{
 <div class="expandable"><div class="disabled">				CHECK_ERROR(index &gt;= 0 &amp;&amp; index &lt; this-&gt;count, L&quot;List&lt;T, K&gt;::Set(vint)#Argument index not in range.&quot;);</div>
@@ -633,10 +641,11 @@ List
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the specified element.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">using</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ListBase'], [], [])"><div class="token cpp_type">ListBase</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::K'], [], [])"><div class="token cpp_type">K</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div>;
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the specified element.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element. It will crash when the index is out of range.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)
 			{
 <div class="expandable"><div class="disabled">				CHECK_ERROR(index &gt;= 0 &amp;&amp; index &lt; this-&gt;count, L&quot;List&lt;T, K&gt;::operator[](vint)#Argument index not in range.&quot;);</div>
@@ -649,19 +658,24 @@ List
 SortedList
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;List that keeps everything in order.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;SortedList: linear container with dynamic size in runtime for ordered values. All elements are kept in order, and are contiguous in memory.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;K&quot;&gt;Type of the key type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;K&quot;&gt;Type of the key type of elements. It is recommended to use the default value.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::SortedList::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::SortedList::K"><div><div class="token cpp_type">K</div></div></div> = <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::KeyType', 'vl::KeyType@<::vl::ComPtr<[T]>>', 'vl::KeyType@<::vl::Ptr<[T]>>'], ['vl::KeyType'], [], [])"><div class="token cpp_type">KeyType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::KeyType::Type', 'vl::KeyType@<::vl::ComPtr<[T]>>::Type', 'vl::KeyType@<::vl::Ptr<[T]>>::Type'], [], [])"><div class="token cpp_type">Type</div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::SortedList"><div><div class="token cpp_type">SortedList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ListBase'], [], [])"><div class="token cpp_type">ListBase</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::K'], [], [])"><div class="token cpp_type">K</div></div>&gt;
 		{
 		<div class="token cpp_keyword ">protected</div>:
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of an item in this list.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Key&quot;&gt;Type of the item to find.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position. Returns -1 if not exists&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to find.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;Returns the last index.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of an element in this list by performing binary search.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Key&quot;&gt;Type of the element to find.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position. Returns -1 if it does not exist.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The element to find.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;</div>
+			<div class="token cpp_comment ">/// If the element exist, this argument returns one of the element that equals to the specified value.</div>
+			<div class="token cpp_comment ">/// If the element doesn not exist,</div>
+			<div class="token cpp_comment ">/// this argument returns either the greatest element that less than the specified value,</div>
+			<div class="token cpp_comment ">/// or the lest element that greater than the specified value.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)[impl0]::Key"><div><div class="token cpp_type">Key</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)[impl0]"><div><div class="token cpp_function">IndexOfInternal</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)[impl0]::Key'], [], [])"><div class="token cpp_type">Key</div></div>&amp; <div class="def" id="NI$vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
@@ -702,31 +716,29 @@ SortedList
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::Insert@::vl::vint(::vl::vint, [T] const &)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>;
 			}
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a list.&lt;/summary&gt;</div>
-			<div class="def" id="FB$vl::collections::SortedList::$__ctor@()[impl0]"><div><div class="token cpp_function">SortedList</div></div></div>()
-			{
-			}
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty list.&lt;/summary&gt;</div>
+			<div class="def" id="FB$vl::collections::SortedList::$__ctor@()[decl0]"><div><div class="token cpp_function">SortedList</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the list contain an item or not.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the list contains the specified item.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to test.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the list contain a value or not.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the list contains the specified value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to test.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::SortedList::Contains@bool([K] const &)[impl0]"><div><div class="token cpp_function">Contains</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::K'], [], [])"><div class="token cpp_type">K</div></div>&amp; <div class="def" id="NI$vl::collections::SortedList::Contains@bool([K] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::Contains@bool([K] const &)[impl0]::item'], [], [])"><div class="token cpp_argument">item</div></div>) != -<div class="token cpp_number ">1</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of an item in this list.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position. Returns -1 if not exists&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to find.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of a value in this list.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position of first element that equals to the specified value. Returns -1 if failed to find.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to find.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]"><div><div class="token cpp_function">IndexOf</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::K'], [], [])"><div class="token cpp_type">K</div></div>&amp; <div class="def" id="NI$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]::outputIndex"><div>outputIndex</div></div> = -<div class="token cpp_number ">1</div>;
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)'], ['vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)'], [], [])"><div class="token cpp_function">IndexOfInternal</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::K'], [], [])"><div class="token cpp_type">K</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]::item'], [], [])"><div class="token cpp_argument">item</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]::outputIndex'], [], [])">outputIndex</div>);
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Add an item at a correct position to keep everying in order.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Add a value at the correct position, all elements will be kept in order.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The index of the added item.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to add.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The value to add.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::SortedList::Add@::vl::vint([T] const &)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::collections::SortedList::Add@::vl::vint([T] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)
 			{
 				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase'], [], [])"><div class="token cpp_type">ArrayBase</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ArrayBase::count'], [], [])"><div class="token cpp_field">count</div></div> == <div class="token cpp_number ">0</div>)
@@ -747,8 +759,8 @@ SortedList
 				}
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Remove an item.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the item is removed.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Remove an element from the list. If multiple elements equal to the specified value, only the first one will be removed&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the element is removed.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;item&quot;&gt;The item to remove.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::SortedList::Remove@bool([K] const &)[impl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList::K'], [], [])"><div class="token cpp_type">K</div></div>&amp; <div class="def" id="NI$vl::collections::SortedList::Remove@bool([K] const &)[impl0]::item"><div><div class="token cpp_argument">item</div></div></div>)
 			{
@@ -828,7 +840,7 @@ Special Containers
 				{
 					<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::Accessor::Get@void *(::vl::collections::bom_helper::TreeNode *, ::vl::vuint8_t)[impl0]::root'], [], [])"><div class="token cpp_argument">root</div></div>)
 					{
-						<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
+						<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">nullptr</div>;
 					}
 					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::bom_helper::Accessor::Get@void *(::vl::collections::bom_helper::TreeNode *, ::vl::vuint8_t)[impl0]::fragmentIndex"><div>fragmentIndex</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::Accessor::Get@void *(::vl::collections::bom_helper::TreeNode *, ::vl::vuint8_t)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div> &gt;&gt; (<div class="token cpp_number ">2</div> * (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::Accessor::Index'], [], [])"><div class="token cpp_enum">Index</div></div> - <div class="token cpp_number ">1</div>))) % <div class="token cpp_number ">4</div>;
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::TreeNode'], [], [])"><div class="token cpp_type">TreeNode</div></div>* <div class="def" id="NI$vl::collections::bom_helper::Accessor::Get@void *(::vl::collections::bom_helper::TreeNode *, ::vl::vuint8_t)[impl0]::fragmentRoot"><div>fragmentRoot</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::Accessor::Get@void *(::vl::collections::bom_helper::TreeNode *, ::vl::vuint8_t)[impl0]::root'], [], [])"><div class="token cpp_argument">root</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::TreeNode::nodes'], [], [])"><div class="token cpp_field">nodes</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::Accessor::Get@void *(::vl::collections::bom_helper::TreeNode *, ::vl::vuint8_t)[impl0]::fragmentIndex'], [], [])">fragmentIndex</div>];
@@ -869,17 +881,11 @@ Special Containers
 		<div class="token cpp_keyword ">public</div>:
 			<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PushOnlyAllocator'], [], [])"><div class="token cpp_type">PushOnlyAllocator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper'], [], [])">bom_helper</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::TreeNode'], [], [])"><div class="token cpp_type">TreeNode</div></div>&gt;			<div class="def" id="NI$vl::collections::ByteObjectMap::Allocator"><div><div class="token cpp_type">Allocator</div></div></div>;
 		<div class="token cpp_keyword ">protected</div>:
-			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper'], [], [])">bom_helper</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::TreeNode'], [], [])"><div class="token cpp_type">TreeNode</div></div>*			<div class="def" id="NI$vl::collections::ByteObjectMap::root"><div><div class="token cpp_field">root</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper'], [], [])">bom_helper</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::bom_helper::TreeNode'], [], [])"><div class="token cpp_type">TreeNode</div></div>*			<div class="def" id="NI$vl::collections::ByteObjectMap::root"><div><div class="token cpp_field">root</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
 
 		<div class="token cpp_keyword ">public</div>:
-			<div class="def" id="FB$vl::collections::ByteObjectMap::$__ctor@()[impl0]"><div><div class="token cpp_function">ByteObjectMap</div></div></div>()
-				:root(<div class="token cpp_number ">0</div>)
-			{
-			}
-
-			<div class="def" id="FB$vl::collections::ByteObjectMap::~ByteObjectMap@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">ByteObjectMap</div></div></div>()
-			{
-			}
+			<div class="def" id="FB$vl::collections::ByteObjectMap::$__ctor@()[decl0]"><div><div class="token cpp_function">ByteObjectMap</div></div></div>() = <div class="token cpp_keyword ">default</div>;
+			<div class="def" id="FB$vl::collections::ByteObjectMap::~ByteObjectMap@()[decl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">ByteObjectMap</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ByteObjectMap::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="FB$vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)[impl0]"><div><div class="token cpp_function">Get</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint8_t'], [], [])"><div class="token cpp_type">vuint8_t</div></div> <div class="def" id="NI$vl::collections::ByteObjectMap::Get@[T] *(::vl::vuint8_t)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)
 			{
@@ -946,14 +952,14 @@ referencedSymbols = {
         ]
     },
     'memcpy@void *(void *, void const *, ::size_t)': {
-        'displayNameInHtml': '<span class="cpp_function">memcpy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'displayNameInHtml': '<span class="cpp_function">memcpy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
             'FB$memcpy@void *(void *, void const *, ::size_t)[decl0]'
         ]
     },
     'memmove@void *(void *, void const *, ::size_t)': {
-        'displayNameInHtml': '<span class="cpp_function">memmove</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)',
+        'displayNameInHtml': '<span class="cpp_function">memmove</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">size_t</span>)',
         'impls': [],
         'decls': [
             'FB$memmove@void *(void *, void const *, ::size_t)[decl0]'
@@ -1301,56 +1307,56 @@ referencedSymbols = {
         'decls': []
     },
     'vl::POD@<[T] [*]>': {
-        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span>[<span class="cpp_keyword">(expr)</span>]&gt;',
+        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span>[<span class="cpp_keyword">expr</span>]&gt;',
         'impls': [
             'NI$vl::POD@<[T] [*]>'
         ],
         'decls': []
     },
     'vl::POD@<[T] [*]>::Result': {
-        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span>[<span class="cpp_keyword">(expr)</span>]&gt;::<span class="cpp_field">Result</span>',
+        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span>[<span class="cpp_keyword">expr</span>]&gt;::<span class="cpp_field">Result</span>',
         'impls': [
             'NI$vl::POD@<[T] [*]>::Result'
         ],
         'decls': []
     },
     'vl::POD@<[T] const volatile>': {
-        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> <span class="cpp_keyword">volatile</span>&gt;',
         'impls': [
             'NI$vl::POD@<[T] const volatile>'
         ],
         'decls': []
     },
     'vl::POD@<[T] const volatile>::Result': {
-        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span><span class="cpp_keyword"> volatile</span>&gt;::<span class="cpp_field">Result</span>',
+        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> <span class="cpp_keyword">volatile</span>&gt;::<span class="cpp_field">Result</span>',
         'impls': [
             'NI$vl::POD@<[T] const volatile>::Result'
         ],
         'decls': []
     },
     'vl::POD@<[T] const>': {
-        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span>&gt;',
         'impls': [
             'NI$vl::POD@<[T] const>'
         ],
         'decls': []
     },
     'vl::POD@<[T] const>::Result': {
-        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> const</span>&gt;::<span class="cpp_field">Result</span>',
+        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">const</span>&gt;::<span class="cpp_field">Result</span>',
         'impls': [
             'NI$vl::POD@<[T] const>::Result'
         ],
         'decls': []
     },
     'vl::POD@<[T] volatile>': {
-        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> volatile</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">volatile</span>&gt;',
         'impls': [
             'NI$vl::POD@<[T] volatile>'
         ],
         'decls': []
     },
     'vl::POD@<[T] volatile>::Result': {
-        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span><span class="cpp_keyword"> volatile</span>&gt;::<span class="cpp_field">Result</span>',
+        'displayNameInHtml': '<span class="cpp_type">POD</span>&lt;<span class="cpp_type">T</span> <span class="cpp_keyword">volatile</span>&gt;::<span class="cpp_field">Result</span>',
         'impls': [
             'NI$vl::POD@<[T] volatile>::Result'
         ],
@@ -1458,7 +1464,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::Array::IndexOf@::vl::vint([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::Array::IndexOf@::vl::vint([K] const &)[impl0]'
         ],
@@ -1499,17 +1505,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::index': {
+    'vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::index': {
         'displayNameInHtml': 'index',
         'impls': [
-            'NI$vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::index'
+            'NI$vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::index'
         ],
         'decls': []
     },
-    'vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::item': {
+    'vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::item': {
         'displayNameInHtml': 'item',
         'impls': [
-            'NI$vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::item'
+            'NI$vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::item'
         ],
         'decls': []
     },
@@ -1745,7 +1751,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::List::Add@::vl::vint([T] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]'
         ],
@@ -1766,7 +1772,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::List::IndexOf@::vl::vint([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]'
         ],
@@ -1787,7 +1793,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Insert</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Insert</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)[impl0]'
         ],
@@ -2053,28 +2059,28 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;',
         'impls': [
             'NI$vl::collections::ListStore'
         ],
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;',
         'impls': [
             'NI$vl::collections::ListStore@<[T], *>'
         ],
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>2': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;',
         'impls': [
             'NI$vl::collections::ListStore@<[T], *>2'
         ],
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>2::AllocateBuffer@void *(::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">AllocateBuffer</span>(<span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">AllocateBuffer</span>(<span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>2::AllocateBuffer@void *(::vl::vint)[impl0]'
         ],
@@ -2088,7 +2094,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>2::DeallocateBuffer@void(void *)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">DeallocateBuffer</span>(<span class="cpp_keyword">void</span> *)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">DeallocateBuffer</span>(<span class="cpp_keyword">void</span> *)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>2::DeallocateBuffer@void(void *)[impl0]'
         ],
@@ -2102,7 +2108,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>2::InitializeItemsByCopy@void(void *, void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">InitializeItemsByCopy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">InitializeItemsByCopy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>2::InitializeItemsByCopy@void(void *, void *, ::vl::vint)[impl0]'
         ],
@@ -2130,14 +2136,14 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>2::InitializeItemsByDefault@void(void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">InitializeItemsByDefault</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">InitializeItemsByDefault</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>2::InitializeItemsByDefault@void(void *, ::vl::vint)[impl0]'
         ],
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>2::InitializeItemsByMove@void(void *, void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">InitializeItemsByMove</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">InitializeItemsByMove</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>2::InitializeItemsByMove@void(void *, void *, ::vl::vint)[impl0]'
         ],
@@ -2165,7 +2171,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>2::MoveItemsInTheSameBuffer@void(void *, void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">MoveItemsInTheSameBuffer</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">MoveItemsInTheSameBuffer</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>2::MoveItemsInTheSameBuffer@void(void *, void *, ::vl::vint)[impl0]'
         ],
@@ -2193,7 +2199,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>2::ReleaseItems@void(void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">ReleaseItems</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">ReleaseItems</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>2::ReleaseItems@void(void *, ::vl::vint)[impl0]'
         ],
@@ -2207,7 +2213,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>::AllocateBuffer@void *(::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">AllocateBuffer</span>(<span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">AllocateBuffer</span>(<span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>::AllocateBuffer@void *(::vl::vint)[impl0]'
         ],
@@ -2221,7 +2227,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>::DeallocateBuffer@void(void *)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">DeallocateBuffer</span>(<span class="cpp_keyword">void</span> *)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">DeallocateBuffer</span>(<span class="cpp_keyword">void</span> *)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>::DeallocateBuffer@void(void *)[impl0]'
         ],
@@ -2235,7 +2241,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>::InitializeItemsByCopy@void(void *, void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">InitializeItemsByCopy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">InitializeItemsByCopy</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>::InitializeItemsByCopy@void(void *, void *, ::vl::vint)[impl0]'
         ],
@@ -2284,7 +2290,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>::InitializeItemsByDefault@void(void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">InitializeItemsByDefault</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">InitializeItemsByDefault</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>::InitializeItemsByDefault@void(void *, ::vl::vint)[impl0]'
         ],
@@ -2319,7 +2325,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>::InitializeItemsByMove@void(void *, void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">InitializeItemsByMove</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">InitializeItemsByMove</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>::InitializeItemsByMove@void(void *, void *, ::vl::vint)[impl0]'
         ],
@@ -2368,7 +2374,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>::MoveItemsInTheSameBuffer@void(void *, void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">MoveItemsInTheSameBuffer</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">MoveItemsInTheSameBuffer</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>::MoveItemsInTheSameBuffer@void(void *, void *, ::vl::vint)[impl0]'
         ],
@@ -2424,7 +2430,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::ListStore@<[T], *>::ReleaseItems@void(void *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">ReleaseItems</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">ListStore</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">ReleaseItems</span>(<span class="cpp_keyword">void</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::collections::ListStore@<[T], *>::ReleaseItems@void(void *, ::vl::vint)[impl0]'
         ],
@@ -2585,7 +2591,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::SortedList::IndexOf@::vl::vint([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]'
         ],
@@ -2606,7 +2612,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)': {
-        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOfInternal</span>&lt;<span class="cpp_type">Key</span>&gt;(<span class="cpp_type">Key</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">vint</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOfInternal</span>&lt;<span class="cpp_type">Key</span>&gt;(<span class="cpp_type">Key</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">vint</span> &)',
         'impls': [
             'FB$vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &, ::vl::vint &)[impl0]'
         ],
@@ -2648,7 +2654,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::SortedList::Insert@::vl::vint(::vl::vint, [T] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Insert</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Insert</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::SortedList::Insert@::vl::vint(::vl::vint, [T] const &)[impl0]'
         ],
@@ -2711,14 +2717,14 @@ referencedSymbols = {
         ]
     },
     'vl::collections::bom_helper::Accessor': {
-        'displayNameInHtml': '<span class="cpp_type">Accessor</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">Accessor</span>&lt;<span class="cpp_keyword">expr</span>&gt;',
         'impls': [
             'NI$vl::collections::bom_helper::Accessor'
         ],
         'decls': []
     },
     'vl::collections::bom_helper::Accessor::Get@void *(::vl::collections::bom_helper::TreeNode *, ::vl::vuint8_t)': {
-        'displayNameInHtml': '<span class="cpp_type">Accessor</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">Get</span>(<span class="cpp_type">TreeNode</span> *, <span class="cpp_type">vuint8_t</span>)',
+        'displayNameInHtml': '<span class="cpp_type">Accessor</span>&lt;<span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">Get</span>(<span class="cpp_type">TreeNode</span> *, <span class="cpp_type">vuint8_t</span>)',
         'impls': [
             'FB$vl::collections::bom_helper::Accessor::Get@void *(::vl::collections::bom_helper::TreeNode *, ::vl::vuint8_t)[impl0]'
         ],
@@ -2760,7 +2766,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::bom_helper::Accessor::Set@void(::vl::collections::bom_helper::TreeNode * &, ::vl::vuint8_t, void *, ::vl::collections::PushOnlyAllocator<::vl::collections::bom_helper::TreeNode> &)': {
-        'displayNameInHtml': '<span class="cpp_type">Accessor</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;::<span class="cpp_function">Set</span>(<span class="cpp_type">TreeNode</span> * &, <span class="cpp_type">vuint8_t</span>, <span class="cpp_keyword">void</span> *, <span class="cpp_type">PushOnlyAllocator</span>&lt;<span class="cpp_type">TreeNode</span>&gt; &)',
+        'displayNameInHtml': '<span class="cpp_type">Accessor</span>&lt;<span class="cpp_keyword">expr</span>&gt;::<span class="cpp_function">Set</span>(<span class="cpp_type">TreeNode</span> * &, <span class="cpp_type">vuint8_t</span>, <span class="cpp_keyword">void</span> *, <span class="cpp_type">PushOnlyAllocator</span>&lt;<span class="cpp_type">TreeNode</span>&gt; &)',
         'impls': [
             'FB$vl::collections::bom_helper::Accessor::Set@void(::vl::collections::bom_helper::TreeNode * &, ::vl::vuint8_t, void *, ::vl::collections::PushOnlyAllocator<::vl::collections::bom_helper::TreeNode> &)[impl0]'
         ],
@@ -2809,7 +2815,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::bom_helper::Accessor@<*>': {
-        'displayNameInHtml': '<span class="cpp_type">Accessor</span>&lt;<span class="cpp_keyword">(expr)</span>&gt;',
+        'displayNameInHtml': '<span class="cpp_type">Accessor</span>&lt;<span class="cpp_keyword">expr</span>&gt;',
         'impls': [
             'NI$vl::collections::bom_helper::Accessor@<*>'
         ],
@@ -3088,8 +3094,8 @@ symbolToFiles = {
     'NI$vl::collections::Array::IndexOf@::vl::vint([K] const &)[impl0]::item': null,
     'NI$vl::collections::Array::Resize@void(::vl::vint)[impl0]::newBuffer': null,
     'NI$vl::collections::Array::Resize@void(::vl::vint)[impl0]::size': null,
-    'NI$vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::index': null,
-    'NI$vl::collections::Array::Set@void(::vl::vint, [T] const &)[impl0]::item': null,
+    'NI$vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::index': null,
+    'NI$vl::collections::Array::Set@bool(::vl::vint, [T] const &)[impl0]::item': null,
     'NI$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]::index': null,
     'NI$vl::collections::ArrayBase': null,
     'NI$vl::collections::ArrayBase::AddressOf@void *(void *, ::vl::vint)[impl0]::bufferOfTs': null,

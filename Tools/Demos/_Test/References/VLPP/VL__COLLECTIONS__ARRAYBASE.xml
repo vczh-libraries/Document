@@ -1,1 +1,7 @@
-<Document><summary>Base type of all linear container.</summary><typeparam name="T">Type of elements.</typeparam></Document>
+<Document symbolId="vl::collections::ArrayBase" accessor="" category="Class" name="ArrayBase" declFile="List.h" declId="NI$vl::collections::ArrayBase"><summary>Base type of all linear container.</summary><typeparam name="T">Type of elements.</typeparam><signature><![CDATA[template <
+    typename T
+>
+class ArrayBase
+    : ListStore<T, expr>
+    , IEnumerable<T>;
+]]></signature><basetypes><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol name="ListStore" declFile="List.h" declId="NI$vl::collections::ListStore"/></basetypes></Document>

@@ -1,1 +1,9 @@
-<Document><summary>Aggregate a lazy list.</summary><typeparam name="I">Type of the initial value.</typeparam><typeparam name="F">Type of the lambda expression.</typeparam><returns>The aggregated value.</returns><param name="init">The initial value that is virtually added before the lazy list.</param><param name="f">The lambda expression as an aggregator.</param></Document>
+<Document symbolId="vl::collections::LazyList::Aggregate@[I]([I], [F])" accessor="public" category="Function" name="Aggregate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]"><summary>Aggregate a lazy list.</summary><typeparam name="I">Type of the initial value.</typeparam><typeparam name="F">Type of the lambda expression.</typeparam><returns>The aggregated value.</returns><param name="init">The initial value that is virtually added before the lazy list.</param><param name="f">The lambda expression as an aggregator.</param><signature><![CDATA[template <
+    typename I, 
+    typename F
+>
+I Aggregate(
+    I init,
+    F f
+) const;
+]]></signature></Document>

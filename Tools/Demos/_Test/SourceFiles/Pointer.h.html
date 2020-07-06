@@ -12,12 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Data Structure::Smart Pointer
-
-Classes:
-	Ptr&lt;T&gt;							: Shared Pointer
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_POINTER</div>
@@ -32,13 +28,23 @@ Classes:
 ReferenceCounterOperator
 ***********************************************************************/</div>
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;The strategy to get the pointer to the reference counter from an object. If you get the same pointer multiple times from the same object by calling [M:vl.ReferenceCounterOperator`2.CreateCounter], than it is safe to convert a object pointer to a [T:vl.Ptr`1]. Currently for reflectable C++ types which inherit from [T:vl.reflection.DescriptableObject] it is yet. For others it is no.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;The type of the object.&lt;/typeparam&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Enabled&quot;&gt;[T:vl.Ptr`1] will always use [T:vl.YesType] as the second type parameter. This parameter is useful when you want to do partial specialization in the SFINAE way.&lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// The strategy class to create and delete the reference counter of an object.</div>
+	<div class="token cpp_comment ">/// For any object inherits from [T:vl.reflection.DescriptableObject], the reference counter is stored inside the object.</div>
+	<div class="token cpp_comment ">/// For any other object, the reference counter is allocated separately.</div>
+	<div class="token cpp_comment ">/// You can create your own strategy by adding a new partial specialization to this class.</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;</div>
+	<div class="token cpp_comment ">/// The type of the object.</div>
+	<div class="token cpp_comment ">/// &lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;Enabled&quot;&gt;</div>
+	<div class="token cpp_comment ">/// [T:vl.Ptr`1] will always use [T:vl.YesType] as the second type parameter.</div>
+	<div class="token cpp_comment ">/// This parameter is useful when you want to do partial specialization in the SFINAE way.</div>
+	<div class="token cpp_comment ">/// &lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::ReferenceCounterOperator::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::ReferenceCounterOperator::Enabled"><div><div class="token cpp_type">Enabled</div></div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::YesType'], [], [])"><div class="token cpp_type">YesType</div></div>&gt;
 	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::ReferenceCounterOperator"><div><div class="token cpp_type">ReferenceCounterOperator</div></div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a pointer to the reference counter from an object.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create the reference counter of an object.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;The pointer to the reference counter.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;reference&quot;&gt;The object.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__forceinline</div> <div class="token cpp_keyword ">volatile</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>* <div class="def" id="FB$vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)[impl0]"><div><div class="token cpp_function">CreateCounter</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ReferenceCounterOperator::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)[impl0]::reference"><div><div class="token cpp_argument">reference</div></div></div>)
@@ -46,7 +52,7 @@ ReferenceCounterOperator
 			<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>(<div class="token cpp_number ">0</div>);
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Destroy a pointer to the reference counter from an object.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Delete the reference counter from an object.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;counter&quot;&gt;The pointer to the reference counter.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;reference&quot;&gt;The object.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__forceinline</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)[impl0]"><div><div class="token cpp_function">DeleteReference</div></div></div>(<div class="token cpp_keyword ">volatile</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>* <div class="def" id="NI$vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)[impl0]::counter"><div><div class="token cpp_argument">counter</div></div></div>, <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)[impl0]::reference"><div><div class="token cpp_argument">reference</div></div></div>)
@@ -60,7 +66,17 @@ ReferenceCounterOperator
 Ptr
 ***********************************************************************/</div>
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;A smart pointer. It is always safe to convert a pointer to an object to a smart pointer once. If you do it multiple times, it may be wrong due to different implementation of [T:vl.ReferenceCounterOperator`2]. In case of wrong, disposing the smart pointer will cause an access violation.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// A shared pointer.</div>
+	<div class="token cpp_comment ">/// It maintains a reference counter to the object.</div>
+	<div class="token cpp_comment ">/// When no [T:vl.Ptr`1] is referencing the object, the object will be deleted automatically.</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+	<div class="token cpp_comment ">/// It is safe to convert the same pointer to an object to a shared pointer once.</div>
+	<div class="token cpp_comment ">/// If you do it multiple times, it depends on [T:vl.ReferenceCounterOperator`2].</div>
+	<div class="token cpp_comment ">/// For built-in strategies, only pointer to [T:vl.reflection.DescriptableObject] or its derived classes can be safely converted to a shared pointer for multiple times.</div>
+	<div class="token cpp_comment ">/// For any other object, it will crash on the destructor of [T:vl.Ptr`1].</div>
+	<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;The type of the object.&lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Ptr::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Ptr"><div><div class="token cpp_type">Ptr</div></div></div>
@@ -124,11 +140,9 @@ Ptr
 	<div class="token cpp_keyword ">public</div>:
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Create a null pointer.&lt;/summary&gt;</div>
-		<div class="def" id="FB$vl::Ptr::$__ctor@()[impl0]"><div><div class="token cpp_function">Ptr</div></div></div>()
-		{
-		}
+		<div class="def" id="FB$vl::Ptr::$__ctor@()[decl0]"><div><div class="token cpp_function">Ptr</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a pointer to an object to a smart pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a pointer to an object to a shared pointer.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The pointer to the object.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Ptr::$__ctor@([T] *)[impl0]"><div><div class="token cpp_function">Ptr</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::Ptr::$__ctor@([T] *)[impl0]::pointer"><div><div class="token cpp_argument">pointer</div></div></div>)
 		{
@@ -142,8 +156,8 @@ Ptr
 			}
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a smart pointer.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The smart pointer to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a shared pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The shared pointer to copy.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Ptr::$__ctor@(::vl::Ptr<[T]> const &)[impl0]"><div><div class="token cpp_function">Ptr</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Ptr::$__ctor@(::vl::Ptr<[T]> const &)[impl0]::pointer"><div><div class="token cpp_argument">pointer</div></div></div>)
 			:counter(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[T]> const &)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::counter'], [], [])"><div class="token cpp_field">counter</div></div>)
 			, reference(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[T]> const &)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div>)
@@ -153,8 +167,8 @@ Ptr
 			<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Inc@void()'], ['vl::Ptr::Inc@void()'], [], [])"><div class="token cpp_function">Inc</div></div>();
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Move a smart pointer.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The smart pointer to Move.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Move a shared pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The shared pointer to Move.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Ptr::$__ctor@(::vl::Ptr<[T]> &&)[impl0]"><div><div class="token cpp_function">Ptr</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::Ptr::$__ctor@(::vl::Ptr<[T]> &&)[impl0]::pointer"><div><div class="token cpp_argument">pointer</div></div></div>)
 			:counter(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[T]> &&)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::counter'], [], [])"><div class="token cpp_field">counter</div></div>)
 			, reference(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[T]> &&)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div>)
@@ -164,9 +178,9 @@ Ptr
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[T]> &&)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::SetEmptyNoIncDec@void()'], ['vl::Ptr::SetEmptyNoIncDec@void()'], [], [])"><div class="token cpp_function">SetEmptyNoIncDec</div></div>();
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Cast a smart pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Cast a shared pointer implicitly by copying another shared pointer.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;The type of the object before casting.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The smart pointer to cast.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The shared pointer to cast.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Ptr::$__ctor@(::vl::Ptr<[C]> const &)[impl0]::C"><div><div class="token cpp_type">C</div></div></div>, <div class="token cpp_keyword ">typename</div> = <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::AcceptType@<[T], ::vl::YesType>'], ['vl::AcceptType'], [], [])"><div class="token cpp_type">AcceptType</div></div>&lt;<div class="token cpp_keyword ">void</div>, <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::PointerConvertable'], [], [])"><div class="token cpp_type">PointerConvertable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[C]> const &)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::PointerConvertable::YesNoType'], [], [])"><div class="token cpp_type">YesNoType</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::AcceptType@<[T], ::vl::YesType>::Type'], [], [])"><div class="token cpp_type">Type</div></div>&gt;
 		<div class="def" id="FB$vl::Ptr::$__ctor@(::vl::Ptr<[C]> const &)[impl0]"><div><div class="token cpp_function">Ptr</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[C]> const &)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&gt;&amp; <div class="def" id="NI$vl::Ptr::$__ctor@(::vl::Ptr<[C]> const &)[impl0]::pointer"><div><div class="token cpp_argument">pointer</div></div></div>)
 		{
@@ -180,9 +194,9 @@ Ptr
 			}
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Cast a smart pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Cast a shared pointer implicitly by moving another shared pointer.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;The type of the object before casting.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The smart pointer to cast.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The shared pointer to cast.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Ptr::$__ctor@(::vl::Ptr<[C]> &&)[impl0]::C"><div><div class="token cpp_type">C</div></div></div>, <div class="token cpp_keyword ">typename</div> = <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::AcceptType@<[T], ::vl::YesType>'], ['vl::AcceptType'], [], [])"><div class="token cpp_type">AcceptType</div></div>&lt;<div class="token cpp_keyword ">void</div>, <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::PointerConvertable'], [], [])"><div class="token cpp_type">PointerConvertable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[C]> &&)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::PointerConvertable::YesNoType'], [], [])"><div class="token cpp_type">YesNoType</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::AcceptType@<[T], ::vl::YesType>::Type'], [], [])"><div class="token cpp_type">Type</div></div>&gt;
 		<div class="def" id="FB$vl::Ptr::$__ctor@(::vl::Ptr<[C]> &&)[impl0]"><div><div class="token cpp_function">Ptr</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::$__ctor@(::vl::Ptr<[C]> &&)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::Ptr::$__ctor@(::vl::Ptr<[C]> &&)[impl0]::pointer"><div><div class="token cpp_argument">pointer</div></div></div>)
 		{
@@ -201,8 +215,11 @@ Ptr
 			<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Dec@void(bool)'], ['vl::Ptr::Dec@void(bool)'], [], [])"><div class="token cpp_function">Dec</div></div>();
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Detach the contained object from this smart pointer.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The detached object. Returns null if this smart pointer is empty.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// Detach the contained object from this shared pointer.</div>
+		<div class="token cpp_comment ">/// When no [T:vl.Ptr`1] is referencing to the object because of a call to Detach, the object will not be deleted.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The detached object. Returns null if this shared pointer is empty.&lt;/returns&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="FB$vl::Ptr::Detach@[T] *()[impl0]"><div><div class="token cpp_function">Detach</div></div></div>()
 		{
 			<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::Ptr::Detach@[T] *()[impl0]::detached"><div>detached</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div>;
@@ -210,9 +227,9 @@ Ptr
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::Detach@[T] *()[impl0]::detached'], [], [])">detached</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Cast a smart pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Cast a shared pointer explicitly.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;The type of the object after casting.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The casted smart pointer. Returns null if failed.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The casted shared pointer. Returns null for empty shared pointer or a failed cast.&lt;/returns&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]::C"><div><div class="token cpp_type">C</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&gt; <div class="def" id="FB$vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]"><div><div class="token cpp_function">Cast</div></div></div>()<div class="token cpp_keyword ">const</div>
 		{
@@ -220,9 +237,9 @@ Ptr
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&gt;((<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]::converted'], [], [])">converted</div> ? <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::counter'], [], [])"><div class="token cpp_field">counter</div></div> : <div class="token cpp_number ">0</div>), <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::Cast@::vl::Ptr<[C]>()[impl0]::converted'], [], [])">converted</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::originalReference'], [], [])"><div class="token cpp_field">originalReference</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::originalDestructor'], [], [])"><div class="token cpp_field">originalDestructor</div></div>);
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a pointer to an object to a smart pointer.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The converted smart pointer.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The pointer to the object.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the object inside this shared pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The shared pointer itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The pointer to the new object.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]::pointer"><div><div class="token cpp_argument">pointer</div></div></div>)
 		{
 			<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Dec@void(bool)'], ['vl::Ptr::Dec@void(bool)'], [], [])"><div class="token cpp_function">Dec</div></div>();
@@ -241,9 +258,9 @@ Ptr
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a smart pointer.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The copied smart pointer.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The smart pointer to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace by copying another shared pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The shared pointer itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The shared pointer to copy.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]::pointer"><div><div class="token cpp_argument">pointer</div></div></div>)
 		{
 			<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">this</div> != &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>)
@@ -258,9 +275,9 @@ Ptr
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Move a smart pointer.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The moved smart pointer.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The smart pointer to Move.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace by moving another shared pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The shared pointer itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;pointer&quot;&gt;The shared pointer to copy.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> &&)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> &&)[impl0]::pointer"><div><div class="token cpp_argument">pointer</div></div></div>)
 		{
 			<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">this</div> != &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> &&)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>)
@@ -335,22 +352,22 @@ Ptr
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div> &lt;= <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::operator <=@bool(::vl::Ptr<[T]> const &)[impl0]::pointer'], [], [])"><div class="token cpp_argument">pointer</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Test if it is a null pointer.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if it is not null.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Test if it is an empty shared pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if it is non-null.&lt;/returns&gt;</div>
 		<div class="def" id="FB$vl::Ptr::$__type@bool()[impl0]"><div><div class="token cpp_keyword ">operator</div></div></div> <div class="token cpp_keyword ">bool</div>()<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div> != <div class="token cpp_number ">0</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Get the pointer to the object.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The pointer to the object.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the pointer to the contained object.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The pointer to the contained object. Returns null for an empty shared pointer.&lt;/returns&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="FB$vl::Ptr::Obj@[T] *()[impl0]"><div><div class="token cpp_function">Obj</div></div></div>()<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Get the pointer to the object.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The pointer to the object.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the pointer to the contained object.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The pointer to the contained object. Returns null for an empty shared pointer.&lt;/returns&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="FB$vl::Ptr::operator ->@[T] *()[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div></div>()<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr::reference'], [], [])"><div class="token cpp_field">reference</div></div>;
@@ -614,70 +631,70 @@ Traits
 <script type="text/javascript">
 referencedSymbols = {
     '_InterlockedDecrement@::LONG(::LONG volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_type">LONG</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_type">LONG</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedDecrement@::LONG(::LONG volatile *)[decl0]'
         ]
     },
     '_InterlockedDecrement@long(long volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">long</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedDecrement@long(long volatile *)[decl0]'
         ]
     },
     '_InterlockedDecrement@unsigned __int64(unsigned __int64 volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedDecrement@unsigned __int64(unsigned __int64 volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedDecrement@unsigned int(unsigned int volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedDecrement@unsigned int(unsigned int volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedDecrement@unsigned long(unsigned long volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedDecrement@unsigned long(unsigned long volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedIncrement@::LONG(::LONG volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_type">LONG</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_type">LONG</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedIncrement@::LONG(::LONG volatile *)[decl0]'
         ]
     },
     '_InterlockedIncrement@long(long volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">long</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [],
         'decls': [
             'FB$_InterlockedIncrement@long(long volatile *)[decl0]'
         ]
     },
     '_InterlockedIncrement@unsigned __int64(unsigned __int64 volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">__int64;</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedIncrement@unsigned __int64(unsigned __int64 volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedIncrement@unsigned int(unsigned int volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedIncrement@unsigned int(unsigned int volatile *)[impl0]'
         ],
         'decls': []
     },
     '_InterlockedIncrement@unsigned long(unsigned long volatile *)': {
-        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)',
+        'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">long</span> <span class="cpp_keyword">volatile</span> *)',
         'impls': [
             'FB$_InterlockedIncrement@unsigned long(unsigned long volatile *)[impl0]'
         ],
@@ -1347,7 +1364,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)': {
-        'displayNameInHtml': '<span class="cpp_type">ReferenceCounterOperator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">Enabled</span>&gt;::<span class="cpp_function">DeleteReference</span>(<span class="cpp_type">vint</span><span class="cpp_keyword"> volatile</span> *, <span class="cpp_keyword">void</span> *)',
+        'displayNameInHtml': '<span class="cpp_type">ReferenceCounterOperator</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">Enabled</span>&gt;::<span class="cpp_function">DeleteReference</span>(<span class="cpp_type">vint</span> <span class="cpp_keyword">volatile</span> *, <span class="cpp_keyword">void</span> *)',
         'impls': [
             'FB$vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)[impl0]'
         ],

@@ -1,1 +1,10 @@
-<Document><summary>Copy the ending of the string.</summary><returns>The copied string.</returns><param name="count">Size of characters to copy.</param></Document>
+<Document symbolId="vl::ObjectString::Right@::vl::ObjectString&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Right" declFile="String.h" declId="FB$vl::ObjectString::Right@::vl::ObjectString&lt;[T]&gt;(::vl::vint)[impl0]"><summary>Get the postfix of the string.</summary><returns>The postfix. It will crash when the specified size is out of range.</returns><param name="count">Size of the prefix.</param><example><![CDATA[
+ int main()
+ {
+     WString s = L"Hello, world!";
+     Console::WriteLine(s.Right(6));
+ }
+ ]]></example><signature><![CDATA[ObjectString<T> Right(
+    vint count
+) const;
+]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

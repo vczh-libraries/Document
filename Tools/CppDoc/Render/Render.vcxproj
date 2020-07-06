@@ -34,6 +34,7 @@
     <ClCompile Include="Source\Collecting.cpp" />
     <ClCompile Include="Source\Compiling.cpp" />
     <ClCompile Include="Source\DisplayNameInHtml.cpp" />
+    <ClCompile Include="Source\Entry.cpp" />
     <ClCompile Include="Source\GenerateFile.cpp" />
     <ClCompile Include="Source\GenerateFileIndex.cpp" />
     <ClCompile Include="Source\GenerateFile_CppCodeInHtml.cpp" />

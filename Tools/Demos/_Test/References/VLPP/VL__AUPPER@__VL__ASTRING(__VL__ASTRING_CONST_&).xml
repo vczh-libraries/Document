@@ -1,1 +1,4 @@
-<Document><summary>Convert all letters to upper case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param></Document>
+<Document symbolId="vl::aupper@::vl::AString(::vl::AString const &amp;)" accessor="" category="Function" name="aupper" declFile="String.h" declId="FB$vl::aupper@::vl::AString(::vl::AString const &amp;)[decl0]"><summary>Convert all letters to upper case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[AString aupper(
+    AString const & string
+);
+]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/></seealsos></Document>

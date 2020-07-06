@@ -1,1 +1,7 @@
-<Document><summary>Create a new lazy list with all elements transformed.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a transformation function.</param></Document>
+<Document symbolId="vl::collections::LazyList::Select@::vl::collections::LazyList&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType&gt;([F])" accessor="public" category="Function" name="Select" declFile="Operation.h" declId="FB$vl::collections::LazyList::Select@::vl::collections::LazyList&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType&gt;([F])[impl0]"><summary>Create a new lazy list with all elements transformed.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a transformation function.</param><signature><![CDATA[template <
+    typename F
+>
+LazyList<vl::function_lambda::FunctionObjectRetriveType<F>::ResultType> Select(
+    F f
+) const;
+]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::ResultType"/><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::ResultType"/></seealsos></Document>

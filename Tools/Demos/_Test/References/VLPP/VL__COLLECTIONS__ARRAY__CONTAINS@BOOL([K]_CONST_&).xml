@@ -1,1 +1,4 @@
-<Document><summary>Test does the array contain an item or not.</summary><returns>Returns true if the array contains the specified item.</returns><param name="item">The item to test.</param></Document>
+<Document symbolId="vl::collections::Array::Contains@bool([K] const &amp;)" accessor="public" category="Function" name="Contains" declFile="List.h" declId="FB$vl::collections::Array::Contains@bool([K] const &amp;)[impl0]"><summary>Test does the array contain a value or not.</summary><returns>Returns true if the array contains the specified value.</returns><param name="item">The value to test.</param><signature><![CDATA[bool Contains(
+    K const & item
+) const;
+]]></signature></Document>

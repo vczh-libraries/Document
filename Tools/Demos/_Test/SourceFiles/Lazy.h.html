@@ -12,13 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Framework::Lazy Evaluation
-
-Classes:
-	Lazy&lt;T&gt;									: Object with lazy evaluation
-
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_LAZY</div>
@@ -46,21 +41,19 @@ Classes:
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal'], [], [])"><div class="token cpp_type">Internal</div></div>&gt;			<div class="def" id="NI$vl::Lazy::internalValue"><div><div class="token cpp_field">internalValue</div></div></div>;
 	<div class="token cpp_keyword ">public</div>:
 		<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty evaluation.&lt;/summary&gt;</div>
-		<div class="def" id="FB$vl::Lazy::$__ctor@()[impl0]"><div><div class="token cpp_function">Lazy</div></div></div>()
-		{
-		}
+		<div class="def" id="FB$vl::Lazy::$__ctor@()[decl0]"><div><div class="token cpp_function">Lazy</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create an evaluation using a function.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create an evaluation using a function, which produces the evaluation result.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;evaluator&quot;&gt;The function.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Lazy::$__ctor@(::vl::Func<[T]()> const &)[impl0]"><div><div class="token cpp_function">Lazy</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::T'], [], [])"><div class="token cpp_type">T</div></div>()&gt;&amp; <div class="def" id="NI$vl::Lazy::$__ctor@(::vl::Func<[T]()> const &)[impl0]::evaluator"><div><div class="token cpp_argument">evaluator</div></div></div>)
 		{
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal'], [], [])"><div class="token cpp_type">Internal</div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal::evaluated'], [], [])"><div class="token cpp_field">evaluated</div></div>=<div class="token cpp_keyword ">false</div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal::evaluator'], [], [])"><div class="token cpp_field">evaluator</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::$__ctor@(::vl::Func<[T]()> const &)[impl0]::evaluator'], [], [])"><div class="token cpp_argument">evaluator</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal::evaluator'], [], [])"><div class="token cpp_field">evaluator</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &&)', 'vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::$__ctor@(::vl::Func<[T]()> const &)[impl0]::evaluator'], [], [])"><div class="token cpp_argument">evaluator</div></div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create an evaluation using the result directly.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The result that you have already known.&lt;/param&gt;0</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create an evaluation with the immediate result.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The result.&lt;/param&gt;0</div>
 		<div class="def" id="FB$vl::Lazy::$__ctor@([T] const &)[impl0]"><div><div class="token cpp_function">Lazy</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::Lazy::$__ctor@([T] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 		{
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal'], [], [])"><div class="token cpp_type">Internal</div></div>;
@@ -68,18 +61,19 @@ Classes:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal::value'], [], [])"><div class="token cpp_field">value</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::$__ctor@([T] const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy an evaluation.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create an evaluation by copying another one.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;lazy&quot;&gt;The evaluation to copy.&lt;/param&gt;</div>
-		<div class="def" id="FB$vl::Lazy::$__ctor@(::vl::Lazy<[T]> const &)[impl0]"><div><div class="token cpp_function">Lazy</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy'], [], [])"><div class="token cpp_type">Lazy</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Lazy::$__ctor@(::vl::Lazy<[T]> const &)[impl0]::lazy"><div><div class="token cpp_argument">lazy</div></div></div>)
-			:internalValue(<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::$__ctor@(::vl::Lazy<[T]> const &)[impl0]::lazy'], [], [])"><div class="token cpp_argument">lazy</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div>)
-		{
-		}
+		<div class="def" id="FB$vl::Lazy::$__ctor@(::vl::Lazy<[T]> const &)[decl0]"><div><div class="token cpp_function">Lazy</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy'], [], [])"><div class="token cpp_type">Lazy</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Lazy::$__ctor@(::vl::Lazy<[T]> const &)[decl0]::lazy"><div>lazy</div></div>) = <div class="token cpp_keyword ">default</div>;
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create an evaluation by moving another one.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;lazy&quot;&gt;The evaluation to move.&lt;/param&gt;</div>
+		<div class="def" id="FB$vl::Lazy::$__ctor@(::vl::Lazy<[T]> &&)[decl0]"><div><div class="token cpp_function">Lazy</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy'], [], [])"><div class="token cpp_type">Lazy</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::Lazy::$__ctor@(::vl::Lazy<[T]> &&)[decl0]::lazy"><div>lazy</div></div>) = <div class="token cpp_keyword ">default</div>;
 
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy'], [], [])"><div class="token cpp_type">Lazy</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::Lazy::operator =@::vl::Lazy<[T]> &(::vl::Func<[T]()> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::T'], [], [])"><div class="token cpp_type">T</div></div>()&gt;&amp; <div class="def" id="NI$vl::Lazy::operator =@::vl::Lazy<[T]> &(::vl::Func<[T]()> const &)[impl0]::evaluator"><div><div class="token cpp_argument">evaluator</div></div></div>)
 		{
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal'], [], [])"><div class="token cpp_type">Internal</div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal::evaluated'], [], [])"><div class="token cpp_field">evaluated</div></div>=<div class="token cpp_keyword ">false</div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal::evaluator'], [], [])"><div class="token cpp_field">evaluator</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::operator =@::vl::Lazy<[T]> &(::vl::Func<[T]()> const &)[impl0]::evaluator'], [], [])"><div class="token cpp_argument">evaluator</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal::evaluator'], [], [])"><div class="token cpp_field">evaluator</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &&)', 'vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)'], [], [], [])"><div class="token cpp_function">=</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::operator =@::vl::Lazy<[T]> &(::vl::Func<[T]()> const &)[impl0]::evaluator'], [], [])"><div class="token cpp_argument">evaluator</div></div>;
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
@@ -97,7 +91,7 @@ Classes:
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Get the evaluation result. If it has not been calculated yet, it will run the evaluation and cache the result. You will not need to calculate for the second time.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the evaluation result. If the evaluation has not been performed, it will run the evaluation function and cache the result.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;The evaluation result.&lt;/returns&gt;</div>
 		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::Lazy::Value@[T] const &()[impl0]"><div><div class="token cpp_function">Value</div></div></div>()<div class="token cpp_keyword ">const</div>
 		{
@@ -112,14 +106,14 @@ Classes:
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Test if it has already been evaluated or not.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if it has already been evaluated.&lt;/returns&gt;</div>
-		<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Lazy::IsEvaluated@bool const()[impl0]"><div><div class="token cpp_function">IsEvaluated</div></div></div>()<div class="token cpp_keyword ">const</div>
+		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Lazy::IsEvaluated@bool()[impl0]"><div><div class="token cpp_function">IsEvaluated</div></div></div>()<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::Internal::evaluated'], [], [])"><div class="token cpp_field">evaluated</div></div>;
 		}
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Test if it is an empty evaluation or not.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if it is not empty.&lt;/returns&gt;</div>
-		<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Lazy::IsAvailable@bool const()[impl0]"><div><div class="token cpp_function">IsAvailable</div></div></div>()<div class="token cpp_keyword ">const</div>
+		<div class="def" id="FB$vl::Lazy::$__type@bool()[impl0]"><div><div class="token cpp_keyword ">operator</div></div></div> <div class="token cpp_keyword ">bool</div>()<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Lazy::internalValue'], [], [])"><div class="token cpp_field">internalValue</div></div>;
 		}
@@ -173,10 +167,10 @@ referencedSymbols = {
     },
     'vl::Func': {
         'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">T</span>&gt;',
-        'impls': [
-            'NI$vl::Func'
-        ],
-        'decls': []
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::Func'
+        ]
     },
     'vl::Func@<[R]([TArgs]...)>': {
         'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;',
@@ -193,14 +187,14 @@ referencedSymbols = {
         'decls': []
     },
     'vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &&)': {
-        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;<span class="cpp_keyword"> const</span> &&)',
+        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt; <span class="cpp_keyword">const</span> &&)',
         'impls': [
             'FB$vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &&)[impl0]'
         ],
         'decls': []
     },
     'vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;<span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt; <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::Func@<[R]([TArgs]...)>::operator =@::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]'
         ],
@@ -217,13 +211,6 @@ referencedSymbols = {
         'displayNameInHtml': 'evaluator',
         'impls': [
             'NI$vl::Lazy::$__ctor@(::vl::Func<[T]()> const &)[impl0]::evaluator'
-        ],
-        'decls': []
-    },
-    'vl::Lazy::$__ctor@(::vl::Lazy<[T]> const &)[impl0]::lazy': {
-        'displayNameInHtml': 'lazy',
-        'impls': [
-            'NI$vl::Lazy::$__ctor@(::vl::Lazy<[T]> const &)[impl0]::lazy'
         ],
         'decls': []
     },
@@ -319,7 +306,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]'
         ],
@@ -341,6 +328,7 @@ symbolToFiles = {
     'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::Func': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
     'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
     'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
@@ -374,11 +362,9 @@ symbolToFiles = {
     'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
     'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
     'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
-    'NI$vl::Func': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
     'NI$vl::Func@<[R]([TArgs]...)>': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
     'NI$vl::Lazy': null,
     'NI$vl::Lazy::$__ctor@(::vl::Func<[T]()> const &)[impl0]::evaluator': null,
-    'NI$vl::Lazy::$__ctor@(::vl::Lazy<[T]> const &)[impl0]::lazy': null,
     'NI$vl::Lazy::$__ctor@([T] const &)[impl0]::value': null,
     'NI$vl::Lazy::Internal': null,
     'NI$vl::Lazy::Internal::evaluated': null,

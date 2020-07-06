@@ -12,10 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-UI::Console
-
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_CONSOLE</div>
@@ -27,29 +25,29 @@ UI::Console
 {
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::console"><div class="ref" onclick="jumpToSymbol([], ['vl::console'], [], [])">console</div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;A Static class for command line window operations.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Basic I/O for command-line applications.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::console::Console"><div><div class="token cpp_type">Console</div></div></div> <div class="token cpp_keyword ">abstract</div>
 		{
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command line window.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write a string to the command-line window.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;length&quot;&gt;Size of the content in wchar_t. The zero terminator is not included.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;length&quot;&gt;Size of the content in wchar_t, not including the zero terminator.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::Write@void(wchar_t const *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]::string"><div>string</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]::length"><div>length</div></div>);
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command line window.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write a string to the command-line window.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write, must be zero terminated.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::Write@void(wchar_t const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::Write@void(wchar_t const *)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::console::Console::Write@void(wchar_t const *)[decl0]::string"><div>string</div></div>);
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command line window.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write a string to the command-line window.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::Write@void(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::Write@void(::vl::WString const &)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::console::Console::Write@void(::vl::WString const &)[decl0]::string"><div>string</div></div>);
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command line window with a CRLF.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the command-line window, following CR/LF characters.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Content to write.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::WriteLine@void(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::WriteLine@void(::vl::WString const &)'], [], [])"><div class="token cpp_function">WriteLine</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::console::Console::WriteLine@void(::vl::WString const &)[decl0]::string"><div>string</div></div>);
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Read from the command line window.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The whole line read from the command line window.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Read a string from the command-line window.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The whole line read from the command-line window.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="FB$vl::console::Console::Read@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::Read@::vl::WString()'], [], [])"><div class="token cpp_function">Read</div></div></div>();
 
 			<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::console::Console::SetColor@void(bool, bool, bool, bool)'], [], [])"><div class="token cpp_function">SetColor</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]::red"><div>red</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]::green"><div>green</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]::blue"><div>blue</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::console::Console::SetColor@void(bool, bool, bool, bool)[decl0]::light"><div>light</div></div>);
@@ -136,7 +134,7 @@ referencedSymbols = {
         ]
     },
     'vl::console::Console::SetTitle@void(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">SetTitle</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">SetTitle</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::console::Console::SetTitle@void(::vl::WString const &)[impl0]'
         ],
@@ -145,7 +143,7 @@ referencedSymbols = {
         ]
     },
     'vl::console::Console::Write@void(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::console::Console::Write@void(::vl::WString const &)[impl0]'
         ],
@@ -154,7 +152,7 @@ referencedSymbols = {
         ]
     },
     'vl::console::Console::Write@void(wchar_t const *)': {
-        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">wchar_t</span> <span class="cpp_keyword">const</span> *)',
         'impls': [
             'FB$vl::console::Console::Write@void(wchar_t const *)[impl0]'
         ],
@@ -163,7 +161,7 @@ referencedSymbols = {
         ]
     },
     'vl::console::Console::Write@void(wchar_t const *, ::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">vint</span>)',
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">Write</span>(<span class="cpp_keyword">wchar_t</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">vint</span>)',
         'impls': [
             'FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[impl0]'
         ],
@@ -172,7 +170,7 @@ referencedSymbols = {
         ]
     },
     'vl::console::Console::WriteLine@void(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">WriteLine</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">WriteLine</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::console::Console::WriteLine@void(::vl::WString const &)[impl0]'
         ],

@@ -262,4 +262,24 @@ extern void											GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath 
 extern Ptr<SymbolGroup>								GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FilePath pathFragment, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
 extern void											GenerateReferenceIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Ptr<SymbolGroup> rootGroup, FilePath pathXml, FilePath pathReference, FileGroupConfig& fileGroups, SortedList<WString>& predefinedGroups, IProgressReporter* progressReporter);
 
+
+/***********************************************************************
+Entry
+***********************************************************************/
+
+void IndexCppCode(
+	FileGroupConfig&		fileGroups,
+	File					preprocessedFile,
+	Ptr<RegexLexer>			lexer,
+
+	FilePath				pathPreprocessed,
+	FilePath				pathInput,
+	FilePath				pathMapping,
+
+	Folder					folderOutput,
+	Folder					folderSource,
+	Folder					folderFragment,
+	Folder					folderReference
+);
+
 #endif

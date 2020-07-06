@@ -1,0 +1,2 @@
+<Document symbolId="vl::DateTime::milliseconds" accessor="public" category="Variable" name="milliseconds" declFile="Basic.h" declId="NI$vl::DateTime::milliseconds"><summary>The milliseconds, from 0 to 999.</summary><signature><![CDATA[vint milliseconds;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

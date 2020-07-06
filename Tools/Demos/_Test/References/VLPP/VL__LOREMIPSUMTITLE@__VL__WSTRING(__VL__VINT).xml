@@ -1,0 +1,4 @@
+<Document symbolId="vl::LoremIpsumTitle@::vl::WString(::vl::vint)" accessor="" category="Function" name="LoremIpsumTitle" declFile="String.h" declId="FB$vl::LoremIpsumTitle@::vl::WString(::vl::vint)[decl0]"><summary>Get some random text for a title, first letters of all words are upper cased.</summary><returns>The generated random text. It may not be exactly in the expected size.</returns><param name="bestLength">The expected size.</param><signature><![CDATA[WString LoremIpsumTitle(
+    vint bestLength
+);
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,0 +1,352 @@
+<reference>
+  <namespace name="::vl">
+    <document name="typedef AString" docId="vl::AString" file="VL__ASTRING"/>
+    <document name="function Curry" docId="vl::Curry@::vl::Func&lt;::vl::Func&lt;::vl::function_binding::Binding@&lt;[R]([T0], [TArgs]...)&gt;::CurriedType&gt;(::vl::function_binding::Binding@&lt;[R]([T0], [TArgs]...)&gt;::FirstParameterType)&gt;([T] *)" file="VL__CURRY@__VL__FUNC___VL__FUNC___VL__FUNCTION_BINDING__BINDING@"/>
+    <document name="function Curry" docId="vl::Curry@::vl::Func&lt;::vl::Func&lt;::vl::function_binding::Binding@&lt;[R]([T0], [TArgs]...)&gt;::CurriedType&gt;(::vl::function_binding::Binding@&lt;[R]([T0], [TArgs]...)&gt;::FirstParameterType)&gt;(::vl::Func&lt;[T]&gt; const &amp;)" file="VL__CURRY@__VL__FUNC___VL__FUNC___VL__FUNCTION_BINDING__BINDING@2"/>
+    <document name="struct DateTime" docId="vl::DateTime" file="VL__DATETIME">
+      <document name="function $__ctor" docId="vl::DateTime::$__ctor@()" file="VL__DATETIME__$__CTOR@()"/>
+      <document name="function Backward" docId="vl::DateTime::Backward@::vl::DateTime(::vl::vuint64_t)" file="VL__DATETIME__BACKWARD@__VL__DATETIME(__VL__VUINT64_T)"/>
+      <document name="function Forward" docId="vl::DateTime::Forward@::vl::DateTime(::vl::vuint64_t)" file="VL__DATETIME__FORWARD@__VL__DATETIME(__VL__VUINT64_T)"/>
+      <document name="function FromDateTime" docId="vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)" file="VL__DATETIME__FROMDATETIME@__VL__DATETIME(__VL__VINT,___VL__VINT"/>
+      <document name="function FromFileTime" docId="vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)" file="VL__DATETIME__FROMFILETIME@__VL__DATETIME(__VL__VUINT64_T)"/>
+      <document name="function LocalTime" docId="vl::DateTime::LocalTime@::vl::DateTime()" file="VL__DATETIME__LOCALTIME@__VL__DATETIME()"/>
+      <document name="function ToLocalTime" docId="vl::DateTime::ToLocalTime@::vl::DateTime()" file="VL__DATETIME__TOLOCALTIME@__VL__DATETIME()"/>
+      <document name="function ToUtcTime" docId="vl::DateTime::ToUtcTime@::vl::DateTime()" file="VL__DATETIME__TOUTCTIME@__VL__DATETIME()"/>
+      <document name="function UtcTime" docId="vl::DateTime::UtcTime@::vl::DateTime()" file="VL__DATETIME__UTCTIME@__VL__DATETIME()"/>
+      <document name="variable day" docId="vl::DateTime::day" file="VL__DATETIME__DAY"/>
+      <document name="variable dayOfWeek" docId="vl::DateTime::dayOfWeek" file="VL__DATETIME__DAYOFWEEK"/>
+      <document name="variable filetime" docId="vl::DateTime::filetime" file="VL__DATETIME__FILETIME"/>
+      <document name="variable hour" docId="vl::DateTime::hour" file="VL__DATETIME__HOUR"/>
+      <document name="variable milliseconds" docId="vl::DateTime::milliseconds" file="VL__DATETIME__MILLISECONDS"/>
+      <document name="variable minute" docId="vl::DateTime::minute" file="VL__DATETIME__MINUTE"/>
+      <document name="variable month" docId="vl::DateTime::month" file="VL__DATETIME__MONTH"/>
+      <document name="variable second" docId="vl::DateTime::second" file="VL__DATETIME__SECOND"/>
+      <document name="variable totalMilliseconds" docId="vl::DateTime::totalMilliseconds" file="VL__DATETIME__TOTALMILLISECONDS"/>
+      <document name="variable year" docId="vl::DateTime::year" file="VL__DATETIME__YEAR"/>
+    </document>
+    <document name="class Error" docId="vl::Error" file="VL__ERROR"/>
+    <document name="class Event">
+      <document name="Partial Specializations">
+        <document name="class Event&lt;void(
+TArgs...)&gt;" docId="vl::Event@&lt;void([TArgs]...)&gt;" file="VL__EVENT@_VOID([TARGS]...)_">
+          <document name="function Add" docId="vl::Event@&lt;void([TArgs]...)&gt;::Add@::vl::Ptr&lt;::vl::EventHandler&gt;(::vl::Func&lt;void([TArgs]...)&gt; const &amp;)" file="VL__EVENT@_VOID([TARGS]...)___ADD@__VL__PTR___VL__EVENTHANDLER_("/>
+          <document name="function Add" docId="vl::Event@&lt;void([TArgs]...)&gt;::Add@::vl::Ptr&lt;::vl::EventHandler&gt;(void([TArgs]...) *)" file="VL__EVENT@_VOID([TARGS]...)___ADD@__VL__PTR___VL__EVENTHANDLER_(2"/>
+          <document name="function Add" docId="vl::Event@&lt;void([TArgs]...)&gt;::Add@::vl::Ptr&lt;::vl::EventHandler&gt;([C] *, void([TArgs]...) ([C] ::) *)" file="VL__EVENT@_VOID([TARGS]...)___ADD@__VL__PTR___VL__EVENTHANDLER_(3"/>
+          <document name="function Remove" docId="vl::Event@&lt;void([TArgs]...)&gt;::Remove@bool(::vl::Ptr&lt;::vl::EventHandler&gt;)" file="VL__EVENT@_VOID([TARGS]...)___REMOVE@BOOL(__VL__PTR___VL__EVENTH"/>
+          <document name="function operator ()" docId="vl::Event@&lt;void([TArgs]...)&gt;::operator ()@void([TArgs]...)" file="VL__EVENT@_VOID([TARGS]...)___OPERATOR_()@VOID([TARGS]...)"/>
+        </document>
+      </document>
+    </document>
+    <document name="class Exception" docId="vl::Exception" file="VL__EXCEPTION"/>
+    <document name="function FinalizeGlobalStorage" docId="vl::FinalizeGlobalStorage@void()" file="VL__FINALIZEGLOBALSTORAGE@VOID()"/>
+    <document name="class Func">
+      <document name="Partial Specializations">
+        <document name="class Func&lt;R(
+TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" file="VL__FUNC@_[R]([TARGS]...)_">
+          <document name="function $__ctor" docId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@()" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@()"/>
+          <document name="function $__ctor" docId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; const &amp;)" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@(__VL__FUNC@_[R]([TARGS]...)"/>
+          <document name="function $__ctor" docId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; &amp;&amp;)" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@(__VL__FUNC@_[R]([TARGS]...)2"/>
+          <document name="function $__ctor" docId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([R]([TArgs]...) *)" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@([R]([TARGS]...)__)"/>
+          <document name="function $__ctor" docId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@([C]__,_[R]([TARGS]...)_([C]"/>
+          <document name="function $__ctor" docId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([C] &amp;&amp;)" file="VL__FUNC@_[R]([TARGS]...)___$__CTOR@([C]_&amp;&amp;)"/>
+          <document name="function $__type" docId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__type@bool()" file="VL__FUNC@_[R]([TARGS]...)___$__TYPE@BOOL()"/>
+          <document name="function operator ()" docId="vl::Func@&lt;[R]([TArgs]...)&gt;::operator ()@[R]([TArgs]...)" file="VL__FUNC@_[R]([TARGS]...)___OPERATOR_()@[R]([TARGS]...)"/>
+        </document>
+      </document>
+    </document>
+    <document name="class GlobalStorage" docId="vl::GlobalStorage" file="VL__GLOBALSTORAGE"/>
+    <document name="class Interface" docId="vl::Interface" file="VL__INTERFACE"/>
+    <document name="struct KeyType" docId="vl::KeyType" file="VL__KEYTYPE">
+      <document name="function GetKeyValue" docId="vl::KeyType::GetKeyValue@[T] const &amp;([T] const &amp;)" file="VL__KEYTYPE__GETKEYVALUE@[T]_CONST_&amp;([T]_CONST_&amp;)"/>
+      <document name="typedef Type" docId="vl::KeyType::Type" file="VL__KEYTYPE__TYPE"/>
+    </document>
+    <document name="class Lazy" docId="vl::Lazy" file="VL__LAZY">
+      <document name="function $__ctor" docId="vl::Lazy::$__ctor@()" file="VL__LAZY__$__CTOR@()"/>
+      <document name="function $__ctor" docId="vl::Lazy::$__ctor@(::vl::Func&lt;[T]()&gt; const &amp;)" file="VL__LAZY__$__CTOR@(__VL__FUNC_[T]()__CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::Lazy::$__ctor@([T] const &amp;)" file="VL__LAZY__$__CTOR@([T]_CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; const &amp;)" file="VL__LAZY__$__CTOR@(__VL__LAZY_[T]__CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; &amp;&amp;)" file="VL__LAZY__$__CTOR@(__VL__LAZY_[T]__&amp;&amp;)"/>
+      <document name="function $__type" docId="vl::Lazy::$__type@bool()" file="VL__LAZY__$__TYPE@BOOL()"/>
+      <document name="function IsEvaluated" docId="vl::Lazy::IsEvaluated@bool()" file="VL__LAZY__ISEVALUATED@BOOL()"/>
+      <document name="function Value" docId="vl::Lazy::Value@[T] const &amp;()" file="VL__LAZY__VALUE@[T]_CONST_&amp;()"/>
+    </document>
+    <document name="function LoremIpsum" docId="vl::LoremIpsum@::vl::WString(::vl::vint, ::vl::LoremIpsumCasing)" file="VL__LOREMIPSUM@__VL__WSTRING(__VL__VINT,___VL__LOREMIPSUMCASING)"/>
+    <document name="enum class LoremIpsumCasing" docId="vl::LoremIpsumCasing" file="VL__LOREMIPSUMCASING"/>
+    <document name="function LoremIpsumParagraph" docId="vl::LoremIpsumParagraph@::vl::WString(::vl::vint)" file="VL__LOREMIPSUMPARAGRAPH@__VL__WSTRING(__VL__VINT)"/>
+    <document name="function LoremIpsumSentence" docId="vl::LoremIpsumSentence@::vl::WString(::vl::vint)" file="VL__LOREMIPSUMSENTENCE@__VL__WSTRING(__VL__VINT)"/>
+    <document name="function LoremIpsumTitle" docId="vl::LoremIpsumTitle@::vl::WString(::vl::vint)" file="VL__LOREMIPSUMTITLE@__VL__WSTRING(__VL__VINT)"/>
+    <document name="class NotCopyable" docId="vl::NotCopyable" file="VL__NOTCOPYABLE"/>
+    <document name="class Nullable" docId="vl::Nullable" file="VL__NULLABLE">
+      <document name="function $__ctor" docId="vl::Nullable::$__ctor@()" file="VL__NULLABLE__$__CTOR@()"/>
+      <document name="function $__ctor" docId="vl::Nullable::$__ctor@([T] const &amp;)" file="VL__NULLABLE__$__CTOR@([T]_CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::Nullable::$__ctor@([T] &amp;&amp;)" file="VL__NULLABLE__$__CTOR@([T]_&amp;&amp;)"/>
+      <document name="function $__ctor" docId="vl::Nullable::$__ctor@(::vl::Nullable&lt;[T]&gt; const &amp;)" file="VL__NULLABLE__$__CTOR@(__VL__NULLABLE_[T]__CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::Nullable::$__ctor@(::vl::Nullable&lt;[T]&gt; &amp;&amp;)" file="VL__NULLABLE__$__CTOR@(__VL__NULLABLE_[T]__&amp;&amp;)"/>
+      <document name="function $__type" docId="vl::Nullable::$__type@bool()" file="VL__NULLABLE__$__TYPE@BOOL()"/>
+      <document name="function Compare" docId="vl::Nullable::Compare@::vl::vint(::vl::Nullable&lt;[T]&gt; const &amp;, ::vl::Nullable&lt;[T]&gt; const &amp;)" file="VL__NULLABLE__COMPARE@__VL__VINT(__VL__NULLABLE_[T]__CONST_&amp;,___"/>
+      <document name="function Equals" docId="vl::Nullable::Equals@bool(::vl::Nullable&lt;[T]&gt; const &amp;, ::vl::Nullable&lt;[T]&gt; const &amp;)" file="VL__NULLABLE__EQUALS@BOOL(__VL__NULLABLE_[T]__CONST_&amp;,___VL__NUL"/>
+      <document name="function Value" docId="vl::Nullable::Value@[T] const &amp;()" file="VL__NULLABLE__VALUE@[T]_CONST_&amp;()"/>
+      <document name="function operator =" docId="vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;([T] const &amp;)" file="VL__NULLABLE__OPERATOR_=@__VL__NULLABLE_[T]__&amp;([T]_CONST_&amp;)"/>
+      <document name="function operator =" docId="vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;(::vl::Nullable&lt;[T]&gt; const &amp;)" file="VL__NULLABLE__OPERATOR_=@__VL__NULLABLE_[T]__&amp;(__VL__NULLABLE_[T"/>
+      <document name="function operator =" docId="vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;(::vl::Nullable&lt;[T]&gt; &amp;&amp;)" file="VL__NULLABLE__OPERATOR_=@__VL__NULLABLE_[T]__&amp;(__VL__NULLABLE_[T2"/>
+    </document>
+    <document name="class Object" docId="vl::Object" file="VL__OBJECT"/>
+    <document name="class ObjectBox" docId="vl::ObjectBox" file="VL__OBJECTBOX">
+      <document name="function $__ctor" docId="vl::ObjectBox::$__ctor@([T] const &amp;)" file="VL__OBJECTBOX__$__CTOR@([T]_CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::ObjectBox::$__ctor@([T] &amp;&amp;)" file="VL__OBJECTBOX__$__CTOR@([T]_&amp;&amp;)"/>
+      <document name="function $__ctor" docId="vl::ObjectBox::$__ctor@(::vl::ObjectBox&lt;[T]&gt; const &amp;)" file="VL__OBJECTBOX__$__CTOR@(__VL__OBJECTBOX_[T]__CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::ObjectBox::$__ctor@(::vl::ObjectBox&lt;[T]&gt; &amp;&amp;)" file="VL__OBJECTBOX__$__CTOR@(__VL__OBJECTBOX_[T]__&amp;&amp;)"/>
+      <document name="function Unbox" docId="vl::ObjectBox::Unbox@[T] const &amp;()" file="VL__OBJECTBOX__UNBOX@[T]_CONST_&amp;()"/>
+      <document name="function operator =" docId="vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;([T] const &amp;)" file="VL__OBJECTBOX__OPERATOR_=@__VL__OBJECTBOX_[T]__&amp;([T]_CONST_&amp;)"/>
+      <document name="function operator =" docId="vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;(::vl::ObjectBox&lt;[T]&gt; const &amp;)" file="VL__OBJECTBOX__OPERATOR_=@__VL__OBJECTBOX_[T]__&amp;(__VL__OBJECTBOX"/>
+      <document name="function operator =" docId="vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;(::vl::ObjectBox&lt;[T]&gt; &amp;&amp;)" file="VL__OBJECTBOX__OPERATOR_=@__VL__OBJECTBOX_[T]__&amp;(__VL__OBJECTBOX2"/>
+    </document>
+    <document name="class ObjectString" docId="vl::ObjectString" file="VL__OBJECTSTRING">
+      <document name="function $__ctor" docId="vl::ObjectString::$__ctor@()" file="VL__OBJECTSTRING__$__CTOR@()"/>
+      <document name="function $__ctor" docId="vl::ObjectString::$__ctor@([T] const &amp;)" file="VL__OBJECTSTRING__$__CTOR@([T]_CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::ObjectString::$__ctor@([T] const *, ::vl::vint)" file="VL__OBJECTSTRING__$__CTOR@([T]_CONST__,___VL__VINT)"/>
+      <document name="function $__ctor" docId="vl::ObjectString::$__ctor@([T] const *, bool)" file="VL__OBJECTSTRING__$__CTOR@([T]_CONST__,_BOOL)"/>
+      <document name="function $__ctor" docId="vl::ObjectString::$__ctor@(::vl::ObjectString&lt;[T]&gt; const &amp;)" file="VL__OBJECTSTRING__$__CTOR@(__VL__OBJECTSTRING_[T]__CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::ObjectString::$__ctor@(::vl::ObjectString&lt;[T]&gt; &amp;&amp;)" file="VL__OBJECTSTRING__$__CTOR@(__VL__OBJECTSTRING_[T]__&amp;&amp;)"/>
+      <document name="function Buffer" docId="vl::ObjectString::Buffer@[T] const *()" file="VL__OBJECTSTRING__BUFFER@[T]_CONST__()"/>
+      <document name="function IndexOf" docId="vl::ObjectString::IndexOf@::vl::vint([T])" file="VL__OBJECTSTRING__INDEXOF@__VL__VINT([T])"/>
+      <document name="function Insert" docId="vl::ObjectString::Insert@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::ObjectString&lt;[T]&gt; const &amp;)" file="VL__OBJECTSTRING__INSERT@__VL__OBJECTSTRING_[T]_(__VL__VINT,___V"/>
+      <document name="function Left" docId="vl::ObjectString::Left@::vl::ObjectString&lt;[T]&gt;(::vl::vint)" file="VL__OBJECTSTRING__LEFT@__VL__OBJECTSTRING_[T]_(__VL__VINT)"/>
+      <document name="function Length" docId="vl::ObjectString::Length@::vl::vint()" file="VL__OBJECTSTRING__LENGTH@__VL__VINT()"/>
+      <document name="function Remove" docId="vl::ObjectString::Remove@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::vint)" file="VL__OBJECTSTRING__REMOVE@__VL__OBJECTSTRING_[T]_(__VL__VINT,___V"/>
+      <document name="function Right" docId="vl::ObjectString::Right@::vl::ObjectString&lt;[T]&gt;(::vl::vint)" file="VL__OBJECTSTRING__RIGHT@__VL__OBJECTSTRING_[T]_(__VL__VINT)"/>
+      <document name="function Sub" docId="vl::ObjectString::Sub@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::vint)" file="VL__OBJECTSTRING__SUB@__VL__OBJECTSTRING_[T]_(__VL__VINT,___VL__"/>
+      <document name="function operator +" docId="vl::ObjectString::operator +@::vl::ObjectString&lt;[T]&gt;(::vl::ObjectString&lt;[T]&gt; const &amp;)" file="VL__OBJECTSTRING__OPERATOR_+@__VL__OBJECTSTRING_[T]_(__VL__OBJEC"/>
+      <document name="function operator +=" docId="vl::ObjectString::operator +=@::vl::ObjectString&lt;[T]&gt; &amp;(::vl::ObjectString&lt;[T]&gt; const &amp;)" file="VL__OBJECTSTRING__OPERATOR_+=@__VL__OBJECTSTRING_[T]__&amp;(__VL__OB"/>
+      <document name="function operator =" docId="vl::ObjectString::operator =@::vl::ObjectString&lt;[T]&gt; &amp;(::vl::ObjectString&lt;[T]&gt; const &amp;)" file="VL__OBJECTSTRING__OPERATOR_=@__VL__OBJECTSTRING_[T]__&amp;(__VL__OBJ"/>
+      <document name="function operator =" docId="vl::ObjectString::operator =@::vl::ObjectString&lt;[T]&gt; &amp;(::vl::ObjectString&lt;[T]&gt; &amp;&amp;)" file="VL__OBJECTSTRING__OPERATOR_=@__VL__OBJECTSTRING_[T]__&amp;(__VL__OBJ2"/>
+      <document name="function operator []" docId="vl::ObjectString::operator []@[T](::vl::vint)" file="VL__OBJECTSTRING__OPERATOR_[]@[T](__VL__VINT)"/>
+    </document>
+    <document name="struct POD" docId="vl::POD" file="VL__POD">
+      <document name="variable Result" docId="vl::POD::Result" file="VL__POD__RESULT"/>
+    </document>
+    <document name="class Ptr" docId="vl::Ptr" file="VL__PTR">
+      <document name="function $__ctor" docId="vl::Ptr::$__ctor@()" file="VL__PTR__$__CTOR@()"/>
+      <document name="function $__ctor" docId="vl::Ptr::$__ctor@([T] *)" file="VL__PTR__$__CTOR@([T]__)"/>
+      <document name="function $__ctor" docId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; const &amp;)" file="VL__PTR__$__CTOR@(__VL__PTR_[T]__CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" file="VL__PTR__$__CTOR@(__VL__PTR_[T]__&amp;&amp;)"/>
+      <document name="function $__ctor" docId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[C]&gt; const &amp;)" file="VL__PTR__$__CTOR@(__VL__PTR_[C]__CONST_&amp;)"/>
+      <document name="function $__ctor" docId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[C]&gt; &amp;&amp;)" file="VL__PTR__$__CTOR@(__VL__PTR_[C]__&amp;&amp;)"/>
+      <document name="function $__type" docId="vl::Ptr::$__type@bool()" file="VL__PTR__$__TYPE@BOOL()"/>
+      <document name="function Cast" docId="vl::Ptr::Cast@::vl::Ptr&lt;[C]&gt;()" file="VL__PTR__CAST@__VL__PTR_[C]_()"/>
+      <document name="function Detach" docId="vl::Ptr::Detach@[T] *()" file="VL__PTR__DETACH@[T]__()"/>
+      <document name="function Obj" docId="vl::Ptr::Obj@[T] *()" file="VL__PTR__OBJ@[T]__()"/>
+      <document name="function operator -&gt;" docId="vl::Ptr::operator -&gt;@[T] *()" file="VL__PTR__OPERATOR_-_@[T]__()"/>
+      <document name="function operator =" docId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;([T] *)" file="VL__PTR__OPERATOR_=@__VL__PTR_[T]__&amp;([T]__)"/>
+      <document name="function operator =" docId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; const &amp;)" file="VL__PTR__OPERATOR_=@__VL__PTR_[T]__&amp;(__VL__PTR_[T]__CONST_&amp;)"/>
+      <document name="function operator =" docId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" file="VL__PTR__OPERATOR_=@__VL__PTR_[T]__&amp;(__VL__PTR_[T]__&amp;&amp;)"/>
+    </document>
+    <document name="struct ReferenceCounterOperator" docId="vl::ReferenceCounterOperator" file="VL__REFERENCECOUNTEROPERATOR">
+      <document name="function CreateCounter" docId="vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)" file="VL__REFERENCECOUNTEROPERATOR__CREATECOUNTER@__VL__VINT_VOLATILE_"/>
+      <document name="function DeleteReference" docId="vl::ReferenceCounterOperator::DeleteReference@void(::vl::vint volatile *, void *)" file="VL__REFERENCECOUNTEROPERATOR__DELETEREFERENCE@VOID(__VL__VINT_VO"/>
+    </document>
+    <document name="typedef WString" docId="vl::WString" file="VL__WSTRING"/>
+    <document name="function alower" docId="vl::alower@::vl::AString(::vl::AString const &amp;)" file="VL__ALOWER@__VL__ASTRING(__VL__ASTRING_CONST_&amp;)"/>
+    <document name="function atof" docId="vl::atof@double(::vl::AString const &amp;)" file="VL__ATOF@DOUBLE(__VL__ASTRING_CONST_&amp;)"/>
+    <document name="function atof_test" docId="vl::atof_test@double(::vl::AString const &amp;, bool &amp;)" file="VL__ATOF_TEST@DOUBLE(__VL__ASTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function atoi" docId="vl::atoi@::vl::vint(::vl::AString const &amp;)" file="VL__ATOI@__VL__VINT(__VL__ASTRING_CONST_&amp;)"/>
+    <document name="function atoi64" docId="vl::atoi64@::vl::vint64_t(::vl::AString const &amp;)" file="VL__ATOI64@__VL__VINT64_T(__VL__ASTRING_CONST_&amp;)"/>
+    <document name="function atoi64_test" docId="vl::atoi64_test@::vl::vint64_t(::vl::AString const &amp;, bool &amp;)" file="VL__ATOI64_TEST@__VL__VINT64_T(__VL__ASTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function atoi_test" docId="vl::atoi_test@::vl::vint(::vl::AString const &amp;, bool &amp;)" file="VL__ATOI_TEST@__VL__VINT(__VL__ASTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function atou" docId="vl::atou@::vl::vuint(::vl::AString const &amp;)" file="VL__ATOU@__VL__VUINT(__VL__ASTRING_CONST_&amp;)"/>
+    <document name="function atou64" docId="vl::atou64@::vl::vuint64_t(::vl::AString const &amp;)" file="VL__ATOU64@__VL__VUINT64_T(__VL__ASTRING_CONST_&amp;)"/>
+    <document name="function atou64_test" docId="vl::atou64_test@::vl::vuint64_t(::vl::AString const &amp;, bool &amp;)" file="VL__ATOU64_TEST@__VL__VUINT64_T(__VL__ASTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function atou_test" docId="vl::atou_test@::vl::vuint(::vl::AString const &amp;, bool &amp;)" file="VL__ATOU_TEST@__VL__VUINT(__VL__ASTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function atow" docId="vl::atow@::vl::WString(::vl::AString const &amp;)" file="VL__ATOW@__VL__WSTRING(__VL__ASTRING_CONST_&amp;)"/>
+    <document name="function aupper" docId="vl::aupper@::vl::AString(::vl::AString const &amp;)" file="VL__AUPPER@__VL__ASTRING(__VL__ASTRING_CONST_&amp;)"/>
+    <document name="function ftoa" docId="vl::ftoa@::vl::AString(double)" file="VL__FTOA@__VL__ASTRING(DOUBLE)"/>
+    <document name="function ftow" docId="vl::ftow@::vl::WString(double)" file="VL__FTOW@__VL__WSTRING(DOUBLE)"/>
+    <document name="function i64toa" docId="vl::i64toa@::vl::AString(::vl::vint64_t)" file="VL__I64TOA@__VL__ASTRING(__VL__VINT64_T)"/>
+    <document name="function i64tow" docId="vl::i64tow@::vl::WString(::vl::vint64_t)" file="VL__I64TOW@__VL__WSTRING(__VL__VINT64_T)"/>
+    <document name="function itoa" docId="vl::itoa@::vl::AString(::vl::vint)" file="VL__ITOA@__VL__ASTRING(__VL__VINT)"/>
+    <document name="function itow" docId="vl::itow@::vl::WString(::vl::vint)" file="VL__ITOW@__VL__WSTRING(__VL__VINT)"/>
+    <document name="typedef pos_t" docId="vl::pos_t" file="VL__POS_T"/>
+    <document name="function u64toa" docId="vl::u64toa@::vl::AString(::vl::vuint64_t)" file="VL__U64TOA@__VL__ASTRING(__VL__VUINT64_T)"/>
+    <document name="function u64tow" docId="vl::u64tow@::vl::WString(::vl::vuint64_t)" file="VL__U64TOW@__VL__WSTRING(__VL__VUINT64_T)"/>
+    <document name="function utoa" docId="vl::utoa@::vl::AString(::vl::vuint)" file="VL__UTOA@__VL__ASTRING(__VL__VUINT)"/>
+    <document name="function utow" docId="vl::utow@::vl::WString(::vl::vuint)" file="VL__UTOW@__VL__WSTRING(__VL__VUINT)"/>
+    <document name="typedef vint" docId="vl::vint" file="VL__VINT"/>
+    <document name="typedef vint16_t" docId="vl::vint16_t" file="VL__VINT16_T"/>
+    <document name="typedef vint32_t" docId="vl::vint32_t" file="VL__VINT32_T"/>
+    <document name="typedef vint64_t" docId="vl::vint64_t" file="VL__VINT64_T"/>
+    <document name="typedef vint8_t" docId="vl::vint8_t" file="VL__VINT8_T"/>
+    <document name="typedef vsint" docId="vl::vsint" file="VL__VSINT"/>
+    <document name="typedef vuint" docId="vl::vuint" file="VL__VUINT"/>
+    <document name="typedef vuint16_t" docId="vl::vuint16_t" file="VL__VUINT16_T"/>
+    <document name="typedef vuint32_t" docId="vl::vuint32_t" file="VL__VUINT32_T"/>
+    <document name="typedef vuint64_t" docId="vl::vuint64_t" file="VL__VUINT64_T"/>
+    <document name="typedef vuint8_t" docId="vl::vuint8_t" file="VL__VUINT8_T"/>
+    <document name="function wlower" docId="vl::wlower@::vl::WString(::vl::WString const &amp;)" file="VL__WLOWER@__VL__WSTRING(__VL__WSTRING_CONST_&amp;)"/>
+    <document name="function wtoa" docId="vl::wtoa@::vl::AString(::vl::WString const &amp;)" file="VL__WTOA@__VL__ASTRING(__VL__WSTRING_CONST_&amp;)"/>
+    <document name="function wtof" docId="vl::wtof@double(::vl::WString const &amp;)" file="VL__WTOF@DOUBLE(__VL__WSTRING_CONST_&amp;)"/>
+    <document name="function wtof_test" docId="vl::wtof_test@double(::vl::WString const &amp;, bool &amp;)" file="VL__WTOF_TEST@DOUBLE(__VL__WSTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function wtoi" docId="vl::wtoi@::vl::vint(::vl::WString const &amp;)" file="VL__WTOI@__VL__VINT(__VL__WSTRING_CONST_&amp;)"/>
+    <document name="function wtoi64" docId="vl::wtoi64@::vl::vint64_t(::vl::WString const &amp;)" file="VL__WTOI64@__VL__VINT64_T(__VL__WSTRING_CONST_&amp;)"/>
+    <document name="function wtoi64_test" docId="vl::wtoi64_test@::vl::vint64_t(::vl::WString const &amp;, bool &amp;)" file="VL__WTOI64_TEST@__VL__VINT64_T(__VL__WSTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function wtoi_test" docId="vl::wtoi_test@::vl::vint(::vl::WString const &amp;, bool &amp;)" file="VL__WTOI_TEST@__VL__VINT(__VL__WSTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function wtou" docId="vl::wtou@::vl::vuint(::vl::WString const &amp;)" file="VL__WTOU@__VL__VUINT(__VL__WSTRING_CONST_&amp;)"/>
+    <document name="function wtou64" docId="vl::wtou64@::vl::vuint64_t(::vl::WString const &amp;)" file="VL__WTOU64@__VL__VUINT64_T(__VL__WSTRING_CONST_&amp;)"/>
+    <document name="function wtou64_test" docId="vl::wtou64_test@::vl::vuint64_t(::vl::WString const &amp;, bool &amp;)" file="VL__WTOU64_TEST@__VL__VUINT64_T(__VL__WSTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function wtou_test" docId="vl::wtou_test@::vl::vuint(::vl::WString const &amp;, bool &amp;)" file="VL__WTOU_TEST@__VL__VUINT(__VL__WSTRING_CONST_&amp;,_BOOL_&amp;)"/>
+    <document name="function wupper" docId="vl::wupper@::vl::WString(::vl::WString const &amp;)" file="VL__WUPPER@__VL__WSTRING(__VL__WSTRING_CONST_&amp;)"/>
+  </namespace>
+  <namespace name="::vl::collections">
+    <document name="class Array" docId="vl::collections::Array" file="VL__COLLECTIONS__ARRAY">
+      <document name="function $__ctor" docId="vl::collections::Array::$__ctor@(::vl::vint)" file="VL__COLLECTIONS__ARRAY__$__CTOR@(__VL__VINT)"/>
+      <document name="function $__ctor" docId="vl::collections::Array::$__ctor@([T] const *, ::vl::vint)" file="VL__COLLECTIONS__ARRAY__$__CTOR@([T]_CONST__,___VL__VINT)"/>
+      <document name="function Contains" docId="vl::collections::Array::Contains@bool([K] const &amp;)" file="VL__COLLECTIONS__ARRAY__CONTAINS@BOOL([K]_CONST_&amp;)"/>
+      <document name="function IndexOf" docId="vl::collections::Array::IndexOf@::vl::vint([K] const &amp;)" file="VL__COLLECTIONS__ARRAY__INDEXOF@__VL__VINT([K]_CONST_&amp;)"/>
+      <document name="function Resize" docId="vl::collections::Array::Resize@void(::vl::vint)" file="VL__COLLECTIONS__ARRAY__RESIZE@VOID(__VL__VINT)"/>
+      <document name="function Set" docId="vl::collections::Array::Set@bool(::vl::vint, [T] const &amp;)" file="VL__COLLECTIONS__ARRAY__SET@BOOL(__VL__VINT,_[T]_CONST_&amp;)"/>
+      <document name="function operator []" docId="vl::collections::Array::operator []@[T] &amp;(::vl::vint)" file="VL__COLLECTIONS__ARRAY__OPERATOR_[]@[T]_&amp;(__VL__VINT)"/>
+    </document>
+    <document name="class ArrayBase" docId="vl::collections::ArrayBase" file="VL__COLLECTIONS__ARRAYBASE">
+      <document name="function Count" docId="vl::collections::ArrayBase::Count@::vl::vint()" file="VL__COLLECTIONS__ARRAYBASE__COUNT@__VL__VINT()"/>
+      <document name="function Get" docId="vl::collections::ArrayBase::Get@[T] const &amp;(::vl::vint)" file="VL__COLLECTIONS__ARRAYBASE__GET@[T]_CONST_&amp;(__VL__VINT)"/>
+      <document name="function operator []" docId="vl::collections::ArrayBase::operator []@[T] const &amp;(::vl::vint)" file="VL__COLLECTIONS__ARRAYBASE__OPERATOR_[]@[T]_CONST_&amp;(__VL__VINT)"/>
+    </document>
+    <document name="function CompareEnumerable" docId="vl::collections::CompareEnumerable@::vl::vint(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;, ::vl::collections::IEnumerable&lt;[U]&gt; const &amp;)" file="VL__COLLECTIONS__COMPAREENUMERABLE@__VL__VINT(__VL__COLLECTIONS_"/>
+    <document name="function CopyFrom" docId="vl::collections::CopyFrom@void([Ds] &amp;, [Ss] const &amp;, bool)" file="VL__COLLECTIONS__COPYFROM@VOID([DS]_&amp;,_[SS]_CONST_&amp;,_BOOL)"/>
+    <document name="function CopyFrom" docId="vl::collections::CopyFrom@void([Ds] &amp;, [S] const *, ::vl::vint, bool)" file="VL__COLLECTIONS__COPYFROM@VOID([DS]_&amp;,_[S]_CONST__,___VL__VINT,_"/>
+    <document name="function CopyFrom" docId="vl::collections::CopyFrom@void([Ds] &amp;, [S] const *, [S] const *, bool)" file="VL__COLLECTIONS__COPYFROM@VOID([DS]_&amp;,_[S]_CONST__,_[S]_CONST__,"/>
+    <document name="function CopyFrom" docId="vl::collections::CopyFrom@void([Ds] &amp;, ::vl::ObjectString&lt;[S]&gt; const &amp;, bool)" file="VL__COLLECTIONS__COPYFROM@VOID([DS]_&amp;,___VL__OBJECTSTRING_[S]__C"/>
+    <document name="function CopyFrom" docId="vl::collections::CopyFrom@void(::vl::ObjectString&lt;[D]&gt; &amp;, [Ss] const &amp;, bool)" file="VL__COLLECTIONS__COPYFROM@VOID(__VL__OBJECTSTRING_[D]__&amp;,_[SS]_C"/>
+    <document name="class Dictionary" docId="vl::collections::Dictionary" file="VL__COLLECTIONS__DICTIONARY">
+      <document name="function $__ctor" docId="vl::collections::Dictionary::$__ctor@()" file="VL__COLLECTIONS__DICTIONARY__$__CTOR@()"/>
+      <document name="function Add" docId="vl::collections::Dictionary::Add@bool(::vl::collections::Pair&lt;[KT], [VT]&gt; const &amp;)" file="VL__COLLECTIONS__DICTIONARY__ADD@BOOL(__VL__COLLECTIONS__PAIR_[K"/>
+      <document name="function Add" docId="vl::collections::Dictionary::Add@bool([KT] const &amp;, [VT] const &amp;)" file="VL__COLLECTIONS__DICTIONARY__ADD@BOOL([KT]_CONST_&amp;,_[VT]_CONST_&amp;"/>
+      <document name="function Clear" docId="vl::collections::Dictionary::Clear@bool()" file="VL__COLLECTIONS__DICTIONARY__CLEAR@BOOL()"/>
+      <document name="function Count" docId="vl::collections::Dictionary::Count@::vl::vint()" file="VL__COLLECTIONS__DICTIONARY__COUNT@__VL__VINT()"/>
+      <document name="function Get" docId="vl::collections::Dictionary::Get@[VT] const &amp;([KK] const &amp;)" file="VL__COLLECTIONS__DICTIONARY__GET@[VT]_CONST_&amp;([KK]_CONST_&amp;)"/>
+      <document name="function Keys" docId="vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &amp;()" file="VL__COLLECTIONS__DICTIONARY__KEYS@__VL__COLLECTIONS__DICTIONARY_"/>
+      <document name="function Remove" docId="vl::collections::Dictionary::Remove@bool([KK] const &amp;)" file="VL__COLLECTIONS__DICTIONARY__REMOVE@BOOL([KK]_CONST_&amp;)"/>
+      <document name="function Set" docId="vl::collections::Dictionary::Set@bool([KT] const &amp;, [VT] const &amp;)" file="VL__COLLECTIONS__DICTIONARY__SET@BOOL([KT]_CONST_&amp;,_[VT]_CONST_&amp;"/>
+      <document name="function SetLessMemoryMode" docId="vl::collections::Dictionary::SetLessMemoryMode@void(bool)" file="VL__COLLECTIONS__DICTIONARY__SETLESSMEMORYMODE@VOID(BOOL)"/>
+      <document name="function Values" docId="vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &amp;()" file="VL__COLLECTIONS__DICTIONARY__VALUES@__VL__COLLECTIONS__DICTIONAR"/>
+      <document name="function operator []" docId="vl::collections::Dictionary::operator []@[VT] const &amp;([KK] const &amp;)" file="VL__COLLECTIONS__DICTIONARY__OPERATOR_[]@[VT]_CONST_&amp;([KK]_CONST"/>
+    </document>
+    <document name="class Group" docId="vl::collections::Group" file="VL__COLLECTIONS__GROUP">
+      <document name="function $__ctor" docId="vl::collections::Group::$__ctor@()" file="VL__COLLECTIONS__GROUP__$__CTOR@()"/>
+      <document name="function Add" docId="vl::collections::Group::Add@bool(::vl::collections::Pair&lt;[KT], [VT]&gt; const &amp;)" file="VL__COLLECTIONS__GROUP__ADD@BOOL(__VL__COLLECTIONS__PAIR_[KT],_["/>
+      <document name="function Add" docId="vl::collections::Group::Add@bool([KT] const &amp;, [VT] const &amp;)" file="VL__COLLECTIONS__GROUP__ADD@BOOL([KT]_CONST_&amp;,_[VT]_CONST_&amp;)"/>
+      <document name="function Clear" docId="vl::collections::Group::Clear@bool()" file="VL__COLLECTIONS__GROUP__CLEAR@BOOL()"/>
+      <document name="function Contains" docId="vl::collections::Group::Contains@bool([KK] const &amp;)" file="VL__COLLECTIONS__GROUP__CONTAINS@BOOL([KK]_CONST_&amp;)"/>
+      <document name="function Contains" docId="vl::collections::Group::Contains@bool([KK] const &amp;, [VK] const &amp;)" file="VL__COLLECTIONS__GROUP__CONTAINS@BOOL([KK]_CONST_&amp;,_[VK]_CONST_&amp;"/>
+      <document name="function Count" docId="vl::collections::Group::Count@::vl::vint()" file="VL__COLLECTIONS__GROUP__COUNT@__VL__VINT()"/>
+      <document name="function Get" docId="vl::collections::Group::Get@::vl::collections::Group::ValueContainer const &amp;([KK] const &amp;)" file="VL__COLLECTIONS__GROUP__GET@__VL__COLLECTIONS__GROUP__VALUECONTA"/>
+      <document name="function GetByIndex" docId="vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &amp;(::vl::vint)" file="VL__COLLECTIONS__GROUP__GETBYINDEX@__VL__COLLECTIONS__GROUP__VAL"/>
+      <document name="function Keys" docId="vl::collections::Group::Keys@::vl::collections::Group::KeyContainer const &amp;()" file="VL__COLLECTIONS__GROUP__KEYS@__VL__COLLECTIONS__GROUP__KEYCONTAI"/>
+      <document name="function Remove" docId="vl::collections::Group::Remove@bool([KK] const &amp;)" file="VL__COLLECTIONS__GROUP__REMOVE@BOOL([KK]_CONST_&amp;)"/>
+      <document name="function Remove" docId="vl::collections::Group::Remove@bool([KK] const &amp;, [VK] const &amp;)" file="VL__COLLECTIONS__GROUP__REMOVE@BOOL([KK]_CONST_&amp;,_[VK]_CONST_&amp;)"/>
+      <document name="function operator []" docId="vl::collections::Group::operator []@::vl::collections::Group::ValueContainer const &amp;([KK] const &amp;)" file="VL__COLLECTIONS__GROUP__OPERATOR_[]@__VL__COLLECTIONS__GROUP__VA"/>
+    </document>
+    <document name="function GroupInnerJoin" docId="vl::collections::GroupInnerJoin@void(::vl::collections::Group&lt;[TKey], [TValueFirst]&gt; const &amp;, ::vl::collections::Group&lt;[TKey], [TValueSecond]&gt; const &amp;, [TDiscardFirst] const &amp;, [TDiscardSecond] const &amp;, [TAccept] const &amp;)" file="VL__COLLECTIONS__GROUPINNERJOIN@VOID(__VL__COLLECTIONS__GROUP_[T"/>
+    <document name="class IEnumerable" docId="vl::collections::IEnumerable" file="VL__COLLECTIONS__IENUMERABLE">
+      <document name="function CreateEnumerator" docId="vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator&lt;[T]&gt; *()" file="VL__COLLECTIONS__IENUMERABLE__CREATEENUMERATOR@__VL__COLLECTIONS"/>
+    </document>
+    <document name="class IEnumerator" docId="vl::collections::IEnumerator" file="VL__COLLECTIONS__IENUMERATOR">
+      <document name="function Clone" docId="vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator&lt;[T]&gt; *()" file="VL__COLLECTIONS__IENUMERATOR__CLONE@__VL__COLLECTIONS__IENUMERAT"/>
+      <document name="function Current" docId="vl::collections::IEnumerator::Current@[T] const &amp;()" file="VL__COLLECTIONS__IENUMERATOR__CURRENT@[T]_CONST_&amp;()"/>
+      <document name="function Evaluated" docId="vl::collections::IEnumerator::Evaluated@bool()" file="VL__COLLECTIONS__IENUMERATOR__EVALUATED@BOOL()"/>
+      <document name="function Index" docId="vl::collections::IEnumerator::Index@::vl::vint()" file="VL__COLLECTIONS__IENUMERATOR__INDEX@__VL__VINT()"/>
+      <document name="function Next" docId="vl::collections::IEnumerator::Next@bool()" file="VL__COLLECTIONS__IENUMERATOR__NEXT@BOOL()"/>
+      <document name="function Reset" docId="vl::collections::IEnumerator::Reset@void()" file="VL__COLLECTIONS__IENUMERATOR__RESET@VOID()"/>
+    </document>
+    <document name="class LazyList" docId="vl::collections::LazyList" file="VL__COLLECTIONS__LAZYLIST">
+      <document name="function $__ctor" docId="vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerator&lt;[T]&gt; *)" file="VL__COLLECTIONS__LAZYLIST__$__CTOR@(__VL__COLLECTIONS__IENUMERAT"/>
+      <document name="function $__ctor" docId="vl::collections::LazyList::$__ctor@(::vl::Ptr&lt;::vl::collections::IEnumerator&lt;[T]&gt;&gt;)" file="VL__COLLECTIONS__LAZYLIST__$__CTOR@(__VL__PTR___VL__COLLECTIONS_"/>
+      <document name="function $__ctor" docId="vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__$__CTOR@(__VL__COLLECTIONS__IENUMERAB"/>
+      <document name="function $__ctor" docId="vl::collections::LazyList::$__ctor@(::vl::collections::LazyList&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__$__CTOR@(__VL__COLLECTIONS__LAZYLIST_"/>
+      <document name="function $__ctor" docId="vl::collections::LazyList::$__ctor@(::vl::Ptr&lt;[TContainer]&gt;)" file="VL__COLLECTIONS__LAZYLIST__$__CTOR@(__VL__PTR_[TCONTAINER]_)"/>
+      <document name="function $__ctor" docId="vl::collections::LazyList::$__ctor@()" file="VL__COLLECTIONS__LAZYLIST__$__CTOR@()"/>
+      <document name="function Aggregate" docId="vl::collections::LazyList::Aggregate@[T]([F])" file="VL__COLLECTIONS__LAZYLIST__AGGREGATE@[T]([F])"/>
+      <document name="function Aggregate" docId="vl::collections::LazyList::Aggregate@[I]([I], [F])" file="VL__COLLECTIONS__LAZYLIST__AGGREGATE@[I]([I],_[F])"/>
+      <document name="function All" docId="vl::collections::LazyList::All@bool([F])" file="VL__COLLECTIONS__LAZYLIST__ALL@BOOL([F])"/>
+      <document name="function Any" docId="vl::collections::LazyList::Any@bool([F])" file="VL__COLLECTIONS__LAZYLIST__ANY@BOOL([F])"/>
+      <document name="function Cast" docId="vl::collections::LazyList::Cast@::vl::collections::LazyList&lt;::vl::Ptr&lt;[U]&gt;&gt;()" file="VL__COLLECTIONS__LAZYLIST__CAST@__VL__COLLECTIONS__LAZYLIST___VL"/>
+      <document name="function Concat" docId="vl::collections::LazyList::Concat@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__CONCAT@__VL__COLLECTIONS__LAZYLIST_[T"/>
+      <document name="function Count" docId="vl::collections::LazyList::Count@::vl::vint()" file="VL__COLLECTIONS__LAZYLIST__COUNT@__VL__VINT()"/>
+      <document name="function Distinct" docId="vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()" file="VL__COLLECTIONS__LAZYLIST__DISTINCT@__VL__COLLECTIONS__LAZYLIST_"/>
+      <document name="function Except" docId="vl::collections::LazyList::Except@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__EXCEPT@__VL__COLLECTIONS__LAZYLIST_[T"/>
+      <document name="function FindType" docId="vl::collections::LazyList::FindType@::vl::collections::LazyList&lt;::vl::Ptr&lt;[U]&gt;&gt;()" file="VL__COLLECTIONS__LAZYLIST__FINDTYPE@__VL__COLLECTIONS__LAZYLIST_"/>
+      <document name="function First" docId="vl::collections::LazyList::First@[T]()" file="VL__COLLECTIONS__LAZYLIST__FIRST@[T]()"/>
+      <document name="function First" docId="vl::collections::LazyList::First@[T]([T])" file="VL__COLLECTIONS__LAZYLIST__FIRST@[T]([T])"/>
+      <document name="function GroupBy" docId="vl::collections::LazyList::GroupBy@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList&lt;[T]&gt;&gt;&gt;([F])" file="VL__COLLECTIONS__LAZYLIST__GROUPBY@__VL__COLLECTIONS__LAZYLIST__"/>
+      <document name="function Intersect" docId="vl::collections::LazyList::Intersect@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__INTERSECT@__VL__COLLECTIONS__LAZYLIST"/>
+      <document name="function IsEmpty" docId="vl::collections::LazyList::IsEmpty@bool()" file="VL__COLLECTIONS__LAZYLIST__ISEMPTY@BOOL()"/>
+      <document name="function Last" docId="vl::collections::LazyList::Last@[T]()" file="VL__COLLECTIONS__LAZYLIST__LAST@[T]()"/>
+      <document name="function Last" docId="vl::collections::LazyList::Last@[T]([T])" file="VL__COLLECTIONS__LAZYLIST__LAST@[T]([T])"/>
+      <document name="function Max" docId="vl::collections::LazyList::Max@[T]()" file="VL__COLLECTIONS__LAZYLIST__MAX@[T]()"/>
+      <document name="function Min" docId="vl::collections::LazyList::Min@[T]()" file="VL__COLLECTIONS__LAZYLIST__MIN@[T]()"/>
+      <document name="function OrderBy" docId="vl::collections::LazyList::OrderBy@::vl::collections::LazyList&lt;[T]&gt;([F])" file="VL__COLLECTIONS__LAZYLIST__ORDERBY@__VL__COLLECTIONS__LAZYLIST_["/>
+      <document name="function Pairwise" docId="vl::collections::LazyList::Pairwise@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;[T], [U]&gt;&gt;(::vl::collections::IEnumerable&lt;[U]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__PAIRWISE@__VL__COLLECTIONS__LAZYLIST_"/>
+      <document name="function Repeat" docId="vl::collections::LazyList::Repeat@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)" file="VL__COLLECTIONS__LAZYLIST__REPEAT@__VL__COLLECTIONS__LAZYLIST_[T"/>
+      <document name="function Reverse" docId="vl::collections::LazyList::Reverse@::vl::collections::LazyList&lt;[T]&gt;()" file="VL__COLLECTIONS__LAZYLIST__REVERSE@__VL__COLLECTIONS__LAZYLIST_["/>
+      <document name="function Select" docId="vl::collections::LazyList::Select@::vl::collections::LazyList&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType&gt;([F])" file="VL__COLLECTIONS__LAZYLIST__SELECT@__VL__COLLECTIONS__LAZYLIST___"/>
+      <document name="function SelectMany" docId="vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])" file="VL__COLLECTIONS__LAZYLIST__SELECTMANY@__VL__FUNCTION_LAMBDA__FUN"/>
+      <document name="function Skip" docId="vl::collections::LazyList::Skip@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)" file="VL__COLLECTIONS__LAZYLIST__SKIP@__VL__COLLECTIONS__LAZYLIST_[T]_"/>
+      <document name="function Take" docId="vl::collections::LazyList::Take@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)" file="VL__COLLECTIONS__LAZYLIST__TAKE@__VL__COLLECTIONS__LAZYLIST_[T]_"/>
+      <document name="function Union" docId="vl::collections::LazyList::Union@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__UNION@__VL__COLLECTIONS__LAZYLIST_[T]"/>
+      <document name="function Where" docId="vl::collections::LazyList::Where@::vl::collections::LazyList&lt;[T]&gt;([F])" file="VL__COLLECTIONS__LAZYLIST__WHERE@__VL__COLLECTIONS__LAZYLIST_[T]"/>
+    </document>
+    <document name="class List" docId="vl::collections::List" file="VL__COLLECTIONS__LIST">
+      <document name="function $__ctor" docId="vl::collections::List::$__ctor@()" file="VL__COLLECTIONS__LIST__$__CTOR@()"/>
+      <document name="function Add" docId="vl::collections::List::Add@::vl::vint([T] const &amp;)" file="VL__COLLECTIONS__LIST__ADD@__VL__VINT([T]_CONST_&amp;)"/>
+      <document name="function Contains" docId="vl::collections::List::Contains@bool([K] const &amp;)" file="VL__COLLECTIONS__LIST__CONTAINS@BOOL([K]_CONST_&amp;)"/>
+      <document name="function IndexOf" docId="vl::collections::List::IndexOf@::vl::vint([K] const &amp;)" file="VL__COLLECTIONS__LIST__INDEXOF@__VL__VINT([K]_CONST_&amp;)"/>
+      <document name="function Insert" docId="vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &amp;)" file="VL__COLLECTIONS__LIST__INSERT@__VL__VINT(__VL__VINT,_[T]_CONST_&amp;"/>
+      <document name="function Remove" docId="vl::collections::List::Remove@bool([K] const &amp;)" file="VL__COLLECTIONS__LIST__REMOVE@BOOL([K]_CONST_&amp;)"/>
+      <document name="function Set" docId="vl::collections::List::Set@bool(::vl::vint, [T] const &amp;)" file="VL__COLLECTIONS__LIST__SET@BOOL(__VL__VINT,_[T]_CONST_&amp;)"/>
+      <document name="function operator []" docId="vl::collections::List::operator []@[T] &amp;(::vl::vint)" file="VL__COLLECTIONS__LIST__OPERATOR_[]@[T]_&amp;(__VL__VINT)"/>
+    </document>
+    <document name="class ListBase" docId="vl::collections::ListBase" file="VL__COLLECTIONS__LISTBASE">
+      <document name="function Clear" docId="vl::collections::ListBase::Clear@bool()" file="VL__COLLECTIONS__LISTBASE__CLEAR@BOOL()"/>
+      <document name="function RemoveAt" docId="vl::collections::ListBase::RemoveAt@bool(::vl::vint)" file="VL__COLLECTIONS__LISTBASE__REMOVEAT@BOOL(__VL__VINT)"/>
+      <document name="function RemoveRange" docId="vl::collections::ListBase::RemoveRange@bool(::vl::vint, ::vl::vint)" file="VL__COLLECTIONS__LISTBASE__REMOVERANGE@BOOL(__VL__VINT,___VL__VI"/>
+      <document name="function SetLessMemoryMode" docId="vl::collections::ListBase::SetLessMemoryMode@void(bool)" file="VL__COLLECTIONS__LISTBASE__SETLESSMEMORYMODE@VOID(BOOL)"/>
+    </document>
+    <document name="class Pair" docId="vl::collections::Pair" file="VL__COLLECTIONS__PAIR">
+      <document name="variable key" docId="vl::collections::Pair::key" file="VL__COLLECTIONS__PAIR__KEY"/>
+      <document name="variable value" docId="vl::collections::Pair::value" file="VL__COLLECTIONS__PAIR__VALUE"/>
+    </document>
+    <document name="class PartialOrderingProcessor" docId="vl::collections::PartialOrderingProcessor" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR">
+      <document name="function InitWithFunc" docId="vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &amp;, [TFunc] &amp;&amp;)" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR__INITWITHFUNC@VOID([TL"/>
+      <document name="function InitWithGroup" docId="vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &amp;, ::vl::collections::PartialOrderingProcessor::GroupOf&lt;[TList]&gt; const &amp;)" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR__INITWITHGROUP@VOID([T"/>
+      <document name="function InitWithSubClass" docId="vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &amp;, ::vl::collections::PartialOrderingProcessor::GroupOf&lt;[TList]&gt; const &amp;, ::vl::collections::Dictionary&lt;ElementType, [TSubClass]&gt; const &amp;)" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR__INITWITHSUBCLASS@VOID"/>
+      <document name="function Sort" docId="vl::collections::PartialOrderingProcessor::Sort@void()" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR__SORT@VOID()"/>
+      <document name="variable components" docId="vl::collections::PartialOrderingProcessor::components" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR__COMPONENTS"/>
+      <document name="variable nodes" docId="vl::collections::PartialOrderingProcessor::nodes" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR__NODES"/>
+    </document>
+    <document name="class SortedList" docId="vl::collections::SortedList" file="VL__COLLECTIONS__SORTEDLIST">
+      <document name="function $__ctor" docId="vl::collections::SortedList::$__ctor@()" file="VL__COLLECTIONS__SORTEDLIST__$__CTOR@()"/>
+      <document name="function Add" docId="vl::collections::SortedList::Add@::vl::vint([T] const &amp;)" file="VL__COLLECTIONS__SORTEDLIST__ADD@__VL__VINT([T]_CONST_&amp;)"/>
+      <document name="function Contains" docId="vl::collections::SortedList::Contains@bool([K] const &amp;)" file="VL__COLLECTIONS__SORTEDLIST__CONTAINS@BOOL([K]_CONST_&amp;)"/>
+      <document name="function IndexOf" docId="vl::collections::SortedList::IndexOf@::vl::vint([K] const &amp;)" file="VL__COLLECTIONS__SORTEDLIST__INDEXOF@__VL__VINT([K]_CONST_&amp;)"/>
+      <document name="function IndexOfInternal" docId="vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &amp;, ::vl::vint &amp;)" file="VL__COLLECTIONS__SORTEDLIST__INDEXOFINTERNAL@__VL__VINT([KEY]_CO"/>
+      <document name="function Remove" docId="vl::collections::SortedList::Remove@bool([K] const &amp;)" file="VL__COLLECTIONS__SORTEDLIST__REMOVE@BOOL([K]_CONST_&amp;)"/>
+    </document>
+  </namespace>
+  <namespace name="::vl::console">
+    <document name="class Console" docId="vl::console::Console" file="VL__CONSOLE__CONSOLE">
+      <document name="function Read" docId="vl::console::Console::Read@::vl::WString()" file="VL__CONSOLE__CONSOLE__READ@__VL__WSTRING()"/>
+      <document name="function Write" docId="vl::console::Console::Write@void(wchar_t const *, ::vl::vint)" file="VL__CONSOLE__CONSOLE__WRITE@VOID(WCHAR_T_CONST__,___VL__VINT)"/>
+      <document name="function Write" docId="vl::console::Console::Write@void(wchar_t const *)" file="VL__CONSOLE__CONSOLE__WRITE@VOID(WCHAR_T_CONST__)"/>
+      <document name="function Write" docId="vl::console::Console::Write@void(::vl::WString const &amp;)" file="VL__CONSOLE__CONSOLE__WRITE@VOID(__VL__WSTRING_CONST_&amp;)"/>
+      <document name="function WriteLine" docId="vl::console::Console::WriteLine@void(::vl::WString const &amp;)" file="VL__CONSOLE__CONSOLE__WRITELINE@VOID(__VL__WSTRING_CONST_&amp;)"/>
+    </document>
+  </namespace>
+  <namespace name="::vl::function_lambda">
+    <document name="function ConvertToFunction" docId="vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])" file="VL__FUNCTION_LAMBDA__CONVERTTOFUNCTION@__VL__FUNCTION_LAMBDA__FU"/>
+    <document name="function Lambda" docId="vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@&lt;[R]([TArgs]...) ([TObject] ::) *&gt;::Type([T])" file="VL__FUNCTION_LAMBDA__LAMBDA@__VL__FUNCTION_LAMBDA__LAMBDARETRIVE"/>
+  </namespace>
+  <namespace name="::vl::unittest">
+    <document name="class UnitTest" docId="vl::unittest::UnitTest" file="VL__UNITTEST__UNITTEST">
+      <document name="function RunAndDisposeTests" docId="vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)" file="VL__UNITTEST__UNITTEST__RUNANDDISPOSETESTS@INT(INT,_WCHAR_T____)"/>
+    </document>
+  </namespace>
+</reference>

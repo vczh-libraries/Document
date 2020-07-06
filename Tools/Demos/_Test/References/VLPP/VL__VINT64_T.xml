@@ -1,1 +1,2 @@
-<Document><summary>8-bytes signed integer.</summary></Document>
+<Document symbolId="vl::vint64_t" accessor="" category="TypeAlias" name="vint64_t" declFile="Basic.h" declId="NI$vl::vint64_t"><summary>8-bytes signed integer.</summary><signature><![CDATA[using vint64_t = signed __int64;
+]]></signature></Document>

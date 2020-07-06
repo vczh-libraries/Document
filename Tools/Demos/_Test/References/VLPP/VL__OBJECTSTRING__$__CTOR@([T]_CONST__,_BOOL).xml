@@ -1,1 +1,5 @@
-<Document><summary>Copy a string.</summary><param name="_buffer">Memory to copy. It should have to contain the zero terminator.</param><param name="copy">Set to true to copy the memory. Set to false to use the memory directly.</param></Document>
+<Document symbolId="vl::ObjectString::$__ctor@([T] const *, bool)" accessor="public" category="Function" name="$__ctor" declFile="String.h" declId="FB$vl::ObjectString::$__ctor@([T] const *, bool)[impl0]"><summary>Copy a string.</summary><param name="_buffer">Memory to copy. It must be zero terminated.</param><param name="copy">Set to true to copy the memory. Set to false to use the memory directly.</param><signature><![CDATA[ ObjectString(
+    T const * _buffer,
+    bool copy /* optional */
+);
+]]></signature></Document>

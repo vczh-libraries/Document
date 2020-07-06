@@ -1,1 +1,4 @@
-<Document><summary>Convert a string to an unsigned integer.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param></Document>
+<Document symbolId="vl::atou@::vl::vuint(::vl::AString const &amp;)" accessor="" category="Function" name="atou" declFile="String.h" declId="FB$vl::atou@::vl::vuint(::vl::AString const &amp;)[decl0]"><summary>Convert a string to an usigned integer.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><remarks>If you need to know whether the conversion is succeeded or not, please use <see cref="atou_test"/> instead.</remarks><signature><![CDATA[vuint atou(
+    AString const & string
+);
+]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/><symbol name="vuint" docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>

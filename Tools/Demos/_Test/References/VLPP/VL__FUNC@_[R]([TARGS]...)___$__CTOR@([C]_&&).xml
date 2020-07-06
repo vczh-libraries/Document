@@ -1,1 +1,8 @@
-<Document><summary>Create a reference using a function object.</summary><typeparam name="C">Type of the function object.</typeparam><param name="function">The function object. It could be a lambda expression.</param></Document>
+<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([C] &amp;&amp;)" accessor="public" category="Function" name="$__ctor" declFile="Function.h" declId="FB$vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([C] &amp;&amp;)[impl0]"><summary>Create a functor from another compatible functor.</summary><typeparam name="C">Type of the functor to copy.</typeparam><param name="function">The functor to copy. It could be a lambda expression, or any types that has operator() members.</param><signature><![CDATA[template <
+    typename C, 
+    typename /* optional */
+>
+ Func(
+    C && function
+);
+]]></signature></Document>

@@ -1,1 +1,7 @@
-<Document><summary>Test does all elements in the lazy list satisfy with a condition.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>Returns true if all elements satisfy with a condition.</returns><param name="f">The lambda expression as a filter.</param></Document>
+<Document symbolId="vl::collections::LazyList::All@bool([F])" accessor="public" category="Function" name="All" declFile="Operation.h" declId="FB$vl::collections::LazyList::All@bool([F])[impl0]"><summary>Test does all elements in the lazy list satisfy with a condition.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>Returns true if all elements satisfy with a condition.</returns><param name="f">The lambda expression as a filter.</param><signature><![CDATA[template <
+    typename F
+>
+bool All(
+    F f
+) const;
+]]></signature></Document>

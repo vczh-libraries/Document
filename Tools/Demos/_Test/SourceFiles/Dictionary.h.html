@@ -12,13 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Data Structure::Dictionary
-
-Classes:
-	Dictionary&lt;KT, VT, KK, VK&gt;					: One to one mapping
-	Group&lt;KT, VT, KK, VK&gt;						: One to many mapping
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_COLLECTIONS_DICTIONARY</div>
@@ -30,11 +25,11 @@ Classes:
 {
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[3]$vl::collections"><div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;Dictionary.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Dictionary: one to one map container.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;KT&quot;&gt;Type of keys.&lt;/typeparam&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;VT&quot;&gt;Type of values.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;KK&quot;&gt;Type of the key type of keys.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;VK&quot;&gt;Type of the key type of values.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;KK&quot;&gt;Type of the key type of keys. It is recommended to use the default value.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;VK&quot;&gt;Type of the key type of values. It is recommended to use the default value.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;
 			<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::Dictionary::KT"><div><div class="token cpp_type">KT</div></div></div>,
 			<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::Dictionary::VT"><div><div class="token cpp_type">VT</div></div></div>,
@@ -101,18 +96,19 @@ Classes:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KeyContainer'], [], [])"><div class="token cpp_type">KeyContainer</div></div>						<div class="def" id="NI$vl::collections::Dictionary::keys"><div><div class="token cpp_field">keys</div></div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::ValueContainer'], [], [])"><div class="token cpp_type">ValueContainer</div></div>						<div class="def" id="NI$vl::collections::Dictionary::values"><div><div class="token cpp_field">values</div></div></div>;
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a dictionary.&lt;/summary&gt;</div>
-			<div class="def" id="FB$vl::collections::Dictionary::$__ctor@()[impl0]"><div><div class="token cpp_function">Dictionary</div></div></div>()
-			{
-			}
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty dictionary.&lt;/summary&gt;</div>
+			<div class="def" id="FB$vl::collections::Dictionary::$__ctor@()[decl0]"><div><div class="token cpp_function">Dictionary</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&gt;* <div class="def" id="FB$vl::collections::Dictionary::CreateEnumerator@::vl::collections::IEnumerator<::vl::collections::Pair<[KT], [VT]>> *()[impl0]"><div><div class="token cpp_function">CreateEnumerator</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator'], [], [])"><div class="token cpp_type">Enumerator</div></div>(<div class="token cpp_keyword ">this</div>);
 			}
-			
+
 			<div class="token cpp_comment ">/// &lt;summary&gt;Set a preference of using memory.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;mode&quot;&gt;Set to true (by default) to let the container efficiently reduce memory usage when necessary.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;mode&quot;&gt;</div>
+			<div class="token cpp_comment ">/// Set to true (by default) to let the container actively reduce memories when there is too much room for unused elements.</div>
+			<div class="token cpp_comment ">/// This could happen after removing a lot of elements.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::Dictionary::SetLessMemoryMode@void(bool)[impl0]"><div><div class="token cpp_function">SetLessMemoryMode</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::Dictionary::SetLessMemoryMode@void(bool)[impl0]::mode"><div><div class="token cpp_argument">mode</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ListBase::SetLessMemoryMode@void(bool)'], ['vl::collections::ListBase::SetLessMemoryMode@void(bool)'], [], [])"><div class="token cpp_function">SetLessMemoryMode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::SetLessMemoryMode@void(bool)[impl0]::mode'], [], [])"><div class="token cpp_argument">mode</div></div>);
@@ -134,32 +130,32 @@ Classes:
 			}
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Get the number of keys.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The number of keys.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The number of keys. It is also the number of values.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::Dictionary::Count@::vl::vint()[impl0]"><div><div class="token cpp_function">Count</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the value associated with a key.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the value associated to a specified key.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the value. It will crash if the key does not exist.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&amp; <div class="def" id="FB$vl::collections::Dictionary::Get@[VT] const &([KK] const &)[impl0]"><div><div class="token cpp_function">Get</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Dictionary::Get@[VT] const &([KK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::values'], [], [])"><div class="token cpp_field">values</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Get@[VT] const &([KK] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>));
 			}
-			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the value associated with a key.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the value.&lt;/returns&gt;</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the value associated to a specified key.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the value. It will crash if the key does not exist.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&amp; <div class="def" id="FB$vl::collections::Dictionary::operator []@[VT] const &([KK] const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Dictionary::operator []@[VT] const &([KK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::values'], [], [])"><div class="token cpp_field">values</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::operator []@[VT] const &([KK] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>));
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Replace the value associated with a key.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Replace the value associated to a specified key.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the value is replaced.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The key to replace.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find. If the key does not exist, it will be added to the dictionary.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The associated value to replace.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Dictionary::Set@bool([KT] const &, [VT] const &)[impl0]"><div><div class="token cpp_function">Set</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>&amp; <div class="def" id="NI$vl::collections::Dictionary::Set@bool([KT] const &, [VT] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&amp; <div class="def" id="NI$vl::collections::Dictionary::Set@bool([KT] const &, [VT] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Dictionary::Set@bool([KT] const &, [VT] const &)[impl0]::index"><div>index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol(['vl::KeyType', 'vl::KeyType@<::vl::ComPtr<[T]>>', 'vl::KeyType@<::vl::Ptr<[T]>>'], ['vl::KeyType'], [], [])"><div class="token cpp_type">KeyType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::KeyType::GetKeyValue@[T] const &([T] const &)', 'vl::KeyType@<::vl::ComPtr<[T]>>::GetKeyValue@[T] *(::vl::ComPtr<[T]> const &)', 'vl::KeyType@<::vl::Ptr<[T]>>::GetKeyValue@[T] *(::vl::Ptr<[T]> const &)'], ['vl::KeyType::GetKeyValue@[T] const &([T] const &)', 'vl::KeyType@<::vl::ComPtr<[T]>>::GetKeyValue@[T] *(::vl::ComPtr<[T]> const &)', 'vl::KeyType@<::vl::Ptr<[T]>>::GetKeyValue@[T] *(::vl::Ptr<[T]> const &)'], [], [])"><div class="token cpp_function">GetKeyValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Set@bool([KT] const &, [VT] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>));
@@ -175,18 +171,18 @@ Classes:
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Add a key with an associated value. Exception will raise if the key already exists.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the pair is added.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Add a key with an associated value.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the pair is added. If will crash if the key exists.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The pair of key and value.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)'], ['vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)', 'vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair::key'], [], [])"><div class="token cpp_field">key</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair::value'], [], [])"><div class="token cpp_field">value</div></div>);
 			}
-			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Add a key with an associated value. Exception will raise if the key already exists.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the pair is added.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Add a key with an associated value.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the pair is added. If will crash if the key exists.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to add.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to add.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>&amp; <div class="def" id="NI$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&amp; <div class="def" id="NI$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			{
 <div class="expandable"><div class="disabled">				CHECK_ERROR(!keys.Contains(KeyType&lt;KT&gt;::GetKeyValue(key)), L&quot;Dictionary&lt;KT, KK, ValueContainer, VT, VK&gt;::Add(const KT&amp;, const VT&amp;)#Key already exists.&quot;);</div>
@@ -198,7 +194,7 @@ Classes:
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Remove a key with the associated value.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the key and the value is removed.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Dictionary::Remove@bool([KK] const &)[impl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Dictionary::Remove@bool([KK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Dictionary::Remove@bool([KK] const &)[impl0]::index"><div>index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Remove@bool([KK] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>);
@@ -214,8 +210,8 @@ Classes:
 				}
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Remove everything.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if all keys and values are removed.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Remove all elements.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if all elements are removed.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Dictionary::Clear@bool()[impl0]"><div><div class="token cpp_function">Clear</div></div></div>()
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ListBase::Clear@bool()'], ['vl::collections::ListBase::Clear@bool()'], [], [])"><div class="token cpp_function">Clear</div></div>();
@@ -223,12 +219,12 @@ Classes:
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
 			}
 		};
-		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Group, which is similar to an dictionary, but a group can associate multiple values with a key.&lt;/summary&gt;</div>
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Group: one to many map container.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;KT&quot;&gt;Type of keys.&lt;/typeparam&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;VT&quot;&gt;Type of values.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;KK&quot;&gt;Type of the key type of keys.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;VK&quot;&gt;Type of the key type of values.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;KK&quot;&gt;Type of the key type of keys. It is recommended to use the default value.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;VK&quot;&gt;Type of the key type of values. It is recommended to use the default value.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;
 			<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::Group::KT"><div><div class="token cpp_type">KT</div></div></div>,
 			<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::Group::VT"><div><div class="token cpp_type">VT</div></div></div>,
@@ -331,9 +327,8 @@ Classes:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KeyContainer'], [], [])"><div class="token cpp_type">KeyContainer</div></div>					<div class="def" id="NI$vl::collections::Group::keys"><div><div class="token cpp_field">keys</div></div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::ValueContainer'], [], [])"><div class="token cpp_type">ValueContainer</div></div>*&gt;			<div class="def" id="NI$vl::collections::Group::values"><div><div class="token cpp_field">values</div></div></div>;
 		<div class="token cpp_keyword ">public</div>:
-			<div class="def" id="FB$vl::collections::Group::$__ctor@()[impl0]"><div><div class="token cpp_function">Group</div></div></div>()
-			{
-			}
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty group.&lt;/summary&gt;</div>
+			<div class="def" id="FB$vl::collections::Group::$__ctor@()[decl0]"><div><div class="token cpp_function">Group</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
 			<div class="def" id="FB$vl::collections::Group::~Group@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">Group</div></div></div>()
 			{
@@ -359,40 +354,40 @@ Classes:
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get all values associated with a key.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;All values.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get all values associated to a specified key.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;All associated values. It will crash if the key does not exist.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::ValueContainer'], [], [])"><div class="token cpp_type">ValueContainer</div></div>&amp; <div class="def" id="FB$vl::collections::Group::Get@::vl::collections::Group::ValueContainer const &([KK] const &)[impl0]"><div><div class="token cpp_function">Get</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Get@::vl::collections::Group::ValueContainer const &([KK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> *<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::values'], [], [])"><div class="token cpp_field">values</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Get@::vl::collections::Group::ValueContainer const &([KK] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>));
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get all values associated with a key.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;All values.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of a the key.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get all values associated to a key at a specified index in &lt;see cref=&quot;Keys&quot;/&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;All associaged values. It will crash if the index is out of range.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the key.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::ValueContainer'], [], [])"><div class="token cpp_type">ValueContainer</div></div>&amp; <div class="def" id="FB$vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &(::vl::vint)[impl0]"><div><div class="token cpp_function">GetByIndex</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &(::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> *<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::values'], [], [])"><div class="token cpp_field">values</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &(::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>);
 			}
-			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get all values associated with a key.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;All values.&lt;/returns&gt;</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get all values associated to a specified key.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;All associated values. It will crash if the key does not exist.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::ValueContainer'], [], [])"><div class="token cpp_type">ValueContainer</div></div>&amp; <div class="def" id="FB$vl::collections::Group::operator []@::vl::collections::Group::ValueContainer const &([KK] const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Group::operator []@::vl::collections::Group::ValueContainer const &([KK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> *<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::values'], [], [])"><div class="token cpp_field">values</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::operator []@::vl::collections::Group::ValueContainer const &([KK] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>));
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test if a key exists in the group or not.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the key exists.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if there is any value associated to a specified key or not.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true there is at least one value associated to this key.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Contains@bool([KK] const &)[impl0]"><div><div class="token cpp_function">Contains</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Contains@bool([KK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::Contains@bool([K] const &)'], ['vl::collections::SortedList::Contains@bool([K] const &)'], [], [])"><div class="token cpp_function">Contains</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Contains@bool([KK] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>);
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test if a key exists with an associated value in the group or not.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the key exists with an associated value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if a value is associated to a specified key or not.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the specified value is associated to the specified key.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to find.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Contains@bool([KK] const &, [VK] const &)[impl0]"><div><div class="token cpp_function">Contains</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Contains@bool([KK] const &, [VK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::VK'], [], [])"><div class="token cpp_type">VK</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Contains@bool([KK] const &, [VK] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div>
@@ -408,18 +403,26 @@ Classes:
 				}
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Add a key with an associated value. If the key already exists, the value will be associated with the key with other values.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Add a key with an associated value.</div>
+			<div class="token cpp_comment ">/// If the key already exists, the value will be associated to the key with other values.</div>
+			<div class="token cpp_comment ">/// If this value has already been associated to the key, it will still be duplicated.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the pair is added.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The pair of key and value.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The pair of key and value to add.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::Group::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::Group::Add@bool([KT] const &, [VT] const &)'], ['vl::collections::Group::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)', 'vl::collections::Group::Add@bool([KT] const &, [VT] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair::key'], [], [])"><div class="token cpp_field">key</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair::value'], [], [])"><div class="token cpp_field">value</div></div>);
 			}
-			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Add a key with an associated value. If the key already exists, the value will be associated with the key with other values.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the pair is added.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Add a key with an associated value.</div>
+			<div class="token cpp_comment ">/// If the key already exists, the value will be associated to the key with other values.</div>
+			<div class="token cpp_comment ">/// If this value has already been associated to the key, it will still be duplicated.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the key and the value are added.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to add.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to add.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Add@bool([KT] const &, [VT] const &)[impl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KT'], [], [])"><div class="token cpp_type">KT</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Add@bool([KT] const &, [VT] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::VT'], [], [])"><div class="token cpp_type">VT</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Add@bool([KT] const &, [VT] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::ValueContainer'], [], [])"><div class="token cpp_type">ValueContainer</div></div>* <div class="def" id="NI$vl::collections::Group::Add@bool([KT] const &, [VT] const &)[impl0]::target"><div>target</div></div>=<div class="token cpp_number ">0</div>;
@@ -439,7 +442,7 @@ Classes:
 			
 			<div class="token cpp_comment ">/// &lt;summary&gt;Remove a key with all associated values.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the key and all associated values are removed.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Remove@bool([KK] const &)[impl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Remove@bool([KK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Group::Remove@bool([KK] const &)[impl0]::index"><div>index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Remove@bool([KK] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>);
@@ -457,10 +460,14 @@ Classes:
 				}
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Remove a key with the associated values.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the key and the associated values are removed. If there are multiple values associated with the key, only the value will be removed.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Remove a value associated to a specified key.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;</div>
+			<div class="token cpp_comment ">/// Returns true if the value is removed.</div>
+			<div class="token cpp_comment ">/// If this value is associated to the key for jultiple times, only the first one will be removed.</div>
+			<div class="token cpp_comment ">/// If this value is associated to the key for jultiple times, only the first one will be removed.</div>
+			<div class="token cpp_comment ">/// &lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to remove.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Remove@bool([KK] const &, [VK] const &)[impl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KK'], [], [])"><div class="token cpp_type">KK</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Remove@bool([KK] const &, [VK] const &)[impl0]::key"><div><div class="token cpp_argument">key</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::VK'], [], [])"><div class="token cpp_type">VK</div></div>&amp; <div class="def" id="NI$vl::collections::Group::Remove@bool([KK] const &, [VK] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Group::Remove@bool([KK] const &, [VK] const &)[impl0]::index"><div>index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::keys'], [], [])"><div class="token cpp_field">keys</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Remove@bool([KK] const &, [VK] const &)[impl0]::key'], [], [])"><div class="token cpp_argument">key</div></div>);
@@ -500,6 +507,49 @@ Classes:
 GroupInnerJoin
 ***********************************************************************/</div>
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Perform inner join on two groups.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TKey&quot;&gt;The type of keys in two groups.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TValueFirst&quot;&gt;The type of values in the first group.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TValueSecond&quot;&gt;The type of values in the second group.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TDiscardFirst&quot;&gt;The type of the first callback.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TDiscardSecond&quot;&gt;The type of the second callback.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TAccept&quot;&gt;The type of the third callback.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;first&quot;&gt;The first group.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;second&quot;&gt;The second group.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;discardFirst&quot;&gt;</div>
+		<div class="token cpp_comment ">/// Callback that is called when a value in the first group is discarded.</div>
+		<div class="token cpp_comment ">/// This happens for values associated to a key in the first group, that no value is assocated to the same key in the second group.</div>
+		<div class="token cpp_comment ">/// The first argument is the key, the second argument is the discarded value in the first group.</div>
+		<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;discardSecond&quot;&gt;</div>
+		<div class="token cpp_comment ">/// Callback that is called when a value in the second group is discarded.</div>
+		<div class="token cpp_comment ">/// This happens for values associated to a key in the second group, that no value is assocated to the same key in the first group.</div>
+		<div class="token cpp_comment ">/// The first argument is the key, the second argument is the discarded value in the first group.</div>
+		<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;accept&quot;&gt;</div>
+		<div class="token cpp_comment ">/// Callback that is called when a match of values in both groups are found.</div>
+		<div class="token cpp_comment ">/// This happens for any key that, values are associated to this key in both group.</div>
+		<div class="token cpp_comment ">/// If multiple values are associated to this key in both group, cartesian product applies on values.</div>
+		<div class="token cpp_comment ">/// The first argument is the key, the second argument is the associated value in the first group, the third argument is the associated value in the second group.</div>
+		<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// This function does not change data in provided groups.</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     Group&lt;vint, WString&gt; as, bs;</div>
+		<div class="token cpp_comment ">///     as.Add(1 ,L&quot;A&quot;); as.Add(1 ,L&quot;B&quot;); as.Add(2 ,L&quot;C&quot;); as.Add(2 ,L&quot;D&quot;);</div>
+		<div class="token cpp_comment ">///     bs.Add(1 ,L&quot;X&quot;); bs.Add(1 ,L&quot;Y&quot;); as.Add(3 ,L&quot;Z&quot;); as.Add(3 ,L&quot;W&quot;);</div>
+		<div class="token cpp_comment ">///     GroupInnerJoin(</div>
+		<div class="token cpp_comment ">///         as,</div>
+		<div class="token cpp_comment ">///         bs,</div>
+		<div class="token cpp_comment ">///         [](vint key, const WString&amp; value) { Console::WriteLine(L&quot;Discarded in as: &quot; + itow(key) + L&quot;, &quot; + value); },</div>
+		<div class="token cpp_comment ">///         [](vint key, const WString&amp; value) { Console::WriteLine(L&quot;Discarded in bs: &quot; + itow(key) + L&quot;, &quot; + value); },</div>
+		<div class="token cpp_comment ">///         [](vint key, const WString&amp; value1, const WString&amp; value 2) { Console::WriteLine(L&quot;Accepted: &quot; + itow(key) + L&quot;, &quot; + value1 + L&quot;, &quot; + value2); }</div>
+		<div class="token cpp_comment ">///         );</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;
 			<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::GroupInnerJoin@void(::vl::collections::Group<[TKey], [TValueFirst]> const &, ::vl::collections::Group<[TKey], [TValueSecond]> const &, [TDiscardFirst] const &, [TDiscardSecond] const &, [TAccept] const &)[impl0]::TKey"><div><div class="token cpp_type">TKey</div></div></div>,
 			<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::GroupInnerJoin@void(::vl::collections::Group<[TKey], [TValueFirst]> const &, ::vl::collections::Group<[TKey], [TValueSecond]> const &, [TDiscardFirst] const &, [TDiscardSecond] const &, [TAccept] const &)[impl0]::TValueFirst"><div><div class="token cpp_type">TValueFirst</div></div></div>,
@@ -666,7 +716,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::KeyType::GetKeyValue@[T] const &([T] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">KeyType</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">GetKeyValue</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">KeyType</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">GetKeyValue</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::KeyType::GetKeyValue@[T] const &([T] const &)[impl0]'
         ],
@@ -687,7 +737,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::KeyType@<::vl::ComPtr<[T]>>::GetKeyValue@[T] *(::vl::ComPtr<[T]> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">KeyType</span>&lt;<span class="cpp_type">ComPtr</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_function">GetKeyValue</span>(<span class="cpp_type">ComPtr</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">KeyType</span>&lt;<span class="cpp_type">ComPtr</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_function">GetKeyValue</span>(<span class="cpp_type">ComPtr</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::KeyType@<::vl::ComPtr<[T]>>::GetKeyValue@[T] *(::vl::ComPtr<[T]> const &)[impl0]'
         ],
@@ -708,7 +758,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::KeyType@<::vl::Ptr<[T]>>::GetKeyValue@[T] *(::vl::Ptr<[T]> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">KeyType</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_function">GetKeyValue</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">KeyType</span>&lt;<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;&gt;::<span class="cpp_function">GetKeyValue</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::KeyType@<::vl::Ptr<[T]>>::GetKeyValue@[T] *(::vl::Ptr<[T]> const &)[impl0]'
         ],
@@ -781,7 +831,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>&gt; <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]'
         ],
@@ -795,7 +845,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">KT</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">VT</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">KT</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">VT</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]'
         ],
@@ -928,7 +978,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::Dictionary::Set@bool([KT] const &, [VT] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Set</span>(<span class="cpp_type">KT</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">VT</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Set</span>(<span class="cpp_type">KT</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">VT</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::Dictionary::Set@bool([KT] const &, [VT] const &)[impl0]'
         ],
@@ -1019,7 +1069,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::Group::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Group</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>&gt;<span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Group</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>&gt; <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::Group::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]'
         ],
@@ -1033,7 +1083,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::Group::Add@bool([KT] const &, [VT] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Group</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">KT</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">VT</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Group</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">KT</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">VT</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::Group::Add@bool([KT] const &, [VT] const &)[impl0]'
         ],
@@ -1516,28 +1566,28 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::List::Add@::vl::vint([T] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]'
         ],
         'decls': []
     },
     'vl::collections::List::Contains@bool([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::List::Contains@bool([K] const &)[impl0]'
         ],
         'decls': []
     },
     'vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Insert</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Insert</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &)[impl0]'
         ],
         'decls': []
     },
     'vl::collections::List::Remove@bool([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Remove</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Remove</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::List::Remove@bool([K] const &)[impl0]'
         ],
@@ -1600,21 +1650,21 @@ referencedSymbols = {
         'decls': []
     },
     'vl::collections::SortedList::Add@::vl::vint([T] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::SortedList::Add@::vl::vint([T] const &)[impl0]'
         ],
         'decls': []
     },
     'vl::collections::SortedList::Contains@bool([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::SortedList::Contains@bool([K] const &)[impl0]'
         ],
         'decls': []
     },
     'vl::collections::SortedList::IndexOf@::vl::vint([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]'
         ],

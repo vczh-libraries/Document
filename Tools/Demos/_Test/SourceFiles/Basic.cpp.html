@@ -11,7 +11,12 @@
 <a class="button" href="../SymbolIndex.html">Symbol Index</a>
 <br>
 <br>
-<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;Basic.h&quot;
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/</div>
+
+<div class="disabled">#include &quot;Basic.h&quot;
 #include &lt;time.h&gt;</div>
 <div class="disabled">#if defined VCZH_MSVC
 #include &lt;Windows.h&gt;</div>
@@ -115,6 +120,8 @@ DateTime
 <div class="disabled">		dt.minute = timeinfo-&gt;tm_min;</div>
 <div class="disabled">		dt.second = timeinfo-&gt;tm_sec;</div>
 <div class="disabled">		dt.milliseconds = milliseconds;</div>
+
+<div class="disabled">		// in Linux and macOS, filetime will be mktime(t) * 1000 + gettimeofday().tv_usec / 1000</div>
 <div class="disabled">        dt.filetime = (vuint64_t)timer * 1000 + milliseconds;</div>
 <div class="disabled">		dt.totalMilliseconds = (vuint64_t)timer * 1000 + milliseconds;</div>
 <div class="disabled">		return dt;</div>
@@ -289,7 +296,7 @@ referencedSymbols = {
         'decls': []
     },
     'FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)': {
-        'displayNameInHtml': '<span class="cpp_function">FileTimeToSystemTime</span>(<span class="cpp_type">FILETIME</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
+        'displayNameInHtml': '<span class="cpp_function">FileTimeToSystemTime</span>(<span class="cpp_type">FILETIME</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
         'impls': [],
         'decls': [
             'FB$FileTimeToSystemTime@::BOOL(::FILETIME const *, ::LPSYSTEMTIME)[decl0]'
@@ -317,21 +324,21 @@ referencedSymbols = {
         'decls': []
     },
     'SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)': {
-        'displayNameInHtml': '<span class="cpp_function">SystemTimeToFileTime</span>(<span class="cpp_type">SYSTEMTIME</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">LPFILETIME</span>)',
+        'displayNameInHtml': '<span class="cpp_function">SystemTimeToFileTime</span>(<span class="cpp_type">SYSTEMTIME</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">LPFILETIME</span>)',
         'impls': [],
         'decls': [
             'FB$SystemTimeToFileTime@::BOOL(::SYSTEMTIME const *, ::LPFILETIME)[decl0]'
         ]
     },
     'SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)': {
-        'displayNameInHtml': '<span class="cpp_function">SystemTimeToTzSpecificLocalTime</span>(<span class="cpp_type">TIME_ZONE_INFORMATION</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">SYSTEMTIME</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
+        'displayNameInHtml': '<span class="cpp_function">SystemTimeToTzSpecificLocalTime</span>(<span class="cpp_type">TIME_ZONE_INFORMATION</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">SYSTEMTIME</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
         'impls': [],
         'decls': [
             'FB$SystemTimeToTzSpecificLocalTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]'
         ]
     },
     'TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)': {
-        'displayNameInHtml': '<span class="cpp_function">TzSpecificLocalTimeToSystemTime</span>(<span class="cpp_type">TIME_ZONE_INFORMATION</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">SYSTEMTIME</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
+        'displayNameInHtml': '<span class="cpp_function">TzSpecificLocalTimeToSystemTime</span>(<span class="cpp_type">TIME_ZONE_INFORMATION</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">SYSTEMTIME</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">LPSYSTEMTIME</span>)',
         'impls': [],
         'decls': [
             'FB$TzSpecificLocalTimeToSystemTime@::BOOL(::TIME_ZONE_INFORMATION const *, ::SYSTEMTIME const *, ::LPSYSTEMTIME)[decl0]'
@@ -795,7 +802,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)': {
-        'displayNameInHtml': '<span class="cpp_function">DateTimeToSystemTime</span>(<span class="cpp_type">DateTime</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">DateTimeToSystemTime</span>(<span class="cpp_type">DateTime</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::DateTimeToSystemTime@::SYSTEMTIME(::vl::DateTime const &)[impl0]'
         ],
@@ -837,7 +844,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::Error::$__ctor@(wchar_t const *)': {
-        'displayNameInHtml': '<span class="cpp_type">Error</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)',
+        'displayNameInHtml': '<span class="cpp_type">Error</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">wchar_t</span> <span class="cpp_keyword">const</span> *)',
         'impls': [
             'FB$vl::Error::$__ctor@(wchar_t const *)[impl0]'
         ],
@@ -901,7 +908,7 @@ referencedSymbols = {
         ]
     },
     'vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)': {
-        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">NotCopyable</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">NotCopyable</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::NotCopyable::$__ctor@(::vl::NotCopyable const &)[impl0]'
         ],
@@ -910,7 +917,7 @@ referencedSymbols = {
         ]
     },
     'vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)': {
-        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>::<span class="cpp_function">operator =</span>(<span class="cpp_type">NotCopyable</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">NotCopyable</span>::<span class="cpp_function">operator =</span>(<span class="cpp_type">NotCopyable</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::NotCopyable::operator =@::vl::NotCopyable &(::vl::NotCopyable const &)[impl0]'
         ],
@@ -935,7 +942,7 @@ referencedSymbols = {
         ]
     },
     'vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)': {
-        'displayNameInHtml': '<span class="cpp_function">SystemTimeToDateTime</span>(<span class="cpp_type">SYSTEMTIME</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">SystemTimeToDateTime</span>(<span class="cpp_type">SYSTEMTIME</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::SystemTimeToDateTime@::vl::DateTime(::SYSTEMTIME const &)[impl0]'
         ],

@@ -1,1 +1,4 @@
-<Document><summary>Create a non-null value.</summary><returns>The created nullable value.</returns><param name="value">The value to copy.</param></Document>
+<Document symbolId="vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;([T] const &amp;)" accessor="public" category="Function" name="operator =" declFile="Basic.h" declId="FB$vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;([T] const &amp;)[impl0]"><summary>Replace the data inside this nullable value by copying from data.</summary><returns>The nullable value itself.</returns><param name="value">The data to copy.</param><signature><![CDATA[Nullable<T> & operator =(
+    T const & value
+);
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

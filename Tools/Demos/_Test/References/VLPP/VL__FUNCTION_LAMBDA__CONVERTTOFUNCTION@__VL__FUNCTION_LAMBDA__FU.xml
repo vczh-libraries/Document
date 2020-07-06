@@ -1,1 +1,7 @@
-<Document><summary>Create a function reference to a function pointer, with all type information autotimatically inferred. You can use the macro called &quot;FUNCTION&quot; to refer to this function.</summary><typeparam name="T">Type of the function pointer.</typeparam><returns>The function reference.</returns><param name="functionObject">The function pointer.</param></Document>
+<Document symbolId="vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])" accessor="" category="Function" name="ConvertToFunction" declFile="Function.h" declId="FB$vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])[impl0]"><summary>Create a functor in <symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/> from a function pointer, with all type arguments autotimatically inferred. The &quot;FUNCTION&quot; macro is recommended for the same purpose for writing compact code.</summary><typeparam name="T">Type of the function pointer.</typeparam><returns>A copied functor in <symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/>.</returns><param name="functionObject">The function pointer.</param><signature><![CDATA[template <
+    typename T
+>
+FunctionObjectRetriveType<T>::Type ConvertToFunction(
+    T functionObject
+);
+]]></signature><seealsos><symbol name="Type" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::Type"/><symbol name="Type" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::Type"/></seealsos></Document>

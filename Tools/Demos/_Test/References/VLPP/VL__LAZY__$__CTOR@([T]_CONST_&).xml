@@ -1,2 +1,5 @@
-<Document><summary>Create an evaluation using the result directly.</summary><param name="value">The result that you have already known.</param>0
-</Document>
+<Document symbolId="vl::Lazy::$__ctor@([T] const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Lazy.h" declId="FB$vl::Lazy::$__ctor@([T] const &amp;)[impl0]"><summary>Create an evaluation with the immediate result.</summary><param name="value">The result.</param>0
+<signature><![CDATA[ Lazy(
+    T const & value
+);
+]]></signature></Document>

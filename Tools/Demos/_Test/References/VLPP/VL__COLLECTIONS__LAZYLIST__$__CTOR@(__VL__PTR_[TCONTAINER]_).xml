@@ -1,1 +1,7 @@
-<Document><summary>Create a lazy list with a container.</summary><typeparam name="TContainer">Type of the container.</typeparam><param name="container">The container.</param></Document>
+<Document symbolId="vl::collections::LazyList::$__ctor@(::vl::Ptr&lt;[TContainer]&gt;)" accessor="public" category="Function" name="$__ctor" declFile="Operation.h" declId="FB$vl::collections::LazyList::$__ctor@(::vl::Ptr&lt;[TContainer]&gt;)[impl0]"><summary>Create a lazy list with a container.</summary><typeparam name="TContainer">Type of the container.</typeparam><param name="container">The container.</param><signature><![CDATA[template <
+    typename TContainer
+>
+ LazyList(
+    Ptr<TContainer> container
+);
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

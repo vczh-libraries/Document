@@ -1,1 +1,4 @@
-<Document><summary>Invoke all callbacks in the event.</summary><param name="args">Arguments to invoke all callbacks.</param></Document>
+<Document symbolId="vl::Event@&lt;void([TArgs]...)&gt;::operator ()@void([TArgs]...)" accessor="public" category="Function" name="operator ()" declFile="Event.h" declId="FB$vl::Event@&lt;void([TArgs]...)&gt;::operator ()@void([TArgs]...)[impl0]"><summary>Invoke all callbacks in the event.</summary><param name="args">Arguments to invoke all callbacks.</param><signature><![CDATA[void operator ()(
+    TArgs... args
+) const;
+]]></signature></Document>

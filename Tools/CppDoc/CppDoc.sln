@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Render", "Render\Render.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TypePrinter", "CaseProjects\TypePrinter\TypePrinter.vcxproj", "{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DocIndex", "DocIndex\DocIndex.vcxproj", "{75C25B86-F64F-41BB-A878-8382D5DB38F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -89,6 +91,14 @@ Global
 		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Release|x64.Build.0 = Release|x64
 		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Release|x86.ActiveCfg = Release|Win32
 		{07A50ECD-D3B5-48C5-8F55-EF609C0F9510}.Release|x86.Build.0 = Release|Win32
+		{75C25B86-F64F-41BB-A878-8382D5DB38F8}.Debug|x64.ActiveCfg = Debug|x64
+		{75C25B86-F64F-41BB-A878-8382D5DB38F8}.Debug|x64.Build.0 = Debug|x64
+		{75C25B86-F64F-41BB-A878-8382D5DB38F8}.Debug|x86.ActiveCfg = Debug|Win32
+		{75C25B86-F64F-41BB-A878-8382D5DB38F8}.Debug|x86.Build.0 = Debug|Win32
+		{75C25B86-F64F-41BB-A878-8382D5DB38F8}.Release|x64.ActiveCfg = Release|x64
+		{75C25B86-F64F-41BB-A878-8382D5DB38F8}.Release|x64.Build.0 = Release|x64
+		{75C25B86-F64F-41BB-A878-8382D5DB38F8}.Release|x86.ActiveCfg = Release|Win32
+		{75C25B86-F64F-41BB-A878-8382D5DB38F8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

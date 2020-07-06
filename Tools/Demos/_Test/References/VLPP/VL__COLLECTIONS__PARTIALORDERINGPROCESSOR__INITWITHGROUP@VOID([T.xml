@@ -1,1 +1,8 @@
-<Document><summary>Initialize the processor, specifying dependency relationships as a group.</summary><typeparam name="TList">Type of the first parameter.</typeparam><param name="items">Items.</param><param name="depGroup">Dependences. If a depends on b, then depGroups[a].Contains(b) == true.</param></Document>
+<Document symbolId="vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &amp;, ::vl::collections::PartialOrderingProcessor::GroupOf&lt;[TList]&gt; const &amp;)" accessor="public" category="Function" name="InitWithGroup" declFile="PartialOrdering.h" declId="FB$vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &amp;, ::vl::collections::PartialOrderingProcessor::GroupOf&lt;[TList]&gt; const &amp;)[impl0]"><summary>Initialize the processor, specifying dependency relationships as a group.</summary><typeparam name="TList">Type of the first parameter.</typeparam><param name="items">Items.</param><param name="depGroup">Dependences. If a depends on b, then depGroups[a].Contains(b) == true.</param><signature><![CDATA[template <
+    typename TList
+>
+void InitWithGroup(
+    TList const & items,
+    GroupOf<TList> const & depGroup
+);
+]]></signature><seealsos><symbol name="GroupOf" declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor::GroupOf"/></seealsos></Document>

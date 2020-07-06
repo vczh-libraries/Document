@@ -1,1 +1,7 @@
-<Document><summary>A lazy evaluated readonly container.</summary><typeparam name="T">The type of elements.</typeparam></Document>
+<Document symbolId="vl::collections::LazyList" accessor="" category="Class" name="LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"><summary>A lazy evaluated readonly container.</summary><typeparam name="T">The type of elements.</typeparam><signature><![CDATA[template <
+    typename T
+>
+class LazyList
+    : Object
+    , IEnumerable<T>;
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/></basetypes></Document>

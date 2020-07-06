@@ -11,7 +11,12 @@
 <a class="button" href="../SymbolIndex.html">Symbol Index</a>
 <br>
 <br>
-<div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;UnitTest.h&quot;</div>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/</div>
+
+<div class="disabled">#include &quot;UnitTest.h&quot;</div>
 <div class="disabled">#include &quot;../Console.h&quot;</div>
 <div class="disabled">#ifdef VCZH_MSVC</div>
 <div class="disabled">#include &lt;Windows.h&gt;
@@ -44,7 +49,7 @@ UnitTest
 				<div class="def" id="NI$vl::unittest::execution_impl::UnitTestContextKind::Category"><div><div class="token cpp_enum">Category</div></div></div>,
 				<div class="def" id="NI$vl::unittest::execution_impl::UnitTestContextKind::Case"><div><div class="token cpp_enum">Case</div></div></div>,
 			};
-
+			
 			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::unittest::execution_impl::UnitTestContext"><div><div class="token cpp_type">UnitTestContext</div></div></div>
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::unittest::execution_impl::UnitTestContext'], [], [])"><div class="token cpp_type">UnitTestContext</div></div>*			<div class="def" id="NI$vl::unittest::execution_impl::UnitTestContext::parent"><div><div class="token cpp_field">parent</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
@@ -393,10 +398,10 @@ referencedSymbols = {
     },
     'vl::Func': {
         'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">T</span>&gt;',
-        'impls': [
-            'NI$vl::Func'
-        ],
-        'decls': []
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::Func'
+        ]
     },
     'vl::Func@<[R]([TArgs]...)>': {
         'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;',
@@ -413,7 +418,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::atow@::vl::WString(::vl::AString const &)': {
-        'displayNameInHtml': '<span class="cpp_function">atow</span>(<span class="cpp_type">AString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_function">atow</span>(<span class="cpp_type">AString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::atow@::vl::WString(::vl::AString const &)[impl0]'
         ],
@@ -446,7 +451,7 @@ referencedSymbols = {
         ]
     },
     'vl::console::Console::WriteLine@void(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">WriteLine</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &)',
+        'displayNameInHtml': '<span class="cpp_type">Console</span>::<span class="cpp_function">WriteLine</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::console::Console::WriteLine@void(::vl::WString const &)[impl0]'
         ],
@@ -530,7 +535,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)': {
-        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">PrintMessage</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_type">MessageKind</span>)',
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">PrintMessage</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">MessageKind</span>)',
         'impls': [
             'FB$vl::unittest::UnitTest::PrintMessage@void(::vl::WString const &, ::vl::unittest::UnitTest::MessageKind)[impl0]'
         ],
@@ -553,7 +558,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)': {
-        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">RegisterTestFile</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">UnitTestFileProc</span>)',
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">RegisterTestFile</span>(<span class="cpp_keyword">char</span> <span class="cpp_keyword">const</span> *, <span class="cpp_type">UnitTestFileProc</span>)',
         'impls': [
             'FB$vl::unittest::UnitTest::RegisterTestFile@void(char const *, ::vl::unittest::UnitTestFileProc)[impl0]'
         ],
@@ -648,7 +653,7 @@ referencedSymbols = {
         'decls': []
     },
     'vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)': {
-        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">RunCategoryOrCase</span>(<span class="cpp_type">WString</span><span class="cpp_keyword"> const</span> &, <span class="cpp_keyword">bool</span>, <span class="cpp_type">Func</span>&lt;<span class="cpp_keyword">void</span>()&gt; &&)',
+        'displayNameInHtml': '<span class="cpp_type">UnitTest</span>::<span class="cpp_function">RunCategoryOrCase</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_keyword">bool</span>, <span class="cpp_type">Func</span>&lt;<span class="cpp_keyword">void</span>()&gt; &&)',
         'impls': [
             'FB$vl::unittest::UnitTest::RunCategoryOrCase@void(::vl::WString const &, bool, ::vl::Func<void()> &&)[impl0]'
         ],
@@ -1031,6 +1036,7 @@ symbolToFiles = {
     'FB$vl::unittest::execution_impl::SuppressCFailure@void([TCallback] &&)[impl0]': null,
     'FB$vl::unittest::execution_impl::SuppressCppFailure@void([TCallback] &&)[impl0]': null,
     'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::Func': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
     'NF[0]$vl::console': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
     'NF[0]$vl::unittest': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
     'NF[0]$vl::unittest::execution_impl': null,
@@ -1071,7 +1077,6 @@ symbolToFiles = {
     'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
     'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::Exception': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
-    'NI$vl::Func': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
     'NI$vl::Func@<[R]([TArgs]...)>': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
     'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
     'NI$vl::console::Console': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },

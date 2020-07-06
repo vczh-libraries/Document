@@ -1,1 +1,7 @@
-<Document><summary>List.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam></Document>
+<Document symbolId="vl::collections::List" accessor="" category="Class" name="List" declFile="List.h" declId="NI$vl::collections::List"><summary>List: linear container with dynamic size in runtime for unordered values. All elements are contiguous in memory.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam><signature><![CDATA[template <
+    typename T, 
+    typename K /* optional */
+>
+class List
+    : ListBase<T, K>;
+]]></signature><basetypes><symbol name="ListBase" docId="vl::collections::ListBase" declFile="List.h" declId="NI$vl::collections::ListBase"/></basetypes></Document>

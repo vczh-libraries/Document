@@ -1,0 +1,3 @@
+<Document symbolId="vl::collections::Group::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Dictionary.h" declId="FB$vl::collections::Group::$__ctor@()[decl0]"><summary>Create an empty group.</summary><signature><![CDATA[ Group(
+);
+]]></signature></Document>

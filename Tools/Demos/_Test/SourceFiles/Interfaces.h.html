@@ -12,13 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Data Structure::Interfaces
-
-Interfaces:
-	IEnumerator&lt;T&gt;									: Enumerator interface
-	IEnumerable&lt;T&gt;									: Enumerable object interface
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_COLLECTIONS_INTERFACES</div>
@@ -37,8 +32,8 @@ Interfaces:
 Interfaces
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Enumerator.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the elements in the enumerator.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;An enumerator interface for receiving values without going back.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the values returned from the enumerator.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::IEnumerator::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::IEnumerator"><div><div class="token cpp_type">IEnumerator</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
 		{
@@ -48,30 +43,79 @@ Interfaces
 			<div class="token cpp_comment ">/// &lt;summary&gt;Copy the enumerator with the current state.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The copied enumerator.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;*						<div class="def" id="FB$vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()[decl0]"><div><div class="token cpp_function">Clone</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the current element in the enumerator.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the current element.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the current value in the enumerator.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the current value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// After calling &lt;see cref=&quot;IEnumerable`1::CreateEnumerator&quot;/&gt;, &lt;see cref=&quot;Next&quot;/&gt; need to be called to make the first value available.</div>
+			<div class="token cpp_comment ">/// Return value of &lt;see cref=&quot;Current&quot;/&gt; will be changed after each time &lt;see cref=&quot;Next&quot;/&gt; is called.</div>
+			<div class="token cpp_comment ">/// If &lt;see cref=&quot;Next&quot;/&gt; returns false, the behavior of &lt;see cref=&quot;Current&quot;/&gt; is undefined.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator::T'], [], [])"><div class="token cpp_type">T</div></div>&amp;							<div class="def" id="FB$vl::collections::IEnumerator::Current@[T] const &()[decl0]"><div><div class="token cpp_function">Current</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of the current element in the enumerator.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The position of the current element.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of the current value in the enumerator.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The position of the current value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// After calling &lt;see cref=&quot;IEnumerable`1::CreateEnumerator&quot;/&gt;, &lt;see cref=&quot;Next&quot;/&gt; need to be called to make the first value available.</div>
+			<div class="token cpp_comment ">/// Index will be increased after each time &lt;see cref=&quot;Next&quot;/&gt; is called with true returned.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>								<div class="def" id="FB$vl::collections::IEnumerator::Index@::vl::vint()[decl0]"><div><div class="token cpp_function">Index</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Step forward.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns false if the enumerator reaches the end.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Prepare for the next value.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns false if there is no more value.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>								<div class="def" id="FB$vl::collections::IEnumerator::Next@bool()[decl0]"><div><div class="token cpp_function">Next</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;Reset the enumerator.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::collections::IEnumerator::Reset@void()[decl0]"><div><div class="token cpp_function">Reset</div></div></div>()=<div class="token cpp_number ">0</div>;
-
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if all values of this enumerator have been evaluated.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if all values have been evaluated.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remakrs&gt;An evaluated enumerator typically means, there will be no more calculation happens in &lt;see cref=&quot;Next&quot;/&gt; regardless if all values have been read or not.&lt;/remakrs&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>								<div class="def" id="FB$vl::collections::IEnumerator::Evaluated@bool()[impl0]"><div><div class="token cpp_function">Evaluated</div></div></div>()<div class="token cpp_keyword ">const</div>{<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;}
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Enumerable.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the elements in the enumerator.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// An enumerable interface representing all types that provide multiple values in order.</div>
+		<div class="token cpp_comment ">/// range-based for-loop is not supported on enumerable yet, current we have &quot;FOREACH&quot; and &quot;FOREACH_INDEXER&quot; for iterating values.</div>
+		<div class="token cpp_comment ">/// &lt;see cref=&quot;CopyFrom&quot;/&gt; functions work for all enumerable implementation.</div>
+		<div class="token cpp_comment ">/// &lt;see cref=&quot;LazyList&quot;/&gt; provides high-level operations for enumerables, you can create a lazy list by calling &lt;see cref=&quot;From&quot;/&gt; on any enumerables.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     List&lt;vint&gt; xs;</div>
+		<div class="token cpp_comment ">///     for (vint i = 0; i &lt; 10; i++)</div>
+		<div class="token cpp_comment ">///         xs.Add(i);</div>
+		<div class="token cpp_comment ">///     List&lt;vint&gt; ys;</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     // replace values in ys using xs, it could also be appending instead of replacing, which is controlled by the third argument</div>
+		<div class="token cpp_comment ">///     CopyFrom(ys, xs);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     // print ys</div>
+		<div class="token cpp_comment ">///     FOREACH(vint, y, ys)</div>
+		<div class="token cpp_comment ">///         Console::Write(itow(y) + L&quot; &quot;);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(L&quot;&quot;);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     // print ys, added by the position</div>
+		<div class="token cpp_comment ">///     FOREACH_INDEXER(vint, y, i, ys)</div>
+		<div class="token cpp_comment ">///         Console::Write(itow(y + i) + L&quot; &quot;);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(L&quot;&quot;);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     // print all odd numbers in ys</div>
+		<div class="token cpp_comment ">///     FOREACH(vint, y, From(ys).Where([](int a){return a % 2 == 1;}))</div>
+		<div class="token cpp_comment ">///         Console::Write(itow(y) + L&quot; &quot;);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(L&quot;&quot;);</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the values in the enumerable.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::IEnumerable::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::IEnumerable"><div><div class="token cpp_type">IEnumerable</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
 		{
 		<div class="token cpp_keyword ">public</div>:
 			<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable::T'], [], [])"><div class="token cpp_type">T</div></div>									<div class="def" id="NI$vl::collections::IEnumerable::ElementType"><div><div class="token cpp_type">ElementType</div></div></div>;
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create an enumerator. [M:vl.collections.IEnumerator`1.Next] should be called to get the first element.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Create an enumerator. [M:vl.collections.IEnumerator`1.Next] should be called before reading the first value.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// In most of the cases, you do not need to call this function.</div>
+			<div class="token cpp_comment ">/// &quot;FOREACH&quot;, &quot;FOREACH_INDEXER&quot;, &lt;see cref=&quot;CopyFrom&quot;/&gt; and &lt;see cref=&quot;LazyList&quot;/&gt; do all the jobs for you.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The enumerator.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;*						<div class="def" id="FB$vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()[decl0]"><div><div class="token cpp_function">CreateEnumerator</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
 		};
