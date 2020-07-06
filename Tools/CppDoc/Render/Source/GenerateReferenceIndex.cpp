@@ -348,7 +348,8 @@ Ptr<XmlElement> ResolveHyperLink(
 			vint index = INVLOC.FindFirst(cppName.name, L"`", Locale::Normalization::None).key;
 			if (index != -1)
 			{
-				templateArgumentCount = wtoi(cppName.name.Right(cppName.name.Length() - index - 1));
+				auto filter = cppName.name.Right(cppName.name.Length() - index - 1);
+				templateArgumentCount = filter == L"*" ? -1 : wtoi(filter);
 				cppName.name = cppName.name.Left(index);
 			}
 		}
@@ -379,7 +380,7 @@ Ptr<XmlElement> ResolveHyperLink(
 			}
 		}
 
-		if (rar.types)
+		if (rar.types && templateArgumentCount != -1)
 		{
 			for (vint k = rar.types->items.Count() - 1; k >= 0; k--)
 			{
@@ -429,13 +430,14 @@ Ptr<XmlElement> ResolveHyperLink(
 					rar.types->items.RemoveAt(k);
 				}
 			}
+
 			if (rar.types->items.Count() == 0)
 			{
 				rar.types = nullptr;
 			}
 		}
 
-		if (rar.values)
+		if (rar.values && templateArgumentCount != -1)
 		{
 			for (vint k = rar.values->items.Count() - 1; k >= 0; k--)
 			{
@@ -481,6 +483,7 @@ Ptr<XmlElement> ResolveHyperLink(
 					rar.values->items.RemoveAt(k);
 				}
 			}
+
 			if (rar.values->items.Count() == 0)
 			{
 				rar.values = nullptr;
@@ -574,7 +577,7 @@ vint ProcessDocumentRecordHyperLinksInternal(
 	const WString& xmlText
 )
 {
-	static Regex regexHyperLink(L"/[(<type>/w):((<content>[a-zA-Z0-9`]+).)*(<content>[a-zA-Z0-9`]+)/]");
+	static Regex regexHyperLink(L"/[(<type>/w):((<content>[a-zA-Z0-9_`*]+).)*(<content>[a-zA-Z0-9_`*]+)/]");
 
 	RegexMatch::List matches;
 	regexHyperLink.Cut(xmlTextContent, false, matches);
@@ -639,7 +642,7 @@ void ProcessDocumentRecordHyperLinksInternal(
 	const WString& xmlText
 )
 {
-	static Regex regexHyperLink(L"^((<content>[a-zA-Z0-9`]+)::)*(<content>[a-zA-Z0-9`]+)$");
+	static Regex regexHyperLink(L"^((<content>[a-zA-Z0-9_`*]+)::)*(<content>[a-zA-Z0-9_`*]+)$");
 
 	if (xmlElement->name.value == L"see")
 	{
