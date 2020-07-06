@@ -26,9 +26,19 @@
 
 ### Document Generation
 
+- [ ] `DocGen.ps1`
+  - [ ] Complete XML comments for Vlpp.
+  - [ ] Write `<example>` for all functions if possible.
+  - [ ] Move `Gaclib` from `UnitTest_ExecuteCases` to a new project `DocIndex`.
+  - [ ] `DocGen.ps1 docindex` builds `UnitTest_Cases` with x86 debug, and `DocIndex` for x64 release.
+  - [ ] `DocGen.ps1 generate` execute `DocIndex` on preprocessed files from `UnitTest_Cases`.
+  - [ ] `DocGen.ps1 verify` extract all `<example>` from XML documents, compile and run them with header code according to which project are they in.
+    - [ ] Report all failed examples, save all example outputs to another group of files.
+  - [ ] `DocGen.ps1 build` builds `WebsiteSource` and download websites.
+  - [ ] `DocGen.ps1 copy` copies files from `website`, `website-doc1`, code index HTML files, `Cpp.js`, `Cpp.css`. `favicon.ico` to `vczh-libraries.github.io`.
+  - [ ] Complete tutorials for Vlpp.
+  - [ ] Update website.
 - [ ] Refine document comment
-  - [ ] Vlpp
-    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppOS
     - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppRegex
@@ -49,19 +59,8 @@
   - [ ] `Sources/Source.html`: HTML fragment for source files, hyper links are converted to numbers
   - [ ] `Sources/Source.js`: hyper link information for `Source.html`
   - [ ] generate a completed list of article pages to a text file for `npm run download`.
-- [ ] Build script for document
-  - [ ] New projects in Document
-    - [ ] reprocess of GacUI files
-    - [ ] build GacUI files
-  - [ ] Assign unique id to `<example>`.
-  - [ ] Powershell script to build and execute all `<example>` to get output
-  - [ ] Combine source and output and convert `<example>` to `<program>`
-    - [ ] Add necessary `#include` and `using namespace` according to which project the source code belongs to.
-  - [ ] Call `WebsiteSource` to generate website
-  - [ ] Copy website to `vczh-libraries.github.io`
 - [ ] Connect reflection symbols to C++ symbols
-- [ ] Author document (Separate document tree and reference tree)
-  - [ ] Vlpp
+- [ ] Author tutorial
   - [ ] VlppOS
   - [ ] VlppRegex
   - [ ] VlppReflection
