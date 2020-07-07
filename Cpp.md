@@ -27,6 +27,7 @@
 ### Document Generation
 
 - [ ] `DocGen.ps1`
+  - [ ] Tutorial for Vlpp
   - [ ] `ValidateAndFixDocumentRecord` replace `<example>` with `<example index="1">`, and export example to `Refefences\CATEGORY\ID.ein.index.xml`.
   - [ ] `DocGen.ps1 build-index` builds `UnitTest_Cases` with x86 debug, and `DocIndex` for x64 release.
   - [ ] `DocGen.ps1 index` execute `DocIndex` on preprocessed files from `UnitTest_Cases`.
