@@ -156,11 +156,13 @@ LazyList
 		<div class="token cpp_comment ">/// &lt;summary&gt;A lazy evaluated container with rich operations. &lt;see cref=&quot;From`*&quot;/&gt; is useful to create lazy list from arrays or containers.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;The type of elements.&lt;/typeparam&gt;</div>
 		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
-		<div class="token cpp_comment ">/// A lazy list is usually created directly from a container source, or from a calculation on a source.</div>
-		<div class="token cpp_comment ">/// Typically the lazy list cannot be used after the source is deleted.</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;A lazy list is usually created directly from a container source, or from a calculation on a source.&lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;Typically the lazy list cannot be used after the source is deleted.&lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
 		<div class="token cpp_comment ">/// If this lazy list needs to be used after the source is deleted,</div>
 		<div class="token cpp_comment ">/// you are recommended to use [F:vl.collections.LazyList`1.Evaluate], &lt;b&gt;with forceCopy set to true&lt;/b&gt;.</div>
-		<div class="token cpp_comment ">/// In this way you get a lazy list with all values copied, they do not rely on other objects.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;In this way you get a lazy list with all values copied, they do not rely on other objects.&lt;/p&gt;</div>
 		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::LazyList"><div><div class="token cpp_type">LazyList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;
@@ -719,12 +721,12 @@ LazyList
 			<div class="token cpp_comment ">/// &lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;forceCopy&quot;&gt;Set to true to force copying values, regardless of whether this lazy list is evaluated or not.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
-			<div class="token cpp_comment ">/// &quot;Evaluated&quot; means reading from this lazy list cause no extra calculation.</div>
-			<div class="token cpp_comment ">/// In most of the cases, the created lazy list relies on its source.</div>
-			<div class="token cpp_comment ">/// For example, a lazy list can be created from a reference to a &lt;see cref=&quot;List`*&quot;/&gt;, or from an array on stack.</div>
-			<div class="token cpp_comment ">/// If this list or array is deleted, then iterating the created lazy list will crash.</div>
-			<div class="token cpp_comment ">/// By calling the Evaluate function &lt;b&gt;with forceCopy set to true&lt;/b&gt;, a new lazy list is created, with all values cached in it.</div>
-			<div class="token cpp_comment ">/// Its connection to the source list or array is removed, and can then be passed to everywhere.</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;&quot;Evaluated&quot; means reading from this lazy list cause no extra calculation.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;In most of the cases, the created lazy list relies on its source.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;For example, a lazy list can be created from a reference to a &lt;see cref=&quot;List`*&quot;/&gt;, or from an array on stack.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;If this list or array is deleted, then iterating the created lazy list will crash.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;By calling the Evaluate function &lt;b&gt;with forceCopy set to true&lt;/b&gt;, a new lazy list is created, with all values cached in it.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;Its connection to the source list or array is removed, and can then be passed to everywhere.&lt;/p&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]"><div><div class="token cpp_function">Evaluate</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::forceCopy"><div><div class="token cpp_argument">forceCopy</div></div></div> = <div class="token cpp_keyword ">false</div>)<div class="token cpp_keyword ">const</div>
 			{
