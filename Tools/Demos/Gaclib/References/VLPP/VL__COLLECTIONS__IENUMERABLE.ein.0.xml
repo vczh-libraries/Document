@@ -1,0 +1,27 @@
+<example><![CDATA[
+ int main()
+ {
+     List<vint> xs;
+     for (vint i = 0; i < 10; i++)
+         xs.Add(i);
+     List<vint> ys;
+
+     // replace values in ys using xs, it could also be appending instead of replacing, which is controlled by the third argument
+     CopyFrom(ys, xs);
+
+     // print ys
+     FOREACH(vint, y, ys)
+         Console::Write(itow(y) + L" ");
+     Console::WriteLine(L"");
+
+     // print ys, added by the position
+     FOREACH_INDEXER(vint, y, i, ys)
+         Console::Write(itow(y + i) + L" ");
+     Console::WriteLine(L"");
+
+     // print all odd numbers in ys
+     FOREACH(vint, y, From(ys).Where([](int a){return a % 2 == 1;}))
+         Console::Write(itow(y) + L" ");
+     Console::WriteLine(L"");
+ }
+ ]]></example>

@@ -3,20 +3,7 @@
  The first argument is any element in this lazy list.
  Returns a key calculated from this argument.
  Elements that have the same key will be grouped together.
- </param><example><![CDATA[
- int main()
- {
-     vint xs[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-     auto ys = From(xs).GroupBy([](vint x){ return x % 3; });
-     using TY = Pair<vint, LazyList<vint>>;
-     FOREACH(TY, y, ys)
-     {
-         Console::Write(itow(y.key) + L":");
-         FOREACH(vint, z, y.value) Console::Write(L" " + itow(z));
-         Console::WriteLine(L"");
-     }
- }
- ]]></example><signature><![CDATA[template <
+ </param><example index="0"/><signature><![CDATA[template <
     typename F
 >
 LazyList<Pair<vl::function_lambda::FunctionObjectRetriveType<F>::ResultType, LazyList<T>>> GroupBy(

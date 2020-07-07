@@ -1,0 +1,7 @@
+<example><![CDATA[
+ int main()
+ {
+     WString s = L"Hello, world!";
+     Console::WriteLine(s.Insert(7, L"a great "));
+ }
+ ]]></example>

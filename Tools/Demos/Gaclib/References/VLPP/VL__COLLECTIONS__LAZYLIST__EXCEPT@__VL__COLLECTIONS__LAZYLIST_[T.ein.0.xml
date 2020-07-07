@@ -1,0 +1,9 @@
+<example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     vint ys[] = {3, 4, 5, 6, 7};
+     auto zs = From(xs).Except(From(ys));
+     FOREACH(vint, z, zs) Console::Write(itow(z) + L" ");
+ }
+ ]]></example>

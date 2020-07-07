@@ -1,0 +1,8 @@
+<example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     auto ys = From(xs).Aggregate([](vint x, vint y){ return x + y; });
+     Console::WriteLine(itow(ys));
+ }
+ ]]></example>

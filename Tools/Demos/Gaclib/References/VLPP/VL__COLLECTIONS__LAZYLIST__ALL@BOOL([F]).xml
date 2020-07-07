@@ -1,11 +1,4 @@
-<Document symbolId="vl::collections::LazyList::All@bool([F])" accessor="public" category="Function" name="All" declFile="Operation.h" declId="FB$vl::collections::LazyList::All@bool([F])[impl0]"><summary>Test if all elements in the lazy list satisfy a filter.</summary><typeparam name="F">Type of the filter.</typeparam><returns>Returns true if all elements satisfy the filter.</returns><param name="f">The filter.</param><example><![CDATA[
- int main()
- {
-     vint xs[] = {1, 2, 3, 4, 5};
-     auto ys = From(xs).All([](vint x){ return x % 2 == 0; });
-     Console::WriteLine(ys ? L"All numbers are even" : L"Not all numbers are even");
- }
- ]]></example><signature><![CDATA[template <
+<Document symbolId="vl::collections::LazyList::All@bool([F])" accessor="public" category="Function" name="All" declFile="Operation.h" declId="FB$vl::collections::LazyList::All@bool([F])[impl0]"><summary>Test if all elements in the lazy list satisfy a filter.</summary><typeparam name="F">Type of the filter.</typeparam><returns>Returns true if all elements satisfy the filter.</returns><param name="f">The filter.</param><example index="0"/><signature><![CDATA[template <
     typename F
 >
 bool All(

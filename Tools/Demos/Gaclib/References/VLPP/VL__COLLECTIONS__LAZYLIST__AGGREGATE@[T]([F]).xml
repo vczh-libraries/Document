@@ -4,14 +4,7 @@
  The second argument is the element right after a prefix.
  Returns the aggregated value of the new prefix.
  For the first call, the first argument is the first element in the lazy list.
- </param><example><![CDATA[
- int main()
- {
-     vint xs[] = {1, 2, 3, 4, 5};
-     auto ys = From(xs).Aggregate([](vint x, vint y){ return x + y; });
-     Console::WriteLine(itow(ys));
- }
- ]]></example><signature><![CDATA[template <
+ </param><example index="0"/><signature><![CDATA[template <
     typename F
 >
 T Aggregate(

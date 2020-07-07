@@ -13,21 +13,7 @@
  The first argument is the key, the second argument is the associated value in the first group, the third argument is the associated value in the second group.
  </param><remarks>
  This function does not change data in provided groups.
- </remarks><example><![CDATA[
- int main()
- {
-     Group<vint, WString> as, bs;
-     as.Add(1 ,L"A"); as.Add(1 ,L"B"); as.Add(2 ,L"C"); as.Add(2 ,L"D");
-     bs.Add(1 ,L"X"); bs.Add(1 ,L"Y"); as.Add(3 ,L"Z"); as.Add(3 ,L"W");
-     GroupInnerJoin(
-         as,
-         bs,
-         [](vint key, const WString& value) { Console::WriteLine(L"Discarded in as: " + itow(key) + L", " + value); },
-         [](vint key, const WString& value) { Console::WriteLine(L"Discarded in bs: " + itow(key) + L", " + value); },
-         [](vint key, const WString& value1, const WString& value 2) { Console::WriteLine(L"Accepted: " + itow(key) + L", " + value1 + L", " + value2); }
-         );
- }
- ]]></example><signature><![CDATA[template <
+ </remarks><example index="0"/><signature><![CDATA[template <
     typename TKey, 
     typename TValueFirst, 
     typename TValueSecond, 

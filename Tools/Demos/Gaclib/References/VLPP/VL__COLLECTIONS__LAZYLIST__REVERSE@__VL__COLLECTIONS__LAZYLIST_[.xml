@@ -1,10 +1,3 @@
-<Document symbolId="vl::collections::LazyList::Reverse@::vl::collections::LazyList&lt;[T]&gt;()" accessor="public" category="Function" name="Reverse" declFile="Operation.h" declId="FB$vl::collections::LazyList::Reverse@::vl::collections::LazyList&lt;[T]&gt;()[impl0]"><summary>Create a new lazy list with all elements in this lazy list in a reverse order.</summary><returns>The created lazy list.</returns><example><![CDATA[
- int main()
- {
-     vint xs[] = {1, 2, 3, 4, 5};
-     auto ys = From(xs).Reverse();
-     FOREACH(vint, y, ys) Console::Write(itow(y) + L" ");
- }
- ]]></example><signature><![CDATA[LazyList<T> Reverse(
+<Document symbolId="vl::collections::LazyList::Reverse@::vl::collections::LazyList&lt;[T]&gt;()" accessor="public" category="Function" name="Reverse" declFile="Operation.h" declId="FB$vl::collections::LazyList::Reverse@::vl::collections::LazyList&lt;[T]&gt;()[impl0]"><summary>Create a new lazy list with all elements in this lazy list in a reverse order.</summary><returns>The created lazy list.</returns><example index="0"/><signature><![CDATA[LazyList<T> Reverse(
 ) const;
 ]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

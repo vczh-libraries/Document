@@ -4,14 +4,7 @@
  Returns a positive number when the first argument is greater.
  Returns a negative number when the second argument is greater.
  Returns zero when two arguments equal.
- </param><example><![CDATA[
- int main()
- {
-     vint xs[] = {1, 2, 3, 4, 5};
-     auto ys = From(xs).OrderBy([](vint x, vint y){ return x - y; });
-     FOREACH(vint, y, ys) Console::Write(itow(y) + L" ");
- }
- ]]></example><signature><![CDATA[template <
+ </param><example index="0"/><signature><![CDATA[template <
     typename F
 >
 LazyList<T> OrderBy(

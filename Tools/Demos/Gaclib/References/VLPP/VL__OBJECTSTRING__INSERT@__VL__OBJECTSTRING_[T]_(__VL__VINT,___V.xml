@@ -1,10 +1,4 @@
-<Document symbolId="vl::ObjectString::Insert@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::ObjectString&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Insert" declFile="String.h" declId="FB$vl::ObjectString::Insert@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::ObjectString&lt;[T]&gt; const &amp;)[impl0]"><summary>Get a string by inserting another string.</summary><returns>The string with another string inserted. It will crash when the specified position is out of range.</returns><param name="index">The position to insert.</param><param name="string">The string to insert.</param><example><![CDATA[
- int main()
- {
-     WString s = L"Hello, world!";
-     Console::WriteLine(s.Insert(7, L"a great "));
- }
- ]]></example><signature><![CDATA[ObjectString<T> Insert(
+<Document symbolId="vl::ObjectString::Insert@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::ObjectString&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Insert" declFile="String.h" declId="FB$vl::ObjectString::Insert@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::ObjectString&lt;[T]&gt; const &amp;)[impl0]"><summary>Get a string by inserting another string.</summary><returns>The string with another string inserted. It will crash when the specified position is out of range.</returns><param name="index">The position to insert.</param><param name="string">The string to insert.</param><example index="0"/><signature><![CDATA[ObjectString<T> Insert(
     vint index,
     ObjectString<T> const & string
 ) const;
