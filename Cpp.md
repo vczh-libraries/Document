@@ -27,12 +27,15 @@
 ### Document Generation
 
 - [ ] `DocGen.ps1`
-  - [ ] `DocGen.ps1 docindex` builds `UnitTest_Cases` with x86 debug, and `DocIndex` for x64 release.
-  - [ ] `DocGen.ps1 generate` execute `DocIndex` on preprocessed files from `UnitTest_Cases`.
-  - [ ] `DocGen.ps1 verify` extract all `<example>` from XML documents, compile and run them with header code according to which project are they in.
+  - [ ] `ValidateAndFixDocumentRecord` replace `<example>` with `<example index="1">`, and export example to `Refefences\CATEGORY\ID.ein.index.xml`.
+  - [ ] `DocGen.ps1 build-index` builds `UnitTest_Cases` with x86 debug, and `DocIndex` for x64 release.
+  - [ ] `DocGen.ps1 index` execute `DocIndex` on preprocessed files from `UnitTest_Cases`.
+  - [ ] `DocGen.ps1 verify` searches for all example xml files, compile and run them with header code according to which project are they in.
     - [ ] Report all failed examples, save all example outputs to another group of files.
-  - [ ] `DocGen.ps1 build` builds `WebsiteSource` and download websites.
+    - [ ] Capture console application output to `Refefences\CATEGORY\ID.eout.index.xml`
+  - [ ] `DocGen.ps1 build-website` builds `WebsiteSource` and download websites.
   - [ ] `DocGen.ps1 copy` copies files from `website`, `website-doc1`, code index HTML files, `Cpp.js`, `Cpp.css`. `favicon.ico` to `vczh-libraries.github.io`.
+  - [ ] `DocGen.ps1` executes all steps above in order.
   - [ ] Complete tutorials for Vlpp.
   - [ ] Update website.
 - [ ] Refine document comment
