@@ -126,18 +126,18 @@
 <div class="disabled">		#endif</div>
 <div class="disabled">	#else /* B2ii. _SECURE_SCL is not yet defined, default it. */</div>
 <div class="disabled">		#if _HAS_ITERATOR_DEBUGGING == 1</div>
-<div class="disabled">			#define _SECURE_SCL 1
-		#else</div>
+<div class="disabled">			#define _SECURE_SCL 1</div>
+<div class="disabled">		#else</div>
 <div class="disabled">			#define _SECURE_SCL 0
 		#endif
 	#endif /* _SECURE_SCL */</div>
 
 	<div class="token cpp_comment ">/* B3. Derive _ITERATOR_DEBUG_LEVEL. */</div>
 <div class="disabled">	#if _HAS_ITERATOR_DEBUGGING</div>
-<div class="disabled">		#define _ITERATOR_DEBUG_LEVEL 2
-	#elif _SECURE_SCL</div>
-<div class="disabled">		#define _ITERATOR_DEBUG_LEVEL 1
-	#else</div>
+<div class="disabled">		#define _ITERATOR_DEBUG_LEVEL 2</div>
+<div class="disabled">	#elif _SECURE_SCL</div>
+<div class="disabled">		#define _ITERATOR_DEBUG_LEVEL 1</div>
+<div class="disabled">	#else</div>
 <div class="disabled">		#define _ITERATOR_DEBUG_LEVEL 0
 	#endif</div>
 
@@ -152,7 +152,7 @@
 <div class="disabled">	#ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH</div>
 <div class="expandable"><div class="disabled">		#pragma detect_mismatch(&quot;_ITERATOR_DEBUG_LEVEL&quot;, _STRINGIZE(_ITERATOR_DEBUG_LEVEL))
 	#endif /* _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH */</div>
-<div class="expanded">#pragma detect_mismatch(<div class="token cpp_string ">&quot;_ITERATOR_DEBUG_LEVEL&quot;</div>, <div class="token cpp_string ">&quot;0&quot;</div>)</div></div>
+<div class="expanded">#pragma detect_mismatch(<div class="token cpp_string ">&quot;_ITERATOR_DEBUG_LEVEL&quot;</div>, <div class="token cpp_string ">&quot;2&quot;</div>)</div></div>
 
 <div class="disabled">	#ifndef _ALLOW_RUNTIME_LIBRARY_MISMATCH</div>
 <div class="disabled">		#if !defined(_DLL) &amp;&amp; !defined(_DEBUG)</div>
@@ -160,13 +160,13 @@
 		#elif !defined(_DLL) &amp;&amp; defined(_DEBUG)</div>
 <div class="disabled">			#pragma detect_mismatch(&quot;RuntimeLibrary&quot;, &quot;MTd_StaticDebug&quot;)
 		#elif defined(_DLL) &amp;&amp; !defined(_DEBUG)</div>
-<div class="expandable"><div class="disabled">			#pragma detect_mismatch(&quot;RuntimeLibrary&quot;, &quot;MD_DynamicRelease&quot;)</div>
-<div class="expanded">#pragma detect_mismatch(<div class="token cpp_string ">&quot;RuntimeLibrary&quot;</div>, <div class="token cpp_string ">&quot;MD_DynamicRelease&quot;</div>)</div></div>
-<div class="disabled">		#elif defined(_DLL) &amp;&amp; defined(_DEBUG)</div>
-<div class="disabled">			#pragma detect_mismatch(&quot;RuntimeLibrary&quot;, &quot;MDd_DynamicDebug&quot;)
+<div class="disabled">			#pragma detect_mismatch(&quot;RuntimeLibrary&quot;, &quot;MD_DynamicRelease&quot;)
+		#elif defined(_DLL) &amp;&amp; defined(_DEBUG)</div>
+<div class="expandable"><div class="disabled">			#pragma detect_mismatch(&quot;RuntimeLibrary&quot;, &quot;MDd_DynamicDebug&quot;)
 		#endif /* defined(_DLL) etc. */
 	#endif /* _ALLOW_RUNTIME_LIBRARY_MISMATCH */
 #endif /* __cplusplus */</div>
+<div class="expanded">#pragma detect_mismatch(<div class="token cpp_string ">&quot;RuntimeLibrary&quot;</div>, <div class="token cpp_string ">&quot;MDd_DynamicDebug&quot;</div>)</div></div>
 
 <div class="disabled">#ifdef _ITERATOR_DEBUG_ARRAY_OVERLOADS</div>
 <div class="disabled">	#if _ITERATOR_DEBUG_ARRAY_OVERLOADS != 0 &amp;&amp; _ITERATOR_DEBUG_ARRAY_OVERLOADS != 1</div>
@@ -176,8 +176,8 @@
 <div class="disabled">	#endif</div>
 <div class="disabled">#else /* _ITERATOR_DEBUG_ARRAY_OVERLOADS */</div>
 <div class="disabled">	#if _ITERATOR_DEBUG_LEVEL == 0</div>
-<div class="disabled">		#define _ITERATOR_DEBUG_ARRAY_OVERLOADS 0</div>
-<div class="disabled">	#else</div>
+<div class="disabled">		#define _ITERATOR_DEBUG_ARRAY_OVERLOADS 0
+	#else</div>
 <div class="disabled">		#define _ITERATOR_DEBUG_ARRAY_OVERLOADS 1
 	#endif
 #endif /* _ITERATOR_DEBUG_ARRAY_OVERLOADS */</div>

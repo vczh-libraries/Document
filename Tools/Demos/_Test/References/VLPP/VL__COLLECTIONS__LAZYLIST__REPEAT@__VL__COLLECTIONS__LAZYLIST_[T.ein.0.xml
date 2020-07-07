@@ -1,0 +1,8 @@
+<example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     auto ys = From(xs).Repeat(3);
+     FOREACH(vint, y, ys) Console::Write(itow(y) + L" ");
+ }
+ ]]></example>

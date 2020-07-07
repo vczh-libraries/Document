@@ -2,18 +2,7 @@
  The transformer.
  The first argument is any element in this lazy list.
  Returns the transformed lazy list from this argument.
- </param><example><![CDATA[
- int main()
- {
-     vint xs[] = {1, 2, 3, 4, 5};
-     auto ys = From(xs).SelectMany([](vint x)
-     {
-         vint factors[] = {1, 10, 100};
-         return From(factors).Select([](vint f){ return f * x; }).Evaluate(true);
-     });
-     FOREACH(vint, y, ys) Console::Write(itow(y) + L" ");
- }
- ]]></example><signature><![CDATA[template <
+ </param><example index="0"/><signature><![CDATA[template <
     typename F
 >
 vl::function_lambda::FunctionObjectRetriveType<F>::ResultType SelectMany(

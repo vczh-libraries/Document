@@ -29,7 +29,6 @@
 - [ ] `DocGen.ps1`
   - [ ] Tutorial for Vlpp
   - [ ] XML document for `PartialOrderingProcessor`
-  - [ ] `ValidateAndFixDocumentRecord` replace `<example>` with `<example index="1">`, and export example to `Refefences\CATEGORY\ID.ein.index.xml`.
   - [ ] `DocGen.ps1 verify` searches for all example xml files, compile and run them with header code according to which project are they in.
     - [ ] Report all failed examples, save all example outputs to another group of files.
     - [ ] Capture console application output to `Refefences\CATEGORY\ID.eout.index.xml`

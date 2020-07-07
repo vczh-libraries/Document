@@ -1,0 +1,8 @@
+<example><![CDATA[
+ int main()
+ {
+     Ptr<Object> boxed = MakePtr<ObjectBox<vint>>(100);
+     vint unboxed = boxed.Cast<ObjectBox<vint>>().UnBox();
+     Console::WriteLine(itow(unboxed));
+ }
+ ]]></example>

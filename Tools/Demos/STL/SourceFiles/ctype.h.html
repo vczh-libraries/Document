@@ -178,7 +178,8 @@
     <div class="token cpp_comment ">// In the debug CRT, we make all calls through the validation function to catch</div>
     <div class="token cpp_comment ">// invalid integer inputs that yield undefined behavior.</div>
 <div class="disabled">    #ifdef _DEBUG</div>
-<div class="disabled">        _ACRTIMP int __cdecl _chvalidator(_In_ int _Ch, _In_ int _Mask);</div>
+<div class="expandable"><div class="disabled">        _ACRTIMP int __cdecl _chvalidator(_In_ int _Ch, _In_ int _Mask);</div>
+<div class="expanded">        <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_chvalidator@int(int, int)[decl0]"><div><div class="token cpp_function">_chvalidator</div></div></div>(  <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_chvalidator@int(int, int)[decl0]::_Ch"><div>_Ch</div></div>,   <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_chvalidator@int(int, int)[decl0]::_Mask"><div>_Mask</div></div>);</div></div>
 <div class="disabled">        #define __chvalidchk(a, b) _chvalidator(a, b)</div>
 <div class="disabled">    #else</div>
 
@@ -221,8 +222,9 @@
     }
 
 <div class="disabled">    #ifdef _DEBUG</div>
-<div class="disabled">    _ACRTIMP int __cdecl _chvalidator_l(_In_opt_ _locale_t, _In_ int _Ch, _In_ int _Mask);</div>
-<div class="disabled">    #endif</div>
+<div class="expandable"><div class="disabled">    _ACRTIMP int __cdecl _chvalidator_l(_In_opt_ _locale_t, _In_ int _Ch, _In_ int _Mask);
+    #endif</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_chvalidator_l@int(::_locale_t, int, int)[decl0]"><div><div class="token cpp_function">_chvalidator_l</div></div></div>(  <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [], [])"><div class="token cpp_type">_locale_t</div></div>,   <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_chvalidator_l@int(::_locale_t, int, int)[decl0]::_Ch"><div>_Ch</div></div>,   <div class="token cpp_keyword ">int</div> <div class="def" id="NI$_chvalidator_l@int(::_locale_t, int, int)[decl0]::_Mask"><div>_Mask</div></div>);</div></div>
 
 <div class="expandable"><div class="disabled">    __inline int __CRTDECL _chvalidchk_l(</div>
 <div class="expanded">    <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]"><div><div class="token cpp_function">_chvalidchk_l</div></div></div>(</div></div>
@@ -235,16 +237,15 @@
         )
     {
 <div class="disabled">        #ifdef _DEBUG</div>
-<div class="disabled">        return _chvalidator_l(_Locale, _C, _Mask);</div>
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['_chvalidator_l@int(::_locale_t, int, int)'], ['_chvalidator_l@int(::_locale_t, int, int)'], [], [])"><div class="token cpp_function">_chvalidator_l</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_Locale'], [], [])"><div class="token cpp_argument">_Locale</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_C'], [], [])"><div class="token cpp_argument">_C</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_Mask'], [], [])"><div class="token cpp_argument">_Mask</div></div>);
 <div class="disabled">        #else</div>
-        <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_Locale'], [], [])"><div class="token cpp_argument">_Locale</div></div>)
-        {
-            <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)'], ['__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)'], [], [])"><div class="token cpp_function">__acrt_locale_get_ctype_array_value</div></div>(<div class="ref" onclick="jumpToSymbol(['__acrt_get_locale_data_prefix@::__crt_locale_data_public *(void const volatile * const)'], ['__acrt_get_locale_data_prefix@::__crt_locale_data_public *(void const volatile * const)'], [], [])"><div class="token cpp_function">__acrt_get_locale_data_prefix</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_Locale'], [], [])"><div class="token cpp_argument">_Locale</div></div>)-&gt;<div class="ref" onclick="jumpToSymbol([], ['__crt_locale_data_public::_locale_pctype'], [], [])"><div class="token cpp_field">_locale_pctype</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_C'], [], [])"><div class="token cpp_argument">_C</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_Mask'], [], [])"><div class="token cpp_argument">_Mask</div></div>);
-        }
+<div class="disabled">        if (_Locale)</div>
+<div class="disabled">        {</div>
+<div class="disabled">            return __acrt_locale_get_ctype_array_value(__acrt_get_locale_data_prefix(_Locale)-&gt;_locale_pctype, _C, _Mask);</div>
+<div class="disabled">        }</div>
 
-<div class="expandable"><div class="disabled">        return __chvalidchk(_C, _Mask);
+<div class="disabled">        return __chvalidchk(_C, _Mask);
         #endif</div>
-<div class="expanded">        <div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol(['__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)'], ['__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)'], [], [])"><div class="token cpp_function">__acrt_locale_get_ctype_array_value</div></div>(<div class="ref" onclick="jumpToSymbol(['__pctype_func@unsigned short const *()'], ['__pctype_func@unsigned short const *()'], [], [])"><div class="token cpp_function">__pctype_func</div></div>(), (<div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_C'], [], [])"><div class="token cpp_argument">_C</div></div>), (<div class="ref" onclick="jumpToSymbol([], ['_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_Mask'], [], [])"><div class="token cpp_argument">_Mask</div></div>)));</div></div>
     }
 
 <div class="disabled">    #define __ascii_isalpha_l(c, locale) (_chvalidchk_l(c, _ALPHA, locale))</div>
@@ -340,13 +341,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)': {
-        'displayNameInHtml': '<span class="cpp_function">__acrt_locale_get_ctype_array_value</span>(<span class="cpp_keyword">unsigned</span><span class="cpp_keyword">short</span> <span class="cpp_keyword">const</span> * <span class="cpp_keyword">const</span>, <span class="cpp_keyword">int</span> <span class="cpp_keyword">const</span>, <span class="cpp_keyword">int</span> <span class="cpp_keyword">const</span>)',
-        'impls': [
-            'FB$__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)[impl0]'
-        ],
-        'decls': []
-    },
     '__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)[impl0]::_Char_value': {
         'displayNameInHtml': '_Char_value',
         'impls': [
@@ -382,13 +376,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__crt_locale_data_public::_locale_pctype': {
-        'displayNameInHtml': '<span class="cpp_type">__crt_locale_data_public</span>::<span class="cpp_field">_locale_pctype</span>',
-        'impls': [
-            'NI$__crt_locale_data_public::_locale_pctype'
-        ],
-        'decls': []
-    },
     '__crt_locale_pointers::locinfo': {
         'displayNameInHtml': '<span class="cpp_type">__crt_locale_pointers</span>::<span class="cpp_field">locinfo</span>',
         'impls': [
@@ -396,11 +383,11 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    '__pctype_func@unsigned short const *()': {
-        'displayNameInHtml': '<span class="cpp_function">__pctype_func</span>()',
+    '_chvalidator_l@int(::_locale_t, int, int)': {
+        'displayNameInHtml': '<span class="cpp_function">_chvalidator_l</span>(<span class="cpp_type">_locale_t</span>, <span class="cpp_keyword">int</span>, <span class="cpp_keyword">int</span>)',
         'impls': [],
         'decls': [
-            'FB$__pctype_func@unsigned short const *()[decl0]'
+            'FB$_chvalidator_l@int(::_locale_t, int, int)[decl0]'
         ]
     },
     '_chvalidchk_l@int(int const, int const, ::_locale_t const)': {
@@ -469,8 +456,7 @@ referencedSymbols = {
 };
 symbolToFiles = {
     'FB$__acrt_get_locale_data_prefix@::__crt_locale_data_public *(void const volatile * const)[impl0]': null,
-    'FB$__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)[impl0]': null,
-    'FB$__pctype_func@unsigned short const *()[decl0]': { 'htmlFileName': 'corecrt_wctype.h', 'displayName': 'corecrt_wctype.h' },
+    'FB$_chvalidator_l@int(::_locale_t, int, int)[decl0]': null,
     'FB$_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]': null,
     'FB$_isctype_l@int(int, int, ::_locale_t)[decl0]': null,
     'NI$__acrt_get_locale_data_prefix@::__crt_locale_data_public *(void const volatile * const)[impl0]::_LocalePointers': null,
@@ -480,7 +466,6 @@ symbolToFiles = {
     'NI$__acrt_locale_get_ctype_array_value@int(unsigned short const * const, int const, int const)[impl0]::_Mask': null,
     'NI$__crt_locale_data_public': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$__crt_locale_data_public::_locale_mb_cur_max': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
-    'NI$__crt_locale_data_public::_locale_pctype': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$__crt_locale_pointers::locinfo': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
     'NI$_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_C': null,
     'NI$_chvalidchk_l@int(int const, int const, ::_locale_t const)[impl0]::_Locale': null,

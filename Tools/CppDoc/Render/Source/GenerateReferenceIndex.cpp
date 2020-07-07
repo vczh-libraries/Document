@@ -714,13 +714,12 @@ void ProcessDocumentRecordHyperLinks(
 ValidateAndFixDocumentRecord
 ***********************************************************************/
 
-void ValidateAndFixDocumentRecord(
+Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
 	Ptr<ParsingTable> parsingTable,
 	Ptr<SymbolGroup> symbolGroup,
-	Ptr<DocumentRecord> documentRecord,
-	StreamWriter& writer
+	Ptr<DocumentRecord> documentRecord
 )
 {
 	auto symbol = symbolGroup->symbol;
@@ -881,14 +880,56 @@ void ValidateAndFixDocumentRecord(
 			xmlDocument->rootElement->subNodes.Add(xmlBaseTypes);
 		}
 
-		XmlPrint(xmlDocument, writer);
+		return xmlDocument;
 	}
 	else
 	{
 		Console::WriteLine(L"");
 		Console::WriteLine(L"FAILED TO PARSE:");
 		Console::WriteLine(xmlText);
+		return nullptr;
 	}
+}
+
+/***********************************************************************
+ExtractExamples
+***********************************************************************/
+
+void ExtractExamples(
+	Ptr<XmlElement>& xmlElement,
+	List<Ptr<XmlElement>>& examples
+)
+{
+	if (xmlElement->name.value == L"example")
+	{
+		vint index = examples.Add(xmlElement);
+		xmlElement = MakePtr<XmlElement>();
+		xmlElement->name.value = L"example";
+
+		auto attr = MakePtr<XmlAttribute>();
+		attr->name.value = L"index";
+		attr->value.value = itow(index);
+		xmlElement->attributes.Add(attr);
+	}
+	else
+	{
+		for (vint i = 0; i < xmlElement->subNodes.Count(); i++)
+		{
+			if (auto subElement = xmlElement->subNodes[i].Cast<XmlElement>())
+			{
+				ExtractExamples(subElement, examples);
+				xmlElement->subNodes[i] = subElement;
+			}
+		}
+	}
+}
+
+void ExtractExamples(
+	Ptr<XmlDocument> xmlDocument,
+	List<Ptr<XmlElement>>& examples
+)
+{
+	ExtractExamples(xmlDocument->rootElement, examples);
 }
 
 /***********************************************************************
@@ -911,11 +952,28 @@ void RenderDocumentRecord(
 		vint index = global->declComments.Keys().IndexOf(symbolGroup->symbol);
 		if (index != -1)
 		{
-			FileStream fileStream((pathReference / fileGroupPrefix / (symbolGroup->uniqueId + L".xml")).GetFullPath(), FileStream::WriteOnly);
-			Utf8Encoder encoder;
-			EncoderStream encoderStream(fileStream, encoder);
-			StreamWriter referenceWriter(encoderStream);
-			ValidateAndFixDocumentRecord(global, result, parsingTable, symbolGroup, global->declComments.Values()[index], referenceWriter);
+			List<Ptr<XmlElement>> examples;
+			if (auto xmlDocument = ValidateAndFixDocumentRecord(global, result, parsingTable, symbolGroup, global->declComments.Values()[index]))
+			{
+				ExtractExamples(xmlDocument, examples);
+
+				{
+					FileStream fileStream((pathReference / fileGroupPrefix / (symbolGroup->uniqueId + L".xml")).GetFullPath(), FileStream::WriteOnly);
+					Utf8Encoder encoder;
+					EncoderStream encoderStream(fileStream, encoder);
+					StreamWriter writer(encoderStream);
+					XmlPrint(xmlDocument, writer);
+				}
+
+				for (vint i = 0; i < examples.Count(); i++)
+				{
+					FileStream fileStream((pathReference / fileGroupPrefix / (symbolGroup->uniqueId + L".ein." + itow(i) + L".xml")).GetFullPath(), FileStream::WriteOnly);
+					Utf8Encoder encoder;
+					EncoderStream encoderStream(fileStream, encoder);
+					StreamWriter writer(encoderStream);
+					XmlPrint(examples[i], writer);
+				}
+			}
 		}
 	}
 

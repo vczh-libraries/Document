@@ -28,31 +28,5 @@
  During the execution of the test program, <b>TEST_FILE</b>, <b>TEST_CATEGORY</b>, <b>TEST_CASE</b> and failed <b>TEST_ASSERT</b> will be rendered with indentation and different colors.
  </p><p><symbol name="RunAndDisposeTests" docId="vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)" declFile="UnitTest.h" declId="FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]"/> is needed in the main function to execute test cases.
  <b>TEST_PRINT</b> could be used during test cases to print debug information to a command-line application.
- </p></summary><example><![CDATA[
- TEST_FILE
- {
-     TEST_CATEGORY(L"This is a test category)
-     {
-         TEST_CASE(L"This is a test case")
-         {
-             TEST_ASSERT(true);
-             TEST_ERROR({WString::Empty[0];});
-             TEST_EXCEPTION({throw Exception();}, Exception, [](const Exception&){});
-         }
-         TEST_CASE_ASSERT(true);
-     }
-
-     TEST_CATEGORY(L"This is another test category")
-     {
-         TEST_PRINT(L"some information");
-         TEST_CASE_ASSERT(true);
-     }
- }
-
- int main(int argc, wchar_t* argv[])
- {
-     // in Linux or macOS, argv must be char*[]
-     return unittest::UnitTest::RunAndDisposeTests(argc, argv);
- }
- ]]></example><signature><![CDATA[class UnitTest;
+ </p></summary><example index="0"/><signature><![CDATA[class UnitTest;
 ]]></signature></Document>

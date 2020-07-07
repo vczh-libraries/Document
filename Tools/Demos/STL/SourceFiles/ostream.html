@@ -86,7 +86,7 @@
 		{	<div class="token cpp_comment ">// construct by moving _Right</div>
 		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ostream::_Myios'], [], [])"><div class="token cpp_type">_Myios</div></div>::<div class="ref" onclick="jumpToSymbol(['std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)'], ['std::basic_ios::init@void(::std::basic_ios::_Mysb *, bool)'], [], [])"><div class="token cpp_function">init</div></div>();
 <div class="expandable"><div class="disabled">		_Myios::move(_STD move(_Right));</div>
-<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ostream::_Myios'], [], [])"><div class="token cpp_type">_Myios</div></div>::<div class="ref" onclick="jumpToSymbol(['std::basic_ios::move@void(::std::basic_ios &&)', 'std::basic_ios::move@void(::std::basic_ios &)'], ['std::basic_ios::move@void(::std::basic_ios &&)', 'std::basic_ios::move@void(::std::basic_ios &)'], [], [])"><div class="token cpp_function">move</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)'], ['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)', 'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])'], [], [])"><div class="token cpp_function">move</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ostream::$__ctor@(::std::basic_ostream &&)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>));</div></div>
+<div class="expanded">		<div class="ref" onclick="jumpToSymbol([], ['std::basic_ostream::_Myios'], [], [])"><div class="token cpp_type">_Myios</div></div>::<div class="ref" onclick="jumpToSymbol(['std::basic_ios::move@void(::std::basic_ios &&)', 'std::basic_ios::move@void(::std::basic_ios &)'], ['std::basic_ios::move@void(::std::basic_ios &&)', 'std::basic_ios::move@void(::std::basic_ios &)'], [], [])"><div class="token cpp_function">move</div></div>(::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)'], ['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)', 'std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)', 'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])'], [], [])"><div class="token cpp_function">move</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::basic_ostream::$__ctor@(::std::basic_ostream &&)[impl0]::_Right'], [], [])"><div class="token cpp_argument">_Right</div></div>));</div></div>
 		}
 
 <div class="expandable"><div class="disabled">	basic_ostream&amp; __CLR_OR_THIS_CALL operator=(basic_ostream&amp;&amp; _Right)</div>
@@ -1145,7 +1145,7 @@
 	{	<div class="token cpp_comment ">// insert to rvalue stream</div>
 	<div class="ref" onclick="jumpToSymbol([], ['std::operator <<@[_Ostr] &&([_Ostr] &&, [_Ty] const &)[impl0]::_Os'], [], [])"><div class="token cpp_argument">_Os</div></div> &lt;&lt; <div class="ref" onclick="jumpToSymbol([], ['std::operator <<@[_Ostr] &&([_Ostr] &&, [_Ty] const &)[impl0]::_Val'], [], [])"><div class="token cpp_argument">_Val</div></div>;
 <div class="expandable"><div class="disabled">	return (_STD move(_Os));</div>
-<div class="expanded">	<div class="token cpp_keyword ">return</div> (::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)'], ['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)', 'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])'], [], [])"><div class="token cpp_function">move</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::operator <<@[_Ostr] &&([_Ostr] &&, [_Ty] const &)[impl0]::_Os'], [], [])"><div class="token cpp_argument">_Os</div></div>));</div></div>
+<div class="expanded">	<div class="token cpp_keyword ">return</div> (::<div class="ref" onclick="jumpToSymbol([], ['std'], [], [])">std</div>:: <div class="ref" onclick="jumpToSymbol(['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)'], ['std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)', 'std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)', 'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])'], [], [])"><div class="token cpp_function">move</div></div>(<div class="ref" onclick="jumpToSymbol([], ['std::operator <<@[_Ostr] &&([_Ostr] &&, [_Ty] const &)[impl0]::_Os'], [], [])"><div class="token cpp_argument">_Os</div></div>));</div></div>
 	}
 
 		<div class="token cpp_comment ">// MANIPULATORS</div>
@@ -2646,6 +2646,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)': {
+        'displayNameInHtml': '<span class="cpp_function">move</span>&lt;<span class="cpp_type">_InIt</span>, <span class="cpp_type">_DestTy</span>, <span class="cpp_keyword">expr</span>&gt;(<span class="cpp_type">_InIt</span>, <span class="cpp_type">_InIt</span>, <span class="cpp_type">_DestTy</span>( &)[<span class="cpp_keyword">expr</span>])',
+        'impls': [
+            'FB$std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)[impl0]'
+        ],
+        'decls': []
+    },
     'std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])': {
         'displayNameInHtml': '<span class="cpp_function">move</span>&lt;<span class="cpp_type">_InIt</span>, <span class="cpp_type">_OutIt</span>&gt;(<span class="cpp_type">_InIt</span>, <span class="cpp_type">_InIt</span>, <span class="cpp_type">_OutIt</span>)',
         'impls': [
@@ -3398,6 +3405,7 @@ symbolToFiles = {
     'FB$std::ios_base::width@::std::streamsize()[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
     'FB$std::ios_base::width@::std::streamsize(::std::streamsize)[impl0]': { 'htmlFileName': 'xiosbase', 'displayName': 'xiosbase' },
     'FB$std::move@::std::remove_reference_t<[_Ty]> &&([_Ty] &&)[impl0]': { 'htmlFileName': 'type_traits', 'displayName': 'type_traits' },
+    'FB$std::move@[_DestTy] *([_InIt], [_InIt], [_DestTy] [*] &)[impl0]': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'FB$std::move@[_OutIt]([_InIt], [_InIt], [_OutIt])[impl0]': { 'htmlFileName': 'xutility', 'displayName': 'xutility' },
     'FB$std::num_put::put@[_OutIt]([_OutIt], ::std::ios_base &, [_Elem], bool)[impl0]': { 'htmlFileName': 'xlocnum', 'displayName': 'xlocnum' },
     'FB$std::num_put::put@[_OutIt]([_OutIt], ::std::ios_base &, [_Elem], double)[impl0]': { 'htmlFileName': 'xlocnum', 'displayName': 'xlocnum' },
