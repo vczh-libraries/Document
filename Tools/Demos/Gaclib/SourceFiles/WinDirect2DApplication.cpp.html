@@ -370,7 +370,7 @@ ControllerListener
 					{
 						<div class="ref" onclick="jumpToSymbol([], ['D2D1_FACTORY_OPTIONS'], [], [])"><div class="token cpp_type">D2D1_FACTORY_OPTIONS</div></div> <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::$__ctor@()[impl0]::fo"><div>fo</div></div> = {};
 <div class="disabled">						#ifdef _DEBUG</div>
-<div class="disabled">						fo.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;</div>
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::$__ctor@()[impl0]::fo'], [], [])">fo</div>.<div class="ref" onclick="jumpToSymbol([], ['D2D1_FACTORY_OPTIONS::debugLevel'], [], [])"><div class="token cpp_field">debugLevel</div></div> = <div class="ref" onclick="jumpToSymbol([], ['D2D1_DEBUG_LEVEL::D2D1_DEBUG_LEVEL_INFORMATION'], [], [])"><div class="token cpp_enum">D2D1_DEBUG_LEVEL_INFORMATION</div></div>;
 <div class="disabled">						#endif</div>
 
 						<div class="ref" onclick="jumpToSymbol([], ['ID2D1Factory'], [], [])"><div class="token cpp_type">ID2D1Factory</div></div>* <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::$__ctor@()[impl0]::factory"><div>factory</div></div>=<div class="token cpp_number ">0</div>;
@@ -396,7 +396,7 @@ ControllerListener
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::CreateD3D11Device@::vl::ComPtr<::ID3D11Device>(::D3D_DRIVER_TYPE)[impl0]::flags"><div>flags</div></div> = <div class="ref" onclick="jumpToSymbol([], ['D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_BGRA_SUPPORT'], [], [])"><div class="token cpp_enum">D3D11_CREATE_DEVICE_BGRA_SUPPORT</div></div>;
 <div class="disabled">					#ifdef _DEBUG</div>
-<div class="disabled">					flags |= D3D11_CREATE_DEVICE_DEBUG;</div>
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::CreateD3D11Device@::vl::ComPtr<::ID3D11Device>(::D3D_DRIVER_TYPE)[impl0]::flags'], [], [])">flags</div> |= <div class="ref" onclick="jumpToSymbol([], ['D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_DEBUG'], [], [])"><div class="token cpp_enum">D3D11_CREATE_DEVICE_DEBUG</div></div>;
 <div class="disabled">					#endif</div>
 
 					<div class="ref" onclick="jumpToSymbol([], ['D3D_FEATURE_LEVEL'], [], [])"><div class="token cpp_type">D3D_FEATURE_LEVEL</div></div> <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::CreateD3D11Device@::vl::ComPtr<::ID3D11Device>(::D3D_DRIVER_TYPE)[impl0]::featureLevels"><div>featureLevels</div></div>[] =
@@ -461,13 +461,14 @@ ControllerListener
 							}
 						}
 <div class="disabled">#if _DEBUG</div>
-<div class="disabled">						CHECK_ERROR(d3d11Device,</div>
-<div class="disabled">							L&quot;Direct2DWindowsNativeControllerListener::NativeWindowCreated(INativeWindow*)#&quot;</div>
-<div class="disabled">							L&quot;Failed to create Direct3D 11 Device. &quot;</div>
-<div class="disabled">							L&quot;If you are running in Debug mode on Windows 10, please ensure the optional feature [Graphics Tools] is correctly installed. &quot;</div>
-<div class="disabled">							L&quot;This error will be skipped in Release mode and GacUI will fallback to use Direct2D 1.0, but you still need to check your Windows SDK Installation.&quot;</div>
-<div class="disabled">							);
+<div class="expandable"><div class="disabled">						CHECK_ERROR(d3d11Device,
+							L&quot;Direct2DWindowsNativeControllerListener::NativeWindowCreated(INativeWindow*)#&quot;
+							L&quot;Failed to create Direct3D 11 Device. &quot;
+							L&quot;If you are running in Debug mode on Windows 10, please ensure the optional feature [Graphics Tools] is correctly installed. &quot;
+							L&quot;This error will be skipped in Release mode and GacUI will fallback to use Direct2D 1.0, but you still need to check your Windows SDK Installation.&quot;
+							);
 #endif</div>
+<div class="expanded">						<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::d3d11Device'], [], [])"><div class="token cpp_field">d3d11Device</div></div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;Direct2DWindowsNativeControllerListener::NativeWindowCreated(INativeWindow*)#&quot;</div> <div class="token cpp_string ">L&quot;Failed to create Direct3D 11 Device. &quot;</div> <div class="token cpp_string ">L&quot;If you are running in Debug mode on Windows 10, please ensure the optional feature [Graphics Tools] is correctly installed. &quot;</div> <div class="token cpp_string ">L&quot;This error will be skipped in Release mode and GacUI will fallback to use Direct2D 1.0, but you still need to check your Windows SDK Installation.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
 					}
 
 					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[impl0]::d2dfactory1'], [], [])">d2dfactory1</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::d3d11Device'], [], [])"><div class="token cpp_field">d3d11Device</div></div>)
@@ -780,6 +781,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'D2D1_DEBUG_LEVEL::D2D1_DEBUG_LEVEL_INFORMATION': {
+        'displayNameInHtml': '<span class="cpp_type">D2D1_DEBUG_LEVEL</span>::<span class="cpp_enum">D2D1_DEBUG_LEVEL_INFORMATION</span>',
+        'impls': [
+            'NI$D2D1_DEBUG_LEVEL::D2D1_DEBUG_LEVEL_INFORMATION'
+        ],
+        'decls': []
+    },
     'D2D1_DEVICE_CONTEXT_OPTIONS::D2D1_DEVICE_CONTEXT_OPTIONS_NONE': {
         'displayNameInHtml': '<span class="cpp_type">D2D1_DEVICE_CONTEXT_OPTIONS</span>::<span class="cpp_enum">D2D1_DEVICE_CONTEXT_OPTIONS_NONE</span>',
         'impls': [
@@ -791,6 +799,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">D2D1_FACTORY_OPTIONS</span>',
         'impls': [
             'NI$D2D1_FACTORY_OPTIONS'
+        ],
+        'decls': []
+    },
+    'D2D1_FACTORY_OPTIONS::debugLevel': {
+        'displayNameInHtml': '<span class="cpp_type">D2D1_FACTORY_OPTIONS</span>::<span class="cpp_field">debugLevel</span>',
+        'impls': [
+            'NI$D2D1_FACTORY_OPTIONS::debugLevel'
         ],
         'decls': []
     },
@@ -840,6 +855,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">D3D11_CREATE_DEVICE_FLAG</span>::<span class="cpp_enum">D3D11_CREATE_DEVICE_BGRA_SUPPORT</span>',
         'impls': [
             'NI$D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_BGRA_SUPPORT'
+        ],
+        'decls': []
+    },
+    'D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_DEBUG': {
+        'displayNameInHtml': '<span class="cpp_type">D3D11_CREATE_DEVICE_FLAG</span>::<span class="cpp_enum">D3D11_CREATE_DEVICE_DEBUG</span>',
+        'impls': [
+            'NI$D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_DEBUG'
         ],
         'decls': []
     },
@@ -1930,6 +1952,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">ComPtr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">T</span> *)',
         'impls': [
             'FB$vl::ComPtr::operator =@::vl::ComPtr<[T]> &([T] *)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
         ],
         'decls': []
     },
@@ -4516,14 +4545,17 @@ symbolToFiles = {
     'NI$D2D1_ALPHA_MODE::D2D1_ALPHA_MODE_IGNORE': { 'htmlFileName': 'dcommon.h', 'displayName': 'dcommon.h' },
     'NI$D2D1_BITMAP_OPTIONS::D2D1_BITMAP_OPTIONS_CANNOT_DRAW': { 'htmlFileName': 'd2d1_1.h', 'displayName': 'd2d1_1.h' },
     'NI$D2D1_BITMAP_OPTIONS::D2D1_BITMAP_OPTIONS_TARGET': { 'htmlFileName': 'd2d1_1.h', 'displayName': 'd2d1_1.h' },
+    'NI$D2D1_DEBUG_LEVEL::D2D1_DEBUG_LEVEL_INFORMATION': { 'htmlFileName': 'd2d1.h', 'displayName': 'd2d1.h' },
     'NI$D2D1_DEVICE_CONTEXT_OPTIONS::D2D1_DEVICE_CONTEXT_OPTIONS_NONE': { 'htmlFileName': 'd2d1_1.h', 'displayName': 'd2d1_1.h' },
     'NI$D2D1_FACTORY_OPTIONS': { 'htmlFileName': 'd2d1.h', 'displayName': 'd2d1.h' },
+    'NI$D2D1_FACTORY_OPTIONS::debugLevel': { 'htmlFileName': 'd2d1.h', 'displayName': 'd2d1.h' },
     'NI$D2D1_FACTORY_TYPE::D2D1_FACTORY_TYPE_SINGLE_THREADED': { 'htmlFileName': 'd2d1.h', 'displayName': 'd2d1.h' },
     'NI$D2D1_RENDER_TARGET_PROPERTIES': { 'htmlFileName': 'd2d1.h', 'displayName': 'd2d1.h' },
     'NI$D2D1_RENDER_TARGET_PROPERTIES::dpiX': { 'htmlFileName': 'd2d1.h', 'displayName': 'd2d1.h' },
     'NI$D2D1_RENDER_TARGET_PROPERTIES::dpiY': { 'htmlFileName': 'd2d1.h', 'displayName': 'd2d1.h' },
     'NI$D2D1_TEXT_ANTIALIAS_MODE::D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE': { 'htmlFileName': 'd2d1.h', 'displayName': 'd2d1.h' },
     'NI$D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_BGRA_SUPPORT': { 'htmlFileName': 'd3d11.h', 'displayName': 'd3d11.h' },
+    'NI$D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_DEBUG': { 'htmlFileName': 'd3d11.h', 'displayName': 'd3d11.h' },
     'NI$D3D_DRIVER_TYPE': { 'htmlFileName': 'd3dcommon.h', 'displayName': 'd3dcommon.h' },
     'NI$D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_HARDWARE': { 'htmlFileName': 'd3dcommon.h', 'displayName': 'd3dcommon.h' },
     'NI$D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_WARP': { 'htmlFileName': 'd3dcommon.h', 'displayName': 'd3dcommon.h' },
@@ -4574,6 +4606,7 @@ symbolToFiles = {
     'NI$WinMainDirect2D@int(::HINSTANCE, void() *)[impl0]::listener': null,
     'NI$tagCOINIT::COINIT_MULTITHREADED': { 'htmlFileName': 'objbase.h', 'displayName': 'objbase.h' },
     'NI$vl::ComPtr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'NI$vl::collections::Dictionary': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
