@@ -1,4 +1,22 @@
-<Document symbolId="vl::collections::LazyList::GroupBy@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList&lt;[T]&gt;&gt;&gt;([F])" accessor="public" category="Function" name="GroupBy" declFile="Operation.h" declId="FB$vl::collections::LazyList::GroupBy@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList&lt;[T]&gt;&gt;&gt;([F])[impl0]"><summary>Create a new lazy list, whose elements are groupd by from elements in this lazy list.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a key retriver to calcuate a key from an element.</param><signature><![CDATA[template <
+<Document symbolId="vl::collections::LazyList::GroupBy@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList&lt;[T]&gt;&gt;&gt;([F])" accessor="public" category="Function" name="GroupBy" declFile="Operation.h" declId="FB$vl::collections::LazyList::GroupBy@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList&lt;[T]&gt;&gt;&gt;([F])[impl0]"><summary>Create a new lazy list, with elements from this lazy list grouped by a key function.</summary><typeparam name="F">Type of the key function.</typeparam><returns>The created lazy list.</returns><param name="f">
+ The key function.
+ The first argument is any element in this lazy list.
+ Returns a key calculated from this argument.
+ Elements that have the same key will be grouped together.
+ </param><example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+     auto ys = From(xs).GroupBy([](vint x){ return x % 3; });
+     using TY = Pair<vint, LazyList<vint>>;
+     FOREACH(TY, y, ys)
+     {
+         Console::Write(itow(y.key) + L":");
+         FOREACH(vint, z, y.value) Console::Write(L" " + itow(z));
+         Console::WriteLine(L"");
+     }
+ }
+ ]]></example><signature><![CDATA[template <
     typename F
 >
 LazyList<Pair<vl::function_lambda::FunctionObjectRetriveType<F>::ResultType, LazyList<T>>> GroupBy(

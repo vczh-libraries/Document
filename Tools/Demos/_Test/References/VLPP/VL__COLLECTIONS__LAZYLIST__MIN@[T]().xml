@@ -1,3 +1,10 @@
-<Document symbolId="vl::collections::LazyList::Min@[T]()" accessor="public" category="Function" name="Min" declFile="Operation.h" declId="FB$vl::collections::LazyList::Min@[T]()[impl0]"><summary>Get the minimum value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The minimum value.</returns><signature><![CDATA[T Min(
+<Document symbolId="vl::collections::LazyList::Min@[T]()" accessor="public" category="Function" name="Min" declFile="Operation.h" declId="FB$vl::collections::LazyList::Min@[T]()[impl0]"><summary>Get the minimum value in the lazy list. It will crash if the lazy list is empty.</summary><returns>The minimum value.</returns><example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     auto ys = From(xs).Min();
+     Console::WriteLine(itow(ys));
+ }
+ ]]></example><signature><![CDATA[T Min(
 ) const;
 ]]></signature></Document>

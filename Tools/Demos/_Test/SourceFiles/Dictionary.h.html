@@ -64,32 +64,37 @@ Licensed under https://github.com/vczh-libraries/License
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::index'], [], [])"><div class="token cpp_field">index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::$__ctor@(::vl::collections::Dictionary<[KT], [VT], [KK], [VK]> const *, ::vl::vint)[impl0]::_index'], [], [])"><div class="token cpp_argument">_index</div></div>;
 				}
 				
-				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&gt;* <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Clone@::vl::collections::IEnumerator<::vl::collections::Pair<[KT], [VT]>> *()[impl0]"><div><div class="token cpp_function">Clone</div></div></div>()<div class="token cpp_keyword ">const</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&gt;* <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Clone@::vl::collections::IEnumerator<::vl::collections::Pair<[KT], [VT]>> *()[impl0]"><div><div class="token cpp_function">Clone</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
 				{
 					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator'], [], [])"><div class="token cpp_type">Enumerator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::container'], [], [])"><div class="token cpp_field">container</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::index'], [], [])"><div class="token cpp_field">index</div></div>);
 				}
 
-				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&amp; <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Current@::vl::collections::Pair<[KT], [VT]> const &()[impl0]"><div><div class="token cpp_function">Current</div></div></div>()<div class="token cpp_keyword ">const</div>
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&amp; <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Current@::vl::collections::Pair<[KT], [VT]> const &()[impl0]"><div><div class="token cpp_function">Current</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
 				{
 					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::current'], [], [])"><div class="token cpp_field">current</div></div>;
 				}
 
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Index@::vl::vint()[impl0]"><div><div class="token cpp_function">Index</div></div></div>()<div class="token cpp_keyword ">const</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Index@::vl::vint()[impl0]"><div><div class="token cpp_function">Index</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
 				{
 					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::index'], [], [])"><div class="token cpp_field">index</div></div>;
 				}
 
-				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Next@bool()[impl0]"><div><div class="token cpp_function">Next</div></div></div>()
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Next@bool()[impl0]"><div><div class="token cpp_function">Next</div></div></div>() <div class="token cpp_keyword ">override</div>
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::index'], [], [])"><div class="token cpp_field">index</div></div>++;
 					<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Enumerator::UpdateCurrent@void()'], ['vl::collections::Dictionary::Enumerator::UpdateCurrent@void()'], [], [])"><div class="token cpp_function">UpdateCurrent</div></div>();
 					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::index'], [], [])"><div class="token cpp_field">index</div></div>&gt;=<div class="token cpp_number ">0</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::index'], [], [])"><div class="token cpp_field">index</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::container'], [], [])"><div class="token cpp_field">container</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Count@::vl::vint()'], ['vl::collections::Dictionary::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();
 				}
 
-				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Reset@void()[impl0]"><div><div class="token cpp_function">Reset</div></div></div>()
+				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Reset@void()[impl0]"><div><div class="token cpp_function">Reset</div></div></div>() <div class="token cpp_keyword ">override</div>
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary::Enumerator::index'], [], [])"><div class="token cpp_field">index</div></div>=-<div class="token cpp_number ">1</div>;
 					<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Enumerator::UpdateCurrent@void()'], ['vl::collections::Dictionary::Enumerator::UpdateCurrent@void()'], [], [])"><div class="token cpp_function">UpdateCurrent</div></div>();
+				}
+
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Dictionary::Enumerator::Evaluated@bool()[impl0]"><div><div class="token cpp_function">Evaluated</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+				{
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
 				}
 			};
 
@@ -265,17 +270,17 @@ Licensed under https://github.com/vczh-libraries/License
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::valueIndex'], [], [])"><div class="token cpp_field">valueIndex</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::$__ctor@(::vl::collections::Group<[KT], [VT], [KK], [VK]> const *, ::vl::vint, ::vl::vint)[impl0]::_valueIndex'], [], [])"><div class="token cpp_argument">_valueIndex</div></div>;
 				}
 				
-				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&gt;* <div class="def" id="FB$vl::collections::Group::Enumerator::Clone@::vl::collections::IEnumerator<::vl::collections::Pair<[KT], [VT]>> *()[impl0]"><div><div class="token cpp_function">Clone</div></div></div>()<div class="token cpp_keyword ">const</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&gt;* <div class="def" id="FB$vl::collections::Group::Enumerator::Clone@::vl::collections::IEnumerator<::vl::collections::Pair<[KT], [VT]>> *()[impl0]"><div><div class="token cpp_function">Clone</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
 				{
 					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator'], [], [])"><div class="token cpp_type">Enumerator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::container'], [], [])"><div class="token cpp_field">container</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::keyIndex'], [], [])"><div class="token cpp_field">keyIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::valueIndex'], [], [])"><div class="token cpp_field">valueIndex</div></div>);
 				}
 
-				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&amp; <div class="def" id="FB$vl::collections::Group::Enumerator::Current@::vl::collections::Pair<[KT], [VT]> const &()[impl0]"><div><div class="token cpp_function">Current</div></div></div>()<div class="token cpp_keyword ">const</div>
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::KT'], [], [])"><div class="token cpp_type">KT</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::VT'], [], [])"><div class="token cpp_type">VT</div></div>&gt;&amp; <div class="def" id="FB$vl::collections::Group::Enumerator::Current@::vl::collections::Pair<[KT], [VT]> const &()[impl0]"><div><div class="token cpp_function">Current</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
 				{
 					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::current'], [], [])"><div class="token cpp_field">current</div></div>;
 				}
 
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::Group::Enumerator::Index@::vl::vint()[impl0]"><div><div class="token cpp_function">Index</div></div></div>()<div class="token cpp_keyword ">const</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::collections::Group::Enumerator::Index@::vl::vint()[impl0]"><div><div class="token cpp_function">Index</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
 				{
 					<div class="token cpp_keyword ">if</div>(<div class="token cpp_number ">0</div>&lt;=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::keyIndex'], [], [])"><div class="token cpp_field">keyIndex</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::keyIndex'], [], [])"><div class="token cpp_field">keyIndex</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::container'], [], [])"><div class="token cpp_field">container</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::collections::Group::Count@::vl::vint()'], ['vl::collections::Group::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>())
 					{
@@ -292,7 +297,7 @@ Licensed under https://github.com/vczh-libraries/License
 					}
 				}
 
-				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Enumerator::Next@bool()[impl0]"><div><div class="token cpp_function">Next</div></div></div>()
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Enumerator::Next@bool()[impl0]"><div><div class="token cpp_function">Next</div></div></div>() <div class="token cpp_keyword ">override</div>
 				{
 					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::keyIndex'], [], [])"><div class="token cpp_field">keyIndex</div></div>==-<div class="token cpp_number ">1</div>)
 					{
@@ -316,11 +321,16 @@ Licensed under https://github.com/vczh-libraries/License
 					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
 				}
 
-				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::Group::Enumerator::Reset@void()[impl0]"><div><div class="token cpp_function">Reset</div></div></div>()
+				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::Group::Enumerator::Reset@void()[impl0]"><div><div class="token cpp_function">Reset</div></div></div>() <div class="token cpp_keyword ">override</div>
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::keyIndex'], [], [])"><div class="token cpp_field">keyIndex</div></div>=-<div class="token cpp_number ">1</div>;
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group::Enumerator::valueIndex'], [], [])"><div class="token cpp_field">valueIndex</div></div>=-<div class="token cpp_number ">1</div>;
 					<div class="ref" onclick="jumpToSymbol(['vl::collections::Group::Enumerator::UpdateCurrent@void()'], ['vl::collections::Group::Enumerator::UpdateCurrent@void()'], [], [])"><div class="token cpp_function">UpdateCurrent</div></div>();
+				}
+
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::Group::Enumerator::Evaluated@bool()[impl0]"><div><div class="token cpp_function">Evaluated</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>
+				{
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
 				}
 			};
 

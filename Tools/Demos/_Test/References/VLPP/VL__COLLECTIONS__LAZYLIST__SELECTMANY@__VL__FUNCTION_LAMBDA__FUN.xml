@@ -1,4 +1,19 @@
-<Document symbolId="vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])" accessor="public" category="Function" name="SelectMany" declFile="Operation.h" declId="FB$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]"><summary>Create a new lazy list, whose elements are from transformed elements in this lazy list.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The created lazy list.</returns><param name="f">The lambda expression as a transformation function to transform one element to multiple elements.</param><signature><![CDATA[template <
+<Document symbolId="vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])" accessor="public" category="Function" name="SelectMany" declFile="Operation.h" declId="FB$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]"><summary>Create a new lazy list, whose elements are from transformed elements in this lazy list.</summary><typeparam name="F">Type of the transformer.</typeparam><returns>The created lazy list.</returns><param name="f">
+ The transformer.
+ The first argument is any element in this lazy list.
+ Returns the transformed lazy list from this argument.
+ </param><example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     auto ys = From(xs).SelectMany([](vint x)
+     {
+         vint factors[] = {1, 10, 100};
+         return From(factors).Select([](vint f){ return f * x; }).Evaluate(true);
+     });
+     FOREACH(vint, y, ys) Console::Write(itow(y) + L" ");
+ }
+ ]]></example><signature><![CDATA[template <
     typename F
 >
 vl::function_lambda::FunctionObjectRetriveType<F>::ResultType SelectMany(

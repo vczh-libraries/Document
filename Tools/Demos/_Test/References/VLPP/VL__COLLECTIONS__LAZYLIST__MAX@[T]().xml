@@ -1,3 +1,10 @@
-<Document symbolId="vl::collections::LazyList::Max@[T]()" accessor="public" category="Function" name="Max" declFile="Operation.h" declId="FB$vl::collections::LazyList::Max@[T]()[impl0]"><summary>Get the maximum value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The maximum value.</returns><signature><![CDATA[T Max(
+<Document symbolId="vl::collections::LazyList::Max@[T]()" accessor="public" category="Function" name="Max" declFile="Operation.h" declId="FB$vl::collections::LazyList::Max@[T]()[impl0]"><summary>Get the maximum value in the lazy list. It will crash if the lazy list is empty.</summary><returns>The maximum value.</returns><example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     auto ys = From(xs).Max();
+     Console::WriteLine(itow(ys));
+ }
+ ]]></example><signature><![CDATA[T Max(
 ) const;
 ]]></signature></Document>

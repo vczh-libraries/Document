@@ -1,4 +1,12 @@
-<Document symbolId="vl::collections::LazyList::Concat@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Concat" declFile="Operation.h" declId="FB$vl::collections::LazyList::Concat@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)[impl0]"><summary>Create a new lazy list containing elements of the two container one after another.</summary><returns>The created lazy list.</returns><param name="remains">Elements that put after this lazy list.</param><signature><![CDATA[LazyList<T> Concat(
+<Document symbolId="vl::collections::LazyList::Concat@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="Concat" declFile="Operation.h" declId="FB$vl::collections::LazyList::Concat@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)[impl0]"><summary>Create a new lazy list containing elements of the two container in order.</summary><returns>The created lazy list.</returns><param name="remains">Elements to be appended.</param><example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     vint ys[] = {6, 7, 8, 9, 10};
+     auto zs = From(xs).Concat(From(ys));
+     FOREACH(vint, z, zs) Console::Write(itow(z) + L" ");
+ }
+ ]]></example><signature><![CDATA[LazyList<T> Concat(
     IEnumerable<T> const & remains
 ) const;
 ]]></signature><seealsos><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

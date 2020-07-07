@@ -230,6 +230,11 @@ TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" file="VL__FUNC@_[R]([TAR
       <document name="function Values" docId="vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &amp;()" file="VL__COLLECTIONS__DICTIONARY__VALUES@__VL__COLLECTIONS__DICTIONAR"/>
       <document name="function operator []" docId="vl::collections::Dictionary::operator []@[VT] const &amp;([KK] const &amp;)" file="VL__COLLECTIONS__DICTIONARY__OPERATOR_[]@[VT]_CONST_&amp;([KK]_CONST"/>
     </document>
+    <document name="function From" docId="vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__FROM@__VL__COLLECTIONS__LAZYLIST_[T]_(__VL__COL"/>
+    <document name="function From" docId="vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::LazyList&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__FROM@__VL__COLLECTIONS__LAZYLIST_[T]_(__VL__COL2"/>
+    <document name="function From" docId="vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;([T] const *, [T] const *)" file="VL__COLLECTIONS__FROM@__VL__COLLECTIONS__LAZYLIST_[T]_([T]_CONST"/>
+    <document name="function From" docId="vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;([T] [*] &amp;)" file="VL__COLLECTIONS__FROM@__VL__COLLECTIONS__LAZYLIST_[T]_([T]_[_]_&amp;"/>
+    <document name="function From" docId="vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;([T] const [*] &amp;)" file="VL__COLLECTIONS__FROM@__VL__COLLECTIONS__LAZYLIST_[T]_([T]_CONST2"/>
     <document name="class Group" docId="vl::collections::Group" file="VL__COLLECTIONS__GROUP">
       <document name="function $__ctor" docId="vl::collections::Group::$__ctor@()" file="VL__COLLECTIONS__GROUP__$__CTOR@()"/>
       <document name="function Add" docId="vl::collections::Group::Add@bool(::vl::collections::Pair&lt;[KT], [VT]&gt; const &amp;)" file="VL__COLLECTIONS__GROUP__ADD@BOOL(__VL__COLLECTIONS__PAIR_[KT],_["/>
@@ -272,6 +277,7 @@ TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" file="VL__FUNC@_[R]([TAR
       <document name="function Concat" docId="vl::collections::LazyList::Concat@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__CONCAT@__VL__COLLECTIONS__LAZYLIST_[T"/>
       <document name="function Count" docId="vl::collections::LazyList::Count@::vl::vint()" file="VL__COLLECTIONS__LAZYLIST__COUNT@__VL__VINT()"/>
       <document name="function Distinct" docId="vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()" file="VL__COLLECTIONS__LAZYLIST__DISTINCT@__VL__COLLECTIONS__LAZYLIST_"/>
+      <document name="function Evaluate" docId="vl::collections::LazyList::Evaluate@::vl::collections::LazyList&lt;[T]&gt;(bool)" file="VL__COLLECTIONS__LAZYLIST__EVALUATE@__VL__COLLECTIONS__LAZYLIST_"/>
       <document name="function Except" docId="vl::collections::LazyList::Except@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" file="VL__COLLECTIONS__LAZYLIST__EXCEPT@__VL__COLLECTIONS__LAZYLIST_[T"/>
       <document name="function FindType" docId="vl::collections::LazyList::FindType@::vl::collections::LazyList&lt;::vl::Ptr&lt;[U]&gt;&gt;()" file="VL__COLLECTIONS__LAZYLIST__FINDTYPE@__VL__COLLECTIONS__LAZYLIST_"/>
       <document name="function First" docId="vl::collections::LazyList::First@[T]()" file="VL__COLLECTIONS__LAZYLIST__FIRST@[T]()"/>
@@ -322,6 +328,9 @@ TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" file="VL__FUNC@_[R]([TAR
       <document name="variable components" docId="vl::collections::PartialOrderingProcessor::components" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR__COMPONENTS"/>
       <document name="variable nodes" docId="vl::collections::PartialOrderingProcessor::nodes" file="VL__COLLECTIONS__PARTIALORDERINGPROCESSOR__NODES"/>
     </document>
+    <document name="function Range" docId="vl::collections::Range@::vl::collections::LazyList&lt;[T]&gt;([T], [T])" file="VL__COLLECTIONS__RANGE@__VL__COLLECTIONS__LAZYLIST_[T]_([T],_[T]"/>
+    <document name="function Sort" docId="vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func&lt;::vl::vint([T], [T])&gt; const &amp;)" file="VL__COLLECTIONS__SORT@VOID([T]__,___VL__VINT,___VL__FUNC___VL__V"/>
+    <document name="function SortLambda" docId="vl::collections::SortLambda@void([T] *, ::vl::vint, [F])" file="VL__COLLECTIONS__SORTLAMBDA@VOID([T]__,___VL__VINT,_[F])"/>
     <document name="class SortedList" docId="vl::collections::SortedList" file="VL__COLLECTIONS__SORTEDLIST">
       <document name="function $__ctor" docId="vl::collections::SortedList::$__ctor@()" file="VL__COLLECTIONS__SORTEDLIST__$__CTOR@()"/>
       <document name="function Add" docId="vl::collections::SortedList::Add@::vl::vint([T] const &amp;)" file="VL__COLLECTIONS__SORTEDLIST__ADD@__VL__VINT([T]_CONST_&amp;)"/>

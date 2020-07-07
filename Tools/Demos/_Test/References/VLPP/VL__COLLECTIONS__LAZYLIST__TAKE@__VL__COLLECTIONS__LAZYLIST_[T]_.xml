@@ -1,4 +1,11 @@
-<Document symbolId="vl::collections::LazyList::Take@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Take" declFile="Operation.h" declId="FB$vl::collections::LazyList::Take@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)[impl0]"><summary>Create a new lazy list with some prefix elements.</summary><returns>The created lazy list.</returns><param name="count">The size of the prefix.</param><signature><![CDATA[LazyList<T> Take(
+<Document symbolId="vl::collections::LazyList::Take@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Take" declFile="Operation.h" declId="FB$vl::collections::LazyList::Take@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)[impl0]"><summary>Create a new lazy list with a prefix of the lazy list.</summary><returns>The created lazy list.</returns><param name="count">The size of the prefix.</param><example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     auto ys = From(xs).Take(3);
+     FOREACH(vint, y, ys) Console::Write(itow(y) + L" ");
+ }
+ ]]></example><signature><![CDATA[LazyList<T> Take(
     vint count
 ) const;
 ]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

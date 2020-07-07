@@ -17,40 +17,42 @@ Licensed under https://github.com/vczh-libraries/License
 
 Functions:
 	CopyFrom(TargetContainer, SourceContainer)
-	[T]		.Select(T-&gt;K) =&gt; [K]
-	[T]		.SelectMany(T-&gt;[K]) =&gt; [K]
-	[T]		.Where(T-&gt;bool) =&gt; [T]
-	[Ptr&lt;T&gt;].Cast&lt;K&gt;() =&gt; [Ptr&lt;K&gt;]
-	[Ptr&lt;T&gt;].FindType&lt;K&gt;() =&gt; [Ptr&lt;K&gt;]
-	[T]		.OrderBy(T-&gt;T-&gt;int) =&gt; [T]
+	[T]			.Select(T-&gt;K) =&gt; [K]
+	[T]			.Where(T-&gt;bool) =&gt; [T]
+	[Ptr&lt;T&gt;]	.Cast&lt;K&gt;() =&gt; [Ptr&lt;K&gt;]
+	[Ptr&lt;T&gt;]	.FindType&lt;K&gt;() =&gt; [Ptr&lt;K&gt;]
+	[T]			.OrderBy(T-&gt;T-&gt;int) =&gt; [T]
 
-	[T]		.Aggregate(T-&gt;T-&gt;T) =&gt; T
-	[T]		.Aggregate(T-&gt;T-&gt;T, T) =&gt; T
-	[T]		.All(T-&gt;bool) =&gt; bool
-	[T]		.Any(T-&gt;bool) =&gt; bool
-	[T]		.Max() =&gt; T
-	[T]		.Min() =&gt; T
-	[T]		.First() =&gt; T
-	[T]		.FirstOrDefault(T) =&gt; T
-	[T]		.Last() =&gt; T
-	[T]		.LastOrDefault(T) =&gt; T
-	[T]		.Count() =&gt; vint
-	[T]		.IsEmpty() =&gt; bool
+	[T]			.Aggregate(T-&gt;T-&gt;T) =&gt; T
+	[T]			.Aggregate(T-&gt;T-&gt;T, T) =&gt; T
+	[T]			.All(T-&gt;bool) =&gt; bool
+	[T]			.Any(T-&gt;bool) =&gt; bool
+	[T]			.Max() =&gt; T
+	[T]			.Min() =&gt; T
+	[T]			.First() =&gt; T
+	[T]			.FirstOrDefault(T) =&gt; T
+	[T]			.Last() =&gt; T
+	[T]			.LastOrDefault(T) =&gt; T
+	[T]			.Count() =&gt; vint
+	[T]			.IsEmpty() =&gt; bool
 
-	[T]		.Concat([T]) =&gt; [T]
-	[T]		.Repeat(vint) =&gt; [T]
-	[T]		.Take(vint) =&gt; [T]
-	[T]		.Skip(vint) =&gt; [T]
-	[T]		.Distinct() =&gt; [T]
-	[T]		.Reverse() =&gt; [T]
+	[T]			.Concat([T]) =&gt; [T]				(evaluated)
+	[T]			.Take(vint) =&gt; [T]				(evaluated)
+	[T]			.Skip(vint) =&gt; [T]				(evaluated)
+	[T]			.Repeat(vint) =&gt; [T]			(evaluated)
+	[T]			.Distinct() =&gt; [T]
+	[T]			.Reverse() =&gt; [T]				(evaluated)
 
-	[T]		.Pairwise([K]) =&gt; [(T,K)]
-	[T]		.Intersect([T]) =&gt; [T]
-	[T]		.Union([T]) =&gt; [T]
-	[T]		.Except([T]) =&gt; [T]
+	[T]			.Pairwise([K]) =&gt; [(T,K)]		(evaluated)
+	[T]			.Intersect([T]) =&gt; [T]
+	[T]			.Except([T]) =&gt; [T]
+	[T]			.Union([T]) =&gt; [T]
 
-	[T]		.Evaluate() =&gt; [T]
-	[T]		.GroupBy(T-&gt;K) =&gt; [(K, [T])]
+	[T]			.Evaluate() =&gt; [T]
+	[T]			.SelectMany(T-&gt;[K]) =&gt; [K]
+	[T]			.GroupBy(T-&gt;K) =&gt; [(K, [T])]
+
+	(evaluated) means the lazy list is evaluated when all sources are evaluated
 
 	From(begin, end) =&gt; [T]
 	From(array) =&gt; [T]
@@ -80,44 +82,67 @@ Functions:
 	{
 
 <div class="token cpp_comment ">/***********************************************************************
-OrderBy Quick Sort
+Quick Sort
 ***********************************************************************/</div>
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Quick sort.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the comparer.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;Pointer to element array to sort.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;length&quot;&gt;The number of elements to sort.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;orderer&quot;&gt;</div>
+		<div class="token cpp_comment ">/// The comparar for two elements.</div>
+		<div class="token cpp_comment ">/// Both arguments are elements to compare.</div>
+		<div class="token cpp_comment ">/// Returns a positive number when the first argument is greater.</div>
+		<div class="token cpp_comment ">/// Returns a negative number when the second argument is greater.</div>
+		<div class="token cpp_comment ">/// Returns zero when two arguments equal.</div>
+		<div class="token cpp_comment ">/// &lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]"><div><div class="token cpp_function">SortLambda</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items"><div><div class="token cpp_argument">items</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::length"><div><div class="token cpp_argument">length</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::orderer"><div><div class="token cpp_argument">orderer</div></div></div>)
 		{
-			<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div>==<div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">return</div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot"><div>pivot</div></div>=<div class="token cpp_number ">0</div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left"><div>left</div></div>=<div class="token cpp_number ">0</div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right"><div>right</div></div>=<div class="token cpp_number ">0</div>;
-			<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag"><div>flag</div></div>=<div class="token cpp_keyword ">false</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div> == <div class="token cpp_number ">0</div>) <div class="token cpp_keyword ">return</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot"><div>pivot</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left"><div>left</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right"><div>right</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag"><div>flag</div></div> = <div class="token cpp_keyword ">false</div>;
 
-			<div class="token cpp_keyword ">while</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div>+<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div>+<div class="token cpp_number ">1</div>!=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div>)
+			<div class="token cpp_keyword ">while</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div> + <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div> + <div class="token cpp_number ">1</div> != <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div>)
 			{
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::mine"><div>mine</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div>?<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div>);
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::theirs"><div>theirs</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div>?<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div>);
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate"><div>candidate</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div>?<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div>-<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div>-<div class="token cpp_number ">1</div>);
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::factor"><div>factor</div></div>=(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div>?-<div class="token cpp_number ">1</div>:<div class="token cpp_number ">1</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::mine"><div>mine</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div> ? <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div> : <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::theirs"><div>theirs</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div> ? <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div> : <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate"><div>candidate</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div> ? <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div> : <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div> - <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div> - <div class="token cpp_number ">1</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::factor"><div>factor</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div> ? -<div class="token cpp_number ">1</div> : <div class="token cpp_number ">1</div>);
 
-				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::orderer'], [], [])"><div class="token cpp_argument">orderer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot'], [], [])">pivot</div>], <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate'], [], [])">candidate</div>])*<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::factor'], [], [])">factor</div>&lt;=<div class="token cpp_number ">0</div>)
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::orderer'], [], [])"><div class="token cpp_argument">orderer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot'], [], [])">pivot</div>], <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate'], [], [])">candidate</div>])*<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::factor'], [], [])">factor</div> &lt;= <div class="token cpp_number ">0</div>)
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::mine'], [], [])">mine</div>++;
 				}
 				<div class="token cpp_keyword ">else</div>
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::theirs'], [], [])">theirs</div>++;
-					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::temp"><div>temp</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot'], [], [])">pivot</div>];
-					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot'], [], [])">pivot</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate'], [], [])">candidate</div>];
-					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate'], [], [])">candidate</div>]=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::temp'], [], [])">temp</div>;
-					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot'], [], [])">pivot</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate'], [], [])">candidate</div>;
-					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div>=!<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::temp"><div>temp</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot'], [], [])">pivot</div>];
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot'], [], [])">pivot</div>] = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate'], [], [])">candidate</div>];
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate'], [], [])">candidate</div>] = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::temp'], [], [])">temp</div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::pivot'], [], [])">pivot</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::candidate'], [], [])">candidate</div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div> = !<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::flag'], [], [])">flag</div>;
 				}
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])'], [], [])"><div class="token cpp_function">SortLambda</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::orderer'], [], [])"><div class="token cpp_argument">orderer</div></div>);
-			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])'], [], [])"><div class="token cpp_function">SortLambda</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>+<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div>+<div class="token cpp_number ">1</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::orderer'], [], [])"><div class="token cpp_argument">orderer</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])'], [], [])"><div class="token cpp_function">SortLambda</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div> + <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::left'], [], [])">left</div> + <div class="token cpp_number ">1</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::right'], [], [])">right</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortLambda@void([T] *, ::vl::vint, [F])[impl0]::orderer'], [], [])"><div class="token cpp_argument">orderer</div></div>);
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Quick sort.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;Pointer to element array to sort.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;length&quot;&gt;The number of elements to sort.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;orderer&quot;&gt;</div>
+		<div class="token cpp_comment ">/// The comparar for two elements.</div>
+		<div class="token cpp_comment ">/// Both arguments are elements to compare.</div>
+		<div class="token cpp_comment ">/// Returns a positive number when the first argument is greater.</div>
+		<div class="token cpp_comment ">/// Returns a negative number when the second argument is greater.</div>
+		<div class="token cpp_comment ">/// Returns zero when two arguments equal.</div>
+		<div class="token cpp_comment ">/// &lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func<::vl::vint([T], [T])> const &)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func<::vl::vint([T], [T])> const &)[impl0]"><div><div class="token cpp_function">Sort</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func<::vl::vint([T], [T])> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func<::vl::vint([T], [T])> const &)[impl0]::items"><div><div class="token cpp_argument">items</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func<::vl::vint([T], [T])> const &)[impl0]::length"><div><div class="token cpp_argument">length</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func<::vl::vint([T], [T])> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func<::vl::vint([T], [T])> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>)&gt;&amp; <div class="def" id="NI$vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func<::vl::vint([T], [T])> const &)[impl0]::orderer"><div><div class="token cpp_argument">orderer</div></div></div>)
 		{
@@ -128,8 +153,15 @@ OrderBy Quick Sort
 LazyList
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;A lazy evaluated readonly container.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;A lazy evaluated container with rich operations. &lt;see cref=&quot;From`*&quot;/&gt; is useful to create lazy list from arrays or containers.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;The type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// A lazy list is usually created directly from a container source, or from a calculation on a source.</div>
+		<div class="token cpp_comment ">/// Typically the lazy list cannot be used after the source is deleted.</div>
+		<div class="token cpp_comment ">/// If this lazy list needs to be used after the source is deleted,</div>
+		<div class="token cpp_comment ">/// you are recommended to use [F:vl.collections.LazyList`1.Evaluate], &lt;b&gt;with forceCopy set to true&lt;/b&gt;.</div>
+		<div class="token cpp_comment ">/// In this way you get a lazy list with all values copied, they do not rely on other objects.</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::LazyList"><div><div class="token cpp_type">LazyList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;
 		{
@@ -141,35 +173,35 @@ LazyList
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::enumeratorPrototype'], [], [])"><div class="token cpp_field">enumeratorPrototype</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::IEnumerator::Clone@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">Clone</div></div>();
 			}
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list with an enumerator.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from an enumerator. This enumerator will be deleted when this lazy list is deleted.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;enumerator&quot;&gt;The enumerator.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerator<[T]> *)[impl0]"><div><div class="token cpp_function">LazyList</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;* <div class="def" id="NI$vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerator<[T]> *)[impl0]::enumerator"><div><div class="token cpp_argument">enumerator</div></div></div>)
 				:enumeratorPrototype(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerator<[T]> *)[impl0]::enumerator'], [], [])"><div class="token cpp_argument">enumerator</div></div>)
 			{
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list with an enumerator.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from an enumerator.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;enumerator&quot;&gt;The enumerator.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::collections::LazyList::$__ctor@(::vl::Ptr<::vl::collections::IEnumerator<[T]>>)[impl0]"><div><div class="token cpp_function">LazyList</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt; <div class="def" id="NI$vl::collections::LazyList::$__ctor@(::vl::Ptr<::vl::collections::IEnumerator<[T]>>)[impl0]::enumerator"><div><div class="token cpp_argument">enumerator</div></div></div>)
 				:enumeratorPrototype(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::$__ctor@(::vl::Ptr<::vl::collections::IEnumerator<[T]>>)[impl0]::enumerator'], [], [])"><div class="token cpp_argument">enumerator</div></div>)
 			{
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list with an enumerable.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;enumerable&quot;&gt;The enumerator.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from an enumerable.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;enumerable&quot;&gt;The enumerable.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">LazyList</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable"><div><div class="token cpp_argument">enumerable</div></div></div>)
 				:enumeratorPrototype(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable'], [], [])"><div class="token cpp_argument">enumerable</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">CreateEnumerator</div></div>())
 			{
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list with an lazy list.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from another lazy list.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;lazyList&quot;&gt;The lazy list.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::collections::LazyList::$__ctor@(::vl::collections::LazyList<[T]> const &)[impl0]"><div><div class="token cpp_function">LazyList</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::$__ctor@(::vl::collections::LazyList<[T]> const &)[impl0]::lazyList"><div><div class="token cpp_argument">lazyList</div></div></div>)
 				:enumeratorPrototype(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::$__ctor@(::vl::collections::LazyList<[T]> const &)[impl0]::lazyList'], [], [])"><div class="token cpp_argument">lazyList</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::enumeratorPrototype'], [], [])"><div class="token cpp_field">enumeratorPrototype</div></div>)
 			{
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list with a container.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from a container. It is very useful to &lt;see cref=&quot;MakePtr`2&quot;/&gt; a container as an intermediate result and then put in a lazy list.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TContainer&quot;&gt;Type of the container.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;container&quot;&gt;The container.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::$__ctor@(::vl::Ptr<[TContainer]>)[impl0]::TContainer"><div><div class="token cpp_type">TContainer</div></div></div>&gt;
@@ -198,9 +230,17 @@ LazyList
 			<div class="token cpp_comment ">//-------------------------------------------------------</div>
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with all elements transformed.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the transformer.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as a transformation function.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The transformer.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Select([](vint x){ return x * 2; });</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 <div class="expandable"><div class="disabled">			LazyList&lt;FUNCTION_RESULT_TYPE(F)&gt; Select(F f)const</div>
 <div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda'], [], [])">function_lambda</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_lambda::FunctionObjectRetriveType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>'], ['vl::function_lambda::FunctionObjectRetriveType'], [], [])"><div class="token cpp_type">FunctionObjectRetriveType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::FunctionObjectRetriveType::ResultType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>::ResultType'], [], [])"><div class="token cpp_type">ResultType</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])[impl0]"><div><div class="token cpp_function">Select</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div></div></div>
@@ -209,10 +249,18 @@ LazyList
 <div class="expanded">				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SelectEnumerator'], [], [])"><div class="token cpp_type">SelectEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda'], [], [])">function_lambda</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_lambda::FunctionObjectRetriveType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>'], ['vl::function_lambda::FunctionObjectRetriveType'], [], [])"><div class="token cpp_type">FunctionObjectRetriveType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::FunctionObjectRetriveType::ResultType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>::ResultType'], [], [])"><div class="token cpp_type">ResultType</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])[impl0]::f'], [], [])"><div class="token cpp_argument">f</div></div>);</div></div>
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with all elements that satisfy with a condition.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with all elements filtered.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the filter.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as a filter.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The filter.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Where([](vint x){ return x % 2 == 0; });</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::Where@::vl::collections::LazyList<[T]>([F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Where@::vl::collections::LazyList<[T]>([F])[impl0]"><div><div class="token cpp_function">Where</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Where@::vl::collections::LazyList<[T]>([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::Where@::vl::collections::LazyList<[T]>([F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
@@ -222,6 +270,11 @@ LazyList
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with all elements casted to a new type.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;U&quot;&gt;The new type.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// The lazy list being casted contains elements of type [T:vl.Ptr`1].</div>
+			<div class="token cpp_comment ">/// [F:vl.Ptr`1.Cast`1] is called on each elements.</div>
+			<div class="token cpp_comment ">/// If some elements fail to cast, they become empty shared pointers.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::Cast@::vl::collections::LazyList<::vl::Ptr<[U]>>()[impl0]::U"><div><div class="token cpp_type">U</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Cast@::vl::collections::LazyList<::vl::Ptr<[U]>>()[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;&gt; <div class="def" id="FB$vl::collections::LazyList::Cast@::vl::collections::LazyList<::vl::Ptr<[U]>>()[impl0]"><div><div class="token cpp_function">Cast</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
@@ -232,6 +285,11 @@ LazyList
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with only elements that successfully casted to a new type.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;U&quot;&gt;The new type.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// The lazy list being casted contains elements of type [T:vl.Ptr`1].</div>
+			<div class="token cpp_comment ">/// [F:vl.Ptr`1.Cast`1] is called on each elements.</div>
+			<div class="token cpp_comment ">/// If some elements fail to cast, they are eliminated from the result.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::FindType@::vl::collections::LazyList<::vl::Ptr<[U]>>()[impl0]::U"><div><div class="token cpp_type">U</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::FindType@::vl::collections::LazyList<::vl::Ptr<[U]>>()[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;&gt; <div class="def" id="FB$vl::collections::LazyList::FindType@::vl::collections::LazyList<::vl::Ptr<[U]>>()[impl0]"><div><div class="token cpp_function">FindType</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
@@ -239,9 +297,23 @@ LazyList
 			}
 			
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with all elements sorted.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the comparer.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as a comparing function.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;</div>
+			<div class="token cpp_comment ">/// The comparar for two elements.</div>
+			<div class="token cpp_comment ">/// Both arguments are elements to compare.</div>
+			<div class="token cpp_comment ">/// Returns a positive number when the first argument is greater.</div>
+			<div class="token cpp_comment ">/// Returns a negative number when the second argument is greater.</div>
+			<div class="token cpp_comment ">/// Returns zero when two arguments equal.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).OrderBy([](vint x, vint y){ return x - y; });</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::OrderBy@::vl::collections::LazyList<[T]>([F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::OrderBy@::vl::collections::LazyList<[T]>([F])[impl0]"><div><div class="token cpp_function">OrderBy</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::OrderBy@::vl::collections::LazyList<[T]>([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::OrderBy@::vl::collections::LazyList<[T]>([F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
@@ -256,10 +328,24 @@ LazyList
 
 			<div class="token cpp_comment ">//-------------------------------------------------------</div>
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Aggregate a lazy list. An exception will raise if the lazy list is empty.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Aggregate a lazy list. It will crash if the lazy list is empty.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the aggregator.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The aggregated value.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as an aggregator.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;</div>
+			<div class="token cpp_comment ">/// The aggregator.</div>
+			<div class="token cpp_comment ">/// The first argument is the aggregated value of any prefix.</div>
+			<div class="token cpp_comment ">/// The second argument is the element right after a prefix.</div>
+			<div class="token cpp_comment ">/// Returns the aggregated value of the new prefix.</div>
+			<div class="token cpp_comment ">/// For the first call, the first argument is the first element in the lazy list.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Aggregate([](vint x, vint y){ return x + y; });</div>
+			<div class="token cpp_comment ">///     Console::WriteLine(itow(ys));</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::Aggregate@[T]([F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="FB$vl::collections::LazyList::Aggregate@[T]([F])[impl0]"><div><div class="token cpp_function">Aggregate</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Aggregate@[T]([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::Aggregate@[T]([F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
@@ -278,10 +364,23 @@ LazyList
 			
 			<div class="token cpp_comment ">/// &lt;summary&gt;Aggregate a lazy list.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;I&quot;&gt;Type of the initial value.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the aggregator.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The aggregated value.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;init&quot;&gt;The initial value that is virtually added before the lazy list.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as an aggregator.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;init&quot;&gt;The aggregated value defined for the empty prefix.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;</div>
+			<div class="token cpp_comment ">/// The aggregator.</div>
+			<div class="token cpp_comment ">/// The first argument is the aggregated value of any prefix.</div>
+			<div class="token cpp_comment ">/// The second argument is the element right after a prefix.</div>
+			<div class="token cpp_comment ">/// Returns the aggregated value of the new prefix.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Aggregate(1, [](vint x, vint y){ return x * y; });</div>
+			<div class="token cpp_comment ">///     Console::WriteLine(itow(ys));</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]::I"><div><div class="token cpp_type">I</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]::I'], [], [])"><div class="token cpp_type">I</div></div> <div class="def" id="FB$vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]"><div><div class="token cpp_function">Aggregate</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]::I'], [], [])"><div class="token cpp_type">I</div></div> <div class="def" id="NI$vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]::init"><div><div class="token cpp_argument">init</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
@@ -293,41 +392,73 @@ LazyList
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]::init'], [], [])"><div class="token cpp_argument">init</div></div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test does all elements in the lazy list satisfy with a condition.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if all elements satisfy with a condition.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as a filter.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if all elements in the lazy list satisfy a filter.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the filter.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if all elements satisfy the filter.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The filter.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).All([](vint x){ return x % 2 == 0; });</div>
+			<div class="token cpp_comment ">///     Console::WriteLine(ys ? L&quot;All numbers are even&quot; : L&quot;Not all numbers are even&quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::All@bool([F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::LazyList::All@bool([F])[impl0]"><div><div class="token cpp_function">All</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::All@bool([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::All@bool([F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])'], ['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])'], [], [])"><div class="token cpp_function">Select</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::All@bool([F])[impl0]::f'], [], [])"><div class="token cpp_argument">f</div></div>).<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Aggregate@[I]([I], [F])'], ['vl::collections::LazyList::Aggregate@[I]([I], [F])', 'vl::collections::LazyList::Aggregate@[T]([F])'], [], [])"><div class="token cpp_function">Aggregate</div></div>(<div class="token cpp_keyword ">true</div>, [](<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::LazyList::All@bool([F])[impl0]::a"><div>a</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::LazyList::All@bool([F])[impl0]::b"><div>b</div></div>){<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::All@bool([F])[impl0]::a'], [], [])">a</div>&amp;&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::All@bool([F])[impl0]::b'], [], [])">b</div>;});
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test does any elements in the lazy list satisfy with a condition.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if at least one element satisfies with a condition.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as a filter.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if any elements in the lazy list satisfy a filter.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the filter.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if there is at least one element satisfies the filter.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The filter.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Any([](vint x){ return x % 2 == 0; });</div>
+			<div class="token cpp_comment ">///     Console::WriteLine(ys ? L&quot;There are even numbers&quot; : L&quot;There is no even number&quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::Any@bool([F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::LazyList::Any@bool([F])[impl0]"><div><div class="token cpp_function">Any</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Any@bool([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::Any@bool([F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])'], ['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])'], [], [])"><div class="token cpp_function">Select</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Any@bool([F])[impl0]::f'], [], [])"><div class="token cpp_argument">f</div></div>).<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Aggregate@[I]([I], [F])'], ['vl::collections::LazyList::Aggregate@[I]([I], [F])', 'vl::collections::LazyList::Aggregate@[T]([F])'], [], [])"><div class="token cpp_function">Aggregate</div></div>(<div class="token cpp_keyword ">false</div>, [](<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::LazyList::Any@bool([F])[impl0]::a"><div>a</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::LazyList::Any@bool([F])[impl0]::b"><div>b</div></div>){<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Any@bool([F])[impl0]::a'], [], [])">a</div>||<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Any@bool([F])[impl0]::b'], [], [])">b</div>;});
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the maximum value in the lazy list. An exception will raise if the lazy list is empty.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the maximum value in the lazy list. It will crash if the lazy list is empty.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The maximum value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Max();</div>
+			<div class="token cpp_comment ">///     Console::WriteLine(itow(ys));</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="FB$vl::collections::LazyList::Max@[T]()[impl0]"><div><div class="token cpp_function">Max</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Aggregate@[T]([F])'], ['vl::collections::LazyList::Aggregate@[I]([I], [F])', 'vl::collections::LazyList::Aggregate@[T]([F])'], [], [])"><div class="token cpp_function">Aggregate</div></div>([](<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::LazyList::Max@[T]()[impl0]::a"><div>a</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::LazyList::Max@[T]()[impl0]::b"><div>b</div></div>){<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Max@[T]()[impl0]::a'], [], [])">a</div>&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Max@[T]()[impl0]::b'], [], [])">b</div>?<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Max@[T]()[impl0]::a'], [], [])">a</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Max@[T]()[impl0]::b'], [], [])">b</div>;});
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the minimum value in the lazy list. An exception will raise if the lazy list is empty.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the minimum value in the lazy list. It will crash if the lazy list is empty.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The minimum value.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Min();</div>
+			<div class="token cpp_comment ">///     Console::WriteLine(itow(ys));</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="FB$vl::collections::LazyList::Min@[T]()[impl0]"><div><div class="token cpp_function">Min</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Aggregate@[T]([F])'], ['vl::collections::LazyList::Aggregate@[I]([I], [F])', 'vl::collections::LazyList::Aggregate@[T]([F])'], [], [])"><div class="token cpp_function">Aggregate</div></div>([](<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::LazyList::Min@[T]()[impl0]::a"><div>a</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::LazyList::Min@[T]()[impl0]::b"><div>b</div></div>){<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Min@[T]()[impl0]::a'], [], [])">a</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Min@[T]()[impl0]::b'], [], [])">b</div>?<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Min@[T]()[impl0]::a'], [], [])">a</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Min@[T]()[impl0]::b'], [], [])">b</div>;});
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the first value in the lazy list. An exception will raise if the lazy list is empty.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the first value in the lazy list. It will crash if the lazy list is empty.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The first value.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="FB$vl::collections::LazyList::First@[T]()[impl0]"><div><div class="token cpp_function">First</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
@@ -340,8 +471,8 @@ LazyList
 			}
 			
 			<div class="token cpp_comment ">/// &lt;summary&gt;Get the first value in the lazy list.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The first value.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;defaultValue&quot;&gt;Returns this argument if the lazy list is empty.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The first value. If the lazy list is empty, the argument is returned.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;defaultValue&quot;&gt;The argument to return if the lazy list is empty.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="FB$vl::collections::LazyList::First@[T]([T])[impl0]"><div><div class="token cpp_function">First</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::LazyList::First@[T]([T])[impl0]::defaultValue"><div><div class="token cpp_argument">defaultValue</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt; <div class="def" id="NI$vl::collections::LazyList::First@[T]([T])[impl0]::enumerator"><div>enumerator</div></div>=<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">CreateEnumerator</div></div>();
@@ -351,8 +482,8 @@ LazyList
 				}
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::First@[T]([T])[impl0]::enumerator'], [], [])">enumerator</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Current@[T] const &()'], ['vl::collections::IEnumerator::Current@[T] const &()'], [], [])"><div class="token cpp_function">Current</div></div>();
 			}
-			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the last value in the lazy list. An exception will raise if the lazy list is empty.&lt;/summary&gt;</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the last value in the lazy list. It will crash if the lazy list is empty.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The last value.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="FB$vl::collections::LazyList::Last@[T]()[impl0]"><div><div class="token cpp_function">Last</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
@@ -371,10 +502,10 @@ LazyList
 					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Last@[T]()[impl0]::value'], [], [])">value</div>;
 				}
 			}
-			
+
 			<div class="token cpp_comment ">/// &lt;summary&gt;Get the last value in the lazy list.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The last value.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;defaultValue&quot;&gt;Returns this argument if the lazy list is empty.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The last value. If the lazy list is empty, the argument is returned.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;defaultValue&quot;&gt;The argument to return if the lazy list is empty.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="FB$vl::collections::LazyList::Last@[T]([T])[impl0]"><div><div class="token cpp_function">Last</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::LazyList::Last@[T]([T])[impl0]::defaultValue"><div><div class="token cpp_argument">defaultValue</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerator'], [], [])"><div class="token cpp_type">IEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt; <div class="def" id="NI$vl::collections::LazyList::Last@[T]([T])[impl0]::enumerator"><div>enumerator</div></div>=<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">CreateEnumerator</div></div>();
@@ -398,7 +529,7 @@ LazyList
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Count@::vl::vint()[impl0]::result'], [], [])">result</div>;
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test is the lazy list empty.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the lazy list is empty.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the lazy list is empty.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::LazyList::IsEmpty@bool()[impl0]"><div><div class="token cpp_function">IsEmpty</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
@@ -408,40 +539,81 @@ LazyList
 
 			<div class="token cpp_comment ">//-------------------------------------------------------</div>
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list containing elements of the two container one after another.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list containing elements of the two container in order.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;remains&quot;&gt;Elements that put after this lazy list.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;remains&quot;&gt;Elements to be appended.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     vint ys[] = {6, 7, 8, 9, 10};</div>
+			<div class="token cpp_comment ">///     auto zs = From(xs).Concat(From(ys));</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, z, zs) Console::Write(itow(z) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Concat@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">Concat</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::Concat@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains"><div><div class="token cpp_argument">remains</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ConcatEnumerator'], [], [])"><div class="token cpp_type">ConcatEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Concat@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains'], [], [])"><div class="token cpp_argument">remains</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">CreateEnumerator</div></div>());
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with some prefix elements.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with a prefix of the lazy list.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The size of the prefix.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Take(3);</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Take@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]"><div><div class="token cpp_function">Take</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::LazyList::Take@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::TakeEnumerator'], [], [])"><div class="token cpp_type">TakeEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Take@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>);
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list without some prefix elements.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with a postfix of the lazy list.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The size of the prefix.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The number of elements to skip.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Skip(3);</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Skip@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]"><div><div class="token cpp_function">Skip</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::LazyList::Skip@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SkipEnumerator'], [], [])"><div class="token cpp_type">SkipEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Skip@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>);
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with several copies of this lazy list one after another.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with several copies of the lazy list in order.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The numbers of copies.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Repeat(3);</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Repeat@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]"><div><div class="token cpp_function">Repeat</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::LazyList::Repeat@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::RepeatEnumerator'], [], [])"><div class="token cpp_type">RepeatEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Repeat@::vl::collections::LazyList<[T]>(::vl::vint)[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>);
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with all elements in this lazy list. If some elements appear several times, only one will be kept.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with duplicated elements removed in this lazy list.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 2, 3, 3, 3, 4, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Distinct();</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Distinct@::vl::collections::LazyList<[T]>()[impl0]"><div><div class="token cpp_function">Distinct</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::DistinctEnumerator'], [], [])"><div class="token cpp_type">DistinctEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>());
@@ -449,6 +621,14 @@ LazyList
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with all elements in this lazy list in a reverse order.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).Reverse();</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Reverse@::vl::collections::LazyList<[T]>()[impl0]"><div><div class="token cpp_function">Reverse</div></div></div>()<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::ReverseEnumerator'], [], [])"><div class="token cpp_type">ReverseEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(*<div class="token cpp_keyword ">this</div>);
@@ -458,33 +638,72 @@ LazyList
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list of pairs from elements from two containers.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;U&quot;&gt;Type of all elements in the second container.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;</div>
+			<div class="token cpp_comment ">/// The created lazy list, which contains pairs of elements from two containers at the same position.</div>
+			<div class="token cpp_comment ">/// If the two container have different sizes, the created lazy list has the size of the shorter one.</div>
+			<div class="token cpp_comment ">/// &lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;remains&quot;&gt;The second container.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5, 6, 7};</div>
+			<div class="token cpp_comment ">///     vint ys[] = {60, 70, 80, 90, 100};</div>
+			<div class="token cpp_comment ">///     auto zs = From(xs).Pairwise(From(ys)).Select(Pair&lt;vint, vint&gt; p){ return p.key + p.value; });</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, z, zs) Console::Write(itow(z) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::Pairwise@::vl::collections::LazyList<::vl::collections::Pair<[T], [U]>>(::vl::collections::IEnumerable<[U]> const &)[impl0]::U"><div><div class="token cpp_type">U</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Pairwise@::vl::collections::LazyList<::vl::collections::Pair<[T], [U]>>(::vl::collections::IEnumerable<[U]> const &)[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;&gt; <div class="def" id="FB$vl::collections::LazyList::Pairwise@::vl::collections::LazyList<::vl::collections::Pair<[T], [U]>>(::vl::collections::IEnumerable<[U]> const &)[impl0]"><div><div class="token cpp_function">Pairwise</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Pairwise@::vl::collections::LazyList<::vl::collections::Pair<[T], [U]>>(::vl::collections::IEnumerable<[U]> const &)[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::Pairwise@::vl::collections::LazyList<::vl::collections::Pair<[T], [U]>>(::vl::collections::IEnumerable<[U]> const &)[impl0]::remains"><div><div class="token cpp_argument">remains</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PairwiseEnumerator'], [], [])"><div class="token cpp_type">PairwiseEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Pairwise@::vl::collections::LazyList<::vl::collections::Pair<[T], [U]>>(::vl::collections::IEnumerable<[U]> const &)[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Pairwise@::vl::collections::LazyList<::vl::collections::Pair<[T], [U]>>(::vl::collections::IEnumerable<[U]> const &)[impl0]::remains'], [], [])"><div class="token cpp_argument">remains</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">CreateEnumerator</div></div>());
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with only elements that appear in both containers.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with elements from the lazy list, which also appear in the second container.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list. Elements in the create lazy list is in the same order as in this lazy list.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;remains&quot;&gt;The second container.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     vint ys[] = {3, 4, 5, 6, 7};</div>
+			<div class="token cpp_comment ">///     auto zs = From(xs).Intersect(From(ys));</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, z, zs) Console::Write(itow(z) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Intersect@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">Intersect</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::Intersect@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains"><div><div class="token cpp_argument">remains</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator'], [], [])"><div class="token cpp_type">IntersectExceptEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="token cpp_keyword ">true</div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Intersect@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains'], [], [])"><div class="token cpp_argument">remains</div></div>)).<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Distinct@::vl::collections::LazyList<[T]>()'], ['vl::collections::LazyList::Distinct@::vl::collections::LazyList<[T]>()'], [], [])"><div class="token cpp_function">Distinct</div></div>();
 			}
-			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with only elements that appear in this lazy list but not in another container.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with elements from the lazy list, which do not appear in the second container.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list. Elements in the create lazy list is in the same order as in this lazy list.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;remains&quot;&gt;The second container.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     vint ys[] = {3, 4, 5, 6, 7};</div>
+			<div class="token cpp_comment ">///     auto zs = From(xs).Except(From(ys));</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, z, zs) Console::Write(itow(z) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Except@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">Except</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::Except@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains"><div><div class="token cpp_argument">remains</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IntersectExceptEnumerator'], [], [])"><div class="token cpp_type">IntersectExceptEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>, <div class="token cpp_keyword ">false</div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], ['vl::collections::LazyList::xs@::vl::collections::IEnumerator<[T]> *()'], [], [])"><div class="token cpp_function">xs</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Except@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains'], [], [])"><div class="token cpp_argument">remains</div></div>)).<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Distinct@::vl::collections::LazyList<[T]>()'], ['vl::collections::LazyList::Distinct@::vl::collections::LazyList<[T]>()'], [], [])"><div class="token cpp_function">Distinct</div></div>();
 			}
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with elements in two containers. If some elements appear several times, only one will be kept.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list with elements in two containers. Duplicated elements will be removed.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;remains&quot;&gt;The second container.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     vint ys[] = {3, 4, 5, 6, 7};</div>
+			<div class="token cpp_comment ">///     auto zs = From(xs).Union(From(ys));</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, z, zs) Console::Write(itow(z) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Union@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">Union</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::Union@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains"><div><div class="token cpp_argument">remains</div></div></div>)<div class="token cpp_keyword ">const</div>
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Concat@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)'], ['vl::collections::LazyList::Concat@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">Concat</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Union@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains'], [], [])"><div class="token cpp_argument">remains</div></div>).<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Distinct@::vl::collections::LazyList<[T]>()'], ['vl::collections::LazyList::Distinct@::vl::collections::LazyList<[T]>()'], [], [])"><div class="token cpp_function">Distinct</div></div>();
@@ -492,24 +711,55 @@ LazyList
 
 			<div class="token cpp_comment ">//-------------------------------------------------------</div>
 
-			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>()[impl0]"><div><div class="token cpp_function">Evaluate</div></div></div>()<div class="token cpp_keyword ">const</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get an evaluated copy of this lazy list.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;</div>
+			<div class="token cpp_comment ">/// The created lazy list.</div>
+			<div class="token cpp_comment ">/// If this lazy list has been evaluated before, it returns a reference to this lazy list.</div>
+			<div class="token cpp_comment ">/// If this lazy list has not been evaluated before, it go through this lazy list and copy all values.</div>
+			<div class="token cpp_comment ">/// &lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;forceCopy&quot;&gt;Set to true to force copying values, regardless of whether this lazy list is evaluated or not.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &quot;Evaluated&quot; means reading from this lazy list cause no extra calculation.</div>
+			<div class="token cpp_comment ">/// In most of the cases, the created lazy list relies on its source.</div>
+			<div class="token cpp_comment ">/// For example, a lazy list can be created from a reference to a &lt;see cref=&quot;List`*&quot;/&gt;, or from an array on stack.</div>
+			<div class="token cpp_comment ">/// If this list or array is deleted, then iterating the created lazy list will crash.</div>
+			<div class="token cpp_comment ">/// By calling the Evaluate function &lt;b&gt;with forceCopy set to true&lt;/b&gt;, a new lazy list is created, with all values cached in it.</div>
+			<div class="token cpp_comment ">/// Its connection to the source list or array is removed, and can then be passed to everywhere.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]"><div><div class="token cpp_function">Evaluate</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::forceCopy"><div><div class="token cpp_argument">forceCopy</div></div></div> = <div class="token cpp_keyword ">false</div>)<div class="token cpp_keyword ">const</div>
 			{
-				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::enumeratorPrototype'], [], [])"><div class="token cpp_field">enumeratorPrototype</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Evaluated@bool()'], ['vl::collections::IEnumerator::Evaluated@bool()'], [], [])"><div class="token cpp_function">Evaluated</div></div>())
+				<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::forceCopy'], [], [])"><div class="token cpp_argument">forceCopy</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::enumeratorPrototype'], [], [])"><div class="token cpp_field">enumeratorPrototype</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::IEnumerator::Evaluated@bool()'], ['vl::collections::IEnumerator::Evaluated@bool()'], [], [])"><div class="token cpp_function">Evaluated</div></div>())
 				{
 					<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 				}
 				<div class="token cpp_keyword ">else</div>
 				{
-					<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt; <div class="def" id="NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>()[impl0]::xs"><div>xs</div></div>=<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;;
-					<div class="ref" onclick="jumpToSymbol(['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(*<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>()[impl0]::xs'], [], [])">xs</div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>(), *<div class="token cpp_keyword ">this</div>);
-					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>()[impl0]::xs'], [], [])">xs</div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt; <div class="def" id="NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::xs"><div>xs</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;;
+					<div class="ref" onclick="jumpToSymbol(['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(*<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::xs'], [], [])">xs</div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>(), *<div class="token cpp_keyword ">this</div>);
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::xs'], [], [])">xs</div>;
 				}
 			}
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list, whose elements are from transformed elements in this lazy list.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the transformer.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as a transformation function to transform one element to multiple elements.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;</div>
+			<div class="token cpp_comment ">/// The transformer.</div>
+			<div class="token cpp_comment ">/// The first argument is any element in this lazy list.</div>
+			<div class="token cpp_comment ">/// Returns the transformed lazy list from this argument.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).SelectMany([](vint x)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         vint factors[] = {1, 10, 100};</div>
+			<div class="token cpp_comment ">///         return From(factors).Select([](vint f){ return f * x; }).Evaluate(true);</div>
+			<div class="token cpp_comment ">///     });</div>
+			<div class="token cpp_comment ">///     FOREACH(vint, y, ys) Console::Write(itow(y) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 <div class="expandable"><div class="disabled">			FUNCTION_RESULT_TYPE(F) SelectMany(F f)const</div>
 <div class="expanded">			<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda'], [], [])">function_lambda</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_lambda::FunctionObjectRetriveType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>'], ['vl::function_lambda::FunctionObjectRetriveType'], [], [])"><div class="token cpp_type">FunctionObjectRetriveType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::FunctionObjectRetriveType::ResultType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>::ResultType'], [], [])"><div class="token cpp_type">ResultType</div></div> <div class="def" id="FB$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]"><div><div class="token cpp_function">SelectMany</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div></div></div>
@@ -520,10 +770,29 @@ LazyList
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])'], ['vl::collections::LazyList::Select@::vl::collections::LazyList<::vl::function_lambda::FunctionObjectRetriveType::ResultType>([F])'], [], [])"><div class="token cpp_function">Select</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::f'], [], [])"><div class="token cpp_argument">f</div></div>).<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Aggregate@[I]([I], [F])'], ['vl::collections::LazyList::Aggregate@[I]([I], [F])', 'vl::collections::LazyList::Aggregate@[T]([F])'], [], [])"><div class="token cpp_function">Aggregate</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;(), [](<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::a"><div>a</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::b"><div>b</div></div>)-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::U'], [], [])"><div class="token cpp_type">U</div></div>&gt;{<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::a'], [], [])">a</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::LazyList::Concat@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)'], ['vl::collections::LazyList::Concat@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">Concat</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]::b'], [], [])">b</div>);});
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list, whose elements are groupd by from elements in this lazy list.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the lambda expression.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a new lazy list, with elements from this lazy list grouped by a key function.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F&quot;&gt;Type of the key function.&lt;/typeparam&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;The lambda expression as a key retriver to calcuate a key from an element.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;f&quot;&gt;</div>
+			<div class="token cpp_comment ">/// The key function.</div>
+			<div class="token cpp_comment ">/// The first argument is any element in this lazy list.</div>
+			<div class="token cpp_comment ">/// Returns a key calculated from this argument.</div>
+			<div class="token cpp_comment ">/// Elements that have the same key will be grouped together.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     vint xs[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};</div>
+			<div class="token cpp_comment ">///     auto ys = From(xs).GroupBy([](vint x){ return x % 3; });</div>
+			<div class="token cpp_comment ">///     using TY = Pair&lt;vint, LazyList&lt;vint&gt;&gt;;</div>
+			<div class="token cpp_comment ">///     FOREACH(TY, y, ys)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         Console::Write(itow(y.key) + L&quot;:&quot;);</div>
+			<div class="token cpp_comment ">///         FOREACH(vint, z, y.value) Console::Write(L&quot; &quot; + itow(z));</div>
+			<div class="token cpp_comment ">///         Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::LazyList::GroupBy@::vl::collections::LazyList<::vl::collections::Pair<::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList<[T]>>>([F])[impl0]::F"><div><div class="token cpp_type">F</div></div></div>&gt;
 <div class="expandable"><div class="disabled">			LazyList&lt;Pair&lt;FUNCTION_RESULT_TYPE(F), LazyList&lt;T&gt;&gt;&gt; GroupBy(F f)const</div>
 <div class="expanded">			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda'], [], [])">function_lambda</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_lambda::FunctionObjectRetriveType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>'], ['vl::function_lambda::FunctionObjectRetriveType'], [], [])"><div class="token cpp_type">FunctionObjectRetriveType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::GroupBy@::vl::collections::LazyList<::vl::collections::Pair<::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList<[T]>>>([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::FunctionObjectRetriveType::ResultType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>::ResultType'], [], [])"><div class="token cpp_type">ResultType</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&gt;&gt; <div class="def" id="FB$vl::collections::LazyList::GroupBy@::vl::collections::LazyList<::vl::collections::Pair<::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList<[T]>>>([F])[impl0]"><div><div class="token cpp_function">GroupBy</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList::GroupBy@::vl::collections::LazyList<::vl::collections::Pair<::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList<[T]>>>([F])[impl0]::F'], [], [])"><div class="token cpp_type">F</div></div> <div class="def" id="NI$vl::collections::LazyList::GroupBy@::vl::collections::LazyList<::vl::collections::Pair<::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList<[T]>>>([F])[impl0]::f"><div><div class="token cpp_argument">f</div></div></div>)<div class="token cpp_keyword ">const</div></div></div>
@@ -542,36 +811,64 @@ LazyList
 			}
 		};
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list with a series of increasing number.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;A lazy list of increasing numbers.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;start&quot;&gt;The first number.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;Total amount of increasing numbers.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]"><div><div class="token cpp_function">Range</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::start"><div><div class="token cpp_argument">start</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::count"><div><div class="token cpp_argument">count</div></div></div>)
 		{
 			<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::RangeEnumerator'], [], [])"><div class="token cpp_type">RangeEnumerator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::start'], [], [])"><div class="token cpp_argument">start</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Range@::vl::collections::LazyList<[T]>([T], [T])[impl0]::count'], [], [])"><div class="token cpp_argument">count</div></div>);
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from an enumerable.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;enumerable&quot;&gt;The enumerable.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]"><div><div class="token cpp_function">From</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable"><div><div class="token cpp_argument">enumerable</div></div></div>)
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::enumerable'], [], [])"><div class="token cpp_argument">enumerable</div></div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from another lazy list.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;enumerable&quot;&gt;The lazy list to copy.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::LazyList<[T]> const &)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::LazyList<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::LazyList<[T]> const &)[impl0]"><div><div class="token cpp_function">From</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::LazyList<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::LazyList<[T]> const &)[impl0]::enumerable"><div><div class="token cpp_argument">enumerable</div></div></div>)
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>(::vl::collections::LazyList<[T]> const &)[impl0]::enumerable'], [], [])"><div class="token cpp_argument">enumerable</div></div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from an array.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;begin&quot;&gt;Pointer to the first element in the array.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;end&quot;&gt;Pointer to the element after the last element in the array.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]"><div><div class="token cpp_function">From</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]::begin"><div><div class="token cpp_argument">begin</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="NI$vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]::end"><div><div class="token cpp_argument">end</div></div></div>)
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::FromPointer@::vl::collections::FromIteratorEnumerable<[T], [T] const *>([T] const *, [T] const *)'], [], [])"><div class="token cpp_function">FromPointer</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]::begin'], [], [])"><div class="token cpp_argument">begin</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] const *, [T] const *)[impl0]::end'], [], [])"><div class="token cpp_argument">end</div></div>);
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from an array.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;size&quot;&gt;Size of the array.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;The array.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::From@::vl::collections::LazyList<[T]>([T] [*] &)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">int</div> <div class="def" id="TA$vl::collections::From@::vl::collections::LazyList<[T]>([T] [*] &)[impl0]::size"><div><div class="token cpp_enum">size</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] [*] &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::From@::vl::collections::LazyList<[T]>([T] [*] &)[impl0]"><div><div class="token cpp_function">From</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] [*] &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> (&amp;<div class="def" id="NI$vl::collections::From@::vl::collections::LazyList<[T]>([T] [*] &)[impl0]::items"><div><div class="token cpp_argument">items</div></div></div>)[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] [*] &)[impl0]::size'], [], [])"><div class="token cpp_enum">size</div></div>])
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::FromArray@::vl::collections::FromIteratorEnumerable<[T], [T] *>([T] [*] &)'], [], [])"><div class="token cpp_function">FromArray</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] [*] &)[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>);
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a lazy list from an array.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of elements.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;size&quot;&gt;Size of the array.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The created lazy list.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;The array.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::From@::vl::collections::LazyList<[T]>([T] const [*] &)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>, <div class="token cpp_keyword ">int</div> <div class="def" id="TA$vl::collections::From@::vl::collections::LazyList<[T]>([T] const [*] &)[impl0]::size"><div><div class="token cpp_enum">size</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] const [*] &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt; <div class="def" id="FB$vl::collections::From@::vl::collections::LazyList<[T]>([T] const [*] &)[impl0]"><div><div class="token cpp_function">From</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] const [*] &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> (&amp;<div class="def" id="NI$vl::collections::From@::vl::collections::LazyList<[T]>([T] const [*] &)[impl0]::items"><div><div class="token cpp_argument">items</div></div></div>)[<div class="ref" onclick="jumpToSymbol([], ['vl::collections::From@::vl::collections::LazyList<[T]>([T] const [*] &)[impl0]::size'], [], [])"><div class="token cpp_enum">size</div></div>])
 		{
@@ -1237,10 +1534,17 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>()[impl0]::xs': {
+    'vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::forceCopy': {
+        'displayNameInHtml': 'forceCopy',
+        'impls': [
+            'NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::forceCopy'
+        ],
+        'decls': []
+    },
+    'vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::xs': {
         'displayNameInHtml': 'xs',
         'impls': [
-            'NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>()[impl0]::xs'
+            'NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::xs'
         ],
         'decls': []
     },
@@ -1971,7 +2275,8 @@ symbolToFiles = {
     'NI$vl::collections::LazyList::Concat@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains': null,
     'NI$vl::collections::LazyList::Count@::vl::vint()[impl0]::enumerator': null,
     'NI$vl::collections::LazyList::Count@::vl::vint()[impl0]::result': null,
-    'NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>()[impl0]::xs': null,
+    'NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::forceCopy': null,
+    'NI$vl::collections::LazyList::Evaluate@::vl::collections::LazyList<[T]>(bool)[impl0]::xs': null,
     'NI$vl::collections::LazyList::Except@::vl::collections::LazyList<[T]>(::vl::collections::IEnumerable<[T]> const &)[impl0]::remains': null,
     'NI$vl::collections::LazyList::FindType@::vl::collections::LazyList<::vl::Ptr<[U]>>()[impl0]::t': null,
     'NI$vl::collections::LazyList::First@[T]()[impl0]::enumerator': null,
