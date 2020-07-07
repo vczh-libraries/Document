@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::List::IndexOf@::vl::vint([K] const &amp;)" accessor="public" category="Function" name="IndexOf" declFile="List.h" declId="FB$vl::collections::List::IndexOf@::vl::vint([K] const &amp;)[impl0]"><summary>Get the position of an item in this list.</summary><returns>Returns the position. Returns -1 if not exists</returns><param name="item">The item to find.</param><signature><![CDATA[vint IndexOf(
+<Document symbolId="vl::collections::List::IndexOf@::vl::vint([K] const &amp;)" accessor="public" category="Function" name="IndexOf" declFile="List.h" declId="FB$vl::collections::List::IndexOf@::vl::vint([K] const &amp;)[impl0]"><summary>Get the position of a value in this list.</summary><returns>Returns the position of first element that equals to the specified value. Returns -1 if failed to find.</returns><param name="item">The value to find.</param><signature><![CDATA[vint IndexOf(
     K const & item
 ) const;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

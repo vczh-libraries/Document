@@ -1,2 +1,6 @@
-<Document symbolId="vl::Object" accessor="" category="Class" name="Object" declFile="Basic.h" declId="NI$vl::Object"><summary>Base type of all classes.</summary><signature><![CDATA[class Object;
+<Document symbolId="vl::Object" accessor="" category="Class" name="Object" declFile="Basic.h" declId="NI$vl::Object"><summary>
+ Base type of all classes.
+ This type has a virtual destructor, making all derived classes destructors virtual.
+ In this way an object is allowed to be deleted using a pointer of a qualified base type pointing to this object.
+ </summary><signature><![CDATA[class Object;
 ]]></signature></Document>

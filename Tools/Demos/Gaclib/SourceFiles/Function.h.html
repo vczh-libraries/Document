@@ -12,17 +12,10 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Framework::Function
-
-Classes:
-	Func&lt;function-type&gt;									: Functor
-
-Functions:
-	Curry :: (A-&gt;B) -&gt; A -&gt; B							: Currying
-	Combine :: (A-&gt;B) -&gt; (A-&gt;C) -&gt; (B-&gt;C-&gt;D) -&gt; (A-&gt;D)	: Combine multiple functors using an operator
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
+
 <div class="disabled">#ifndef VCZH_FUNCTION</div>
 <div class="disabled">#define VCZH_FUNCTION
 #include &lt;memory.h&gt;</div>
@@ -32,9 +25,7 @@ Functions:
 {
 
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Func::T"><div><div class="token cpp_type">T</div></div></div>&gt;
-	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Func"><div class="ref" onclick="jumpToSymbol([], [], ['vl::Func@<[R]([TArgs]...)>'], [])"><div class="token cpp_type">Func</div></div></div>
-	{
-	};
+	<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::Func"><div class="ref" onclick="jumpToSymbol([], [], ['vl::Func@<[R]([TArgs]...)>'], [])"><div class="token cpp_type">Func</div></div></div>;
  
 <div class="token cpp_comment ">/***********************************************************************
 vl::function_lambda::LambdaRetriveType&lt;R(TArgs...)&gt;
@@ -190,7 +181,7 @@ vl::Func&lt;R(TArgs...)&gt;
 		};
 	}
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;A type representing a function reference.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;A type for functors.&lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;R&quot;&gt;The return type.&lt;/typeparam&gt;</div>
 	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TArgs&quot;&gt;Types of parameters.&lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Func@<[R]([TArgs]...)>::R"><div><div class="token cpp_type">R</div></div></div>, <div class="token cpp_keyword ">typename</div> ...<div class="def" id="TA$vl::Func@<[R]([TArgs]...)>::TArgs"><div><div class="token cpp_type">TArgs</div></div></div>&gt;
@@ -220,45 +211,37 @@ vl::Func&lt;R(TArgs...)&gt;
 		<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div> <div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::FunctionType"><div><div class="token cpp_type">FunctionType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...);
 		<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div> <div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::ResultType"><div><div class="token cpp_type">ResultType</div></div></div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a null function reference.&lt;/summary&gt;</div>
-		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@()[impl0]"><div><div class="token cpp_function">Func</div></div></div>()
-		{
-		}
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a null functor.&lt;/summary&gt;</div>
+		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@()[decl0]"><div><div class="token cpp_function">Func</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a function reference.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The function reference to copy.&lt;/param&gt;</div>
-		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]"><div><div class="token cpp_function">Func</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func@<[R]([TArgs]...)>'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;&amp; <div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)
-			:invoker(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::invoker'], [], [])"><div class="token cpp_field">invoker</div></div>)
-		{
-		}
+		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a functor.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The functor to copy.&lt;/param&gt;</div>
+		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[decl0]"><div><div class="token cpp_function">Func</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;&amp; <div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[decl0]::function"><div>function</div></div>) = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Move a function reference.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The function reference to move.&lt;/param&gt;</div>
-		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &&)[impl0]"><div><div class="token cpp_function">Func</div></div></div>(<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func@<[R]([TArgs]...)>'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;&amp;&amp; <div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &&)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)
-			:invoker(<div class="ref" onclick="jumpToSymbol(['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], ['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], [], [])"><div class="token cpp_function">MoveValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &&)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::invoker'], [], [])"><div class="token cpp_field">invoker</div></div>))
-		{
-		}
+		<div class="token cpp_comment ">/// &lt;summary&gt;Move a functor.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The functor to move.&lt;/param&gt;</div>
+		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &&)[decl0]"><div><div class="token cpp_function">Func</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;&amp;&amp; <div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &&)[decl0]::function"><div>function</div></div>) = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a reference using a function pointer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a functor from a function pointer.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The function pointer.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@([R]([TArgs]...) *)[impl0]"><div><div class="token cpp_function">Func</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>(*<div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::$__ctor@([R]([TArgs]...) *)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...))
 		{
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::invoker'], [], [])"><div class="token cpp_field">invoker</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::internal_invokers'], [], [])">internal_invokers</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::internal_invokers::StaticInvoker'], [], [])"><div class="token cpp_type">StaticInvoker</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@([R]([TArgs]...) *)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>);
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a reference using a method.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;Type of the class that has the method.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;sender&quot;&gt;The object that has the method.&lt;/param&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The function pointer.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a functor from a method.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;Type of the class that this method belongs to.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;sender&quot;&gt;The object that this method belongs to.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The method pointer.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::C"><div><div class="token cpp_type">C</div></div></div>&gt;
 		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]"><div><div class="token cpp_function">Func</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>* <div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::sender"><div><div class="token cpp_argument">sender</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>::*<div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...))
 		{
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::invoker'], [], [])"><div class="token cpp_field">invoker</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::internal_invokers'], [], [])">internal_invokers</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::internal_invokers::MemberInvoker'], [], [])"><div class="token cpp_type">MemberInvoker</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::sender'], [], [])"><div class="token cpp_argument">sender</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>);
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a reference using a function object.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;Type of the function object.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The function object. It could be a lambda expression.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a functor from another compatible functor.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;Type of the functor to copy.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The functor to copy. It could be a lambda expression, or any types that has operator() members.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] &&)[impl0]::C"><div><div class="token cpp_type">C</div></div></div>, <div class="token cpp_keyword ">typename</div> = <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::AcceptType@<[T], ::vl::YesType>'], ['vl::AcceptType'], [], [])"><div class="token cpp_type">AcceptType</div></div>&lt;<div class="token cpp_keyword ">void</div>, <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::ReturnConvertable', 'vl::ReturnConvertable@<[TFrom], void>', 'vl::ReturnConvertable@<void, [TTo]>', 'vl::ReturnConvertable@<void, void>'], ['vl::ReturnConvertable'], [], [])"><div class="token cpp_type">ReturnConvertable</div></div>&lt;<div class="token cpp_keyword ">decltype</div>(<div class="ref" onclick="jumpToSymbol(['vl::ValueOf@[T]()'], ['vl::ValueOf@[T]()'], [], [])"><div class="token cpp_function">ValueOf</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@([C] &&)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&gt;()(<div class="ref" onclick="jumpToSymbol([], ['vl::ValueOf@[T]()'], [], [])"><div class="token cpp_function">ValueOf</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>&gt;()...)), <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::ReturnConvertable::YesNoType', 'vl::ReturnConvertable@<[TFrom], void>::YesNoType', 'vl::ReturnConvertable@<void, [TTo]>::YesNoType', 'vl::ReturnConvertable@<void, void>::YesNoType'], [], [])"><div class="token cpp_type">YesNoType</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::AcceptType@<[T], ::vl::YesType>::Type'], [], [])"><div class="token cpp_type">Type</div></div>&gt;
 		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] &&)[impl0]"><div><div class="token cpp_function">Func</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::$__ctor@([C] &&)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&amp;&amp; <div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] &&)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)
 		{
@@ -269,7 +252,7 @@ vl::Func&lt;R(TArgs...)&gt;
 		}
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Invoke the function.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;Returns the function result.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns the function result. It crashes when the functor is null.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;args&quot;&gt;Arguments to invoke the function.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::R'], [], [])"><div class="token cpp_type">R</div></div> <div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">(</div><div class="token cpp_function">)</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div> ...<div class="def" id="NI$vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)[impl0]::args"><div><div class="token cpp_argument">args</div></div></div>)<div class="token cpp_keyword ">const</div>
 		{
@@ -298,8 +281,8 @@ vl::Func&lt;R(TArgs...)&gt;
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::invoker'], [], [])"><div class="token cpp_field">invoker</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator !=@bool(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">!</div><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::operator !=@bool(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::invoker'], [], [])"><div class="token cpp_field">invoker</div></div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Test is the reference a null reference.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if it is not a null reference.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Test is the functor is non-null.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the functor is non-null.&lt;/returns&gt;</div>
 		<div class="def" id="FB$vl::Func@<[R]([TArgs]...)>::$__type@bool()[impl0]"><div><div class="token cpp_keyword ">operator</div></div></div> <div class="token cpp_keyword ">bool</div>()<div class="token cpp_keyword ">const</div>
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::invoker'], [], [])"><div class="token cpp_field">invoker</div></div>;
@@ -312,19 +295,19 @@ LAMBDA
  
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[1]$vl::function_lambda"><div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda'], [], [])">function_lambda</div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a function reference to a function object or a lambda expression, with all type information autotimatically inferred. You can use the macro called &quot;LAMBDA&quot; to refer to this function.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the function object or the lambda expression.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The function reference.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;functionObject&quot;&gt;The function object or the lambda expression.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a functor in [T:vl.Func`1] from another functor, with all type arguments autotimatically inferred. The &quot;LAMBDA&quot; macro is recommended for the same purpose for writing compact code.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the functor to copy.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;A copied functor in [T:vl.Func`1].&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;functionObject&quot;&gt;The functor to copy.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>::Type([T])[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::function_lambda::LambdaRetriveType', 'vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>', 'vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>2'], ['vl::function_lambda::LambdaRetriveType'], [], [])"><div class="token cpp_type">LambdaRetriveType</div></div>&lt;<div class="token cpp_keyword ">decltype</div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>::Type([T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>::<div class="token cpp_keyword ">operator</div>())&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>2::Type', 'vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>::Type'], [], [])"><div class="token cpp_type">Type</div></div> <div class="def" id="FB$vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>::Type([T])[impl0]"><div><div class="token cpp_function">Lambda</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>::Type([T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>::Type([T])[impl0]::functionObject"><div><div class="token cpp_argument">functionObject</div></div></div>)
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@<[R]([TArgs]...) ([TObject] ::) *>::Type([T])[impl0]::functionObject'], [], [])"><div class="token cpp_argument">functionObject</div></div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a function reference to a function pointer, with all type information autotimatically inferred. You can use the macro called &quot;FUNCTION&quot; to refer to this function.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a functor in [T:vl.Func`1] from a function pointer, with all type arguments autotimatically inferred. The &quot;FUNCTION&quot; macro is recommended for the same purpose for writing compact code.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the function pointer.&lt;/typeparam&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The function reference.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;A copied functor in [T:vl.Func`1].&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;functionObject&quot;&gt;The function pointer.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::function_lambda::FunctionObjectRetriveType', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>'], ['vl::function_lambda::FunctionObjectRetriveType'], [], [])"><div class="token cpp_type">FunctionObjectRetriveType</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::FunctionObjectRetriveType::Type', 'vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>::Type'], [], [])"><div class="token cpp_type">Type</div></div> <div class="def" id="FB$vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])[impl0]"><div><div class="token cpp_function">ConvertToFunction</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])[impl0]::functionObject"><div><div class="token cpp_argument">functionObject</div></div></div>)
@@ -401,9 +384,14 @@ vl::function_binding::Binding&lt;R(TArgs...)&gt;
 		}; 
 	}
  
-	<div class="token cpp_comment ">/// &lt;summary&gt;Currize a function. Currizing means to create a new function whose argument is the first argument of the original function. Calling this function will return another function reference whose arguments is all remain arguments of the original function. Calling the returned function will call the original function.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the function.&lt;/typeparam&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The currized function.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// Currize a function pointer.</div>
+	<div class="token cpp_comment ">/// Currizing means to create a new functor whose argument is the first argument of the original function.</div>
+	<div class="token cpp_comment ">/// Calling this functor will return another functor whose arguments are all remaining arguments of the original function.</div>
+	<div class="token cpp_comment ">/// Calling the returned function will call the original function.</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the function pointer.&lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The currized functor.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The function pointer to currize.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_binding'], [], [])">function_binding</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_binding::Binding', 'vl::function_binding::Binding@<[R]([T0], [TArgs]...)>'], ['vl::function_binding::Binding'], [], [])"><div class="token cpp_type">Binding</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType'], [], [])"><div class="token cpp_type">CurriedType</div></div>&gt;(<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_binding'], [], [])">function_binding</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_binding::Binding', 'vl::function_binding::Binding@<[R]([T0], [TArgs]...)>'], ['vl::function_binding::Binding'], [], [])"><div class="token cpp_type">Binding</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType'], [], [])"><div class="token cpp_type">FirstParameterType</div></div>)&gt;
@@ -411,80 +399,21 @@ vl::function_binding::Binding&lt;R(TArgs...)&gt;
 	{
 		<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_binding'], [], [])">function_binding</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_binding::Binding', 'vl::function_binding::Binding@<[R]([T0], [TArgs]...)>'], ['vl::function_binding::Binding'], [], [])"><div class="token cpp_type">Binding</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::Currier'], [], [])"><div class="token cpp_type">Currier</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>);
 	}
- 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Currize a function. Currizing means to create a new function whose argument is the first argument of the original function. Calling this function will return another function reference whose arguments is all remain arguments of the original function. Calling the returned function will call the original function.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the function.&lt;/typeparam&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The currized function.&lt;/returns&gt;</div>
-	<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The function reference to currize.&lt;/param&gt;</div>
+
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// Currize a functor in [T:vl.Func`1].</div>
+	<div class="token cpp_comment ">/// Currizing means to create a new functor whose argument is the first argument of the original function.</div>
+	<div class="token cpp_comment ">/// Calling this functor will return another functor whose arguments are all remaining arguments of the original function.</div>
+	<div class="token cpp_comment ">/// Calling the returned function will call the original function.</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the functor.&lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;The currized functor.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The functor to currize.&lt;/param&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_binding'], [], [])">function_binding</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_binding::Binding', 'vl::function_binding::Binding@<[R]([T0], [TArgs]...)>'], ['vl::function_binding::Binding'], [], [])"><div class="token cpp_type">Binding</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType'], [], [])"><div class="token cpp_type">CurriedType</div></div>&gt;(<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_binding'], [], [])">function_binding</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_binding::Binding', 'vl::function_binding::Binding@<[R]([T0], [TArgs]...)>'], ['vl::function_binding::Binding'], [], [])"><div class="token cpp_type">Binding</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType'], [], [])"><div class="token cpp_type">FirstParameterType</div></div>)&gt;
 	<div class="def" id="FB$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]"><div><div class="token cpp_function">Curry</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::function"><div><div class="token cpp_argument">function</div></div></div>)
 	{
 		<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_binding'], [], [])">function_binding</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_binding::Binding', 'vl::function_binding::Binding@<[R]([T0], [TArgs]...)>'], ['vl::function_binding::Binding'], [], [])"><div class="token cpp_type">Binding</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::Currier'], [], [])"><div class="token cpp_type">Currier</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::function'], [], [])"><div class="token cpp_argument">function</div></div>);
-	}
-
-<div class="token cpp_comment ">/***********************************************************************
-vl::function_combining::Combining&lt;R1(TArgs...), R2(TArgs...), R(R1,R2)&gt;
-***********************************************************************/</div>
- 
-	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::function_combining"><div>function_combining</div></div>
-	{
-		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::function_combining::Combining::A"><div><div class="token cpp_type">A</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::function_combining::Combining::B"><div><div class="token cpp_type">B</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::function_combining::Combining::C"><div><div class="token cpp_type">C</div></div></div>&gt;
-		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::function_combining::Combining"><div class="ref" onclick="jumpToSymbol([], [], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>'], [])"><div class="token cpp_type">Combining</div></div></div>
-		{
-		};
- 
-		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1"><div><div class="token cpp_type">R1</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2"><div><div class="token cpp_type">R2</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R"><div><div class="token cpp_type">R</div></div></div>, <div class="token cpp_keyword ">typename</div> ...<div class="def" id="TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs"><div><div class="token cpp_type">TArgs</div></div></div>&gt;
-		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>"><div class="ref" onclick="jumpToSymbol([], [], [], ['vl::function_combining::Combining'])"><div class="token cpp_type">Combining</div></div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'], [], [])"><div class="token cpp_type">R1</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...), <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'], [], [])"><div class="token cpp_type">R2</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...), <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'], [], [])"><div class="token cpp_type">R1</div></div>,<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'], [], [])"><div class="token cpp_type">R2</div></div>)&gt; : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
-		{
-		<div class="token cpp_keyword ">protected</div>:
-			<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'], [], [])"><div class="token cpp_type">R1</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;			<div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function1"><div><div class="token cpp_field">function1</div></div></div>;
-			<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'], [], [])"><div class="token cpp_type">R2</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;			<div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function2"><div><div class="token cpp_field">function2</div></div></div>;
-			<div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'], [], [])"><div class="token cpp_type">R1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'], [], [])"><div class="token cpp_type">R2</div></div>)&gt;				<div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::converter"><div><div class="token cpp_field">converter</div></div></div>;
-		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'], [], [])"><div class="token cpp_type">R1</div></div> <div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FirstFunctionType"><div><div class="token cpp_type">FirstFunctionType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...);
-			<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'], [], [])"><div class="token cpp_type">R2</div></div> <div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::SecondFunctionType"><div><div class="token cpp_type">SecondFunctionType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...);
-			<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R'], [], [])"><div class="token cpp_type">R</div></div> <div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::ConverterFunctionType"><div><div class="token cpp_type">ConverterFunctionType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'], [], [])"><div class="token cpp_type">R1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'], [], [])"><div class="token cpp_type">R2</div></div>);
-			<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R'], [], [])"><div class="token cpp_type">R</div></div> <div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType"><div><div class="token cpp_type">FinalFunctionType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...);
-
-			<div class="def" id="FB$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]"><div><div class="token cpp_function">Combining</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'], [], [])"><div class="token cpp_type">R1</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;&amp; <div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function1"><div><div class="token cpp_argument">_function1</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'], [], [])"><div class="token cpp_type">R2</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>...)&gt;&amp; <div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function2"><div><div class="token cpp_argument">_function2</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'], [], [])"><div class="token cpp_type">R1</div></div>,<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'], [], [])"><div class="token cpp_type">R2</div></div>)&gt;&amp; <div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_converter"><div><div class="token cpp_argument">_converter</div></div></div>)
-				:function1(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function1'], [], [])"><div class="token cpp_argument">_function1</div></div>)
-				,function2(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function2'], [], [])"><div class="token cpp_argument">_function2</div></div>)
-				,converter(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_converter'], [], [])"><div class="token cpp_argument">_converter</div></div>)
-			{
-			}
-
-			<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R'], [], [])"><div class="token cpp_type">R</div></div> <div class="def" id="FB$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::operator ()@[R]([TArgs] &&...)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">(</div><div class="token cpp_function">)</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>&amp;&amp; ...<div class="def" id="NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::operator ()@[R]([TArgs] &&...)[impl0]::args"><div><div class="token cpp_argument">args</div></div></div>)<div class="token cpp_keyword ">const</div>
-			{
-				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::converter'], [], [])"><div class="token cpp_field">converter</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function1'], [], [])"><div class="token cpp_field">function1</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::ForwardValue@[T] &&(::vl::RemoveReference::Type &&)', 'vl::ForwardValue@[T] &&(::vl::RemoveReference::Type &)'], [], [])"><div class="token cpp_function">ForwardValue</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::operator ()@[R]([TArgs] &&...)[impl0]::args'], [], [])"><div class="token cpp_argument">args</div></div>)...), <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function2'], [], [])"><div class="token cpp_field">function2</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::ForwardValue@[T] &&(::vl::RemoveReference::Type &&)', 'vl::ForwardValue@[T] &&(::vl::RemoveReference::Type &)'], [], [])"><div class="token cpp_function">ForwardValue</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'], [], [])"><div class="token cpp_type">TArgs</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::operator ()@[R]([TArgs] &&...)[impl0]::args'], [], [])"><div class="token cpp_argument">args</div></div>)...));
-			}
-		};
-	}
-
-	<div class="token cpp_comment ">/// &lt;summary&gt;Combine two functions with a converter function. The two functions to combine should have the same argument types. The converter function will use the return values of the two function to calculate the final value.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F1&quot;&gt;Type of the first function.&lt;/typeparam&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;F2&quot;&gt;Type of the second function.&lt;/typeparam&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;C&quot;&gt;Type of the converter function.&lt;/typeparam&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;A new function whose argument list are the same of the two functions to provide. Calling this function will call function1, function2 and converter in order to calculate the final value.&lt;/returns&gt;</div>
-	<div class="token cpp_comment ">/// &lt;param name=&quot;converter&quot;&gt;The converter function.&lt;/param&gt;</div>
-	<div class="token cpp_comment ">/// &lt;param name=&quot;function1&quot;&gt;The first function.&lt;/param&gt;</div>
-	<div class="token cpp_comment ">/// &lt;param name=&quot;function2&quot;&gt;The second function.&lt;/param&gt;</div>
-	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F1"><div><div class="token cpp_type">F1</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F2"><div><div class="token cpp_type">F2</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::C"><div><div class="token cpp_type">C</div></div></div>&gt;
-	<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining'], [], [])">function_combining</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_combining::Combining', 'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>'], ['vl::function_combining::Combining'], [], [])"><div class="token cpp_type">Combining</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F1'], [], [])"><div class="token cpp_type">F1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F2'], [], [])"><div class="token cpp_type">F2</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType'], [], [])"><div class="token cpp_type">FinalFunctionType</div></div>&gt;
-	<div class="def" id="FB$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]"><div><div class="token cpp_function">Combine</div></div></div>(<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&gt; <div class="def" id="NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::converter"><div><div class="token cpp_argument">converter</div></div></div>, <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F1'], [], [])"><div class="token cpp_type">F1</div></div>&gt; <div class="def" id="NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function1"><div><div class="token cpp_argument">function1</div></div></div>, <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F2'], [], [])"><div class="token cpp_type">F2</div></div>&gt; <div class="def" id="NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function2"><div><div class="token cpp_argument">function2</div></div></div>)
-	{
-		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::function_combining'], [], [])">function_combining</div>::<div class="ref" onclick="jumpToSymbol(['vl::function_combining::Combining', 'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>'], ['vl::function_combining::Combining'], [], [])"><div class="token cpp_type">Combining</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F1'], [], [])"><div class="token cpp_type">F1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F2'], [], [])"><div class="token cpp_type">F2</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::C'], [], [])"><div class="token cpp_type">C</div></div>&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function1'], [], [])"><div class="token cpp_argument">function1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function2'], [], [])"><div class="token cpp_argument">function2</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::converter'], [], [])"><div class="token cpp_argument">converter</div></div>);
-	}
-
-	<div class="token cpp_comment ">/// &lt;summary&gt;Use the converter function to create a combiner, who will receive two function and use &lt;see cref=&quot;Combine`3&quot;/&gt; to create a combined function. This function assumes the result types of the two provided function in the future are the same, and the converter function will not change the result type.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the two functions to combine.&lt;/typeparam&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;The combiner.&lt;/returns&gt;</div>
-	<div class="token cpp_comment ">/// &lt;param name=&quot;converter&quot;&gt;The converter function.&lt;/param&gt;</div>
-	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
-	<div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;,<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;)&gt; <div class="def" id="FB$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]"><div><div class="token cpp_function">Combiner</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::ResultType'], [], [])"><div class="token cpp_type">ResultType</div></div>(<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::ResultType'], [], [])"><div class="token cpp_type">ResultType</div></div>,<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::ResultType'], [], [])"><div class="token cpp_type">ResultType</div></div>)&gt;&amp; <div class="def" id="NI$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::converter"><div><div class="token cpp_argument">converter</div></div></div>)
-	{
-		<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol([], ['vl::Func@<[R]([TArgs]...)>::ResultType'], [], [])"><div class="token cpp_type">ResultType</div></div> <div class="def" id="NI$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::R"><div><div class="token cpp_type">R</div></div></div>;
-		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)'], ['vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)', 'vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)'], [], [])"><div class="token cpp_function">Curry</div></div>&lt;<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;(<div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::R'], [], [])"><div class="token cpp_type">R</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::R'], [], [])"><div class="token cpp_type">R</div></div>,<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::R'], [], [])"><div class="token cpp_type">R</div></div>)&gt;,<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;,<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;)&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)'], [], [])"><div class="token cpp_function">Combine</div></div>)<div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::converter'], [], [])"><div class="token cpp_argument">converter</div></div>);
 	}
 }
 <div class="disabled">#endif</div>
@@ -988,83 +917,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)': {
-        'displayNameInHtml': '<span class="cpp_function">Combine</span>&lt;<span class="cpp_type">F1</span>, <span class="cpp_type">F2</span>, <span class="cpp_type">C</span>&gt;(<span class="cpp_type">Func</span>&lt;<span class="cpp_type">C</span>&gt;, <span class="cpp_type">Func</span>&lt;<span class="cpp_type">F1</span>&gt;, <span class="cpp_type">Func</span>&lt;<span class="cpp_type">F2</span>&gt;)',
-        'impls': [
-            'FB$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]'
-        ],
-        'decls': []
-    },
-    'vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::C': {
-        'displayNameInHtml': '<span class="cpp_type">C</span>',
-        'impls': [
-            'TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::C'
-        ],
-        'decls': []
-    },
-    'vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F1': {
-        'displayNameInHtml': '<span class="cpp_type">F1</span>',
-        'impls': [
-            'TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F1'
-        ],
-        'decls': []
-    },
-    'vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F2': {
-        'displayNameInHtml': '<span class="cpp_type">F2</span>',
-        'impls': [
-            'TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F2'
-        ],
-        'decls': []
-    },
-    'vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::converter': {
-        'displayNameInHtml': 'converter',
-        'impls': [
-            'NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::converter'
-        ],
-        'decls': []
-    },
-    'vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function1': {
-        'displayNameInHtml': 'function1',
-        'impls': [
-            'NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function1'
-        ],
-        'decls': []
-    },
-    'vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function2': {
-        'displayNameInHtml': 'function2',
-        'impls': [
-            'NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function2'
-        ],
-        'decls': []
-    },
-    'vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::R': {
-        'displayNameInHtml': '<span class="cpp_function">Combiner</span>&lt;<span class="cpp_type">T</span>&gt;::$::<span class="cpp_type">R</span>',
-        'impls': [
-            'NI$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::R'
-        ],
-        'decls': []
-    },
-    'vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T': {
-        'displayNameInHtml': '<span class="cpp_type">T</span>',
-        'impls': [
-            'TA$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T'
-        ],
-        'decls': []
-    },
-    'vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::converter': {
-        'displayNameInHtml': 'converter',
-        'impls': [
-            'NI$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::converter'
-        ],
-        'decls': []
-    },
-    'vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)': {
-        'displayNameInHtml': '<span class="cpp_function">Curry</span>&lt;<span class="cpp_type">T</span>&gt;(<span class="cpp_type">Func</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
-        'impls': [
-            'FB$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]'
-        ],
-        'decls': []
-    },
     'vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::T': {
         'displayNameInHtml': '<span class="cpp_type">T</span>',
         'impls': [
@@ -1076,13 +928,6 @@ referencedSymbols = {
         'displayNameInHtml': 'function',
         'impls': [
             'NI$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::function'
-        ],
-        'decls': []
-    },
-    'vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)': {
-        'displayNameInHtml': '<span class="cpp_function">Curry</span>&lt;<span class="cpp_type">T</span>&gt;(<span class="cpp_type">T</span> *)',
-        'impls': [
-            'FB$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]'
         ],
         'decls': []
     },
@@ -1116,29 +961,15 @@ referencedSymbols = {
     },
     'vl::Func': {
         'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">T</span>&gt;',
-        'impls': [
-            'NI$vl::Func'
-        ],
-        'decls': []
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::Func'
+        ]
     },
     'vl::Func@<[R]([TArgs]...)>': {
         'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;',
         'impls': [
             'NI$vl::Func@<[R]([TArgs]...)>'
-        ],
-        'decls': []
-    },
-    'vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &&)[impl0]::function': {
-        'displayNameInHtml': 'function',
-        'impls': [
-            'NI$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &&)[impl0]::function'
-        ],
-        'decls': []
-    },
-    'vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]::function': {
-        'displayNameInHtml': 'function',
-        'impls': [
-            'NI$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]::function'
         ],
         'decls': []
     },
@@ -1258,13 +1089,6 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">R</span>',
         'impls': [
             'TA$vl::Func@<[R]([TArgs]...)>::R'
-        ],
-        'decls': []
-    },
-    'vl::Func@<[R]([TArgs]...)>::ResultType': {
-        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;::<span class="cpp_type">ResultType</span>',
-        'impls': [
-            'NI$vl::Func@<[R]([TArgs]...)>::ResultType'
         ],
         'decls': []
     },
@@ -1709,111 +1533,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::function_combining': {
-        'displayNameInHtml': 'vl::function_combining',
-        'impls': [],
-        'decls': [
-            'NF[0]$vl::function_combining'
-        ]
-    },
-    'vl::function_combining::Combining': {
-        'displayNameInHtml': '<span class="cpp_type">Combining</span>&lt;<span class="cpp_type">A</span>, <span class="cpp_type">B</span>, <span class="cpp_type">C</span>&gt;',
-        'impls': [
-            'NI$vl::function_combining::Combining'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>': {
-        'displayNameInHtml': '<span class="cpp_type">Combining</span>&lt;<span class="cpp_type">R1</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R2</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R</span>(<span class="cpp_type">R1</span>, <span class="cpp_type">R2</span>)&gt;',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_converter': {
-        'displayNameInHtml': '_converter',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_converter'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function1': {
-        'displayNameInHtml': '_function1',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function1'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function2': {
-        'displayNameInHtml': '_function2',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function2'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType': {
-        'displayNameInHtml': '<span class="cpp_type">Combining</span>&lt;<span class="cpp_type">R1</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R2</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R</span>(<span class="cpp_type">R1</span>, <span class="cpp_type">R2</span>)&gt;::<span class="cpp_type">FinalFunctionType</span>',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R': {
-        'displayNameInHtml': '<span class="cpp_type">R</span>',
-        'impls': [
-            'TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1': {
-        'displayNameInHtml': '<span class="cpp_type">R1</span>',
-        'impls': [
-            'TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2': {
-        'displayNameInHtml': '<span class="cpp_type">R2</span>',
-        'impls': [
-            'TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs': {
-        'displayNameInHtml': '<span class="cpp_type">TArgs</span>',
-        'impls': [
-            'TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::converter': {
-        'displayNameInHtml': '<span class="cpp_type">Combining</span>&lt;<span class="cpp_type">R1</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R2</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R</span>(<span class="cpp_type">R1</span>, <span class="cpp_type">R2</span>)&gt;::<span class="cpp_field">converter</span>',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::converter'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function1': {
-        'displayNameInHtml': '<span class="cpp_type">Combining</span>&lt;<span class="cpp_type">R1</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R2</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R</span>(<span class="cpp_type">R1</span>, <span class="cpp_type">R2</span>)&gt;::<span class="cpp_field">function1</span>',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function1'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function2': {
-        'displayNameInHtml': '<span class="cpp_type">Combining</span>&lt;<span class="cpp_type">R1</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R2</span>(<span class="cpp_type">TArgs</span>...), <span class="cpp_type">R</span>(<span class="cpp_type">R1</span>, <span class="cpp_type">R2</span>)&gt;::<span class="cpp_field">function2</span>',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function2'
-        ],
-        'decls': []
-    },
-    'vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::operator ()@[R]([TArgs] &&...)[impl0]::args': {
-        'displayNameInHtml': 'args',
-        'impls': [
-            'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::operator ()@[R]([TArgs] &&...)[impl0]::args'
-        ],
-        'decls': []
-    },
     'vl::function_lambda': {
         'displayNameInHtml': 'vl::function_lambda',
         'impls': [],
@@ -2223,9 +1942,6 @@ referencedSymbols = {
     }
 };
 symbolToFiles = {
-    'FB$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]': null,
-    'FB$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]': null,
-    'FB$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]': null,
     'FB$vl::ForwardValue@[T] &&(::vl::RemoveReference::Type &&)[impl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'FB$vl::ForwardValue@[T] &&(::vl::RemoveReference::Type &)[impl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'FB$vl::Func@<[R]([TArgs]...)>::IsEmptyFunc@bool(::vl::Func@<[R]([TArgs]...)><[R2]([TArgs2]...)> &)[impl0]': null,
@@ -2241,8 +1957,8 @@ symbolToFiles = {
     'FB$vl::ValueOf@[T]()[decl0]': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'FB$vl::internal_invokers::Invoker::Invoke@[R]([TArgs] &&...)[decl0]': null,
     'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::Func': null,
     'NF[0]$vl::function_binding': null,
-    'NF[0]$vl::function_combining': null,
     'NF[0]$vl::function_lambda': null,
     'NF[0]$vl::internal_invokers': null,
     'NF[100]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
@@ -2718,24 +2434,15 @@ symbolToFiles = {
     'NI$vl::AcceptType': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::AcceptType@<[T], ::vl::YesType>': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::AcceptType@<[T], ::vl::YesType>::Type': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
-    'NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::converter': null,
-    'NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function1': null,
-    'NI$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::function2': null,
-    'NI$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::R': null,
-    'NI$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::converter': null,
     'NI$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::function': null,
     'NI$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]::function': null,
-    'NI$vl::Func': null,
     'NI$vl::Func@<[R]([TArgs]...)>': null,
-    'NI$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> &&)[impl0]::function': null,
-    'NI$vl::Func@<[R]([TArgs]...)>::$__ctor@(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]::function': null,
     'NI$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] &&)[impl0]::function': null,
     'NI$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::function': null,
     'NI$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] *, [R]([TArgs]...) ([C] ::) *)[impl0]::sender': null,
     'NI$vl::Func@<[R]([TArgs]...)>::$__ctor@([R]([TArgs]...) *)[impl0]::function': null,
     'NI$vl::Func@<[R]([TArgs]...)>::IsEmptyFunc@bool(::vl::Func@<[R]([TArgs]...)><[R2]([TArgs2]...)> &)[impl0]::function': null,
     'NI$vl::Func@<[R]([TArgs]...)>::IsEmptyFunc@bool(::vl::Func@<[R]([TArgs]...)><[R2]([TArgs2]...)> const &)[impl0]::function': null,
-    'NI$vl::Func@<[R]([TArgs]...)>::ResultType': null,
     'NI$vl::Func@<[R]([TArgs]...)>::invoker': null,
     'NI$vl::Func@<[R]([TArgs]...)>::operator !=@bool(::vl::Func@<[R]([TArgs]...)><[R]([TArgs]...)> const &)[impl0]::function': null,
     'NI$vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)[impl0]::args': null,
@@ -2782,16 +2489,6 @@ symbolToFiles = {
     'NI$vl::function_binding::CR@<[T] &>': null,
     'NI$vl::function_binding::CR@<[T] const &>': null,
     'NI$vl::function_binding::CR@<[T] const>': null,
-    'NI$vl::function_combining::Combining': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_converter': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function1': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::$__ctor@(::vl::Func<[R1]([TArgs]...)> const &, ::vl::Func<[R2]([TArgs]...)> const &, ::vl::Func<[R]([R1], [R2])> const &)[impl0]::_function2': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::converter': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function1': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::function2': null,
-    'NI$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::operator ()@[R]([TArgs] &&...)[impl0]::args': null,
     'NI$vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])[impl0]::functionObject': null,
     'NI$vl::function_lambda::FunctionObjectRetriveType': null,
     'NI$vl::function_lambda::FunctionObjectRetriveType::Type': null,
@@ -2824,10 +2521,6 @@ symbolToFiles = {
     'NI$vl::internal_invokers::StaticInvoker::$__ctor@([R]([TArgs]...) *)[impl0]::_function': null,
     'NI$vl::internal_invokers::StaticInvoker::Invoke@[R]([TArgs] &&...)[impl0]::args': null,
     'NI$vl::internal_invokers::StaticInvoker::function': null,
-    'TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::C': null,
-    'TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F1': null,
-    'TA$vl::Combine@::vl::Func<::vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::FinalFunctionType>(::vl::Func<[C]>, ::vl::Func<[F1]>, ::vl::Func<[F2]>)[impl0]::F2': null,
-    'TA$vl::Combiner@::vl::Func<::vl::Func<[T]>(::vl::Func<[T]>, ::vl::Func<[T]>)>(::vl::Func<::vl::Func@<[R]([TArgs]...)>::ResultType(::vl::Func@<[R]([TArgs]...)>::ResultType, ::vl::Func@<[R]([TArgs]...)>::ResultType)> const &)[impl0]::T': null,
     'TA$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>(::vl::Func<[T]> const &)[impl0]::T': null,
     'TA$vl::Curry@::vl::Func<::vl::Func<::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::CurriedType>(::vl::function_binding::Binding@<[R]([T0], [TArgs]...)>::FirstParameterType)>([T] *)[impl0]::T': null,
     'TA$vl::Func@<[R]([TArgs]...)>::$__ctor@([C] &&)[impl0]::C': null,
@@ -2846,10 +2539,6 @@ symbolToFiles = {
     'TA$vl::function_binding::CR@<[T] &>::T': null,
     'TA$vl::function_binding::CR@<[T] const &>::T': null,
     'TA$vl::function_binding::CR@<[T] const>::T': null,
-    'TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R': null,
-    'TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R1': null,
-    'TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::R2': null,
-    'TA$vl::function_combining::Combining@<[R1]([TArgs]...), [R2]([TArgs]...), [R]([R1], [R2])>::TArgs': null,
     'TA$vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])[impl0]::T': null,
     'TA$vl::function_lambda::FunctionObjectRetriveType::T': null,
     'TA$vl::function_lambda::FunctionObjectRetriveType@<[R]([TArgs]...) *>::R': null,

@@ -1,0 +1,15 @@
+<Document symbolId="vl::collections::LazyList::Evaluate@::vl::collections::LazyList&lt;[T]&gt;(bool)" accessor="public" category="Function" name="Evaluate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Evaluate@::vl::collections::LazyList&lt;[T]&gt;(bool)[impl0]"><summary>Get an evaluated copy of this lazy list.</summary><returns>
+ The created lazy list.
+ If this lazy list has been evaluated before, it returns a reference to this lazy list.
+ If this lazy list has not been evaluated before, it go through this lazy list and copy all values.
+ </returns><param name="forceCopy">Set to true to force copying values, regardless of whether this lazy list is evaluated or not.</param><remarks>
+ &quot;Evaluated&quot; means reading from this lazy list cause no extra calculation.
+ In most of the cases, the created lazy list relies on its source.
+ For example, a lazy list can be created from a reference to a <symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/>, or from an array on stack.
+ If this list or array is deleted, then iterating the created lazy list will crash.
+ By calling the Evaluate function <b>with forceCopy set to true</b>, a new lazy list is created, with all values cached in it.
+ Its connection to the source list or array is removed, and can then be passed to everywhere.
+ </remarks><signature><![CDATA[LazyList<T> Evaluate(
+    bool forceCopy /* optional */
+) const;
+]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

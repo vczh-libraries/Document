@@ -3,4 +3,4 @@
 vuint64_t)> const & run,
     vuint64_t milliseconds
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NI$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IGuiAnimation"/><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IGuiAnimation"/><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>

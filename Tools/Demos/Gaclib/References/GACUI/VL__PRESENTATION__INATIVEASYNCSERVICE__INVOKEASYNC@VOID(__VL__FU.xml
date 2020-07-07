@@ -4,4 +4,4 @@
     Func<void(
 )> const & proc
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NI$vl::Func"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/></seealsos></Document>

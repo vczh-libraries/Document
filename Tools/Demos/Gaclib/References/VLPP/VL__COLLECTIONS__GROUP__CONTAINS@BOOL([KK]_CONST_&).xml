@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::Group::Contains@bool([KK] const &amp;)" accessor="public" category="Function" name="Contains" declFile="Dictionary.h" declId="FB$vl::collections::Group::Contains@bool([KK] const &amp;)[impl0]"><summary>Test if a key exists in the group or not.</summary><returns>Returns true if the key exists.</returns><param name="key">The key to find.</param><signature><![CDATA[bool Contains(
+<Document symbolId="vl::collections::Group::Contains@bool([KK] const &amp;)" accessor="public" category="Function" name="Contains" declFile="Dictionary.h" declId="FB$vl::collections::Group::Contains@bool([KK] const &amp;)[impl0]"><summary>Test if there is any value associated to a specified key or not.</summary><returns>Returns true there is at least one value associated to this key.</returns><param name="key">The key to find.</param><signature><![CDATA[bool Contains(
     KK const & key
 ) const;
 ]]></signature></Document>

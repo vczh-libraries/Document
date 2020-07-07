@@ -1,4 +1,17 @@
-<Document symbolId="vl::collections::LazyList::Aggregate@[T]([F])" accessor="public" category="Function" name="Aggregate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Aggregate@[T]([F])[impl0]"><summary>Aggregate a lazy list. An exception will raise if the lazy list is empty.</summary><typeparam name="F">Type of the lambda expression.</typeparam><returns>The aggregated value.</returns><param name="f">The lambda expression as an aggregator.</param><signature><![CDATA[template <
+<Document symbolId="vl::collections::LazyList::Aggregate@[T]([F])" accessor="public" category="Function" name="Aggregate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Aggregate@[T]([F])[impl0]"><summary>Aggregate a lazy list. It will crash if the lazy list is empty.</summary><typeparam name="F">Type of the aggregator.</typeparam><returns>The aggregated value.</returns><param name="f">
+ The aggregator.
+ The first argument is the aggregated value of any prefix.
+ The second argument is the element right after a prefix.
+ Returns the aggregated value of the new prefix.
+ For the first call, the first argument is the first element in the lazy list.
+ </param><example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 3, 4, 5};
+     auto ys = From(xs).Aggregate([](vint x, vint y){ return x + y; });
+     Console::WriteLine(itow(ys));
+ }
+ ]]></example><signature><![CDATA[template <
     typename F
 >
 T Aggregate(

@@ -1,4 +1,4 @@
-<Document symbolId="vl::atof_test@double(::vl::AString const &amp;, bool &amp;)" accessor="" category="Function" name="atof_test" declFile="String.h" declId="FB$vl::atof_test@double(::vl::AString const &amp;, bool &amp;)[decl0]"><summary>Convert a string to 64-bits floating point number.</summary><returns>The converted number. If the convert failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[double atof_test(
+<Document symbolId="vl::atof_test@double(::vl::AString const &amp;, bool &amp;)" accessor="" category="Function" name="atof_test" declFile="String.h" declId="FB$vl::atof_test@double(::vl::AString const &amp;, bool &amp;)[decl0]"><summary>Convert a string to a 64-bits floating point number.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[double atof_test(
     AString const & string,
     bool & success
 );

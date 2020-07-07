@@ -1,3 +1,0 @@
-<Document symbolId="vl::InitializeGlobalStorage@void()" accessor="" category="Function" name="InitializeGlobalStorage" declFile="GlobalStorage.h" declId="FB$vl::InitializeGlobalStorage@void()[decl0]"><summary>Initialize the global storage.</summary><signature><![CDATA[void InitializeGlobalStorage(
-);
-]]></signature></Document>

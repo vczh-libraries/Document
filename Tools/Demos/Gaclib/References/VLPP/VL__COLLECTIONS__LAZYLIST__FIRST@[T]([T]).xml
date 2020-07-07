@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::LazyList::First@[T]([T])" accessor="public" category="Function" name="First" declFile="Operation.h" declId="FB$vl::collections::LazyList::First@[T]([T])[impl0]"><summary>Get the first value in the lazy list.</summary><returns>The first value.</returns><param name="defaultValue">Returns this argument if the lazy list is empty.</param><signature><![CDATA[T First(
+<Document symbolId="vl::collections::LazyList::First@[T]([T])" accessor="public" category="Function" name="First" declFile="Operation.h" declId="FB$vl::collections::LazyList::First@[T]([T])[impl0]"><summary>Get the first value in the lazy list.</summary><returns>The first value. If the lazy list is empty, the argument is returned.</returns><param name="defaultValue">The argument to return if the lazy list is empty.</param><signature><![CDATA[T First(
     T defaultValue
 ) const;
 ]]></signature></Document>

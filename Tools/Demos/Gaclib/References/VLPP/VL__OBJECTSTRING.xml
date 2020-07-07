@@ -1,4 +1,7 @@
-<Document symbolId="vl::ObjectString" accessor="" category="Class" name="ObjectString" declFile="String.h" declId="NI$vl::ObjectString"><summary>A type representing a string.</summary><typeparam name="T">Type of a character.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::ObjectString" accessor="" category="Class" name="ObjectString" declFile="String.h" declId="NI$vl::ObjectString"><summary>
+ Immutable string. <symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/> and <symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/> is recommended instead.
+ Locale awared operations are in <symbol name="Locale" docId="vl::Locale" declFile="Locale.h" declId="NI$vl::Locale"/>, typically by using the &quot;INVLOC&quot; macro.
+ </summary><typeparam name="T">Type of code points.</typeparam><signature><![CDATA[template <
     typename T
 >
 class ObjectString

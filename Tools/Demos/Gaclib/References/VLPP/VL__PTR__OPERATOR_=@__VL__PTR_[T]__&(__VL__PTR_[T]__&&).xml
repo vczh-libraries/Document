@@ -1,4 +1,4 @@
-<Document symbolId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="operator =" declFile="Pointer.h" declId="FB$vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; &amp;&amp;)[impl0]"><summary>Move a smart pointer.</summary><returns>The moved smart pointer.</returns><param name="pointer">The smart pointer to Move.</param><signature><![CDATA[Ptr<T> & operator =(
+<Document symbolId="vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="operator =" declFile="Pointer.h" declId="FB$vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; &amp;&amp;)[impl0]"><summary>Replace by moving another shared pointer.</summary><returns>The shared pointer itself.</returns><param name="pointer">The shared pointer to copy.</param><signature><![CDATA[Ptr<T> & operator =(
     Ptr<T> && pointer
 );
 ]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

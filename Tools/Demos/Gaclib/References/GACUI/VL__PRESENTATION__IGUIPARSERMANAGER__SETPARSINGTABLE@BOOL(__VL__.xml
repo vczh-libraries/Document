@@ -3,4 +3,4 @@
     Func<Ptr<Table>(
 )> loader
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NI$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="Table" declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiParserManager::Table"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="Table" declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiParserManager::Table"/></seealsos></Document>

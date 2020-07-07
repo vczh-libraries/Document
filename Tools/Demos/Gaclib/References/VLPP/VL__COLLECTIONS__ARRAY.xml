@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::Array" accessor="" category="Class" name="Array" declFile="List.h" declId="NI$vl::collections::Array"><summary>Array.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::collections::Array" accessor="" category="Class" name="Array" declFile="List.h" declId="NI$vl::collections::Array"><summary>Array: linear container with fixed size in runtime. All elements are contiguous in memory.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam><signature><![CDATA[template <
     typename T, 
     typename K /* optional */
 >

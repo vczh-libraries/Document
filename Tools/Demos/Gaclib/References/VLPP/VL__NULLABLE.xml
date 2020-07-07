@@ -1,4 +1,4 @@
-<Document symbolId="vl::Nullable" accessor="" category="Class" name="Nullable" declFile="Basic.h" declId="NI$vl::Nullable"><summary>Type for optionally storing a value.</summary><typeparam name="T">Type of the value.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::Nullable" accessor="" category="Class" name="Nullable" declFile="Basic.h" declId="NI$vl::Nullable"><summary>Type for representing nullable data.</summary><typeparam name="T">Type of the data, typically it is a value type, or <symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/> could be used here.</typeparam><signature><![CDATA[template <
     typename T
 >
 class Nullable;

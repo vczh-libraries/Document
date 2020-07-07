@@ -1,4 +1,10 @@
-<Document symbolId="vl::ObjectString::Sub@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="Sub" declFile="String.h" declId="FB$vl::ObjectString::Sub@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::vint)[impl0]"><summary>Copy the middle of the string.</summary><returns>The copied string.</returns><param name="index">Position of characters to copy.</param><param name="count">Size of characters to copy.</param><signature><![CDATA[ObjectString<T> Sub(
+<Document symbolId="vl::ObjectString::Sub@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="Sub" declFile="String.h" declId="FB$vl::ObjectString::Sub@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::vint)[impl0]"><summary>Get a sub string.</summary><returns>The sub string. It will crash when the specified position or size is out of range.</returns><param name="index">The position of the first code point of the sub string.</param><param name="count">The size of the sub string.</param><example><![CDATA[
+ int main()
+ {
+     WString s = L"Hello, world!";
+     Console::WriteLine(s.Sub(7, 5));
+ }
+ ]]></example><signature><![CDATA[ObjectString<T> Sub(
     vint index,
     vint count
 ) const;

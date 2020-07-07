@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::Dictionary" accessor="" category="Class" name="Dictionary" declFile="Dictionary.h" declId="NI$vl::collections::Dictionary"><summary>Dictionary.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys.</typeparam><typeparam name="VK">Type of the key type of values.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::collections::Dictionary" accessor="" category="Class" name="Dictionary" declFile="Dictionary.h" declId="NI$vl::collections::Dictionary"><summary>Dictionary: one to one map container.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys. It is recommended to use the default value.</typeparam><typeparam name="VK">Type of the key type of values. It is recommended to use the default value.</typeparam><signature><![CDATA[template <
     typename KT, 
     typename VT, 
     typename KK /* optional */, 

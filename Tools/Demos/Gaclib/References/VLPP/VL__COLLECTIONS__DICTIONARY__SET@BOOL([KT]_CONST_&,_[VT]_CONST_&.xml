@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::Dictionary::Set@bool([KT] const &amp;, [VT] const &amp;)" accessor="public" category="Function" name="Set" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::Set@bool([KT] const &amp;, [VT] const &amp;)[impl0]"><summary>Replace the value associated with a key.</summary><returns>Returns true if the value is replaced.</returns><param name="key">The key to find.</param><param name="value">The key to replace.</param><signature><![CDATA[bool Set(
+<Document symbolId="vl::collections::Dictionary::Set@bool([KT] const &amp;, [VT] const &amp;)" accessor="public" category="Function" name="Set" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::Set@bool([KT] const &amp;, [VT] const &amp;)[impl0]"><summary>Replace the value associated to a specified key.</summary><returns>Returns true if the value is replaced.</returns><param name="key">The key to find. If the key does not exist, it will be added to the dictionary.</param><param name="value">The associated value to replace.</param><signature><![CDATA[bool Set(
     KT const & key,
     VT const & value
 );

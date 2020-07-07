@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::ListBase::RemoveRange@bool(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="RemoveRange" declFile="List.h" declId="FB$vl::collections::ListBase::RemoveRange@bool(::vl::vint, ::vl::vint)[impl0]"><summary>Remove elements.</summary><returns>Returns true if the element is removed.</returns><param name="index">The index of the first element to remove.</param><param name="_count">The number of elements to remove.</param><signature><![CDATA[bool RemoveRange(
+<Document symbolId="vl::collections::ListBase::RemoveRange@bool(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="RemoveRange" declFile="List.h" declId="FB$vl::collections::ListBase::RemoveRange@bool(::vl::vint, ::vl::vint)[impl0]"><summary>Remove contiguous elements at a specified psition.</summary><returns>Returns true if elements are removed. It will crash when the index or the size is out of range.</returns><param name="index">The index of the first element to remove.</param><param name="_count">The number of elements to remove.</param><signature><![CDATA[bool RemoveRange(
     vint index,
     vint _count
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::Dictionary::operator []@[VT] const &amp;([KK] const &amp;)" accessor="public" category="Function" name="operator []" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::operator []@[VT] const &amp;([KK] const &amp;)[impl0]"><summary>Get the reference to the value associated with a key.</summary><returns>The reference to the value.</returns><param name="key">The key to find.</param><signature><![CDATA[VT const & operator [](
+<Document symbolId="vl::collections::Dictionary::operator []@[VT] const &amp;([KK] const &amp;)" accessor="public" category="Function" name="operator []" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::operator []@[VT] const &amp;([KK] const &amp;)[impl0]"><summary>Get the reference to the value associated to a specified key.</summary><returns>The reference to the value. It will crash if the key does not exist.</returns><param name="key">The key to find.</param><signature><![CDATA[VT const & operator [](
     KK const & key
 ) const;
 ]]></signature></Document>

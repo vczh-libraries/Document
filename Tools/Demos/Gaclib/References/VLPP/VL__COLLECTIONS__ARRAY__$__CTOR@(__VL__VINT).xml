@@ -1,4 +1,7 @@
-<Document symbolId="vl::collections::Array::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="List.h" declId="FB$vl::collections::Array::$__ctor@(::vl::vint)[impl0]"><summary>Create an array.</summary><param name="size">The size of the array.</param><signature><![CDATA[ Array(
+<Document symbolId="vl::collections::Array::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="List.h" declId="FB$vl::collections::Array::$__ctor@(::vl::vint)[impl0]"><summary>Create an array.</summary><param name="size">The size of the array.</param><remarks>
+ The default value is zero. <symbol name="Resize" docId="vl::collections::Array::Resize@void(::vl::vint)" declFile="List.h" declId="FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]"/> can be called to determine the size later.
+ It will crash when the size is a negative number.
+ </remarks><signature><![CDATA[ Array(
     vint size /* optional */
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

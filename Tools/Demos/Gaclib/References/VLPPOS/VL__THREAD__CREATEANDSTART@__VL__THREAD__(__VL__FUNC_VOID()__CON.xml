@@ -3,4 +3,4 @@
 )> const & procedure,
     bool deleteAfterStopped /* optional */
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NI$vl::Func"/><symbol name="Thread" docId="vl::Thread" declFile="Threading.h" declId="NI$vl::Thread"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="Thread" docId="vl::Thread" declFile="Threading.h" declId="NI$vl::Thread"/></seealsos></Document>

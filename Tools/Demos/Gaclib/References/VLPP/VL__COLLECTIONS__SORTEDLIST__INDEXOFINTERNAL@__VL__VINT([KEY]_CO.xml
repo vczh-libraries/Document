@@ -1,4 +1,9 @@
-<Document symbolId="vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &amp;, ::vl::vint &amp;)" accessor="protected" category="Function" name="IndexOfInternal" declFile="List.h" declId="FB$vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &amp;, ::vl::vint &amp;)[impl0]"><summary>Get the position of an item in this list.</summary><typeparam name="Key">Type of the item to find.</typeparam><returns>Returns the position. Returns -1 if not exists</returns><param name="item">The item to find.</param><param name="index">Returns the last index.</param><signature><![CDATA[template <
+<Document symbolId="vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &amp;, ::vl::vint &amp;)" accessor="protected" category="Function" name="IndexOfInternal" declFile="List.h" declId="FB$vl::collections::SortedList::IndexOfInternal@::vl::vint([Key] const &amp;, ::vl::vint &amp;)[impl0]"><summary>Get the position of an element in this list by performing binary search.</summary><typeparam name="Key">Type of the element to find.</typeparam><returns>Returns the position. Returns -1 if it does not exist.</returns><param name="item">The element to find.</param><param name="index">
+ If the element exist, this argument returns one of the element that equals to the specified value.
+ If the element doesn not exist,
+ this argument returns either the greatest element that less than the specified value,
+ or the lest element that greater than the specified value.
+ </param><signature><![CDATA[template <
     typename Key
 >
 vint IndexOfInternal(

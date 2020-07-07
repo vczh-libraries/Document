@@ -12,19 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Framework::Basic
-
-Classes:
-	NotCopyable									: Object inherits from this type cannot be copied
-	Error										: Error, unlike exception, is not encouraged to catch
-	Object										: Base class of all classes
-
-Macros:
-	CHECK_ERROR(CONDITION,DESCRIPTION)			: Assert, throws an Error if failed
-	CHECK_FAIL(DESCRIPTION)						: Force an assert failure
-	SCOPE_VARIABLE(TYPE,VARIABLE,VALUE){ ... }	: Scoped variable
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_BASIC</div>
@@ -122,18 +111,18 @@ Macros:
 #endif</div>
 
 <div class="disabled">#ifdef VCZH_64</div>
-<div class="disabled">	/// &lt;summary&gt;Signed interface whose size is equal to sizeof(void*).&lt;/summary&gt;</div>
+<div class="disabled">	/// &lt;summary&gt;Signed interface whose size equals to sizeof(void*).&lt;/summary&gt;</div>
 <div class="disabled">	typedef vint64_t				vint;</div>
-<div class="disabled">	/// &lt;summary&gt;Signed interface whose size is equal to sizeof(void*).&lt;/summary&gt;</div>
+<div class="disabled">	/// &lt;summary&gt;Signed interface whose size equals to sizeof(void*).&lt;/summary&gt;</div>
 <div class="disabled">	typedef vint64_t				vsint;</div>
-<div class="disabled">	/// &lt;summary&gt;Unsigned interface whose size is equal to sizeof(void*).&lt;/summary&gt;</div>
+<div class="disabled">	/// &lt;summary&gt;Unsigned interface whose size equals to sizeof(void*).&lt;/summary&gt;</div>
 <div class="disabled">	typedef vuint64_t				vuint;</div>
 <div class="disabled">#else</div>
-	<div class="token cpp_comment ">/// &lt;summary&gt;Signed interface whose size is equal to sizeof(void*).&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Signed interface whose size equals to sizeof(void*).&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint32_t'], [], [])"><div class="token cpp_type">vint32_t</div></div>				<div class="def" id="NI$vl::vint"><div><div class="token cpp_type">vint</div></div></div>;
-	<div class="token cpp_comment ">/// &lt;summary&gt;Signed interface whose size is equal to sizeof(void*).&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Signed interface whose size equals to sizeof(void*).&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint32_t'], [], [])"><div class="token cpp_type">vint32_t</div></div>				<div class="def" id="NI$vl::vsint"><div><div class="token cpp_type">vsint</div></div></div>;
-	<div class="token cpp_comment ">/// &lt;summary&gt;Unsigned interface whose size is equal to sizeof(void*).&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Unsigned interface whose size equals to sizeof(void*).&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vuint32_t'], [], [])"><div class="token cpp_type">vuint32_t</div></div>				<div class="def" id="NI$vl::vuint"><div><div class="token cpp_type">vuint</div></div></div>;
 <div class="disabled">#endif</div>
 	<div class="token cpp_comment ">/// &lt;summary&gt;Signed interger representing position.&lt;/summary&gt;</div>
@@ -177,6 +166,7 @@ Macros:
 	Basic Types
 	***********************************************************************/</div>
 
+	<div class="token cpp_comment ">/// &lt;summary&gt;Base type for all classes to stop generating default copy constructors.&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::NotCopyable"><div><div class="token cpp_type">NotCopyable</div></div></div>
 	{
 	<div class="token cpp_keyword ">private</div>:
@@ -186,7 +176,7 @@ Macros:
 		<div class="def" id="FB$vl::NotCopyable::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable::$__ctor@()'], [], [])"><div class="token cpp_function">NotCopyable</div></div></div>();
 	};
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Base type of all errors. An error is an exception that you are not allowed to catch. Raising it means there is a fatal error in the code.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Base type of all errors. An error is an exception that is not recommended to catch. Raising it means there is a mistake in the code.&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Error"><div><div class="token cpp_type">Error</div></div></div>
 	{
 	<div class="token cpp_keyword ">private</div>:
@@ -312,210 +302,202 @@ Macros:
 	Basic Types
 	***********************************************************************/</div>
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Base type of all classes.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// Base type of all classes.</div>
+	<div class="token cpp_comment ">/// This type has a virtual destructor, making all derived classes destructors virtual.</div>
+	<div class="token cpp_comment ">/// In this way an object is allowed to be deleted using a pointer of a qualified base type pointing to this object.</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Object"><div><div class="token cpp_type">Object</div></div></div>
 	{
 	<div class="token cpp_keyword ">public</div>:
 		<div class="token cpp_keyword ">virtual</div> <div class="def" id="FB$vl::Object::~Object@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Object::~Object@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">Object</div></div></div>();
 	};
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Type for storing a value to wherever requiring a [T:vl.Ptr`1] to [T:vl.Object].&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the value.&lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Store data of a value type in a reference type object. It is useful when the data is required to be stored in a pointer to [T:vl.Object].&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+	<div class="token cpp_comment ">/// int main()</div>
+	<div class="token cpp_comment ">/// {</div>
+	<div class="token cpp_comment ">///     Ptr&lt;Object&gt; boxed = MakePtr&lt;ObjectBox&lt;vint&gt;&gt;(100);</div>
+	<div class="token cpp_comment ">///     vint unboxed = boxed.Cast&lt;ObjectBox&lt;vint&gt;&gt;().UnBox();</div>
+	<div class="token cpp_comment ">///     Console::WriteLine(itow(unboxed));</div>
+	<div class="token cpp_comment ">/// }</div>
+	<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Value type to use.&lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::ObjectBox::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::ObjectBox"><div><div class="token cpp_type">ObjectBox</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
 	{
 	<div class="token cpp_keyword ">private</div>:
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>					<div class="def" id="NI$vl::ObjectBox::object"><div><div class="token cpp_field">object</div></div></div>;
 	<div class="token cpp_keyword ">public</div>:
-		<div class="token cpp_comment ">/// &lt;summary&gt;Box a value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;_object&quot;&gt;The value to box.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a boxed reference object from data of a value type.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;_object&quot;&gt;The data to box.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::ObjectBox::$__ctor@([T] const &)[impl0]"><div><div class="token cpp_function">ObjectBox</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::ObjectBox::$__ctor@([T] const &)[impl0]::_object"><div><div class="token cpp_argument">_object</div></div></div>)
 			:object(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::$__ctor@([T] const &)[impl0]::_object'], [], [])"><div class="token cpp_argument">_object</div></div>)
 		{
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Box a movable value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;_object&quot;&gt;The value to box.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a boxed reference object by moving data of a value type.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;_object&quot;&gt;The data to move and box.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::ObjectBox::$__ctor@([T] &&)[impl0]"><div><div class="token cpp_function">ObjectBox</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&amp;&amp; <div class="def" id="NI$vl::ObjectBox::$__ctor@([T] &&)[impl0]::_object"><div><div class="token cpp_argument">_object</div></div></div>)
 			:object(<div class="ref" onclick="jumpToSymbol(['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], ['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], [], [])"><div class="token cpp_function">MoveValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::$__ctor@([T] &&)[impl0]::_object'], [], [])"><div class="token cpp_argument">_object</div></div>))
 		{
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a box.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The box.&lt;/param&gt;</div>
-		<div class="def" id="FB$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> const &)[impl0]"><div><div class="token cpp_function">ObjectBox</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
-			:object(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::object'], [], [])"><div class="token cpp_field">object</div></div>)
-		{
-		}
+		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a boxed reference object.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The reference object to copy.&lt;/param&gt;</div>
+		<div class="def" id="FB$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> const &)[decl0]"><div><div class="token cpp_function">ObjectBox</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Move a box.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The box.&lt;/param&gt;</div>
-		<div class="def" id="FB$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> &&)[impl0]"><div><div class="token cpp_function">ObjectBox</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> &&)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
-			:object(<div class="ref" onclick="jumpToSymbol(['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], ['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], [], [])"><div class="token cpp_function">MoveValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> &&)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::object'], [], [])"><div class="token cpp_field">object</div></div>))
-		{
-		}
+		<div class="token cpp_comment ">/// &lt;summary&gt;Move a boxed reference object.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The reference object to move.&lt;/param&gt;</div>
+		<div class="def" id="FB$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> &&)[decl0]"><div><div class="token cpp_function">ObjectBox</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> &&)[decl0]::value"><div>value</div></div>) = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Box a value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The boxed value.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;_object&quot;&gt;The value to box.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the boxed data of a value type.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The reference object itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;_object&quot;&gt;The data to replace the original data.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &([T] const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &([T] const &)[impl0]::_object"><div><div class="token cpp_argument">_object</div></div></div>)
 		{
 			<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &([T] const &)[impl0]::_object'], [], [])"><div class="token cpp_argument">_object</div></div>;
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a box.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The boxed value.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The box.&lt;/param&gt;</div>
-		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
-		{
-			<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::object'], [], [])"><div class="token cpp_field">object</div></div>;
-			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
-		}
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the boxed data from another reference object.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The reference object itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The reference object to copy.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Move a box.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The boxed value.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The box.&lt;/param&gt;</div>
-		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> &&)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> &&)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
-		{
-			<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], ['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], [], [])"><div class="token cpp_function">MoveValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> &&)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::object'], [], [])"><div class="token cpp_field">object</div></div>);
-			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
-		}
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the boxed data by moving from another reference object.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The reference object itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The reference object to move.&lt;/param&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> &&)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox'], [], [])"><div class="token cpp_type">ObjectBox</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> &&)[decl0]::value"><div>value</div></div>) = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Unbox the value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The original value.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the boxed data of a value type.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The unboxed data of a value type.&lt;/returns&gt;</div>
 		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::ObjectBox::Unbox@[T] const &()[impl0]"><div><div class="token cpp_function">Unbox</div></div></div>()
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::ObjectBox::object'], [], [])"><div class="token cpp_field">object</div></div>;
 		}
 	};
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Type for optionally storing a value.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the value.&lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Type for representing nullable data.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the data, typically it is a value type, or [T:vl.Ptr`1] could be used here.&lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::Nullable::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Nullable"><div><div class="token cpp_type">Nullable</div></div></div>
 	{
 	<div class="token cpp_keyword ">private</div>:
-		<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>*					<div class="def" id="NI$vl::Nullable::object"><div><div class="token cpp_field">object</div></div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>*					<div class="def" id="NI$vl::Nullable::object"><div><div class="token cpp_field">object</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
 	<div class="token cpp_keyword ">public</div>:
 		<div class="token cpp_comment ">/// &lt;summary&gt;Create a null value.&lt;/summary&gt;</div>
-		<div class="def" id="FB$vl::Nullable::$__ctor@()[impl0]"><div><div class="token cpp_function">Nullable</div></div></div>()
-			:object(<div class="token cpp_number ">0</div>)
-		{
-		}
+		<div class="def" id="FB$vl::Nullable::$__ctor@()[decl0]"><div><div class="token cpp_function">Nullable</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a non-null value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a non-null value by copying data.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The data to copy.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Nullable::$__ctor@([T] const &)[impl0]"><div><div class="token cpp_function">Nullable</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::Nullable::$__ctor@([T] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			:object(<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@([T] const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>))
 		{
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a non-null value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to move.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a non-null value by moving data.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The data to move.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Nullable::$__ctor@([T] &&)[impl0]"><div><div class="token cpp_function">Nullable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&amp;&amp; <div class="def" id="NI$vl::Nullable::$__ctor@([T] &&)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			:object(<div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>(<div class="ref" onclick="jumpToSymbol(['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], ['vl::MoveValue@::vl::RemoveReference::Type &&([T] &&)'], [], [])"><div class="token cpp_function">MoveValue</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@([T] &&)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>)))
 		{
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a nullable value.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a nullable value by copying from another nullable value.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;nullable&quot;&gt;The nullable value to copy.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Nullable::$__ctor@(::vl::Nullable<[T]> const &)[impl0]"><div><div class="token cpp_function">Nullable</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Nullable::$__ctor@(::vl::Nullable<[T]> const &)[impl0]::nullable"><div><div class="token cpp_argument">nullable</div></div></div>)
-			:object(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@(::vl::Nullable<[T]> const &)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> ? <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>(*<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@(::vl::Nullable<[T]> const &)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) : <div class="token cpp_number ">0</div>)
+			:object(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@(::vl::Nullable<[T]> const &)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> ? <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>(*<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@(::vl::Nullable<[T]> const &)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) : <div class="token cpp_keyword ">nullptr</div>)
 		{
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Move a nullable value.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a nullable value by moving from another nullable value.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;nullable&quot;&gt;The nullable value to move.&lt;/param&gt;</div>
 		<div class="def" id="FB$vl::Nullable::$__ctor@(::vl::Nullable<[T]> &&)[impl0]"><div><div class="token cpp_function">Nullable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::Nullable::$__ctor@(::vl::Nullable<[T]> &&)[impl0]::nullable"><div><div class="token cpp_argument">nullable</div></div></div>)
 			:object(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@(::vl::Nullable<[T]> &&)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>)
 		{
-			<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@(::vl::Nullable<[T]> &&)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_number ">0</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::$__ctor@(::vl::Nullable<[T]> &&)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_keyword ">nullptr</div>;
 		}
 
 		<div class="def" id="FB$vl::Nullable::~Nullable@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">Nullable</div></div></div>()
 		{
-			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>)
-			{
-				<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_number ">0</div>;
-			}
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create a non-null value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The created nullable value.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to copy.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the data inside this nullable value by copying from data.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The nullable value itself.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The data to copy.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::Nullable::operator =@::vl::Nullable<[T]> &([T] const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::Nullable::operator =@::vl::Nullable<[T]> &([T] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 		{
-			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>)
-			{
-				<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_number ">0</div>;
-			}
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator =@::vl::Nullable<[T]> &([T] const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>);
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Copy a nullable value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The created nullable value.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the data inside this nullable value by copying from another nullable value.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The nullable value itself.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;nullable&quot;&gt;The nullable value to copy.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> const &)[impl0]::nullable"><div><div class="token cpp_argument">nullable</div></div></div>)
 		{
 			<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">this</div> != &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> const &)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>)
 			{
-				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>)
-				{
-					<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
-					<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_number ">0</div>;
-				}
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
 				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> const &)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>)
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>(*<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> const &)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>);
+				}
+				<div class="token cpp_keyword ">else</div>
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_keyword ">nullptr</div>;
 				}
 			}
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Move a nullable value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The created nullable value.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Replace the data inside this nullable value by moving from another nullable value.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The nullable value itself.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;nullable&quot;&gt;The nullable value to move.&lt;/param&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="FB$vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> &&)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp;&amp; <div class="def" id="NI$vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> &&)[impl0]::nullable"><div><div class="token cpp_argument">nullable</div></div></div>)
 		{
 			<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">this</div> != &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> &&)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>)
 			{
-				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>)
-				{
-					<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
-					<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_number ">0</div>;
-				}
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> &&)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> &&)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_number ">0</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator =@::vl::Nullable<[T]> &(::vl::Nullable<[T]> &&)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> = <div class="token cpp_keyword ">nullptr</div>;
 			}
 			<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Comparing two nullable values.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true when these nullable values are all null, or the data inside them equals.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;a&quot;&gt;The first nullable value to compare.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;b&quot;&gt;The second nullable value to compare.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]"><div><div class="token cpp_function">Equals</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>)
 		{
-			<div class="token cpp_keyword ">return</div>
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>
-				? <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>
-				? *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> == *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>
-				: <div class="token cpp_keyword ">false</div>
-				: <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>
-				? <div class="token cpp_keyword ">false</div>
-				: <div class="token cpp_keyword ">true</div>;
+			<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> &amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">return</div> *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> == *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Equals@bool(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
+			<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
 		}
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Comparing two nullable values.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;</div>
+		<div class="token cpp_comment ">/// Returns a positive value when the first value is greater than the second value.</div>
+		<div class="token cpp_comment ">/// Returns a negative value when the first value is lesser than the second value.</div>
+		<div class="token cpp_comment ">/// Returns zero when the two values equal.</div>
+		<div class="token cpp_comment ">/// When one is null and another one is not, the non-null one is greater.</div>
+		<div class="token cpp_comment ">/// &lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;a&quot;&gt;The first nullable value to compare.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;b&quot;&gt;The second nullable value to compare.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]"><div><div class="token cpp_function">Compare</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a"><div><div class="token cpp_argument">a</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b"><div><div class="token cpp_argument">b</div></div></div>)
 		{
-			<div class="token cpp_keyword ">return</div>
-				<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>
-				? <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>
-				? (*<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> == *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> ? <div class="token cpp_number ">0</div> : *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> &lt; *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> ? -<div class="token cpp_number ">1</div> : <div class="token cpp_number ">1</div>)
-				: <div class="token cpp_number ">1</div>
-				: <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>
-				? -<div class="token cpp_number ">1</div>
-				: <div class="token cpp_number ">0</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>)
+			{
+				<div class="token cpp_keyword ">if</div> (*<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> &gt; *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">1</div>;
+				<div class="token cpp_keyword ">if</div> (*<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> &lt; *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">return</div> -<div class="token cpp_number ">1</div>;
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
+			}
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">return</div> <div class="token cpp_number ">1</div>;
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">return</div> -<div class="token cpp_number ">1</div>;
+			<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
 		}
 
 		<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::Nullable::operator ==@bool(::vl::Nullable<[T]> const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable'], [], [])"><div class="token cpp_type">Nullable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;&amp; <div class="def" id="NI$vl::Nullable::operator ==@bool(::vl::Nullable<[T]> const &)[impl0]::nullable"><div><div class="token cpp_argument">nullable</div></div></div>)<div class="token cpp_keyword ">const</div>
@@ -548,17 +530,18 @@ Macros:
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)'], ['vl::Nullable::Compare@::vl::vint(::vl::Nullable<[T]> const &, ::vl::Nullable<[T]> const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::operator >=@bool(::vl::Nullable<[T]> const &)[impl0]::nullable'], [], [])"><div class="token cpp_argument">nullable</div></div>) &gt;= <div class="token cpp_number ">0</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Convert the nullable value to a bool value.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if it is not null.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Test if this nullable value is non-null.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if it is non-null.&lt;/returns&gt;</div>
 		<div class="def" id="FB$vl::Nullable::$__type@bool()[impl0]"><div><div class="token cpp_keyword ">operator</div></div></div> <div class="token cpp_keyword ">bool</div>()<div class="token cpp_keyword ">const</div>
 		{
-			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> != <div class="token cpp_number ">0</div>;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div> != <div class="token cpp_keyword ">nullptr</div>;
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Unbox the value. This operation will cause an access violation of it is null.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The original value.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Return the data inside this nullable value&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The data inside this nullable value. It crashes when it is null.&lt;/returns&gt;</div>
 		<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::Nullable::Value@[T] const &()[impl0]"><div><div class="token cpp_function">Value</div></div></div>()<div class="token cpp_keyword ">const</div>
 		{
+			<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>) <div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;Nullable&lt;T&gt;::Value()#Cannot unbox from null.&quot;</div>);
 			<div class="token cpp_keyword ">return</div> *<div class="ref" onclick="jumpToSymbol([], ['vl::Nullable::object'], [], [])"><div class="token cpp_field">object</div></div>;
 		}
 	};
@@ -574,18 +557,18 @@ Macros:
 	Type Traits
 	***********************************************************************/</div>
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Get the index type of a value for containers.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the value.&lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Type for specify and create a representative value for comparing another value of a specific type for containers.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;The element type for containers.&lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::KeyType::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::KeyType"><div class="ref" onclick="jumpToSymbol([], [], ['vl::KeyType@<::vl::Ptr<[T]>>', 'vl::KeyType@<::vl::ComPtr<[T]>>'], [])"><div class="token cpp_type">KeyType</div></div></div>
 	{
 	<div class="token cpp_keyword ">public</div>:
-		<div class="token cpp_comment ">/// &lt;summary&gt;The index type of a value for containers.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;The type of the representative value.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::KeyType::T'], [], [])"><div class="token cpp_type">T</div></div> <div class="def" id="NI$vl::KeyType::Type"><div><div class="token cpp_type">Type</div></div></div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a value to its index type.&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;returns&gt;The corresponding index value.&lt;/returns&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Convert a value in a container to its representative value.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The representative value.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value in a container.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::KeyType::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="FB$vl::KeyType::GetKeyValue@[T] const &([T] const &)[impl0]"><div><div class="token cpp_function">GetKeyValue</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::KeyType::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::KeyType::GetKeyValue@[T] const &([T] const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 		{
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::KeyType::GetKeyValue@[T] const &([T] const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>;
@@ -628,18 +611,39 @@ Macros:
 	<div class="token cpp_comment ">/// &lt;summary&gt;A type representing the combination of date and time.&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::DateTime"><div><div class="token cpp_type">DateTime</div></div></div>
 	{
+		<div class="token cpp_comment ">/// &lt;summary&gt;The year.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::year"><div><div class="token cpp_field">year</div></div></div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;The month, from 1 to 12.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::month"><div><div class="token cpp_field">month</div></div></div>;
-		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::dayOfWeek"><div><div class="token cpp_field">dayOfWeek</div></div></div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;The day, from 1 to 31.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::day"><div><div class="token cpp_field">day</div></div></div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;The hour, from 0 to 23.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::hour"><div><div class="token cpp_field">hour</div></div></div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;The minute, from 0 to 59.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::minute"><div><div class="token cpp_field">minute</div></div></div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;The second, from 0 to 60.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::second"><div><div class="token cpp_field">second</div></div></div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;The milliseconds, from 0 to 999.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::milliseconds"><div><div class="token cpp_field">milliseconds</div></div></div>;
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// The calculated total milliseconds. It is OS dependent because the start time is different.</div>
+		<div class="token cpp_comment ">/// It is from 0 to 6, representing Sunday to Saturday.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::DateTime::dayOfWeek"><div><div class="token cpp_field">dayOfWeek</div></div></div>;
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// The calculated total milliseconds. It is OS dependent because the start time is different.</div>
+		<div class="token cpp_comment ">/// You should not rely on the fact about how this value is created.</div>
+		<div class="token cpp_comment ">/// The only invariant thing is that, when an date time is earlier than another, the totalMilliseconds is lesser.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>			<div class="def" id="NI$vl::DateTime::totalMilliseconds"><div><div class="token cpp_field">totalMilliseconds</div></div></div>;
 
-		<div class="token cpp_comment ">// in gcc, this will be mktime(t) * 1000 + gettimeofday().tv_usec / 1000</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// The calculated file time for the date and time. It is OS dependent.</div>
+		<div class="token cpp_comment ">/// You should not rely on the fact about how this value is created.</div>
+		<div class="token cpp_comment ">/// The only invariant thing is that, when an date time is earlier than another, the filetime is lesser.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>			<div class="def" id="NI$vl::DateTime::filetime"><div><div class="token cpp_field">filetime</div></div></div>;
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Get the current local time.&lt;/summary&gt;</div>
@@ -661,9 +665,12 @@ Macros:
 		<div class="token cpp_comment ">/// &lt;param name=&quot;_milliseconds&quot;&gt;The millisecond.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>		<div class="def" id="FB$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">FromDateTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_year"><div>_year</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_month"><div>_month</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_day"><div>_day</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_hour"><div>_hour</div></div> = <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_minute"><div>_minute</div></div> = <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_second"><div>_second</div></div> = <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::DateTime::FromDateTime@::vl::DateTime(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_milliseconds"><div>_milliseconds</div></div> = <div class="token cpp_number ">0</div>);
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create a date time value from a file time.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The created date time value.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;filetime&quot;&gt;The file time.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::DateTime'], [], [])"><div class="token cpp_type">DateTime</div></div>		<div class="def" id="FB$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)'], [], [])"><div class="token cpp_function">FromFileTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div> <div class="def" id="NI$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[decl0]::filetime"><div>filetime</div></div>);
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty date time value.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty date time value that is not meaningful.&lt;/summary&gt;</div>
 		<div class="def" id="FB$vl::DateTime::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::DateTime::$__ctor@()'], [], [])"><div class="token cpp_function">DateTime</div></div></div>();
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Convert the UTC time to the local time.&lt;/summary&gt;</div>
@@ -1481,6 +1488,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
+        ],
+        'decls': []
+    },
     'vl::Error::$__ctor@(wchar_t const *)': {
         'displayNameInHtml': '<span class="cpp_type">Error</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_keyword">wchar_t</span> <span class="cpp_keyword">const</span> *)',
         'impls': [
@@ -1803,20 +1817,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> &&)[impl0]::value': {
-        'displayNameInHtml': 'value',
-        'impls': [
-            'NI$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> &&)[impl0]::value'
-        ],
-        'decls': []
-    },
-    'vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> const &)[impl0]::value': {
-        'displayNameInHtml': 'value',
-        'impls': [
-            'NI$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> const &)[impl0]::value'
-        ],
-        'decls': []
-    },
     'vl::ObjectBox::$__ctor@([T] &&)[impl0]::_object': {
         'displayNameInHtml': '_object',
         'impls': [
@@ -1842,20 +1842,6 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">ObjectBox</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">object</span>',
         'impls': [
             'NI$vl::ObjectBox::object'
-        ],
-        'decls': []
-    },
-    'vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> &&)[impl0]::value': {
-        'displayNameInHtml': 'value',
-        'impls': [
-            'NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> &&)[impl0]::value'
-        ],
-        'decls': []
-    },
-    'vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> const &)[impl0]::value': {
-        'displayNameInHtml': 'value',
-        'impls': [
-            'NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> const &)[impl0]::value'
         ],
         'decls': []
     },
@@ -3224,6 +3210,7 @@ symbolToFiles = {
     'NI$vl::DateTime::operator ==@bool(::vl::DateTime const &)[impl0]::value': null,
     'NI$vl::DateTime::operator >=@bool(::vl::DateTime const &)[impl0]::value': null,
     'NI$vl::DateTime::operator >@bool(::vl::DateTime const &)[impl0]::value': null,
+    'NI$vl::Error': null,
     'NI$vl::ForwardValue@[T] &&(::vl::RemoveReference::Type &&)[impl0]::value': null,
     'NI$vl::ForwardValue@[T] &&(::vl::RemoveReference::Type &)[impl0]::value': null,
     'NI$vl::KeyType::GetKeyValue@[T] const &([T] const &)[impl0]::value': null,
@@ -3253,13 +3240,9 @@ symbolToFiles = {
     'NI$vl::Nullable::operator >@bool(::vl::Nullable<[T]> const &)[impl0]::nullable': null,
     'NI$vl::Object': null,
     'NI$vl::ObjectBox': null,
-    'NI$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> &&)[impl0]::value': null,
-    'NI$vl::ObjectBox::$__ctor@(::vl::ObjectBox<[T]> const &)[impl0]::value': null,
     'NI$vl::ObjectBox::$__ctor@([T] &&)[impl0]::_object': null,
     'NI$vl::ObjectBox::$__ctor@([T] const &)[impl0]::_object': null,
     'NI$vl::ObjectBox::object': null,
-    'NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> &&)[impl0]::value': null,
-    'NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &(::vl::ObjectBox<[T]> const &)[impl0]::value': null,
     'NI$vl::ObjectBox::operator =@::vl::ObjectBox<[T]> &([T] const &)[impl0]::_object': null,
     'NI$vl::POD': null,
     'NI$vl::POD::Result': null,

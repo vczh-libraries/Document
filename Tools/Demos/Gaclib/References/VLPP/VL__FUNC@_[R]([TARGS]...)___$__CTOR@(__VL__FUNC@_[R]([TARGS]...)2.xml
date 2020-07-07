@@ -1,4 +1,4 @@
-<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor" declFile="Function.h" declId="FB$vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; &amp;&amp;)[impl0]"><summary>Move a function reference.</summary><param name="function">The function reference to move.</param><signature><![CDATA[ Func(
+<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor" declFile="Function.h" declId="FB$vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; &amp;&amp;)[decl0]"><summary>Move a functor.</summary><param name="function">The functor to move.</param><signature><![CDATA[ Func(
     Func<R(
 TArgs...)> && function
 );

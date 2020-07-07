@@ -1,3 +1,3 @@
-<Document symbolId="vl::Lazy::Value@[T] const &amp;()" accessor="public" category="Function" name="Value" declFile="Lazy.h" declId="FB$vl::Lazy::Value@[T] const &amp;()[impl0]"><summary>Get the evaluation result. If it has not been calculated yet, it will run the evaluation and cache the result. You will not need to calculate for the second time.</summary><returns>The evaluation result.</returns><signature><![CDATA[T const & Value(
+<Document symbolId="vl::Lazy::Value@[T] const &amp;()" accessor="public" category="Function" name="Value" declFile="Lazy.h" declId="FB$vl::Lazy::Value@[T] const &amp;()[impl0]"><summary>Get the evaluation result. If the evaluation has not been performed, it will run the evaluation function and cache the result.</summary><returns>The evaluation result.</returns><signature><![CDATA[T const & Value(
 ) const;
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::i64toa@::vl::AString(::vl::vint64_t)" accessor="" category="Function" name="i64toa" declFile="String.h" declId="FB$vl::i64toa@::vl::AString(::vl::vint64_t)[decl0]"><summary>Convert a 64-bits signed interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[AString i64toa(
+<Document symbolId="vl::i64toa@::vl::AString(::vl::vint64_t)" accessor="" category="Function" name="i64toa" declFile="String.h" declId="FB$vl::i64toa@::vl::AString(::vl::vint64_t)[decl0]"><summary>Convert a signed 64-bits interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[AString i64toa(
     vint64_t number
 );
 ]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/><symbol name="vint64_t" docId="vl::vint64_t" declFile="Basic.h" declId="NI$vl::vint64_t"/></seealsos></Document>

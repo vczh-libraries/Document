@@ -1,0 +1,2 @@
+<Document symbolId="vl::DateTime::minute" accessor="public" category="Variable" name="minute" declFile="Basic.h" declId="NI$vl::DateTime::minute"><summary>The minute, from 0 to 59.</summary><signature><![CDATA[vint minute;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,3 +1,3 @@
-<Document symbolId="vl::collections::LazyList::First@[T]()" accessor="public" category="Function" name="First" declFile="Operation.h" declId="FB$vl::collections::LazyList::First@[T]()[impl0]"><summary>Get the first value in the lazy list. An exception will raise if the lazy list is empty.</summary><returns>The first value.</returns><signature><![CDATA[T First(
+<Document symbolId="vl::collections::LazyList::First@[T]()" accessor="public" category="Function" name="First" declFile="Operation.h" declId="FB$vl::collections::LazyList::First@[T]()[impl0]"><summary>Get the first value in the lazy list. It will crash if the lazy list is empty.</summary><returns>The first value.</returns><signature><![CDATA[T First(
 ) const;
 ]]></signature></Document>

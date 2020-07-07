@@ -1,4 +1,4 @@
-<Document symbolId="vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Lazy.h" declId="FB$vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; const &amp;)[impl0]"><summary>Copy an evaluation.</summary><param name="lazy">The evaluation to copy.</param><signature><![CDATA[ Lazy(
+<Document symbolId="vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Lazy.h" declId="FB$vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; const &amp;)[decl0]"><summary>Create an evaluation by copying another one.</summary><param name="lazy">The evaluation to copy.</param><signature><![CDATA[ Lazy(
     Lazy<T> const & lazy
 );
 ]]></signature><seealsos><symbol name="Lazy" docId="vl::Lazy" declFile="Lazy.h" declId="NI$vl::Lazy"/></seealsos></Document>

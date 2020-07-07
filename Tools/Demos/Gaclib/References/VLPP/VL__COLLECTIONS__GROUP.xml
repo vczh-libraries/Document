@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::Group" accessor="" category="Class" name="Group" declFile="Dictionary.h" declId="NI$vl::collections::Group"><summary>Group, which is similar to an dictionary, but a group can associate multiple values with a key.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys.</typeparam><typeparam name="VK">Type of the key type of values.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::collections::Group" accessor="" category="Class" name="Group" declFile="Dictionary.h" declId="NI$vl::collections::Group"><summary>Group: one to many map container.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys. It is recommended to use the default value.</typeparam><typeparam name="VK">Type of the key type of values. It is recommended to use the default value.</typeparam><signature><![CDATA[template <
     typename KT, 
     typename VT, 
     typename KK /* optional */, 

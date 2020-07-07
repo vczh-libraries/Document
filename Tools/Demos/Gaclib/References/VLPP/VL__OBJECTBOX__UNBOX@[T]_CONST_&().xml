@@ -1,3 +1,3 @@
-<Document symbolId="vl::ObjectBox::Unbox@[T] const &amp;()" accessor="public" category="Function" name="Unbox" declFile="Basic.h" declId="FB$vl::ObjectBox::Unbox@[T] const &amp;()[impl0]"><summary>Unbox the value.</summary><returns>The original value.</returns><signature><![CDATA[T const & Unbox(
+<Document symbolId="vl::ObjectBox::Unbox@[T] const &amp;()" accessor="public" category="Function" name="Unbox" declFile="Basic.h" declId="FB$vl::ObjectBox::Unbox@[T] const &amp;()[impl0]"><summary>Get the boxed data of a value type.</summary><returns>The unboxed data of a value type.</returns><signature><![CDATA[T const & Unbox(
 );
 ]]></signature></Document>

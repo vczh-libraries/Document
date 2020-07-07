@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::ListBase" accessor="" category="Class" name="ListBase" declFile="List.h" declId="NI$vl::collections::ListBase"><summary>Base type for a list container.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::collections::ListBase" accessor="" category="Class" name="ListBase" declFile="List.h" declId="NI$vl::collections::ListBase"><summary>Base type for all list containers.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam><signature><![CDATA[template <
     typename T, 
     typename K /* optional */
 >

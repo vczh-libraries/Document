@@ -1,4 +1,4 @@
-<Document symbolId="vl::wtoa@::vl::AString(::vl::WString const &amp;)" accessor="" category="Function" name="wtoa" declFile="String.h" declId="FB$vl::wtoa@::vl::AString(::vl::WString const &amp;)[decl0]"><summary>Convert an Unicode string to an Ansi string.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[AString wtoa(
+<Document symbolId="vl::wtoa@::vl::AString(::vl::WString const &amp;)" accessor="" category="Function" name="wtoa" declFile="String.h" declId="FB$vl::wtoa@::vl::AString(::vl::WString const &amp;)[decl0]"><summary>Convert a Unicode string to an Ansi string.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[AString wtoa(
     WString const & string
 );
 ]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

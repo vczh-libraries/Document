@@ -1,0 +1,8 @@
+<Document symbolId="vl::collections::Range@::vl::collections::LazyList&lt;[T]&gt;([T], [T])" accessor="" category="Function" name="Range" declFile="Operation.h" declId="FB$vl::collections::Range@::vl::collections::LazyList&lt;[T]&gt;([T], [T])[impl0]"><summary>Create a lazy list with a series of increasing number.</summary><typeparam name="T">Type of elements.</typeparam><returns>A lazy list of increasing numbers.</returns><param name="start">The first number.</param><param name="count">Total amount of increasing numbers.</param><signature><![CDATA[template <
+    typename T
+>
+LazyList<T> Range(
+    T start,
+    T count
+);
+]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

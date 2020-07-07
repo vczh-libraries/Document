@@ -1,3 +1,10 @@
-<Document symbolId="vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()" accessor="public" category="Function" name="Distinct" declFile="Operation.h" declId="FB$vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()[impl0]"><summary>Create a new lazy list with all elements in this lazy list. If some elements appear several times, only one will be kept.</summary><returns>The created lazy list.</returns><signature><![CDATA[LazyList<T> Distinct(
+<Document symbolId="vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()" accessor="public" category="Function" name="Distinct" declFile="Operation.h" declId="FB$vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()[impl0]"><summary>Create a new lazy list with duplicated elements removed in this lazy list.</summary><returns>The created lazy list.</returns><example><![CDATA[
+ int main()
+ {
+     vint xs[] = {1, 2, 2, 3, 3, 3, 4, 4, 5};
+     auto ys = From(xs).Distinct();
+     FOREACH(vint, y, ys) Console::Write(itow(y) + L" ");
+ }
+ ]]></example><signature><![CDATA[LazyList<T> Distinct(
 ) const;
 ]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>
