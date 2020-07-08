@@ -1,5 +1,5 @@
 <example><![CDATA[
- BEGIN_GLOBAL_STOREGE_CLASS(MyStorage)
+ BEGIN_GLOBAL_STORAGE_CLASS(MyStorage)
      Ptr<vint> data;
  INITIALIZE_GLOBAL_STORAGE_CLASS
      data = new vint(100);
