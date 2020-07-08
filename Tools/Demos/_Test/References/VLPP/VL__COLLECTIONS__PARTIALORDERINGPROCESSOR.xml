@@ -1,11 +1,9 @@
 <Document symbolId="vl::collections::PartialOrderingProcessor" accessor="" category="Class" name="PartialOrderingProcessor" declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor"><summary>
- Partial ordering item sorter.
- This class sorts items in a partial order using the given dependency information.
- Node stored in this class using the index of items.
- If a depends on b, then a.ins-&gt;Contains(b) &amp;&amp; b.outs-&gt;Contains(a).
- The sorting result is a list of strong connected components in order.
- If a depends on b, then the component containing a appears after the component containing b.
- Node could represent a sub class if InitWithSubClass is called.
+ PartialOrderingProcessor is used to sort objects by given relationships among them.
+ The relationship is defined by dependance.
+ If A depends on B, then B will be place before A after sorting.
+ If a group of objects depends on each other by the given relationship,
+ they will be grouped together in the sorting result.
  </summary><signature><![CDATA[class PartialOrderingProcessor
     : Object;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

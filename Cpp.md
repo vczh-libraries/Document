@@ -27,7 +27,6 @@
 ### Document Generation
 
 - [ ] `DocGen.ps1`
-  - [ ] XML document for `PartialOrderingProcessor`
   - [ ] `DocGen.ps1 build-website` builds `WebsiteSource` and download websites.
   - [ ] `DocGen.ps1 copy` copies files from `website`, `website-doc1`, code index HTML files, `Cpp.js`, `Cpp.css`. `favicon.ico` to `vczh-libraries.github.io`.
   - [ ] Complete tutorials for Vlpp.
