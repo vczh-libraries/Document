@@ -1,0 +1,3 @@
+Accepted: 1[A, B][X, Y]
+Discarded in as: 2[C, D]
+Discarded in as: 3[Z, W]

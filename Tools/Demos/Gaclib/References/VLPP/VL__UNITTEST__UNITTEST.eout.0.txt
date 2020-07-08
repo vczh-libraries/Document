@@ -1,0 +1,10 @@
+Failures are suppressed.
+c:\code\vczhlibraries\document\tools\examples\vlpp\example.h
+    This is a test category
+        This is a test case
+        true
+    This is another test category
+        some information
+        true
+Passed test files: 1/1
+Passed test cases: 3/3
