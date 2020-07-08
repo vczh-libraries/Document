@@ -29,9 +29,6 @@
 - [ ] `DocGen.ps1`
   - [ ] Tutorial for Vlpp
   - [ ] XML document for `PartialOrderingProcessor`
-  - [ ] `DocGen.ps1 verify` searches for all example xml files, compile and run them with header code according to which project are they in.
-    - [ ] Report all failed examples, save all example outputs to another group of files.
-    - [ ] Capture console application output to `Refefences\CATEGORY\ID.eout.index.xml`
   - [ ] `DocGen.ps1 build-website` builds `WebsiteSource` and download websites.
   - [ ] `DocGen.ps1 copy` copies files from `website`, `website-doc1`, code index HTML files, `Cpp.js`, `Cpp.css`. `favicon.ico` to `vczh-libraries.github.io`.
   - [ ] `DocGen.ps1` executes all steps (`build-index`, `index`, `verify`, `build-website`, `copy`) in order.
@@ -52,7 +49,6 @@
     - [ ] Mark license on source files, generated files and codegen tools
 - [ ] Improve `WebsiteSource`
   - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
-  - [ ] Convert `<example>` to `<program>`
   - [ ] `FileIndex.xml`: file tree view
   - [ ] `SymbolIndex.xml`: symbol tree view, fragments will be generated in `WebsiteSource`
   - [ ] `Sources/Source.html`: HTML fragment for source files, hyper links are converted to numbers
