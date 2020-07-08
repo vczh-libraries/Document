@@ -1,0 +1,20 @@
+Component 0: sub classes 0
+Component 1: sub classes 3 2 1
+Component 2: sub classes 4
+Component 3: sub classes 5
+Sub class 0
+    : apple_1 apple_2
+    <- sub classes 1
+Sub class 1
+    : ball_1 ball_2
+    <- sub classes 2
+Sub class 2
+    : cat_1 cat_2
+    <- sub classes 3 4
+Sub class 3
+    : dog_1 dog_2
+    <- sub classes 1 5
+Sub class 4
+    : elephant_1 elephant_2
+Sub class 5
+    : fish_1 fish_2

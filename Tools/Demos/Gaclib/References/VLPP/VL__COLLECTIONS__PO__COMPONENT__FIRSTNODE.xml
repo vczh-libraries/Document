@@ -1,0 +1,5 @@
+<Document symbolId="vl::collections::po::Component::firstNode" accessor="public" category="Variable" name="firstNode" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Component::firstNode"><summary>
+ Pointer to the array of all indexes of nodes in this component.
+ Index is used in <symbol name="nodes" docId="vl::collections::PartialOrderingProcessor::nodes" declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor::nodes"/>.
+ </summary><signature><![CDATA[vint const * firstNode;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

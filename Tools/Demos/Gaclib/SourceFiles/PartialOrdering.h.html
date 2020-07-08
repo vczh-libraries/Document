@@ -31,19 +31,50 @@ Partial Ordering
 
 		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::collections::po"><div>po</div></div>
 		{
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Node contains extra information for sorted objects.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::po::Node"><div><div class="token cpp_type">Node</div></div></div>
 			{
 				<div class="token cpp_keyword ">bool</div>					<div class="def" id="NI$vl::collections::po::Node::visited"><div><div class="token cpp_field">visited</div></div></div> = <div class="token cpp_keyword ">false</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;The index used in [F:vl.collections.PartialOrderingProcessor.components], specifying the component that contain this node.&lt;/summary&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="NI$vl::collections::po::Node::component"><div><div class="token cpp_field">component</div></div></div> = -<div class="token cpp_number ">1</div>;
-				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;*		<div class="def" id="NI$vl::collections::po::Node::ins"><div><div class="token cpp_field">ins</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;					<div class="token cpp_comment ">// all nodes that this node depends on</div>
-				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;*		<div class="def" id="NI$vl::collections::po::Node::outs"><div><div class="token cpp_field">outs</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;					<div class="token cpp_comment ">// all nodes that depend on this node</div>
-				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>*				<div class="def" id="NI$vl::collections::po::Node::firstSubClassItem"><div><div class="token cpp_field">firstSubClassItem</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;	<div class="token cpp_comment ">// index of the first item in this sub class node</div>
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="NI$vl::collections::po::Node::subClassItemCount"><div><div class="token cpp_field">subClassItemCount</div></div></div> = <div class="token cpp_number ">0</div>;			<div class="token cpp_comment ">// the number of items in this sub class node</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;All nodes that this node depends on.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;*		<div class="def" id="NI$vl::collections::po::Node::ins"><div><div class="token cpp_field">ins</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;All nodes that this node is depended by.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;*		<div class="def" id="NI$vl::collections::po::Node::outs"><div><div class="token cpp_field">outs</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// If [M:vl.collections.PartialOrderingProcessor.InitWithSubClass`2] is used,</div>
+				<div class="token cpp_comment ">/// a node becomes a sub class representing objects.</div>
+				<div class="token cpp_comment ">/// An object will not be shared by different sub classes.</div>
+				<div class="token cpp_comment ">/// In this case, this field is a pointer to an array of indexes of objects.</div>
+				<div class="token cpp_comment ">/// The index is used in &quot;items&quot; argument in [M:vl.collections.PartialOrderingProcessor.InitWithSubClass`2]</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>*				<div class="def" id="NI$vl::collections::po::Node::firstSubClassItem"><div><div class="token cpp_field">firstSubClassItem</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// When &lt;see cref=&quot;firstSubClassItem&quot;/&gt; is available,</div>
+				<div class="token cpp_comment ">/// this field is the number of indexes in the array.</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="NI$vl::collections::po::Node::subClassItemCount"><div><div class="token cpp_field">subClassItemCount</div></div></div> = <div class="token cpp_number ">0</div>;
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Component is a unit in sorting result.</div>
+			<div class="token cpp_comment ">/// If a component contains more than one node,</div>
+			<div class="token cpp_comment ">/// it means that nodes in this component depend on each other by the given relationship.</div>
+			<div class="token cpp_comment ">/// It is not possible to tell which node should be place before others for all nodes in this component.</div>
+			<div class="token cpp_comment ">/// If all nodes are completely partial ordered,</div>
+			<div class="token cpp_comment ">/// there should be only one node in all components.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::collections::po::Component"><div><div class="token cpp_type">Component</div></div></div>
 			{
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// Pointer to the array of all indexes of nodes in this component.</div>
+				<div class="token cpp_comment ">/// Index is used in [F:vl.collections.PartialOrderingProcessor.nodes].</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>*				<div class="def" id="NI$vl::collections::po::Component::firstNode"><div><div class="token cpp_field">firstNode</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;The number of nodes in this component.&lt;/summary&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="NI$vl::collections::po::Component::nodeCount"><div><div class="token cpp_field">nodeCount</div></div></div> = <div class="token cpp_number ">0</div>;
 			};
 		}
@@ -52,42 +83,113 @@ Partial Ordering
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[16]$vl::collections"><div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div></div>
 	{
 		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-		<div class="token cpp_comment ">/// Partial ordering item sorter.</div>
-		<div class="token cpp_comment ">/// This class sorts items in a partial order using the given dependency information.</div>
-		<div class="token cpp_comment ">/// Node stored in this class using the index of items.</div>
-		<div class="token cpp_comment ">/// If a depends on b, then a.ins-&amp;gt;Contains(b) &amp;amp;&amp;amp; b.outs-&amp;gt;Contains(a).</div>
-		<div class="token cpp_comment ">/// The sorting result is a list of strong connected components in order.</div>
-		<div class="token cpp_comment ">/// If a depends on b, then the component containing a appears after the component containing b.</div>
-		<div class="token cpp_comment ">/// Node could represent a sub class if InitWithSubClass is called.</div>
+		<div class="token cpp_comment ">/// PartialOrderingProcessor is used to sort objects by given relationships among them.</div>
+		<div class="token cpp_comment ">/// The relationship is defined by dependance.</div>
+		<div class="token cpp_comment ">/// If A depends on B, then B will be place before A after sorting.</div>
+		<div class="token cpp_comment ">/// If a group of objects depends on each other by the given relationship,</div>
+		<div class="token cpp_comment ">/// they will be grouped together in the sorting result.</div>
 		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::collections::PartialOrderingProcessor"><div><div class="token cpp_type">PartialOrderingProcessor</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
 		{
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::PartialOrderingProcessor::GroupOf::TList"><div><div class="token cpp_type">TList</div></div></div>&gt;
 			<div class="token cpp_keyword ">using</div> <div class="def" id="NI$vl::collections::PartialOrderingProcessor::GroupOf"><div><div class="token cpp_type">GroupOf</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group'], [], [])"><div class="token cpp_type">Group</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::GroupOf::TList'], [], [])"><div class="token cpp_type">TList</div></div>::ElementType, <div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::GroupOf::TList'], [], [])"><div class="token cpp_type">TList</div></div>::ElementType&gt;;
 		<div class="token cpp_keyword ">protected</div>:
-			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::collections::PartialOrderingProcessor::emptyList"><div><div class="token cpp_field">emptyList</div></div></div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group'], [], [])"><div class="token cpp_type">Group</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;			<div class="def" id="NI$vl::collections::PartialOrderingProcessor::ins"><div><div class="token cpp_field">ins</div></div></div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group'], [], [])"><div class="token cpp_type">Group</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;			<div class="def" id="NI$vl::collections::PartialOrderingProcessor::outs"><div><div class="token cpp_field">outs</div></div></div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::collections::PartialOrderingProcessor::firstNodesBuffer"><div><div class="token cpp_field">firstNodesBuffer</div></div></div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::collections::PartialOrderingProcessor::subClassItemsBuffer"><div><div class="token cpp_field">subClassItemsBuffer</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::collections::PartialOrderingProcessor::emptyList"><div><div class="token cpp_field">emptyList</div></div></div>;				<div class="token cpp_comment ">// make a pointer to an empty list available</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group'], [], [])"><div class="token cpp_type">Group</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;			<div class="def" id="NI$vl::collections::PartialOrderingProcessor::ins"><div><div class="token cpp_field">ins</div></div></div>;					<div class="token cpp_comment ">// if a depends on b, ins.Contains(a, b)</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Group'], [], [])"><div class="token cpp_type">Group</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;			<div class="def" id="NI$vl::collections::PartialOrderingProcessor::outs"><div><div class="token cpp_field">outs</div></div></div>;					<div class="token cpp_comment ">// if a depends on b, outs.Contains(b, a)</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::collections::PartialOrderingProcessor::firstNodesBuffer"><div><div class="token cpp_field">firstNodesBuffer</div></div></div>;		<div class="token cpp_comment ">// one buffer for all Component::firstNode</div>
+			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::collections::PartialOrderingProcessor::subClassItemsBuffer"><div><div class="token cpp_field">subClassItemsBuffer</div></div></div>;	<div class="token cpp_comment ">// one buffer for all Node::firstSubClassItem</div>
 
 			<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::collections::PartialOrderingProcessor::InitNodes@void(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitNodes@void(::vl::vint)'], [], [])"><div class="token cpp_function">InitNodes</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::PartialOrderingProcessor::InitNodes@void(::vl::vint)[decl0]::itemCount"><div>itemCount</div></div>);
 			<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::collections::PartialOrderingProcessor::VisitUnvisitedNode@void(::vl::collections::po::Node &, ::vl::collections::Array<::vl::vint> &, ::vl::vint &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::VisitUnvisitedNode@void(::vl::collections::po::Node &, ::vl::collections::Array<::vl::vint> &, ::vl::vint &)'], [], [])"><div class="token cpp_function">VisitUnvisitedNode</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::po'], [], [])">po</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::po::Node'], [], [])"><div class="token cpp_type">Node</div></div>&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::VisitUnvisitedNode@void(::vl::collections::po::Node &, ::vl::collections::Array<::vl::vint> &, ::vl::vint &)[decl0]::node"><div>node</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::VisitUnvisitedNode@void(::vl::collections::po::Node &, ::vl::collections::Array<::vl::vint> &, ::vl::vint &)[decl0]::reversedOrder"><div>reversedOrder</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::VisitUnvisitedNode@void(::vl::collections::po::Node &, ::vl::collections::Array<::vl::vint> &, ::vl::vint &)[decl0]::used"><div>used</div></div>);
 			<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::collections::PartialOrderingProcessor::AssignUnassignedNode@void(::vl::collections::po::Node &, ::vl::vint, ::vl::vint &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::AssignUnassignedNode@void(::vl::collections::po::Node &, ::vl::vint, ::vl::vint &)'], [], [])"><div class="token cpp_function">AssignUnassignedNode</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::po'], [], [])">po</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::po::Node'], [], [])"><div class="token cpp_type">Node</div></div>&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::AssignUnassignedNode@void(::vl::collections::po::Node &, ::vl::vint, ::vl::vint &)[decl0]::node"><div>node</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::PartialOrderingProcessor::AssignUnassignedNode@void(::vl::collections::po::Node &, ::vl::vint, ::vl::vint &)[decl0]::componentIndex"><div>componentIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::AssignUnassignedNode@void(::vl::collections::po::Node &, ::vl::vint, ::vl::vint &)[decl0]::used"><div>used</div></div>);
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Nodes.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;After &lt;see cref=&quot;Sort&quot;/&gt; is called, this field stores all nodes referenced by sorted components.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// The same order is kept as the &quot;items&quot; argument in &lt;see cref=&quot;InitWithGroup`1&quot;/&gt;, and &lt;see cref=&quot;InitWithFunc`2&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// If sub classing is enabled by calling &lt;see cref=&quot;InitWithSubClass`2&quot;/&gt;,</div>
+			<div class="token cpp_comment ">/// a node represents a sub class of objects.</div>
+			<div class="token cpp_comment ">/// In this case, the order in this field does not matter,</div>
+			<div class="token cpp_comment ">/// [F:vl.collections.po.Node.firstSubClassItem] stores indexes of objects in this sub class.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::po'], [], [])">po</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::po::Node'], [], [])"><div class="token cpp_type">Node</div></div>&gt;				<div class="def" id="NI$vl::collections::PartialOrderingProcessor::nodes"><div><div class="token cpp_field">nodes</div></div></div>;
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Strong connected components in order.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;After &lt;see cref=&quot;Sort&quot;/&gt; is called, this field stores all sorted components in order.&lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::po'], [], [])">po</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::po::Component'], [], [])"><div class="token cpp_type">Component</div></div>&gt;			<div class="def" id="NI$vl::collections::PartialOrderingProcessor::components"><div><div class="token cpp_field">components</div></div></div>;
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Sort. This method can only be called once.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Sort objects by given relationships. It will crash if this method is called for more than once.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// One and only one of &lt;see cref=&quot;InitWithGroup`1&quot;/&gt;, &lt;see cref=&quot;InitWithFunc`2&quot;/&gt; or &lt;see cref=&quot;InitWithSubClass`2&quot;/&gt; must be called to set data for sorting.</div>
+			<div class="token cpp_comment ">/// And then call &lt;see cref=&quot;Sort&quot;/&gt; to sort objects and store the result in &lt;see cref=&quot;components&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::collections::PartialOrderingProcessor::Sort@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::Sort@void()'], [], [])"><div class="token cpp_function">Sort</div></div></div>();
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Initialize the processor, specifying dependency relationships as a group.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TList&quot;&gt;Type of the first parameter.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;Items.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;depGroup&quot;&gt;Dependences. If a depends on b, then depGroups[a].Contains(b) == true.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Set data for sorting, by providing a list for objects, and a group for their relationship.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TList&quot;&gt;Type of the list for objects. &lt;see cref=&quot;Array`*&quot;/&gt;, &lt;see cref=&quot;List`*&quot;/&gt; or &lt;see cref=&quot;SortedList`*&quot;/&gt; are recommended.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;List of objects for sorting.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;depGroup&quot;&gt;Relationship of objects for sorting in &lt;see cref=&quot;Group`*&quot;/&gt;. Both keys and values are elements in &quot;items&quot;. To say that a depends on b, do depGroup.Add(a, b).&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     //         apple</div>
+			<div class="token cpp_comment ">///     //           ^</div>
+			<div class="token cpp_comment ">///     //           |</div>
+			<div class="token cpp_comment ">///     //         ball</div>
+			<div class="token cpp_comment ">///     //         ^  \</div>
+			<div class="token cpp_comment ">///     //        /    V</div>
+			<div class="token cpp_comment ">///     //     cat &lt;-- dog</div>
+			<div class="token cpp_comment ">///     //       ^     ^</div>
+			<div class="token cpp_comment ">///     //      /       \</div>
+			<div class="token cpp_comment ">///     //  elephant   fish</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     List&lt;WString&gt; items;</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;elephant&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;fish&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;ball&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;cat&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;dog&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;apple&quot;);</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     Group&lt;WString, WString&gt; depGroup;</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;ball&quot;, L&quot;apple&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;cat&quot;, L&quot;ball&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;ball&quot;, L&quot;dog&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;dog&quot;, L&quot;cat&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;elephant&quot;, L&quot;cat&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;fish&quot;, L&quot;dog&quot;);</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     PartialOrderingProcessor pop;</div>
+			<div class="token cpp_comment ">///     pop.InitWithGroup(items, depGroup);</div>
+			<div class="token cpp_comment ">///     pop.Sort();</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     for (vint i = 0; i &lt; pop.components.Count(); i++)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         auto&amp; c = pop.components[i];</div>
+			<div class="token cpp_comment ">///         Console::WriteLine(</div>
+			<div class="token cpp_comment ">///             L&quot;Component &quot; + itow(i) + L&quot;: &quot; +</div>
+			<div class="token cpp_comment ">///             Range&lt;vint&gt;(0, c.nodeCount)</div>
+			<div class="token cpp_comment ">///                 .Select([&amp;](vint ni){ return items[c.firstNode[ni]]; })</div>
+			<div class="token cpp_comment ">///                 .Aggregate([](const WString&amp; a, const WString&amp; b){ return a + L&quot; &quot; + b; })</div>
+			<div class="token cpp_comment ">///         );</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     for (vint i = 0; i &lt; pop.nodes.Count(); i++)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         auto&amp; n = pop.nodes[i];</div>
+			<div class="token cpp_comment ">///         if(n.outs-&gt;Count() &gt; 0)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(</div>
+			<div class="token cpp_comment ">///                 L&quot;Node &quot; + items[i] + L&quot; &lt;- &quot; +</div>
+			<div class="token cpp_comment ">///                 From(*n.outs)</div>
+			<div class="token cpp_comment ">///                     .Select([&amp;](vint ni){ return items[ni]; })</div>
+			<div class="token cpp_comment ">///                     .Aggregate([](const WString&amp; a, const WString&amp; b){ return a + L&quot; &quot; + b; })</div>
+			<div class="token cpp_comment ">///             );</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &)[impl0]::TList"><div><div class="token cpp_type">TList</div></div></div>&gt;
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &)[impl0]"><div><div class="token cpp_function">InitWithGroup</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &)[impl0]::TList'], [], [])"><div class="token cpp_type">TList</div></div>&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &)[impl0]::items"><div><div class="token cpp_argument">items</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::GroupOf'], [], [])"><div class="token cpp_type">GroupOf</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &)[impl0]::TList'], [], [])"><div class="token cpp_type">TList</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &)[impl0]::depGroup"><div><div class="token cpp_argument">depGroup</div></div></div>)
 			{
@@ -115,11 +217,75 @@ Partial Ordering
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitNodes@void(::vl::vint)'], [], [])"><div class="token cpp_function">InitNodes</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &)[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>.Count());
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Initialize the processor, specifying dependency relationships as a callback function.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TList&quot;&gt;Type of the first parameter.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TFunc&quot;&gt;Type of the second parameter.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;Items.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;depFunc&quot;&gt;Dependences. If a depends on b, then depFunc(a, b) == true.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Set data for sorting, by providing a list for objects, and a function for their relationship.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TList&quot;&gt;Type of the list for objects. &lt;see cref=&quot;Array`*&quot;/&gt;, &lt;see cref=&quot;List`*&quot;/&gt; or &lt;see cref=&quot;SortedList`*&quot;/&gt; are recommended.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TFunc&quot;&gt;Type of the function that defines relationships of objects.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;List of objects for sorting.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;depFunc&quot;&gt;Relationship of objects for sorting, both arguments are elements in &quot;items&quot;. To say that a depends on b, depFunc(a, b) must returns true.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     //         apple</div>
+			<div class="token cpp_comment ">///     //           ^</div>
+			<div class="token cpp_comment ">///     //           |</div>
+			<div class="token cpp_comment ">///     //         ball</div>
+			<div class="token cpp_comment ">///     //         ^  \</div>
+			<div class="token cpp_comment ">///     //        /    V</div>
+			<div class="token cpp_comment ">///     //     cat &lt;-- dog</div>
+			<div class="token cpp_comment ">///     //       ^     ^</div>
+			<div class="token cpp_comment ">///     //      /       \</div>
+			<div class="token cpp_comment ">///     //  elephant   fish</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     List&lt;WString&gt; items;</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;elephant&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;fish&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;ball&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;cat&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;dog&quot;);</div>
+			<div class="token cpp_comment ">///     items.Add(L&quot;apple&quot;);</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     auto depFunc = [](const WString&amp; a, const WString&amp; b)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         return</div>
+			<div class="token cpp_comment ">///             (a == L&quot;ball&quot; &amp;&amp; b == L&quot;apple&quot;) ||</div>
+			<div class="token cpp_comment ">///             (a == L&quot;cat&quot; &amp;&amp; b == L&quot;ball&quot;) ||</div>
+			<div class="token cpp_comment ">///             (a == L&quot;ball&quot; &amp;&amp; b == L&quot;dog&quot;) ||</div>
+			<div class="token cpp_comment ">///             (a == L&quot;dog&quot; &amp;&amp; b == L&quot;cat&quot;) ||</div>
+			<div class="token cpp_comment ">///             (a == L&quot;elephant&quot; &amp;&amp; b == L&quot;cat&quot;) ||</div>
+			<div class="token cpp_comment ">///             (a == L&quot;fish&quot; &amp;&amp; b == L&quot;dog&quot;)</div>
+			<div class="token cpp_comment ">///             ;</div>
+			<div class="token cpp_comment ">///     };</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     PartialOrderingProcessor pop;</div>
+			<div class="token cpp_comment ">///     pop.InitWithFunc(items, depFunc);</div>
+			<div class="token cpp_comment ">///     pop.Sort();</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     for (vint i = 0; i &lt; pop.components.Count(); i++)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         auto&amp; c = pop.components[i];</div>
+			<div class="token cpp_comment ">///         Console::WriteLine(</div>
+			<div class="token cpp_comment ">///             L&quot;Component &quot; + itow(i) + L&quot;: &quot; +</div>
+			<div class="token cpp_comment ">///             Range&lt;vint&gt;(0, c.nodeCount)</div>
+			<div class="token cpp_comment ">///                 .Select([&amp;](vint ni){ return items[c.firstNode[ni]]; })</div>
+			<div class="token cpp_comment ">///                 .Aggregate([](const WString&amp; a, const WString&amp; b){ return a + L&quot; &quot; + b; })</div>
+			<div class="token cpp_comment ">///         );</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     for (vint i = 0; i &lt; pop.nodes.Count(); i++)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         auto&amp; n = pop.nodes[i];</div>
+			<div class="token cpp_comment ">///         if(n.outs-&gt;Count() &gt; 0)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(</div>
+			<div class="token cpp_comment ">///                 L&quot;Node &quot; + items[i] + L&quot; &lt;- &quot; +</div>
+			<div class="token cpp_comment ">///                 From(*n.outs)</div>
+			<div class="token cpp_comment ">///                     .Select([&amp;](vint ni){ return items[ni]; })</div>
+			<div class="token cpp_comment ">///                     .Aggregate([](const WString&amp; a, const WString&amp; b){ return a + L&quot; &quot; + b; })</div>
+			<div class="token cpp_comment ">///             );</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]::TList"><div><div class="token cpp_type">TList</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]::TFunc"><div><div class="token cpp_type">TFunc</div></div></div>&gt;
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]"><div><div class="token cpp_function">InitWithFunc</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]::TList'], [], [])"><div class="token cpp_type">TList</div></div>&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]::items"><div><div class="token cpp_argument">items</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]::TFunc'], [], [])"><div class="token cpp_type">TFunc</div></div>&amp;&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]::depFunc"><div><div class="token cpp_argument">depFunc</div></div></div>)
 			{
@@ -137,12 +303,100 @@ Partial Ordering
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithGroup@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &)'], [], [])"><div class="token cpp_function">InitWithGroup</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]::items'], [], [])"><div class="token cpp_argument">items</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithFunc@void([TList] const &, [TFunc] &&)[impl0]::depGroup'], [], [])">depGroup</div>);
 			}
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Initialize the processor, specifying dependency relationships and sub class classification as two groups.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TList&quot;&gt;Type of the first parameter.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TSubClass&quot;&gt;Type of the sub class.&lt;/typeparam&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;Items.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;depGroup&quot;&gt;Dependences. If a depends on b, then depGroups[a].Contains(b) == true.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;subClasses&quot;&gt;To put multiple items in a node to represent a sub class, use these items as keys, use a unique value as a value, and put them in subClasses.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Set data for sorting, by providing a list for objects, and a group for their relationship, and a dictionary for sub classing objects.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TList&quot;&gt;Type of the list for objects. &lt;see cref=&quot;Array`*&quot;/&gt;, &lt;see cref=&quot;List`*&quot;/&gt; or &lt;see cref=&quot;SortedList`*&quot;/&gt; are recommended.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TSubClass&quot;&gt;Type of a sub class.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;items&quot;&gt;List of objects for sorting.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;depGroup&quot;&gt;Relationship of objects for sorting in &lt;see cref=&quot;Group`*&quot;/&gt;. Both keys and values are elements in &quot;items&quot;. To say that a depends on b, do depGroup.Add(a, b).&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;subClasses&quot;&gt;Sub classing objects. Keys are elements in &quot;items&quot;. If multiple keys have the same value in this dictionary, then these objects are in the same sub class.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// Relationships are defined on objects.</div>
+			<div class="token cpp_comment ">/// By sub classing objects,</div>
+			<div class="token cpp_comment ">/// relationships of sub classes are calculated from &quot;depGroup&quot;.</div>
+			<div class="token cpp_comment ">/// If object A in sub class X depends on object B in sub class Y, then sub class X depends on sub class Y.</div>
+			<div class="token cpp_comment ">/// It is allowed that relatipnships on sub classes are not completely partial ordered,</div>
+			<div class="token cpp_comment ">/// in this case, some components may contain multiple sub classes.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     //         apple</div>
+			<div class="token cpp_comment ">///     //           ^</div>
+			<div class="token cpp_comment ">///     //           |</div>
+			<div class="token cpp_comment ">///     //         ball</div>
+			<div class="token cpp_comment ">///     //         ^  \</div>
+			<div class="token cpp_comment ">///     //        /    V</div>
+			<div class="token cpp_comment ">///     //     cat &lt;-- dog</div>
+			<div class="token cpp_comment ">///     //       ^     ^</div>
+			<div class="token cpp_comment ">///     //      /       \</div>
+			<div class="token cpp_comment ">///     //  elephant   fish</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     List&lt;WString&gt; items;</div>
+			<div class="token cpp_comment ">///     for (vint i = 1; i &lt;= 2; i++)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         items.Add(L&quot;apple_&quot; + itow(i));</div>
+			<div class="token cpp_comment ">///         items.Add(L&quot;ball_&quot; + itow(i));</div>
+			<div class="token cpp_comment ">///         items.Add(L&quot;cat_&quot; + itow(i));</div>
+			<div class="token cpp_comment ">///         items.Add(L&quot;dog_&quot; + itow(i));</div>
+			<div class="token cpp_comment ">///         items.Add(L&quot;elephant_&quot; + itow(i));</div>
+			<div class="token cpp_comment ">///         items.Add(L&quot;fish_&quot; + itow(i));</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     Group&lt;WString, WString&gt; depGroup;</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;ball_2&quot;, L&quot;apple_1&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;cat_2&quot;, L&quot;ball_1&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;ball_2&quot;, L&quot;dog_1&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;dog_2&quot;, L&quot;cat_1&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;elephant_2&quot;, L&quot;cat_1&quot;);</div>
+			<div class="token cpp_comment ">///     depGroup.Add(L&quot;fish_2&quot;, L&quot;dog_1&quot;);</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     Dictionary&lt;WString, vint&gt; subClass;</div>
+			<div class="token cpp_comment ">///     for (vint i = 1; i &lt;= 2; i++)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         subClass.Add(L&quot;apple_&quot; + itow(i), 1);</div>
+			<div class="token cpp_comment ">///         subClass.Add(L&quot;ball_&quot; + itow(i), 2);</div>
+			<div class="token cpp_comment ">///         subClass.Add(L&quot;cat_&quot; + itow(i), 3);</div>
+			<div class="token cpp_comment ">///         subClass.Add(L&quot;dog_&quot; + itow(i), 4);</div>
+			<div class="token cpp_comment ">///         subClass.Add(L&quot;elephant_&quot; + itow(i), 5);</div>
+			<div class="token cpp_comment ">///         subClass.Add(L&quot;fish_&quot; + itow(i), 6);</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     PartialOrderingProcessor pop;</div>
+			<div class="token cpp_comment ">///     pop.InitWithSubClass(items, depGroup, subClass);</div>
+			<div class="token cpp_comment ">///     pop.Sort();</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     for (vint i = 0; i &lt; pop.components.Count(); i++)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         auto&amp; c = pop.components[i];</div>
+			<div class="token cpp_comment ">///         Console::WriteLine(</div>
+			<div class="token cpp_comment ">///             L&quot;Component &quot; + itow(i) + L&quot;: sub classes&quot; +</div>
+			<div class="token cpp_comment ">///             Range&lt;vint&gt;(0, c.nodeCount)</div>
+			<div class="token cpp_comment ">///                 .Select([&amp;](vint ni) { return c.firstNode[ni]; })</div>
+			<div class="token cpp_comment ">///                 .Aggregate&lt;WString&gt;(L&quot;&quot;, [](const WString&amp; a, vint b) { return a + L&quot; &quot; + itow(b); })</div>
+			<div class="token cpp_comment ">///         );</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     for (vint i = 0; i &lt; pop.nodes.Count(); i++)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         auto&amp; n = pop.nodes[i];</div>
+			<div class="token cpp_comment ">///         Console::WriteLine(L&quot;Sub class &quot; + itow(i));</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         Console::WriteLine(</div>
+			<div class="token cpp_comment ">///             Range&lt;vint&gt;(0, n.subClassItemCount)</div>
+			<div class="token cpp_comment ">///                 .Select([&amp;](vint si) { return n.firstSubClassItem[si]; })</div>
+			<div class="token cpp_comment ">///                 .Aggregate&lt;WString&gt;(L&quot;    :&quot;, [&amp;](const WString&amp; a, vint b) { return a + L&quot; &quot; + items[b]; })</div>
+			<div class="token cpp_comment ">///         );</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         if (n.outs-&gt;Count() &gt; 0)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(</div>
+			<div class="token cpp_comment ">///                 From(*n.outs)</div>
+			<div class="token cpp_comment ">///                     .Aggregate&lt;WString&gt;(L&quot;    &lt;- sub classes&quot;, [](const WString&amp; a, vint b) { return a + L&quot; &quot; + itow(b); })</div>
+			<div class="token cpp_comment ">///             );</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::TList"><div><div class="token cpp_type">TList</div></div></div>, <div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::TSubClass"><div><div class="token cpp_type">TSubClass</div></div></div>&gt;
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]"><div><div class="token cpp_function">InitWithSubClass</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::TList'], [], [])"><div class="token cpp_type">TList</div></div>&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::items"><div><div class="token cpp_argument">items</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::GroupOf'], [], [])"><div class="token cpp_type">GroupOf</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::TList'], [], [])"><div class="token cpp_type">TList</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::depGroup"><div><div class="token cpp_argument">depGroup</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="token cpp_keyword ">typename</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::TList'], [], [])"><div class="token cpp_type">TList</div></div>::ElementType, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::TSubClass'], [], [])"><div class="token cpp_type">TSubClass</div></div>&gt;&amp; <div class="def" id="NI$vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &, ::vl::collections::PartialOrderingProcessor::GroupOf<[TList]> const &, ::vl::collections::Dictionary<ElementType, [TSubClass]> const &)[impl0]::subClasses"><div><div class="token cpp_argument">subClasses</div></div></div>)
 			{

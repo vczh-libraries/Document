@@ -1,0 +1,8 @@
+Component 0: apple
+Component 1: ball dog cat
+Component 2: fish
+Component 3: elephant
+Node ball <- cat
+Node cat <- dog elephant
+Node dog <- ball fish
+Node apple <- ball

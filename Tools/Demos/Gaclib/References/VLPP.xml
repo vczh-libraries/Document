@@ -340,6 +340,19 @@ TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" file="VL__FUNC@_[R]([TAR
       <document name="function Remove" docId="vl::collections::SortedList::Remove@bool([K] const &amp;)" file="VL__COLLECTIONS__SORTEDLIST__REMOVE@BOOL([K]_CONST_&amp;)"/>
     </document>
   </namespace>
+  <namespace name="::vl::collections::po">
+    <document name="struct Component" docId="vl::collections::po::Component" file="VL__COLLECTIONS__PO__COMPONENT">
+      <document name="variable firstNode" docId="vl::collections::po::Component::firstNode" file="VL__COLLECTIONS__PO__COMPONENT__FIRSTNODE"/>
+      <document name="variable nodeCount" docId="vl::collections::po::Component::nodeCount" file="VL__COLLECTIONS__PO__COMPONENT__NODECOUNT"/>
+    </document>
+    <document name="struct Node" docId="vl::collections::po::Node" file="VL__COLLECTIONS__PO__NODE">
+      <document name="variable component" docId="vl::collections::po::Node::component" file="VL__COLLECTIONS__PO__NODE__COMPONENT"/>
+      <document name="variable firstSubClassItem" docId="vl::collections::po::Node::firstSubClassItem" file="VL__COLLECTIONS__PO__NODE__FIRSTSUBCLASSITEM"/>
+      <document name="variable ins" docId="vl::collections::po::Node::ins" file="VL__COLLECTIONS__PO__NODE__INS"/>
+      <document name="variable outs" docId="vl::collections::po::Node::outs" file="VL__COLLECTIONS__PO__NODE__OUTS"/>
+      <document name="variable subClassItemCount" docId="vl::collections::po::Node::subClassItemCount" file="VL__COLLECTIONS__PO__NODE__SUBCLASSITEMCOUNT"/>
+    </document>
+  </namespace>
   <namespace name="::vl::console">
     <document name="class Console" docId="vl::console::Console" file="VL__CONSOLE__CONSOLE">
       <document name="function Read" docId="vl::console::Console::Read@::vl::WString()" file="VL__CONSOLE__CONSOLE__READ@__VL__WSTRING()"/>
@@ -351,7 +364,7 @@ TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" file="VL__FUNC@_[R]([TAR
   </namespace>
   <namespace name="::vl::function_lambda">
     <document name="function ConvertToFunction" docId="vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])" file="VL__FUNCTION_LAMBDA__CONVERTTOFUNCTION@__VL__FUNCTION_LAMBDA__FU"/>
-    <document name="function Lambda" docId="vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@&lt;[R]([TArgs]...) ([TObject] ::) *&gt;2::Type([T])" file="VL__FUNCTION_LAMBDA__LAMBDA@__VL__FUNCTION_LAMBDA__LAMBDARETRIVE"/>
+    <document name="function Lambda" docId="vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@&lt;[R]([TArgs]...) ([TObject] ::) *&gt;::Type([T])" file="VL__FUNCTION_LAMBDA__LAMBDA@__VL__FUNCTION_LAMBDA__LAMBDARETRIVE"/>
   </namespace>
   <namespace name="::vl::unittest">
     <document name="class UnitTest" docId="vl::unittest::UnitTest" file="VL__UNITTEST__UNITTEST">

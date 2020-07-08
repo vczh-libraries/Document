@@ -1,0 +1,9 @@
+<Document symbolId="vl::collections::po::Component" accessor="" category="Struct" name="Component" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Component"><summary>
+ Component is a unit in sorting result.
+ If a component contains more than one node,
+ it means that nodes in this component depend on each other by the given relationship.
+ It is not possible to tell which node should be place before others for all nodes in this component.
+ If all nodes are completely partial ordered,
+ there should be only one node in all components.
+ </summary><signature><![CDATA[struct Component;
+]]></signature></Document>
