@@ -29,9 +29,7 @@
 - [ ] `DocGen.ps1`
   - [ ] `DocGen.ps1 build-website` builds `WebsiteSource` and download websites.
   - [ ] `DocGen.ps1 copy` copies files from `website`, `website-doc1`, code index HTML files, `Cpp.js`, `Cpp.css`. `favicon.ico` to `vczh-libraries.github.io`.
-  - [ ] Complete tutorials for Vlpp.
   - [ ] Fix signature for Curry.
-  - [ ] Update website.
 - [ ] Refine document comment
   - [ ] VlppOS
     - [ ] Mark license on source files, generated files and codegen tools
