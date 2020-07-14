@@ -1,0 +1,10 @@
+<Document symbolId="vl::UrlEncodeQuery@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="UrlEncodeQuery" declFile="HttpUtility.h" declId="FB$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Encode a text as part of the url. This function can be used to create arguments in an URL.</summary><returns>The encoded text.</returns><param name="query">The text to encode.</param><remarks><p>
+ When a character is not a digit or a letter,
+ it is first encoded to UTF-8,
+ then each byte is written as &quot;%&quot; with two hex digits.
+ </p><p>
+ This function is only available in Windows.
+ </p></remarks><signature><![CDATA[WString UrlEncodeQuery(
+    WString const & query
+);
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

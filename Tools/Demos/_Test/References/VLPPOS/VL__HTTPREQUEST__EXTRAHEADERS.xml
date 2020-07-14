@@ -1,0 +1,2 @@
+<Document symbolId="vl::HttpRequest::extraHeaders" accessor="public" category="Variable" name="extraHeaders" declFile="HttpUtility.h" declId="NI$vl::HttpRequest::extraHeaders"><summary>A dictionary to contain extra headers.</summary><signature><![CDATA[HeaderMap extraHeaders;
+]]></signature><seealsos><symbol name="HeaderMap" declFile="HttpUtility.h" declId="NI$vl::HttpRequest::HeaderMap"/></seealsos></Document>

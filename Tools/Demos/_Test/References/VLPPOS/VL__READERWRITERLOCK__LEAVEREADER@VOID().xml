@@ -1,0 +1,3 @@
+<Document symbolId="vl::ReaderWriterLock::LeaveReader@void()" accessor="public" category="Function" name="LeaveReader" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::LeaveReader@void()[decl0]"><summary>Release a reader lock.</summary><signature><![CDATA[void LeaveReader(
+);
+]]></signature></Document>

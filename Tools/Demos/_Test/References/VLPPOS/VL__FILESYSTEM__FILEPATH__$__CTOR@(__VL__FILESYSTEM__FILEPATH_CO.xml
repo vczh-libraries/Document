@@ -1,0 +1,4 @@
+<Document symbolId="vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &amp;)[decl0]"><summary>Copy a file path.</summary><param name="_filePath">The file path to copy.</param><signature><![CDATA[ FilePath(
+    FilePath const & _filePath
+);
+]]></signature><seealsos><symbol name="FilePath" docId="vl::filesystem::FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"/></seealsos></Document>

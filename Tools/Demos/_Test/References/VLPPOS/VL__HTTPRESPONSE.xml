@@ -1,0 +1,2 @@
+<Document symbolId="vl::HttpResponse" accessor="" category="Class" name="HttpResponse" declFile="HttpUtility.h" declId="NI$vl::HttpResponse"><summary>A type representing an http response.</summary><signature><![CDATA[class HttpResponse;
+]]></signature></Document>

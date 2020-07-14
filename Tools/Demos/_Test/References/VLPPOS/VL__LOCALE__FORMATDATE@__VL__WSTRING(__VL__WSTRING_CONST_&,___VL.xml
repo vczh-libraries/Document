@@ -1,0 +1,8 @@
+<Document symbolId="vl::Locale::FormatDate@::vl::WString(::vl::WString const &amp;, ::vl::DateTime)" accessor="public" category="Function" name="FormatDate" declFile="Locale.h" declId="FB$vl::Locale::FormatDate@::vl::WString(::vl::WString const &amp;, ::vl::DateTime)[decl0]"><summary>Convert a date to a formatted string.</summary><returns>The formatted string.</returns><param name="format">The format to use.</param><param name="date">The date to convert.</param><remarks>
+ The value of the &quot;format&quot; argument must come from any of the following functions.
+ Otherwise the behavior is undefined.
+ <ul><li><symbol name="GetShortDateFormats" docId="vl::Locale::GetShortDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" declFile="Locale.h" declId="FB$vl::Locale::GetShortDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"/></li><li><symbol name="GetLongDateFormats" docId="vl::Locale::GetLongDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" declFile="Locale.h" declId="FB$vl::Locale::GetLongDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"/></li><li><symbol name="GetYearMonthDateFormats" docId="vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" declFile="Locale.h" declId="FB$vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"/></li></ul></remarks><signature><![CDATA[WString FormatDate(
+    WString const & format,
+    DateTime date
+) const;
+]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

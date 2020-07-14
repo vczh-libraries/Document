@@ -1,0 +1,8 @@
+<Document symbolId="vl::Locale::FormatTime@::vl::WString(::vl::WString const &amp;, ::vl::DateTime)" accessor="public" category="Function" name="FormatTime" declFile="Locale.h" declId="FB$vl::Locale::FormatTime@::vl::WString(::vl::WString const &amp;, ::vl::DateTime)[decl0]"><summary>Convert a time to a formatted string.</summary><returns>The formatted string.</returns><param name="format">The format to use.</param><param name="time">The time to convert.</param><remarks>
+ The value of the &quot;format&quot; argument must come from any of the following functions.
+ Otherwise the behavior is undefined.
+ <ul><li><symbol name="GetLongTimeFormats" docId="vl::Locale::GetLongTimeFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" declFile="Locale.h" declId="FB$vl::Locale::GetLongTimeFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"/></li><li><symbol name="GetShortTimeFormats" docId="vl::Locale::GetShortTimeFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" declFile="Locale.h" declId="FB$vl::Locale::GetShortTimeFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"/></li></ul></remarks><signature><![CDATA[WString FormatTime(
+    WString const & format,
+    DateTime time
+) const;
+]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

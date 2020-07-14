@@ -1,0 +1,5 @@
+<Document symbolId="vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)" accessor="public" category="Function" name="Write" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)[decl0]"><summary>Write to the current position and step forward. It will crash if the stream is <b>unwritable</b> or <b>unavailable</b>.</summary><returns>Returns the actual size of the content that has written. Returns 0 if a stream has not enough space to write.</returns><param name="_buffer">A buffer storing the content to write.</param><param name="_size">The size of the content that is expected to write.</param><signature><![CDATA[vint Write(
+    void * _buffer,
+    vint _size
+);
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

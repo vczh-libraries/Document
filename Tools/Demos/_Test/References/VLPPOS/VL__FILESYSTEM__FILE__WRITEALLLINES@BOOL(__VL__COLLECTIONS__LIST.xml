@@ -1,0 +1,6 @@
+<Document symbolId="vl::filesystem::File::WriteAllLines@bool(::vl::collections::List&lt;::vl::WString&gt; &amp;, bool, ::vl::stream::BomEncoder::Encoding)" accessor="public" category="Function" name="WriteAllLines" declFile="FileSystem.h" declId="FB$vl::filesystem::File::WriteAllLines@bool(::vl::collections::List&lt;::vl::WString&gt; &amp;, bool, ::vl::stream::BomEncoder::Encoding)[decl0]"><summary>Write text to the file.</summary><returns>Returns true if this operation succeeded.</returns><param name="lines">The text to write, with CRLF appended after all lines.</param><param name="bom">Set to true to add a corresponding BOM at the beginning of the file according to the encoding, the default value is true.</param><param name="encoding">The text encoding, the default encoding is UTF-16.</param><signature><![CDATA[bool WriteAllLines(
+    collections::List<WString> & lines,
+    bool bom /* optional */,
+    stream::BomEncoder::Encoding encoding /* optional */
+);
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol name="Encoding" docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/></seealsos></Document>

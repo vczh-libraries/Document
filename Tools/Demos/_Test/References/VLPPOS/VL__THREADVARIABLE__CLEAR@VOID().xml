@@ -1,0 +1,3 @@
+<Document symbolId="vl::ThreadVariable::Clear@void()" accessor="public" category="Function" name="Clear" declFile="Threading.h" declId="FB$vl::ThreadVariable::Clear@void()[impl0]"><summary>Remove the data from this storage.</summary><signature><![CDATA[void Clear(
+);
+]]></signature></Document>

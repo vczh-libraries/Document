@@ -1,0 +1,3 @@
+<Document symbolId="vl::stream::IStream::CanRead@bool()" accessor="public" category="Function" name="CanRead" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanRead@bool()[decl0]"><summary>Test if the stream is <b>readable</b>.</summary><returns>Returns true if the stream is <b>readable</b>.</returns><signature><![CDATA[bool CanRead(
+) const;
+]]></signature></Document>

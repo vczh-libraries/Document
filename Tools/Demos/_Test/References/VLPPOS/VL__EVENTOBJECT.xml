@@ -1,0 +1,3 @@
+<Document symbolId="vl::EventObject" accessor="" category="Class" name="EventObject" declFile="Threading.h" declId="NI$vl::EventObject"><summary>Event.</summary><signature><![CDATA[class EventObject
+    : WaitableObject;
+]]></signature><basetypes><symbol name="WaitableObject" docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/></basetypes></Document>

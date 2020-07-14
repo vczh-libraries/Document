@@ -1,0 +1,3 @@
+<Document symbolId="vl::stream::TextReader::ReadLine@::vl::WString()" accessor="public" category="Function" name="ReadLine" declFile="Accessor.h" declId="FB$vl::stream::TextReader::ReadLine@::vl::WString()[decl0]"><summary>Read a string until a line breaks is reached.</summary><returns>The string without the line break. If the reader reaches the end, it returns an empty string.</returns><signature><![CDATA[WString ReadLine(
+);
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

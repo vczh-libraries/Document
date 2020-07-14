@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interfaces.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_STREAM_INTERFACES</div>
+<div class="disabled">#define VCZH_STREAM_INTERFACES</div>
+
+<div class="disabled">#include &lt;Vlpp.h&gt;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[30]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
+	{
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// Interface for streams.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// Please notice that, even if you get a stream object, if [M:vl.stream.IStream.IsAvailable] returns false, all other methods cannot be used.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// Not all methods are available for all types of streams.</div>
+		<div class="token cpp_comment ">/// Feature testing functions must be called before calling other methods, if it is not sure that what kind of stream is being operated against:</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">///   &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Readable&lt;/b&gt;: A stream is readable if [M:vl.stream.IStream.CanRead] returns true.&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Peekable&lt;/b&gt;: A stream is peekable if [M:vl.stream.IStream.CanPeek] returns true.&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Writable&lt;/b&gt;: A stream is writable if [M:vl.stream.IStream.CanWrite] returns true.&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Seekable&lt;/b&gt;: A stream is readable if [M:vl.stream.IStream.CanSeek] returns true.&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Finite&lt;/b&gt;: A stream is finite if [M:vl.stream.IStream.IsLimited] returns true.&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///   &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::IStream"><div><div class="token cpp_type">IStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
+		{
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the stream is &lt;b&gt;readable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the stream is &lt;b&gt;readable&lt;/b&gt;.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::IStream::CanRead@bool()[decl0]"><div><div class="token cpp_function">CanRead</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the stream is &lt;b&gt;writable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the stream is &lt;b&gt;writable&lt;/b&gt;.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::IStream::CanWrite@bool()[decl0]"><div><div class="token cpp_function">CanWrite</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the stream is &lt;b&gt;seekable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the stream is &lt;b&gt;seekable&lt;/b&gt;.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::IStream::CanSeek@bool()[decl0]"><div><div class="token cpp_function">CanSeek</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the stream is &lt;b&gt;peekable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the stream is &lt;b&gt;peekable&lt;/b&gt;.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::IStream::CanPeek@bool()[decl0]"><div><div class="token cpp_function">CanPeek</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the content of the stream is &lt;b&gt;finite&lt;/b&gt;. A writable stream can also be limited, it means that you can only write limited content to the stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the content of the stream is &lt;b&gt;finite&lt;/b&gt;.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::IStream::IsLimited@bool()[decl0]"><div><div class="token cpp_function">IsLimited</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test if the stream is &lt;b&gt;available&lt;/b&gt;. For example, if you create a readable [T:vl.stream.FileStream] giving a wrong file name, it will be unavailable.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the stream is &lt;b&gt;available&lt;/b&gt;.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::IStream::IsAvailable@bool()[decl0]"><div><div class="token cpp_function">IsAvailable</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Close the stream, making the stream &lt;b&gt;unavailable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::IStream::Close@void()[decl0]"><div><div class="token cpp_function">Close</div></div></div>()=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the current position in the stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The position in the stream. Returns -1 if the stream is &lt;b&gt;unavailable&lt;/b&gt;.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div>					<div class="def" id="FB$vl::stream::IStream::Position@::vl::pos_t()[decl0]"><div><div class="token cpp_function">Position</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the size of the content in this stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The size of the content in this stream. Returns -1 if the size is &lt;b&gt;unsizable&lt;/b&gt; or &lt;b&gt;unavailable&lt;/b&gt;.&lt;/returns&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div>					<div class="def" id="FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]"><div><div class="token cpp_function">Size</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Step forward or backward from the current position. It will crash if the stream is &lt;b&gt;unseekable&lt;/b&gt; or &lt;b&gt;unavailable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;The length to step forward if it is a positive number. The length to step backward if it is a negative number&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::IStream::Seek@void(::vl::pos_t)[decl0]"><div><div class="token cpp_function">Seek</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::IStream::Seek@void(::vl::pos_t)[decl0]::_size"><div>_size</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Step forward from the beginning. It will crash if the stream is &lt;b&gt;unseekable&lt;/b&gt; or &lt;b&gt;unavailable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;The length to step forward.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::IStream::SeekFromBegin@void(::vl::pos_t)[decl0]"><div><div class="token cpp_function">SeekFromBegin</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::IStream::SeekFromBegin@void(::vl::pos_t)[decl0]::_size"><div>_size</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Step backward from the end. It will crash if the stream is &lt;b&gt;unseekable&lt;/b&gt; or &lt;b&gt;unavailable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;The length to step backward.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::IStream::SeekFromEnd@void(::vl::pos_t)[decl0]"><div><div class="token cpp_function">SeekFromEnd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div> <div class="def" id="NI$vl::stream::IStream::SeekFromEnd@void(::vl::pos_t)[decl0]::_size"><div>_size</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Read from the current position and step forward. It will crash if the stream is &lt;b&gt;unreadable&lt;/b&gt; or &lt;b&gt;unavailable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the actual size of the content that has read. Returns 0 if a stream has no more data to read.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;A buffer to store the content.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;The size of the content that is expected to read.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)[decl0]"><div><div class="token cpp_function">Read</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Write to the current position and step forward. It will crash if the stream is &lt;b&gt;unwritable&lt;/b&gt; or &lt;b&gt;unavailable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the actual size of the content that has written. Returns 0 if a stream has not enough space to write.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;A buffer storing the content to write.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;The size of the content that is expected to write.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)[decl0]"><div><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Read from the current position without stepping forward. It will crash if the stream is &lt;b&gt;unpeekable&lt;/b&gt; or &lt;b&gt;unavailable&lt;/b&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the actual size of the content that is read. Returns 0 if a stream has no more data to read.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;A buffer to store the content.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;The size of the content that is expected to read.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::IStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]"><div><div class="token cpp_function">Peek</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::IStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::IStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>)=<div class="token cpp_number ">0</div>;
+		};
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder interface. This interface defines a writable transformation from one stream to another stream. You can create a [T:vl.stream.EncoderStream] after you have an encoder.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::IEncoder"><div><div class="token cpp_type">IEncoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
+		{
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_comment ">/// &lt;summary&gt;Set a target &lt;b&gt;writable&lt;/b&gt; stream to receive data. &lt;see cref=&quot;Write&quot;/&gt; transforms the content and write to this tream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_stream&quot;&gt;The target &lt;b&gt;writable&lt;/b&gt; stream.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::IEncoder::Setup@void(::vl::stream::IStream *)[decl0]"><div><div class="token cpp_function">Setup</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>* <div class="def" id="NI$vl::stream::IEncoder::Setup@void(::vl::stream::IStream *)[decl0]::_stream"><div>_stream</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Stop the transformation, ensuring all content is written to the target stream.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">virtual</div>	<div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::IEncoder::Close@void()[decl0]"><div><div class="token cpp_function">Close</div></div></div>()=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Transform content and write to the target stream.</div>
+			<div class="token cpp_comment ">/// This function could use caching to improve performance.</div>
+			<div class="token cpp_comment ">/// Please do not expect that all transformed content will be written to the target stream immediately.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;</div>
+			<div class="token cpp_comment ">/// Returns the actual size of the content that has written &lt;b&gt;before&lt;/b&gt; transforming.</div>
+			<div class="token cpp_comment ">/// A successful write operation may only cache the data without actually write anything to the target stream.</div>
+			<div class="token cpp_comment ">/// &lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;A buffer storing the content to transform.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;The expected size of the content in bytes in &quot;_buffer&quot; to use.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::IEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]"><div><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::IEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::IEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>)=<div class="token cpp_number ">0</div>;
+		};
+		
+		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder interface. This interface defines a readable transformation from one stream to another stream. You can create a [T:vl.stream.DecoderStream] after you have an decoder.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::IDecoder"><div><div class="token cpp_type">IDecoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
+		{
+		<div class="token cpp_keyword ">public</div>:
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Set a target &lt;b&gt;readable&lt;/b&gt; stream.</div>
+			<div class="token cpp_comment ">/// &lt;see cref=&quot;Read&quot;/&gt; reads from this tream and transform the content.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_stream&quot;&gt;The target &lt;b&gt;readable&lt;/b&gt; stream.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::IDecoder::Setup@void(::vl::stream::IStream *)[decl0]"><div><div class="token cpp_function">Setup</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>* <div class="def" id="NI$vl::stream::IDecoder::Setup@void(::vl::stream::IStream *)[decl0]::_stream"><div>_stream</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Stop the transformation.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">virtual</div>	<div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::IDecoder::Close@void()[decl0]"><div><div class="token cpp_function">Close</div></div></div>()=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;Read from the target stream and transform the content.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the actual size of the content has read after transforming.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;A buffer to store the content.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;The expected size of the content in bytes in &quot;_buffer&quot; to receive.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)[decl0]"><div><div class="token cpp_function">Read</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>)=<div class="token cpp_number ">0</div>;
+		};
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl'
+        ]
+    },
+    'vl::Interface': {
+        'displayNameInHtml': '<span class="cpp_type">Interface</span>',
+        'impls': [
+            'NI$vl::Interface'
+        ],
+        'decls': []
+    },
+    'vl::pos_t': {
+        'displayNameInHtml': '<span class="cpp_type">pos_t</span>',
+        'impls': [
+            'NI$vl::pos_t'
+        ],
+        'decls': []
+    },
+    'vl::stream': {
+        'displayNameInHtml': 'vl::stream',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::stream',
+            'NF[1]$vl::stream',
+            'NF[2]$vl::stream',
+            'NF[3]$vl::stream',
+            'NF[4]$vl::stream',
+            'NF[5]$vl::stream',
+            'NF[6]$vl::stream',
+            'NF[7]$vl::stream',
+            'NF[8]$vl::stream',
+            'NF[9]$vl::stream'
+        ]
+    },
+    'vl::stream::IStream': {
+        'displayNameInHtml': '<span class="cpp_type">IStream</span>',
+        'impls': [
+            'NI$vl::stream::IStream'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::stream': null,
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::stream': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[28]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[29]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::stream': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[30]$vl': null,
+    'NF[31]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[32]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[33]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[34]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[37]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[38]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[39]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[40]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::stream': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::stream': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::stream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::stream': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::stream': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NI$vl::Interface': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::pos_t': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::stream::IStream': null,
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

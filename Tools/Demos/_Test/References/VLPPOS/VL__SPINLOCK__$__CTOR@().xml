@@ -1,0 +1,3 @@
+<Document symbolId="vl::SpinLock::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Threading.h" declId="FB$vl::SpinLock::$__ctor@()[decl0]"><summary>Create a spin lock.</summary><signature><![CDATA[ SpinLock(
+);
+]]></signature></Document>

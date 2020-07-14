@@ -1,0 +1,5 @@
+<Document symbolId="vl::Mutex::Open@bool(bool, ::vl::WString const &amp;)" accessor="public" category="Function" name="Open" declFile="Threading.h" declId="FB$vl::Mutex::Open@bool(bool, ::vl::WString const &amp;)[decl0]"><summary>Open an existing global named mutex.</summary><returns>Returns true if this operation succeeded.</returns><param name="inheritable">Set to true make the mutex visible to all all child processes. This argument is only used in Windows.</param><param name="name">Name of the mutex. This argument is ignored in Linux.</param><signature><![CDATA[bool Open(
+    bool inheritable,
+    WString const & name
+);
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

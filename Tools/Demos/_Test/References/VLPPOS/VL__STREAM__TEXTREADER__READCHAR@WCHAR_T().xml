@@ -1,0 +1,3 @@
+<Document symbolId="vl::stream::TextReader::ReadChar@wchar_t()" accessor="public" category="Function" name="ReadChar" declFile="Accessor.h" declId="FB$vl::stream::TextReader::ReadChar@wchar_t()[decl0]"><summary>Read a single character.</summary><returns>The character.</returns><signature><![CDATA[wchar_t ReadChar(
+);
+]]></signature></Document>

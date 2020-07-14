@@ -1,0 +1,10 @@
+<Document symbolId="vl::stream::CompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" accessor="" category="Function" name="CompressStream" declFile="CompressionStream.h" declId="FB$vl::stream::CompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)[decl0]"><summary>Compress data from a <b>readable</b> input stream to a <b>writable</b> output stream.</summary><returns>Data copied in bytes.</returns><param name="inputStream">The <b>readable</b> input stream.</param><param name="outputStream">The <b>writable</b> output stream.</param><remarks>
+ Data is compressed in multiple batches,
+ the is expected output stream to have data in multiple parts.
+ In each part, the first 4 bytes is the data before compression in bytes.
+ the rest is the compressed data.
+ </remarks><signature><![CDATA[void CompressStream(
+    stream::IStream & inputStream,
+    stream::IStream & outputStream
+);
+]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>

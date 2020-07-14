@@ -277,7 +277,7 @@
 
 <div class="expandable"><div class="disabled">    _ACRTIMP void __cdecl perror(_In_opt_z_ char const* _ErrMsg);
 #endif // _CRT_FUNCTIONS_REQUIRED</div>
-<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$perror@void(char const *)[decl0]"><div><div class="token cpp_function">perror</div></div></div>(  <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$perror@void(char const *)[decl0]::_ErrMsg"><div>_ErrMsg</div></div>);</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">void</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="FB$perror@void(char const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['perror@void(char const *)'], [], [])"><div class="token cpp_function">perror</div></div></div>(  <div class="token cpp_keyword ">char</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="NI$perror@void(char const *)[decl0]::_ErrMsg"><div>_ErrMsg</div></div>);</div></div>
 
 
 
@@ -2325,8 +2325,7 @@ referencedSymbols = {
         'impls': [],
         'decls': [
             'FB$_rotl64@unsigned __int64(unsigned __int64, int)[decl0]',
-            'FB$_rotl64@unsigned __int64(unsigned __int64, int)[decl1]',
-            'FB$_rotl64@unsigned __int64(unsigned __int64, int)[decl2]'
+            'FB$_rotl64@unsigned __int64(unsigned __int64, int)[decl1]'
         ]
     },
     '_rotl@unsigned int(unsigned int, int)': {
@@ -2334,8 +2333,7 @@ referencedSymbols = {
         'impls': [],
         'decls': [
             'FB$_rotl@unsigned int(unsigned int, int)[decl0]',
-            'FB$_rotl@unsigned int(unsigned int, int)[decl1]',
-            'FB$_rotl@unsigned int(unsigned int, int)[decl2]'
+            'FB$_rotl@unsigned int(unsigned int, int)[decl1]'
         ]
     },
     '_rotr64@unsigned __int64(unsigned __int64, int)': {
@@ -2343,8 +2341,7 @@ referencedSymbols = {
         'impls': [],
         'decls': [
             'FB$_rotr64@unsigned __int64(unsigned __int64, int)[decl0]',
-            'FB$_rotr64@unsigned __int64(unsigned __int64, int)[decl1]',
-            'FB$_rotr64@unsigned __int64(unsigned __int64, int)[decl2]'
+            'FB$_rotr64@unsigned __int64(unsigned __int64, int)[decl1]'
         ]
     },
     '_rotr@unsigned int(unsigned int, int)': {
@@ -2352,8 +2349,7 @@ referencedSymbols = {
         'impls': [],
         'decls': [
             'FB$_rotr@unsigned int(unsigned int, int)[decl0]',
-            'FB$_rotr@unsigned int(unsigned int, int)[decl1]',
-            'FB$_rotr@unsigned int(unsigned int, int)[decl2]'
+            'FB$_rotr@unsigned int(unsigned int, int)[decl1]'
         ]
     },
     '_searchenv_s@::errno_t(char const *, char const *, char *, ::size_t)': {
@@ -2805,6 +2801,14 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'perror@void(char const *)': {
+        'displayNameInHtml': '<span class="cpp_function">perror</span>(<span class="cpp_keyword">char</span> <span class="cpp_keyword">const</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$perror@void(char const *)[decl0]',
+            'FB$perror@void(char const *)[decl1]'
+        ]
+    },
     'rsize_t': {
         'displayNameInHtml': '<span class="cpp_type">rsize_t</span>',
         'impls': [
@@ -2915,16 +2919,12 @@ symbolToFiles = {
     'FB$_mbstowcs_s_l@::errno_t(::size_t *, wchar_t [*] &, char const *, ::size_t, ::_locale_t)[impl0]': null,
     'FB$_rotl64@unsigned __int64(unsigned __int64, int)[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_rotl64@unsigned __int64(unsigned __int64, int)[decl1]': null,
-    'FB$_rotl64@unsigned __int64(unsigned __int64, int)[decl2]': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
     'FB$_rotl@unsigned int(unsigned int, int)[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_rotl@unsigned int(unsigned int, int)[decl1]': null,
-    'FB$_rotl@unsigned int(unsigned int, int)[decl2]': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
     'FB$_rotr64@unsigned __int64(unsigned __int64, int)[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_rotr64@unsigned __int64(unsigned __int64, int)[decl1]': null,
-    'FB$_rotr64@unsigned __int64(unsigned __int64, int)[decl2]': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
     'FB$_rotr@unsigned int(unsigned int, int)[decl0]': { 'htmlFileName': 'intrin.h', 'displayName': 'intrin.h' },
     'FB$_rotr@unsigned int(unsigned int, int)[decl1]': null,
-    'FB$_rotr@unsigned int(unsigned int, int)[decl2]': { 'htmlFileName': 'winnt.h', 'displayName': 'winnt.h' },
     'FB$_searchenv_s@::errno_t(char const *, char const *, char *, ::size_t)[decl0]': null,
     'FB$_searchenv_s@::errno_t(char const *, char const *, char [*] &)[impl0]': null,
     'FB$_set_doserrno@::errno_t(unsigned long)[decl0]': { 'htmlFileName': 'errno.h', 'displayName': 'errno.h' },
@@ -2954,6 +2954,8 @@ symbolToFiles = {
     'FB$lldiv@::lldiv_t(long long, long long)[decl0]': null,
     'FB$mbstowcs_s@::errno_t(::size_t *, wchar_t *, ::size_t, char const *, ::size_t)[decl0]': null,
     'FB$mbstowcs_s@::errno_t(::size_t *, wchar_t [*] &, char const *, ::size_t)[impl0]': null,
+    'FB$perror@void(char const *)[decl0]': null,
+    'FB$perror@void(char const *)[decl1]': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
     'FB$wcstombs_s@::errno_t(::size_t *, char *, ::size_t, wchar_t const *, ::size_t)[decl0]': null,
     'FB$wcstombs_s@::errno_t(::size_t *, char [*] &, wchar_t const *, ::size_t)[impl0]': null,
     'NI$_CRT_DOUBLE': null,

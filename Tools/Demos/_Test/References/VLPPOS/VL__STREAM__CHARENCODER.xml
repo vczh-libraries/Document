@@ -1,0 +1,4 @@
+<Document symbolId="vl::stream::CharEncoder" accessor="" category="Class" name="CharEncoder" declFile="CharFormat.h" declId="NI$vl::stream::CharEncoder"><summary>Base type of all character encoder.</summary><signature><![CDATA[class CharEncoder
+    : Object
+    , IEncoder;
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IEncoder" docId="vl::stream::IEncoder" declFile="Interfaces.h2" declId="NI$vl::stream::IEncoder"/></basetypes></Document>

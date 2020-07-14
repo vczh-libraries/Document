@@ -1,0 +1,2 @@
+<Document symbolId="vl::HttpRequest" accessor="" category="Class" name="HttpRequest" declFile="HttpUtility.h" declId="NI$vl::HttpRequest"><summary>An http requiest.</summary><signature><![CDATA[class HttpRequest;
+]]></signature></Document>
