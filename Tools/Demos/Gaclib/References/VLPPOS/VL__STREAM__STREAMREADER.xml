@@ -4,6 +4,6 @@
  To specify the encoding in the input stream,
  you are recommended to create a <symbol name="DecoderStream" docId="vl::stream::DecoderStream" declFile="Accessor.h" declId="NI$vl::stream::DecoderStream"/> with a <symbol name="CharDecoder" docId="vl::stream::CharDecoder" declFile="CharFormat.h" declId="NI$vl::stream::CharDecoder"/>,
  like <symbol name="BomDecoder" docId="vl::stream::BomDecoder" declFile="CharFormat.h" declId="NI$vl::stream::BomDecoder"/>, <symbol name="MbcsDecoder" docId="vl::stream::MbcsDecoder" declFile="CharFormat.h" declId="NI$vl::stream::MbcsDecoder"/>, <symbol name="Utf16Decoder" docId="vl::stream::Utf16Decoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf16Decoder"/>, <symbol name="Utf16BEDecoder" docId="vl::stream::Utf16BEDecoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf16BEDecoder"/> or <symbol name="Utf8Decoder" docId="vl::stream::Utf8Decoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf8Decoder"/>.
- </remarks><example index="0"/><signature><![CDATA[class StreamReader
+ </remarks><example index="0" output="false"/><signature><![CDATA[class StreamReader
     : TextReader;
 ]]></signature><basetypes><symbol name="TextReader" docId="vl::stream::TextReader" declFile="Accessor.h" declId="NI$vl::stream::TextReader"/></basetypes></Document>
