@@ -106,6 +106,17 @@ HTTP Utility
 	<div class="token cpp_comment ">/// This function is only available in Windows.</div>
 	<div class="token cpp_comment ">/// &lt;/p&gt;</div>
 	<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+	<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+	<div class="token cpp_comment ">/// int main()</div>
+	<div class="token cpp_comment ">/// {</div>
+	<div class="token cpp_comment ">///     HttpRequest request;</div>
+	<div class="token cpp_comment ">///     HttpResponse response;</div>
+	<div class="token cpp_comment ">///     request.SetHost(L&quot;http://www.msftncsi.com/ncsi.txt&quot;);</div>
+	<div class="token cpp_comment ">///     HttpQuery(request, response);</div>
+	<div class="token cpp_comment ">///     Console::WriteLine(L&quot;Status:&quot; + itow(response.statusCode));</div>
+	<div class="token cpp_comment ">///     Console::WriteLine(L&quot;Body:&quot; + response.GetBodyUtf8());</div>
+	<div class="token cpp_comment ">/// }</div>
+	<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">bool</div>				<div class="def" id="FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]"><div><div class="token cpp_function">HttpQuery</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest'], [], [])"><div class="token cpp_type">HttpRequest</div></div>&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]::request"><div>request</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse'], [], [])"><div class="token cpp_type">HttpResponse</div></div>&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]::response"><div>response</div></div>);
 
 	<div class="token cpp_comment ">/// &lt;summary&gt;Encode a text as part of the url. This function can be used to create arguments in an URL.&lt;/summary&gt;</div>

@@ -2,7 +2,7 @@
  This function will block the calling thread until the respons is returned.
  </p><p>
  This function is only available in Windows.
- </p></remarks><signature><![CDATA[bool HttpQuery(
+ </p></remarks><example index="0"/><signature><![CDATA[bool HttpQuery(
     HttpRequest const & request,
     HttpResponse & response
 );

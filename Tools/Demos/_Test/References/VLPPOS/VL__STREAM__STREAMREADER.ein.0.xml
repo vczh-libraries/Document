@@ -1,0 +1,10 @@
+<example output="false"><![CDATA[
+ int main()
+ {
+     FileStream fileStream(L"C:/a.txt", FileStream::ReadOnly);
+     Utf8Decoder decoder;
+     DecoderStream decoderStream(fileStream, decoder);
+     StreamReader reader(decoderStream);
+     Console::WriteLine(reader.ReadToEnd());
+ }
+ ]]></example>

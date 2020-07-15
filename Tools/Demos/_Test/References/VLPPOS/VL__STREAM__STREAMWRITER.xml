@@ -4,6 +4,6 @@
  To specify the encoding in the input stream,
  you are recommended to create a <symbol name="EncoderStream" docId="vl::stream::EncoderStream" declFile="Accessor.h" declId="NI$vl::stream::EncoderStream"/> with a <symbol name="CharEncoder" docId="vl::stream::CharEncoder" declFile="CharFormat.h" declId="NI$vl::stream::CharEncoder"/>,
  like <symbol name="BomEncoder" docId="vl::stream::BomEncoder" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder"/>, <symbol name="MbcsEncoder" docId="vl::stream::MbcsEncoder" declFile="CharFormat.h" declId="NI$vl::stream::MbcsEncoder"/>, <symbol name="Utf16Encoder" docId="vl::stream::Utf16Encoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf16Encoder"/>, <symbol name="Utf16BEEncoder" docId="vl::stream::Utf16BEEncoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf16BEEncoder"/> or <symbol name="Utf8Encoder" docId="vl::stream::Utf8Encoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf8Encoder"/>.
- </remarks><signature><![CDATA[class StreamWriter
+ </remarks><example index="0"/><signature><![CDATA[class StreamWriter
     : TextWriter;
 ]]></signature><basetypes><symbol name="TextWriter" docId="vl::stream::TextWriter" declFile="Accessor.h" declId="NI$vl::stream::TextWriter"/></basetypes></Document>

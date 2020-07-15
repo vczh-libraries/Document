@@ -4,7 +4,7 @@
  The callback to receive a big string.
  The argument is a reference to a <symbol name="StreamWriter" docId="vl::stream::StreamWriter" declFile="Accessor.h" declId="NI$vl::stream::StreamWriter"/>.
  After the callback is executed, everything written to the writer will be returned from &quot;GenerateToStream&quot;.
- </param><param name="block">Size of the cache in bytes.</param><signature><![CDATA[template <
+ </param><param name="block">Size of the cache in bytes.</param><example index="0"/><signature><![CDATA[template <
     typename TCallback
 >
 WString GenerateToStream(

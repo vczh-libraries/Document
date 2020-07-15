@@ -165,6 +165,29 @@ Helper Functions
 		<div class="token cpp_comment ">/// In each part, the first 4 bytes is the data before compression in bytes.</div>
 		<div class="token cpp_comment ">/// the rest is the compressed data.</div>
 		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     MemoryStream textStream, compressedStream, decompressedStream;</div>
+		<div class="token cpp_comment ">///     {</div>
+		<div class="token cpp_comment ">///         Utf8Encoder encoder;</div>
+		<div class="token cpp_comment ">///         EncoderStream encoderStream(textStream, encoder);</div>
+		<div class="token cpp_comment ">///         StreamWriter writer(encoderStream);</div>
+		<div class="token cpp_comment ">///         writer.Write(L&quot;Some text to compress.&quot;);</div>
+		<div class="token cpp_comment ">///     }</div>
+		<div class="token cpp_comment ">///     textStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     CompressStream(textStream, compressedStream);</div>
+		<div class="token cpp_comment ">///     compressedStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///     DecompressStream(compressedStream, decompressedStream);</div>
+		<div class="token cpp_comment ">///     decompressedStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     Utf8Decoder decoder;</div>
+		<div class="token cpp_comment ">///     DecoderStream decoderStream(decompressedStream, decoder);</div>
+		<div class="token cpp_comment ">///     StreamReader reader(decoderStream);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(reader.ReadToEnd());</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]"><div><div class="token cpp_function">CompressStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::inputStream"><div>inputStream</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::outputStream"><div>outputStream</div></div>);
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Decompress data from a &lt;b&gt;readable&lt;/b&gt; input stream (with compressed data) to a &lt;b&gt;writable&lt;/b&gt; output stream (with uncompressed data).&lt;/summary&gt;</div>
@@ -177,6 +200,29 @@ Helper Functions
 		<div class="token cpp_comment ">/// In each part, the first 4 bytes is the data before compression in bytes.</div>
 		<div class="token cpp_comment ">/// the rest is the compressed data.</div>
 		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     MemoryStream textStream, compressedStream, decompressedStream;</div>
+		<div class="token cpp_comment ">///     {</div>
+		<div class="token cpp_comment ">///         Utf8Encoder encoder;</div>
+		<div class="token cpp_comment ">///         EncoderStream encoderStream(textStream, encoder);</div>
+		<div class="token cpp_comment ">///         StreamWriter writer(encoderStream);</div>
+		<div class="token cpp_comment ">///         writer.Write(L&quot;Some text to compress.&quot;);</div>
+		<div class="token cpp_comment ">///     }</div>
+		<div class="token cpp_comment ">///     textStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     CompressStream(textStream, compressedStream);</div>
+		<div class="token cpp_comment ">///     compressedStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///     DecompressStream(compressedStream, decompressedStream);</div>
+		<div class="token cpp_comment ">///     decompressedStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     Utf8Decoder decoder;</div>
+		<div class="token cpp_comment ">///     DecoderStream decoderStream(decompressedStream, decoder);</div>
+		<div class="token cpp_comment ">///     StreamReader reader(decoderStream);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(reader.ReadToEnd());</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]"><div><div class="token cpp_function">DecompressStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::inputStream"><div>inputStream</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::outputStream"><div>outputStream</div></div>);
 	}
 }

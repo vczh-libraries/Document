@@ -113,6 +113,16 @@ Text Related
 		<div class="token cpp_comment ">/// you are recommended to create a &lt;see cref=&quot;DecoderStream&quot;/&gt; with a &lt;see cref=&quot;CharDecoder&quot;/&gt;,</div>
 		<div class="token cpp_comment ">/// like &lt;see cref=&quot;BomDecoder&quot;/&gt;, &lt;see cref=&quot;MbcsDecoder&quot;/&gt;, &lt;see cref=&quot;Utf16Decoder&quot;/&gt;, &lt;see cref=&quot;Utf16BEDecoder&quot;/&gt; or &lt;see cref=&quot;Utf8Decoder&quot;/&gt;.</div>
 		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example output=&quot;false&quot;&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     FileStream fileStream(L&quot;C:/a.txt&quot;, FileStream::ReadOnly);</div>
+		<div class="token cpp_comment ">///     Utf8Decoder decoder;</div>
+		<div class="token cpp_comment ">///     DecoderStream decoderStream(fileStream, decoder);</div>
+		<div class="token cpp_comment ">///     StreamReader reader(decoderStream);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(reader.ReadToEnd());</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::StreamReader"><div><div class="token cpp_type">StreamReader</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextReader'], [], [])"><div class="token cpp_type">TextReader</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -134,6 +144,16 @@ Text Related
 		<div class="token cpp_comment ">/// you are recommended to create a &lt;see cref=&quot;EncoderStream&quot;/&gt; with a &lt;see cref=&quot;CharEncoder&quot;/&gt;,</div>
 		<div class="token cpp_comment ">/// like &lt;see cref=&quot;BomEncoder&quot;/&gt;, &lt;see cref=&quot;MbcsEncoder&quot;/&gt;, &lt;see cref=&quot;Utf16Encoder&quot;/&gt;, &lt;see cref=&quot;Utf16BEEncoder&quot;/&gt; or &lt;see cref=&quot;Utf8Encoder&quot;/&gt;.</div>
 		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example output=&quot;false&quot;&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     FileStream fileStream(L&quot;C:/a.txt&quot;, FileStream::WriteOnly);</div>
+		<div class="token cpp_comment ">///     Utf8Encoder encoder;</div>
+		<div class="token cpp_comment ">///     EncoderStream encoderStream(fileStream, encoder);</div>
+		<div class="token cpp_comment ">///     StreamWriter writer(encoderStream);</div>
+		<div class="token cpp_comment ">///     writer.Write(L&quot;Hello, world!&quot;);</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::StreamWriter"><div><div class="token cpp_type">StreamWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter'], [], [])"><div class="token cpp_type">TextWriter</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -231,6 +251,16 @@ Helper Functions
 		<div class="token cpp_comment ">/// After the callback is executed, everything written to the writer will be returned from &quot;GenerateToStream&quot;.</div>
 		<div class="token cpp_comment ">/// &lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;block&quot;&gt;Size of the cache in bytes.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     Console::Write(GenerateToStream([](StreamWriter&amp; writer)</div>
+		<div class="token cpp_comment ">///     {</div>
+		<div class="token cpp_comment ">///         writer.WriteLine(L&quot;Hello, world!&quot;);</div>
+		<div class="token cpp_comment ">///         writer.WriteLine(L&quot;Welcome to Gaclib!&quot;);</div>
+		<div class="token cpp_comment ">///     });</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]::TCallback"><div><div class="token cpp_type">TCallback</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="FB$vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]"><div><div class="token cpp_function">GenerateToStream</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]::TCallback'], [], [])"><div class="token cpp_type">TCallback</div></div>&amp; <div class="def" id="NI$vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]::callback"><div><div class="token cpp_argument">callback</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]::block"><div><div class="token cpp_argument">block</div></div></div> = <div class="token cpp_number ">65536</div>)
 		{

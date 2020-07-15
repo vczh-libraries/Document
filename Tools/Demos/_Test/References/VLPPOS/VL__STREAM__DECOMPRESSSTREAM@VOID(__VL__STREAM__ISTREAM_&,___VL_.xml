@@ -3,7 +3,7 @@
  the is expected input stream to have data in multiple parts.
  In each part, the first 4 bytes is the data before compression in bytes.
  the rest is the compressed data.
- </remarks><signature><![CDATA[void DecompressStream(
+ </remarks><example index="0"/><signature><![CDATA[void DecompressStream(
     stream::IStream & inputStream,
     stream::IStream & outputStream
 );
