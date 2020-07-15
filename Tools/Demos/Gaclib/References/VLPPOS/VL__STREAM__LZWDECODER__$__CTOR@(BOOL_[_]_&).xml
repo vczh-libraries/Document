@@ -2,9 +2,9 @@
  A filter array
  If existingBytes[x] == true, it means x will possibly appear.
  If existingBytes[x] == false, it means x will never appear.
- </param><remark>
+ </param><remarks>
  The array &quot;existingBytes&quot; should exactly match the one given to <symbol name="LzwEncoder" docId="vl::stream::LzwEncoder" declFile="CompressionStream.h" declId="NI$vl::stream::LzwEncoder"/>.
- </remark><signature><![CDATA[ LzwDecoder(
+ </remarks><signature><![CDATA[ LzwDecoder(
     bool( & existingBytes)[expr]
 );
 ]]></signature></Document>

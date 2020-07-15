@@ -2,9 +2,9 @@
  A filter array
  If existingBytes[x] == true, it means x will possibly appear.
  If existingBytes[x] == false, it means x will never appear.
- </param><remark>
+ </param><remarks>
  The behavior is undefined, if existingBytes[x] == false, but byte x is actually in the data to compress.
- </remark><signature><![CDATA[ LzwEncoder(
+ </remarks><signature><![CDATA[ LzwEncoder(
     bool( & existingBytes)[expr]
 );
 ]]></signature></Document>
