@@ -1,11 +1,10 @@
-<Document symbolId="vl::stream::IStream" accessor="" category="Class" name="IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"><summary>
- Interface for streams. Stream functions are grouped into 5 categories:
- 1) Feature testing functions.
- 2) Read functions, available only if <symbol name="CanRead" docId="vl::stream::IStream::CanRead@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanRead@bool()[decl0]"/> returns true.
- 3) Peek functions, available only if <symbol name="CanPeek" docId="vl::stream::IStream::CanPeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanPeek@bool()[decl0]"/> returns true.
- 4) Write functions, available only if <symbol name="CanWrite" docId="vl::stream::IStream::CanWrite@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanWrite@bool()[decl0]"/> returns true.
- 5) Seek functions, available only if <symbol name="CanSeek" docId="vl::stream::IStream::CanSeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanSeek@bool()[decl0]"/> returns true.
- 6) Size functions, available only if <symbol name="IsLimited" docId="vl::stream::IStream::IsLimited@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::IsLimited@bool()[decl0]"/> returns true. But there are still some streams knows that the content is limited, but the size is unknown. In this case, <symbol name="Size" docId="vl::stream::IStream::Size@::vl::pos_t()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]"/> will return -1.
- </summary><signature><![CDATA[class IStream
+<Document symbolId="vl::stream::IStream" accessor="" category="Class" name="IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"><summary><p>
+ Interface for streams.
+ </p><p>
+ Please notice that, even if you get a stream object, if <symbol name="IsAvailable" docId="vl::stream::IStream::IsAvailable@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::IsAvailable@bool()[decl0]"/> returns false, all other methods cannot be used.
+ </p><p>
+ Not all methods are available for all types of streams.
+ Feature testing functions must be called before calling other methods, if it is not sure that what kind of stream is being operated against:
+ </p><p><ul><li><b>Readable</b>: A stream is readable if <symbol name="CanRead" docId="vl::stream::IStream::CanRead@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanRead@bool()[decl0]"/> returns true.</li><li><b>Peekable</b>: A stream is peekable if <symbol name="CanPeek" docId="vl::stream::IStream::CanPeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanPeek@bool()[decl0]"/> returns true.</li><li><b>Writable</b>: A stream is writable if <symbol name="CanWrite" docId="vl::stream::IStream::CanWrite@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanWrite@bool()[decl0]"/> returns true.</li><li><b>Seekable</b>: A stream is readable if <symbol name="CanSeek" docId="vl::stream::IStream::CanSeek@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanSeek@bool()[decl0]"/> returns true.</li><li><b>Finite</b>: A stream is finite if <symbol name="IsLimited" docId="vl::stream::IStream::IsLimited@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::IsLimited@bool()[decl0]"/> returns true.</li></ul></p></summary><signature><![CDATA[class IStream
     : Interface;
 ]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="CacheStream.h" declId="FB$vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::vint)[decl0]"><summary>Create a cache stream using a target stream.</summary><param name="_target">The target stream.</param><param name="_block">Size of the cache.</param><signature><![CDATA[ CacheStream(
+<Document symbolId="vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="CacheStream.h" declId="FB$vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::vint)[decl0]"><summary>Create a cache stream from a target stream.</summary><param name="_target">The target stream.</param><param name="_block">Size of the cache.</param><signature><![CDATA[ CacheStream(
     IStream & _target,
     vint _block /* optional */
 );

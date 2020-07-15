@@ -1,16 +1,19 @@
-<Document symbolId="vl::ReaderWriterLock" accessor="" category="Class" name="ReaderWriterLock" declFile="Threading.h" declId="NI$vl::ReaderWriterLock"><summary><![CDATA[
+<Document symbolId="vl::ReaderWriterLock" accessor="" category="Class" name="ReaderWriterLock" declFile="Threading.h" declId="NI$vl::ReaderWriterLock"><summary>
  Reader writer lock.
- The macro "READER_LOCK" and "WRITER_LOCK" are encouraged to use instead of calling ]]><symbol name="EnterReader" docId="vl::ReaderWriterLock::EnterReader@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::EnterReader@void()[decl0]"/><![CDATA[, ]]><symbol name="LeaveReader" docId="vl::ReaderWriterLock::LeaveReader@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::LeaveReader@void()[decl0]"/><![CDATA[, ]]><symbol name="EnterWriter" docId="vl::ReaderWriterLock::EnterWriter@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::EnterWriter@void()[decl0]"/><![CDATA[ and ]]><symbol name="LeaveWriter" docId="vl::ReaderWriterLock::LeaveWriter@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::LeaveWriter@void()[decl0]"/><![CDATA[ like this:
+ The macro &quot;READER_LOCK&quot; and &quot;WRITER_LOCK&quot; are recommended instead of calling <symbol name="EnterReader" docId="vl::ReaderWriterLock::EnterReader@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::EnterReader@void()[decl0]"/>, <symbol name="LeaveReader" docId="vl::ReaderWriterLock::LeaveReader@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::LeaveReader@void()[decl0]"/>, <symbol name="EnterWriter" docId="vl::ReaderWriterLock::EnterWriter@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::EnterWriter@void()[decl0]"/> and <symbol name="LeaveWriter" docId="vl::ReaderWriterLock::LeaveWriter@void()" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::LeaveWriter@void()[decl0]"/> like this:
+ <program><code><![CDATA[
  READER_LOCK(yourLock)
  {
-		<code>
+     // do something
  }
+ ]]></code></program>
  or
+ <program><code><![CDATA[
  WRITER_LOCK(yourLock)
  {
-		<code>
+     // do something
  }
- ]]></summary><signature><![CDATA[class ReaderWriterLock
+ ]]></code></program></summary><signature><![CDATA[class ReaderWriterLock
     : Object
     , NotCopyable;
 ]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

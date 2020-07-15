@@ -12,12 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::BroadcastStream
-
-Interfaces:
-	BroadcastStream					: Stream that copy the written data to multiple streams
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_BROADCASTSTREAM</div>
@@ -29,7 +25,10 @@ Interfaces:
 {
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[1]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;A writable stream that copy written content to multiple target streams.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;A &lt;b&gt;writable&lt;/b&gt; stream that copy the written content to multiple output streams.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// When writing happens, the boreadcast stream will only performance one write attempt to each output stream.</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::BroadcastStream"><div><div class="token cpp_type">BroadcastStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
 		{
 			<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>*&gt;		<div class="def" id="NI$vl::stream::BroadcastStream::StreamList"><div><div class="token cpp_type">StreamList</div></div></div>;
@@ -38,12 +37,15 @@ Interfaces:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div>					<div class="def" id="NI$vl::stream::BroadcastStream::position"><div><div class="token cpp_field">position</div></div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::StreamList'], [], [])"><div class="token cpp_type">StreamList</div></div>				<div class="def" id="NI$vl::stream::BroadcastStream::streams"><div><div class="token cpp_field">streams</div></div></div>;
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a strema.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a boradcast stream.&lt;/summary&gt;</div>
 			<div class="def" id="FB$vl::stream::BroadcastStream::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::$__ctor@()'], [], [])"><div class="token cpp_function">BroadcastStream</div></div></div>();
 			<div class="def" id="FB$vl::stream::BroadcastStream::~BroadcastStream@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::~BroadcastStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">BroadcastStream</div></div></div>();
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the list of target streams. You can add streams to this list, or remove streams from this list.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The list of target streams.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Get the list of output streams.</div>
+			<div class="token cpp_comment ">/// You can change this list to subscribe or unsubscribe.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The list of output streams.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::StreamList'], [], [])"><div class="token cpp_type">StreamList</div></div>&amp;				<div class="def" id="FB$vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &()'], [], [])"><div class="token cpp_function">Targets</div></div></div>();
 			<div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::BroadcastStream::CanRead@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::CanRead@bool()'], [], [])"><div class="token cpp_function">CanRead</div></div></div>()<div class="token cpp_keyword ">const</div>;
 			<div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::stream::BroadcastStream::CanWrite@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::CanWrite@bool()'], [], [])"><div class="token cpp_function">CanWrite</div></div></div>()<div class="token cpp_keyword ">const</div>;

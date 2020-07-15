@@ -12,12 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::MemoryWrapperStream
-
-Interfaces:
-	MemoryWrapperStream				: Memory stream which manipulate a given buffer
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_MEMORYWRAPPERSTREAM</div>
@@ -29,7 +25,7 @@ Interfaces:
 {
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[7]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;A readable, writable, seekable and peekable stream that operates a buffer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;A &lt;b&gt;readable&lt;/b&gt;, &lt;b&gt;peekable&lt;/b&gt;, &lt;b&gt;writable&lt;/b&gt;, &lt;b&gt;seekable&lt;/b&gt; and &lt;b&gt;finite&lt;/b&gt; stream that creates on a buffer.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::MemoryWrapperStream"><div><div class="token cpp_type">MemoryWrapperStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -37,9 +33,9 @@ Interfaces:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>						<div class="def" id="NI$vl::stream::MemoryWrapperStream::size"><div><div class="token cpp_field">size</div></div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>						<div class="def" id="NI$vl::stream::MemoryWrapperStream::position"><div><div class="token cpp_field">position</div></div></div>;
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a memory wrapper stream.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;_buffer&quot;&gt;The buffer to operate.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;Size of the buffer.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_size&quot;&gt;Size of the buffer in bytes.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">MemoryWrapperStream</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>);
 			<div class="def" id="FB$vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryWrapperStream::~MemoryWrapperStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">MemoryWrapperStream</div></div></div>();
 

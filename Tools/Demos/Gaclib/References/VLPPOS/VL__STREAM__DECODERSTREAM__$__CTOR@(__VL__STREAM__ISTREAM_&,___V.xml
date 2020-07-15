@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IDecoder &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Accessor.h" declId="FB$vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IDecoder &amp;)[decl0]"><summary>Create a stream.</summary><param name="_stream">The target stream to read.</param><param name="_decoder">The decoder to transform content.</param><signature><![CDATA[ DecoderStream(
+<Document symbolId="vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IDecoder &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Accessor.h" declId="FB$vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IDecoder &amp;)[decl0]"><summary>Create a decoder stream.</summary><param name="_stream">The input stream to read.</param><param name="_decoder">The decoder to transform content.</param><signature><![CDATA[ DecoderStream(
     IStream & _stream,
     IDecoder & _decoder
 );

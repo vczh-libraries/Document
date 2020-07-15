@@ -11,7 +11,12 @@
 <a class="button" href="../SymbolIndex.html">Symbol Index</a>
 <br>
 <br>
-<div class="codebox"><div class="cpp_default"><div class="disabled">#include &lt;string.h&gt;</div>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/</div>
+
+<div class="disabled">#include &lt;string.h&gt;</div>
 <div class="disabled">#include &quot;BroadcastStream.h&quot;</div>
 
 <div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[54]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
@@ -111,7 +116,9 @@ BroadcastStream
 		{
 			<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::streams'], [], [])"><div class="token cpp_field">streams</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::i'], [], [])">i</div>++)
 			{
-				<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::streams'], [], [])"><div class="token cpp_field">streams</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::i'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::written"><div>written</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::streams'], [], [])"><div class="token cpp_field">streams</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::i'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], ['vl::stream::IStream::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer'], [], [])"><div class="token cpp_argument">_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>);
+<div class="expandable"><div class="disabled">				CHECK_ERROR(written == _size, L&quot;BroadcastStream::Write(void*, vint)#Failed to copy data to the output stream.&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::written'], [], [])">written</div> == <div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;BroadcastStream::Write(void*, vint)#Failed to copy data to the output stream.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
 			}
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::position'], [], [])"><div class="token cpp_field">position</div></div>+=<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
 			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size'], [], [])"><div class="token cpp_argument">_size</div></div>;
@@ -847,6 +854,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::written': {
+        'displayNameInHtml': 'written',
+        'impls': [
+            'NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::written'
+        ],
+        'decls': []
+    },
     'vl::stream::BroadcastStream::closed': {
         'displayNameInHtml': '<span class="cpp_type">BroadcastStream</span>::<span class="cpp_field">closed</span>',
         'impls': [
@@ -1431,6 +1445,7 @@ symbolToFiles = {
     'NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_buffer': null,
     'NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::_size': null,
     'NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::i': null,
+    'NI$vl::stream::BroadcastStream::Write@::vl::vint(void *, ::vl::vint)[impl0]::written': null,
     'NI$vl::stream::BroadcastStream::closed': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
     'NI$vl::stream::BroadcastStream::position': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
     'NI$vl::stream::BroadcastStream::streams': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },

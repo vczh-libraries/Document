@@ -1,4 +1,6 @@
-<Document symbolId="vl::RepeatingTaskExecutor" accessor="" category="Class" name="RepeatingTaskExecutor" declFile="Threading.h" declId="NI$vl::RepeatingTaskExecutor"><summary>Queued task executor. It is different from a thread pool by: 1) Task execution is single threaded, 2) If you queue a task, it will override the the unexecuted queued task.</summary><typeparam name="T">The type of the argument to run a task.</typeparam><signature><![CDATA[template <
+<Document symbolId="vl::RepeatingTaskExecutor" accessor="" category="Class" name="RepeatingTaskExecutor" declFile="Threading.h" declId="NI$vl::RepeatingTaskExecutor"><summary>
+ Queued task executor. It is different from a thread because:
+ <ul><li>Task execution is single threaded.</li><li>If you queue a task, it will override all unexecuted queued tasks.</li></ul></summary><typeparam name="T">The type of the argument to run a task.</typeparam><signature><![CDATA[template <
     typename T
 >
 class RepeatingTaskExecutor

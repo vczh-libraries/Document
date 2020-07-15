@@ -12,11 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::CharFormat
-
-Classes:
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_COMPRESSIONSTREAM</div>
@@ -69,7 +66,11 @@ Compression
 			<div class="def" id="FB$vl::stream::LzwBase::~LzwBase@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase::~LzwBase@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">LzwBase</div></div></div>();
 		};
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;An encoder to compress using Lzw algorithm.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;An encoder to compress data using the Lzw algorithm.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remark&gt;</div>
+		<div class="token cpp_comment ">/// You are not recommended to compress data more than 1 mega bytes at once using the encoder directly.</div>
+		<div class="token cpp_comment ">/// &lt;see cref=&quot;CompressStream&quot;/&gt; and &lt;see cref=&quot;DecompressStream&quot;/&gt; is recommended.</div>
+		<div class="token cpp_comment ">/// &lt;/remark&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::LzwEncoder"><div><div class="token cpp_type">LzwEncoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IEncoder'], [], [])"><div class="token cpp_type">IEncoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -84,8 +85,15 @@ Compression
 		<div class="token cpp_keyword ">public</div>:
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create an encoder.&lt;/summary&gt;</div>
 			<div class="def" id="FB$vl::stream::LzwEncoder::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::$__ctor@()'], [], [])"><div class="token cpp_function">LzwEncoder</div></div></div>();
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create an encoder and tell it which byte will never appear in the data before compression.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;existingBytes&quot;&gt;An array to tell the encoder which byte will never appear in the data before compression.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an encoder, specifying what bytes will never appear in the data to compress.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;existingBytes&quot;&gt;</div>
+			<div class="token cpp_comment ">/// A filter array</div>
+			<div class="token cpp_comment ">/// If existingBytes[x] == true, it means x will possibly appear.</div>
+			<div class="token cpp_comment ">/// If existingBytes[x] == false, it means x will never appear.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remark&gt;</div>
+			<div class="token cpp_comment ">/// The behavior is undefined, if existingBytes[x] == false, but byte x is actually in the data to compress.</div>
+			<div class="token cpp_comment ">/// &lt;/remark&gt;</div>
 			<div class="def" id="FB$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::$__ctor@(bool [*] &)'], [], [])"><div class="token cpp_function">LzwEncoder</div></div></div>(<div class="token cpp_keyword ">bool</div> (&amp;<div class="def" id="NI$vl::stream::LzwEncoder::$__ctor@(bool [*] &)[decl0]::existingBytes"><div>existingBytes</div></div>)[<div class="token cpp_number ">256</div>]);
 			<div class="def" id="FB$vl::stream::LzwEncoder::~LzwEncoder@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::~LzwEncoder@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">LzwEncoder</div></div></div>();
 
@@ -94,7 +102,11 @@ Compression
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="FB$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>)<div class="token cpp_keyword ">override</div>;
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;An decoder to decompress using Lzw algorithm.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;An decoder to decompress data using the Lzw algorithm.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remark&gt;</div>
+		<div class="token cpp_comment ">/// You are not recommended to compress data more than 1 mega bytes at once using the encoder directly.</div>
+		<div class="token cpp_comment ">/// &lt;see cref=&quot;CompressStream&quot;/&gt; and &lt;see cref=&quot;DecompressStream&quot;/&gt; is recommended.</div>
+		<div class="token cpp_comment ">/// &lt;/remark&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::LzwDecoder"><div><div class="token cpp_type">LzwDecoder</div></div></div> :<div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwBase'], [], [])"><div class="token cpp_type">LzwBase</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IDecoder'], [], [])"><div class="token cpp_type">IDecoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -114,10 +126,17 @@ Compression
 			<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)'], [], [])"><div class="token cpp_function">PrepareOutputBuffer</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::LzwDecoder::PrepareOutputBuffer@void(::vl::vint)[decl0]::size"><div>size</div></div>);
 			<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)'], [], [])"><div class="token cpp_function">ExpandCodeToOutputBuffer</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw'], [], [])">lzw</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::lzw::Code'], [], [])"><div class="token cpp_type">Code</div></div>* <div class="def" id="NI$vl::stream::LzwDecoder::ExpandCodeToOutputBuffer@void(::vl::stream::lzw::Code *)[decl0]::code"><div>code</div></div>);
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create an decoder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a decoder.&lt;/summary&gt;</div>
 			<div class="def" id="FB$vl::stream::LzwDecoder::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@()'], [], [])"><div class="token cpp_function">LzwDecoder</div></div></div>();
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create an decoder and tell it which byte will never appear in the data before compression.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;existingBytes&quot;&gt;An array to tell the encoder which byte will never appear in the data before compression.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an encoder, specifying what bytes will never appear in the decompressed data.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;existingBytes&quot;&gt;</div>
+			<div class="token cpp_comment ">/// A filter array</div>
+			<div class="token cpp_comment ">/// If existingBytes[x] == true, it means x will possibly appear.</div>
+			<div class="token cpp_comment ">/// If existingBytes[x] == false, it means x will never appear.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remark&gt;</div>
+			<div class="token cpp_comment ">/// The array &quot;existingBytes&quot; should exactly match the one given to &lt;see cref=&quot;LzwEncoder&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// &lt;/remark&gt;</div>
 			<div class="def" id="FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::$__ctor@(bool [*] &)'], [], [])"><div class="token cpp_function">LzwDecoder</div></div></div>(<div class="token cpp_keyword ">bool</div> (&amp;<div class="def" id="NI$vl::stream::LzwDecoder::$__ctor@(bool [*] &)[decl0]::existingBytes"><div>existingBytes</div></div>)[<div class="token cpp_number ">256</div>]);
 			<div class="def" id="FB$vl::stream::LzwDecoder::~LzwDecoder@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::LzwDecoder::~LzwDecoder@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">LzwDecoder</div></div></div>();
 
@@ -130,8 +149,80 @@ Compression
 Helper Functions
 ***********************************************************************/</div>
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;Copy data from a &lt;b&gt;readable&lt;/b&gt; input stream to a &lt;b&gt;writable&lt;/b&gt; output stream.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Data copied in bytes.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;inputStream&quot;&gt;The &lt;b&gt;readable&lt;/b&gt; input stream.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;outputStream&quot;&gt;The &lt;b&gt;writable&lt;/b&gt; output stream.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>						<div class="def" id="FB$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">CopyStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::inputStream"><div>inputStream</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::outputStream"><div>outputStream</div></div>);
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Compress data from a &lt;b&gt;readable&lt;/b&gt; input stream to a &lt;b&gt;writable&lt;/b&gt; output stream.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Data copied in bytes.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;inputStream&quot;&gt;The &lt;b&gt;readable&lt;/b&gt; input stream.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;outputStream&quot;&gt;The &lt;b&gt;writable&lt;/b&gt; output stream.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// Data is compressed in multiple batches,</div>
+		<div class="token cpp_comment ">/// the is expected output stream to have data in multiple parts.</div>
+		<div class="token cpp_comment ">/// In each part, the first 4 bytes is the data before compression in bytes.</div>
+		<div class="token cpp_comment ">/// the rest is the compressed data.</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     MemoryStream textStream, compressedStream, decompressedStream;</div>
+		<div class="token cpp_comment ">///     {</div>
+		<div class="token cpp_comment ">///         Utf8Encoder encoder;</div>
+		<div class="token cpp_comment ">///         EncoderStream encoderStream(textStream, encoder);</div>
+		<div class="token cpp_comment ">///         StreamWriter writer(encoderStream);</div>
+		<div class="token cpp_comment ">///         writer.Write(L&quot;Some text to compress.&quot;);</div>
+		<div class="token cpp_comment ">///     }</div>
+		<div class="token cpp_comment ">///     textStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     CompressStream(textStream, compressedStream);</div>
+		<div class="token cpp_comment ">///     compressedStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///     DecompressStream(compressedStream, decompressedStream);</div>
+		<div class="token cpp_comment ">///     decompressedStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     Utf8Decoder decoder;</div>
+		<div class="token cpp_comment ">///     DecoderStream decoderStream(decompressedStream, decoder);</div>
+		<div class="token cpp_comment ">///     StreamReader reader(decoderStream);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(reader.ReadToEnd());</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">CompressStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::inputStream"><div>inputStream</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::outputStream"><div>outputStream</div></div>);
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;Decompress data from a &lt;b&gt;readable&lt;/b&gt; input stream (with compressed data) to a &lt;b&gt;writable&lt;/b&gt; output stream (with uncompressed data).&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;Data copied in bytes.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;inputStream&quot;&gt;The &lt;b&gt;readable&lt;/b&gt; input stream.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;outputStream&quot;&gt;The &lt;b&gt;writable&lt;/b&gt; output stream.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// Data is compressed in multiple batches,</div>
+		<div class="token cpp_comment ">/// the is expected input stream to have data in multiple parts.</div>
+		<div class="token cpp_comment ">/// In each part, the first 4 bytes is the data before compression in bytes.</div>
+		<div class="token cpp_comment ">/// the rest is the compressed data.</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     MemoryStream textStream, compressedStream, decompressedStream;</div>
+		<div class="token cpp_comment ">///     {</div>
+		<div class="token cpp_comment ">///         Utf8Encoder encoder;</div>
+		<div class="token cpp_comment ">///         EncoderStream encoderStream(textStream, encoder);</div>
+		<div class="token cpp_comment ">///         StreamWriter writer(encoderStream);</div>
+		<div class="token cpp_comment ">///         writer.Write(L&quot;Some text to compress.&quot;);</div>
+		<div class="token cpp_comment ">///     }</div>
+		<div class="token cpp_comment ">///     textStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     CompressStream(textStream, compressedStream);</div>
+		<div class="token cpp_comment ">///     compressedStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///     DecompressStream(compressedStream, decompressedStream);</div>
+		<div class="token cpp_comment ">///     decompressedStream.SeekFromBegin(0);</div>
+		<div class="token cpp_comment ">///</div>
+		<div class="token cpp_comment ">///     Utf8Decoder decoder;</div>
+		<div class="token cpp_comment ">///     DecoderStream decoderStream(decompressedStream, decoder);</div>
+		<div class="token cpp_comment ">///     StreamReader reader(decoderStream);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(reader.ReadToEnd());</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>						<div class="def" id="FB$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">DecompressStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::inputStream"><div>inputStream</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::DecompressStream@void(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::outputStream"><div>outputStream</div></div>);
 	}
 }

@@ -1,3 +1,3 @@
-<Document symbolId="vl::filesystem::FilePath" accessor="" category="Class" name="FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"><summary>A type representing a file path.</summary><signature><![CDATA[class FilePath
+<Document symbolId="vl::filesystem::FilePath" accessor="" category="Class" name="FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"><summary>Absolute file path.</summary><signature><![CDATA[class FilePath
     : Object;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

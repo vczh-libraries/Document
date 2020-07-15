@@ -1,0 +1,5 @@
+<Document symbolId="vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" accessor="" category="Function" name="CopyStream" declFile="CompressionStream.h" declId="FB$vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)[decl0]"><summary>Copy data from a <b>readable</b> input stream to a <b>writable</b> output stream.</summary><returns>Data copied in bytes.</returns><param name="inputStream">The <b>readable</b> input stream.</param><param name="outputStream">The <b>writable</b> output stream.</param><signature><![CDATA[vint CopyStream(
+    stream::IStream & inputStream,
+    stream::IStream & outputStream
+);
+]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

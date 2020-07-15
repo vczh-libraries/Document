@@ -1,4 +1,9 @@
-<Document symbolId="vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" accessor="public" category="Function" name="$__ctor" declFile="RecorderStream.h" declId="FB$vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)[decl0]"><summary>Create a stream.</summary><param name="_in">The stream to read.</param><param name="_out">The stream to write what is read from &quot;_in&quot;.</param><signature><![CDATA[ RecorderStream(
+<Document symbolId="vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" accessor="public" category="Function" name="$__ctor" declFile="RecorderStream.h" declId="FB$vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)[decl0]"><summary>Create a recorder stream.</summary><param name="_in">
+ The input stream.
+ This recorder stream is <b>readable</b> only when the input stream is <b>readable</b>
+ This recorder stream is <b>finite</b> only when the input stream is <b>finite</b></param><param name="_out">
+ The output stream.
+ </param><signature><![CDATA[ RecorderStream(
     IStream & _in,
     IStream & _out
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::TextReader" accessor="" category="Class" name="TextReader" declFile="Accessor.h" declId="NI$vl::stream::TextReader"><summary>Text reader. All line breaks are normalized to CRLF regardless the format in the source.</summary><signature><![CDATA[class TextReader
+<Document symbolId="vl::stream::TextReader" accessor="" category="Class" name="TextReader" declFile="Accessor.h" declId="NI$vl::stream::TextReader"><summary>Text reader. All line breaks are normalized to CRLF regardless whatever in the input stream.</summary><signature><![CDATA[class TextReader
     : Object
     , NotCopyable;
 ]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

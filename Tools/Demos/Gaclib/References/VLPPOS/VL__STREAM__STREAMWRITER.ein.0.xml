@@ -1,0 +1,10 @@
+<example output="false"><![CDATA[
+ int main()
+ {
+     FileStream fileStream(L"C:/a.txt", FileStream::WriteOnly);
+     Utf8Encoder encoder;
+     EncoderStream encoderStream(fileStream, encoder);
+     StreamWriter writer(encoderStream);
+     writer.Write(L"Hello, world!");
+ }
+ ]]></example>

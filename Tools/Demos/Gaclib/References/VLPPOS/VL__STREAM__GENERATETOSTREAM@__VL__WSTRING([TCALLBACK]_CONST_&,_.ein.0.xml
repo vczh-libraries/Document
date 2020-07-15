@@ -1,0 +1,10 @@
+<example><![CDATA[
+ int main()
+ {
+     Console::Write(GenerateToStream([](StreamWriter& writer)
+     {
+         writer.WriteLine(L"Hello, world!");
+         writer.WriteLine(L"Welcome to Gaclib!");
+     });
+ }
+ ]]></example>

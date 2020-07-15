@@ -12,18 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::Accessor
-
-Classes:
-	TextReader						: Text reader base class
-	TextWriter						: Text writer base class
-	StringReader					: Text reader from a string
-	StreamReader					: Text reader from a stream
-	StreamWriter					: Text writer to a stream
-	EncoderStream					: Stream that takes an encoder to translate another stream
-	DecoderStream					: Stream that takes a decoder to translate another stream
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_ACCESSOR</div>
@@ -41,7 +31,7 @@ Classes:
 Text Related
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Text reader. All line breaks are normalized to CRLF regardless the format in the source.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Text reader. All line breaks are normalized to CRLF regardless whatever in the input stream.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::TextReader"><div><div class="token cpp_type">TextReader</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">private</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
 		{
 		<div class="token cpp_keyword ">public</div>:
@@ -51,15 +41,15 @@ Text Related
 			<div class="token cpp_comment ">/// &lt;summary&gt;Read a single character.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The character.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">wchar_t</div>				<div class="def" id="FB$vl::stream::TextReader::ReadChar@wchar_t()[decl0]"><div><div class="token cpp_function">ReadChar</div></div></div>()=<div class="token cpp_number ">0</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Read a string of a specified size.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The string.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Read a string of a specified size in characters.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The read string. It could be shorter than the expected length if the reader reaches the end.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;length&quot;&gt;Expected length of the string to read.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::stream::TextReader::ReadString@::vl::WString(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextReader::ReadString@::vl::WString(::vl::vint)'], [], [])"><div class="token cpp_function">ReadString</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::TextReader::ReadString@::vl::WString(::vl::vint)[decl0]::length"><div>length</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;Read a string until a line breaks is reached.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The string. It does not contain the line break.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The string without the line break. If the reader reaches the end, it returns an empty string.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::stream::TextReader::ReadLine@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextReader::ReadLine@::vl::WString()'], [], [])"><div class="token cpp_function">ReadLine</div></div></div>();
 			<div class="token cpp_comment ">/// &lt;summary&gt;Read everying remain.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The string.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The read string.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::stream::TextReader::ReadToEnd@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextReader::ReadToEnd@::vl::WString()'], [], [])"><div class="token cpp_function">ReadToEnd</div></div></div>();
 		};
 		
@@ -71,18 +61,18 @@ Text Related
 			<div class="token cpp_comment ">/// &lt;param name=&quot;c&quot;&gt;The character to write.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::stream::TextWriter::WriteChar@void(wchar_t)[decl0]"><div><div class="token cpp_function">WriteChar</div></div></div>(<div class="token cpp_keyword ">wchar_t</div> <div class="def" id="NI$vl::stream::TextWriter::WriteChar@void(wchar_t)[decl0]::c"><div>c</div></div>)=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;Write a string.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Buffer to the string to write.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;charCount&quot;&gt;Size of the string in characters not including the zero terminator.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Buffer of the string to write.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;charCount&quot;&gt;Size of the string in characters, not including the zero terminator.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)[decl0]::string"><div>string</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)[decl0]::charCount"><div>charCount</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;Write a string.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Buffer to the zero terminated string to write.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Buffer of the zero terminated string to write.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::stream::TextWriter::WriteString@void(wchar_t const *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter::WriteString@void(wchar_t const *)'], [], [])"><div class="token cpp_function">WriteString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::stream::TextWriter::WriteString@void(wchar_t const *)[decl0]::string"><div>string</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;Write a string.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;The string to write.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::stream::TextWriter::WriteString@void(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter::WriteString@void(::vl::WString const &)'], [], [])"><div class="token cpp_function">WriteString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::stream::TextWriter::WriteString@void(::vl::WString const &)[decl0]::string"><div>string</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;Write a string with a CRLF.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Buffer to the string to write.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;charCount&quot;&gt;Size of the string in characters not including the zero terminator.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;charCount&quot;&gt;Size of the string in characters, not including the zero terminator.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::stream::TextWriter::WriteLine@void(wchar_t const *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter::WriteLine@void(wchar_t const *, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteLine</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::stream::TextWriter::WriteLine@void(wchar_t const *, ::vl::vint)[decl0]::string"><div>string</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::TextWriter::WriteLine@void(wchar_t const *, ::vl::vint)[decl0]::charCount"><div>charCount</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;Write a string with a CRLF.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;string&quot;&gt;Buffer to the zero terminated string to write.&lt;/param&gt;</div>
@@ -115,7 +105,24 @@ Text Related
 			<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>						<div class="def" id="FB$vl::stream::StringReader::ReadToEnd@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::StringReader::ReadToEnd@::vl::WString()'], [], [])"><div class="token cpp_function">ReadToEnd</div></div></div>();
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Text reader from a stream.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// Text reader from a stream storing characters in wchar_t.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// To specify the encoding in the input stream,</div>
+		<div class="token cpp_comment ">/// you are recommended to create a &lt;see cref=&quot;DecoderStream&quot;/&gt; with a &lt;see cref=&quot;CharDecoder&quot;/&gt;,</div>
+		<div class="token cpp_comment ">/// like &lt;see cref=&quot;BomDecoder&quot;/&gt;, &lt;see cref=&quot;MbcsDecoder&quot;/&gt;, &lt;see cref=&quot;Utf16Decoder&quot;/&gt;, &lt;see cref=&quot;Utf16BEDecoder&quot;/&gt; or &lt;see cref=&quot;Utf8Decoder&quot;/&gt;.</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example output=&quot;false&quot;&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     FileStream fileStream(L&quot;C:/a.txt&quot;, FileStream::ReadOnly);</div>
+		<div class="token cpp_comment ">///     Utf8Decoder decoder;</div>
+		<div class="token cpp_comment ">///     DecoderStream decoderStream(fileStream, decoder);</div>
+		<div class="token cpp_comment ">///     StreamReader reader(decoderStream);</div>
+		<div class="token cpp_comment ">///     Console::WriteLine(reader.ReadToEnd());</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::StreamReader"><div><div class="token cpp_type">StreamReader</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextReader'], [], [])"><div class="token cpp_type">TextReader</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -128,8 +135,25 @@ Text Related
 			<div class="token cpp_keyword ">bool</div>						<div class="def" id="FB$vl::stream::StreamReader::IsEnd@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::StreamReader::IsEnd@bool()'], [], [])"><div class="token cpp_function">IsEnd</div></div></div>();
 			<div class="token cpp_keyword ">wchar_t</div>						<div class="def" id="FB$vl::stream::StreamReader::ReadChar@wchar_t()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::StreamReader::ReadChar@wchar_t()'], [], [])"><div class="token cpp_function">ReadChar</div></div></div>();
 		};
-		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Text writer to a stream.&lt;/summary&gt;</div>
+
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// Text reader from a stream storing characters in wchar_t.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// To specify the encoding in the input stream,</div>
+		<div class="token cpp_comment ">/// you are recommended to create a &lt;see cref=&quot;EncoderStream&quot;/&gt; with a &lt;see cref=&quot;CharEncoder&quot;/&gt;,</div>
+		<div class="token cpp_comment ">/// like &lt;see cref=&quot;BomEncoder&quot;/&gt;, &lt;see cref=&quot;MbcsEncoder&quot;/&gt;, &lt;see cref=&quot;Utf16Encoder&quot;/&gt;, &lt;see cref=&quot;Utf16BEEncoder&quot;/&gt; or &lt;see cref=&quot;Utf8Encoder&quot;/&gt;.</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example output=&quot;false&quot;&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     FileStream fileStream(L&quot;C:/a.txt&quot;, FileStream::WriteOnly);</div>
+		<div class="token cpp_comment ">///     Utf8Encoder encoder;</div>
+		<div class="token cpp_comment ">///     EncoderStream encoderStream(fileStream, encoder);</div>
+		<div class="token cpp_comment ">///     StreamWriter writer(encoderStream);</div>
+		<div class="token cpp_comment ">///     writer.Write(L&quot;Hello, world!&quot;);</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::StreamWriter"><div><div class="token cpp_type">StreamWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter'], [], [])"><div class="token cpp_type">TextWriter</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -148,7 +172,7 @@ Text Related
 Encoding Related
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder stream, a writable stream using an [T:vl.stream.IEncoder] to transform content.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder stream, a &lt;b&gt;writable&lt;/b&gt; and potentially &lt;b&gt;finite&lt;/b&gt; stream using [T:vl.stream.IEncoder] to transform content.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::EncoderStream"><div><div class="token cpp_type">EncoderStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -157,8 +181,8 @@ Encoding Related
 			<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div>						<div class="def" id="NI$vl::stream::EncoderStream::position"><div><div class="token cpp_field">position</div></div></div>;
 
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a stream.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_stream&quot;&gt;The target stream to write.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create en encoder stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_stream&quot;&gt;The output stream to write.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;_encoder&quot;&gt;The encoder to transform content.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::stream::EncoderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IEncoder &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::EncoderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IEncoder &)'], [], [])"><div class="token cpp_function">EncoderStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::EncoderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IEncoder &)[decl0]::_stream"><div>_stream</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IEncoder'], [], [])"><div class="token cpp_type">IEncoder</div></div>&amp; <div class="def" id="NI$vl::stream::EncoderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IEncoder &)[decl0]::_encoder"><div>_encoder</div></div>);
 			<div class="def" id="FB$vl::stream::EncoderStream::~EncoderStream@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::EncoderStream::~EncoderStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">EncoderStream</div></div></div>();
@@ -180,7 +204,7 @@ Encoding Related
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>						<div class="def" id="FB$vl::stream::EncoderStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::EncoderStream::Peek@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Peek</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::EncoderStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::EncoderStream::Peek@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>);
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder stream, a readable stream using an [T:vl.stream.IDecoder] to transform content.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder stream, a &lt;b&gt;readable&lt;/b&gt; and potentially &lt;b&gt;finite&lt;/b&gt; stream using [T:vl.stream.IDecoder] to transform content.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::DecoderStream"><div><div class="token cpp_type">DecoderStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -189,8 +213,8 @@ Encoding Related
 			<div class="ref" onclick="jumpToSymbol([], ['vl::pos_t'], [], [])"><div class="token cpp_type">pos_t</div></div>						<div class="def" id="NI$vl::stream::DecoderStream::position"><div><div class="token cpp_field">position</div></div></div>;
 
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a stream.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_stream&quot;&gt;The target stream to read.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a decoder stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_stream&quot;&gt;The input stream to read.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;_decoder&quot;&gt;The decoder to transform content.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IDecoder &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IDecoder &)'], [], [])"><div class="token cpp_function">DecoderStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IDecoder &)[decl0]::_stream"><div>_stream</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IDecoder'], [], [])"><div class="token cpp_type">IDecoder</div></div>&amp; <div class="def" id="NI$vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IDecoder &)[decl0]::_decoder"><div>_decoder</div></div>);
 			<div class="def" id="FB$vl::stream::DecoderStream::~DecoderStream@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::DecoderStream::~DecoderStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">DecoderStream</div></div></div>();
@@ -216,6 +240,27 @@ Encoding Related
 Helper Functions
 ***********************************************************************/</div>
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// Build a big string using &lt;see cref=&quot;StreamWriter&quot;/&gt;.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TCallback&quot;&gt;The type of the callback.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">/// &lt;returns&gt;The built big string.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;callback&quot;&gt;</div>
+		<div class="token cpp_comment ">/// The callback to receive a big string.</div>
+		<div class="token cpp_comment ">/// The argument is a reference to a &lt;see cref=&quot;StreamWriter&quot;/&gt;.</div>
+		<div class="token cpp_comment ">/// After the callback is executed, everything written to the writer will be returned from &quot;GenerateToStream&quot;.</div>
+		<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;block&quot;&gt;Size of the cache in bytes.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">/// int main()</div>
+		<div class="token cpp_comment ">/// {</div>
+		<div class="token cpp_comment ">///     Console::Write(GenerateToStream([](StreamWriter&amp; writer)</div>
+		<div class="token cpp_comment ">///     {</div>
+		<div class="token cpp_comment ">///         writer.WriteLine(L&quot;Hello, world!&quot;);</div>
+		<div class="token cpp_comment ">///         writer.WriteLine(L&quot;Welcome to Gaclib!&quot;);</div>
+		<div class="token cpp_comment ">///     });</div>
+		<div class="token cpp_comment ">/// }</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]::TCallback"><div><div class="token cpp_type">TCallback</div></div></div>&gt;
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="FB$vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]"><div><div class="token cpp_function">GenerateToStream</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]::TCallback'], [], [])"><div class="token cpp_type">TCallback</div></div>&amp; <div class="def" id="NI$vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]::callback"><div><div class="token cpp_argument">callback</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::GenerateToStream@::vl::WString([TCallback] const &, ::vl::vint)[impl0]::block"><div><div class="token cpp_argument">block</div></div></div> = <div class="token cpp_number ">65536</div>)
 		{

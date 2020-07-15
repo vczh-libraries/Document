@@ -1,3 +1,3 @@
-<Document symbolId="vl::stream::IEncoder::Close@void()" accessor="public" category="Function" name="Close" declFile="Interfaces.h2" declId="FB$vl::stream::IEncoder::Close@void()[decl0]"><summary>Stop the transformation, ensuring all written content is transformed to the target stream.</summary><signature><![CDATA[void Close(
+<Document symbolId="vl::stream::IEncoder::Close@void()" accessor="public" category="Function" name="Close" declFile="Interfaces.h2" declId="FB$vl::stream::IEncoder::Close@void()[decl0]"><summary>Stop the transformation, ensuring all content is written to the target stream.</summary><signature><![CDATA[void Close(
 );
 ]]></signature></Document>

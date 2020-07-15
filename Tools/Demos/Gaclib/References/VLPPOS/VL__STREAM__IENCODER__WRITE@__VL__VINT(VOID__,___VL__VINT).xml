@@ -1,4 +1,11 @@
-<Document symbolId="vl::stream::IEncoder::Write@::vl::vint(void *, ::vl::vint)" accessor="public" category="Function" name="Write" declFile="Interfaces.h2" declId="FB$vl::stream::IEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]"><summary>Transform content and write to the target stream. This function may cache something to increase performance, so it cannot expect that all transformed content will be written to the target stream immediately.</summary><returns>Returns the actual size of the content before transforming that is written. The content is treated as being written even it is cached and not actually write to the target stream.</returns><param name="_buffer">A buffer storing the content to write.</param><param name="_size">The size of the content that is expected to write.</param><signature><![CDATA[vint Write(
+<Document symbolId="vl::stream::IEncoder::Write@::vl::vint(void *, ::vl::vint)" accessor="public" category="Function" name="Write" declFile="Interfaces.h2" declId="FB$vl::stream::IEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]"><summary>
+ Transform content and write to the target stream.
+ This function could use caching to improve performance.
+ Please do not expect that all transformed content will be written to the target stream immediately.
+ </summary><returns>
+ Returns the actual size of the content that has written <b>before</b> transforming.
+ A successful write operation may only cache the data without actually write anything to the target stream.
+ </returns><param name="_buffer">A buffer storing the content to transform.</param><param name="_size">The expected size of the content in bytes in &quot;_buffer&quot; to use.</param><signature><![CDATA[vint Write(
     void * _buffer,
     vint _size
 );

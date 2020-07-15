@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="MemoryWrapperStream.h" declId="FB$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[decl0]"><summary>Create a stream.</summary><param name="_buffer">The buffer to operate.</param><param name="_size">Size of the buffer.</param><signature><![CDATA[ MemoryWrapperStream(
+<Document symbolId="vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="MemoryWrapperStream.h" declId="FB$vl::stream::MemoryWrapperStream::$__ctor@(void *, ::vl::vint)[decl0]"><summary>Create a memory wrapper stream.</summary><param name="_buffer">The buffer to operate.</param><param name="_size">Size of the buffer in bytes.</param><signature><![CDATA[ MemoryWrapperStream(
     void * _buffer,
     vint _size
 );

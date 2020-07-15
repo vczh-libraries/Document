@@ -12,12 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::MemoryStream
-
-Interfaces:
-	MemoryStream					: Memory stream
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_MEMORYSTREAM</div>
@@ -29,7 +25,7 @@ Interfaces:
 {
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[5]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;A readable, writable, seekable and peekable stream that stores everything in memory.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;A &lt;b&gt;readable&lt;/b&gt;, &lt;b&gt;peekable&lt;/b&gt;, &lt;b&gt;writable&lt;/b&gt; and &lt;b&gt;seekable&lt;/b&gt; stream that creates on a buffer.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::MemoryStream"><div><div class="token cpp_type">MemoryStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -41,8 +37,12 @@ Interfaces:
 
 			<div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::stream::MemoryStream::PrepareSpace@void(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryStream::PrepareSpace@void(::vl::vint)'], [], [])"><div class="token cpp_function">PrepareSpace</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryStream::PrepareSpace@void(::vl::vint)[decl0]::totalSpace"><div>totalSpace</div></div>);
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a stream.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_block&quot;&gt;Size for each allocation. The stream will only allocate new memory of size &quot;_block&quot; when it reaches the end and has to extend.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a memory stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_block&quot;&gt;</div>
+			<div class="token cpp_comment ">/// Size for each allocation.</div>
+			<div class="token cpp_comment ">/// When the allocated buffer is not big enough for writing,</div>
+			<div class="token cpp_comment ">/// the buffer will be rebuilt with an extension of &quot;_block&quot; in bytes.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
 			<div class="def" id="FB$vl::stream::MemoryStream::$__ctor@(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryStream::$__ctor@(::vl::vint)'], [], [])"><div class="token cpp_function">MemoryStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MemoryStream::$__ctor@(::vl::vint)[decl0]::_block"><div>_block</div></div>=<div class="token cpp_number ">65536</div>);
 			<div class="def" id="FB$vl::stream::MemoryStream::~MemoryStream@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MemoryStream::~MemoryStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">MemoryStream</div></div></div>();
 

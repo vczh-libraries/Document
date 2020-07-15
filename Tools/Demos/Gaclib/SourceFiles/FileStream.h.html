@@ -12,12 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::FileStream
-
-Interfaces:
-	FileStream						: File stream
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_FILESTREAM</div>
@@ -30,27 +26,27 @@ Interfaces:
 {
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[4]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;A file stream. It is readable when you use [F:vl.stream.FileStream.AccessRight.ReadOnly] or [F:vl.stream.FileStream.AccessRight.ReadWrite] to create the stream. It is writable when you use [F:vl.stream.FileStream.AccessRight.WriteOnly] or [F:vl.stream.FileStream.AccessRight.ReadWrite] to create the stream.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;A file stream. If the given file name is not working, the stream could be &lt;b&gt;unavailable&lt;/b&gt;.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::FileStream"><div><div class="token cpp_type">FileStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
 		{
 		<div class="token cpp_keyword ">public</div>:
 			<div class="token cpp_comment ">/// &lt;summary&gt;Access to the file.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::stream::FileStream::AccessRight"><div><div class="token cpp_type">AccessRight</div></div></div>
 			{
-				<div class="token cpp_comment ">/// &lt;summary&gt;The file is opened to read.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;The file is opened to read, making this stream &lt;b&gt;readable&lt;/b&gt;,  &lt;b&gt;seekable&lt;/b&gt; and &lt;b&gt;finite&lt;/b&gt;.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::stream::FileStream::AccessRight::ReadOnly"><div><div class="token cpp_enum">ReadOnly</div></div></div>,
-				<div class="token cpp_comment ">/// &lt;summary&gt;The file is opened to write.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;The file is opened to write, making this stream &lt;b&gt;writable&lt;/b&gt;.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::stream::FileStream::AccessRight::WriteOnly"><div><div class="token cpp_enum">WriteOnly</div></div></div>,
-				<div class="token cpp_comment ">/// &lt;summary&gt;The file is opened to both read and write.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;The file is opened to both read and write, making this stream &lt;b&gt;readable&lt;/b&gt;, &lt;b&gt;seekable&lt;/b&gt; and &lt;b&gt;writable&lt;/b&gt;.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::stream::FileStream::AccessRight::ReadWrite"><div><div class="token cpp_enum">ReadWrite</div></div></div>
 			};
 		<div class="token cpp_keyword ">protected</div>:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::FileStream::AccessRight'], [], [])"><div class="token cpp_type">AccessRight</div></div>				<div class="def" id="NI$vl::stream::FileStream::accessRight"><div><div class="token cpp_field">accessRight</div></div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['FILE'], [], [])"><div class="token cpp_type">FILE</div></div>*					<div class="def" id="NI$vl::stream::FileStream::file"><div><div class="token cpp_field">file</div></div></div>;
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a stream.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;fileName&quot;&gt;File to operate.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_accessRight&quot;&gt;Operations want to perform on the file.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a file stream from a given file name.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;fileName&quot;&gt;The file to operate.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_accessRight&quot;&gt;Expected operations on the file.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::stream::FileStream::$__ctor@(::vl::WString const &, ::vl::stream::FileStream::AccessRight)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::FileStream::$__ctor@(::vl::WString const &, ::vl::stream::FileStream::AccessRight)'], [], [])"><div class="token cpp_function">FileStream</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::stream::FileStream::$__ctor@(::vl::WString const &, ::vl::stream::FileStream::AccessRight)[decl0]::fileName"><div>fileName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::FileStream::AccessRight'], [], [])"><div class="token cpp_type">AccessRight</div></div> <div class="def" id="NI$vl::stream::FileStream::$__ctor@(::vl::WString const &, ::vl::stream::FileStream::AccessRight)[decl0]::_accessRight"><div>_accessRight</div></div>);
 			<div class="def" id="FB$vl::stream::FileStream::~FileStream@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::FileStream::~FileStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">FileStream</div></div></div>();
 

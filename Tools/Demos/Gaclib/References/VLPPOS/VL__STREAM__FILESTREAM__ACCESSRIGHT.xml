@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::FileStream::AccessRight" accessor="public" category="Enum" name="AccessRight" declFile="FileStream.h" declId="NI$vl::stream::FileStream::AccessRight"><summary>Access to the file.</summary><enumitem name="ReadOnly">The file is opened to read.</enumitem><enumitem name="ReadWrite">The file is opened to both read and write.</enumitem><enumitem name="WriteOnly">The file is opened to write.</enumitem><signature><![CDATA[enum AccessRight
+<Document symbolId="vl::stream::FileStream::AccessRight" accessor="public" category="Enum" name="AccessRight" declFile="FileStream.h" declId="NI$vl::stream::FileStream::AccessRight"><summary>Access to the file.</summary><enumitem name="ReadOnly">The file is opened to read, making this stream <b>readable</b>,  <b>seekable</b> and <b>finite</b>.</enumitem><enumitem name="ReadWrite">The file is opened to both read and write, making this stream <b>readable</b>, <b>seekable</b> and <b>writable</b>.</enumitem><enumitem name="WriteOnly">The file is opened to write, making this stream <b>writable</b>.</enumitem><signature><![CDATA[enum AccessRight
 {
     ReadOnly,
     WriteOnly,

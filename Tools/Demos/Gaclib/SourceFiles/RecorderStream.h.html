@@ -12,12 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::RecorderStream
-
-Interfaces:
-	RecorderStream					: A readable stream that will copy the data to another stream on the fly
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_RECORDERSTREAM</div>
@@ -29,16 +25,29 @@ Interfaces:
 {
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[9]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
 	{
-		<div class="token cpp_comment ">/// &lt;summary&gt;A readable stream that, read from an stream, and write everything that is read to another stream.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// A readable stream that, reads from one stream, and copy everything that is read to another stream.</div>
+		<div class="token cpp_comment ">/// The stream is &lt;b&gt;unavailable&lt;/b&gt; if one of the input stream or the output stream is &lt;b&gt;unavailable&lt;/b&gt;.</div>
+		<div class="token cpp_comment ">/// The stream is &lt;b&gt;readable&lt;/b&gt;, and potentially &lt;b&gt;finite&lt;/b&gt;.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// When reading happens, the recorder stream will only performance one write attempt to the output stream.</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::RecorderStream"><div><div class="token cpp_type">RecorderStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>*				<div class="def" id="NI$vl::stream::RecorderStream::in"><div><div class="token cpp_field">in</div></div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>*				<div class="def" id="NI$vl::stream::RecorderStream::out"><div><div class="token cpp_field">out</div></div></div>;
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a stream.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_in&quot;&gt;The stream to read.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_out&quot;&gt;The stream to write what is read from &quot;_in&quot;.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a recorder stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_in&quot;&gt;</div>
+			<div class="token cpp_comment ">/// The input stream.</div>
+			<div class="token cpp_comment ">/// This recorder stream is &lt;b&gt;readable&lt;/b&gt; only when the input stream is &lt;b&gt;readable&lt;/b&gt;</div>
+			<div class="token cpp_comment ">/// This recorder stream is &lt;b&gt;finite&lt;/b&gt; only when the input stream is &lt;b&gt;finite&lt;/b&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_out&quot;&gt;</div>
+			<div class="token cpp_comment ">/// The output stream.</div>
+			<div class="token cpp_comment ">/// &lt;/param&gt;</div>
 			<div class="def" id="FB$vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IStream &)'], [], [])"><div class="token cpp_function">RecorderStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::_in"><div>_in</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &, ::vl::stream::IStream &)[decl0]::_out"><div>_out</div></div>);
 			<div class="def" id="FB$vl::stream::RecorderStream::~RecorderStream@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::RecorderStream::~RecorderStream@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">RecorderStream</div></div></div>();
 

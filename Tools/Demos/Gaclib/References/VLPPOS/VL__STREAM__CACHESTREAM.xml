@@ -1,8 +1,16 @@
-<Document symbolId="vl::stream::CacheStream" accessor="" category="Class" name="CacheStream" declFile="CacheStream.h" declId="NI$vl::stream::CacheStream"><summary>
- A cache stream. Features (readable, writable, seekable, peekable) are enabled according to the target stream.
- When you read from the cache strema, it will read a specified size of content from the target stream first and cache, reducing the numbers of operations on the target stream.
- When you write to the cache strema, it will save them to a buffer, and write to the target stream until the buffer reaches a specified size, reducing the numbers of operations on the target stream.
- </summary><signature><![CDATA[class CacheStream
+<Document symbolId="vl::stream::CacheStream" accessor="" category="Class" name="CacheStream" declFile="CacheStream.h" declId="NI$vl::stream::CacheStream"><summary><p>
+ A potentially <b>readable</b>, <b>peekable</b>, <b>writable</b>, <b>seekable</b> and <b>finite</b> stream that creates on another stream.
+ Each feature is available if the target stream has the same feature.
+ </p><p>
+ When you read from the cache strema,
+ it will read a specified size of content from the target stream at once and cache,
+ reducing the number of operations on the target stream.
+ </p><p>
+ When you write to the cache stream,
+ it will cache all the data to write,
+ and write to the target stream after the cache is full,
+ reducing the number of operations on the target stream.
+ </p></summary><signature><![CDATA[class CacheStream
     : Object
     , IStream;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>

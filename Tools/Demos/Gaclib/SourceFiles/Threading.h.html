@@ -12,16 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Framework::Threading
-
-Classes:
-	Thread										: Thread
-	CriticalSection
-	Mutex
-	Semaphore
-	EventObject
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_THREADING</div>
@@ -59,47 +51,53 @@ Kernel Mode Objects
 		<div class="def" id="FB$vl::WaitableObject::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::$__ctor@()'], [], [])"><div class="token cpp_function">WaitableObject</div></div></div>();
 		<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::WaitableObject::SetData@void(::vl::threading_internal::WaitableData *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::SetData@void(::vl::threading_internal::WaitableData *)'], [], [])"><div class="token cpp_function">SetData</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::threading_internal'], [], [])">threading_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::threading_internal::WaitableData'], [], [])"><div class="token cpp_type">WaitableData</div></div>* <div class="def" id="NI$vl::WaitableObject::SetData@void(::vl::threading_internal::WaitableData *)[decl0]::data"><div>data</div></div>);
 	<div class="token cpp_keyword ">public</div>:
-		<div class="token cpp_comment ">/// &lt;summary&gt;Test if the object has already been created. Some of the synchronization objects should initialize itself after the constructor. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Test if the object has already been created. Some of the synchronization objects should initialize itself after the constructor.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the object has already been created.&lt;/returns&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::WaitableObject::IsCreated@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::IsCreated@bool()'], [], [])"><div class="token cpp_function">IsCreated</div></div></div>();
 		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for this object to signal.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the object is signaled. Returns false if this operation failed.&lt;/returns&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::WaitableObject::Wait@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::Wait@bool()'], [], [])"><div class="token cpp_function">Wait</div></div></div>();
-		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for this object to signal for a period of time. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for this object to signal for a period of time.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the object is signaled. Returns false if this operation failed, including time out.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;ms&quot;&gt;Time in milliseconds.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::WaitableObject::WaitForTime@bool(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::WaitForTime@bool(::vl::vint)'], [], [])"><div class="token cpp_function">WaitForTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::WaitableObject::WaitForTime@bool(::vl::vint)[decl0]::ms"><div>ms</div></div>);
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for multiple objects. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for multiple objects.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if all objects are signaled. Returns false if this operation failed.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;objects&quot;&gt;A pointer to an array to &lt;see cref=&quot;WaitableObject&quot;/&gt; pointers.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The number of &lt;see cref=&quot;WaitableObject&quot;/&gt; objects in the array.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::WaitableObject::WaitAll@bool(::vl::WaitableObject * *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::WaitAll@bool(::vl::WaitableObject * *, ::vl::vint)'], [], [])"><div class="token cpp_function">WaitAll</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject'], [], [])"><div class="token cpp_type">WaitableObject</div></div>** <div class="def" id="NI$vl::WaitableObject::WaitAll@bool(::vl::WaitableObject * *, ::vl::vint)[decl0]::objects"><div>objects</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::WaitableObject::WaitAll@bool(::vl::WaitableObject * *, ::vl::vint)[decl0]::count"><div>count</div></div>);
-		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for multiple objects for a period of time. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for multiple objects for a period of time.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if all objects are signaled. Returns false if this operation failed, including time out.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;objects&quot;&gt;A pointer to an array to &lt;see cref=&quot;WaitableObject&quot;/&gt; pointers.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The number of &lt;see cref=&quot;WaitableObject&quot;/&gt; objects in the array.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;ms&quot;&gt;Time in milliseconds.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::WaitableObject::WaitAllForTime@bool(::vl::WaitableObject * *, ::vl::vint, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::WaitAllForTime@bool(::vl::WaitableObject * *, ::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">WaitAllForTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject'], [], [])"><div class="token cpp_type">WaitableObject</div></div>** <div class="def" id="NI$vl::WaitableObject::WaitAllForTime@bool(::vl::WaitableObject * *, ::vl::vint, ::vl::vint)[decl0]::objects"><div>objects</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::WaitableObject::WaitAllForTime@bool(::vl::WaitableObject * *, ::vl::vint, ::vl::vint)[decl0]::count"><div>count</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::WaitableObject::WaitAllForTime@bool(::vl::WaitableObject * *, ::vl::vint, ::vl::vint)[decl0]::ms"><div>ms</div></div>);
-		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for one of the objects. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for one of the objects.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns the index of the first signaled or abandoned object, according to the &quot;abandoned&quot; parameter. Returns -1 if this operation failed.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;objects&quot;&gt;A pointer to an array to &lt;see cref=&quot;WaitableObject&quot;/&gt; pointers.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The number of &lt;see cref=&quot;WaitableObject&quot;/&gt; objects in the array.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;abandoned&quot;&gt;Returns true if the waiting is canceled by an abandoned object. An abandoned object is caused by it&apos;s owner thread existing without releasing it.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="FB$vl::WaitableObject::WaitAny@::vl::vint(::vl::WaitableObject * *, ::vl::vint, bool *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::WaitAny@::vl::vint(::vl::WaitableObject * *, ::vl::vint, bool *)'], [], [])"><div class="token cpp_function">WaitAny</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject'], [], [])"><div class="token cpp_type">WaitableObject</div></div>** <div class="def" id="NI$vl::WaitableObject::WaitAny@::vl::vint(::vl::WaitableObject * *, ::vl::vint, bool *)[decl0]::objects"><div>objects</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::WaitableObject::WaitAny@::vl::vint(::vl::WaitableObject * *, ::vl::vint, bool *)[decl0]::count"><div>count</div></div>, <div class="token cpp_keyword ">bool</div>* <div class="def" id="NI$vl::WaitableObject::WaitAny@::vl::vint(::vl::WaitableObject * *, ::vl::vint, bool *)[decl0]::abandoned"><div>abandoned</div></div>);
-		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for one of the objects for a period of time. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Wait for one of the objects for a period of time.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns the index of the first signaled or abandoned object, according to the &quot;abandoned&quot; parameter. Returns -1 if this operation failed, including time out.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;objects&quot;&gt;A pointer to an array to &lt;see cref=&quot;WaitableObject&quot;/&gt; pointers.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The number of &lt;see cref=&quot;WaitableObject&quot;/&gt; objects in the array.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;ms&quot;&gt;Time in milliseconds.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;abandoned&quot;&gt;Returns true if the waiting is canceled by an abandoned object. An abandoned object is caused by it&apos;s owner thread existing without releasing it.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="FB$vl::WaitableObject::WaitAnyForTime@::vl::vint(::vl::WaitableObject * *, ::vl::vint, ::vl::vint, bool *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject::WaitAnyForTime@::vl::vint(::vl::WaitableObject * *, ::vl::vint, ::vl::vint, bool *)'], [], [])"><div class="token cpp_function">WaitAnyForTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject'], [], [])"><div class="token cpp_type">WaitableObject</div></div>** <div class="def" id="NI$vl::WaitableObject::WaitAnyForTime@::vl::vint(::vl::WaitableObject * *, ::vl::vint, ::vl::vint, bool *)[decl0]::objects"><div>objects</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::WaitableObject::WaitAnyForTime@::vl::vint(::vl::WaitableObject * *, ::vl::vint, ::vl::vint, bool *)[decl0]::count"><div>count</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::WaitableObject::WaitAnyForTime@::vl::vint(::vl::WaitableObject * *, ::vl::vint, ::vl::vint, bool *)[decl0]::ms"><div>ms</div></div>, <div class="token cpp_keyword ">bool</div>* <div class="def" id="NI$vl::WaitableObject::WaitAnyForTime@::vl::vint(::vl::WaitableObject * *, ::vl::vint, ::vl::vint, bool *)[decl0]::abandoned"><div>abandoned</div></div>);
 <div class="disabled">#elif defined VCZH_GCC</div>
 <div class="disabled">		virtual bool								Wait() = 0;
 #endif</div>
 	};
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Representing a thread. [M:vl.Thread.CreateAndStart] is the suggested way to create threads.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Thread. [M:vl.Thread.CreateAndStart] is the suggested way to create threads.&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::Thread"><div><div class="token cpp_type">Thread</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WaitableObject'], [], [])"><div class="token cpp_type">WaitableObject</div></div>
 	{
 		<div class="token cpp_keyword ">friend</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::Thread::InternalThreadProc@void(::vl::Thread *)[decl0]"><div><div class="token cpp_function">InternalThreadProc</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Thread'], [], [])"><div class="token cpp_type">Thread</div></div>* <div class="def" id="NI$vl::Thread::InternalThreadProc@void(::vl::Thread *)[decl0]::thread"><div>thread</div></div>);
@@ -130,12 +128,12 @@ Kernel Mode Objects
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns the created thread.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;procedure&quot;&gt;The function pointer.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;argument&quot;&gt;The argument to call the function pointer.&lt;/param&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;deleteAfterStopped&quot;&gt;Set to true (by default) to make the thread delete itself after the job is done. If you set this argument to true, you are not suggested to touch the returned thread pointer in any way.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;deleteAfterStopped&quot;&gt;Set to true (by default) to make the thread delete itself after the job is done. If you set this argument to true, you are not recommended to touch the returned thread pointer in any way.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Thread'], [], [])"><div class="token cpp_type">Thread</div></div>*								<div class="def" id="FB$vl::Thread::CreateAndStart@::vl::Thread *(::vl::Thread::ThreadProcedure, void *, bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Thread::CreateAndStart@::vl::Thread *(::vl::Thread::ThreadProcedure, void *, bool)'], [], [])"><div class="token cpp_function">CreateAndStart</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Thread::ThreadProcedure'], [], [])"><div class="token cpp_type">ThreadProcedure</div></div> <div class="def" id="NI$vl::Thread::CreateAndStart@::vl::Thread *(::vl::Thread::ThreadProcedure, void *, bool)[decl0]::procedure"><div>procedure</div></div>, <div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::Thread::CreateAndStart@::vl::Thread *(::vl::Thread::ThreadProcedure, void *, bool)[decl0]::argument"><div>argument</div></div>=<div class="token cpp_number ">0</div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::Thread::CreateAndStart@::vl::Thread *(::vl::Thread::ThreadProcedure, void *, bool)[decl0]::deleteAfterStopped"><div>deleteAfterStopped</div></div>=<div class="token cpp_keyword ">true</div>);
 		<div class="token cpp_comment ">/// &lt;summary&gt;Create a thread using a function object or a lambda expression.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns the created thread.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;procedure&quot;&gt;The function object or the lambda expression.&lt;/param&gt;</div>
-		<div class="token cpp_comment ">/// &lt;param name=&quot;deleteAfterStopped&quot;&gt;Set to true (by default) to make the thread delete itself after the job is done. If you set this argument to true, you are not suggested to touch the returned thread pointer in any way.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;param name=&quot;deleteAfterStopped&quot;&gt;Set to true (by default) to make the thread delete itself after the job is done. If you set this argument to true, you are not recommended to touch the returned thread pointer in any way.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Thread'], [], [])"><div class="token cpp_type">Thread</div></div>*								<div class="def" id="FB$vl::Thread::CreateAndStart@::vl::Thread *(::vl::Func<void()> const &, bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Thread::CreateAndStart@::vl::Thread *(::vl::Func<void()> const &, bool)'], [], [])"><div class="token cpp_function">CreateAndStart</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>()&gt;&amp; <div class="def" id="NI$vl::Thread::CreateAndStart@::vl::Thread *(::vl::Func<void()> const &, bool)[decl0]::procedure"><div>procedure</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::Thread::CreateAndStart@::vl::Thread *(::vl::Func<void()> const &, bool)[decl0]::deleteAfterStopped"><div>deleteAfterStopped</div></div>=<div class="token cpp_keyword ">true</div>);
 		<div class="token cpp_comment ">/// &lt;summary&gt;Pause the caller thread for a period of time.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;ms&quot;&gt;Time in milliseconds.&lt;/param&gt;</div>
@@ -186,7 +184,7 @@ Kernel Mode Objects
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 		<div class="token cpp_comment ">/// Release the mutex.</div>
-		<div class="token cpp_comment ">/// In the implementation for Linux, calling Release() more than once between two Wait(), or calling Wait() more than once between two Release(), will results in an undefined behavior.</div>
+		<div class="token cpp_comment ">/// In Linux, calling Release() more than once between two Wait(), or calling Wait() more than once between two Release(), will results in an undefined behavior.</div>
 		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::Mutex::Release@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::Mutex::Release@bool()'], [], [])"><div class="token cpp_function">Release</div></div></div>();
@@ -303,14 +301,20 @@ Thread Pool
 Kernel Mode Objects in Process
 ***********************************************************************/</div>
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;&lt;![CDATA[</div>
-	<div class="token cpp_comment ">/// Critical section. It is similar to mutex, but in Windows, enter a owned critical section will not cause dead lock.</div>
-	<div class="token cpp_comment ">/// The macro &quot;CS_LOCK&quot; is encouraged to use instead of calling [M:vl.CriticalSection.Enter] and [M:vl.CriticalSection.Leave] like this:</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// Critical section.</div>
+	<div class="token cpp_comment ">/// The macro &quot;CS_LOCK&quot; is recommended instead of calling [M:vl.CriticalSection.Enter] and [M:vl.CriticalSection.Leave] like this:</div>
+	<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
 	<div class="token cpp_comment ">/// CS_LOCK(yourCriticalSection)</div>
 	<div class="token cpp_comment ">/// {</div>
-	<div class="token cpp_comment ">///		&lt;code&gt;</div>
+	<div class="token cpp_comment ">///     // do something</div>
 	<div class="token cpp_comment ">/// }</div>
-	<div class="token cpp_comment ">/// ]]&gt;&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+	<div class="token cpp_comment ">/// In Windows, enter a owned critical section will not result in dead lock.</div>
+	<div class="token cpp_comment ">/// In Linux and macOS, it works like a mutex.</div>
+	<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::CriticalSection"><div><div class="token cpp_type">CriticalSection</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
 	{
 	<div class="token cpp_keyword ">private</div>:
@@ -340,19 +344,23 @@ Kernel Mode Objects in Process
 		};
 	};
 	
-	<div class="token cpp_comment ">/// &lt;summary&gt;&lt;![CDATA[</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 	<div class="token cpp_comment ">/// Reader writer lock.</div>
-	<div class="token cpp_comment ">/// The macro &quot;READER_LOCK&quot; and &quot;WRITER_LOCK&quot; are encouraged to use instead of calling [M:vl.ReaderWriterLock.EnterReader], [M:vl.ReaderWriterLock.LeaveReader], [M:vl.ReaderWriterLock.EnterWriter] and [M:vl.ReaderWriterLock.LeaveWriter] like this:</div>
+	<div class="token cpp_comment ">/// The macro &quot;READER_LOCK&quot; and &quot;WRITER_LOCK&quot; are recommended instead of calling [M:vl.ReaderWriterLock.EnterReader], [M:vl.ReaderWriterLock.LeaveReader], [M:vl.ReaderWriterLock.EnterWriter] and [M:vl.ReaderWriterLock.LeaveWriter] like this:</div>
+	<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
 	<div class="token cpp_comment ">/// READER_LOCK(yourLock)</div>
 	<div class="token cpp_comment ">/// {</div>
-	<div class="token cpp_comment ">///		&lt;code&gt;</div>
+	<div class="token cpp_comment ">///     // do something</div>
 	<div class="token cpp_comment ">/// }</div>
+	<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
 	<div class="token cpp_comment ">/// or</div>
+	<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
 	<div class="token cpp_comment ">/// WRITER_LOCK(yourLock)</div>
 	<div class="token cpp_comment ">/// {</div>
-	<div class="token cpp_comment ">///		&lt;code&gt;</div>
+	<div class="token cpp_comment ">///     // do something</div>
 	<div class="token cpp_comment ">/// }</div>
-	<div class="token cpp_comment ">/// ]]&gt;&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::ReaderWriterLock"><div><div class="token cpp_type">ReaderWriterLock</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
 	{
 	<div class="token cpp_keyword ">private</div>:
@@ -412,28 +420,33 @@ Kernel Mode Objects in Process
 		<div class="token cpp_comment ">/// &lt;param name=&quot;cs&quot;&gt;The critical section.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::ConditionVariable::SleepWith@bool(::vl::CriticalSection &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ConditionVariable::SleepWith@bool(::vl::CriticalSection &)'], [], [])"><div class="token cpp_function">SleepWith</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::CriticalSection'], [], [])"><div class="token cpp_type">CriticalSection</div></div>&amp; <div class="def" id="NI$vl::ConditionVariable::SleepWith@bool(::vl::CriticalSection &)[decl0]::cs"><div>cs</div></div>);
 <div class="disabled">#ifdef VCZH_MSVC</div>
-		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned critical section and release it for a period of time. When the function returns, the condition variable is activated or it is time out, and the current thread owned the critical section again. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned critical section and release it for a period of time. When the function returns, the condition variable is activated or it is time out, and the current thread owned the critical section again.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;cs&quot;&gt;The critical section.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;ms&quot;&gt;Time in milliseconds.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::ConditionVariable::SleepWithForTime@bool(::vl::CriticalSection &, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ConditionVariable::SleepWithForTime@bool(::vl::CriticalSection &, ::vl::vint)'], [], [])"><div class="token cpp_function">SleepWithForTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::CriticalSection'], [], [])"><div class="token cpp_type">CriticalSection</div></div>&amp; <div class="def" id="NI$vl::ConditionVariable::SleepWithForTime@bool(::vl::CriticalSection &, ::vl::vint)[decl0]::cs"><div>cs</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ConditionVariable::SleepWithForTime@bool(::vl::CriticalSection &, ::vl::vint)[decl0]::ms"><div>ms</div></div>);
-		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned reader lock and release it. When the function returns, the condition variable is activated, and the current thread owned the reader lock again. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned reader lock and release it. When the function returns, the condition variable is activated, and the current thread owned the reader lock again.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;lock&quot;&gt;The reader lock.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::ConditionVariable::SleepWithReader@bool(::vl::ReaderWriterLock &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ConditionVariable::SleepWithReader@bool(::vl::ReaderWriterLock &)'], [], [])"><div class="token cpp_function">SleepWithReader</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ReaderWriterLock'], [], [])"><div class="token cpp_type">ReaderWriterLock</div></div>&amp; <div class="def" id="NI$vl::ConditionVariable::SleepWithReader@bool(::vl::ReaderWriterLock &)[decl0]::lock"><div>lock</div></div>);
-		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned reader lock and release it for a period of time. When the function returns, the condition variable is activated or it is time out, and the current thread owned the reader lock again. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned reader lock and release it for a period of time. When the function returns, the condition variable is activated or it is time out, and the current thread owned the reader lock again.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;lock&quot;&gt;The reader lock.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;ms&quot;&gt;Time in milliseconds.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::ConditionVariable::SleepWithReaderForTime@bool(::vl::ReaderWriterLock &, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ConditionVariable::SleepWithReaderForTime@bool(::vl::ReaderWriterLock &, ::vl::vint)'], [], [])"><div class="token cpp_function">SleepWithReaderForTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ReaderWriterLock'], [], [])"><div class="token cpp_type">ReaderWriterLock</div></div>&amp; <div class="def" id="NI$vl::ConditionVariable::SleepWithReaderForTime@bool(::vl::ReaderWriterLock &, ::vl::vint)[decl0]::lock"><div>lock</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ConditionVariable::SleepWithReaderForTime@bool(::vl::ReaderWriterLock &, ::vl::vint)[decl0]::ms"><div>ms</div></div>);
-		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned writer lock and release it. When the function returns, the condition variable is activated, and the current thread owned the writer lock again. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned writer lock and release it. When the function returns, the condition variable is activated, and the current thread owned the writer lock again.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;lock&quot;&gt;The writer lock.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::ConditionVariable::SleepWithWriter@bool(::vl::ReaderWriterLock &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ConditionVariable::SleepWithWriter@bool(::vl::ReaderWriterLock &)'], [], [])"><div class="token cpp_function">SleepWithWriter</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ReaderWriterLock'], [], [])"><div class="token cpp_type">ReaderWriterLock</div></div>&amp; <div class="def" id="NI$vl::ConditionVariable::SleepWithWriter@bool(::vl::ReaderWriterLock &)[decl0]::lock"><div>lock</div></div>);
-		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned writer lock and release it for a period of time. When the function returns, the condition variable is activated or it is time out, and the current thread owned the writer lock again. This function is only available in Windows.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Bind a conditional variable with a owned writer lock and release it for a period of time. When the function returns, the condition variable is activated or it is time out, and the current thread owned the writer lock again.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;lock&quot;&gt;The writer lock.&lt;/param&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;ms&quot;&gt;Time in milliseconds.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;This function is only available in Windows.&lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::ConditionVariable::SleepWithWriterForTime@bool(::vl::ReaderWriterLock &, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ConditionVariable::SleepWithWriterForTime@bool(::vl::ReaderWriterLock &, ::vl::vint)'], [], [])"><div class="token cpp_function">SleepWithWriterForTime</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::ReaderWriterLock'], [], [])"><div class="token cpp_type">ReaderWriterLock</div></div>&amp; <div class="def" id="NI$vl::ConditionVariable::SleepWithWriterForTime@bool(::vl::ReaderWriterLock &, ::vl::vint)[decl0]::lock"><div>lock</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::ConditionVariable::SleepWithWriterForTime@bool(::vl::ReaderWriterLock &, ::vl::vint)[decl0]::ms"><div>ms</div></div>);
 <div class="disabled">#endif</div>
 		<div class="token cpp_comment ">/// &lt;summary&gt;Wake one thread that pending on this condition variable.&lt;/summary&gt;</div>
@@ -448,14 +461,16 @@ User Mode Objects
 
 	<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">long</div> <div class="def" id="NI$vl::LockedInt"><div><div class="token cpp_type">LockedInt</div></div></div>;
 	
-	<div class="token cpp_comment ">/// &lt;summary&gt;&lt;![CDATA[</div>
-	<div class="token cpp_comment ">/// Spin lock. It is similar to mutex.</div>
-	<div class="token cpp_comment ">/// The macro &quot;SPIN_LOCK&quot; is encouraged to use instead of calling [M:vl.SpinLock.Enter] and [M:vl.SpinLock.Leave] like this:</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// Spin lock. It is similar to mutex, but it does not occupy resource in the system.</div>
+	<div class="token cpp_comment ">/// The macro &quot;SPIN_LOCK&quot; is recommended instead of calling [M:vl.SpinLock.Enter] and [M:vl.SpinLock.Leave] like this:</div>
+	<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
 	<div class="token cpp_comment ">/// SPIN_LOCK(yourLock)</div>
 	<div class="token cpp_comment ">/// {</div>
-	<div class="token cpp_comment ">///		&lt;code&gt;</div>
+	<div class="token cpp_comment ">///     // do something</div>
 	<div class="token cpp_comment ">/// }</div>
-	<div class="token cpp_comment ">/// ]]&gt;&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::SpinLock"><div><div class="token cpp_type">SpinLock</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
 	{
 	<div class="token cpp_keyword ">protected</div>:
@@ -491,12 +506,13 @@ User Mode Objects
 
 <div class="token cpp_comment ">/***********************************************************************
 Thread Local Storage
-
-ThreadLocalStorage and ThreadVariable&lt;T&gt; are designed to be used as global value types only.
-Dynamically create instances of them are undefined behavior.
 ***********************************************************************/</div>
 
 	<div class="token cpp_comment ">/// &lt;summary&gt;Thread local storage operations.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+	<div class="token cpp_comment ">/// This class is designed to define global variables.</div>
+	<div class="token cpp_comment ">/// Dynamically allocation will result in undefined behavior.</div>
+	<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::ThreadLocalStorage"><div><div class="token cpp_type">ThreadLocalStorage</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">private</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
 	{
 		<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div>(*<div class="def" id="NI$vl::ThreadLocalStorage::Destructor"><div><div class="token cpp_type">Destructor</div></div></div>)(<div class="token cpp_keyword ">void</div>*);
@@ -519,12 +535,16 @@ Dynamically create instances of them are undefined behavior.
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::ThreadLocalStorage::FixStorages@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ThreadLocalStorage::FixStorages@void()'], [], [])"><div class="token cpp_function">FixStorages</div></div></div>();
 		<div class="token cpp_comment ">/// &lt;summary&gt;Clear all storages for the current thread. For threads that are created using [T:vl.Thread], this function will be automatically called when before the thread exit.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::ThreadLocalStorage::ClearStorages@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ThreadLocalStorage::ClearStorages@void()'], [], [])"><div class="token cpp_function">ClearStorages</div></div></div>();
-		<div class="token cpp_comment ">/// &lt;summary&gt;Clear all storages for the current thread (should be the main thread) and clear all records. This function can only be called by the main thread when all other threads are exited. It will reduce noices when you want to detect memory leaks.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Clear all storages for the current thread (should be the main thread) and clear all records. This function can only be called by the main thread when all other threads are exited. It will reduce noices for detecting memory leaks.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::ThreadLocalStorage::DisposeStorages@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::ThreadLocalStorage::DisposeStorages@void()'], [], [])"><div class="token cpp_function">DisposeStorages</div></div></div>();
 	};
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Thread local variable. This type can only be used to define global variables. Different threads can store different values to and obtain differnt values from a thread local variable.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;Thread local variable. Different threads can store different values to and obtain differnt values from a thread local variable.&lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of the storage.&lt;/typeparam&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+	<div class="token cpp_comment ">/// This class is designed to define global variables.</div>
+	<div class="token cpp_comment ">/// Dynamically allocation will result in undefined behavior.</div>
+	<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::ThreadVariable::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::ThreadVariable"><div class="ref" onclick="jumpToSymbol([], [], ['vl::ThreadVariable@<[T] *>'], [])"><div class="token cpp_type">ThreadVariable</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">private</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
 	{
@@ -619,7 +639,13 @@ Dynamically create instances of them are undefined behavior.
 RepeatingTaskExecutor
 ***********************************************************************/</div>
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;Queued task executor. It is different from a thread pool by: 1) Task execution is single threaded, 2) If you queue a task, it will override the the unexecuted queued task.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+	<div class="token cpp_comment ">/// Queued task executor. It is different from a thread because:</div>
+	<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+	<div class="token cpp_comment ">///   &lt;li&gt;Task execution is single threaded.&lt;/li&gt;</div>
+	<div class="token cpp_comment ">///   &lt;li&gt;If you queue a task, it will override all unexecuted queued tasks.&lt;/li&gt;</div>
+	<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+	<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;The type of the argument to run a task.&lt;/typeparam&gt;</div>
 	<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::RepeatingTaskExecutor::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::RepeatingTaskExecutor"><div><div class="token cpp_type">RepeatingTaskExecutor</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
@@ -686,8 +712,14 @@ RepeatingTaskExecutor
 			<div class="ref" onclick="jumpToSymbol([], ['vl::RepeatingTaskExecutor::executingEvent'], [], [])"><div class="token cpp_field">executingEvent</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::SpinLock::Leave@void()'], ['vl::SpinLock::Leave@void()'], [], [])"><div class="token cpp_function">Leave</div></div>();
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Queue a task. If there is a queued task that has not been executied yet, those tasks will be canceled. Only one task can be queued at the same moment.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Queue a task.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;input&quot;&gt;The argument to run a task.&lt;/param&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// When there is a running task, queuing a new task will cancel all unexecuted queued tasks.</div>
+		<div class="token cpp_comment ">/// When there is no running task, queuing a task will execute this task immediately.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::RepeatingTaskExecutor::SubmitTask@void([T] const &)[impl0]"><div><div class="token cpp_function">SubmitTask</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::RepeatingTaskExecutor::T'], [], [])"><div class="token cpp_type">T</div></div>&amp; <div class="def" id="NI$vl::RepeatingTaskExecutor::SubmitTask@void([T] const &)[impl0]::input"><div><div class="token cpp_argument">input</div></div></div>)
 		{
 <div class="expandable"><div class="disabled">			SPIN_LOCK(inputLock)</div>

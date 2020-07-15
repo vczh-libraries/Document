@@ -12,23 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::CharFormat
-
-Classes:
-	CharEncoder									: Encoder to translate from wchar_t to some specified format
-	CharDecoder									: Decoder to transate from some specified format to wchar_t
-	MbcsEncoder									: Mbcs encoder (using the code page of the current locale)
-	MbcsDecoder									: Mbcs decoder (using the code page of the current locale)
-	Utf16Encoder								: UTF-16 encoder
-	Utf16Decoder								: UTF-16 decoder
-	Utf16BEEncoder								: UTF-16 encoder with big endian
-	Utf16BEDecoder								: UTF-16 decoder with big endian
-	Utf8Encoder									: UTF-8 encoder
-	Utf8Decoder									: UTF-8 decoder
-	BomEncoder									: Character encoder which writes a BOM before the text
-	BomDecoder									: Character decoder which reads a BOM from the data to know the encoding
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_CHARFORMAT</div>
@@ -44,18 +29,18 @@ Classes:
 	{
 
 		<div class="token cpp_comment ">/*
-		How UCS-4 translate to UTF-8
-		U-00000000 - U-0000007F:  0xxxxxxx
-		U-00000080 - U-000007FF:  110xxxxx 10xxxxxx
-		U-00000800 - U-0000FFFF:  1110xxxx 10xxxxxx 10xxxxxx
-		U-00010000 - U-001FFFFF:  11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-		U-00200000 - U-03FFFFFF:  111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
-		U-04000000 - U-7FFFFFFF:  1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+		How UCS-4 translates to UTF-8
+			U-00000000 - U-0000007F:  0xxxxxxx
+			U-00000080 - U-000007FF:  110xxxxx 10xxxxxx
+			U-00000800 - U-0000FFFF:  1110xxxx 10xxxxxx 10xxxxxx
+			U-00010000 - U-001FFFFF:  11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+			U-00200000 - U-03FFFFFF:  111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+			U-04000000 - U-7FFFFFFF:  1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
 		BOM:
-		FFFE	=Unicode			(vceUtf16)
-		FEFF	=Unicode Big Endian	(vceUtf16_be)
-		EFBBBF	=UTF-8				(vceUtf8)
-		other	=MBCS(GBK)			(vceMbcs)
+			FFFE	=Unicode
+			FEFF	=Unicode Big Endian
+			EFBBBF	=UTF-8
+			other	=MBCS(GBK)
 		*/</div>
 
 <div class="token cpp_comment ">/***********************************************************************
@@ -100,14 +85,14 @@ Char Encoder and Decoder
 Mbcs
 ***********************************************************************/</div>
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to transform text in a local code page from wchar_t.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to write text in the local code page.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::MbcsEncoder"><div><div class="token cpp_type">MbcsEncoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CharEncoder'], [], [])"><div class="token cpp_type">CharEncoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::stream::MbcsEncoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::MbcsEncoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteString</div></div></div>(<div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::stream::MbcsEncoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::MbcsEncoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]::chars"><div>chars</div></div>);
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to transform text in a local code page to wchar_t.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to read text in the local code page.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::MbcsDecoder"><div><div class="token cpp_type">MbcsDecoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CharDecoder'], [], [])"><div class="token cpp_type">CharDecoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -118,14 +103,14 @@ Mbcs
 Utf-16
 ***********************************************************************/</div>
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to transform UTF-16 text from wchar_t.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to write UTF-16 text.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::Utf16Encoder"><div><div class="token cpp_type">Utf16Encoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CharEncoder'], [], [])"><div class="token cpp_type">CharEncoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::stream::Utf16Encoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::Utf16Encoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteString</div></div></div>(<div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::stream::Utf16Encoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::Utf16Encoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]::chars"><div>chars</div></div>);
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to transform UTF-16 text to wchar_t.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to read UTF-16 text.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::Utf16Decoder"><div><div class="token cpp_type">Utf16Decoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CharDecoder'], [], [])"><div class="token cpp_type">CharDecoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -136,14 +121,14 @@ Utf-16
 Utf-16-be
 ***********************************************************************/</div>
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to transform big endian UTF-16 text from wchar_t.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to write big endian UTF-16 to.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::Utf16BEEncoder"><div><div class="token cpp_type">Utf16BEEncoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CharEncoder'], [], [])"><div class="token cpp_type">CharEncoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::stream::Utf16BEEncoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::Utf16BEEncoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteString</div></div></div>(<div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::stream::Utf16BEEncoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::Utf16BEEncoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]::chars"><div>chars</div></div>);
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to transform big endian UTF-16 text to wchar_t.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to read big endian UTF-16 text.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::Utf16BEDecoder"><div><div class="token cpp_type">Utf16BEDecoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CharDecoder'], [], [])"><div class="token cpp_type">CharDecoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -154,14 +139,14 @@ Utf-16-be
 Utf-8
 ***********************************************************************/</div>
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to transform UTF-8 text from wchar_t.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to write UTF-8 text.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::Utf8Encoder"><div><div class="token cpp_type">Utf8Encoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CharEncoder'], [], [])"><div class="token cpp_type">CharEncoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::stream::Utf8Encoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::Utf8Encoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)'], [], [])"><div class="token cpp_function">WriteString</div></div></div>(<div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::stream::Utf8Encoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::Utf8Encoder::WriteString@::vl::vint(wchar_t *, ::vl::vint)[decl0]::chars"><div>chars</div></div>);
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to transform UTF-8 text to wchar_t.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to read UTF-8 text.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::Utf8Decoder"><div><div class="token cpp_type">Utf8Decoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::CharDecoder'], [], [])"><div class="token cpp_type">CharDecoder</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -178,7 +163,7 @@ Utf-8
 Bom
 ***********************************************************************/</div>
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to transform text from wchar_t. A BOM will be added at the beginning.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Encoder to write text in a specified encoding. A BOM will be added at the beginning.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::BomEncoder"><div><div class="token cpp_type">BomEncoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IEncoder'], [], [])"><div class="token cpp_type">IEncoder</div></div>
 		{
 		<div class="token cpp_keyword ">public</div>:
@@ -187,19 +172,19 @@ Bom
 			{
 				<div class="token cpp_comment ">/// &lt;summary&gt;Multi-bytes character string.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::stream::BomEncoder::Encoding::Mbcs"><div><div class="token cpp_enum">Mbcs</div></div></div>,
-				<div class="token cpp_comment ">/// &lt;summary&gt;UTF-8.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;UTF-8. EF, BB, BF will be written before writing any text.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::stream::BomEncoder::Encoding::Utf8"><div><div class="token cpp_enum">Utf8</div></div></div>,
-				<div class="token cpp_comment ">/// &lt;summary&gt;UTF-16.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;UTF-16. FF FE will be written before writing any text.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::stream::BomEncoder::Encoding::Utf16"><div><div class="token cpp_enum">Utf16</div></div></div>,
-				<div class="token cpp_comment ">/// &lt;summary&gt;Big endian UTF-16.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Big endian UTF-16. FE FF, BF will be written before writing any text.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::stream::BomEncoder::Encoding::Utf16BE"><div><div class="token cpp_enum">Utf16BE</div></div></div>
 			};
 		<div class="token cpp_keyword ">protected</div>:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::Encoding'], [], [])"><div class="token cpp_type">Encoding</div></div>						<div class="def" id="NI$vl::stream::BomEncoder::encoding"><div><div class="token cpp_field">encoding</div></div></div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IEncoder'], [], [])"><div class="token cpp_type">IEncoder</div></div>*						<div class="def" id="NI$vl::stream::BomEncoder::encoder"><div><div class="token cpp_field">encoder</div></div></div>;
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create an encoder.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_encoding&quot;&gt;Specified encoding.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an encoder with a specified encoding.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_encoding&quot;&gt;The specified encoding.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::stream::BomEncoder::$__ctor@(::vl::stream::BomEncoder::Encoding)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::$__ctor@(::vl::stream::BomEncoder::Encoding)'], [], [])"><div class="token cpp_function">BomEncoder</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::Encoding'], [], [])"><div class="token cpp_type">Encoding</div></div> <div class="def" id="NI$vl::stream::BomEncoder::$__ctor@(::vl::stream::BomEncoder::Encoding)[decl0]::_encoding"><div>_encoding</div></div>);
 			<div class="def" id="FB$vl::stream::BomEncoder::~BomEncoder@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::~BomEncoder@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">BomEncoder</div></div></div>();
 
@@ -208,7 +193,7 @@ Bom
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::stream::BomEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomEncoder::Write@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">Write</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::BomEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::BomEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>);
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to transform text to wchar_t. This decoder depends on the BOM information at the beginning to decide the format of the input.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Decoder to read text. This decoder depends on BOM at the beginning to decide the format of the input.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::BomDecoder"><div><div class="token cpp_type">BomDecoder</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IDecoder'], [], [])"><div class="token cpp_type">IDecoder</div></div>
 		{
 		<div class="token cpp_keyword ">private</div>:
@@ -243,7 +228,7 @@ Bom
 			<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>*						<div class="def" id="NI$vl::stream::BomDecoder::stream"><div><div class="token cpp_field">stream</div></div></div>;
 
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create an decoder.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create an decoder, BOM will be consumed before reading any text.&lt;/summary&gt;</div>
 			<div class="def" id="FB$vl::stream::BomDecoder::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomDecoder::$__ctor@()'], [], [])"><div class="token cpp_function">BomDecoder</div></div></div>();
 			<div class="def" id="FB$vl::stream::BomDecoder::~BomDecoder@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::BomDecoder::~BomDecoder@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">BomDecoder</div></div></div>();
 

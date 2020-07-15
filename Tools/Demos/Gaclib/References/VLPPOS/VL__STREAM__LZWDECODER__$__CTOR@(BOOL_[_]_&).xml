@@ -1,4 +1,10 @@
-<Document symbolId="vl::stream::LzwDecoder::$__ctor@(bool [*] &amp;)" accessor="public" category="Function" name="$__ctor" declFile="CompressionStream.h" declId="FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &amp;)[decl0]"><summary>Create an decoder and tell it which byte will never appear in the data before compression.</summary><param name="existingBytes">An array to tell the encoder which byte will never appear in the data before compression.</param><signature><![CDATA[ LzwDecoder(
+<Document symbolId="vl::stream::LzwDecoder::$__ctor@(bool [*] &amp;)" accessor="public" category="Function" name="$__ctor" declFile="CompressionStream.h" declId="FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &amp;)[decl0]"><summary>Create an encoder, specifying what bytes will never appear in the decompressed data.</summary><param name="existingBytes">
+ A filter array
+ If existingBytes[x] == true, it means x will possibly appear.
+ If existingBytes[x] == false, it means x will never appear.
+ </param><remark>
+ The array &quot;existingBytes&quot; should exactly match the one given to <symbol name="LzwEncoder" docId="vl::stream::LzwEncoder" declFile="CompressionStream.h" declId="NI$vl::stream::LzwEncoder"/>.
+ </remark><signature><![CDATA[ LzwDecoder(
     bool( & existingBytes)[expr]
 );
 ]]></signature></Document>

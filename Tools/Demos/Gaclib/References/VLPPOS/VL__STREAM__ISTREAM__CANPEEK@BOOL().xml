@@ -1,3 +1,3 @@
-<Document symbolId="vl::stream::IStream::CanPeek@bool()" accessor="public" category="Function" name="CanPeek" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanPeek@bool()[decl0]"><summary>Test if the stream is peekable.</summary><returns>Returns true if the stream is peekable.</returns><signature><![CDATA[bool CanPeek(
+<Document symbolId="vl::stream::IStream::CanPeek@bool()" accessor="public" category="Function" name="CanPeek" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::CanPeek@bool()[decl0]"><summary>Test if the stream is <b>peekable</b>.</summary><returns>Returns true if the stream is <b>peekable</b>.</returns><signature><![CDATA[bool CanPeek(
 ) const;
 ]]></signature></Document>

@@ -12,12 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Stream::CacheStream
-
-Interfaces:
-	CacheStream						: Stream that provide a cache for reading and writing
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_STREAM_CACHESTREAM</div>
@@ -30,9 +26,21 @@ Interfaces:
 	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[2]$vl::stream"><div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div></div>
 	{
 		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-		<div class="token cpp_comment ">/// A cache stream. Features (readable, writable, seekable, peekable) are enabled according to the target stream.</div>
-		<div class="token cpp_comment ">/// When you read from the cache strema, it will read a specified size of content from the target stream first and cache, reducing the numbers of operations on the target stream.</div>
-		<div class="token cpp_comment ">/// When you write to the cache strema, it will save them to a buffer, and write to the target stream until the buffer reaches a specified size, reducing the numbers of operations on the target stream.</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// A potentially &lt;b&gt;readable&lt;/b&gt;, &lt;b&gt;peekable&lt;/b&gt;, &lt;b&gt;writable&lt;/b&gt;, &lt;b&gt;seekable&lt;/b&gt; and &lt;b&gt;finite&lt;/b&gt; stream that creates on another stream.</div>
+		<div class="token cpp_comment ">/// Each feature is available if the target stream has the same feature.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// When you read from the cache strema,</div>
+		<div class="token cpp_comment ">/// it will read a specified size of content from the target stream at once and cache,</div>
+		<div class="token cpp_comment ">/// reducing the number of operations on the target stream.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// When you write to the cache stream,</div>
+		<div class="token cpp_comment ">/// it will cache all the data to write,</div>
+		<div class="token cpp_comment ">/// and write to the target stream after the cache is full,</div>
+		<div class="token cpp_comment ">/// reducing the number of operations on the target stream.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
 		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::stream::CacheStream"><div><div class="token cpp_type">CacheStream</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>
 		{
@@ -53,7 +61,7 @@ Interfaces:
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::CacheStream::InternalRead@::vl::vint(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::CacheStream::InternalRead@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">InternalRead</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::CacheStream::InternalRead@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::CacheStream::InternalRead@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>);
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::stream::CacheStream::InternalWrite@::vl::vint(void *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::CacheStream::InternalWrite@::vl::vint(void *, ::vl::vint)'], [], [])"><div class="token cpp_function">InternalWrite</div></div></div>(<div class="token cpp_keyword ">void</div>* <div class="def" id="NI$vl::stream::CacheStream::InternalWrite@::vl::vint(void *, ::vl::vint)[decl0]::_buffer"><div>_buffer</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::CacheStream::InternalWrite@::vl::vint(void *, ::vl::vint)[decl0]::_size"><div>_size</div></div>);
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a cache stream using a target stream.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a cache stream from a target stream.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;_target&quot;&gt;The target stream.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;_block&quot;&gt;Size of the cache.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &, ::vl::vint)'], [], [])"><div class="token cpp_function">CacheStream</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &, ::vl::vint)[decl0]::_target"><div>_target</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::stream::CacheStream::$__ctor@(::vl::stream::IStream &, ::vl::vint)[decl0]::_block"><div>_block</div></div>=<div class="token cpp_number ">65536</div>);

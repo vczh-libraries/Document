@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::IStream::SeekFromEnd@void(::vl::pos_t)" accessor="public" category="Function" name="SeekFromEnd" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::SeekFromEnd@void(::vl::pos_t)[decl0]"><summary>Step backward from the end. Will throw exception if the stream is not seekable or not available.</summary><param name="_size">The length of the step.</param><signature><![CDATA[void SeekFromEnd(
+<Document symbolId="vl::stream::IStream::SeekFromEnd@void(::vl::pos_t)" accessor="public" category="Function" name="SeekFromEnd" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::SeekFromEnd@void(::vl::pos_t)[decl0]"><summary>Step backward from the end. It will crash if the stream is <b>unseekable</b> or <b>unavailable</b>.</summary><param name="_size">The length to step backward.</param><signature><![CDATA[void SeekFromEnd(
     pos_t _size
 );
 ]]></signature><seealsos><symbol name="pos_t" docId="vl::pos_t" declFile="Basic.h" declId="NI$vl::pos_t"/></seealsos></Document>

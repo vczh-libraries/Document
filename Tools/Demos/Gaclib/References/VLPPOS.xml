@@ -49,6 +49,7 @@
       <document name="variable statusCode" docId="vl::HttpResponse::statusCode" file="VL__HTTPRESPONSE__STATUSCODE"/>
     </document>
     <document name="class Locale" docId="vl::Locale" file="VL__LOCALE">
+      <document name="function $__ctor" docId="vl::Locale::$__ctor@(::vl::WString const &amp;)" file="VL__LOCALE__$__CTOR@(__VL__WSTRING_CONST_&amp;)"/>
       <document name="function Compare" docId="vl::Locale::Compare@::vl::vint(::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::Locale::Normalization)" file="VL__LOCALE__COMPARE@__VL__VINT(__VL__WSTRING_CONST_&amp;,___VL__WSTR"/>
       <document name="function CompareOrdinal" docId="vl::Locale::CompareOrdinal@::vl::vint(::vl::WString const &amp;, ::vl::WString const &amp;)" file="VL__LOCALE__COMPAREORDINAL@__VL__VINT(__VL__WSTRING_CONST_&amp;,___V"/>
       <document name="function CompareOrdinalIgnoreCase" docId="vl::Locale::CompareOrdinalIgnoreCase@::vl::vint(::vl::WString const &amp;, ::vl::WString const &amp;)" file="VL__LOCALE__COMPAREORDINALIGNORECASE@__VL__VINT(__VL__WSTRING_CO"/>
@@ -178,6 +179,7 @@
       <document name="function $__ctor" docId="vl::filesystem::FilePath::$__ctor@(::vl::WString const &amp;)" file="VL__FILESYSTEM__FILEPATH__$__CTOR@(__VL__WSTRING_CONST_&amp;)"/>
       <document name="function $__ctor" docId="vl::filesystem::FilePath::$__ctor@(wchar_t const *)" file="VL__FILESYSTEM__FILEPATH__$__CTOR@(WCHAR_T_CONST__)"/>
       <document name="function $__ctor" docId="vl::filesystem::FilePath::$__ctor@(::vl::filesystem::FilePath const &amp;)" file="VL__FILESYSTEM__FILEPATH__$__CTOR@(__VL__FILESYSTEM__FILEPATH_CO"/>
+      <document name="variable Delimiter" docId="vl::filesystem::FilePath::Delimiter" file="VL__FILESYSTEM__FILEPATH__DELIMITER"/>
       <document name="function GetFolder" docId="vl::filesystem::FilePath::GetFolder@::vl::filesystem::FilePath()" file="VL__FILESYSTEM__FILEPATH__GETFOLDER@__VL__FILESYSTEM__FILEPATH()"/>
       <document name="function GetFullPath" docId="vl::filesystem::FilePath::GetFullPath@::vl::WString()" file="VL__FILESYSTEM__FILEPATH__GETFULLPATH@__VL__WSTRING()"/>
       <document name="function GetName" docId="vl::filesystem::FilePath::GetName@::vl::WString()" file="VL__FILESYSTEM__FILEPATH__GETNAME@__VL__WSTRING()"/>
@@ -216,9 +218,12 @@
     </document>
     <document name="class CharDecoder" docId="vl::stream::CharDecoder" file="VL__STREAM__CHARDECODER"/>
     <document name="class CharEncoder" docId="vl::stream::CharEncoder" file="VL__STREAM__CHARENCODER"/>
+    <document name="function CompressStream" docId="vl::stream::CompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" file="VL__STREAM__COMPRESSSTREAM@VOID(__VL__STREAM__ISTREAM_&amp;,___VL__S"/>
+    <document name="function CopyStream" docId="vl::stream::CopyStream@::vl::vint(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" file="VL__STREAM__COPYSTREAM@__VL__VINT(__VL__STREAM__ISTREAM_&amp;,___VL_"/>
     <document name="class DecoderStream" docId="vl::stream::DecoderStream" file="VL__STREAM__DECODERSTREAM">
       <document name="function $__ctor" docId="vl::stream::DecoderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IDecoder &amp;)" file="VL__STREAM__DECODERSTREAM__$__CTOR@(__VL__STREAM__ISTREAM_&amp;,___V"/>
     </document>
+    <document name="function DecompressStream" docId="vl::stream::DecompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" file="VL__STREAM__DECOMPRESSSTREAM@VOID(__VL__STREAM__ISTREAM_&amp;,___VL_"/>
     <document name="class EncoderStream" docId="vl::stream::EncoderStream" file="VL__STREAM__ENCODERSTREAM">
       <document name="function $__ctor" docId="vl::stream::EncoderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IEncoder &amp;)" file="VL__STREAM__ENCODERSTREAM__$__CTOR@(__VL__STREAM__ISTREAM_&amp;,___V"/>
     </document>
@@ -226,6 +231,7 @@
       <document name="function $__ctor" docId="vl::stream::FileStream::$__ctor@(::vl::WString const &amp;, ::vl::stream::FileStream::AccessRight)" file="VL__STREAM__FILESTREAM__$__CTOR@(__VL__WSTRING_CONST_&amp;,___VL__ST"/>
       <document name="enum AccessRight" docId="vl::stream::FileStream::AccessRight" file="VL__STREAM__FILESTREAM__ACCESSRIGHT"/>
     </document>
+    <document name="function GenerateToStream" docId="vl::stream::GenerateToStream@::vl::WString([TCallback] const &amp;, ::vl::vint)" file="VL__STREAM__GENERATETOSTREAM@__VL__WSTRING([TCALLBACK]_CONST_&amp;,_"/>
     <document name="class IDecoder" docId="vl::stream::IDecoder" file="VL__STREAM__IDECODER">
       <document name="function Close" docId="vl::stream::IDecoder::Close@void()" file="VL__STREAM__IDECODER__CLOSE@VOID()"/>
       <document name="function Read" docId="vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)" file="VL__STREAM__IDECODER__READ@__VL__VINT(VOID__,___VL__VINT)"/>

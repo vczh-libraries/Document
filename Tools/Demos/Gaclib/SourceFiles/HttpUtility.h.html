@@ -11,7 +11,12 @@
 <a class="button" href="../SymbolIndex.html">Symbol Index</a>
 <br>
 <br>
-<div class="codebox"><div class="cpp_default"><div class="disabled">#ifndef VCZH_HTTPUTILITY</div>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_HTTPUTILITY</div>
 <div class="disabled">#define VCZH_HTTPUTILITY</div>
 
 <div class="disabled">#include &lt;Vlpp.h&gt;</div>
@@ -25,7 +30,7 @@
 HTTP Utility
 ***********************************************************************/</div>
 
-	<div class="token cpp_comment ">/// &lt;summary&gt;A type representing an http requiest.&lt;/summary&gt;</div>
+	<div class="token cpp_comment ">/// &lt;summary&gt;An http requiest.&lt;/summary&gt;</div>
 	<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::HttpRequest"><div><div class="token cpp_type">HttpRequest</div></div></div>
 	{
 		<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt;					<div class="def" id="NI$vl::HttpRequest::BodyBuffer"><div><div class="token cpp_type">BodyBuffer</div></div></div>;
@@ -35,37 +40,37 @@ HTTP Utility
 		<div class="token cpp_comment ">/// &lt;summary&gt;Name of the server, like &quot;gaclib.net&quot;.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="NI$vl::HttpRequest::server"><div><div class="token cpp_field">server</div></div></div>;
 		<div class="token cpp_comment ">/// &lt;summary&gt;Port of the server, like 80.&lt;/summary&gt;</div>
-		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::HttpRequest::port"><div><div class="token cpp_field">port</div></div></div>;
-		<div class="token cpp_comment ">/// &lt;summary&gt;Query of the request, like &quot;/GettingStart.html&quot;.&lt;/summary&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::HttpRequest::port"><div><div class="token cpp_field">port</div></div></div> = <div class="token cpp_number ">0</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Query of the request, like &quot;/index.html&quot;.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="NI$vl::HttpRequest::query"><div><div class="token cpp_field">query</div></div></div>;
-		<div class="token cpp_comment ">/// &lt;summary&gt;Set to true if the request uses SSL.&lt;/summary&gt;</div>
-		<div class="token cpp_keyword ">bool</div>				<div class="def" id="NI$vl::HttpRequest::secure"><div><div class="token cpp_field">secure</div></div></div>;
-		<div class="token cpp_comment ">/// &lt;summary&gt;User name to authorize. Set to empty if you don&apos;t want to provide it.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Set to true if the request uses SSL, or https.&lt;/summary&gt;</div>
+		<div class="token cpp_keyword ">bool</div>				<div class="def" id="NI$vl::HttpRequest::secure"><div><div class="token cpp_field">secure</div></div></div> = <div class="token cpp_keyword ">false</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;User name to authorize. Set to empty if authorization is not needed.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="NI$vl::HttpRequest::username"><div><div class="token cpp_field">username</div></div></div>;
-		<div class="token cpp_comment ">/// &lt;summary&gt;Password to authorize. Set to empty if you don&apos;t want to provide it.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Password to authorize. Set to empty if authorization is not needed.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="NI$vl::HttpRequest::password"><div><div class="token cpp_field">password</div></div></div>;
 		<div class="token cpp_comment ">/// &lt;summary&gt;HTTP method, like &quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, etc.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="NI$vl::HttpRequest::method"><div><div class="token cpp_field">method</div></div></div>;
-		<div class="token cpp_comment ">/// &lt;summary&gt;Cookie. Set to empty if you don&apos;t want to provide it.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Cookie. Set to empty if cookie is not needed.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="NI$vl::HttpRequest::cookie"><div><div class="token cpp_field">cookie</div></div></div>;
-		<div class="token cpp_comment ">/// &lt;summary&gt;Request body. This is a binary array using an array container to char.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Request body. This is a byte array.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::BodyBuffer'], [], [])"><div class="token cpp_type">BodyBuffer</div></div>			<div class="def" id="NI$vl::HttpRequest::body"><div><div class="token cpp_field">body</div></div></div>;
 		<div class="token cpp_comment ">/// &lt;summary&gt;Content type, like &quot;text/xml&quot;.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="NI$vl::HttpRequest::contentType"><div><div class="token cpp_field">contentType</div></div></div>;
-		<div class="token cpp_comment ">/// &lt;summary&gt;Accept type list, elements of it like &quot;text/xml&quot;.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Accept type list, elements like &quot;text/xml&quot;.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::StringList'], [], [])"><div class="token cpp_type">StringList</div></div>			<div class="def" id="NI$vl::HttpRequest::acceptTypes"><div><div class="token cpp_field">acceptTypes</div></div></div>;
 		<div class="token cpp_comment ">/// &lt;summary&gt;A dictionary to contain extra headers.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::HeaderMap'], [], [])"><div class="token cpp_type">HeaderMap</div></div>			<div class="def" id="NI$vl::HttpRequest::extraHeaders"><div><div class="token cpp_field">extraHeaders</div></div></div>;
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty request.&lt;/summary&gt;</div>
-		<div class="def" id="FB$vl::HttpRequest::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::$__ctor@()'], [], [])"><div class="token cpp_function">HttpRequest</div></div></div>();
+		<div class="def" id="FB$vl::HttpRequest::$__ctor@()[decl0]"><div><div class="token cpp_function">HttpRequest</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
 		<div class="token cpp_comment ">/// &lt;summary&gt;Set &lt;see cref=&quot;server&quot;/&gt;, &lt;see cref=&quot;port&quot;/&gt;, &lt;see cref=&quot;query&quot;/&gt; and &lt;see cref=&quot;secure&quot;/&gt; fields for you using an URL.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;inputQuery&quot;&gt;The URL.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">bool</div>				<div class="def" id="FB$vl::HttpRequest::SetHost@bool(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetHost@bool(::vl::WString const &)'], [], [])"><div class="token cpp_function">SetHost</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::HttpRequest::SetHost@bool(::vl::WString const &)[decl0]::inputQuery"><div>inputQuery</div></div>);
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Fill the body with a text using UTF-8 encoding.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Fill the text body in UTF-8.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;param name=&quot;bodyString&quot;&gt;The text to fill.&lt;/param&gt;</div>
 		<div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)'], [], [])"><div class="token cpp_function">SetBodyUtf8</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[decl0]::bodyString"><div>bodyString</div></div>);
 	};
@@ -76,28 +81,57 @@ HTTP Utility
 		<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="token cpp_keyword ">char</div>&gt;		<div class="def" id="NI$vl::HttpResponse::BodyBuffer"><div><div class="token cpp_type">BodyBuffer</div></div></div>;
 	<div class="token cpp_keyword ">public</div>:
 		<div class="token cpp_comment ">/// &lt;summary&gt;Status code, like 200.&lt;/summary&gt;</div>
-		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::HttpResponse::statusCode"><div><div class="token cpp_field">statusCode</div></div></div>;
-		<div class="token cpp_comment ">/// &lt;summary&gt;Response body. This is a binary array using an array container to char.&lt;/summary&gt;</div>
+		<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>				<div class="def" id="NI$vl::HttpResponse::statusCode"><div><div class="token cpp_field">statusCode</div></div></div> = <div class="token cpp_number ">0</div>;
+		<div class="token cpp_comment ">/// &lt;summary&gt;Response body. This is a byte array.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::BodyBuffer'], [], [])"><div class="token cpp_type">BodyBuffer</div></div>			<div class="def" id="NI$vl::HttpResponse::body"><div><div class="token cpp_field">body</div></div></div>;
 		<div class="token cpp_comment ">/// &lt;summary&gt;Returned cookie from the server.&lt;/summary&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="NI$vl::HttpResponse::cookie"><div><div class="token cpp_field">cookie</div></div></div>;
 
-		<div class="def" id="FB$vl::HttpResponse::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::$__ctor@()'], [], [])"><div class="token cpp_function">HttpResponse</div></div></div>();
+		<div class="def" id="FB$vl::HttpResponse::$__ctor@()[decl0]"><div><div class="token cpp_function">HttpResponse</div></div></div>() = <div class="token cpp_keyword ">default</div>;
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;If you believe the server returns a text in UTF-8, use it to decode the body.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Get the text body, encoding is assumed to be UTF-8.&lt;/summary&gt;</div>
 		<div class="token cpp_comment ">/// &lt;returns&gt;The response body as text.&lt;/returns&gt;</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>				<div class="def" id="FB$vl::HttpResponse::GetBodyUtf8@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse::GetBodyUtf8@::vl::WString()'], [], [])"><div class="token cpp_function">GetBodyUtf8</div></div></div>();
 	};
 
 	<div class="token cpp_comment ">/// &lt;summary&gt;Send an http request and receive a response.&lt;/summary&gt;</div>
-	<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded. Even the server returns 404 will be treated as success, because you get the response.&lt;/returns&gt;</div>
-	<div class="token cpp_comment ">/// &lt;param name=&quot;request&quot;&gt;The request.&lt;/param&gt;</div>
-	<div class="token cpp_comment ">/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded, even when the server returns 404.&lt;/returns&gt;</div>
+	<div class="token cpp_comment ">/// &lt;param name=&quot;request&quot;&gt;The request to send.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;param name=&quot;response&quot;&gt;Returns the response.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+	<div class="token cpp_comment ">/// &lt;p&gt;</div>
+	<div class="token cpp_comment ">/// This function will block the calling thread until the respons is returned.</div>
+	<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+	<div class="token cpp_comment ">/// &lt;p&gt;</div>
+	<div class="token cpp_comment ">/// This function is only available in Windows.</div>
+	<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+	<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+	<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+	<div class="token cpp_comment ">/// int main()</div>
+	<div class="token cpp_comment ">/// {</div>
+	<div class="token cpp_comment ">///     HttpRequest request;</div>
+	<div class="token cpp_comment ">///     HttpResponse response;</div>
+	<div class="token cpp_comment ">///     request.SetHost(L&quot;http://www.msftncsi.com/ncsi.txt&quot;);</div>
+	<div class="token cpp_comment ">///     HttpQuery(request, response);</div>
+	<div class="token cpp_comment ">///     Console::WriteLine(L&quot;Status:&quot; + itow(response.statusCode));</div>
+	<div class="token cpp_comment ">///     Console::WriteLine(L&quot;Body:&quot; + response.GetBodyUtf8());</div>
+	<div class="token cpp_comment ">/// }</div>
+	<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">bool</div>				<div class="def" id="FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)'], [], [])"><div class="token cpp_function">HttpQuery</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::HttpRequest'], [], [])"><div class="token cpp_type">HttpRequest</div></div>&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]::request"><div>request</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::HttpResponse'], [], [])"><div class="token cpp_type">HttpResponse</div></div>&amp; <div class="def" id="NI$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]::response"><div>response</div></div>);
 
 	<div class="token cpp_comment ">/// &lt;summary&gt;Encode a text as part of the url. This function can be used to create arguments in an URL.&lt;/summary&gt;</div>
 	<div class="token cpp_comment ">/// &lt;returns&gt;The encoded text.&lt;/returns&gt;</div>
 	<div class="token cpp_comment ">/// &lt;param name=&quot;query&quot;&gt;The text to encode.&lt;/param&gt;</div>
+	<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+	<div class="token cpp_comment ">/// &lt;p&gt;</div>
+	<div class="token cpp_comment ">/// When a character is not a digit or a letter,</div>
+	<div class="token cpp_comment ">/// it is first encoded to UTF-8,</div>
+	<div class="token cpp_comment ">/// then each byte is written as &quot;%&quot; with two hex digits.</div>
+	<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+	<div class="token cpp_comment ">/// &lt;p&gt;</div>
+	<div class="token cpp_comment ">/// This function is only available in Windows.</div>
+	<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+	<div class="token cpp_comment ">///&lt;/remarks&gt;</div>
 	<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>			<div class="def" id="FB$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)'], [], [])"><div class="token cpp_function">UrlEncodeQuery</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[decl0]::query"><div>query</div></div>);
 }
 
@@ -600,15 +634,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::HttpRequest::$__ctor@()': {
-        'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_function">$__ctor</span>()',
-        'impls': [
-            'FB$vl::HttpRequest::$__ctor@()[impl0]'
-        ],
-        'decls': [
-            'FB$vl::HttpRequest::$__ctor@()[decl0]'
-        ]
-    },
     'vl::HttpRequest::BodyBuffer': {
         'displayNameInHtml': '<span class="cpp_type">HttpRequest</span>::<span class="cpp_type">BodyBuffer</span>',
         'impls': [
@@ -654,15 +679,6 @@ referencedSymbols = {
             'NI$vl::HttpResponse'
         ],
         'decls': []
-    },
-    'vl::HttpResponse::$__ctor@()': {
-        'displayNameInHtml': '<span class="cpp_type">HttpResponse</span>::<span class="cpp_function">$__ctor</span>()',
-        'impls': [
-            'FB$vl::HttpResponse::$__ctor@()[impl0]'
-        ],
-        'decls': [
-            'FB$vl::HttpResponse::$__ctor@()[decl0]'
-        ]
     },
     'vl::HttpResponse::BodyBuffer': {
         'displayNameInHtml': '<span class="cpp_type">HttpResponse</span>::<span class="cpp_type">BodyBuffer</span>',
@@ -756,14 +772,10 @@ referencedSymbols = {
 symbolToFiles = {
     'FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[decl0]': null,
     'FB$vl::HttpQuery@bool(::vl::HttpRequest const &, ::vl::HttpResponse &)[impl0]': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
-    'FB$vl::HttpRequest::$__ctor@()[decl0]': null,
-    'FB$vl::HttpRequest::$__ctor@()[impl0]': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
     'FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[decl0]': null,
     'FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &)[impl0]': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
     'FB$vl::HttpRequest::SetHost@bool(::vl::WString const &)[decl0]': null,
     'FB$vl::HttpRequest::SetHost@bool(::vl::WString const &)[impl0]': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
-    'FB$vl::HttpResponse::$__ctor@()[decl0]': null,
-    'FB$vl::HttpResponse::$__ctor@()[impl0]': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
     'FB$vl::HttpResponse::GetBodyUtf8@::vl::WString()[decl0]': null,
     'FB$vl::HttpResponse::GetBodyUtf8@::vl::WString()[impl0]': { 'htmlFileName': 'HttpUtility.cpp', 'displayName': 'HttpUtility.cpp' },
     'FB$vl::UrlEncodeQuery@::vl::WString(::vl::WString const &)[decl0]': null,
