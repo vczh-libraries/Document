@@ -902,14 +902,23 @@ void ExtractExamples(
 {
 	if (xmlElement->name.value == L"example")
 	{
+		auto outputAttr = XmlGetAttribute(xmlElement, L"output");
 		vint index = examples.Add(xmlElement);
 		xmlElement = MakePtr<XmlElement>();
 		xmlElement->name.value = L"example";
-
-		auto attr = MakePtr<XmlAttribute>();
-		attr->name.value = L"index";
-		attr->value.value = itow(index);
-		xmlElement->attributes.Add(attr);
+		{
+			auto attr = MakePtr<XmlAttribute>();
+			attr->name.value = L"index";
+			attr->value.value = itow(index);
+			xmlElement->attributes.Add(attr);
+		}
+		if (outputAttr)
+		{
+			auto attr = MakePtr<XmlAttribute>();
+			attr->name.value = L"output";
+			attr->value.value = outputAttr->value.value;
+			xmlElement->attributes.Add(attr);
+		}
 	}
 	else
 	{
