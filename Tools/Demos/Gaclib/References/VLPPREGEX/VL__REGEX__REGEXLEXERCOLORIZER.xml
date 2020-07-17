@@ -1,3 +1,3 @@
-<Document symbolId="vl::regex::RegexLexerColorizer" accessor="" category="Class" name="RegexLexerColorizer" declFile="Regex.h" declId="NI$vl::regex::RegexLexerColorizer"><summary>Lexical colorizer.</summary><signature><![CDATA[class RegexLexerColorizer
+<Document symbolId="vl::regex::RegexLexerColorizer" accessor="" category="Class" name="RegexLexerColorizer" declFile="Regex.h" declId="NI$vl::regex::RegexLexerColorizer"><summary>Lexical colorizer. Call <symbol name="Colorize" docId="vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()" declFile="Regex.h" declId="FB$vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()[decl0]"/> to create this object.</summary><signature><![CDATA[class RegexLexerColorizer
     : Object;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

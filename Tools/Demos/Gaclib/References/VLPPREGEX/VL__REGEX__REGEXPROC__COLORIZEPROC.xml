@@ -1,4 +1,12 @@
-<Document symbolId="vl::regex::RegexProc::colorizeProc" accessor="public" category="Variable" name="colorizeProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::colorizeProc"><summary>
+<Document symbolId="vl::regex::RegexProc::colorizeProc" accessor="public" category="Variable" name="colorizeProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::colorizeProc"><summary><p>
  The colorizer callback. It is called when a token is recognized.
- </summary><signature><![CDATA[RegexTokenColorizeProc colorizeProc;
+ </p><p>
+ The first argument is <symbol name="argument" docId="vl::regex::RegexProc::argument" declFile="Regex.h" declId="NI$vl::regex::RegexProc::argument"/>.
+ </p><p>
+ The second argument is the position of the first character of the token in characters.
+ </p><p>
+ The third argument is the length of the recognized token in characters.
+ </p><p>
+ The fourth character is the regular expression in the list (the first argument in the contructor of <symbol name="RegexLexer" docId="vl::regex::RegexLexer" declFile="Regex.h" declId="NI$vl::regex::RegexLexer"/>) that matches this token.
+ </p></summary><signature><![CDATA[RegexTokenColorizeProc colorizeProc;
 ]]></signature><seealsos><symbol name="RegexTokenColorizeProc" declFile="Regex.h" declId="NI$vl::regex::RegexTokenColorizeProc"/></seealsos></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::regex::RegexToken::start" accessor="public" category="Variable" name="start" declFile="Regex.h" declId="NI$vl::regex::RegexToken::start"><summary>Position in the input string.</summary><signature><![CDATA[vint start;
+<Document symbolId="vl::regex::RegexToken::start" accessor="public" category="Variable" name="start" declFile="Regex.h" declId="NI$vl::regex::RegexToken::start"><summary>Position in the input string in characters.</summary><signature><![CDATA[vint start;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)" accessor="public" category="Function" name="Walk" declFile="Regex.h" declId="FB$vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)[decl0]"><summary>Step forward by one character.</summary><returns>Returns the new current state.</returns><param name="input">The input character.</param><param name="state">The current state.</param><signature><![CDATA[vint Walk(
+<Document symbolId="vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)" accessor="public" category="Function" name="Walk" declFile="Regex.h" declId="FB$vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)[decl0]"><summary>Step forward by one character.</summary><returns>Returns the new current state. It is used to walk the next character.</returns><param name="input">The input character.</param><param name="state">The current state.</param><signature><![CDATA[vint Walk(
     wchar_t input,
     vint state
 ) const;

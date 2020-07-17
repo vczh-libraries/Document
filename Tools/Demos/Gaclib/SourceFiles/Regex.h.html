@@ -47,7 +47,7 @@ Classes:
 Data Structure
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;A type representing a fragment of the input string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;A sub string of the string that a &lt;see cref=&quot;Regex&quot;/&gt; is matched against.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::regex::RegexString"><div><div class="token cpp_type">RegexString</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
@@ -59,19 +59,19 @@ Data Structure
 			<div class="def" id="FB$vl::regex::RegexString::$__ctor@(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString::$__ctor@(::vl::vint)'], [], [])"><div class="token cpp_function">RegexString</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexString::$__ctor@(::vl::vint)[decl0]::_start"><div>_start</div></div>=<div class="token cpp_number ">0</div>);
 			<div class="def" id="FB$vl::regex::RegexString::$__ctor@(::vl::WString const &, ::vl::vint, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString::$__ctor@(::vl::WString const &, ::vl::vint, ::vl::vint)'], [], [])"><div class="token cpp_function">RegexString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::RegexString::$__ctor@(::vl::WString const &, ::vl::vint, ::vl::vint)[decl0]::_string"><div>_string</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexString::$__ctor@(::vl::WString const &, ::vl::vint, ::vl::vint)[decl0]::_start"><div>_start</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexString::$__ctor@(::vl::WString const &, ::vl::vint, ::vl::vint)[decl0]::_length"><div>_length</div></div>);
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;The position of the input string.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;The position of the input string in characters.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The position.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::regex::RegexString::Start@::vl::vint()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString::Start@::vl::vint()'], [], [])"><div class="token cpp_function">Start</div></div></div>()<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;The size of the fragment in characters.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;The size of the sub string in characters.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The size.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::regex::RegexString::Length@::vl::vint()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString::Length@::vl::vint()'], [], [])"><div class="token cpp_function">Length</div></div></div>()<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the fragment.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The fragment.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the sub string as a &lt;see cref=&quot;WString&quot;/&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The sub string.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp;								<div class="def" id="FB$vl::regex::RegexString::Value@::vl::WString const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString::Value@::vl::WString const &()'], [], [])"><div class="token cpp_function">Value</div></div></div>()<div class="token cpp_keyword ">const</div>;
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::regex::RegexString::operator ==@bool(::vl::regex::RegexString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString::operator ==@bool(::vl::regex::RegexString const &)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString'], [], [])"><div class="token cpp_type">RegexString</div></div>&amp; <div class="def" id="NI$vl::regex::RegexString::operator ==@bool(::vl::regex::RegexString const &)[decl0]::string"><div>string</div></div>)<div class="token cpp_keyword ">const</div>;
 		};
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;A type representing a match of the input string.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;A match produces by a &lt;see cref=&quot;Regex&quot;/&gt;.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::regex::RegexMatch"><div><div class="token cpp_type">RegexMatch</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">private</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
 		{
 			<div class="token cpp_keyword ">friend</div> <div class="token cpp_keyword ">class</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex'], [], [])"><div class="token cpp_type">Regex</div></div>;
@@ -91,17 +91,21 @@ Data Structure
 			<div class="def" id="FB$vl::regex::RegexMatch::$__ctor@(::vl::regex::RegexString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::$__ctor@(::vl::regex::RegexString const &)'], [], [])"><div class="token cpp_function">RegexMatch</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString'], [], [])"><div class="token cpp_type">RegexString</div></div>&amp; <div class="def" id="NI$vl::regex::RegexMatch::$__ctor@(::vl::regex::RegexString const &)[decl0]::_result"><div>_result</div></div>);
 		<div class="token cpp_keyword ">public</div>:
 			
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test if this match is a success match or a failed match. A failed match will only appear when calling [M:vl.regex.Regex.Split] or [M:vl.regex.Regex.Cut]. In other cases, failed matches are either not included in the result, or become null pointers.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this match is a success match.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Test if this match is a succeeded match or a failed match.</div>
+			<div class="token cpp_comment ">/// A failed match will only appear when calling [M:vl.regex.Regex.Split] or [M:vl.regex.Regex.Cut].</div>
+			<div class="token cpp_comment ">/// In other cases, failed matches are either not included in the result.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this match is a succeeded match.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::regex::RegexMatch::Success@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::Success@bool()'], [], [])"><div class="token cpp_function">Success</div></div></div>()<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the whole fragment that matches.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The whole fragment.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the matched sub string.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The matched sub string.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexString'], [], [])"><div class="token cpp_type">RegexString</div></div>&amp;							<div class="def" id="FB$vl::regex::RegexMatch::Result@::vl::regex::RegexString const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::Result@::vl::regex::RegexString const &()'], [], [])"><div class="token cpp_function">Result</div></div></div>()<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get all fragments that are captured.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;All fragments that are captured.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get all sub strings that are captured anonymously.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;All sub strings that are captured anonymously.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::CaptureList'], [], [])"><div class="token cpp_type">CaptureList</div></div>&amp;							<div class="def" id="FB$vl::regex::RegexMatch::Captures@::vl::regex::RegexMatch::CaptureList const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::Captures@::vl::regex::RegexMatch::CaptureList const &()'], [], [])"><div class="token cpp_function">Captures</div></div></div>()<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get all fragments that are captured by named groups.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;All fragments that are captured.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get all sub strings that are captured by named groups.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;All sub strings that are captured by named groups.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::CaptureGroup'], [], [])"><div class="token cpp_type">CaptureGroup</div></div>&amp;							<div class="def" id="FB$vl::regex::RegexMatch::Groups@::vl::regex::RegexMatch::CaptureGroup const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::Groups@::vl::regex::RegexMatch::CaptureGroup const &()'], [], [])"><div class="token cpp_function">Groups</div></div></div>()<div class="token cpp_keyword ">const</div>;
 		};
 
@@ -109,105 +113,151 @@ Data Structure
 Regex
 ***********************************************************************/</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;&lt;![CDATA[</div>
-		<div class="token cpp_comment ">/// Regular Expression. Here is a brief description of the regular expression grammar:</div>
-		<div class="token cpp_comment ">///	1) Charset:</div>
-		<div class="token cpp_comment ">///		a, [a-z], [^a-z]</div>
-		<div class="token cpp_comment ">/// 2) Functional characters:</div>
-		<div class="token cpp_comment ">///		^: the beginning of the input (DFA incompatible)</div>
-		<div class="token cpp_comment ">///		$: the end of the input (DFA incompatible)</div>
-		<div class="token cpp_comment ">///		regex1|regex2: match either regex1 or regex2</div>
-		<div class="token cpp_comment ">///	3) Escaping (both \ and / mean the next character is escaped)</div>
-		<div class="token cpp_comment ">///		Escaped characters:</div>
-		<div class="token cpp_comment ">///			\r: the CR character</div>
-		<div class="token cpp_comment ">///			\n: the LF character</div>
-		<div class="token cpp_comment ">///			\t: the tab character</div>
-		<div class="token cpp_comment ">///			\s: spacing characters (including space, \r, \n, \t)</div>
-		<div class="token cpp_comment ">///			\S: non-spacing characters</div>
-		<div class="token cpp_comment ">///			\d: [0-9]</div>
-		<div class="token cpp_comment ">///			\D: [^0-9]</div>
-		<div class="token cpp_comment ">///			\l: [a-zA-Z]</div>
-		<div class="token cpp_comment ">///			\L: [^a-zA-Z]</div>
-		<div class="token cpp_comment ">///			\w: [a-zA-Z0-9_]</div>
-		<div class="token cpp_comment ">///			\W: [^a-zA-Z0-9_]</div>
-		<div class="token cpp_comment ">///			\.: any character (this is the main different from other regex, which treat &quot;.&quot; as any characters and &quot;\.&quot; as the dot character)</div>
-		<div class="token cpp_comment ">///			\\, \/, \(, \), \+, \*, \?, \{, \}, \[, \], \&lt;, \&gt;, \^, \$, \!, \=: represents itself</div>
-		<div class="token cpp_comment ">///		Escaped characters in charset defined in a square bracket:</div>
-		<div class="token cpp_comment ">///			\r: the CR character</div>
-		<div class="token cpp_comment ">///			\n: the LF character</div>
-		<div class="token cpp_comment ">///			\t: the tab character</div>
-		<div class="token cpp_comment ">///			\-, \[, \], \\, \/, \^, \$: represents itself</div>
-		<div class="token cpp_comment ">///	4) Loops:</div>
-		<div class="token cpp_comment ">///		regex{3}: repeats 3 times</div>
-		<div class="token cpp_comment ">///		regex{3,}: repeats 3 or more times</div>
-		<div class="token cpp_comment ">///		regex{1,3}: repeats 1 to 3 times</div>
-		<div class="token cpp_comment ">///		regex?: repeats 0 or 1 times</div>
-		<div class="token cpp_comment ">///		regex*: repeats 0 or more times</div>
-		<div class="token cpp_comment ">///		regex+: repeats 1 or more times</div>
-		<div class="token cpp_comment ">///		if you add a &quot;?&quot; right after a loop, it means repeating as less as possible (DFA incompatible)</div>
-		<div class="token cpp_comment ">///	5) Capturing: (DFA incompatible)</div>
-		<div class="token cpp_comment ">///		(regex): No capturing, just change the operators&apos; association</div>
-		<div class="token cpp_comment ">///		(?regex): Capture matched fragment</div>
-		<div class="token cpp_comment ">///		(&lt;name&gt;regex): Capture matched fragment in a named group called &quot;name&quot;</div>
-		<div class="token cpp_comment ">///		(&lt;$i&gt;): Match the i-th captured fragment, begins from 0</div>
-		<div class="token cpp_comment ">///		(&lt;$name;i&gt;): Match the i-th captured fragment in the named group called &quot;name&quot;, begins from 0</div>
-		<div class="token cpp_comment ">///		(&lt;$name&gt;): Match any captured fragment in the named group called &quot;name&quot;</div>
-		<div class="token cpp_comment ">///	6) MISC</div>
-		<div class="token cpp_comment ">///		(=regex): The prefix of the following text should match the regex, but it is not counted in the whole match (DFA incompatible)</div>
-		<div class="token cpp_comment ">///		(!regex): Any prefix of the following text should not match the regex, and it is not counted in the whole match (DFA incompatible)</div>
-		<div class="token cpp_comment ">///		(&lt;#name&gt;regex): Name the regex &quot;name&quot;, and it applies here</div>
-		<div class="token cpp_comment ">///		(&lt;&amp;name&gt;): Copy the named regex &quot;name&quot; here and apply</div>
-		<div class="token cpp_comment ">/// ]]&gt;&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">///     Regular Expression. Here is a brief description of the regular expression grammar.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">///     &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///         &lt;li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;b&gt;Charset&lt;/b&gt;:</div>
+		<div class="token cpp_comment ">///             &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;a&lt;/b&gt;, &lt;b&gt;[a-z]&lt;/b&gt;, &lt;b&gt;[^a-z]&lt;/b&gt;&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///         &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;b&gt;Functional characters&lt;/b&gt;:</div>
+		<div class="token cpp_comment ">///             &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;^&lt;/b&gt;: the beginning of the input (DFA incompatible)&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;$&lt;/b&gt;: the end of the input (DFA incompatible)&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;regex1|regex2&lt;/b&gt;: match either regex1 or regex2&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///         &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;b&gt;Escaping&lt;/b&gt; (both \ and / mean the next character is escaped):</div>
+		<div class="token cpp_comment ">///             &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                     Escaped characters:</div>
+		<div class="token cpp_comment ">///                     &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\r&lt;/b&gt;: the CR character&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\n&lt;/b&gt;: the LF character&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\t&lt;/b&gt;: the tab character&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\s&lt;/b&gt;: spacing characters (including space, \r, \n, \t)&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\S&lt;/b&gt;: non-spacing characters&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\d&lt;/b&gt;: [0-9]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\D&lt;/b&gt;: [^0-9]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\l&lt;/b&gt;: [a-zA-Z]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\L&lt;/b&gt;: [^a-zA-Z]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\w&lt;/b&gt;: [a-zA-Z0-9_]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\W&lt;/b&gt;: [^a-zA-Z0-9_]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\.&lt;/b&gt;: any character (this is the main different from other regex, which treat &quot;.&quot; as any characters and &quot;\.&quot; as the dot character)&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\\&lt;/b&gt;, &lt;b&gt;\/&lt;/b&gt;, &lt;b&gt;\(&lt;/b&gt;, &lt;b&gt;\)&lt;/b&gt;, &lt;b&gt;\+&lt;/b&gt;, &lt;b&gt;\*&lt;/b&gt;, &lt;b&gt;\?&lt;/b&gt;, &lt;b&gt;\{&lt;/b&gt;, &lt;b&gt;\}&lt;/b&gt;, &lt;b&gt;\[&lt;/b&gt;, &lt;b&gt;\]&lt;/b&gt;, &lt;b&gt;\&amp;lt;&lt;/b&gt;, &lt;b&gt;\&amp;gt;&lt;/b&gt;, &lt;b&gt;\^&lt;/b&gt;, &lt;b&gt;\$&lt;/b&gt;, &lt;b&gt;\!&lt;/b&gt;, &lt;b&gt;\=&lt;/b&gt;: represents itself&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                     Escaped characters in charset defined in a square bracket:</div>
+		<div class="token cpp_comment ">///                     &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\r&lt;/b&gt;: the CR character&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\n&lt;/b&gt;: the LF character&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\t&lt;/b&gt;: the tab character&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                         &lt;li&gt;&lt;b&gt;\-&lt;/b&gt;, &lt;b&gt;\[&lt;/b&gt;, &lt;b&gt;\]&lt;/b&gt;, &lt;b&gt;\\&lt;/b&gt;, &lt;b&gt;\/&lt;/b&gt;, &lt;b&gt;\^&lt;/b&gt;, &lt;b&gt;\$&lt;/b&gt;: represents itself&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///         &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;b&gt;Loops&lt;/b&gt;:</div>
+		<div class="token cpp_comment ">///             &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;regex{3}&lt;/b&gt;: repeats 3 times&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;regex{3,}&lt;/b&gt;: repeats 3 or more times&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;regex{1,3}&lt;/b&gt;: repeats 1 to 3 times&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;regex?&lt;/b&gt;: repeats 0 or 1 times&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;regex*&lt;/b&gt;: repeats 0 or more times&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;regex+&lt;/b&gt;: repeats 1 or more times&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///             if you add an additional &lt;b&gt;?&lt;/b&gt; right after a loop, it means repeating as less as possible &lt;b&gt;(DFA incompatible)&lt;/b&gt;</div>
+		<div class="token cpp_comment ">///         &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;b&gt;Capturing&lt;/b&gt;: &lt;b&gt;(DFA incompatible)&lt;/b&gt;</div>
+		<div class="token cpp_comment ">///             &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(regex)&lt;/b&gt;: No capturing, just change the operators&apos; association&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(?regex)&lt;/b&gt;: Capture matched fragment&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(&amp;lt;name&amp;gt;regex)&lt;/b&gt;: Capture matched fragment in a named group called &quot;name&quot;&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(&amp;lt;$i&amp;gt;)&lt;/b&gt;: Match the i-th captured fragment, begins from 0&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(&amp;lt;$name;i&amp;gt;)&lt;/b&gt;: Match the i-th captured fragment in the named group called &quot;name&quot;, begins from 0&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(&amp;lt;$name&amp;gt;)&lt;/b&gt;: Match any captured fragment in the named group called &quot;name&quot;&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///         &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;b&gt;MISC&lt;/b&gt;</div>
+		<div class="token cpp_comment ">///             &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(=regex)&lt;/b&gt;: The prefix of the following text should match the regex, but it is not counted in the whole match &lt;b&gt;(DFA incompatible)&lt;/b&gt;&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(!regex)&lt;/b&gt;: Any prefix of the following text should not match the regex, and it is not counted in the whole match &lt;b&gt;(DFA incompatible)&lt;/b&gt;&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(&amp;lt;#name&amp;gt;regex)&lt;/b&gt;: Name the regex &quot;name&quot;, and it applies here&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;li&gt;&lt;b&gt;(&amp;lt;&amp;name&amp;gt;)&lt;/b&gt;: Copy the named regex &quot;name&quot; here and apply&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///         &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">///     The regular expression has pupre mode and rich mode.</div>
+		<div class="token cpp_comment ">///     Pure mode means the regular expression is driven by a DFA, while the rich mode is not.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">///     The regular expression can test a string instead of matching.</div>
+		<div class="token cpp_comment ">///     Testing only returns a bool very indicating success or failure.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::regex::Regex"><div><div class="token cpp_type">Regex</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">private</div> <div class="ref" onclick="jumpToSymbol([], ['vl::NotCopyable'], [], [])"><div class="token cpp_type">NotCopyable</div></div>
 		{
 		<div class="token cpp_keyword ">protected</div>:
-			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal'], [], [])">regex_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>*			<div class="def" id="NI$vl::regex::Regex::pure"><div><div class="token cpp_field">pure</div></div></div>;
-			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal'], [], [])">regex_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::RichInterpretor'], [], [])"><div class="token cpp_type">RichInterpretor</div></div>*			<div class="def" id="NI$vl::regex::Regex::rich"><div><div class="token cpp_field">rich</div></div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal'], [], [])">regex_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::PureInterpretor'], [], [])"><div class="token cpp_type">PureInterpretor</div></div>*			<div class="def" id="NI$vl::regex::Regex::pure"><div><div class="token cpp_field">pure</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal'], [], [])">regex_internal</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex_internal::RichInterpretor'], [], [])"><div class="token cpp_type">RichInterpretor</div></div>*			<div class="def" id="NI$vl::regex::Regex::rich"><div><div class="token cpp_field">rich</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
 
 			<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::regex::Regex::Process@void(::vl::WString const &, bool, bool, bool, ::vl::regex::RegexMatch::List &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::Process@void(::vl::WString const &, bool, bool, bool, ::vl::regex::RegexMatch::List &)'], [], [])"><div class="token cpp_function">Process</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Process@void(::vl::WString const &, bool, bool, bool, ::vl::regex::RegexMatch::List &)[decl0]::text"><div>text</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::Regex::Process@void(::vl::WString const &, bool, bool, bool, ::vl::regex::RegexMatch::List &)[decl0]::keepEmpty"><div>keepEmpty</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::Regex::Process@void(::vl::WString const &, bool, bool, bool, ::vl::regex::RegexMatch::List &)[decl0]::keepSuccess"><div>keepSuccess</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::Regex::Process@void(::vl::WString const &, bool, bool, bool, ::vl::regex::RegexMatch::List &)[decl0]::keepFail"><div>keepFail</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch'], [], [])"><div class="token cpp_type">RegexMatch</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::List'], [], [])"><div class="token cpp_type">List</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Process@void(::vl::WString const &, bool, bool, bool, ::vl::regex::RegexMatch::List &)[decl0]::matches"><div>matches</div></div>)<div class="token cpp_keyword ">const</div>;
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a regular expression.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a regular expression. It will crash if the regular expression produces syntax error.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;code&quot;&gt;The regular expression in a string.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;preferPure&quot;&gt;Set to true to tell the Regex to use DFA if possible.&lt;/param&gt;</div>
-			<div class="def" id="FB$vl::regex::Regex::$__ctor@(::vl::WString const &, bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::$__ctor@(::vl::WString const &, bool)'], [], [])"><div class="token cpp_function">Regex</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::$__ctor@(::vl::WString const &, bool)[decl0]::code"><div>code</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::Regex::$__ctor@(::vl::WString const &, bool)[decl0]::preferPure"><div>preferPure</div></div>=<div class="token cpp_keyword ">true</div>);
+			<div class="token cpp_comment ">/// &lt;param name=&quot;preferPure&quot;&gt;Set to true to use DFA if possible.&lt;/param&gt;</div>
+			<div class="def" id="FB$vl::regex::Regex::$__ctor@(::vl::WString const &, bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::$__ctor@(::vl::WString const &, bool)'], [], [])"><div class="token cpp_function">Regex</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::$__ctor@(::vl::WString const &, bool)[decl0]::code"><div>code</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::Regex::$__ctor@(::vl::WString const &, bool)[decl0]::preferPure"><div>preferPure</div></div> = <div class="token cpp_keyword ">true</div>);
 			<div class="def" id="FB$vl::regex::Regex::~Regex@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::~Regex@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">Regex</div></div></div>();
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the Regex uses DFA to match a string.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if DFA is used.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test is a DFA used to match a string.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if a DFA is used.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::regex::Regex::IsPureMatch@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::IsPureMatch@bool()'], [], [])"><div class="token cpp_function">IsPureMatch</div></div></div>()<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Test does the Regex uses DFA to test a string. Test means ignoring all capturing requirements.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if DFA is used.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Test is a DFA used to test a string. It ignores all capturing.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if a DFA is used.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::regex::Regex::IsPureTest@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::IsPureTest@bool()'], [], [])"><div class="token cpp_function">IsPureTest</div></div></div>()<div class="token cpp_keyword ">const</div>;
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Match a prefix of the text.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the match. Returns null if failed.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to match.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch'], [], [])"><div class="token cpp_type">RegexMatch</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::Ref'], [], [])"><div class="token cpp_type">Ref</div></div>								<div class="def" id="FB$vl::regex::Regex::MatchHead@::vl::regex::RegexMatch::Ref(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::MatchHead@::vl::regex::RegexMatch::Ref(::vl::WString const &)'], [], [])"><div class="token cpp_function">MatchHead</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::MatchHead@::vl::regex::RegexMatch::Ref(::vl::WString const &)[decl0]::text"><div>text</div></div>)<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Match a fragment of the text.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Match a sub string of the text.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the match. Returns null if failed.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to match.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch'], [], [])"><div class="token cpp_type">RegexMatch</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::Ref'], [], [])"><div class="token cpp_type">Ref</div></div>								<div class="def" id="FB$vl::regex::Regex::Match@::vl::regex::RegexMatch::Ref(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::Match@::vl::regex::RegexMatch::Ref(::vl::WString const &)'], [], [])"><div class="token cpp_function">Match</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Match@::vl::regex::RegexMatch::Ref(::vl::WString const &)[decl0]::text"><div>text</div></div>)<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Match a prefix of the text, ignoring all capturing requirements.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Match a prefix of the text, ignoring all capturing.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if it succeeded.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to match.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::regex::Regex::TestHead@bool(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::TestHead@bool(::vl::WString const &)'], [], [])"><div class="token cpp_function">TestHead</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::TestHead@bool(::vl::WString const &)[decl0]::text"><div>text</div></div>)<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Match a fragment of the text, ignoring all capturing requirements.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Match a sub string of the text, ignoring all capturing.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if succeeded.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to match.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::regex::Regex::Test@bool(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::Test@bool(::vl::WString const &)'], [], [])"><div class="token cpp_function">Test</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Test@bool(::vl::WString const &)[decl0]::text"><div>text</div></div>)<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Find all matched fragments of the text, returning all matched fragments.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Find all matched fragments in the given text, returning all matched sub strings.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to match.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;matches&quot;&gt;All successful matches.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;matches&quot;&gt;Returns all succeeded matches.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::regex::Regex::Search@void(::vl::WString const &, ::vl::regex::RegexMatch::List &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::Search@void(::vl::WString const &, ::vl::regex::RegexMatch::List &)'], [], [])"><div class="token cpp_function">Search</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Search@void(::vl::WString const &, ::vl::regex::RegexMatch::List &)[decl0]::text"><div>text</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch'], [], [])"><div class="token cpp_type">RegexMatch</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::List'], [], [])"><div class="token cpp_type">List</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Search@void(::vl::WString const &, ::vl::regex::RegexMatch::List &)[decl0]::matches"><div>matches</div></div>)<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Split the text by matched fragments, returning all unmatched fragments.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Split the text by matched sub strings, returning all unmatched sub strings.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to match.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;keepEmptyMatch&quot;&gt;Set to true to keep all empty matches.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;matches&quot;&gt;All failed matches.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;keepEmptyMatch&quot;&gt;Set to true to keep all empty unmatched sub strings. This could happen when there is nothing between two matched sub strings.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;matches&quot;&gt;Returns all failed matches.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::regex::Regex::Split@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::Split@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)'], [], [])"><div class="token cpp_function">Split</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Split@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)[decl0]::text"><div>text</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::Regex::Split@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)[decl0]::keepEmptyMatch"><div>keepEmptyMatch</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch'], [], [])"><div class="token cpp_type">RegexMatch</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::List'], [], [])"><div class="token cpp_type">List</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Split@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)[decl0]::matches"><div>matches</div></div>)<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Cut the text by matched fragments, returning all matched or unmatched fragments.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Cut the text by matched sub strings, returning all matched and unmatched sub strings.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;text&quot;&gt;The text to match.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;keepEmptyMatch&quot;&gt;Set to true to keep all empty matches.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;matches&quot;&gt;All successful and failed matches.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;keepEmptyMatch&quot;&gt;Set to true to keep all empty matches. This could happen when there is nothing between two matched sub strings.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;matches&quot;&gt;Returns all succeeded and failed matches.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::regex::Regex::Cut@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::Regex::Cut@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)'], [], [])"><div class="token cpp_function">Cut</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Cut@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)[decl0]::text"><div>text</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::regex::Regex::Cut@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)[decl0]::keepEmptyMatch"><div>keepEmptyMatch</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch'], [], [])"><div class="token cpp_type">RegexMatch</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexMatch::List'], [], [])"><div class="token cpp_type">List</div></div>&amp; <div class="def" id="NI$vl::regex::Regex::Cut@void(::vl::WString const &, bool, ::vl::regex::RegexMatch::List &)[decl0]::matches"><div>matches</div></div>)<div class="token cpp_keyword ">const</div>;
 		};
 
@@ -218,17 +268,18 @@ Tokenizer
 		<div class="token cpp_comment ">/// &lt;summary&gt;A token.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::regex::RegexToken"><div><div class="token cpp_type">RegexToken</div></div></div>
 		{
-			<div class="token cpp_comment ">/// &lt;summary&gt;Position in the input string.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Position in the input string in characters.&lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::regex::RegexToken::start"><div><div class="token cpp_field">start</div></div></div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;Size of this token in characters.&lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::regex::RegexToken::length"><div><div class="token cpp_field">length</div></div></div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;The token id, begins at 0, represents the regular expression in the list that matches this token. -1 means this token is produced by an error.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;The token id, begins at 0, represents the regular expression in the list (the first argument in the contructor of &lt;see cref=&quot;RegexLexer&quot;/&gt;) that matches this token. -1 means this token is produced by an error.&lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::regex::RegexToken::token"><div><div class="token cpp_field">token</div></div></div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;The pointer to where this token starts in the input string .&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;This pointer comes from a &lt;see cref=&quot;WString&quot;/&gt; that used to be analyzed. You should keep a variable to that string alive, so that to keep this pointer alive.&lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>*								<div class="def" id="NI$vl::regex::RegexToken::reading"><div><div class="token cpp_field">reading</div></div></div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;The argument value from [M:vl.regex.RegexLexer.Parse].&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;The &quot;codeIndex&quot; argument from [M:vl.regex.RegexLexer.Parse].&lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::regex::RegexToken::codeIndex"><div><div class="token cpp_field">codeIndex</div></div></div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;True if this token is complete. False if this token does not end here.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;True if this token is complete. False if this token does not end here. This could happend when colorizing a text line by line.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="NI$vl::regex::RegexToken::completeToken"><div><div class="token cpp_field">completeToken</div></div></div>;
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Row number of the first character, begins at 0.&lt;/summary&gt;</div>
@@ -253,25 +304,27 @@ Tokenizer
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::regex::RegexProcessingToken::start"><div><div class="token cpp_field">start</div></div></div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// The length of the token, could be modified after the callback.</div>
+			<div class="token cpp_comment ">/// The length of the token, allowing to be updated by the callback.</div>
 			<div class="token cpp_comment ">/// When the callback returns, the length is not allowed to be decreased.</div>
 			<div class="token cpp_comment ">/// This value will be -1 if &lt;see cref=&quot;interTokenState&quot;/&gt; is not null.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::regex::RegexProcessingToken::length"><div><div class="token cpp_field">length</div></div></div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// The id of the token, could be modified after the callback.</div>
+			<div class="token cpp_comment ">/// The id of the token, allowing to be updated by the callback.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="NI$vl::regex::RegexProcessingToken::token"><div><div class="token cpp_field">token</div></div></div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// The flag indicating if this token is completed, could be modified after the callback.</div>
+			<div class="token cpp_comment ">/// The flag indicating if this token is completed, allowing to be updated by the callback.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="NI$vl::regex::RegexProcessingToken::completeToken"><div><div class="token cpp_field">completeToken</div></div></div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// The inter token state object, could be modified after the callback.</div>
+			<div class="token cpp_comment ">/// The inter token state object, allowing to be updated by the callback.</div>
 			<div class="token cpp_comment ">/// When the callback returns:</div>
-			<div class="token cpp_comment ">///   if the completeText parameter is true in &lt;see cref=&quot;RegexProc::extendProc&quot;/&gt;, it should be nullptr.</div>
-			<div class="token cpp_comment ">///   if the token does not end at the end of the input, it should not be nullptr.</div>
-			<div class="token cpp_comment ">///   if a token is completed, it should be nullptr.</div>
+			<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+			<div class="token cpp_comment ">///   &lt;li&gt;if the completeText parameter is true in &lt;see cref=&quot;RegexProc::extendProc&quot;/&gt;, it should be nullptr.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///   &lt;li&gt;if the token does not end at the end of the input, it should not be nullptr.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///   &lt;li&gt;if a token is completed in one attemp of extending, it should be nullptr.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">void</div>*										<div class="def" id="NI$vl::regex::RegexProcessingToken::interTokenState"><div><div class="token cpp_field">interTokenState</div></div></div>;
 
@@ -293,18 +346,75 @@ Tokenizer
 		<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::regex::RegexProc"><div><div class="token cpp_type">RegexProc</div></div></div>
 		{
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// The deleter which deletes inter token state objects created by &lt;see cref=&quot;extendProc&quot;/&gt;. This callback is not called automatically.</div>
+			<div class="token cpp_comment ">/// The deleter which deletes &lt;see cref=&quot;RegexProcessingToken::interTokenState&quot;/&gt; created by &lt;see cref=&quot;extendProc&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// This callback is not called automatically.</div>
+			<div class="token cpp_comment ">/// It is here to make the maintainance convenient for the caller.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexInterTokenStateDeleter'], [], [])"><div class="token cpp_type">RegexInterTokenStateDeleter</div></div>					<div class="def" id="NI$vl::regex::RegexProc::deleter"><div><div class="token cpp_field">deleter</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// The token extend callback. It is called after recognizing any token, and run a customized procedure to modify the token based on the given context.</div>
-			<div class="token cpp_comment ">/// If the length parameter is -1, it means the caller does not measure the incoming text buffer, which automatically indicates that the buffer is null-terminated.</div>
-			<div class="token cpp_comment ">/// If the length parameter is not -1, it means the number of available characters in the buffer.</div>
-			<div class="token cpp_comment ">/// The completeText parameter could be true or false. When it is false, it means that the buffer does not contain all the text.</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;The token extend callback. It is called after recognizing any token, and run a customized procedure to modify the token based on the given context.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;If the length parameter is -1, it means the caller does not measure the incoming text buffer, which automatically indicates that the buffer is null-terminated.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;If the length parameter is not -1, it means the number of available characters in the buffer.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;The completeText parameter could be true or false. When it is false, it means that the buffer does not contain all the text.&lt;/p&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// This is very useful to recognize any token that cannot be expressed using a regular expression.</div>
+			<div class="token cpp_comment ">/// For example, a C++ literal string R&quot;tag(the conteng)tag&quot;.</div>
+			<div class="token cpp_comment ">/// It is recommended to add a token for &lt;b&gt;R&quot;tag(&lt;/b&gt;,</div>
+			<div class="token cpp_comment ">/// and then use this extend proc to search for a &lt;b&gt;)tag&quot;&lt;/b&gt; to complete the token.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;Important&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// when colorizing a text line by line,</div>
+			<div class="token cpp_comment ">/// a cross-line token could be incomplete at the end of the line.</div>
+			<div class="token cpp_comment ">/// Because a given buffer ends at the end of that line,</div>
+			<div class="token cpp_comment ">/// the extend proc is not able to know right now about what is going on in the future.</div>
+			<div class="token cpp_comment ">/// Here is what &lt;see cref=&quot;RegexProcessingToken::interTokenState&quot;/&gt; is designed for,</div>
+			<div class="token cpp_comment ">/// the extend proc can store anything it wants using that pointer.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The caller can get this pointer from the return value of &lt;see cref=&quot;RegexLexerColorizer::Colorize&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// This pointer only available for cross-line tokens, it is obvious that one line produces at most one such pointer.</div>
+			<div class="token cpp_comment ">/// Then the caller keeps calling that function to walk throught the whole string.</div>
+			<div class="token cpp_comment ">/// When the return value is changed, the pointer is no longer used, and it can be deleted by calling &lt;see cref=&quot;deleter&quot;/&gt; manually.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The first argument is &lt;see cref=&quot;argument&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The second argument is a pointer to the buffer of the first character in this token.</div>
+			<div class="token cpp_comment ">/// If the previous token is incomplete, then the buffer begins at the first character of the new buffer.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The third argument is the length of the recognized token in characters.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The fourth character indicates if the token is completed.</div>
+			<div class="token cpp_comment ">/// Even if a token is completed, but the extend proc found that, the extend exceeds the end of the buffer,</div>
+			<div class="token cpp_comment ">/// then it can update the value to make it incomplete.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The fifth contains the context for this token. Fields except &quot;start&quot; are allowed to be updated by the extend proc.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenExtendProc'], [], [])"><div class="token cpp_type">RegexTokenExtendProc</div></div>						<div class="def" id="NI$vl::regex::RegexProc::extendProc"><div><div class="token cpp_field">extendProc</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
 			<div class="token cpp_comment ">/// The colorizer callback. It is called when a token is recognized.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The first argument is &lt;see cref=&quot;argument&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The second argument is the position of the first character of the token in characters.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The third argument is the length of the recognized token in characters.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The fourth character is the regular expression in the list (the first argument in the contructor of &lt;see cref=&quot;RegexLexer&quot;/&gt;) that matches this token.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokenColorizeProc'], [], [])"><div class="token cpp_type">RegexTokenColorizeProc</div></div>						<div class="def" id="NI$vl::regex::RegexProc::colorizeProc"><div><div class="token cpp_field">colorizeProc</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
@@ -337,7 +447,7 @@ Tokenizer
 			<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::regex::RegexTokens::ReadToEnd@void(::vl::collections::List<::vl::regex::RegexToken> &, bool(::vl::vint) *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokens::ReadToEnd@void(::vl::collections::List<::vl::regex::RegexToken> &, bool(::vl::vint) *)'], [], [])"><div class="token cpp_function">ReadToEnd</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexToken'], [], [])"><div class="token cpp_type">RegexToken</div></div>&gt;&amp; <div class="def" id="NI$vl::regex::RegexTokens::ReadToEnd@void(::vl::collections::List<::vl::regex::RegexToken> &, bool(::vl::vint) *)[decl0]::tokens"><div>tokens</div></div>, <div class="token cpp_keyword ">bool</div>(*<div class="def" id="NI$vl::regex::RegexTokens::ReadToEnd@void(::vl::collections::List<::vl::regex::RegexToken> &, bool(::vl::vint) *)[decl0]::discard"><div>discard</div></div>)(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)=<div class="token cpp_number ">0</div>)<div class="token cpp_keyword ">const</div>;
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;Lexical walker.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;A type for walking through a text against a &lt;see cref=&quot;RegexLexer&quot;/&gt;. Call &lt;see cref=&quot;RegexLexer::Walk&quot;/&gt; to create this object.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::regex::RegexLexerWalker"><div><div class="token cpp_type">RegexLexerWalker</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
 		{
 			<div class="token cpp_keyword ">friend</div> <div class="token cpp_keyword ">class</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexer'], [], [])"><div class="token cpp_type">RegexLexer</div></div>;
@@ -352,6 +462,7 @@ Tokenizer
 			
 			<div class="token cpp_comment ">/// &lt;summary&gt;Get the start DFA state number, which represents the correct state before parsing any input.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The DFA state number.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;When calling &lt;see cref=&quot;Walk&quot;/&gt; for the first character, the return value should be passed to the second parameter.&lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::regex::RegexLexerWalker::GetStartState@::vl::vint()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerWalker::GetStartState@::vl::vint()'], [], [])"><div class="token cpp_function">GetStartState</div></div></div>()<div class="token cpp_keyword ">const</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;Test if this state can only lead to the end of one kind of token.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the token index if this state can only lead to the end of one kind of token. Returns -1 if not.&lt;/returns&gt;</div>
@@ -362,10 +473,10 @@ Tokenizer
 			<div class="token cpp_comment ">/// &lt;param name=&quot;state&quot;&gt;The current state. Returns the new current state when this function returns.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;token&quot;&gt;Returns the token index at the end of the token.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;finalState&quot;&gt;Returns true if it reach the end of the token.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;previousTokenStop&quot;&gt;Returns true if the last character is the end of the token.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;previousTokenStop&quot;&gt;Returns true if the previous character is the end of the token.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &, ::vl::vint &, bool &, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &, ::vl::vint &, bool &, bool &)'], [], [])"><div class="token cpp_function">Walk</div></div></div>(<div class="token cpp_keyword ">wchar_t</div> <div class="def" id="NI$vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &, ::vl::vint &, bool &, bool &)[decl0]::input"><div>input</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &, ::vl::vint &, bool &, bool &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&amp; <div class="def" id="NI$vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &, ::vl::vint &, bool &, bool &)[decl0]::token"><div>token</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &, ::vl::vint &, bool &, bool &)[decl0]::finalState"><div>finalState</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &, ::vl::vint &, bool &, bool &)[decl0]::previousTokenStop"><div>previousTokenStop</div></div>)<div class="token cpp_keyword ">const</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;Step forward by one character.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the new current state.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the new current state. It is used to walk the next character.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;input&quot;&gt;The input character.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;state&quot;&gt;The current state.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)'], [], [])"><div class="token cpp_function">Walk</div></div></div>(<div class="token cpp_keyword ">wchar_t</div> <div class="def" id="NI$vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)[decl0]::input"><div>input</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)[decl0]::state"><div>state</div></div>)<div class="token cpp_keyword ">const</div>;
@@ -380,7 +491,7 @@ Tokenizer
 			<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::regex::RegexLexerWalker::IsClosedToken@bool(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerWalker::IsClosedToken@bool(::vl::WString const &)'], [], [])"><div class="token cpp_function">IsClosedToken</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::RegexLexerWalker::IsClosedToken@bool(::vl::WString const &)[decl0]::input"><div>input</div></div>)<div class="token cpp_keyword ">const</div>;
 		};
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Lexical colorizer.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Lexical colorizer. Call &lt;see cref=&quot;RegexLexer::Colorize&quot;/&gt; to create this object.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::regex::RegexLexerColorizer"><div><div class="token cpp_type">RegexLexerColorizer</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
 		{
 			<div class="token cpp_keyword ">friend</div> <div class="token cpp_keyword ">class</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexer'], [], [])"><div class="token cpp_type">RegexLexer</div></div>;
@@ -407,20 +518,38 @@ Tokenizer
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Get the internal state.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The internal state.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// If &lt;see cref=&quot;Colorize&quot;/&gt; has not been called, the return value of this function is the start state.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// If a text is multi-lined, &lt;see cref=&quot;Colorize&quot;/&gt; could be called line by line, and the internal state is changed.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// In order to colorize another piece of multi-lined text,</div>
+			<div class="token cpp_comment ">/// you can either save the start state and call &lt;see cref=&quot;SetInternalState&quot;/&gt; to reset the state,</div>
+			<div class="token cpp_comment ">/// or call &lt;see cref=&quot;RegexLexer::Colorize&quot;/&gt; for a new colorizer.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::InternalState'], [], [])"><div class="token cpp_type">InternalState</div></div>								<div class="def" id="FB$vl::regex::RegexLexerColorizer::GetInternalState@::vl::regex::RegexLexerColorizer::InternalState()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::GetInternalState@::vl::regex::RegexLexerColorizer::InternalState()'], [], [])"><div class="token cpp_function">GetInternalState</div></div></div>();
-			<div class="token cpp_comment ">/// &lt;summary&gt;Restore the colorizer to a internal state.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;state&quot;&gt;The internal state.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Restore the colorizer to a specified state.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;state&quot;&gt;The state to restore.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)'], [], [])"><div class="token cpp_function">SetInternalState</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::InternalState'], [], [])"><div class="token cpp_type">InternalState</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)[decl0]::state"><div>state</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;Step forward by one character.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;input&quot;&gt;The input character.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;Callbacks in &lt;see cref=&quot;RegexProc&quot;/&gt; will be called, which is from the second argument of the constructor of &lt;see cref=&quot;RegexLexer&quot;/&gt;.&lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::regex::RegexLexerColorizer::Pass@void(wchar_t)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::Pass@void(wchar_t)'], [], [])"><div class="token cpp_function">Pass</div></div></div>(<div class="token cpp_keyword ">wchar_t</div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::Pass@void(wchar_t)[decl0]::input"><div>input</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;Get the start DFA state number, which represents the correct state before colorizing any characters.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The DFA state number.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::regex::RegexLexerColorizer::GetStartState@::vl::vint()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::GetStartState@::vl::vint()'], [], [])"><div class="token cpp_function">GetStartState</div></div></div>()<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Colorize a text.&lt;/summary&gt;	GetCurrentState()const;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;An inter token state at the end of this line. It could be the same object which is returned from the previous call.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Colorize a text.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;An inter token state at the end of this line. It could be the same object to which is returned from the previous call.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;input&quot;&gt;The text to colorize.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;length&quot;&gt;Size of the text in characters.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;See &lt;see cref=&quot;RegexProcessingToken::interTokenState&quot;/&gt; and &lt;see cref=&quot;RegexProc::extendProc&quot;/&gt; for more information about the return value.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;Callbacks in &lt;see cref=&quot;RegexProc&quot;/&gt; will be called, which is from the second argument of the constructor of &lt;see cref=&quot;RegexLexer&quot;/&gt;.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">void</div>*										<div class="def" id="FB$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)'], [], [])"><div class="token cpp_function">Colorize</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="NI$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[decl0]::input"><div>input</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[decl0]::length"><div>length</div></div>);
 		};
 
@@ -434,18 +563,19 @@ Tokenizer
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc'], [], [])"><div class="token cpp_type">RegexProc</div></div>									<div class="def" id="NI$vl::regex::RegexLexer::proc"><div><div class="token cpp_field">proc</div></div></div>;
 
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lexical analyzer by a set of regular expressions. [F:vl.regex.RegexToken.token] will be the index of the matched regular expression.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;tokens&quot;&gt;The regular expressions.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;_proc&quot;&gt;Callback procedures.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a lexical analyzer by a set of regular expressions. [F:vl.regex.RegexToken.token] will be the index of the matched regular expression in the first argument.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;tokens&quot;&gt;ALl regular expression, each one represent a kind of tokens.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;_proc&quot;&gt;Configuration of all callbacks.&lt;/param&gt;</div>
 			<div class="def" id="FB$vl::regex::RegexLexer::$__ctor@(::vl::collections::IEnumerable<::vl::WString> const &, ::vl::regex::RegexProc)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexer::$__ctor@(::vl::collections::IEnumerable<::vl::WString> const &, ::vl::regex::RegexProc)'], [], [])"><div class="token cpp_function">RegexLexer</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::IEnumerable'], [], [])"><div class="token cpp_type">IEnumerable</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::regex::RegexLexer::$__ctor@(::vl::collections::IEnumerable<::vl::WString> const &, ::vl::regex::RegexProc)[decl0]::tokens"><div>tokens</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc'], [], [])"><div class="token cpp_type">RegexProc</div></div> <div class="def" id="NI$vl::regex::RegexLexer::$__ctor@(::vl::collections::IEnumerable<::vl::WString> const &, ::vl::regex::RegexProc)[decl0]::_proc"><div>_proc</div></div>);
 			<div class="def" id="FB$vl::regex::RegexLexer::~RegexLexer@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexer::~RegexLexer@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">RegexLexer</div></div></div>();
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Tokenize a input text.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The result.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Tokenize an input text.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;All tokens, including recognized tokens or unrecognized tokens. For unrecognized tokens, [F:vl.regex.RegexToken.token] will be -1.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;code&quot;&gt;The text to tokenize.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;codeIndex&quot;&gt;Extra information that will store in [F:vl.regex.RegexToken.codeIndex].&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;codeIndex&quot;&gt;Extra information that will be copied to [F:vl.regex.RegexToken.codeIndex].&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;Callbacks in &lt;see cref=&quot;RegexProc&quot;/&gt; will be called when iterating through tokens, which is from the second argument of the constructor of &lt;see cref=&quot;RegexLexer&quot;/&gt;.&lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexTokens'], [], [])"><div class="token cpp_type">RegexTokens</div></div>									<div class="def" id="FB$vl::regex::RegexLexer::Parse@::vl::regex::RegexTokens(::vl::WString const &, ::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexer::Parse@::vl::regex::RegexTokens(::vl::WString const &, ::vl::vint)'], [], [])"><div class="token cpp_function">Parse</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::regex::RegexLexer::Parse@::vl::regex::RegexTokens(::vl::WString const &, ::vl::vint)[decl0]::code"><div>code</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexer::Parse@::vl::regex::RegexTokens(::vl::WString const &, ::vl::vint)[decl0]::codeIndex"><div>codeIndex</div></div>=-<div class="token cpp_number ">1</div>)<div class="token cpp_keyword ">const</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;Create a equivalence walker from this lexical analyzer.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Create a equivalence walker from this lexical analyzer. A walker enable you to walk throught characters one by one,&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The walker.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerWalker'], [], [])"><div class="token cpp_type">RegexLexerWalker</div></div>							<div class="def" id="FB$vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()'], [], [])"><div class="token cpp_function">Walk</div></div></div>()<div class="token cpp_keyword ">const</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;Create a equivalence colorizer from this lexical analyzer.&lt;/summary&gt;</div>
