@@ -1,0 +1,6 @@
+<Document symbolId="vl::regex::Regex::Cut@void(::vl::WString const &amp;, bool, ::vl::regex::RegexMatch::List &amp;)" accessor="public" category="Function" name="Cut" declFile="Regex.h" declId="FB$vl::regex::Regex::Cut@void(::vl::WString const &amp;, bool, ::vl::regex::RegexMatch::List &amp;)[decl0]"><summary>Cut the text by matched sub strings, returning all matched and unmatched sub strings.</summary><param name="text">The text to match.</param><param name="keepEmptyMatch">Set to true to keep all empty matches. This could happen when there is nothing between two matched sub strings.</param><param name="matches">Returns all succeeded and failed matches.</param><signature><![CDATA[void Cut(
+    WString const & text,
+    bool keepEmptyMatch,
+    RegexMatch::List & matches
+) const;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="List" declFile="Regex.h" declId="NI$vl::regex::RegexMatch::List"/></seealsos></Document>

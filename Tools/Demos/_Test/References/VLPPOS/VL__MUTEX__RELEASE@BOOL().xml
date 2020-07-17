@@ -1,6 +1,0 @@
-<Document symbolId="vl::Mutex::Release@bool()" accessor="public" category="Function" name="Release" declFile="Threading.h" declId="FB$vl::Mutex::Release@bool()[decl0]"><summary>
- Release the mutex.
- In Linux, calling Release() more than once between two Wait(), or calling Wait() more than once between two Release(), will results in an undefined behavior.
- </summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Release(
-);
-]]></signature></Document>

@@ -1,0 +1,76 @@
+<reference>
+  <namespace name="::vl::regex">
+    <document name="class Regex" docId="vl::regex::Regex" file="VL__REGEX__REGEX">
+      <document name="function $__ctor" docId="vl::regex::Regex::$__ctor@(::vl::WString const &amp;, bool)" file="VL__REGEX__REGEX__$__CTOR@(__VL__WSTRING_CONST_&amp;,_BOOL)"/>
+      <document name="function Cut" docId="vl::regex::Regex::Cut@void(::vl::WString const &amp;, bool, ::vl::regex::RegexMatch::List &amp;)" file="VL__REGEX__REGEX__CUT@VOID(__VL__WSTRING_CONST_&amp;,_BOOL,___VL__RE"/>
+      <document name="function IsPureMatch" docId="vl::regex::Regex::IsPureMatch@bool()" file="VL__REGEX__REGEX__ISPUREMATCH@BOOL()"/>
+      <document name="function IsPureTest" docId="vl::regex::Regex::IsPureTest@bool()" file="VL__REGEX__REGEX__ISPURETEST@BOOL()"/>
+      <document name="function Match" docId="vl::regex::Regex::Match@::vl::regex::RegexMatch::Ref(::vl::WString const &amp;)" file="VL__REGEX__REGEX__MATCH@__VL__REGEX__REGEXMATCH__REF(__VL__WSTRI"/>
+      <document name="function MatchHead" docId="vl::regex::Regex::MatchHead@::vl::regex::RegexMatch::Ref(::vl::WString const &amp;)" file="VL__REGEX__REGEX__MATCHHEAD@__VL__REGEX__REGEXMATCH__REF(__VL__W"/>
+      <document name="function Search" docId="vl::regex::Regex::Search@void(::vl::WString const &amp;, ::vl::regex::RegexMatch::List &amp;)" file="VL__REGEX__REGEX__SEARCH@VOID(__VL__WSTRING_CONST_&amp;,___VL__REGEX"/>
+      <document name="function Split" docId="vl::regex::Regex::Split@void(::vl::WString const &amp;, bool, ::vl::regex::RegexMatch::List &amp;)" file="VL__REGEX__REGEX__SPLIT@VOID(__VL__WSTRING_CONST_&amp;,_BOOL,___VL__"/>
+      <document name="function Test" docId="vl::regex::Regex::Test@bool(::vl::WString const &amp;)" file="VL__REGEX__REGEX__TEST@BOOL(__VL__WSTRING_CONST_&amp;)"/>
+      <document name="function TestHead" docId="vl::regex::Regex::TestHead@bool(::vl::WString const &amp;)" file="VL__REGEX__REGEX__TESTHEAD@BOOL(__VL__WSTRING_CONST_&amp;)"/>
+    </document>
+    <document name="class RegexLexer" docId="vl::regex::RegexLexer" file="VL__REGEX__REGEXLEXER">
+      <document name="function $__ctor" docId="vl::regex::RegexLexer::$__ctor@(::vl::collections::IEnumerable&lt;::vl::WString&gt; const &amp;, ::vl::regex::RegexProc)" file="VL__REGEX__REGEXLEXER__$__CTOR@(__VL__COLLECTIONS__IENUMERABLE__"/>
+      <document name="function Colorize" docId="vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()" file="VL__REGEX__REGEXLEXER__COLORIZE@__VL__REGEX__REGEXLEXERCOLORIZER"/>
+      <document name="function Parse" docId="vl::regex::RegexLexer::Parse@::vl::regex::RegexTokens(::vl::WString const &amp;, ::vl::vint)" file="VL__REGEX__REGEXLEXER__PARSE@__VL__REGEX__REGEXTOKENS(__VL__WSTR"/>
+      <document name="function Walk" docId="vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()" file="VL__REGEX__REGEXLEXER__WALK@__VL__REGEX__REGEXLEXERWALKER()"/>
+    </document>
+    <document name="class RegexLexerColorizer" docId="vl::regex::RegexLexerColorizer" file="VL__REGEX__REGEXLEXERCOLORIZER">
+      <document name="function Colorize" docId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)" file="VL__REGEX__REGEXLEXERCOLORIZER__COLORIZE@VOID__(WCHAR_T_CONST__,"/>
+      <document name="function GetInternalState" docId="vl::regex::RegexLexerColorizer::GetInternalState@::vl::regex::RegexLexerColorizer::InternalState()" file="VL__REGEX__REGEXLEXERCOLORIZER__GETINTERNALSTATE@__VL__REGEX__RE"/>
+      <document name="function GetStartState" docId="vl::regex::RegexLexerColorizer::GetStartState@::vl::vint()" file="VL__REGEX__REGEXLEXERCOLORIZER__GETSTARTSTATE@__VL__VINT()"/>
+      <document name="function Pass" docId="vl::regex::RegexLexerColorizer::Pass@void(wchar_t)" file="VL__REGEX__REGEXLEXERCOLORIZER__PASS@VOID(WCHAR_T)"/>
+      <document name="function SetInternalState" docId="vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)" file="VL__REGEX__REGEXLEXERCOLORIZER__SETINTERNALSTATE@VOID(__VL__REGE"/>
+    </document>
+    <document name="class RegexLexerWalker" docId="vl::regex::RegexLexerWalker" file="VL__REGEX__REGEXLEXERWALKER">
+      <document name="function GetRelatedToken" docId="vl::regex::RegexLexerWalker::GetRelatedToken@::vl::vint(::vl::vint)" file="VL__REGEX__REGEXLEXERWALKER__GETRELATEDTOKEN@__VL__VINT(__VL__VI"/>
+      <document name="function GetStartState" docId="vl::regex::RegexLexerWalker::GetStartState@::vl::vint()" file="VL__REGEX__REGEXLEXERWALKER__GETSTARTSTATE@__VL__VINT()"/>
+      <document name="function IsClosedToken" docId="vl::regex::RegexLexerWalker::IsClosedToken@bool(wchar_t const *, ::vl::vint)" file="VL__REGEX__REGEXLEXERWALKER__ISCLOSEDTOKEN@BOOL(WCHAR_T_CONST__,"/>
+      <document name="function IsClosedToken" docId="vl::regex::RegexLexerWalker::IsClosedToken@bool(::vl::WString const &amp;)" file="VL__REGEX__REGEXLEXERWALKER__ISCLOSEDTOKEN@BOOL(__VL__WSTRING_CO"/>
+      <document name="function Walk" docId="vl::regex::RegexLexerWalker::Walk@void(wchar_t, ::vl::vint &amp;, ::vl::vint &amp;, bool &amp;, bool &amp;)" file="VL__REGEX__REGEXLEXERWALKER__WALK@VOID(WCHAR_T,___VL__VINT_&amp;,___"/>
+      <document name="function Walk" docId="vl::regex::RegexLexerWalker::Walk@::vl::vint(wchar_t, ::vl::vint)" file="VL__REGEX__REGEXLEXERWALKER__WALK@__VL__VINT(WCHAR_T,___VL__VINT"/>
+    </document>
+    <document name="class RegexMatch" docId="vl::regex::RegexMatch" file="VL__REGEX__REGEXMATCH">
+      <document name="function Captures" docId="vl::regex::RegexMatch::Captures@::vl::regex::RegexMatch::CaptureList const &amp;()" file="VL__REGEX__REGEXMATCH__CAPTURES@__VL__REGEX__REGEXMATCH__CAPTURE"/>
+      <document name="function Groups" docId="vl::regex::RegexMatch::Groups@::vl::regex::RegexMatch::CaptureGroup const &amp;()" file="VL__REGEX__REGEXMATCH__GROUPS@__VL__REGEX__REGEXMATCH__CAPTUREGR"/>
+      <document name="function Result" docId="vl::regex::RegexMatch::Result@::vl::regex::RegexString const &amp;()" file="VL__REGEX__REGEXMATCH__RESULT@__VL__REGEX__REGEXSTRING_CONST_&amp;()"/>
+      <document name="function Success" docId="vl::regex::RegexMatch::Success@bool()" file="VL__REGEX__REGEXMATCH__SUCCESS@BOOL()"/>
+    </document>
+    <document name="struct RegexProc" docId="vl::regex::RegexProc" file="VL__REGEX__REGEXPROC">
+      <document name="variable argument" docId="vl::regex::RegexProc::argument" file="VL__REGEX__REGEXPROC__ARGUMENT"/>
+      <document name="variable colorizeProc" docId="vl::regex::RegexProc::colorizeProc" file="VL__REGEX__REGEXPROC__COLORIZEPROC"/>
+      <document name="variable deleter" docId="vl::regex::RegexProc::deleter" file="VL__REGEX__REGEXPROC__DELETER"/>
+      <document name="variable extendProc" docId="vl::regex::RegexProc::extendProc" file="VL__REGEX__REGEXPROC__EXTENDPROC"/>
+    </document>
+    <document name="struct RegexProcessingToken" docId="vl::regex::RegexProcessingToken" file="VL__REGEX__REGEXPROCESSINGTOKEN">
+      <document name="variable completeToken" docId="vl::regex::RegexProcessingToken::completeToken" file="VL__REGEX__REGEXPROCESSINGTOKEN__COMPLETETOKEN"/>
+      <document name="variable interTokenState" docId="vl::regex::RegexProcessingToken::interTokenState" file="VL__REGEX__REGEXPROCESSINGTOKEN__INTERTOKENSTATE"/>
+      <document name="variable length" docId="vl::regex::RegexProcessingToken::length" file="VL__REGEX__REGEXPROCESSINGTOKEN__LENGTH"/>
+      <document name="variable start" docId="vl::regex::RegexProcessingToken::start" file="VL__REGEX__REGEXPROCESSINGTOKEN__START"/>
+      <document name="variable token" docId="vl::regex::RegexProcessingToken::token" file="VL__REGEX__REGEXPROCESSINGTOKEN__TOKEN"/>
+    </document>
+    <document name="class RegexString" docId="vl::regex::RegexString" file="VL__REGEX__REGEXSTRING">
+      <document name="function Length" docId="vl::regex::RegexString::Length@::vl::vint()" file="VL__REGEX__REGEXSTRING__LENGTH@__VL__VINT()"/>
+      <document name="function Start" docId="vl::regex::RegexString::Start@::vl::vint()" file="VL__REGEX__REGEXSTRING__START@__VL__VINT()"/>
+      <document name="function Value" docId="vl::regex::RegexString::Value@::vl::WString const &amp;()" file="VL__REGEX__REGEXSTRING__VALUE@__VL__WSTRING_CONST_&amp;()"/>
+    </document>
+    <document name="struct RegexToken" docId="vl::regex::RegexToken" file="VL__REGEX__REGEXTOKEN">
+      <document name="variable codeIndex" docId="vl::regex::RegexToken::codeIndex" file="VL__REGEX__REGEXTOKEN__CODEINDEX"/>
+      <document name="variable columnEnd" docId="vl::regex::RegexToken::columnEnd" file="VL__REGEX__REGEXTOKEN__COLUMNEND"/>
+      <document name="variable columnStart" docId="vl::regex::RegexToken::columnStart" file="VL__REGEX__REGEXTOKEN__COLUMNSTART"/>
+      <document name="variable completeToken" docId="vl::regex::RegexToken::completeToken" file="VL__REGEX__REGEXTOKEN__COMPLETETOKEN"/>
+      <document name="variable length" docId="vl::regex::RegexToken::length" file="VL__REGEX__REGEXTOKEN__LENGTH"/>
+      <document name="variable reading" docId="vl::regex::RegexToken::reading" file="VL__REGEX__REGEXTOKEN__READING"/>
+      <document name="variable rowEnd" docId="vl::regex::RegexToken::rowEnd" file="VL__REGEX__REGEXTOKEN__ROWEND"/>
+      <document name="variable rowStart" docId="vl::regex::RegexToken::rowStart" file="VL__REGEX__REGEXTOKEN__ROWSTART"/>
+      <document name="variable start" docId="vl::regex::RegexToken::start" file="VL__REGEX__REGEXTOKEN__START"/>
+      <document name="variable token" docId="vl::regex::RegexToken::token" file="VL__REGEX__REGEXTOKEN__TOKEN"/>
+    </document>
+    <document name="class RegexTokens" docId="vl::regex::RegexTokens" file="VL__REGEX__REGEXTOKENS">
+      <document name="function ReadToEnd" docId="vl::regex::RegexTokens::ReadToEnd@void(::vl::collections::List&lt;::vl::regex::RegexToken&gt; &amp;, bool(::vl::vint) *)" file="VL__REGEX__REGEXTOKENS__READTOEND@VOID(__VL__COLLECTIONS__LIST__"/>
+    </document>
+  </namespace>
+</reference>

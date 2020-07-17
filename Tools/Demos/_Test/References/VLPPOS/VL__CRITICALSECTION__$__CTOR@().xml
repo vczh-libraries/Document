@@ -1,3 +1,0 @@
-<Document symbolId="vl::CriticalSection::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Threading.h" declId="FB$vl::CriticalSection::$__ctor@()[decl0]"><summary>Create a critical section.</summary><signature><![CDATA[ CriticalSection(
-);
-]]></signature></Document>

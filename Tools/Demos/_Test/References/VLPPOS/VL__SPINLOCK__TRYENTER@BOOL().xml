@@ -1,3 +1,0 @@
-<Document symbolId="vl::SpinLock::TryEnter@bool()" accessor="public" category="Function" name="TryEnter" declFile="Threading.h" declId="FB$vl::SpinLock::TryEnter@bool()[decl0]"><summary>Try enter a spin lock. This function will return immediately.</summary><returns>Returns true if the current thread owned the spin lock.</returns><signature><![CDATA[bool TryEnter(
-);
-]]></signature></Document>

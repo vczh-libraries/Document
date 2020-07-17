@@ -1,3 +1,0 @@
-<Document symbolId="vl::RepeatingTaskExecutor::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Threading.h" declId="FB$vl::RepeatingTaskExecutor::$__ctor@()[impl0]"><summary>Create a task executor.</summary><signature><![CDATA[ RepeatingTaskExecutor(
-);
-]]></signature></Document>

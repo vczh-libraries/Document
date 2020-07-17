@@ -1,2 +1,0 @@
-<Document symbolId="vl::HttpRequest::port" accessor="public" category="Variable" name="port" declFile="HttpUtility.h" declId="NI$vl::HttpRequest::port"><summary>Port of the server, like 80.</summary><signature><![CDATA[vint port;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

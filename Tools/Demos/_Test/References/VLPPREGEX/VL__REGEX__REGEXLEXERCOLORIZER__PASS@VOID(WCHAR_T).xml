@@ -1,0 +1,4 @@
+<Document symbolId="vl::regex::RegexLexerColorizer::Pass@void(wchar_t)" accessor="public" category="Function" name="Pass" declFile="Regex.h" declId="FB$vl::regex::RegexLexerColorizer::Pass@void(wchar_t)[decl0]"><summary>Step forward by one character.</summary><param name="input">The input character.</param><remarks>Callbacks in <symbol name="RegexProc" docId="vl::regex::RegexProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc"/> will be called, which is from the second argument of the constructor of <symbol name="RegexLexer" docId="vl::regex::RegexLexer" declFile="Regex.h" declId="NI$vl::regex::RegexLexer"/>.</remarks><signature><![CDATA[void Pass(
+    wchar_t input
+);
+]]></signature></Document>

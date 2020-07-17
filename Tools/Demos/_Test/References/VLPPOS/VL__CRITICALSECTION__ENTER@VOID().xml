@@ -1,3 +1,0 @@
-<Document symbolId="vl::CriticalSection::Enter@void()" accessor="public" category="Function" name="Enter" declFile="Threading.h" declId="FB$vl::CriticalSection::Enter@void()[decl0]"><summary>Enter a critical section.</summary><signature><![CDATA[void Enter(
-);
-]]></signature></Document>

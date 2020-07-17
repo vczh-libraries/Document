@@ -1,3 +1,0 @@
-<Document symbolId="vl::ThreadLocalStorage::DisposeStorages@void()" accessor="public" category="Function" name="DisposeStorages" declFile="Threading.h" declId="FB$vl::ThreadLocalStorage::DisposeStorages@void()[decl0]"><summary>Clear all storages for the current thread (should be the main thread) and clear all records. This function can only be called by the main thread when all other threads are exited. It will reduce noices for detecting memory leaks.</summary><signature><![CDATA[static void DisposeStorages(
-);
-]]></signature></Document>

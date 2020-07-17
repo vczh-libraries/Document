@@ -1,3 +1,0 @@
-<Document symbolId="vl::Semaphore" accessor="" category="Class" name="Semaphore" declFile="Threading.h" declId="NI$vl::Semaphore"><summary>Semaphore.</summary><signature><![CDATA[class Semaphore
-    : WaitableObject;
-]]></signature><basetypes><symbol name="WaitableObject" docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/></basetypes></Document>

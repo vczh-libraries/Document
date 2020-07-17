@@ -1,3 +1,0 @@
-<Document symbolId="vl::filesystem::FilePath::IsRoot@bool()" accessor="public" category="Function" name="IsRoot" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::IsRoot@bool()[decl0]"><summary>Test if the file path is a the root of all file system objects.</summary><returns>Returns true if the file path is the root of all file system objects.</returns><signature><![CDATA[bool IsRoot(
-) const;
-]]></signature></Document>

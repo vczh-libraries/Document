@@ -1,4 +1,0 @@
-<Document symbolId="vl::filesystem::FilePath::$__ctor@(::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::$__ctor@(::vl::WString const &amp;)[decl0]"><summary>Create a file path.</summary><param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param><signature><![CDATA[ FilePath(
-    WString const & _filePath
-);
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

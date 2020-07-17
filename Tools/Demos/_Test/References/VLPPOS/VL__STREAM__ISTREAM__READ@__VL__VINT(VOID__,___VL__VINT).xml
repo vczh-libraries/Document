@@ -1,5 +1,0 @@
-<Document symbolId="vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)" accessor="public" category="Function" name="Read" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Read@::vl::vint(void *, ::vl::vint)[decl0]"><summary>Read from the current position and step forward. It will crash if the stream is <b>unreadable</b> or <b>unavailable</b>.</summary><returns>Returns the actual size of the content that has read. Returns 0 if a stream has no more data to read.</returns><param name="_buffer">A buffer to store the content.</param><param name="_size">The size of the content that is expected to read.</param><signature><![CDATA[vint Read(
-    void * _buffer,
-    vint _size
-);
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

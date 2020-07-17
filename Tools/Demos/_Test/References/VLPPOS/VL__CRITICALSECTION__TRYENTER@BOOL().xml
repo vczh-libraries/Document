@@ -1,3 +1,0 @@
-<Document symbolId="vl::CriticalSection::TryEnter@bool()" accessor="public" category="Function" name="TryEnter" declFile="Threading.h" declId="FB$vl::CriticalSection::TryEnter@bool()[decl0]"><summary>Try enter a critical section. This function will return immediately.</summary><returns>Returns true if the current thread owned the critical section.</returns><signature><![CDATA[bool TryEnter(
-);
-]]></signature></Document>

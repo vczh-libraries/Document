@@ -1,3 +1,0 @@
-<Document symbolId="vl::stream::Utf16Encoder" accessor="" category="Class" name="Utf16Encoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf16Encoder"><summary>Encoder to write UTF-16 text.</summary><signature><![CDATA[class Utf16Encoder
-    : CharEncoder;
-]]></signature><basetypes><symbol name="CharEncoder" docId="vl::stream::CharEncoder" declFile="CharFormat.h" declId="NI$vl::stream::CharEncoder"/></basetypes></Document>

@@ -1,0 +1,6 @@
+<Document symbolId="vl::regex::RegexTokens::ReadToEnd@void(::vl::collections::List&lt;::vl::regex::RegexToken&gt; &amp;, bool(::vl::vint) *)" accessor="public" category="Function" name="ReadToEnd" declFile="Regex.h" declId="FB$vl::regex::RegexTokens::ReadToEnd@void(::vl::collections::List&lt;::vl::regex::RegexToken&gt; &amp;, bool(::vl::vint) *)[decl0]"><summary>Copy all tokens.</summary><param name="tokens">Returns all tokens.</param><param name="discard">A callback to decide which kind of tokens to discard. The input is <symbol name="token" docId="vl::regex::RegexToken::token" declFile="Regex.h" declId="NI$vl::regex::RegexToken::token"/>. Returns true to discard this kind of tokens.</param><signature><![CDATA[void ReadToEnd(
+    collections::List<RegexToken> & tokens,
+    bool( * discard)(
+vint) /* optional */
+) const;
+]]></signature><seealsos><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol name="RegexToken" docId="vl::regex::RegexToken" declFile="Regex.h" declId="NI$vl::regex::RegexToken"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,6 +1,0 @@
-<Document symbolId="vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &amp;, ::vl::stream::BomEncoder::Encoding &amp;, bool &amp;)" accessor="public" category="Function" name="ReadAllTextWithEncodingTesting" declFile="FileSystem.h" declId="FB$vl::filesystem::File::ReadAllTextWithEncodingTesting@bool(::vl::WString &amp;, ::vl::stream::BomEncoder::Encoding &amp;, bool &amp;)[decl0]"><summary>Get the content of a text file with encoding testing.</summary><returns>Returns true if this operation succeeded.</returns><param name="text">Returns the content of the file.</param><param name="encoding">Returns the encoding of the file.</param><param name="containsBom">Returns true if there is a BOM in the file.</param><signature><![CDATA[bool ReadAllTextWithEncodingTesting(
-    WString & text,
-    stream::BomEncoder::Encoding & encoding,
-    bool & containsBom
-);
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="Encoding" docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/></seealsos></Document>

@@ -1,0 +1,4 @@
+<Document symbolId="vl::regex::RegexProc::argument" accessor="public" category="Variable" name="argument" declFile="Regex.h" declId="NI$vl::regex::RegexProc::argument"><summary>
+ The argument object that is the first argument for <symbol name="extendProc" docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/> and <symbol name="colorizeProc" docId="vl::regex::RegexProc::colorizeProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::colorizeProc"/>.
+ </summary><signature><![CDATA[void * argument;
+]]></signature></Document>

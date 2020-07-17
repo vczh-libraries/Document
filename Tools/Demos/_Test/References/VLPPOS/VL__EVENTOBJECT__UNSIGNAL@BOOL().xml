@@ -1,3 +1,0 @@
-<Document symbolId="vl::EventObject::Unsignal@bool()" accessor="public" category="Function" name="Unsignal" declFile="Threading.h" declId="FB$vl::EventObject::Unsignal@bool()[decl0]"><summary>Unsignal the event.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Unsignal(
-);
-]]></signature></Document>

@@ -1,4 +1,0 @@
-<Document symbolId="vl::Locale::GetShortDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetShortDateFormats" declFile="Locale.h" declId="FB$vl::Locale::GetShortDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"><summary>Get all short date formats for this locale.</summary><param name="formats">Returns all formats.</param><signature><![CDATA[void GetShortDateFormats(
-    collections::List<WString> & formats
-) const;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/></seealsos></Document>

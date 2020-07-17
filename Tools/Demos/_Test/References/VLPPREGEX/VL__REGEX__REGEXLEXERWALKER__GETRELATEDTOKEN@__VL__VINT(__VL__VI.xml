@@ -1,0 +1,4 @@
+<Document symbolId="vl::regex::RegexLexerWalker::GetRelatedToken@::vl::vint(::vl::vint)" accessor="public" category="Function" name="GetRelatedToken" declFile="Regex.h" declId="FB$vl::regex::RegexLexerWalker::GetRelatedToken@::vl::vint(::vl::vint)[decl0]"><summary>Test if this state can only lead to the end of one kind of token.</summary><returns>Returns the token index if this state can only lead to the end of one kind of token. Returns -1 if not.</returns><param name="state">The DFA state number.</param><signature><![CDATA[vint GetRelatedToken(
+    vint state
+) const;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

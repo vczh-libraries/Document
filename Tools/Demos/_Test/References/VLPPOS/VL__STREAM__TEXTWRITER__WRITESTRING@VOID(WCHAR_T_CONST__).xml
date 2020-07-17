@@ -1,4 +1,0 @@
-<Document symbolId="vl::stream::TextWriter::WriteString@void(wchar_t const *)" accessor="public" category="Function" name="WriteString" declFile="Accessor.h" declId="FB$vl::stream::TextWriter::WriteString@void(wchar_t const *)[decl0]"><summary>Write a string.</summary><param name="string">Buffer of the zero terminated string to write.</param><signature><![CDATA[void WriteString(
-    wchar_t const * string
-);
-]]></signature></Document>
