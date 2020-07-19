@@ -815,6 +815,7 @@ RegexLexerColorizer
 			vint lastFinalStateLength = 0;
 			vint lastFinalStateToken = -1;
 
+			vint tokenStartState = internalState.currentState;
 			for (vint i = start; i < length; i++)
 			{
 				vint currentToken = -1;
@@ -833,11 +834,14 @@ RegexLexerColorizer
 					}
 					else if (i == start)
 					{
-						if (colorize)
+						if (tokenStartState == GetStartState())
 						{
-							proc.colorizeProc(proc.argument, start, 1, -1);
+							if (colorize)
+							{
+								proc.colorizeProc(proc.argument, start, 1, -1);
+							}
+							return i + 1;
 						}
-						return i + 1;
 					}
 					else
 					{
