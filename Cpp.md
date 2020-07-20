@@ -31,10 +31,6 @@
   - [ ] `DocGen.ps1 copy` copies files from `website`, `website-doc1`, code index HTML files, `Cpp.js`, `Cpp.css`. `favicon.ico` to `vczh-libraries.github.io`.
   - [ ] Fix signature for Curry.
 - [ ] Refine document comment
-  - [ ] VlppOS
-    - [ ] Mark license on source files, generated files and codegen tools
-  - [ ] VlppRegex
-    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppReflection
     - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppParser
@@ -52,8 +48,6 @@
   - [ ] generate a completed list of article pages to a text file for `npm run download`.
 - [ ] Connect reflection symbols to C++ symbols
 - [ ] Author tutorial
-  - [ ] VlppOS
-  - [ ] VlppRegex
   - [ ] VlppReflection
   - [ ] VlppParser
     - [ ] Syntax
