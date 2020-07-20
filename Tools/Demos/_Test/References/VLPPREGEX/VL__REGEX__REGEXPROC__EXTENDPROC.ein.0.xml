@@ -1,0 +1,129 @@
+<example><![CDATA[
+ int main()
+ {
+     List<WString> tokenDefs;
+     tokenDefs.Add(L"/d+");
+     tokenDefs.Add(L"[a-zA-Z_]/w*");
+     tokenDefs.Add(L"\"([^\"/\\]|/\\/.)*\"");
+     tokenDefs.Add(L"R\"[^(]*/(");
+     tokenDefs.Add(L"[(){};]");
+     tokenDefs.Add(L"/s+");
+     tokenDefs.Add(L"///*+([^//*]|/*+[^//])*/*+//");
+ 
+     const wchar_t* lines[] = {
+         L"/*********************",
+         L"MAIN.CPP",
+         L"*********************/",
+         L"",
+         L"int main()",
+         L"{",
+         L"    printf(\"This is a \\\"simple\\\" text.\");",
+         L"    printf(R\"____(This is a",
+         L"\"multiple lined\"",
+         L"literal text)____\");",
+         L"    return 0;",
+         L"}",
+     };
+ 
+     struct Argument
+     {
+         // for a real colorizer, you can put a color buffer here.
+         // the buffer is reused for every line of code.
+         // but for the demo, I put the current processing text instead.
+         // so that I am able to print what is processed.
+         const wchar_t* processingText = nullptr;
+     } argument;
+ 
+     struct InterTokenState
+     {
+         WString postfix;
+     };
+ 
+     RegexProc proc;
+     proc.argument = &argument;
+     proc.colorizeProc = [](void* argument, vint start, vint length, vint token)
+     {
+         // this is guaranteed by "proc.argument = &argument;"
+         auto text = reinterpret_cast<Argument*>(argument)->processingText;
+         Console::WriteLine(itow(token) + L": <" + WString(text + start, length) + L">");
+     };
+     proc.deleter = [](void* interTokenState)
+     {
+         delete reinterpret_cast<InterTokenState*>(interTokenState);
+     };
+     proc.extendProc = [](void* argument, const wchar_t* reading, vint length, bool completeText, RegexProcessingToken& processingToken)
+     {
+         // 3 is R"[^(]*/(
+         // 7 is not used in tokenDefs, it is occupied to represent an extended literal string
+         if (processingToken.token == 3 || processingToken.token == 7)
+         {
+             // for calling wcsstr, create a buffer that is zero terminated
+             WString readingBuffer = length == -1 ? WString(reading, false) : WString(reading, length);
+             reading = readingBuffer.Buffer();
+ 
+             // get the postfix, which is )____" in this case
+             WString postfix;
+             if (processingToken.interTokenState)
+             {
+                 postfix = reinterpret_cast<InterTokenState*>(processingToken.interTokenState)->postfix;
+             }
+             else
+             {
+                 postfix = L")" + WString(reading + 2, processingToken.length - 3) + L"\"";
+             }
+ 
+             // try to find if the postfix, which is )____" in this case, appear in the given buffer
+             auto find = wcsstr(reading, postfix.Buffer());
+             if (find)
+             {
+                 // if we find the postfix, it means we find the end of the literal string
+                 // here processingToken.token automatically becomes 7
+                 // interTokenState needs to be nullptr to indicate this
+                 processingToken.length = (vint)(find - reading) + postfix.Length();
+                 processingToken.completeToken = true;
+                 processingToken.interTokenState = nullptr;
+             }
+             else
+             {
+                 // if we don't find the postfix, it means the end of the literal string is in future lines
+                 // we need to set the token to 7, which is the real token id for literal strings
+                 // since we change any token from 3 to 7, 3 will never be passed to colorizeProc in "token" argument
+                 processingToken.length = readingBuffer.Length();
+                 processingToken.token = 7;
+                 processingToken.completeToken = false;
+ 
+                 // we need to ensure that interTokenState is not nullptr, and we can save the postfix here
+                 if (!completeText && !processingToken.interTokenState)
+                 {
+                     auto state = new InterTokenState;
+                     state->postfix = postfix;
+                     processingToken.interTokenState = state;
+                 }
+             }
+         }
+     };
+ 
+     RegexLexer lexer(tokenDefs, proc);
+     RegexLexerColorizer colorizer = lexer.Colorize();
+ 
+     void* lastInterTokenState = nullptr;
+     FOREACH_INDEXER(const wchar_t*, line, index, From(lines))
+     {
+         Console::WriteLine(L"Begin line " + itow(index));
+         argument.processingText = line;
+         void* interTokenState = colorizer.Colorize(line, wcslen(line));
+         
+         if (lastInterTokenState && lastInterTokenState != interTokenState)
+         {
+             // call the deleter manually
+             proc.deleter(lastInterTokenState);
+         }
+         lastInterTokenState = interTokenState;
+ 
+         argument.processingText = nullptr;
+         colorizer.Pass(L'\r');
+         colorizer.Pass(L'\n');
+         Console::WriteLine(L"");
+     }
+ }
+ ]]></example>

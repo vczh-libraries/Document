@@ -1,0 +1,20 @@
+<example><![CDATA[
+ int main()
+ {
+     List<WString> tokenDefs;
+     tokenDefs.Add(L"/d+");
+     tokenDefs.Add(L"/w+");
+     tokenDefs.Add(L"/s+");
+ 
+     RegexLexer lexer(tokenDefs, {});
+     WString input = L"I have 2 books.";
+     auto tokenResult = lexer.Parse(input);
+ 
+     FOREACH(RegexToken, token, tokenResult)
+     {
+         // input must be in a variable
+         // because token.reading points to a position from input.Buffer();
+         Console::WriteLine(itow(token.token) + L": <" + WString(token.reading, token.length) + L">");
+     }
+ }
+ ]]></example>

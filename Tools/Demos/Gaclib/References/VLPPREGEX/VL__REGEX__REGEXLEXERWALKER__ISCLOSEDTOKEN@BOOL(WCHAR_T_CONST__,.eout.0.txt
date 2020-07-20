@@ -1,0 +1,5 @@
+. is a closed token.
+2 is not a closed token.
+2. is not a closed token.
+2.5 is not a closed token.
+2.5. is a closed token.

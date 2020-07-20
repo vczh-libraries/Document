@@ -829,6 +829,7 @@ RegexLexerColorizer
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::lastFinalStateLength"><div>lastFinalStateLength</div></div> = <div class="token cpp_number ">0</div>;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::lastFinalStateToken"><div>lastFinalStateToken</div></div> = -<div class="token cpp_number ">1</div>;
 
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::tokenStartState"><div>tokenStartState</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::internalState'], [], [])"><div class="token cpp_field">internalState</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::InternalState::currentState'], [], [])"><div class="token cpp_field">currentState</div></div>;
 			<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::i"><div>i</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::start'], [], [])"><div class="token cpp_argument">start</div></div>; <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::length'], [], [])"><div class="token cpp_argument">length</div></div>; <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::i'], [], [])">i</div>++)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::currentToken"><div>currentToken</div></div> = -<div class="token cpp_number ">1</div>;
@@ -847,11 +848,14 @@ RegexLexerColorizer
 					}
 					<div class="token cpp_keyword ">else</div> <div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::i'], [], [])">i</div> == <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::start'], [], [])"><div class="token cpp_argument">start</div></div>)
 					{
-						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::colorize'], [], [])"><div class="token cpp_argument">colorize</div></div>)
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::tokenStartState'], [], [])">tokenStartState</div> == <div class="ref" onclick="jumpToSymbol(['vl::regex::RegexLexerColorizer::GetStartState@::vl::vint()'], ['vl::regex::RegexLexerColorizer::GetStartState@::vl::vint()'], [], [])"><div class="token cpp_function">GetStartState</div></div>())
 						{
-							<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::colorizeProc'], [], [])"><div class="token cpp_field">colorizeProc</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::argument'], [], [])"><div class="token cpp_field">argument</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::start'], [], [])"><div class="token cpp_argument">start</div></div>, <div class="token cpp_number ">1</div>, -<div class="token cpp_number ">1</div>);
+							<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::colorize'], [], [])"><div class="token cpp_argument">colorize</div></div>)
+							{
+								<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::colorizeProc'], [], [])"><div class="token cpp_field">colorizeProc</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::proc'], [], [])"><div class="token cpp_field">proc</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexProc::argument'], [], [])"><div class="token cpp_field">argument</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::start'], [], [])"><div class="token cpp_argument">start</div></div>, <div class="token cpp_number ">1</div>, -<div class="token cpp_number ">1</div>);
+							}
+							<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::i'], [], [])">i</div> + <div class="token cpp_number ">1</div>;
 						}
-						<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::i'], [], [])">i</div> + <div class="token cpp_number ">1</div>;
 					}
 					<div class="token cpp_keyword ">else</div>
 					{
@@ -2952,6 +2956,13 @@ referencedSymbols = {
         'displayNameInHtml': 'token',
         'impls': [
             'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token3'
+        ],
+        'decls': []
+    },
+    'vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::tokenStartState': {
+        'displayNameInHtml': 'tokenStartState',
+        'impls': [
+            'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::tokenStartState'
         ],
         'decls': []
     },
@@ -5398,6 +5409,7 @@ symbolToFiles = {
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token': null,
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token2': null,
     'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::token3': null,
+    'NI$vl::regex::RegexLexerColorizer::WalkOneToken@::vl::vint(wchar_t const *, ::vl::vint, ::vl::vint, bool)[impl0]::tokenStartState': null,
     'NI$vl::regex::RegexLexerColorizer::internalState': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
     'NI$vl::regex::RegexLexerColorizer::proc': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
     'NI$vl::regex::RegexLexerColorizer::walker': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },

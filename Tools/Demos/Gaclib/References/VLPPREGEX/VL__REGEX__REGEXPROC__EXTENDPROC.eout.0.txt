@@ -1,0 +1,53 @@
+Begin line 0
+6: </*********************>
+
+Begin line 1
+6: <MAIN.CPP>
+
+Begin line 2
+6: <*********************/>
+
+Begin line 3
+
+Begin line 4
+1: <int>
+5: < >
+1: <main>
+4: <(>
+4: <)>
+
+Begin line 5
+4: <{>
+
+Begin line 6
+5: <    >
+1: <printf>
+4: <(>
+2: <"This is a \"simple\" text.">
+4: <)>
+4: <;>
+
+Begin line 7
+5: <    >
+1: <printf>
+4: <(>
+7: <R"____(This is a>
+
+Begin line 8
+7: <"multiple lined">
+
+Begin line 9
+7: <literal text)____">
+4: <)>
+4: <;>
+
+Begin line 10
+5: <    >
+1: <return>
+5: < >
+0: <0>
+4: <;>
+
+Begin line 11
+4: <}>
+

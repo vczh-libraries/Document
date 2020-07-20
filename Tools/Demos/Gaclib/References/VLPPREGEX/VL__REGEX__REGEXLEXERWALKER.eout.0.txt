@@ -1,0 +1,17 @@
+Recognized token: 2: <This>
+Recognized token: 3: < >
+Recognized token: 2: <book>
+Recognized token: 3: < >
+Recognized token: 2: <costs>
+Recognized token: 3: < >
+Recognized token: 0: <2.5>
+Unrecognized character: <.>
+Recognized token: 3: < >
+Recognized token: 2: <That>
+Recognized token: 3: < >
+Recognized token: 2: <book>
+Recognized token: 3: < >
+Recognized token: 2: <costs>
+Recognized token: 3: < >
+Recognized token: 1: <2>
+Unrecognized character: <.>

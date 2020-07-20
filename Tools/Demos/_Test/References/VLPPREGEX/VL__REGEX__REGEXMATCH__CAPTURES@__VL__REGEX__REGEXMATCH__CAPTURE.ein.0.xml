@@ -1,0 +1,11 @@
+<example><![CDATA[
+ int main()
+ {
+     Regex regex(L"^/.*?((?C/S+)(/.*?))+$");
+     auto match = regex.MatchHead(L"C++ and C# are my favorite programing languages");
+     FOREACH(RegexString, capture, match->Captures())
+     {
+         Console::WriteLine(capture.Value());
+     }
+ }
+ ]]></example>

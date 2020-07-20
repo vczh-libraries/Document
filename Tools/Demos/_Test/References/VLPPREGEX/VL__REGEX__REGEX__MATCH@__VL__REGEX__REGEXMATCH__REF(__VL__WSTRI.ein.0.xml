@@ -1,0 +1,8 @@
+<example><![CDATA[
+ int main()
+ {
+     Regex regex(L"C/S+");
+     auto match = regex.Match(L"C++ and C# are my favorite programing languages");
+     Console::WriteLine(match->Result().Value());
+ }
+ ]]></example>

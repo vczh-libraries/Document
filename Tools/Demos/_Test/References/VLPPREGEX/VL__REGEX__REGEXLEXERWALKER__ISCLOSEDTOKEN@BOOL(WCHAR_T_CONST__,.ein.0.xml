@@ -1,0 +1,24 @@
+<example><![CDATA[
+ int main()
+ {
+     List<WString> tokenDefs;
+     tokenDefs.Add(L"/d+./d+");
+     tokenDefs.Add(L"/d+");
+ 
+     RegexLexer lexer(tokenDefs, {});
+     RegexLexerWalker walker = lexer.Walk();
+ 
+     WString tests[] = { L".", L"2", L"2.", L"2.5", L"2.5." };
+     FOREACH(WString, test, From(tests))
+     {
+         if (walker.IsClosedToken(test.Buffer(), test.Length()))
+         {
+             Console::WriteLine(test + L" is a closed token.");
+         }
+         else
+         {
+             Console::WriteLine(test + L" is not a closed token.");
+         }
+     }
+ }
+ ]]></example>

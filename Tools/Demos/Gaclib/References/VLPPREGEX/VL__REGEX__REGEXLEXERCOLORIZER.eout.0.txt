@@ -1,0 +1,31 @@
+Begin line 0
+4: </*********************>
+
+Begin line 1
+4: <MAIN.CPP>
+
+Begin line 2
+4: <*********************/>
+
+Begin line 3
+
+Begin line 4
+1: <int>
+3: < >
+1: <main>
+2: <(>
+2: <)>
+
+Begin line 5
+2: <{>
+
+Begin line 6
+3: <    >
+1: <return>
+3: < >
+0: <0>
+2: <;>
+
+Begin line 7
+2: <}>
+

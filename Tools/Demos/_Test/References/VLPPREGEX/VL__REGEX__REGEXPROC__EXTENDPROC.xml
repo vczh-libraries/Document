@@ -28,5 +28,5 @@
  then it can update the value to make it incomplete.
  </p><p>
  The fifth contains the context for this token. Fields except &quot;start&quot; are allowed to be updated by the extend proc.
- </p></remarks><signature><![CDATA[RegexTokenExtendProc extendProc;
+ </p></remarks><example index="0"/><signature><![CDATA[RegexTokenExtendProc extendProc;
 ]]></signature><seealsos><symbol name="RegexTokenExtendProc" declFile="Regex.h" declId="NI$vl::regex::RegexTokenExtendProc"/></seealsos></Document>
