@@ -12,11 +12,8 @@
 <br>
 <br>
 <div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-Framework::Reflection
-
-Interfaces:
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/</div>
 
 <div class="disabled">#ifndef VCZH_REFLECTION_GUITYPEDESCRIPTOR</div>
@@ -65,7 +62,41 @@ Attribute
 			};
 		}
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Base class of all reflectable object. You can use pointer or smart pointer to DescriptableObject to define variables, but if you want to create a reflectable class, you should inherit from [T:vl.reflection.Description`1].&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// Base class of all reflectable value types (class).</div>
+		<div class="token cpp_comment ">/// If you want to create a reflectable class, you should inherit from [T:vl.reflection.Description`1].</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// Inheriting from [T:vl.reflection.Description`1] is necessary even if you turned on &quot;VCZH_DEBUG_NO_REFLECTION&quot; preprocessor definition.</div>
+		<div class="token cpp_comment ">/// In this case, some members will be removed from this class to reduce the object size.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;b&gt;Ptr&amp;lt;DescriptableObject&amp;gt;&lt;/b&gt; is recommended to replace &lt;b&gt;Ptr&amp;lt;Object&amp;gt;&lt;/b&gt; for holding a reflectable object.</div>
+		<div class="token cpp_comment ">/// When a class &lt;b&gt;T&lt;/b&gt; inherits from [T:vl.reflection.Description`1], including &lt;b&gt;DescriptableObject&lt;/b&gt; itself,</div>
+		<div class="token cpp_comment ">/// &lt;b&gt;Ptr&amp;lt;T&amp;gt;&lt;/b&gt; is safe to be created directly from a &lt;b&gt;T*&lt;/b&gt; hold by another &lt;b&gt;Ptr&amp;lt;T&amp;gt;&lt;/b&gt;.</div>
+		<div class="token cpp_comment ">/// This is not allowed for all classes that do not inherit from [T:vl.reflection.Description`1].</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// When a class in Workflow script inherits from a class in C++,</div>
+		<div class="token cpp_comment ">/// since it is not possible to actually create a class in runtime,</div>
+		<div class="token cpp_comment ">/// so the created object from this Workflow class is multiple &lt;b&gt;DescriptableObject&lt;/b&gt; grouping together.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// This is called &lt;b&gt;aggregation&lt;/b&gt;.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// In this case, &lt;see cref=&quot;SafeAggregationCast`1&quot;/&gt; is required to do pointer casting to a C++ class.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// To allow a C++ class to be aggregated,</div>
+		<div class="token cpp_comment ">/// use [T:vl.reflection.AggregatableDescription`1] instead of [T:vl.reflection.Description`1],</div>
+		<div class="token cpp_comment ">/// and call &lt;see cref=&quot;FinalizeAggregation&quot;/&gt; in the destructor.</div>
+		<div class="token cpp_comment ">/// If A inherits B and they are all aggregatable, do it in both destructors.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::DescriptableObject"><div><div class="token cpp_type">DescriptableObject</div></div></div>
 		{
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> T, <div class="token cpp_keyword ">typename</div> Enabled&gt;
@@ -96,15 +127,31 @@ Attribute
 		<div class="token cpp_keyword ">protected</div>:
 
 <div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>
+			<div class="token cpp_comment ">// Returns true if this object inherits other objects by aggregation.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::reflection::DescriptableObject::IsAggregated@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::IsAggregated@bool()'], [], [])"><div class="token cpp_function">IsAggregated</div></div></div>();
+
+			<div class="token cpp_comment ">// Returnd the number of aggregated base objects.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="FB$vl::reflection::DescriptableObject::GetAggregationSize@::vl::vint()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::GetAggregationSize@::vl::vint()'], [], [])"><div class="token cpp_function">GetAggregationSize</div></div></div>();
+
+			<div class="token cpp_comment ">// Return the object that inherit this object.&lt;/returns&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>*						<div class="def" id="FB$vl::reflection::DescriptableObject::GetAggregationRoot@::vl::reflection::DescriptableObject *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::GetAggregationRoot@::vl::reflection::DescriptableObject *()'], [], [])"><div class="token cpp_function">GetAggregationRoot</div></div></div>();
+
+			<div class="token cpp_comment ">// Notice that an object inherit this object, it is called by SetAggregationParent</div>
 			<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::DescriptableObject::SetAggregationRoot@void(::vl::reflection::DescriptableObject *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::SetAggregationRoot@void(::vl::reflection::DescriptableObject *)'], [], [])"><div class="token cpp_function">SetAggregationRoot</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>* <div class="def" id="NI$vl::reflection::DescriptableObject::SetAggregationRoot@void(::vl::reflection::DescriptableObject *)[decl0]::value"><div>value</div></div>);
+
+			<div class="token cpp_comment ">// Return the specified aggregated base object</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>*						<div class="def" id="FB$vl::reflection::DescriptableObject::GetAggregationParent@::vl::reflection::DescriptableObject *(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::GetAggregationParent@::vl::reflection::DescriptableObject *(::vl::vint)'], [], [])"><div class="token cpp_function">GetAggregationParent</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::DescriptableObject::GetAggregationParent@::vl::reflection::DescriptableObject *(::vl::vint)[decl0]::index"><div>index</div></div>);
+
+			<div class="token cpp_comment ">// Set an aggregated base class</div>
 			<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::DescriptableObject::SetAggregationParent@void(::vl::vint, ::vl::reflection::DescriptableObject *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::SetAggregationParent@void(::vl::vint, ::vl::reflection::DescriptableObject *)'], [], [])"><div class="token cpp_function">SetAggregationParent</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::DescriptableObject::SetAggregationParent@void(::vl::vint, ::vl::reflection::DescriptableObject *)[decl0]::index"><div>index</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>* <div class="def" id="NI$vl::reflection::DescriptableObject::SetAggregationParent@void(::vl::vint, ::vl::reflection::DescriptableObject *)[decl0]::value"><div>value</div></div>);
+
+			<div class="token cpp_comment ">// Set an aggregated base class</div>
 			<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::DescriptableObject::SetAggregationParent@void(::vl::vint, ::vl::Ptr<::vl::reflection::DescriptableObject> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::SetAggregationParent@void(::vl::vint, ::vl::Ptr<::vl::reflection::DescriptableObject> &)'], [], [])"><div class="token cpp_function">SetAggregationParent</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::DescriptableObject::SetAggregationParent@void(::vl::vint, ::vl::Ptr<::vl::reflection::DescriptableObject> &)[decl0]::index"><div>index</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>&gt;&amp; <div class="def" id="NI$vl::reflection::DescriptableObject::SetAggregationParent@void(::vl::vint, ::vl::Ptr<::vl::reflection::DescriptableObject> &)[decl0]::value"><div>value</div></div>);
+
+			<div class="token cpp_comment ">// Must be called in Workflow generated classes that inherit from aggregatable C++ classes.</div>
 			<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::DescriptableObject::InitializeAggregation@void(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::InitializeAggregation@void(::vl::vint)'], [], [])"><div class="token cpp_function">InitializeAggregation</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::DescriptableObject::InitializeAggregation@void(::vl::vint)[decl0]::size"><div>size</div></div>);
 <div class="disabled">#endif</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;A function that must be called in destructors of all classes inheriting from [T:vl.reflection.AggregatableDescription`1].&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::DescriptableObject::FinalizeAggregation@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::FinalizeAggregation@void()'], [], [])"><div class="token cpp_function">FinalizeAggregation</div></div></div>();
 
 <div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>
@@ -135,16 +182,29 @@ Attribute
 			<div class="token cpp_keyword ">virtual</div> <div class="def" id="FB$vl::reflection::DescriptableObject::~DescriptableObject@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::~DescriptableObject@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">DescriptableObject</div></div></div>();
 
 <div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the type descriptor that describe the real type of this object.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;Get the type descriptor that describe the real type of this object.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The real type.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>*			<div class="def" id="FB$vl::reflection::DescriptableObject::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()'], [], [])"><div class="token cpp_function">GetTypeDescriptor</div></div></div>();
 <div class="disabled">#endif</div>
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get an internal property of this object. This map is totally for customization.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Get an internal property of this object.</div>
+			<div class="token cpp_comment ">/// Internal properties are totally for customization,</div>
+			<div class="token cpp_comment ">/// they do not affect the object in anyway.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;Value of the internal property of this object.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;Name of the property.&lt;/param&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>&gt;								<div class="def" id="FB$vl::reflection::DescriptableObject::GetInternalProperty@::vl::Ptr<::vl::Object>(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::GetInternalProperty@::vl::Ptr<::vl::Object>(::vl::WString const &)'], [], [])"><div class="token cpp_function">GetInternalProperty</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::DescriptableObject::GetInternalProperty@::vl::Ptr<::vl::Object>(::vl::WString const &)[decl0]::name"><div>name</div></div>);
-			<div class="token cpp_comment ">/// &lt;summary&gt;Set an internal property of this object. This map is totally for customization.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Set an internal property of this object.</div>
+			<div class="token cpp_comment ">/// Internal properties are totally for customization,</div>
+			<div class="token cpp_comment ">/// they do not affect the object in anyway.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;Name of the property.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;Value of the internal property of this object.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &, ::vl::Ptr<::vl::Object>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &, ::vl::Ptr<::vl::Object>)'], [], [])"><div class="token cpp_function">SetInternalProperty</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &, ::vl::Ptr<::vl::Object>)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>&gt; <div class="def" id="NI$vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &, ::vl::Ptr<::vl::Object>)[decl0]::value"><div>value</div></div>);
@@ -154,14 +214,32 @@ Attribute
 			<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::reflection::DescriptableObject::Dispose@bool(bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::Dispose@bool(bool)'], [], [])"><div class="token cpp_function">Dispose</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::reflection::DescriptableObject::Dispose@bool(bool)[decl0]::forceDisposing"><div>forceDisposing</div></div>);
 
 <div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>
-			<div class="token cpp_comment ">/// &lt;summary&gt;Get the aggregation root object.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;Get the aggregation root object, which is the object that inherits this object by aggregation.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The aggregation root object. If this object is not aggregated, or it is the root object of others, than this function return itself.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>*						<div class="def" id="FB$vl::reflection::DescriptableObject::SafeGetAggregationRoot@::vl::reflection::DescriptableObject *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::SafeGetAggregationRoot@::vl::reflection::DescriptableObject *()'], [], [])"><div class="token cpp_function">SafeGetAggregationRoot</div></div></div>();
 
 <div class="disabled">#endif</div>
-			<div class="token cpp_comment ">/// &lt;summary&gt;Cast the object to another type, considered aggregation.&lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;The object with the expected type in all aggregated objects.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Cast the object to another type, this is required when the object is involved in aggregation.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The object with the expected type in all involved aggregated objects. It will crash when multiple objects are found to be qualified.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;The expected type to cast.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// A workflow class could inherit from multiple aggregatable C++ classes.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// In order to do pointer casting correctly,</div>
+			<div class="token cpp_comment ">/// this function allow you to cast from one aggregated C++ base object to another aggregated C++ base object,</div>
+			<div class="token cpp_comment ">/// even when these two objects are not involved in inheriting in C++.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// When &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;on&lt;/b&gt;, it performs dynamic_cast.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::DescriptableObject::SafeAggregationCast@[T] *()[impl0]::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 			<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::SafeAggregationCast@[T] *()[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>* <div class="def" id="FB$vl::reflection::DescriptableObject::SafeAggregationCast@[T] *()[impl0]"><div><div class="token cpp_function">SafeAggregationCast</div></div></div>()
 			{
@@ -175,247 +253,358 @@ Attribute
 			}
 		};
 		
-		<div class="token cpp_comment ">/// &lt;summary&gt;&lt;![CDATA[</div>
-		<div class="token cpp_comment ">/// Inherit from this class when you want to create a reflectable class. It should be used like this:</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// Inherit from this class when you want to create a reflectable class.</div>
+		<div class="token cpp_comment ">/// It should be used like this:</div>
+		<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
 		<div class="token cpp_comment ">/// class YourClass : public Description&lt;YourClass&gt;</div>
 		<div class="token cpp_comment ">/// {</div>
-		<div class="token cpp_comment ">///		...</div>
+		<div class="token cpp_comment ">///     ..</div>
 		<div class="token cpp_comment ">/// };</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">/// If you want YourClass to be inheritable in scripts, instead of using Description, you should use AggregatableDescription, like this:</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// If you want YourClass to be inheritable in scripts,</div>
+		<div class="token cpp_comment ">/// instead of using Description,</div>
+		<div class="token cpp_comment ">/// you should use &lt;see cref=&quot;AggregatableDescription`1&quot;/&gt;, like this:</div>
+		<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
 		<div class="token cpp_comment ">/// class YourClass : public AggregatableDescription&lt;YourClass&gt;</div>
 		<div class="token cpp_comment ">/// {</div>
-		<div class="token cpp_comment ">///		~YourClass()</div>
-		<div class="token cpp_comment ">///		{</div>
-		<div class="token cpp_comment ">///			FinalizeAggregation();</div>
-		<div class="token cpp_comment ">///		}</div>
+		<div class="token cpp_comment ">///     ~YourClass()</div>
+		<div class="token cpp_comment ">///     {</div>
+		<div class="token cpp_comment ">///         FinalizeAggregation();</div>
+		<div class="token cpp_comment ">///     }</div>
 		<div class="token cpp_comment ">/// };</div>
+		<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// After you complete your type,</div>
+		<div class="token cpp_comment ">/// use the following macros and functions to register your class into the global type table.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// Some of the predefined type has already been registered.</div>
+		<div class="token cpp_comment ">/// If your types depend on these types, you should load those types by calling some or all of them:</div>
+		<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.LoadPredefinedTypes]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.LoadParsingTypes]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.JsonLoadTypes]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.XmlLoadTypes]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// The order does not matter, because content of types are lazily loaded.</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;p&gt;</div>
+		<div class="token cpp_comment ">/// Everything below should be put in &lt;b&gt;vl::reflection::description&lt;/b&gt; namespaces.</div>
+		<div class="token cpp_comment ">/// &lt;ol&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;b&gt;(in header files)&lt;/b&gt; Create a macro that contains all types that you want to register.</div>
+		<div class="token cpp_comment ">///         Content in the list will become full names for registered type,</div>
+		<div class="token cpp_comment ">///         so it is strongly recommended to use the full name.</div>
+		<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///             #define MY_TYPELIST(F)\</div>
+		<div class="token cpp_comment ">///                 F(mynamespaces::MyClass1)\</div>
+		<div class="token cpp_comment ">///                 F(mynamespaces::MyClass2)\</div>
+		<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;b&gt;in header files)&lt;/b&gt; Connect type names and types:</div>
+		<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///             MY_TYPELIST(DECL_TYPE_INFO)</div>
+		<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;b&gt;(in cpp files)&lt;/b&gt; Connect type names and types:</div>
+		<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///             MY_TYPELIST(IMPL_VL_TYPE_INFO)</div>
+		<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;b&gt;(in cpp files)&lt;/b&gt; Register all members:</div>
+		<div class="token cpp_comment ">///         &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///             &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                 You will need to define a macro for commas, Whatever name is fine.</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     #define _ ,</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;b&gt;enum&lt;/b&gt;:</div>
+		<div class="token cpp_comment ">///                 use &lt;b&gt;BEGIN_ENUM_ITEM_MERGABLE&lt;/b&gt; instead of &lt;b&gt;BEGIN_ENUM_ITEM&lt;/b&gt; if enum items are flags instead of concrete items.</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     BEGIN_ENUM_ITEM(Season)</div>
+		<div class="token cpp_comment ">///                         ENUM_ITEM(Spring)</div>
+		<div class="token cpp_comment ">///                         ENUM_ITEM(Summer)</div>
+		<div class="token cpp_comment ">///                         ENUM_ITEM(Autumn)</div>
+		<div class="token cpp_comment ">///                         ENUM_ITEM(Winter)</div>
+		<div class="token cpp_comment ">///                     END_ENUM_ITEM(Season)</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;b&gt;enum class:&lt;/b&gt;</div>
+		<div class="token cpp_comment ">///                 use &lt;b&gt;BEGIN_ENUM_ITEM_MERGABLE&lt;/b&gt; instead of &lt;b&gt;BEGIN_ENUM_ITEM&lt;/b&gt; if enum items are flags instead of concrete items.</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     BEGIN_ENUM_ITEM(Season)</div>
+		<div class="token cpp_comment ">///                         ENUM_CLASS_ITEM(Spring)</div>
+		<div class="token cpp_comment ">///                         ENUM_CLASS_ITEM(Summer)</div>
+		<div class="token cpp_comment ">///                         ENUM_CLASS_ITEM(Autumn)</div>
+		<div class="token cpp_comment ">///                         ENUM_CLASS_ITEM(Winter)</div>
+		<div class="token cpp_comment ">///                     END_ENUM_ITEM(Season)</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;b&gt;struct&lt;/b&gt;:</div>
+		<div class="token cpp_comment ">///                 It doesn&apos;t necessary mean a struct in C++.</div>
+		<div class="token cpp_comment ">///                 Structs in reflection and Workflow script mean value types that carry only data, without methods and inheritance.</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     BEGIN_STRUCT_MEMBER(Point)</div>
+		<div class="token cpp_comment ">///                         STRUCT_MEMBER(x)</div>
+		<div class="token cpp_comment ">///                         STRUCT_MEMBER(y)</div>
+		<div class="token cpp_comment ">///                     END_STRUCT_MEMBER(Point)</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;b&gt;class&lt;/b&gt;:</div>
+		<div class="token cpp_comment ">///                 It doesn&apos;t necessary mean a class in C++.</div>
+		<div class="token cpp_comment ">///                 Classes in reflection and Workflow script mean reference types.</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 Here are all macros that register content of classes</div>
+		<div class="token cpp_comment ">///                 &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_BASE&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_FIELD&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_CONSTRUCTOR&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_EXTERNALCTOR(_TEMPLATE)?&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_METHOD(_OVERLOAD)?_RENAME&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_(STATIC_)?METHOD(_OVERLOAD)?&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_(STATIC_)?EXTERNALMETHOD(_TEMPLATE)?&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_PROPERTY(_EVENT)?(_READONLY)?(_FAST)?&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_PROPERTY_REFERENCETEMPLATE&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;CLASS_MEMBER_EVENT&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     BEGIN_CLASS_MEMBER(MyClass)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">/// After you have complete your type, use the following macros and functions to register your class into the global type table. Everything should be defined in vl::reflection::description namespaces.</div>
-		<div class="token cpp_comment ">///	Some of the predefined type has already been registered, if your types depend on these types, you should load those types by calling some or all of them:</div>
-		<div class="token cpp_comment ">///	[F:vl.reflection.description.LoadPredefinedTypes]</div>
-		<div class="token cpp_comment ">///	[F:vl.reflection.description.LoadParsingTypes]</div>
-		<div class="token cpp_comment ">///	[F:vl.reflection.description.JsonLoadTypes]</div>
-		<div class="token cpp_comment ">///	[F:vl.reflection.description.XmlLoadTypes]</div>
+		<div class="token cpp_comment ">///                         // 01) Declare a base class (can have multiple base classes).</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_BASE(MyBaseClass)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">/// 1) (in header files) Create a macro that contains all types that you want to register. Content in the list will become the registered type names, so it is strongly recommended to use the full name.</div>
-		<div class="token cpp_comment ">///		#define MY_TYPELIST(F)\</div>
-		<div class="token cpp_comment ">///			F(mynamespaces::MyClass1)\</div>
-		<div class="token cpp_comment ">///			F(mynamespaces::MyClass2)\</div>
+		<div class="token cpp_comment ">///                         // 02) Declare a field.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_FIELD(myField)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">/// 2) (in header files) Connect type names and types:</div>
-		<div class="token cpp_comment ">///		MY_TYPELIST(DECL_TYPE_INFO)</div>
+		<div class="token cpp_comment ">///                         // 03) Default constructor that results in a raw pointer.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_CONSTRUCTIOR(MyClass*(), NO_PARAMETER)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">/// 3) (in cpp files) Connect type names and types:</div>
-		<div class="token cpp_comment ">///		MY_TYPELIST(IMPL_VL_TYPE_INFO)</div>
+		<div class="token cpp_comment ">///                         // 04) Default constructor that results in a shared pointer.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_CONSTRUCTIOR(Ptr&lt;MyClass&gt;(), NO_PARAMETER)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">/// 4) (in cpp files) Register all members:</div>
-		<div class="token cpp_comment ">///		</div>
-		<div class="token cpp_comment ">///		#define _ ,</div>
+		<div class="token cpp_comment ">///                         // 05) Constructor with arguments.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(int, const WString&amp;), {L&quot;numberParameter&quot; _ L&quot;stringParameter&quot;})</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///		a) enum:</div>
-		<div class="token cpp_comment ">///			use BEGIN_ENUM_ITEM_MERGABLE instead of BEGIN_ENUM_ITEM if enum items are consider mergable using &quot;|&quot;.</div>
+		<div class="token cpp_comment ">///                         // 06) Inject a global function as a constructor.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EXTERNALCTOR(Ptr&lt;MyClass&gt;(int, const WString&amp;), {L&quot;numberParameter&quot; _ L&quot;stringParameter&quot;}, mynamespace::CreateMyClass)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			BEGIN_ENUM_ITEM(Season)</div>
-		<div class="token cpp_comment ">///				ENUM_ITEM(Spring)</div>
-		<div class="token cpp_comment ">///				ENUM_ITEM(Summer)</div>
-		<div class="token cpp_comment ">///				ENUM_ITEM(Autumn)</div>
-		<div class="token cpp_comment ">///				ENUM_ITEM(Winter)</div>
-		<div class="token cpp_comment ">///			END_ENUM_ITEM(Season)</div>
+		<div class="token cpp_comment ">///                         // 07) Inject a consturctor and specify how to generate C++ code, &quot;*&quot; means not able to generate.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr&lt;MyClass&gt;(int, const WString&amp;), {L&quot;numberParameter&quot; _ L&quot;stringParameter&quot;}, CreateMyClass, L&quot;mynamespace::GetMyClass($Arguments)&quot;, L&quot;::vl::Func&lt;$Func&gt;(&amp;mynamespace::GetMyClass)&quot;)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr&lt;MyClass&gt;(), NO_PARAMETER, []()-&gt;Ptr&lt;MyClass&gt;{return nullptr;}, L&quot;*&quot;, L&quot;*&quot;)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///		b) enum class:</div>
-		<div class="token cpp_comment ">///			use BEGIN_ENUM_ITEM_MERGABLE instead of BEGIN_ENUM_ITEM if enum items are consider mergable using &quot;|&quot;.</div>
+		<div class="token cpp_comment ">///                         // 08) Add unoverloaded functions.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD(MyFunction1, NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD(MyFunction2, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;})</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			BEGIN_ENUM_ITEM(Season)</div>
-		<div class="token cpp_comment ">///				ENUM_CLASS_ITEM(Spring)</div>
-		<div class="token cpp_comment ">///				ENUM_CLASS_ITEM(Summer)</div>
-		<div class="token cpp_comment ">///				ENUM_CLASS_ITEM(Autumn)</div>
-		<div class="token cpp_comment ">///				ENUM_CLASS_ITEM(Winter)</div>
-		<div class="token cpp_comment ">///			END_ENUM_ITEM(Season)</div>
+		<div class="token cpp_comment ">///                         // 09) Add unoverloaded functions but give different names. Unoverloaded only means in C++, not in renamed functions.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD_RENAME(MyNewName1, MyFunction1, NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD_RENAME(MyNewName2, MyFunction2, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;})</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///		c) struct (pure data structure):</div>
-		<div class="token cpp_comment ">///			BEGIN_STRUCT_MEMBER(Point)</div>
-		<div class="token cpp_comment ">///				STRUCT_MEMBER(x)</div>
-		<div class="token cpp_comment ">///				STRUCT_MEMBER(y)</div>
-		<div class="token cpp_comment ">///			END_STRUCT_MEMBER(Point)</div>
+		<div class="token cpp_comment ">///                         // 10) Add overloaded functions, with function type specified in method pointers</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, NO_PARAMETER, int(MyClass::*)())</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L&quot;parameter&quot;}, int(MyClass::*)(int))</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(MyClass::*)(int, const WString&amp;))</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///		d) class:</div>
-		<div class="token cpp_comment ">///			BEGIN_CLASS_MEMBER(MyClass)</div>
+		<div class="token cpp_comment ">///                         // 11) Add overloaded functions but give different names.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName3, MyFunction3, NO_PARAMETER, int(MyClass::*)())</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L&quot;parameter&quot;}, int(MyClass::*)(int))</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(MyClass::*)(int, const WString&amp;))</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				I) declare a base class (can have multiple base classes):</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_BASE(MyBaseClass)</div>
+		<div class="token cpp_comment ">///                         // 12) Inject global functions as methods:</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L&quot;parameter&quot;}, int(MyClass::*)(int), mynamespace::AGlobalFunction)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				II) declare a field:</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_FIELD(myField)</div>
+		<div class="token cpp_comment ">///                         // 13) Inject a method and specify how to generate C++ code, &quot;*&quot; means not able to generate.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(MyNewName5, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(MyClass::*)(int, const WString&amp;), [](MyClass* a, int b, const WString&amp; c){return 0;}, L&quot;*&quot;, L&quot;*&quot;)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				III) Empty constructor that results in a raw pointer:</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_CONSTRUCTIOR(MyClass*(), NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         // 14) Add unoverloaded static functions</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_STATIC_METHOD(MyFunction4, NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_STATIC_METHOD(MyFunction5, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;})</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				IV) Empty constructor that results in a smart pointer:</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_CONSTRUCTIOR(Ptr&lt;MyClass&gt;(), NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         // 15) Add overloaded static functions</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, NO_PARAMETER, int(*)())</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, {L&quot;parameter&quot;}, int(*)(int))</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(*)(int, const WString&amp;))</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				V) Constructor with arguments:</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(int, const WString&amp;), {L&quot;numberParameter&quot; _ L&quot;stringParameter&quot;})</div>
+		<div class="token cpp_comment ">///                         // 16) Inject global functions as static methods:</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L&quot;parameter&quot;}, int(*)(int), mynamespace::AGlobalFunction2)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				VI) Inject a global function as a constructor</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EXTERNALCTOR(Ptr&lt;MyClass&gt;(int, const WString&amp;), {L&quot;numberParameter&quot; _ L&quot;stringParameter&quot;}, mynamespace::CreateMyClass)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr&lt;MyClass&gt;(int, const WString&amp;), {L&quot;numberParameter&quot; _ L&quot;stringParameter&quot;}, CreateMyClass, L&quot;mynamespace::GetMyClass($Arguments)&quot;, L&quot;::vl::Func&lt;$Func&gt;(&amp;mynamespace::GetMyClass)&quot;)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr&lt;MyClass&gt;(), NO_PARAMETER, []()-&gt;Ptr&lt;MyClass&gt;{return nullptr;}, L&quot;*&quot;, L&quot;*&quot;)</div>
+		<div class="token cpp_comment ">///                         // 17) Inject a static method and specify how to generate C++ code, &quot;*&quot; means not able to generate.</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_STATIC_EXTERNALMETHOD_TEMPLATE(MyNewName6, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(*)(int, const WString&amp;), [](int b, const WString&amp; c){return 0;}, L&quot;*&quot;)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				VII) Add unoverloaded functions</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD(MyFunction1, NO_PARAMETER)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD(MyFunction2, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;})</div>
+		<div class="token cpp_comment ">///                         // 18) Add a getter function as a property</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_PROPERTY_READONLY_FAST(X)</div>
+		<div class="token cpp_comment ">///                         // which is short for</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_PROPERTY_READONLY(X, GetX)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				VIII) Add unoverloaded function but give a different names</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_RENAME(MyNewName1, MyFunction1, NO_PARAMETER)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_RENAME(MyNewName2, MyFunction2, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;})</div>
+		<div class="token cpp_comment ">///                         // 19) Add a pair of getter and setter functions as a property</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_PROPERTY_FAST(X)</div>
+		<div class="token cpp_comment ">///                         // which is short for</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD(SetX, {L&quot;value&quot;})</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_PROPERTY(X, GetX, SetX)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				IX) Add overloaded functions</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, NO_PARAMETER, int(MyClass::*)())</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L&quot;parameter&quot;}, int(MyClass::*)(int))</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(MyClass::*)(int, const WString&amp;))</div>
+		<div class="token cpp_comment ">///                         // 20) Add a getter function as a property with a property changed event</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EVENT(XChanged)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(X)</div>
+		<div class="token cpp_comment ">///                         // which is short for</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EVENT(XChanged)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_PROPERTY_EVENT_READONLY(X, GetX, XChanged)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				IX) Add overloaded functions but give different names</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName3, MyFunction3, NO_PARAMETER, int(MyClass::*)())</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L&quot;parameter&quot;}, int(MyClass::*)(int))</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(MyClass::*)(int, const WString&amp;))</div>
+		<div class="token cpp_comment ">///                         // 21) Add a pair of getter and setter functions as a property with a property changed event</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EVENT(XChanged)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_PROPERTY_EVENT_FAST(X)</div>
+		<div class="token cpp_comment ">///                         // which is short for</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_EVENT(XChanged)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_METHOD(SetX, {L&quot;value&quot;})</div>
+		<div class="token cpp_comment ">///                         CLASS_MEMBER_PROPERTY_EVENT(X, GetX, SetX, XChanged)</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				X) Inject global functions as methods:</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L&quot;parameter&quot;}, int(MyClass::*)(int), mynamespace::AGlobalFunction)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(MyNewName5, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(MyClass::*)(int, const WString&amp;), [](MyClass* a, int b, const WString&amp; c){return 0;}, L&quot;*&quot;, L&quot;*&quot;)</div>
+		<div class="token cpp_comment ">///                     END_CLASS_MEMBER(MyClass)</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 If the code compiles, the class should look like this:</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     class MyClass : public Description&lt;MyClass&gt;</div>
+		<div class="token cpp_comment ">///                     {</div>
+		<div class="token cpp_comment ">///                     public:</div>
+		<div class="token cpp_comment ">///                         MyClass();</div>
+		<div class="token cpp_comment ">///                         MyClass(int numberParameter, const WString&amp; stringParameter);</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				XI) Add unoverloaded static functions</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_STATIC_METHOD(MyFunction4, NO_PARAMETER)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_STATIC_METHOD(MyFunction5, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;})</div>
+		<div class="token cpp_comment ">///                         int MyFunction1();</div>
+		<div class="token cpp_comment ">///                         int MyFunction2(int parameter1, const WString&amp; parameter2);</div>
+		<div class="token cpp_comment ">///                         int MyFunction3();</div>
+		<div class="token cpp_comment ">///                         int MyFunction3(int parameter);</div>
+		<div class="token cpp_comment ">///                         int MyFunction3(int parameter1, const WString&amp; parameter2);</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				XII) Add overloaded static functions</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, NO_PARAMETER, int(*)())</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, {L&quot;parameter&quot;}, int(*)(int))</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(*)(int, const WString&amp;))</div>
+		<div class="token cpp_comment ">///                         static int MyFunction4();</div>
+		<div class="token cpp_comment ">///                         static int MyFunction5(int parameter1, const WString&amp; parameter2);</div>
+		<div class="token cpp_comment ">///                         static int MyFunction6();</div>
+		<div class="token cpp_comment ">///                         static int MyFunction6(int parameter);</div>
+		<div class="token cpp_comment ">///                         static int MyFunction6(int parameter1, const WString&amp; parameter2);</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				XIII) Inject global functions as static methods:</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L&quot;parameter&quot;}, int(*)(int), mynamespace::AGlobalFunction2)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_STATIC_EXTERNALMETHOD_INVOKETEMPLATE(MyNewName6, {L&quot;parameter1&quot; _ L&quot;parameter2&quot;}, int(*)(int, const WString&amp;), [](int b, const WString&amp; c){return 0;}, L&quot;*&quot;)</div>
+		<div class="token cpp_comment ">///                         Event&lt;void()&gt; XChanged;</div>
+		<div class="token cpp_comment ">///                         int GetX();</div>
+		<div class="token cpp_comment ">///                         void SetX(int value);</div>
+		<div class="token cpp_comment ">///                     };</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				XIV) Add a getter function as a property</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_PROPERTY_READONLY_FAST(X)</div>
-		<div class="token cpp_comment ">///				which is short for</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_PROPERTY_READONLY(X, GetX)</div>
+		<div class="token cpp_comment ">///                     Ptr&lt;MyClass&gt; CreateMyClass(int numberParameter, const WString7 stringParameter);</div>
+		<div class="token cpp_comment ">///                     int GlobalFunction(MyClass* self, int parameter);</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;b&gt;interface&lt;/b&gt;:</div>
+		<div class="token cpp_comment ">///                 A C++ class can be registered as a reflectable interface if:</div>
+		<div class="token cpp_comment ">///                 &lt;ul&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;Directly or indirectly inherits [T:vl.reflection.IDescriptable]&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                     &lt;li&gt;The only registered constructor (if exists) should use Ptr&amp;lt;[T:vl.reflection.description.IValueInterfaceProxy]&amp;gt; as a parameter, so that a Workflow script class could implement this interface.&lt;/li&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 Suppose you have an interface like this:</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     class IMyInterface : public virtual IDescriptable, public Description&lt;IMyInterface&gt;</div>
+		<div class="token cpp_comment ">///                     {</div>
+		<div class="token cpp_comment ">///                     public:</div>
+		<div class="token cpp_comment ">///                         int GetX();</div>
+		<div class="token cpp_comment ">///                         void SetX(int value);</div>
+		<div class="token cpp_comment ">///                     };</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 If you want to allow a Workflow script class implement this interface, you should first add a proxy like this:</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     #pragma warning(push)</div>
+		<div class="token cpp_comment ">///                     #pragma warning(disable:4250)</div>
+		<div class="token cpp_comment ">///                     BEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR(IMyInterface)</div>
+		<div class="token cpp_comment ">///                         // or BEGIN_INTERFACE_PROXY_RAWPTR(IMyInterface, baseInterfaces...)</div>
+		<div class="token cpp_comment ">///                         // or BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(IMyInterface)</div>
+		<div class="token cpp_comment ">///                         // or BEGIN_INTERFACE_PROXY_SHAREDPTR(IMyInterface, baseInterfaces...)</div>
+		<div class="token cpp_comment ">///                         int GetX()override</div>
+		<div class="token cpp_comment ">///                         {</div>
+		<div class="token cpp_comment ">///                             INVOKEGET_INTERFACE_PROXY_NOPARAMS(GetX)</div>
+		<div class="token cpp_comment ">///                         }</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				XV) Add a pair of getter and setter functions as a property</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_PROPERTY_FAST(X)</div>
-		<div class="token cpp_comment ">///				which is short for</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD(SetX, {L&quot;value&quot;})</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_PROPERTY(X, GetX, SetX)</div>
+		<div class="token cpp_comment ">///                         void SetX(int value)override</div>
+		<div class="token cpp_comment ">///                         {</div>
+		<div class="token cpp_comment ">///                             INVOKE_INTERFACE_PROXY(SetX, value)</div>
+		<div class="token cpp_comment ">///                         }</div>
+		<div class="token cpp_comment ">///                     END_INTERFACE_PROXY(IMyInterface)</div>
+		<div class="token cpp_comment ">///                     #pragma warning(pop)</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 And then use this code to register the interface:</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     BEGIN_INTERFACE_MEMBER(IMyInterface)</div>
+		<div class="token cpp_comment ">///                         ...</div>
+		<div class="token cpp_comment ">///                     END_INTERFACE_MEMBER(IMyInterface)</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///                 &lt;p&gt;</div>
+		<div class="token cpp_comment ">///                 Everything else is the same as registering classes.</div>
+		<div class="token cpp_comment ">///                 Use &lt;b&gt;BEGIN_INTERFACE_MEMBER_NOPROXY&lt;/b&gt; to register an interface without a proxy,</div>
+		<div class="token cpp_comment ">///                 which means a Workflow script class cannot implement this interface.</div>
+		<div class="token cpp_comment ">///                 &lt;/p&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///             &lt;li&gt;</div>
+		<div class="token cpp_comment ">///                 Undefine the macro for comma:</div>
+		<div class="token cpp_comment ">///                 &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///                     #undef _</div>
+		<div class="token cpp_comment ">///                 ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///             &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;</div>
+		<div class="token cpp_comment ">///         &lt;b&gt;(in cpp files)&lt;/b&gt; Create a type loader:</div>
+		<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///             class MyTypeLoader : public Object, public ITypeLoader</div>
+		<div class="token cpp_comment ">///             {</div>
+		<div class="token cpp_comment ">///             public:</div>
+		<div class="token cpp_comment ">///                 void Load(ITypeManager* manager)</div>
+		<div class="token cpp_comment ">///                 {</div>
+		<div class="token cpp_comment ">///                     MY_TYPELIST(ADD_TYPE_INFO)</div>
+		<div class="token cpp_comment ">///                 }</div>
 		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				XVI) Add a getter function as a property with a property changed event</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EVENT(XChanged)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(X)</div>
-		<div class="token cpp_comment ">///				which is short for</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EVENT(XChanged)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_PROPERTY_EVENT_READONLY(X, GetX, XChanged)</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				XVII) Add a pair of getter and setter functions as a property with a property changed event</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EVENT(XChanged)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_PROPERTY_EVENT_FAST(X)</div>
-		<div class="token cpp_comment ">///				which is short for</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_EVENT(XChanged)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_METHOD(SetX, {L&quot;value&quot;})</div>
-		<div class="token cpp_comment ">///				CLASS_MEMBER_PROPERTY_EVENT(X, GetX, SetX, XChanged)</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			END_CLASS_MEMBER(MyClass)</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			If the code compiles, the class should look like this:</div>
-		<div class="token cpp_comment ">///			class MyClass : public Description&lt;MyClass&gt;</div>
-		<div class="token cpp_comment ">///			{</div>
-		<div class="token cpp_comment ">///			public:</div>
-		<div class="token cpp_comment ">///				MyClass();</div>
-		<div class="token cpp_comment ">///				MyClass(int numberParameter, const WString&amp; stringParameter);</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				int MyFunction1();</div>
-		<div class="token cpp_comment ">///				int MyFunction2(int parameter1, const WString&amp; parameter2);</div>
-		<div class="token cpp_comment ">///				int MyFunction3();</div>
-		<div class="token cpp_comment ">///				int MyFunction3(int parameter);</div>
-		<div class="token cpp_comment ">///				int MyFunction3(int parameter1, const WString&amp; parameter2);</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				static int MyFunction4();</div>
-		<div class="token cpp_comment ">///				static int MyFunction5(int parameter1, const WString&amp; parameter2);</div>
-		<div class="token cpp_comment ">///				static int MyFunction6();</div>
-		<div class="token cpp_comment ">///				static int MyFunction6(int parameter);</div>
-		<div class="token cpp_comment ">///				static int MyFunction6(int parameter1, const WString&amp; parameter2);</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				Event&lt;void()&gt; XChanged;</div>
-		<div class="token cpp_comment ">///				int GetX();</div>
-		<div class="token cpp_comment ">///				void SetX(int value);</div>
-		<div class="token cpp_comment ">///			};</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			Ptr&lt;MyClass&gt; CreateMyClass(int numberParameter, const WString7 stringParameter);</div>
-		<div class="token cpp_comment ">///			int GlobalFunction(MyClass* self, int parameter);</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///		e) interface:</div>
-		<div class="token cpp_comment ">///			An interface is defined by</div>
-		<div class="token cpp_comment ">///			I) Directly or indirectly inherits [T:vl.reflection.IDescriptable]</div>
-		<div class="token cpp_comment ">///			II) The only registered constructor (if exists) should use Ptr&lt;[T:vl.reflection.description.IValueInterfaceProxy]&gt; as a parameter</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			Suppose you have an interface like this:</div>
-		<div class="token cpp_comment ">///			class IMyInterface : public virtual IDescriptable, public Description&lt;IMyInterface&gt;</div>
-		<div class="token cpp_comment ">///			{</div>
-		<div class="token cpp_comment ">///			public:</div>
-		<div class="token cpp_comment ">///				int GetX();</div>
-		<div class="token cpp_comment ">///				void SetX(int value);</div>
-		<div class="token cpp_comment ">///			};</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			If you want this interface implementable by Workflow script, you should first add a proxy like this:</div>
-		<div class="token cpp_comment ">///			#pragma warning(push)</div>
-		<div class="token cpp_comment ">///			#pragma warning(disable:4250)</div>
-		<div class="token cpp_comment ">///			BEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR(IMyInterface)</div>
-		<div class="token cpp_comment ">///			 or BEGIN_INTERFACE_PROXY_RAWPTR(IMyInterface, baseInterfaces...)</div>
-		<div class="token cpp_comment ">///			 or BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(IMyInterface)</div>
-		<div class="token cpp_comment ">///			 or BEGIN_INTERFACE_PROXY_SHAREDPTR(IMyInterface, baseInterfaces...)</div>
-		<div class="token cpp_comment ">///				int GetX()override</div>
-		<div class="token cpp_comment ">///				{</div>
-		<div class="token cpp_comment ">///					INVOKEGET_INTERFACE_PROXY_NOPARAMS(GetX)</div>
-		<div class="token cpp_comment ">///				}</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///				void SetX(int value)override</div>
-		<div class="token cpp_comment ">///				{</div>
-		<div class="token cpp_comment ">///					INVOKE_INTERFACE_PROXY(SetX, value)</div>
-		<div class="token cpp_comment ">///				}</div>
-		<div class="token cpp_comment ">///			END_INTERFACE_PROXY(IMyInterface)</div>
-		<div class="token cpp_comment ">///			#pragma warning(pop)</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			And then use this code to register the interface:</div>
-		<div class="token cpp_comment ">///			BEGIN_INTERFACE_MEMBER(IMyInterface)</div>
-		<div class="token cpp_comment ">///				...</div>
-		<div class="token cpp_comment ">///			END_INTERFACE_MEMBER(IMyInterface)</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			Everything else is the same as registering classes. Use BEGIN_INTERFACE_MEMBER_NOPROXY to register an interface without a proxy, which means you cannot implement it in runtime dynamically.</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///		#undef _</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">/// 5) (in cpp files) Create a type loader:</div>
-		<div class="token cpp_comment ">///		class MyTypeLoader : public Object, public ITypeLoader</div>
-		<div class="token cpp_comment ">///		{</div>
-		<div class="token cpp_comment ">///		public:</div>
-		<div class="token cpp_comment ">///			void Load(ITypeManager* manager)</div>
-		<div class="token cpp_comment ">///			{</div>
-		<div class="token cpp_comment ">///				MY_TYPELIST(ADD_TYPE_INFO)</div>
-		<div class="token cpp_comment ">///			}</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///			void Unload(ITypeManager* manager)</div>
-		<div class="token cpp_comment ">///			{</div>
-		<div class="token cpp_comment ">///			}</div>
-		<div class="token cpp_comment ">///		};</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">///	6) Load types when you think is a good timing using this code:</div>
-		<div class="token cpp_comment ">///		vl::reflection::description::GetGlobalTypeManager()-&gt;AddTypeLoader(new MyTypeLoader);</div>
-		<div class="token cpp_comment ">///</div>
-		<div class="token cpp_comment ">/// ]]&gt;&lt;/summary&gt;</div>
-		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type of your created reflection class.&lt;/typeparam&gt;</div>
+		<div class="token cpp_comment ">///                 void Unload(ITypeManager* manager)</div>
+		<div class="token cpp_comment ">///                 {</div>
+		<div class="token cpp_comment ">///                 }</div>
+		<div class="token cpp_comment ">///             };</div>
+		<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+		<div class="token cpp_comment ">///     &lt;li&gt;</div>
+		<div class="token cpp_comment ">///         Before using reflection on registered types, you need to register the type loader:</div>
+		<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+		<div class="token cpp_comment ">///             vl::reflection::description::GetGlobalTypeManager()-&gt;AddTypeLoader(new MyTypeLoader);</div>
+		<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+		<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/ol&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type that inherit this class.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::Description::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::Description"><div class="ref" onclick="jumpToSymbol([], [], ['vl::reflection::Description@<::vl::workflow::typeimpl::WfClassInstance>', 'vl::reflection::Description@<::vl::workflow::typeimpl::WfInterfaceInstance>'], [])"><div class="token cpp_type">Description</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>
 		{
@@ -452,6 +641,10 @@ Attribute
 <div class="disabled">#endif</div>
 		};
 
+		<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+		<div class="token cpp_comment ">/// Inherit from this class when you want to create a reflectable class that can be inherited by Workflow script classes.</div>
+		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;typeparam name=&quot;T&quot;&gt;Type that inherit this class.&lt;/typeparam&gt;</div>
 		<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::AggregatableDescription::T"><div><div class="token cpp_type">T</div></div></div>&gt;
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::AggregatableDescription"><div><div class="token cpp_type">AggregatableDescription</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::AggregatableDescription::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;
 		{
@@ -462,7 +655,7 @@ Attribute
 		<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>* <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description::associatedTypeDescriptor::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="def" id="NI$vl::reflection::Description::associatedTypeDescriptor"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description::associatedTypeDescriptor'], [], [])"><div class="token cpp_field">associatedTypeDescriptor</div></div></div>=<div class="token cpp_number ">0</div>;
 <div class="disabled">#endif</div>
 
-		<div class="token cpp_comment ">/// &lt;summary&gt;Base types of all reflectable interfaces. All reflectable interface types should be virtual inherited.&lt;/summary&gt;</div>
+		<div class="token cpp_comment ">/// &lt;summary&gt;Base type of all reflectable interfaces. All reflectable interface types should be virtual inherited.&lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::IDescriptable"><div><div class="token cpp_type">IDescriptable</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>&gt;
 		{
 		<div class="token cpp_keyword ">public</div>:
@@ -525,19 +718,28 @@ Value
 			};
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;A type to store all values of reflectable types.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// To convert between &lt;b&gt;Value&lt;/b&gt; and its real C++ type, the following functions are recommended:</div>
+			<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.BoxValue`1]&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.UnboxValue`1]&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.BoxParameter`1]&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.UnboxParameter`1]&lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::Value"><div><div class="token cpp_type">Value</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
 			{
 			<div class="token cpp_keyword ">public</div>:
-				<div class="token cpp_comment ">/// &lt;summary&gt;Representing how the value is stored.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;How the value is stored.&lt;/summary&gt;</div>
 				<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::reflection::description::Value::ValueType"><div><div class="token cpp_type">ValueType</div></div></div>
 				{
 					<div class="token cpp_comment ">/// &lt;summary&gt;The value is null.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::reflection::description::Value::ValueType::Null"><div><div class="token cpp_enum">Null</div></div></div>,
-					<div class="token cpp_comment ">/// &lt;summary&gt;The value stored using a raw pointer.&lt;/summary&gt;</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The reference value is stored using a raw pointer.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::reflection::description::Value::ValueType::RawPtr"><div><div class="token cpp_enum">RawPtr</div></div></div>,
-					<div class="token cpp_comment ">/// &lt;summary&gt;The value stored using a smart pointer.&lt;/summary&gt;</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The reference value is stored using a shared pointer.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::reflection::description::Value::ValueType::SharedPtr"><div><div class="token cpp_enum">SharedPtr</div></div></div>,
-					<div class="token cpp_comment ">/// &lt;summary&gt;The value stored using a boxed value.&lt;/summary&gt;</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The value is stored by boxing.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::reflection::description::Value::ValueType::BoxedValue"><div><div class="token cpp_enum">BoxedValue</div></div></div>,
 				};
 			<div class="token cpp_keyword ">protected</div>:
@@ -555,6 +757,7 @@ Value
 
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::reflection::description::Value::Compare@::vl::vint(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::Compare@::vl::vint(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">Compare</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::Compare@::vl::vint(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)[decl0]::a"><div>a</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::Compare@::vl::vint(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)[decl0]::b"><div>b</div></div>)<div class="token cpp_keyword ">const</div>;
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a null value.&lt;/summary&gt;</div>
 				<div class="def" id="FB$vl::reflection::description::Value::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::$__ctor@()'], [], [])"><div class="token cpp_function">Value</div></div></div>();
 				<div class="def" id="FB$vl::reflection::description::Value::$__ctor@(::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::$__ctor@(::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">Value</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::$__ctor@(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp;							<div class="def" id="FB$vl::reflection::description::Value::operator =@::vl::reflection::description::Value &(::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::operator =@::vl::reflection::description::Value &(::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::operator =@::vl::reflection::description::Value &(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>);
@@ -565,61 +768,161 @@ Value
 				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::Value::operator >@bool(::vl::reflection::description::Value const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&gt;</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::operator >@bool(::vl::reflection::description::Value const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::reflection::description::Value::Compare@::vl::vint(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)'], ['vl::reflection::description::Value::Compare@::vl::vint(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::operator >@bool(::vl::reflection::description::Value const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>)&gt;<div class="token cpp_number ">0</div>; }
 				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::Value::operator >=@bool(::vl::reflection::description::Value const &)[impl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">&gt;</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::operator >=@bool(::vl::reflection::description::Value const &)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)<div class="token cpp_keyword ">const</div> { <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::reflection::description::Value::Compare@::vl::vint(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)'], ['vl::reflection::description::Value::Compare@::vl::vint(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">Compare</div></div>(*<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::operator >=@bool(::vl::reflection::description::Value const &)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>) &gt;= <div class="token cpp_number ">0</div>; }
 
-				<div class="token cpp_comment ">/// &lt;summary&gt;Get how the value is stored.&lt;/summary&gt;</div>
-				<div class="token cpp_comment ">/// &lt;returns&gt;How the value is stored.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Find out how the value is stored.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns How the value is stored.&lt;/returns&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::ValueType'], [], [])"><div class="token cpp_type">ValueType</div></div>						<div class="def" id="FB$vl::reflection::description::Value::GetValueType@::vl::reflection::description::Value::ValueType()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::GetValueType@::vl::reflection::description::Value::ValueType()'], [], [])"><div class="token cpp_function">GetValueType</div></div></div>()<div class="token cpp_keyword ">const</div>;
-				<div class="token cpp_comment ">/// &lt;summary&gt;Get the stored raw pointer if possible.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the stored raw pointer if &lt;b&gt;GetValueType()&lt;/b&gt; returns &lt;b&gt;RawPtr&lt;/b&gt; or &lt;b&gt;SharedPtr&lt;/b&gt;.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;The stored raw pointer. Returns null if failed.&lt;/returns&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>*				<div class="def" id="FB$vl::reflection::description::Value::GetRawPtr@::vl::reflection::DescriptableObject *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::GetRawPtr@::vl::reflection::DescriptableObject *()'], [], [])"><div class="token cpp_function">GetRawPtr</div></div></div>()<div class="token cpp_keyword ">const</div>;
-				<div class="token cpp_comment ">/// &lt;summary&gt;Get the stored shared pointer if possible.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the stored shared pointer if &lt;b&gt;GetValueType()&lt;/b&gt; returns &lt;b&gt;SharedPtr&lt;/b&gt;.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;The stored shared pointer. Returns null if failed.&lt;/returns&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>&gt;			<div class="def" id="FB$vl::reflection::description::Value::GetSharedPtr@::vl::Ptr<::vl::reflection::DescriptableObject>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::GetSharedPtr@::vl::Ptr<::vl::reflection::DescriptableObject>()'], [], [])"><div class="token cpp_function">GetSharedPtr</div></div></div>()<div class="token cpp_keyword ">const</div>;
-				<div class="token cpp_comment ">/// &lt;summary&gt;Get the stored text if possible.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the stored value if &lt;b&gt;GetValueType()&lt;/b&gt; returns &lt;b&gt;BoxedValue&lt;/b&gt;.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;The stored text. Returns empty if failed.&lt;/returns&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IBoxedValue'], [], [])"><div class="token cpp_type">IBoxedValue</div></div>&gt;				<div class="def" id="FB$vl::reflection::description::Value::GetBoxedValue@::vl::Ptr<::vl::reflection::description::IBoxedValue>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::GetBoxedValue@::vl::Ptr<::vl::reflection::description::IBoxedValue>()'], [], [])"><div class="token cpp_function">GetBoxedValue</div></div></div>()<div class="token cpp_keyword ">const</div>;
-				<div class="token cpp_comment ">/// &lt;summary&gt;Get the real type of the stored object.&lt;/summary&gt;</div>
-				<div class="token cpp_comment ">/// &lt;returns&gt;The real type. Returns null if the value is null.&lt;/returns&gt;</div>
-
+				<div class="token cpp_comment ">/// &lt;summary&gt;Test if this value isnull.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this value is null.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::Value::IsNull@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::IsNull@bool()'], [], [])"><div class="token cpp_function">IsNull</div></div></div>()<div class="token cpp_keyword ">const</div>;
 <div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the real type of the stored object.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The real type. Returns null if the value is null.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>*				<div class="def" id="FB$vl::reflection::description::Value::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()'], [], [])"><div class="token cpp_function">GetTypeDescriptor</div></div></div>()<div class="token cpp_keyword ">const</div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::reflection::description::Value::GetTypeFriendlyName@::vl::WString()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::GetTypeFriendlyName@::vl::WString()'], [], [])"><div class="token cpp_function">GetTypeFriendlyName</div></div></div>()<div class="token cpp_keyword ">const</div>;
 				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::Value::CanConvertTo@bool(::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::Value::ValueType)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::CanConvertTo@bool(::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::Value::ValueType)'], [], [])"><div class="token cpp_function">CanConvertTo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>* <div class="def" id="NI$vl::reflection::description::Value::CanConvertTo@bool(::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::Value::ValueType)[decl0]::targetType"><div>targetType</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::ValueType'], [], [])"><div class="token cpp_type">ValueType</div></div> <div class="def" id="NI$vl::reflection::description::Value::CanConvertTo@bool(::vl::reflection::description::ITypeDescriptor *, ::vl::reflection::description::Value::ValueType)[decl0]::targetValueType"><div>targetValueType</div></div>)<div class="token cpp_keyword ">const</div>;
 				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::Value::CanConvertTo@bool(::vl::reflection::description::ITypeInfo *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::CanConvertTo@bool(::vl::reflection::description::ITypeInfo *)'], [], [])"><div class="token cpp_function">CanConvertTo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeInfo'], [], [])"><div class="token cpp_type">ITypeInfo</div></div>* <div class="def" id="NI$vl::reflection::description::Value::CanConvertTo@bool(::vl::reflection::description::ITypeInfo *)[decl0]::targetType"><div>targetType</div></div>)<div class="token cpp_keyword ">const</div>;
 <div class="disabled">#endif</div>
 
-				<div class="token cpp_comment ">/// &lt;summary&gt;Store a raw pointer.&lt;/summary&gt;</div>
-				<div class="token cpp_comment ">/// &lt;returns&gt;The boxed value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a value from a raw pointer.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created value.&lt;/returns&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The raw pointer to store.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)'], [], [])"><div class="token cpp_function">From</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>* <div class="def" id="NI$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)[decl0]::value"><div>value</div></div>);
-				<div class="token cpp_comment ">/// &lt;summary&gt;Store a shared pointer.&lt;/summary&gt;</div>
-				<div class="token cpp_comment ">/// &lt;returns&gt;The boxed value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a value from a shared pointer.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created value.&lt;/returns&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The shared pointer to store.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::DescriptableObject>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::DescriptableObject>)'], [], [])"><div class="token cpp_function">From</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>&gt; <div class="def" id="NI$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::DescriptableObject>)[decl0]::value"><div>value</div></div>);
-				<div class="token cpp_comment ">/// &lt;summary&gt;Store a text.&lt;/summary&gt;</div>
-				<div class="token cpp_comment ">/// &lt;returns&gt;The boxed value.&lt;/returns&gt;</div>
-				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The text to store.&lt;/param&gt;</div>
-				<div class="token cpp_comment ">/// &lt;param name=&quot;type&quot;&gt;The type that you expect to interpret the text.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a boxed value.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The boxed value to store.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;type&quot;&gt;The type of the boxed value.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IBoxedValue>, ::vl::reflection::description::ITypeDescriptor *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IBoxedValue>, ::vl::reflection::description::ITypeDescriptor *)'], [], [])"><div class="token cpp_function">From</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IBoxedValue'], [], [])"><div class="token cpp_type">IBoxedValue</div></div>&gt; <div class="def" id="NI$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IBoxedValue>, ::vl::reflection::description::ITypeDescriptor *)[decl0]::value"><div>value</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>* <div class="def" id="NI$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IBoxedValue>, ::vl::reflection::description::ITypeDescriptor *)[decl0]::type"><div>type</div></div>);
 
 <div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IMethodInfo'], [], [])"><div class="token cpp_type">IMethodInfo</div></div>*				<div class="def" id="FB$vl::reflection::description::Value::SelectMethod@::vl::reflection::description::IMethodInfo *(::vl::reflection::description::IMethodGroupInfo *, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::SelectMethod@::vl::reflection::description::IMethodInfo *(::vl::reflection::description::IMethodGroupInfo *, ::vl::collections::Array<::vl::reflection::description::Value> &)'], [], [])"><div class="token cpp_function">SelectMethod</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IMethodGroupInfo'], [], [])"><div class="token cpp_type">IMethodGroupInfo</div></div>* <div class="def" id="NI$vl::reflection::description::Value::SelectMethod@::vl::reflection::description::IMethodInfo *(::vl::reflection::description::IMethodGroupInfo *, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::methodGroup"><div>methodGroup</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;&amp; <div class="def" id="NI$vl::reflection::description::Value::SelectMethod@::vl::reflection::description::IMethodInfo *(::vl::reflection::description::IMethodGroupInfo *, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::arguments"><div>arguments</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call the default constructor of the specified type to create a value.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;type&quot;&gt;The type to create the value.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::reflection::description::ITypeDescriptor *)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::reflection::description::ITypeDescriptor *)'], [], [])"><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>* <div class="def" id="NI$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::reflection::description::ITypeDescriptor *)[decl0]::type"><div>type</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call the constructor of the specified type to create a value.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;type&quot;&gt;The type to create the value.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;arguments&quot;&gt;Arguments for the constructor.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::reflection::description::ITypeDescriptor *, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::reflection::description::ITypeDescriptor *, ::vl::collections::Array<::vl::reflection::description::Value> &)'], [], [])"><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>* <div class="def" id="NI$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::reflection::description::ITypeDescriptor *, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::type"><div>type</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;&amp; <div class="def" id="NI$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::reflection::description::ITypeDescriptor *, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::arguments"><div>arguments</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call the default constructor of the specified type to create a value.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;typeName&quot;&gt;The registered full name for the type to create the value.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::WString const &)'], [], [])"><div class="token cpp_function">Create</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::WString const &)[decl0]::typeName"><div>typeName</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call the constructor of the specified type to create a value.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;typeName&quot;&gt;The registered full name for the type to create the value.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;arguments&quot;&gt;Arguments for the constructor.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)'], [], [])"><div class="token cpp_function">Create</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::typeName"><div>typeName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;&amp; <div class="def" id="NI$vl::reflection::description::Value::Create@::vl::reflection::description::Value(::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::arguments"><div>arguments</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call a static method of the specified type.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The return value from that method.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;typeName&quot;&gt;The registered full name for the type.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The registered name for the method.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &)'], [], [])"><div class="token cpp_function">InvokeStatic</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &)[decl0]::typeName"><div>typeName</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &)[decl0]::name"><div>name</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call a static method of the specified type.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The return value from that method.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;typeName&quot;&gt;The registered full name for the type.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The registered name for the method.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;arguments&quot;&gt;Arguments for the method.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)'], [], [])"><div class="token cpp_function">InvokeStatic</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::typeName"><div>typeName</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;&amp; <div class="def" id="NI$vl::reflection::description::Value::InvokeStatic@::vl::reflection::description::Value(::vl::WString const &, ::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::arguments"><div>arguments</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call the getter function for a property.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The value of the property.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The registered name for the property.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>							<div class="def" id="FB$vl::reflection::description::Value::GetProperty@::vl::reflection::description::Value(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::GetProperty@::vl::reflection::description::Value(::vl::WString const &)'], [], [])"><div class="token cpp_function">GetProperty</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::GetProperty@::vl::reflection::description::Value(::vl::WString const &)[decl0]::name"><div>name</div></div>)<div class="token cpp_keyword ">const</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call the setter function for a property.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The registered name for the property.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;newValue&quot;&gt;The value to set the property.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::reflection::description::Value::SetProperty@void(::vl::WString const &, ::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::SetProperty@void(::vl::WString const &, ::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">SetProperty</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::SetProperty@void(::vl::WString const &, ::vl::reflection::description::Value const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::SetProperty@void(::vl::WString const &, ::vl::reflection::description::Value const &)[decl0]::newValue"><div>newValue</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call a non-static method.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The return value from that method.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The registered name for the method.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>							<div class="def" id="FB$vl::reflection::description::Value::Invoke@::vl::reflection::description::Value(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::Invoke@::vl::reflection::description::Value(::vl::WString const &)'], [], [])"><div class="token cpp_function">Invoke</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::Invoke@::vl::reflection::description::Value(::vl::WString const &)[decl0]::name"><div>name</div></div>)<div class="token cpp_keyword ">const</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call a non-static method.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The return value from that method.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The registered name for the method.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;arguments&quot;&gt;Arguments for the method.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>							<div class="def" id="FB$vl::reflection::description::Value::Invoke@::vl::reflection::description::Value(::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::Invoke@::vl::reflection::description::Value(::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)'], [], [])"><div class="token cpp_function">Invoke</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::Invoke@::vl::reflection::description::Value(::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;&amp; <div class="def" id="NI$vl::reflection::description::Value::Invoke@::vl::reflection::description::Value(::vl::WString const &, ::vl::collections::Array<::vl::reflection::description::Value> &)[decl0]::arguments"><div>arguments</div></div>)<div class="token cpp_keyword ">const</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Attach a callback function for the event.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The event handler for this attachment. You need to keep it to detach the callback function.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The registered name for the event.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;function&quot;&gt;The callback function.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IEventHandler'], [], [])"><div class="token cpp_type">IEventHandler</div></div>&gt;				<div class="def" id="FB$vl::reflection::description::Value::AttachEvent@::vl::Ptr<::vl::reflection::description::IEventHandler>(::vl::WString const &, ::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::AttachEvent@::vl::Ptr<::vl::reflection::description::IEventHandler>(::vl::WString const &, ::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">AttachEvent</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::AttachEvent@::vl::Ptr<::vl::reflection::description::IEventHandler>(::vl::WString const &, ::vl::reflection::description::Value const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::AttachEvent@::vl::Ptr<::vl::reflection::description::IEventHandler>(::vl::WString const &, ::vl::reflection::description::Value const &)[decl0]::function"><div>function</div></div>)<div class="token cpp_keyword ">const</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Detach a callback function from the event.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The registered name for the event.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;handler&quot;&gt;The event handler returned from &lt;see cref=&quot;AttachEvent&quot;/&gt;.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Only available when &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; is &lt;b&gt;off&lt;/b&gt;.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::Value::DetachEvent@bool(::vl::WString const &, ::vl::Ptr<::vl::reflection::description::IEventHandler>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::DetachEvent@bool(::vl::WString const &, ::vl::Ptr<::vl::reflection::description::IEventHandler>)'], [], [])"><div class="token cpp_function">DetachEvent</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::Value::DetachEvent@bool(::vl::WString const &, ::vl::Ptr<::vl::reflection::description::IEventHandler>)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IEventHandler'], [], [])"><div class="token cpp_type">IEventHandler</div></div>&gt; <div class="def" id="NI$vl::reflection::description::Value::DetachEvent@bool(::vl::WString const &, ::vl::Ptr<::vl::reflection::description::IEventHandler>)[decl0]::handler"><div>handler</div></div>)<div class="token cpp_keyword ">const</div>;
 <div class="disabled">#endif</div>
 
-				<div class="token cpp_comment ">/// &lt;summary&gt;Dispose the object is it is stored as a raw pointer.&lt;/summary&gt;</div>
-				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the object is disposed. Returns false if the object cannot be disposed. An exception will be thrown if the reference counter is not 0.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Dispose the object if &lt;b&gt;GetValueType()&lt;/b&gt; returns &lt;b&gt;RawPtr&lt;/b&gt;.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;</div>
+				<div class="token cpp_comment ">/// Returns true if the object is disposed.</div>
+				<div class="token cpp_comment ">/// Returns false if the object cannot be disposed.</div>
+				<div class="token cpp_comment ">/// An exception will be thrown if the reference counter is not 0.</div>
+				<div class="token cpp_comment ">///&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::Value::DeleteRawPtr@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value::DeleteRawPtr@bool()'], [], [])"><div class="token cpp_function">DeleteRawPtr</div></div></div>();
 			};
 

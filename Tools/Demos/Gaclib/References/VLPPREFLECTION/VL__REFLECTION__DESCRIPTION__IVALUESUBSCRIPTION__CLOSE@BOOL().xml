@@ -1,0 +1,3 @@
+<Document symbolId="vl::reflection::description::IValueSubscription::Close@bool()" accessor="public" category="Function" name="Close" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueSubscription::Close@bool()[decl0]"><summary>Stop the subscription.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Close(
+);
+]]></signature></Document>

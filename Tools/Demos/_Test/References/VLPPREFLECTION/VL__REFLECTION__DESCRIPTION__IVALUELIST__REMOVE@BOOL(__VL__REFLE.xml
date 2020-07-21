@@ -1,0 +1,4 @@
+<Document symbolId="vl::reflection::description::IValueList::Remove@bool(::vl::reflection::description::Value const &amp;)" accessor="public" category="Function" name="Remove" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueList::Remove@bool(::vl::reflection::description::Value const &amp;)[decl0]"><summary>Remove an element from the list. If multiple elements equal to the specified value, only the first one will be removed.</summary><returns>Returns true if the element is removed.</returns><param name="value">The item to remove.</param><signature><![CDATA[bool Remove(
+    Value const & value
+);
+]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

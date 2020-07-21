@@ -1,0 +1,6 @@
+<Document symbolId="vl::reflection::description::IValueObservableList" accessor="" category="Class" name="IValueObservableList" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueObservableList"><summary>
+ The reflectable version of list container which triggers an event whenever items are changed.
+ </summary><signature><![CDATA[class IValueObservableList
+    : IValueList
+    , Description<IValueObservableList>;
+]]></signature><seealsos><symbol name="IValueObservableList" docId="vl::reflection::description::IValueObservableList" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueObservableList"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IValueList" docId="vl::reflection::description::IValueList" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueList"/></basetypes></Document>

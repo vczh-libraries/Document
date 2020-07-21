@@ -1,0 +1,5 @@
+<Document symbolId="vl::stream::EncoderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IEncoder &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Accessor.h" declId="FB$vl::stream::EncoderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IEncoder &amp;)[decl0]"><summary>Create en encoder stream.</summary><param name="_stream">The output stream to write.</param><param name="_encoder">The encoder to transform content.</param><signature><![CDATA[ EncoderStream(
+    IStream & _stream,
+    IEncoder & _encoder
+);
+]]></signature><seealsos><symbol name="IEncoder" docId="vl::stream::IEncoder" declFile="Interfaces.h2" declId="NI$vl::stream::IEncoder"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>

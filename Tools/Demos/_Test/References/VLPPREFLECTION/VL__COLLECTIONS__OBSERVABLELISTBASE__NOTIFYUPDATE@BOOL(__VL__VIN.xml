@@ -1,0 +1,10 @@
+<Document symbolId="vl::collections::ObservableListBase::NotifyUpdate@bool(::vl::vint, ::vl::vint)" accessor="public" category="Function" name="NotifyUpdate" declFile="GuiTypeDescriptorBuilder_Container.h" declId="FB$vl::collections::ObservableListBase::NotifyUpdate@bool(::vl::vint, ::vl::vint)[impl0]"><summary>Trigger <b>NotifyUpdateInternal</b> manually.</summary><returns>Returns true if arguments are not out of range.</returns><param name="start">The index of the first item that are changed.</param><param name="count">The number of items that are changed, the default value is 1.</param><remarks>
+ This is useful when the container is not actually changed, but data in some items are changed.
+ For example, in an observable list of shared pointers,
+ properties of elements are changed does not trigger callbacks because it doesn&apos;t change pointers in the list.
+ If subscribers need to know about such change, calling this function is an easy way to do it.
+ </remarks><signature><![CDATA[bool NotifyUpdate(
+    vint start,
+    vint count /* optional */
+);
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

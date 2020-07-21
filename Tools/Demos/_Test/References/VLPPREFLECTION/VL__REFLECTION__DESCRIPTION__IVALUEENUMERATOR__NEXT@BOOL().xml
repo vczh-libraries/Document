@@ -1,0 +1,3 @@
+<Document symbolId="vl::reflection::description::IValueEnumerator::Next@bool()" accessor="public" category="Function" name="Next" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueEnumerator::Next@bool()[decl0]"><summary>Prepare for the next value.</summary><returns>Returns false if there is no more value.</returns><signature><![CDATA[bool Next(
+);
+]]></signature></Document>

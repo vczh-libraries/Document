@@ -1,0 +1,3 @@
+<Document symbolId="vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &amp;()" accessor="public" category="Function" name="GetFilePath" declFile="FileSystem.h" declId="FB$vl::filesystem::Folder::GetFilePath@::vl::filesystem::FilePath const &amp;()[decl0]"><summary>Get the file path of the folder.</summary><returns>The file path.</returns><signature><![CDATA[FilePath const & GetFilePath(
+) const;
+]]></signature><seealsos><symbol name="FilePath" docId="vl::filesystem::FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"/></seealsos></Document>

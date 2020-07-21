@@ -1,0 +1,6 @@
+<Document symbolId="vl::ThreadPoolLite::Queue@bool(void(void *) *, void *)" accessor="public" category="Function" name="Queue" declFile="Threading.h" declId="FB$vl::ThreadPoolLite::Queue@bool(void(void *) *, void *)[decl0]"><summary>Queue a function pointer.</summary><returns>Returns true if this operation succeeded.</returns><param name="proc">The function pointer.</param><param name="argument">The argument to call the function pointer.</param><signature><![CDATA[static bool Queue(
+    void( * proc)(
+void *),
+    void * argument
+);
+]]></signature></Document>

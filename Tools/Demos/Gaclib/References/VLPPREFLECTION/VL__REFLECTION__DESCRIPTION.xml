@@ -1,243 +1,269 @@
-<Document symbolId="vl::reflection::Description" accessor="" category="Class" name="Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"><summary><![CDATA[
- Inherit from this class when you want to create a reflectable class. It should be used like this:
+<Document symbolId="vl::reflection::Description" accessor="" category="Class" name="Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"><summary><p>
+ Inherit from this class when you want to create a reflectable class.
+ It should be used like this:
+ <program><code><![CDATA[
  class YourClass : public Description<YourClass>
  {
-		...
+     ..
  };
-
- If you want YourClass to be inheritable in scripts, instead of using Description, you should use AggregatableDescription, like this:
+ ]]></code></program></p><p>
+ If you want YourClass to be inheritable in scripts,
+ instead of using Description,
+ you should use <symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"/>, like this:
+ <program><code><![CDATA[
  class YourClass : public AggregatableDescription<YourClass>
  {
-		~YourClass()
-		{
-			FinalizeAggregation();
-		}
+     ~YourClass()
+     {
+         FinalizeAggregation();
+     }
  };
+ ]]></code></program></p><p>
+ After you complete your type,
+ use the following macros and functions to register your class into the global type table.
+ </p><p>
+ Some of the predefined type has already been registered.
+ If your types depend on these types, you should load those types by calling some or all of them:
+ <ul><li><symbol name="LoadPredefinedTypes" declFile="GuiTypeDescriptorReflection.cpp" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[impl0]"/></li><li><symbol name="LoadParsingTypes" declFile="Parsing.cpp" declId="FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]"/></li><li><symbol name="JsonLoadTypes" declFile="ParsingJson_Ast.cpp" declId="FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]"/></li><li><symbol name="XmlLoadTypes" declFile="ParsingXml_Ast.cpp" declId="FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]"/></li></ul></p><p>
+ The order does not matter, because content of types are lazily loaded.
+ </p><p>
+ Everything below should be put in <b>vl::reflection::description</b> namespaces.
+ <ol><li><b>(in header files)</b> Create a macro that contains all types that you want to register.
+         Content in the list will become full names for registered type,
+         so it is strongly recommended to use the full name.
+         <program><code><![CDATA[
+             #define MY_TYPELIST(F)\
+                 F(mynamespaces::MyClass1)\
+                 F(mynamespaces::MyClass2)\
+         ]]></code></program></li><li><b>in header files)</b> Connect type names and types:
+         <program><code><![CDATA[
+             MY_TYPELIST(DECL_TYPE_INFO)
+         ]]></code></program></li><li><b>(in cpp files)</b> Connect type names and types:
+         <program><code><![CDATA[
+             MY_TYPELIST(IMPL_VL_TYPE_INFO)
+         ]]></code></program></li><li><b>(in cpp files)</b> Register all members:
+         <ul><li>
+                 You will need to define a macro for commas, Whatever name is fine.
+                 <program><code><![CDATA[
+                     #define _ ,
+                 ]]></code></program></li><li><b>enum</b>:
+                 use <b>BEGIN_ENUM_ITEM_MERGABLE</b> instead of <b>BEGIN_ENUM_ITEM</b> if enum items are flags instead of concrete items.
+                 <program><code><![CDATA[
+                     BEGIN_ENUM_ITEM(Season)
+                         ENUM_ITEM(Spring)
+                         ENUM_ITEM(Summer)
+                         ENUM_ITEM(Autumn)
+                         ENUM_ITEM(Winter)
+                     END_ENUM_ITEM(Season)
+                 ]]></code></program></li><li><b>enum class:</b>
+                 use <b>BEGIN_ENUM_ITEM_MERGABLE</b> instead of <b>BEGIN_ENUM_ITEM</b> if enum items are flags instead of concrete items.
+                 <program><code><![CDATA[
+                     BEGIN_ENUM_ITEM(Season)
+                         ENUM_CLASS_ITEM(Spring)
+                         ENUM_CLASS_ITEM(Summer)
+                         ENUM_CLASS_ITEM(Autumn)
+                         ENUM_CLASS_ITEM(Winter)
+                     END_ENUM_ITEM(Season)
+                 ]]></code></program></li><li><b>struct</b>:
+                 It doesn&apos;t necessary mean a struct in C++.
+                 Structs in reflection and Workflow script mean value types that carry only data, without methods and inheritance.
+                 <program><code><![CDATA[
+                     BEGIN_STRUCT_MEMBER(Point)
+                         STRUCT_MEMBER(x)
+                         STRUCT_MEMBER(y)
+                     END_STRUCT_MEMBER(Point)
+                 ]]></code></program></li><li><p><b>class</b>:
+                 It doesn&apos;t necessary mean a class in C++.
+                 Classes in reflection and Workflow script mean reference types.
+                 </p><p>
+                 Here are all macros that register content of classes
+                 <ul><li>CLASS_MEMBER_BASE</li><li>CLASS_MEMBER_FIELD</li><li>CLASS_MEMBER_CONSTRUCTOR</li><li>CLASS_MEMBER_EXTERNALCTOR(_TEMPLATE)?</li><li>CLASS_MEMBER_METHOD(_OVERLOAD)?_RENAME</li><li>CLASS_MEMBER_(STATIC_)?METHOD(_OVERLOAD)?</li><li>CLASS_MEMBER_(STATIC_)?EXTERNALMETHOD(_TEMPLATE)?</li><li>CLASS_MEMBER_PROPERTY(_EVENT)?(_READONLY)?(_FAST)?</li><li>CLASS_MEMBER_PROPERTY_REFERENCETEMPLATE</li><li>CLASS_MEMBER_EVENT</li></ul></p><p><program><code><![CDATA[
+                     BEGIN_CLASS_MEMBER(MyClass)
 
- After you have complete your type, use the following macros and functions to register your class into the global type table. Everything should be defined in vl::reflection::description namespaces.
-	Some of the predefined type has already been registered, if your types depend on these types, you should load those types by calling some or all of them:
-	]]><symbol name="LoadPredefinedTypes" declFile="GuiTypeDescriptorReflection.cpp" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[impl0]"/><![CDATA[
-	]]><symbol name="LoadParsingTypes" declFile="Parsing.cpp" declId="FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]"/><![CDATA[
-	]]><symbol name="JsonLoadTypes" declFile="ParsingJson_Ast.cpp" declId="FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]"/><![CDATA[
-	]]><symbol name="XmlLoadTypes" declFile="ParsingXml_Ast.cpp" declId="FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]"/><![CDATA[
+                         // 01) Declare a base class (can have multiple base classes).
+                         CLASS_MEMBER_BASE(MyBaseClass)
 
- 1) (in header files) Create a macro that contains all types that you want to register. Content in the list will become the registered type names, so it is strongly recommended to use the full name.
-		#define MY_TYPELIST(F)\
-			F(mynamespaces::MyClass1)\
-			F(mynamespaces::MyClass2)\
+                         // 02) Declare a field.
+                         CLASS_MEMBER_FIELD(myField)
 
- 2) (in header files) Connect type names and types:
-		MY_TYPELIST(DECL_TYPE_INFO)
+                         // 03) Default constructor that results in a raw pointer.
+                         CLASS_MEMBER_CONSTRUCTIOR(MyClass*(), NO_PARAMETER)
 
- 3) (in cpp files) Connect type names and types:
-		MY_TYPELIST(IMPL_VL_TYPE_INFO)
+                         // 04) Default constructor that results in a shared pointer.
+                         CLASS_MEMBER_CONSTRUCTIOR(Ptr<MyClass>(), NO_PARAMETER)
 
- 4) (in cpp files) Register all members:
-		
-		#define _ ,
+                         // 05) Constructor with arguments.
+                         CLASS_MEMBER_CONSTRUCTOR(Ptr<MyClass>(int, const WString&), {L"numberParameter" _ L"stringParameter"})
 
-		a) enum:
-			use BEGIN_ENUM_ITEM_MERGABLE instead of BEGIN_ENUM_ITEM if enum items are consider mergable using "|".
+                         // 06) Inject a global function as a constructor.
+                         CLASS_MEMBER_EXTERNALCTOR(Ptr<MyClass>(int, const WString&), {L"numberParameter" _ L"stringParameter"}, mynamespace::CreateMyClass)
 
-			BEGIN_ENUM_ITEM(Season)
-				ENUM_ITEM(Spring)
-				ENUM_ITEM(Summer)
-				ENUM_ITEM(Autumn)
-				ENUM_ITEM(Winter)
-			END_ENUM_ITEM(Season)
+                         // 07) Inject a consturctor and specify how to generate C++ code, "*" means not able to generate.
+                         CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr<MyClass>(int, const WString&), {L"numberParameter" _ L"stringParameter"}, CreateMyClass, L"mynamespace::GetMyClass($Arguments)", L"::vl::Func<$Func>(&mynamespace::GetMyClass)")
+                         CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr<MyClass>(), NO_PARAMETER, []()->Ptr<MyClass>{return nullptr;}, L"*", L"*")
 
-		b) enum class:
-			use BEGIN_ENUM_ITEM_MERGABLE instead of BEGIN_ENUM_ITEM if enum items are consider mergable using "|".
+                         // 08) Add unoverloaded functions.
+                         CLASS_MEMBER_METHOD(MyFunction1, NO_PARAMETER)
+                         CLASS_MEMBER_METHOD(MyFunction2, {L"parameter1" _ L"parameter2"})
 
-			BEGIN_ENUM_ITEM(Season)
-				ENUM_CLASS_ITEM(Spring)
-				ENUM_CLASS_ITEM(Summer)
-				ENUM_CLASS_ITEM(Autumn)
-				ENUM_CLASS_ITEM(Winter)
-			END_ENUM_ITEM(Season)
+                         // 09) Add unoverloaded functions but give different names. Unoverloaded only means in C++, not in renamed functions.
+                         CLASS_MEMBER_METHOD_RENAME(MyNewName1, MyFunction1, NO_PARAMETER)
+                         CLASS_MEMBER_METHOD_RENAME(MyNewName2, MyFunction2, {L"parameter1" _ L"parameter2"})
 
-		c) struct (pure data structure):
-			BEGIN_STRUCT_MEMBER(Point)
-				STRUCT_MEMBER(x)
-				STRUCT_MEMBER(y)
-			END_STRUCT_MEMBER(Point)
+                         // 10) Add overloaded functions, with function type specified in method pointers
+                         CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, NO_PARAMETER, int(MyClass::*)())
+                         CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L"parameter"}, int(MyClass::*)(int))
+                         CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&))
 
-		d) class:
-			BEGIN_CLASS_MEMBER(MyClass)
+                         // 11) Add overloaded functions but give different names.
+                         CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName3, MyFunction3, NO_PARAMETER, int(MyClass::*)())
+                         CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L"parameter"}, int(MyClass::*)(int))
+                         CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&))
 
-				I) declare a base class (can have multiple base classes):
-				CLASS_MEMBER_BASE(MyBaseClass)
+                         // 12) Inject global functions as methods:
+                         CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L"parameter"}, int(MyClass::*)(int), mynamespace::AGlobalFunction)
 
-				II) declare a field:
-				CLASS_MEMBER_FIELD(myField)
+                         // 13) Inject a method and specify how to generate C++ code, "*" means not able to generate.
+                         CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(MyNewName5, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&), [](MyClass* a, int b, const WString& c){return 0;}, L"*", L"*")
 
-				III) Empty constructor that results in a raw pointer:
-				CLASS_MEMBER_CONSTRUCTIOR(MyClass*(), NO_PARAMETER)
+                         // 14) Add unoverloaded static functions
+                         CLASS_MEMBER_STATIC_METHOD(MyFunction4, NO_PARAMETER)
+                         CLASS_MEMBER_STATIC_METHOD(MyFunction5, {L"parameter1" _ L"parameter2"})
 
-				IV) Empty constructor that results in a smart pointer:
-				CLASS_MEMBER_CONSTRUCTIOR(Ptr<MyClass>(), NO_PARAMETER)
+                         // 15) Add overloaded static functions
+                         CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, NO_PARAMETER, int(*)())
+                         CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, {L"parameter"}, int(*)(int))
+                         CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, {L"parameter1" _ L"parameter2"}, int(*)(int, const WString&))
 
-				V) Constructor with arguments:
-				CLASS_MEMBER_CONSTRUCTOR(Ptr<MyClass>(int, const WString&), {L"numberParameter" _ L"stringParameter"})
+                         // 16) Inject global functions as static methods:
+                         CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L"parameter"}, int(*)(int), mynamespace::AGlobalFunction2)
 
-				VI) Inject a global function as a constructor
-				CLASS_MEMBER_EXTERNALCTOR(Ptr<MyClass>(int, const WString&), {L"numberParameter" _ L"stringParameter"}, mynamespace::CreateMyClass)
-				CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr<MyClass>(int, const WString&), {L"numberParameter" _ L"stringParameter"}, CreateMyClass, L"mynamespace::GetMyClass($Arguments)", L"::vl::Func<$Func>(&mynamespace::GetMyClass)")
-				CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr<MyClass>(), NO_PARAMETER, []()->Ptr<MyClass>{return nullptr;}, L"*", L"*")
+                         // 17) Inject a static method and specify how to generate C++ code, "*" means not able to generate.
+                         CLASS_MEMBER_STATIC_EXTERNALMETHOD_TEMPLATE(MyNewName6, {L"parameter1" _ L"parameter2"}, int(*)(int, const WString&), [](int b, const WString& c){return 0;}, L"*")
 
-				VII) Add unoverloaded functions
-				CLASS_MEMBER_METHOD(MyFunction1, NO_PARAMETER)
-				CLASS_MEMBER_METHOD(MyFunction2, {L"parameter1" _ L"parameter2"})
+                         // 18) Add a getter function as a property
+                         CLASS_MEMBER_PROPERTY_READONLY_FAST(X)
+                         // which is short for
+                         CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
+                         CLASS_MEMBER_PROPERTY_READONLY(X, GetX)
 
-				VIII) Add unoverloaded function but give a different names
-				CLASS_MEMBER_METHOD_RENAME(MyNewName1, MyFunction1, NO_PARAMETER)
-				CLASS_MEMBER_METHOD_RENAME(MyNewName2, MyFunction2, {L"parameter1" _ L"parameter2"})
+                         // 19) Add a pair of getter and setter functions as a property
+                         CLASS_MEMBER_PROPERTY_FAST(X)
+                         // which is short for
+                         CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
+                         CLASS_MEMBER_METHOD(SetX, {L"value"})
+                         CLASS_MEMBER_PROPERTY(X, GetX, SetX)
 
-				IX) Add overloaded functions
-				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, NO_PARAMETER, int(MyClass::*)())
-				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L"parameter"}, int(MyClass::*)(int))
-				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&))
+                         // 20) Add a getter function as a property with a property changed event
+                         CLASS_MEMBER_EVENT(XChanged)
+                         CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(X)
+                         // which is short for
+                         CLASS_MEMBER_EVENT(XChanged)
+                         CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
+                         CLASS_MEMBER_PROPERTY_EVENT_READONLY(X, GetX, XChanged)
 
-				IX) Add overloaded functions but give different names
-				CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName3, MyFunction3, NO_PARAMETER, int(MyClass::*)())
-				CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L"parameter"}, int(MyClass::*)(int))
-				CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&))
+                         // 21) Add a pair of getter and setter functions as a property with a property changed event
+                         CLASS_MEMBER_EVENT(XChanged)
+                         CLASS_MEMBER_PROPERTY_EVENT_FAST(X)
+                         // which is short for
+                         CLASS_MEMBER_EVENT(XChanged)
+                         CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
+                         CLASS_MEMBER_METHOD(SetX, {L"value"})
+                         CLASS_MEMBER_PROPERTY_EVENT(X, GetX, SetX, XChanged)
 
-				X) Inject global functions as methods:
-				CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L"parameter"}, int(MyClass::*)(int), mynamespace::AGlobalFunction)
-				CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(MyNewName5, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&), [](MyClass* a, int b, const WString& c){return 0;}, L"*", L"*")
+                     END_CLASS_MEMBER(MyClass)
+                 ]]></code></program></p><p>
+                 If the code compiles, the class should look like this:
+                 <program><code><![CDATA[
+                     class MyClass : public Description<MyClass>
+                     {
+                     public:
+                         MyClass();
+                         MyClass(int numberParameter, const WString& stringParameter);
 
-				XI) Add unoverloaded static functions
-				CLASS_MEMBER_STATIC_METHOD(MyFunction4, NO_PARAMETER)
-				CLASS_MEMBER_STATIC_METHOD(MyFunction5, {L"parameter1" _ L"parameter2"})
+                         int MyFunction1();
+                         int MyFunction2(int parameter1, const WString& parameter2);
+                         int MyFunction3();
+                         int MyFunction3(int parameter);
+                         int MyFunction3(int parameter1, const WString& parameter2);
 
-				XII) Add overloaded static functions
-				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, NO_PARAMETER, int(*)())
-				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, {L"parameter"}, int(*)(int))
-				CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, {L"parameter1" _ L"parameter2"}, int(*)(int, const WString&))
+                         static int MyFunction4();
+                         static int MyFunction5(int parameter1, const WString& parameter2);
+                         static int MyFunction6();
+                         static int MyFunction6(int parameter);
+                         static int MyFunction6(int parameter1, const WString& parameter2);
 
-				XIII) Inject global functions as static methods:
-				CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L"parameter"}, int(*)(int), mynamespace::AGlobalFunction2)
-				CLASS_MEMBER_STATIC_EXTERNALMETHOD_INVOKETEMPLATE(MyNewName6, {L"parameter1" _ L"parameter2"}, int(*)(int, const WString&), [](int b, const WString& c){return 0;}, L"*")
+                         Event<void()> XChanged;
+                         int GetX();
+                         void SetX(int value);
+                     };
 
-				XIV) Add a getter function as a property
-				CLASS_MEMBER_PROPERTY_READONLY_FAST(X)
-				which is short for
-				CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
-				CLASS_MEMBER_PROPERTY_READONLY(X, GetX)
+                     Ptr<MyClass> CreateMyClass(int numberParameter, const WString7 stringParameter);
+                     int GlobalFunction(MyClass* self, int parameter);
+                 ]]></code></program></p></li><li><p><b>interface</b>:
+                 A C++ class can be registered as a reflectable interface if:
+                 <ul><li>Directly or indirectly inherits <symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></li><li>The only registered constructor (if exists) should use Ptr&lt;<symbol name="IValueInterfaceProxy" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueInterfaceProxy"/>&gt; as a parameter, so that a Workflow script class could implement this interface.</li></ul></p><p>
+                 Suppose you have an interface like this:
+                 <program><code><![CDATA[
+                     class IMyInterface : public virtual IDescriptable, public Description<IMyInterface>
+                     {
+                     public:
+                         int GetX();
+                         void SetX(int value);
+                     };
+                 ]]></code></program></p><p>
+                 If you want to allow a Workflow script class implement this interface, you should first add a proxy like this:
+                 <program><code><![CDATA[
+                     #pragma warning(push)
+                     #pragma warning(disable:4250)
+                     BEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR(IMyInterface)
+                         // or BEGIN_INTERFACE_PROXY_RAWPTR(IMyInterface, baseInterfaces...)
+                         // or BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(IMyInterface)
+                         // or BEGIN_INTERFACE_PROXY_SHAREDPTR(IMyInterface, baseInterfaces...)
+                         int GetX()override
+                         {
+                             INVOKEGET_INTERFACE_PROXY_NOPARAMS(GetX)
+                         }
 
-				XV) Add a pair of getter and setter functions as a property
-				CLASS_MEMBER_PROPERTY_FAST(X)
-				which is short for
-				CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
-				CLASS_MEMBER_METHOD(SetX, {L"value"})
-				CLASS_MEMBER_PROPERTY(X, GetX, SetX)
+                         void SetX(int value)override
+                         {
+                             INVOKE_INTERFACE_PROXY(SetX, value)
+                         }
+                     END_INTERFACE_PROXY(IMyInterface)
+                     #pragma warning(pop)
+                 ]]></code></program></p><p>
+                 And then use this code to register the interface:
+                 <program><code><![CDATA[
+                     BEGIN_INTERFACE_MEMBER(IMyInterface)
+                         ...
+                     END_INTERFACE_MEMBER(IMyInterface)
+                 ]]></code></program></p><p>
+                 Everything else is the same as registering classes.
+                 Use <b>BEGIN_INTERFACE_MEMBER_NOPROXY</b> to register an interface without a proxy,
+                 which means a Workflow script class cannot implement this interface.
+                 </p></li><li>
+                 Undefine the macro for comma:
+                 <program><code><![CDATA[
+                     #undef _
+                 ]]></code></program></li></ul></li><li><b>(in cpp files)</b> Create a type loader:
+         <program><code><![CDATA[
+             class MyTypeLoader : public Object, public ITypeLoader
+             {
+             public:
+                 void Load(ITypeManager* manager)
+                 {
+                     MY_TYPELIST(ADD_TYPE_INFO)
+                 }
 
-				XVI) Add a getter function as a property with a property changed event
-				CLASS_MEMBER_EVENT(XChanged)
-				CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(X)
-				which is short for
-				CLASS_MEMBER_EVENT(XChanged)
-				CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
-				CLASS_MEMBER_PROPERTY_EVENT_READONLY(X, GetX, XChanged)
-
-				XVII) Add a pair of getter and setter functions as a property with a property changed event
-				CLASS_MEMBER_EVENT(XChanged)
-				CLASS_MEMBER_PROPERTY_EVENT_FAST(X)
-				which is short for
-				CLASS_MEMBER_EVENT(XChanged)
-				CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
-				CLASS_MEMBER_METHOD(SetX, {L"value"})
-				CLASS_MEMBER_PROPERTY_EVENT(X, GetX, SetX, XChanged)
-
-			END_CLASS_MEMBER(MyClass)
-
-			If the code compiles, the class should look like this:
-			class MyClass : public Description<MyClass>
-			{
-			public:
-				MyClass();
-				MyClass(int numberParameter, const WString& stringParameter);
-
-				int MyFunction1();
-				int MyFunction2(int parameter1, const WString& parameter2);
-				int MyFunction3();
-				int MyFunction3(int parameter);
-				int MyFunction3(int parameter1, const WString& parameter2);
-
-				static int MyFunction4();
-				static int MyFunction5(int parameter1, const WString& parameter2);
-				static int MyFunction6();
-				static int MyFunction6(int parameter);
-				static int MyFunction6(int parameter1, const WString& parameter2);
-
-				Event<void()> XChanged;
-				int GetX();
-				void SetX(int value);
-			};
-
-			Ptr<MyClass> CreateMyClass(int numberParameter, const WString7 stringParameter);
-			int GlobalFunction(MyClass* self, int parameter);
-
-		e) interface:
-			An interface is defined by
-			I) Directly or indirectly inherits ]]><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/><![CDATA[
-			II) The only registered constructor (if exists) should use Ptr<]]><symbol name="IValueInterfaceProxy" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueInterfaceProxy"/><![CDATA[> as a parameter
-
-			Suppose you have an interface like this:
-			class IMyInterface : public virtual IDescriptable, public Description<IMyInterface>
-			{
-			public:
-				int GetX();
-				void SetX(int value);
-			};
-
-			If you want this interface implementable by Workflow script, you should first add a proxy like this:
-			#pragma warning(push)
-			#pragma warning(disable:4250)
-			BEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR(IMyInterface)
-			 or BEGIN_INTERFACE_PROXY_RAWPTR(IMyInterface, baseInterfaces...)
-			 or BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(IMyInterface)
-			 or BEGIN_INTERFACE_PROXY_SHAREDPTR(IMyInterface, baseInterfaces...)
-				int GetX()override
-				{
-					INVOKEGET_INTERFACE_PROXY_NOPARAMS(GetX)
-				}
-
-				void SetX(int value)override
-				{
-					INVOKE_INTERFACE_PROXY(SetX, value)
-				}
-			END_INTERFACE_PROXY(IMyInterface)
-			#pragma warning(pop)
-
-			And then use this code to register the interface:
-			BEGIN_INTERFACE_MEMBER(IMyInterface)
-				...
-			END_INTERFACE_MEMBER(IMyInterface)
-
-			Everything else is the same as registering classes. Use BEGIN_INTERFACE_MEMBER_NOPROXY to register an interface without a proxy, which means you cannot implement it in runtime dynamically.
-
-		#undef _
-
- 5) (in cpp files) Create a type loader:
-		class MyTypeLoader : public Object, public ITypeLoader
-		{
-		public:
-			void Load(ITypeManager* manager)
-			{
-				MY_TYPELIST(ADD_TYPE_INFO)
-			}
-
-			void Unload(ITypeManager* manager)
-			{
-			}
-		};
-
-	6) Load types when you think is a good timing using this code:
-		vl::reflection::description::GetGlobalTypeManager()->AddTypeLoader(new MyTypeLoader);
-
- ]]></summary><typeparam name="T">Type of your created reflection class.</typeparam><signature><![CDATA[template <
+                 void Unload(ITypeManager* manager)
+                 {
+                 }
+             };
+         ]]></code></program></li><li>
+         Before using reflection on registered types, you need to register the type loader:
+         <program><code><![CDATA[
+             vl::reflection::description::GetGlobalTypeManager()->AddTypeLoader(new MyTypeLoader);
+         ]]></code></program></li></ol></p></summary><typeparam name="T">Type that inherit this class.</typeparam><signature><![CDATA[template <
     typename T
 >
 class Description

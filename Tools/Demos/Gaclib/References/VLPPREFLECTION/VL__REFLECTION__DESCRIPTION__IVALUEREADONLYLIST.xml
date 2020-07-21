@@ -1,0 +1,8 @@
+<Document symbolId="vl::reflection::description::IValueReadonlyList" accessor="" category="Class" name="IValueReadonlyList" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueReadonlyList"><summary>
+ The reflectable version of readonly
+ <symbol name="Array" docId="vl::collections::Array" declFile="List.h" declId="NI$vl::collections::Array"/>,
+ <symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/> or
+ <symbol name="SortedList" docId="vl::collections::SortedList" declFile="List.h" declId="NI$vl::collections::SortedList"/></summary><signature><![CDATA[class IValueReadonlyList
+    : IValueEnumerable
+    , Description<IValueReadonlyList>;
+]]></signature><seealsos><symbol name="IValueReadonlyList" docId="vl::reflection::description::IValueReadonlyList" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueReadonlyList"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IValueEnumerable" docId="vl::reflection::description::IValueEnumerable" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueEnumerable"/></basetypes></Document>

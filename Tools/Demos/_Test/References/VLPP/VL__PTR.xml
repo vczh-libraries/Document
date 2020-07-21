@@ -4,9 +4,9 @@
  When no <symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/> is referencing the object, the object will be deleted automatically.
  </summary><remarks>
  It is safe to convert the same pointer to an object to a shared pointer once.
- If you do it multiple times, it depends on [T:vl.ReferenceCounterOperator`2].
- For built-in strategies, only pointer to [T:vl.reflection.DescriptableObject] or its derived classes can be safely converted to a shared pointer for multiple times.
- For any other object, it will crash on the destructor of [T:vl.Ptr`1].
+ If you do it multiple times, it depends on <symbol name="ReferenceCounterOperator" docId="vl::ReferenceCounterOperator" declFile="Pointer.h" declId="NI$vl::ReferenceCounterOperator"/>.
+ For built-in strategies, only pointer to <symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/> or its derived classes can be safely converted to a shared pointer for multiple times.
+ For any other object, it will crash on the destructor of <symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/>.
  </remarks><typeparam name="T">The type of the object.</typeparam><signature><![CDATA[template <
     typename T
 >

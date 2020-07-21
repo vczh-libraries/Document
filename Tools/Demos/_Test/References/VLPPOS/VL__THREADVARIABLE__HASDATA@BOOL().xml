@@ -1,0 +1,3 @@
+<Document symbolId="vl::ThreadVariable::HasData@bool()" accessor="public" category="Function" name="HasData" declFile="Threading.h" declId="FB$vl::ThreadVariable::HasData@bool()[impl0]"><summary>Test if the storage has data.</summary><returns>Returns true if the storage has data.</returns><signature><![CDATA[bool HasData(
+);
+]]></signature></Document>

@@ -1,0 +1,3 @@
+<Document symbolId="vl::ConditionVariable::WakeOnePending@void()" accessor="public" category="Function" name="WakeOnePending" declFile="Threading.h" declId="FB$vl::ConditionVariable::WakeOnePending@void()[decl0]"><summary>Wake one thread that pending on this condition variable.</summary><signature><![CDATA[void WakeOnePending(
+);
+]]></signature></Document>

@@ -1,0 +1,14 @@
+<Document symbolId="vl::stream::GenerateToStream@::vl::WString([TCallback] const &amp;, ::vl::vint)" accessor="" category="Function" name="GenerateToStream" declFile="Accessor.h" declId="FB$vl::stream::GenerateToStream@::vl::WString([TCallback] const &amp;, ::vl::vint)[impl0]"><summary>
+ Build a big string using <symbol name="StreamWriter" docId="vl::stream::StreamWriter" declFile="Accessor.h" declId="NI$vl::stream::StreamWriter"/>.
+ </summary><typeparam name="TCallback">The type of the callback.</typeparam><returns>The built big string.</returns><param name="callback">
+ The callback to receive a big string.
+ The argument is a reference to a <symbol name="StreamWriter" docId="vl::stream::StreamWriter" declFile="Accessor.h" declId="NI$vl::stream::StreamWriter"/>.
+ After the callback is executed, everything written to the writer will be returned from &quot;GenerateToStream&quot;.
+ </param><param name="block">Size of the cache in bytes.</param><example index="0"/><signature><![CDATA[template <
+    typename TCallback
+>
+WString GenerateToStream(
+    TCallback const & callback,
+    vint block /* optional */
+);
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

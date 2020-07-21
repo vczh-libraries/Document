@@ -1,0 +1,2 @@
+<Document symbolId="vl::HttpRequest::acceptTypes" accessor="public" category="Variable" name="acceptTypes" declFile="HttpUtility.h" declId="NI$vl::HttpRequest::acceptTypes"><summary>Accept type list, elements like &quot;text/xml&quot;.</summary><signature><![CDATA[StringList acceptTypes;
+]]></signature><seealsos><symbol name="StringList" declFile="HttpUtility.h" declId="NI$vl::HttpRequest::StringList"/></seealsos></Document>

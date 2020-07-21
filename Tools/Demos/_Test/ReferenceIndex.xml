@@ -1,4 +1,6 @@
 <categories>
   <category name="Vlpp" file="VLPP"/>
+  <category name="VlppOS" file="VLPPOS"/>
   <category name="VlppRegex" file="VLPPREGEX"/>
+  <category name="VlppReflection" file="VLPPREFLECTION"/>
 </categories>

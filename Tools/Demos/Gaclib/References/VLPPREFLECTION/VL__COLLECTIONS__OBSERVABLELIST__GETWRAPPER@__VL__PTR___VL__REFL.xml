@@ -1,0 +1,11 @@
+<Document symbolId="vl::collections::ObservableList::GetWrapper@::vl::Ptr&lt;::vl::reflection::description::IValueObservableList&gt;()" accessor="public" category="Function" name="GetWrapper" declFile="GuiTypeDescriptorBuilder_Container.h" declId="FB$vl::collections::ObservableList::GetWrapper@::vl::Ptr&lt;::vl::reflection::description::IValueObservableList&gt;()[impl0]"><summary>
+ Get the maintained observable list.
+ <symbol name="ItemChanged" docId="vl::reflection::description::IValueObservableList::ItemChanged" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueObservableList::ItemChanged"/> of the observable list
+ will be automatically triggered when any changing happens.
+ </summary><returns>The maintained observable list.</returns><remarks><symbol name="BoxParameter" docId="vl::reflection::description::BoxParameter@::vl::reflection::description::Value(::vl::reflection::description::TypeInfoRetriver::ResultReferenceType, ::vl::reflection::description::ITypeDescriptor *)" declFile="GuiTypeDescriptorBuilder.h" declId="FB$vl::reflection::description::BoxParameter@::vl::reflection::description::Value(::vl::reflection::description::TypeInfoRetriver::ResultReferenceType, ::vl::reflection::description::ITypeDescriptor *)[impl0]"/>
+ cannot turn any predefined C++ object to an reflectable observable list
+ and keep it binding to the C++ object.
+ When an reflectable observable list is required, ObservableList is strongly recommended.
+ </remarks><signature><![CDATA[Ptr<reflection::description::IValueObservableList> GetWrapper(
+);
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IValueObservableList" docId="vl::reflection::description::IValueObservableList" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueObservableList"/></seealsos></Document>

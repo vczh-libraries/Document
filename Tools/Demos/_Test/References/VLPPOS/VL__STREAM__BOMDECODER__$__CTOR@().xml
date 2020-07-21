@@ -1,0 +1,3 @@
+<Document symbolId="vl::stream::BomDecoder::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="CharFormat.h" declId="FB$vl::stream::BomDecoder::$__ctor@()[decl0]"><summary>Create an decoder, BOM will be consumed before reading any text.</summary><signature><![CDATA[ BomDecoder(
+);
+]]></signature></Document>

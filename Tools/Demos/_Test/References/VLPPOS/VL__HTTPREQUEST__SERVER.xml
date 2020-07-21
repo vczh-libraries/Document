@@ -1,0 +1,2 @@
+<Document symbolId="vl::HttpRequest::server" accessor="public" category="Variable" name="server" declFile="HttpUtility.h" declId="NI$vl::HttpRequest::server"><summary>Name of the server, like &quot;gaclib.net&quot;.</summary><signature><![CDATA[WString server;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

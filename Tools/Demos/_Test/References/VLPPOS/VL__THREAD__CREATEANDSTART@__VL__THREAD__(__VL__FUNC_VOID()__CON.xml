@@ -1,0 +1,6 @@
+<Document symbolId="vl::Thread::CreateAndStart@::vl::Thread *(::vl::Func&lt;void()&gt; const &amp;, bool)" accessor="public" category="Function" name="CreateAndStart" declFile="Threading.h" declId="FB$vl::Thread::CreateAndStart@::vl::Thread *(::vl::Func&lt;void()&gt; const &amp;, bool)[decl0]"><summary>Create a thread using a function object or a lambda expression.</summary><returns>Returns the created thread.</returns><param name="procedure">The function object or the lambda expression.</param><param name="deleteAfterStopped">Set to true (by default) to make the thread delete itself after the job is done. If you set this argument to true, you are not recommended to touch the returned thread pointer in any way.</param><signature><![CDATA[static Thread * CreateAndStart(
+    Func<void(
+)> const & procedure,
+    bool deleteAfterStopped /* optional */
+);
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="Thread" docId="vl::Thread" declFile="Threading.h" declId="NI$vl::Thread"/></seealsos></Document>

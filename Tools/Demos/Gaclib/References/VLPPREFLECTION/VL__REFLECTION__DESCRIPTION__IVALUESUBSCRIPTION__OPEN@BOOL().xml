@@ -1,0 +1,3 @@
+<Document symbolId="vl::reflection::description::IValueSubscription::Open@bool()" accessor="public" category="Function" name="Open" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueSubscription::Open@bool()[decl0]"><summary>Start the subscription.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Open(
+);
+]]></signature></Document>

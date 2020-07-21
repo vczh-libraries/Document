@@ -1,0 +1,3 @@
+<Document symbolId="vl::Thread::GetState@::vl::Thread::ThreadState()" accessor="public" category="Function" name="GetState" declFile="Threading.h" declId="FB$vl::Thread::GetState@::vl::Thread::ThreadState()[decl0]"><summary>Get the state of the thread.</summary><returns>The state of the thread.</returns><signature><![CDATA[ThreadState GetState(
+);
+]]></signature><seealsos><symbol name="ThreadState" docId="vl::Thread::ThreadState" declFile="Threading.h" declId="NI$vl::Thread::ThreadState"/></seealsos></Document>

@@ -1,0 +1,4 @@
+<Document symbolId="vl::reflection::DescriptableObject::Dispose@bool(bool)" accessor="public" category="Function" name="Dispose" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::Dispose@bool(bool)[decl0]"><summary>Try to delete this object.</summary><returns>Returns true if this operation succeeded. Returns false if the object refuces to be dispose.</returns><param name="forceDisposing">Set to true to force disposing this object. If the reference counter is not 0 if you force disposing it, it will raise a <symbol name="ValueNotDisposableException" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ValueNotDisposableException"/>.</param><signature><![CDATA[bool Dispose(
+    bool forceDisposing
+);
+]]></signature></Document>

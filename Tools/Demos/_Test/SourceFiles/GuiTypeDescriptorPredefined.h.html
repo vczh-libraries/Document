@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GuiTypeDescriptorPredefined.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_REFLECTION_GUITYPEDESCRIPTORPREDEFINED</div>
+<div class="disabled">#define VCZH_REFLECTION_GUITYPEDESCRIPTORPREDEFINED</div>
+
+<div class="disabled">#include &lt;math.h&gt;</div>
+<div class="disabled">#include &quot;GuiTypeDescriptor.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[49]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[2]$vl::reflection"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[2]$vl::reflection::description"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div></div>
+		{
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::reflection::description::VoidValue"><div><div class="token cpp_type">VoidValue</div></div></div> {};
+
+<div class="token cpp_comment ">/***********************************************************************
+Collections
+***********************************************************************/</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;The reflectable version of &lt;see cref=&quot;collections::IEnumerator`1&quot;/&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueEnumerator"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerator'], [], [])"><div class="token cpp_type">IValueEnumerator</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerator'], [], [])"><div class="token cpp_type">IValueEnumerator</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the current value in the enumerator.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The current value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;&lt;see cref=&quot;Next&quot;/&gt; needs to be called to make the first value available.&lt;/remarks&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::IValueEnumerator::GetCurrent@::vl::reflection::description::Value()[decl0]"><div><div class="token cpp_function">GetCurrent</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of the current value in the enumerator.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The position of the current value.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::reflection::description::IValueEnumerator::GetIndex@::vl::vint()[decl0]"><div><div class="token cpp_function">GetIndex</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Prepare for the next value.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns false if there is no more value.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::IValueEnumerator::Next@bool()[decl0]"><div><div class="token cpp_function">Next</div></div></div>() = <div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;The reflectable version of &lt;see cref=&quot;collections::IEnumerable`1&quot;/&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;&lt;see cref=&quot;BoxParameter`1&quot;/&gt; will create a &lt;see cref=&quot;Value&quot;/&gt; storing a shared pointer to an instance of this interface from an enumerable.&lt;/remarks&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueEnumerable"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerable'], [], [])"><div class="token cpp_type">IValueEnumerable</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerable'], [], [])"><div class="token cpp_type">IValueEnumerable</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// Create an enumerator. &lt;see cref=&quot;IValueEnumerator::Next&quot;/&gt; should be called before reading the first value.</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The enumerator.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerator'], [], [])"><div class="token cpp_type">IValueEnumerator</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueEnumerable::CreateEnumerator@::vl::Ptr<::vl::reflection::description::IValueEnumerator>()[decl0]"><div><div class="token cpp_function">CreateEnumerator</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create an enumerable from another lazy list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created enumerable.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;values&quot;&gt;The lazy list to wrap.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerable'], [], [])"><div class="token cpp_type">IValueEnumerable</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueEnumerable::Create@::vl::Ptr<::vl::reflection::description::IValueEnumerable>(::vl::collections::LazyList<::vl::reflection::description::Value>)[decl0]"><div><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IValueEnumerable::Create@::vl::Ptr<::vl::reflection::description::IValueEnumerable>(::vl::collections::LazyList<::vl::reflection::description::Value>)[decl0]::values"><div>values</div></div>);
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// The reflectable version of readonly</div>
+			<div class="token cpp_comment ">/// &lt;see cref=&quot;collections::Array`2&quot;/&gt;,</div>
+			<div class="token cpp_comment ">/// &lt;see cref=&quot;collections::List`2&quot;/&gt; or</div>
+			<div class="token cpp_comment ">/// &lt;see cref=&quot;collections::SortedList`2&quot;/&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueReadonlyList"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerable'], [], [])"><div class="token cpp_type">IValueEnumerable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the number of elements in the container.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The number of elements.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::reflection::description::IValueReadonlyList::GetCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetCount</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the reference to the specified element.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the specified element. It will crash when the index is out of range.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::IValueReadonlyList::Get@::vl::reflection::description::Value(::vl::vint)[decl0]"><div><div class="token cpp_function">Get</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::description::IValueReadonlyList::Get@::vl::reflection::description::Value(::vl::vint)[decl0]::index"><div>index</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Test does the list contain a value or not.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the list contains the specified value.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to test.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::IValueReadonlyList::Contains@bool(::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">Contains</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueReadonlyList::Contains@bool(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the position of a value in this list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns the position of first element that equals to the specified value. Returns -1 if failed to find.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to find.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::reflection::description::IValueReadonlyList::IndexOf@::vl::vint(::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">IndexOf</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueReadonlyList::IndexOf@::vl::vint(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// The reflectable version of readonly</div>
+			<div class="token cpp_comment ">/// &lt;see cref=&quot;collections::Array`2&quot;/&gt; or</div>
+			<div class="token cpp_comment ">/// &lt;see cref=&quot;collections::List`2&quot;/&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+
+			<div class="token cpp_comment ">/// &lt;remarks&gt;&lt;see cref=&quot;BoxParameter`1&quot;/&gt; will create a &lt;see cref=&quot;Value&quot;/&gt; storing a shared pointer to an instance of this interface from a container.&lt;/remarks&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueList"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Replace an element in the specified position.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded. It will crash when the index is out of range&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position of the element to replace.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The new value to replace.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::reflection::description::IValueList::Set@void(::vl::vint, ::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">Set</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::description::IValueList::Set@void(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::index"><div>index</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueList::Set@void(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Append a value at the end of the list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The index of the added item.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to add.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::reflection::description::IValueList::Add@::vl::vint(::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">Add</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueList::Add@::vl::vint(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Insert a value at the specified position.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The index of the added item. It will crash if the index is out of range&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The position to insert the value.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The value to add.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::reflection::description::IValueList::Insert@::vl::vint(::vl::vint, ::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">Insert</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::description::IValueList::Insert@::vl::vint(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::index"><div>index</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueList::Insert@::vl::vint(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Remove an element from the list. If multiple elements equal to the specified value, only the first one will be removed.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the element is removed.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The item to remove.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::IValueList::Remove@bool(::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueList::Remove@bool(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Remove an element at a specified position.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the element is removed. It will crash when the index is out of range.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the element to remove.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::IValueList::RemoveAt@bool(::vl::vint)[decl0]"><div><div class="token cpp_function">RemoveAt</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::description::IValueList::RemoveAt@bool(::vl::vint)[decl0]::index"><div>index</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Remove all elements.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::reflection::description::IValueList::Clear@void()[decl0]"><div><div class="token cpp_function">Clear</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created list.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>&gt;			<div class="def" id="FB$vl::reflection::description::IValueList::Create@::vl::Ptr<::vl::reflection::description::IValueList>()[decl0]"><div><div class="token cpp_function">Create</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a list with elements copied from another readonly list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created list.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;values&quot;&gt;Elements to copy.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>&gt;			<div class="def" id="FB$vl::reflection::description::IValueList::Create@::vl::Ptr<::vl::reflection::description::IValueList>(::vl::Ptr<::vl::reflection::description::IValueReadonlyList>)[decl0]"><div><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IValueList::Create@::vl::Ptr<::vl::reflection::description::IValueList>(::vl::Ptr<::vl::reflection::description::IValueReadonlyList>)[decl0]::values"><div>values</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a list with elements copied from another lazy list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created list.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;values&quot;&gt;Elements to copy.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>&gt;			<div class="def" id="FB$vl::reflection::description::IValueList::Create@::vl::Ptr<::vl::reflection::description::IValueList>(::vl::collections::LazyList<::vl::reflection::description::Value>)[decl0]"><div><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IValueList::Create@::vl::Ptr<::vl::reflection::description::IValueList>(::vl::collections::LazyList<::vl::reflection::description::Value>)[decl0]::values"><div>values</div></div>);
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// The reflectable version of list container which triggers an event whenever items are changed.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueObservableList"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList'], [], [])"><div class="token cpp_type">IValueObservableList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList'], [], [])"><div class="token cpp_type">IValueObservableList</div></div>&gt;
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> <div class="def" id="NI$vl::reflection::description::IValueObservableList::ItemChangedProc"><div><div class="token cpp_type">ItemChangedProc</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> index, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> oldCount, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> newCount);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;Event that is triggered whenever items are changed.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;The first argument is the index of the first item that is changed.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;The second argument is the number of original items that are replaced by new items.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;The third argument is the number of new items that replace original items.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;If an item is changed, oldCount and newCount are both 1.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;If several items are removed from the list, newCount is 0.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;If several items are inserted to the list, oldCount is 0.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;This event is triggered when the updating is done, original items are not possible to access at the moment.&lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+				<div class="ref" onclick="jumpToSymbol(['vl::Event@<void([TArgs]...)>'], ['vl::Event'], [], [])"><div class="token cpp_type">Event</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList::ItemChangedProc'], [], [])"><div class="token cpp_type">ItemChangedProc</div></div>&gt;			<div class="def" id="NI$vl::reflection::description::IValueObservableList::ItemChanged"><div><div class="token cpp_field">ItemChanged</div></div></div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created list.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList'], [], [])"><div class="token cpp_type">IValueObservableList</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueObservableList::Create@::vl::Ptr<::vl::reflection::description::IValueObservableList>()[decl0]"><div><div class="token cpp_function">Create</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a list with elements copied from another readonly list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created list.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;values&quot;&gt;Elements to copy.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList'], [], [])"><div class="token cpp_type">IValueObservableList</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueObservableList::Create@::vl::Ptr<::vl::reflection::description::IValueObservableList>(::vl::Ptr<::vl::reflection::description::IValueReadonlyList>)[decl0]"><div><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IValueObservableList::Create@::vl::Ptr<::vl::reflection::description::IValueObservableList>(::vl::Ptr<::vl::reflection::description::IValueReadonlyList>)[decl0]::values"><div>values</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a list with elements copied from another lazy list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created list.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;values&quot;&gt;Elements to copy.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList'], [], [])"><div class="token cpp_type">IValueObservableList</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueObservableList::Create@::vl::Ptr<::vl::reflection::description::IValueObservableList>(::vl::collections::LazyList<::vl::reflection::description::Value>)[decl0]"><div><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IValueObservableList::Create@::vl::Ptr<::vl::reflection::description::IValueObservableList>(::vl::collections::LazyList<::vl::reflection::description::Value>)[decl0]::values"><div>values</div></div>);
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// The reflectable version of readonly &lt;see cref=&quot;collections::Dictionary`4&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueReadonlyDictionary"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get all keys.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;All keys.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueReadonlyDictionary::GetKeys@::vl::Ptr<::vl::reflection::description::IValueReadonlyList>()[decl0]"><div><div class="token cpp_function">GetKeys</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get all values.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;All values.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueReadonlyDictionary::GetValues@::vl::Ptr<::vl::reflection::description::IValueReadonlyList>()[decl0]"><div><div class="token cpp_function">GetValues</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the number of keys.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The number of keys. It is also the number of values.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::reflection::description::IValueReadonlyDictionary::GetCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetCount</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the value associated to a specified key.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The reference to the value. It will crash if the key does not exist.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::IValueReadonlyDictionary::Get@::vl::reflection::description::Value(::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">Get</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueReadonlyDictionary::Get@::vl::reflection::description::Value(::vl::reflection::description::Value const &)[decl0]::key"><div>key</div></div>) = <div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// The reflectable version of &lt;see cref=&quot;collections::Dictionary`4&quot;/&gt;.</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;&lt;see cref=&quot;BoxParameter`1&quot;/&gt; will create a &lt;see cref=&quot;Value&quot;/&gt; storing a shared pointer to an instance of this interface from a dictionary.&lt;/remarks&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueDictionary"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueDictionary'], [], [])"><div class="token cpp_type">IValueDictionary</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueDictionary'], [], [])"><div class="token cpp_type">IValueDictionary</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Replace the value associated to a specified key.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the value is replaced.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find. If the key does not exist, it will be added to the dictionary.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The associated value to replace.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::reflection::description::IValueDictionary::Set@void(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">Set</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueDictionary::Set@void(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)[decl0]::key"><div>key</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueDictionary::Set@void(::vl::reflection::description::Value const &, ::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Remove a key with the associated value.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the key and the value is removed.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;key&quot;&gt;The key to find.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::IValueDictionary::Remove@bool(::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">Remove</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueDictionary::Remove@bool(::vl::reflection::description::Value const &)[decl0]::key"><div>key</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Remove all elements.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::reflection::description::IValueDictionary::Clear@void()[decl0]"><div><div class="token cpp_function">Clear</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create an empty dictionary.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created dictionary.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueDictionary'], [], [])"><div class="token cpp_type">IValueDictionary</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueDictionary::Create@::vl::Ptr<::vl::reflection::description::IValueDictionary>()[decl0]"><div><div class="token cpp_function">Create</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a dictionary with elements copied from another readonly dictionary.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created dictionary.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;values&quot;&gt;Elements to copy.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueDictionary'], [], [])"><div class="token cpp_type">IValueDictionary</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueDictionary::Create@::vl::Ptr<::vl::reflection::description::IValueDictionary>(::vl::Ptr<::vl::reflection::description::IValueReadonlyDictionary>)[decl0]"><div><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IValueDictionary::Create@::vl::Ptr<::vl::reflection::description::IValueDictionary>(::vl::Ptr<::vl::reflection::description::IValueReadonlyDictionary>)[decl0]::values"><div>values</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a dictionary with elements copied from another lazy list.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created dictionary.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;values&quot;&gt;Elements to copy.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueDictionary'], [], [])"><div class="token cpp_type">IValueDictionary</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueDictionary::Create@::vl::Ptr<::vl::reflection::description::IValueDictionary>(::vl::collections::LazyList<::vl::collections::Pair<::vl::reflection::description::Value, ::vl::reflection::description::Value>>)[decl0]"><div><div class="token cpp_function">Create</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;&gt; <div class="def" id="NI$vl::reflection::description::IValueDictionary::Create@::vl::Ptr<::vl::reflection::description::IValueDictionary>(::vl::collections::LazyList<::vl::collections::Pair<::vl::reflection::description::Value, ::vl::reflection::description::Value>>)[decl0]::values"><div>values</div></div>);
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Interface Implementation Proxy
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueInterfaceProxy"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueInterfaceProxy'], [], [])"><div class="token cpp_type">IValueInterfaceProxy</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueInterfaceProxy'], [], [])"><div class="token cpp_type">IValueInterfaceProxy</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::IValueInterfaceProxy::Invoke@::vl::reflection::description::Value(::vl::reflection::description::IMethodInfo *, ::vl::Ptr<::vl::reflection::description::IValueList>)[decl0]"><div><div class="token cpp_function">Invoke</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IMethodInfo'], [], [])"><div class="token cpp_type">IMethodInfo</div></div>* <div class="def" id="NI$vl::reflection::description::IValueInterfaceProxy::Invoke@::vl::reflection::description::Value(::vl::reflection::description::IMethodInfo *, ::vl::Ptr<::vl::reflection::description::IValueList>)[decl0]::methodInfo"><div>methodInfo</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IValueInterfaceProxy::Invoke@::vl::reflection::description::Value(::vl::reflection::description::IMethodInfo *, ::vl::Ptr<::vl::reflection::description::IValueList>)[decl0]::arguments"><div>arguments</div></div>) = <div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;A reflectable version of &lt;see cref=&quot;Func`1&quot;/&gt;.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;&lt;see cref=&quot;BoxParameter`1&quot;/&gt; will create a &lt;see cref=&quot;Value&quot;/&gt; storing a shared pointer to an instance of this interface from a function.&lt;/remarks&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueFunctionProxy"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueFunctionProxy'], [], [])"><div class="token cpp_type">IValueFunctionProxy</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueFunctionProxy'], [], [])"><div class="token cpp_type">IValueFunctionProxy</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Call the function.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Return value from the function.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;arguments&quot;&gt;Arguments to call the function.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>					<div class="def" id="FB$vl::reflection::description::IValueFunctionProxy::Invoke@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IValueList>)[decl0]"><div><div class="token cpp_function">Invoke</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IValueFunctionProxy::Invoke@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IValueList>)[decl0]::arguments"><div>arguments</div></div>) = <div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;A reflectable subscription, usually created by the &lt;b&gt;bind&lt;/b&gt; expression in Workflow script.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueSubscription"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueSubscription'], [], [])"><div class="token cpp_type">IValueSubscription</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueSubscription'], [], [])"><div class="token cpp_type">IValueSubscription</div></div>&gt;
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> <div class="def" id="NI$vl::reflection::description::IValueSubscription::ValueChangedProc"><div><div class="token cpp_type">ValueChangedProc</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; newValue);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Event that triggered when the binding source is changed.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;The first argument is the new value of the binding source.&lt;/remarks&gt;</div>
+				<div class="ref" onclick="jumpToSymbol(['vl::Event@<void([TArgs]...)>'], ['vl::Event'], [], [])"><div class="token cpp_type">Event</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueSubscription::ValueChangedProc'], [], [])"><div class="token cpp_type">ValueChangedProc</div></div>&gt;			<div class="def" id="NI$vl::reflection::description::IValueSubscription::ValueChanged"><div><div class="token cpp_field">ValueChanged</div></div></div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Start the subscription.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::IValueSubscription::Open@bool()[decl0]"><div><div class="token cpp_function">Open</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Manually trigger the event.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::IValueSubscription::Update@bool()[decl0]"><div><div class="token cpp_function">Update</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Stop the subscription.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::IValueSubscription::Close@bool()[decl0]"><div><div class="token cpp_function">Close</div></div></div>() = <div class="token cpp_number ">0</div>;
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Interface Implementation Proxy (Implement)
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ValueInterfaceRoot"><div><div class="token cpp_type">ValueInterfaceRoot</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueInterfaceProxy'], [], [])"><div class="token cpp_type">IValueInterfaceProxy</div></div>&gt;		<div class="def" id="NI$vl::reflection::description::ValueInterfaceRoot::proxy"><div><div class="token cpp_field">proxy</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::reflection::description::ValueInterfaceRoot::SetProxy@void(::vl::Ptr<::vl::reflection::description::IValueInterfaceProxy>)[impl0]"><div><div class="token cpp_function">SetProxy</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueInterfaceProxy'], [], [])"><div class="token cpp_type">IValueInterfaceProxy</div></div>&gt; <div class="def" id="NI$vl::reflection::description::ValueInterfaceRoot::SetProxy@void(::vl::Ptr<::vl::reflection::description::IValueInterfaceProxy>)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ValueInterfaceRoot::proxy'], [], [])"><div class="token cpp_field">proxy</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ValueInterfaceRoot::SetProxy@void(::vl::Ptr<::vl::reflection::description::IValueInterfaceProxy>)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>;
+				}
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueInterfaceProxy'], [], [])"><div class="token cpp_type">IValueInterfaceProxy</div></div>&gt; <div class="def" id="FB$vl::reflection::description::ValueInterfaceRoot::GetProxy@::vl::Ptr<::vl::reflection::description::IValueInterfaceProxy>()[impl0]"><div><div class="token cpp_function">GetProxy</div></div></div>()
+				{
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ValueInterfaceRoot::proxy'], [], [])"><div class="token cpp_field">proxy</div></div>;
+				}
+			};
+
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::ValueInterfaceProxy::T"><div><div class="token cpp_type">T</div></div></div>&gt;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ValueInterfaceProxy"><div class="ref" onclick="jumpToSymbol([], [], ['vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerator>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerable>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueObservableList>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyDictionary>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueDictionary>', 'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueSubscription>'], [])"><div class="token cpp_type">ValueInterfaceProxy</div></div></div>
+			{
+			};
+
+#pragma warning(push)
+#pragma warning(disable:<div class="token cpp_number ">4250</div>)
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::reflection::description::ValueInterfaceImpl::TInterface"><div><div class="token cpp_type">TInterface</div></div></div>, <div class="token cpp_keyword ">typename</div> ...<div class="def" id="TA$vl::reflection::description::ValueInterfaceImpl::TBaseInterfaces"><div><div class="token cpp_type">TBaseInterfaces</div></div></div>&gt;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ValueInterfaceImpl"><div><div class="token cpp_type">ValueInterfaceImpl</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ValueInterfaceRoot'], [], [])"><div class="token cpp_type">ValueInterfaceRoot</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ValueInterfaceImpl::TInterface'], [], [])"><div class="token cpp_type">TInterface</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ValueInterfaceProxy'], [], [])"><div class="token cpp_type">ValueInterfaceProxy</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ValueInterfaceImpl::TBaseInterfaces'], [], [])"><div class="token cpp_type">TBaseInterfaces</div></div>&gt;...
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::reflection::description::ValueInterfaceImpl::~ValueInterfaceImpl@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">ValueInterfaceImpl</div></div></div>()
+				{
+					<div class="ref" onclick="jumpToSymbol(['vl::reflection::DescriptableObject::FinalizeAggregation@void()'], ['vl::reflection::DescriptableObject::FinalizeAggregation@void()'], [], [])"><div class="token cpp_function">FinalizeAggregation</div></div>();
+				}
+			};
+#pragma warning(pop)
+
+<div class="token cpp_comment ">/***********************************************************************
+Runtime Exception
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueCallStack"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueCallStack'], [], [])"><div class="token cpp_type">IValueCallStack</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueCallStack'], [], [])"><div class="token cpp_type">IValueCallStack</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetLocalVariables@::vl::Ptr<::vl::reflection::description::IValueReadonlyDictionary>()[decl0]"><div><div class="token cpp_function">GetLocalVariables</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetLocalArguments@::vl::Ptr<::vl::reflection::description::IValueReadonlyDictionary>()[decl0]"><div><div class="token cpp_function">GetLocalArguments</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetCapturedVariables@::vl::Ptr<::vl::reflection::description::IValueReadonlyDictionary>()[decl0]"><div><div class="token cpp_function">GetCapturedVariables</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetGlobalVariables@::vl::Ptr<::vl::reflection::description::IValueReadonlyDictionary>()[decl0]"><div><div class="token cpp_function">GetGlobalVariables</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetFunctionName@::vl::WString()[decl0]"><div><div class="token cpp_function">GetFunctionName</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetSourceCodeBeforeCodegen@::vl::WString()[decl0]"><div><div class="token cpp_function">GetSourceCodeBeforeCodegen</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetSourceCodeAfterCodegen@::vl::WString()[decl0]"><div><div class="token cpp_function">GetSourceCodeAfterCodegen</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetRowBeforeCodegen@::vl::vint()[decl0]"><div><div class="token cpp_function">GetRowBeforeCodegen</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::reflection::description::IValueCallStack::GetRowAfterCodegen@::vl::vint()[decl0]"><div><div class="token cpp_function">GetRowAfterCodegen</div></div></div>() = <div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueException"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+<div class="disabled">#pragma push_macro(&quot;GetMessage&quot;)</div>
+<div class="disabled">#if defined GetMessage</div>
+<div class="disabled">#undef GetMessage
+#endif</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::reflection::description::IValueException::GetMessage@::vl::WString()[decl0]"><div><div class="token cpp_function">GetMessage</div></div></div>() = <div class="token cpp_number ">0</div>;
+<div class="disabled">#pragma pop_macro(&quot;GetMessage&quot;)</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::IValueException::GetFatal@bool()[decl0]"><div><div class="token cpp_function">GetFatal</div></div></div>() = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>&gt;			<div class="def" id="FB$vl::reflection::description::IValueException::GetCallStack@::vl::Ptr<::vl::reflection::description::IValueReadonlyList>()[decl0]"><div><div class="token cpp_function">GetCallStack</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div>&gt;				<div class="def" id="FB$vl::reflection::description::IValueException::Create@::vl::Ptr<::vl::reflection::description::IValueException>(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Create</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IValueException::Create@::vl::Ptr<::vl::reflection::description::IValueException>(::vl::WString const &)[decl0]::message"><div>message</div></div>);
+			};
+		}
+	}
+}
+
+<div class="disabled">#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl'
+        ]
+    },
+    'vl::Event': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::Event'
+        ]
+    },
+    'vl::Event@<void([TArgs]...)>': {
+        'displayNameInHtml': '<span class="cpp_type">Event</span>&lt;<span class="cpp_keyword">void</span>(<span class="cpp_type">TArgs</span>...)&gt;',
+        'impls': [
+            'NI$vl::Event@<void([TArgs]...)>'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
+        'impls': [
+            'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections'
+        ]
+    },
+    'vl::collections::LazyList': {
+        'displayNameInHtml': '<span class="cpp_type">LazyList</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::LazyList'
+        ],
+        'decls': []
+    },
+    'vl::collections::Pair': {
+        'displayNameInHtml': '<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">K</span>, <span class="cpp_type">V</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Pair'
+        ],
+        'decls': []
+    },
+    'vl::reflection': {
+        'displayNameInHtml': 'vl::reflection',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection',
+            'NF[1]$vl::reflection',
+            'NF[2]$vl::reflection',
+            'NF[3]$vl::reflection',
+            'NF[4]$vl::reflection',
+            'NF[5]$vl::reflection',
+            'NF[6]$vl::reflection',
+            'NF[7]$vl::reflection',
+            'NF[8]$vl::reflection'
+        ]
+    },
+    'vl::reflection::DescriptableObject::FinalizeAggregation@void()': {
+        'displayNameInHtml': '<span class="cpp_type">DescriptableObject</span>::<span class="cpp_function">FinalizeAggregation</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::reflection::DescriptableObject::FinalizeAggregation@void()[decl0]'
+        ]
+    },
+    'vl::reflection::Description': {
+        'displayNameInHtml': '<span class="cpp_type">Description</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::Description'
+        ],
+        'decls': []
+    },
+    'vl::reflection::IDescriptable': {
+        'displayNameInHtml': '<span class="cpp_type">IDescriptable</span>',
+        'impls': [
+            'NI$vl::reflection::IDescriptable'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description': {
+        'displayNameInHtml': 'vl::reflection::description',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection::description',
+            'NF[1]$vl::reflection::description',
+            'NF[2]$vl::reflection::description',
+            'NF[3]$vl::reflection::description',
+            'NF[4]$vl::reflection::description',
+            'NF[5]$vl::reflection::description',
+            'NF[6]$vl::reflection::description',
+            'NF[7]$vl::reflection::description',
+            'NF[8]$vl::reflection::description'
+        ]
+    },
+    'vl::reflection::description::IMethodInfo': {
+        'displayNameInHtml': '<span class="cpp_type">IMethodInfo</span>',
+        'impls': [
+            'NI$vl::reflection::description::IMethodInfo'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IMethodInfo'
+        ]
+    },
+    'vl::reflection::description::IValueCallStack': {
+        'displayNameInHtml': '<span class="cpp_type">IValueCallStack</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueCallStack'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueCallStack'
+        ]
+    },
+    'vl::reflection::description::IValueDictionary': {
+        'displayNameInHtml': '<span class="cpp_type">IValueDictionary</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueDictionary'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueDictionary'
+        ]
+    },
+    'vl::reflection::description::IValueEnumerable': {
+        'displayNameInHtml': '<span class="cpp_type">IValueEnumerable</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueEnumerable'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueEnumerable'
+        ]
+    },
+    'vl::reflection::description::IValueEnumerator': {
+        'displayNameInHtml': '<span class="cpp_type">IValueEnumerator</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueEnumerator'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueEnumerator'
+        ]
+    },
+    'vl::reflection::description::IValueException': {
+        'displayNameInHtml': '<span class="cpp_type">IValueException</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueException'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueException'
+        ]
+    },
+    'vl::reflection::description::IValueFunctionProxy': {
+        'displayNameInHtml': '<span class="cpp_type">IValueFunctionProxy</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueFunctionProxy'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueFunctionProxy'
+        ]
+    },
+    'vl::reflection::description::IValueInterfaceProxy': {
+        'displayNameInHtml': '<span class="cpp_type">IValueInterfaceProxy</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueInterfaceProxy'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueInterfaceProxy'
+        ]
+    },
+    'vl::reflection::description::IValueList': {
+        'displayNameInHtml': '<span class="cpp_type">IValueList</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueList'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueList'
+        ]
+    },
+    'vl::reflection::description::IValueObservableList': {
+        'displayNameInHtml': '<span class="cpp_type">IValueObservableList</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueObservableList'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueObservableList'
+        ]
+    },
+    'vl::reflection::description::IValueObservableList::ItemChangedProc': {
+        'displayNameInHtml': '<span class="cpp_type">IValueObservableList</span>::<span class="cpp_type">ItemChangedProc</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueObservableList::ItemChangedProc'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::IValueReadonlyDictionary': {
+        'displayNameInHtml': '<span class="cpp_type">IValueReadonlyDictionary</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueReadonlyDictionary'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueReadonlyDictionary'
+        ]
+    },
+    'vl::reflection::description::IValueReadonlyList': {
+        'displayNameInHtml': '<span class="cpp_type">IValueReadonlyList</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueReadonlyList'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueReadonlyList'
+        ]
+    },
+    'vl::reflection::description::IValueSubscription': {
+        'displayNameInHtml': '<span class="cpp_type">IValueSubscription</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueSubscription'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueSubscription'
+        ]
+    },
+    'vl::reflection::description::IValueSubscription::ValueChangedProc': {
+        'displayNameInHtml': '<span class="cpp_type">IValueSubscription</span>::<span class="cpp_type">ValueChangedProc</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueSubscription::ValueChangedProc'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::Value': {
+        'displayNameInHtml': '<span class="cpp_type">Value</span>',
+        'impls': [
+            'NI$vl::reflection::description::Value'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceImpl::TBaseInterfaces': {
+        'displayNameInHtml': '<span class="cpp_type">TBaseInterfaces</span>',
+        'impls': [
+            'TA$vl::reflection::description::ValueInterfaceImpl::TBaseInterfaces'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceImpl::TInterface': {
+        'displayNameInHtml': '<span class="cpp_type">TInterface</span>',
+        'impls': [
+            'TA$vl::reflection::description::ValueInterfaceImpl::TInterface'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueDictionary>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueDictionary</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueDictionary>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerable>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueEnumerable</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerable>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerator>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueEnumerator</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerator>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueList>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueList</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueList>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueObservableList>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueObservableList</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueObservableList>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyDictionary>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueReadonlyDictionary</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyDictionary>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyList>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueReadonlyList</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyList>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueSubscription>': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceProxy</span>&lt;<span class="cpp_type">IValueSubscription</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueSubscription>'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceRoot': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceRoot</span>',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceRoot'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceRoot::SetProxy@void(::vl::Ptr<::vl::reflection::description::IValueInterfaceProxy>)[impl0]::value': {
+        'displayNameInHtml': 'value',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceRoot::SetProxy@void(::vl::Ptr<::vl::reflection::description::IValueInterfaceProxy>)[impl0]::value'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::ValueInterfaceRoot::proxy': {
+        'displayNameInHtml': '<span class="cpp_type">ValueInterfaceRoot</span>::<span class="cpp_field">proxy</span>',
+        'impls': [
+            'NI$vl::reflection::description::ValueInterfaceRoot::proxy'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::reflection::DescriptableObject::FinalizeAggregation@void()[decl0]': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::Event': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IMethodInfo': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueCallStack': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueDictionary': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueEnumerable': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueEnumerator': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueException': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueFunctionProxy': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueInterfaceProxy': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueList': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueObservableList': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueReadonlyDictionary': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueReadonlyList': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueSubscription': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[28]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[29]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::reflection': null,
+    'NF[2]$vl::reflection::description': null,
+    'NF[30]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[31]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[32]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[33]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[34]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[37]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[38]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[39]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[40]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[42]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[43]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[44]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[45]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[46]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[48]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[49]$vl': null,
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[50]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[51]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[52]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[53]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[54]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[55]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[7]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NI$vl::Event@<void([TArgs]...)>': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::LazyList': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NI$vl::collections::Pair': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NI$vl::reflection::Description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::IDescriptable': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::IMethodInfo': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::IValueCallStack': null,
+    'NI$vl::reflection::description::IValueDictionary': null,
+    'NI$vl::reflection::description::IValueEnumerable': null,
+    'NI$vl::reflection::description::IValueEnumerator': null,
+    'NI$vl::reflection::description::IValueException': null,
+    'NI$vl::reflection::description::IValueFunctionProxy': null,
+    'NI$vl::reflection::description::IValueInterfaceProxy': null,
+    'NI$vl::reflection::description::IValueList': null,
+    'NI$vl::reflection::description::IValueObservableList': null,
+    'NI$vl::reflection::description::IValueObservableList::ItemChangedProc': null,
+    'NI$vl::reflection::description::IValueReadonlyDictionary': null,
+    'NI$vl::reflection::description::IValueReadonlyList': null,
+    'NI$vl::reflection::description::IValueSubscription': null,
+    'NI$vl::reflection::description::IValueSubscription::ValueChangedProc': null,
+    'NI$vl::reflection::description::Value': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy': null,
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueDictionary>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerable>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueEnumerator>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueList>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueObservableList>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyDictionary>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueReadonlyList>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceProxy@<::vl::reflection::description::IValueSubscription>': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NI$vl::reflection::description::ValueInterfaceRoot': null,
+    'NI$vl::reflection::description::ValueInterfaceRoot::SetProxy@void(::vl::Ptr<::vl::reflection::description::IValueInterfaceProxy>)[impl0]::value': null,
+    'NI$vl::reflection::description::ValueInterfaceRoot::proxy': null,
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'TA$vl::reflection::description::ValueInterfaceImpl::TBaseInterfaces': null,
+    'TA$vl::reflection::description::ValueInterfaceImpl::TInterface': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

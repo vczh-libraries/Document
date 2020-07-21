@@ -1,0 +1,15 @@
+<Document symbolId="vl::CriticalSection" accessor="" category="Class" name="CriticalSection" declFile="Threading.h" declId="NI$vl::CriticalSection"><summary>
+ Critical section.
+ The macro &quot;CS_LOCK&quot; is recommended instead of calling <symbol name="Enter" docId="vl::CriticalSection::Enter@void()" declFile="Threading.h" declId="FB$vl::CriticalSection::Enter@void()[decl0]"/> and <symbol name="Leave" docId="vl::CriticalSection::Leave@void()" declFile="Threading.h" declId="FB$vl::CriticalSection::Leave@void()[decl0]"/> like this:
+ <program><code><![CDATA[
+ CS_LOCK(yourCriticalSection)
+ {
+     // do something
+ }
+ ]]></code></program></summary><remarks>
+ In Windows, enter a owned critical section will not result in dead lock.
+ In Linux and macOS, it works like a mutex.
+ </remarks><signature><![CDATA[class CriticalSection
+    : Object
+    , NotCopyable;
+]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
