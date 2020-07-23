@@ -31,12 +31,13 @@
   - [ ] `DocGen.ps1 copy` copies files from `website`, `website-doc1`, code index HTML files, `Cpp.js`, `Cpp.css`. `favicon.ico` to `vczh-libraries.github.io`.
   - [ ] Fix signature for Curry.
 - [ ] Refine document comment
+  - [ ] Generate `C++ name -> <symbols>` file, so that `<article>` could have hyper-links to document pages
+  - [ ] Automatically generate `registered types` list
   - [ ] VlppParser
     - [ ] Fix document for `ParsingTable`
     - [ ] Add `header:` in codegen so that generated files have license comment
     - [ ] Enable writing XML documents for AST
     - [ ] Regenerate XML and JSON parser
-    - [ ] Automatically generate `registered types` list
   - [ ] Workflow
     - [ ] Mark license on source files, generated files and codegen tools
     - [ ] Add header and comments to generated file
