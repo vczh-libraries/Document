@@ -54,6 +54,113 @@ Collections
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;The reflectable version of &lt;see cref=&quot;collections::IEnumerable`1&quot;/&gt;.&lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;remarks&gt;&lt;see cref=&quot;BoxParameter`1&quot;/&gt; will create a &lt;see cref=&quot;Value&quot;/&gt; storing a shared pointer to an instance of this interface from an enumerable.&lt;/remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// // reflectable C++ types</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace mynamespace</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     class MyClass : public Object, public Description&lt;MyClass&gt;</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     public:</div>
+			<div class="token cpp_comment ">///         MyClass(vint _data = 0)</div>
+			<div class="token cpp_comment ">///             :data(_data)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         vint data;</div>
+			<div class="token cpp_comment ">///     };</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #define MY_TYPELIST(F)\</div>
+			<div class="token cpp_comment ">///     F(mynamespace::MyClass)\</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // it is recommended to put the content below in a separated header file</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace vl</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     namespace reflection</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         namespace description</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             MY_TYPELIST(DECL_TYPE_INFO)</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // it is recommended to put the content below in a separated cpp file</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace vl</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     namespace reflection</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         namespace description</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             using namespace mynamespace;</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #define _ ,</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             MY_TYPELIST(IMPL_CPP_TYPE_INFO)</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             BEGIN_CLASS_MEMBER(MyClass)</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(), NO_PARAMETER)</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(vint), { L&quot;data&quot; })</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_FIELD(data)</div>
+			<div class="token cpp_comment ">///             END_CLASS_MEMBER(MyClass)</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #undef  _</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// class MyTypeLoader : public Object, public ITypeLoader</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">/// public:</div>
+			<div class="token cpp_comment ">///     void Load(ITypeManager* manager)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         MY_TYPELIST(ADD_TYPE_INFO)</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     void Unload(ITypeManager* manager)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// };</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // main function</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     LoadPredefinedTypes();</div>
+			<div class="token cpp_comment ">///     GetGlobalTypeManager()-&gt;AddTypeLoader(new MyTypeLoader);</div>
+			<div class="token cpp_comment ">///     GetGlobalTypeManager()-&gt;Load();</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         LazyList&lt;Ptr&lt;MyClass&gt;&gt; cs = Range&lt;vint&gt;(1, 10)</div>
+			<div class="token cpp_comment ">///             .Select([](vint i)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 return MakePtr&lt;MyClass&gt;(i);</div>
+			<div class="token cpp_comment ">///             });</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         Value boxed = BoxParameter&lt;LazyList&lt;Ptr&lt;MyClass&gt;&gt;&gt;(cs);</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             auto enumerable = UnboxValue&lt;Ptr&lt;IValueEnumerable&gt;&gt;(boxed);</div>
+			<div class="token cpp_comment ">///             auto enumerator = enumerable-&gt;CreateEnumerator();</div>
+			<div class="token cpp_comment ">///             while (enumerator-&gt;Next())</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Console::Write(itow(UnboxValue&lt;Ptr&lt;MyClass&gt;&gt;(enumerator-&gt;GetCurrent())-&gt;data) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             auto enumerator = boxed.Invoke(L&quot;CreateEnumerator&quot;);</div>
+			<div class="token cpp_comment ">///             while (UnboxValue&lt;bool&gt;(enumerator.Invoke(L&quot;Next&quot;)))</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Console::Write(itow(UnboxValue&lt;vint&gt;(enumerator.GetProperty(L&quot;Current&quot;).GetProperty(L&quot;data&quot;))) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">///     DestroyGlobalTypeManager();</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueEnumerable"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerable'], [], [])"><div class="token cpp_type">IValueEnumerable</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerable'], [], [])"><div class="token cpp_type">IValueEnumerable</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
@@ -103,8 +210,120 @@ Collections
 			<div class="token cpp_comment ">/// &lt;see cref=&quot;collections::Array`2&quot;/&gt; or</div>
 			<div class="token cpp_comment ">/// &lt;see cref=&quot;collections::List`2&quot;/&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-
 			<div class="token cpp_comment ">/// &lt;remarks&gt;&lt;see cref=&quot;BoxParameter`1&quot;/&gt; will create a &lt;see cref=&quot;Value&quot;/&gt; storing a shared pointer to an instance of this interface from a container.&lt;/remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// // reflectable C++ types</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace mynamespace</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     class MyClass : public Object, public Description&lt;MyClass&gt;</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     public:</div>
+			<div class="token cpp_comment ">///         MyClass(vint _data = 0)</div>
+			<div class="token cpp_comment ">///             :data(_data)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         vint data;</div>
+			<div class="token cpp_comment ">///     };</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #define MY_TYPELIST(F)\</div>
+			<div class="token cpp_comment ">///     F(mynamespace::MyClass)\</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // it is recommended to put the content below in a separated header file</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace vl</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     namespace reflection</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         namespace description</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             MY_TYPELIST(DECL_TYPE_INFO)</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // it is recommended to put the content below in a separated cpp file</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace vl</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     namespace reflection</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         namespace description</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             using namespace mynamespace;</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #define _ ,</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             MY_TYPELIST(IMPL_CPP_TYPE_INFO)</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             BEGIN_CLASS_MEMBER(MyClass)</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(), NO_PARAMETER)</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(vint), { L&quot;data&quot; })</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_FIELD(data)</div>
+			<div class="token cpp_comment ">///             END_CLASS_MEMBER(MyClass)</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #undef  _</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// class MyTypeLoader : public Object, public ITypeLoader</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">/// public:</div>
+			<div class="token cpp_comment ">///     void Load(ITypeManager* manager)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         MY_TYPELIST(ADD_TYPE_INFO)</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     void Unload(ITypeManager* manager)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// };</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // main function</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     LoadPredefinedTypes();</div>
+			<div class="token cpp_comment ">///     GetGlobalTypeManager()-&gt;AddTypeLoader(new MyTypeLoader);</div>
+			<div class="token cpp_comment ">///     GetGlobalTypeManager()-&gt;Load();</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         List&lt;Ptr&lt;MyClass&gt;&gt; cs;</div>
+			<div class="token cpp_comment ">///         CopyFrom(cs, Range&lt;vint&gt;(1, 10)</div>
+			<div class="token cpp_comment ">///             .Select([](vint i)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 return MakePtr&lt;MyClass&gt;(i);</div>
+			<div class="token cpp_comment ">///             })</div>
+			<div class="token cpp_comment ">///         );</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         Value boxed = BoxParameter&lt;List&lt;Ptr&lt;MyClass&gt;&gt;&gt;(cs);</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             auto list = UnboxValue&lt;Ptr&lt;IValueList&gt;&gt;(boxed);</div>
+			<div class="token cpp_comment ">///             for (vint i = 0; i &lt; list-&gt;GetCount(); i++)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Console::Write(itow(UnboxValue&lt;Ptr&lt;MyClass&gt;&gt;(list-&gt;Get(i))-&gt;data) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///         for (vint i = 1; i &lt;= 5; i++)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             cs.RemoveAt(i);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             for (vint i = 0; i &lt; UnboxValue&lt;vint&gt;(boxed.GetProperty(L&quot;Count&quot;)); i++)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Console::Write(itow(UnboxValue&lt;vint&gt;(boxed.Invoke(L&quot;Get&quot;, (Value_xs(), i)).GetProperty(L&quot;data&quot;))) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">///     DestroyGlobalTypeManager();</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueList"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
@@ -156,6 +375,129 @@ Collections
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// The reflectable version of list container which triggers an event whenever items are changed.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// // reflectable C++ types</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace mynamespace</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     class MyClass : public Object, public Description&lt;MyClass&gt;</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     public:</div>
+			<div class="token cpp_comment ">///         MyClass(vint _data = 0)</div>
+			<div class="token cpp_comment ">///             :data(_data)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         vint data;</div>
+			<div class="token cpp_comment ">///     };</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #define MY_TYPELIST(F)\</div>
+			<div class="token cpp_comment ">///     F(mynamespace::MyClass)\</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // it is recommended to put the content below in a separated header file</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace vl</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     namespace reflection</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         namespace description</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             MY_TYPELIST(DECL_TYPE_INFO)</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // it is recommended to put the content below in a separated cpp file</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace vl</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     namespace reflection</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         namespace description</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             using namespace mynamespace;</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #define _ ,</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             MY_TYPELIST(IMPL_CPP_TYPE_INFO)</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             BEGIN_CLASS_MEMBER(MyClass)</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(), NO_PARAMETER)</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(vint), { L&quot;data&quot; })</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_FIELD(data)</div>
+			<div class="token cpp_comment ">///             END_CLASS_MEMBER(MyClass)</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #undef  _</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// class MyTypeLoader : public Object, public ITypeLoader</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">/// public:</div>
+			<div class="token cpp_comment ">///     void Load(ITypeManager* manager)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         MY_TYPELIST(ADD_TYPE_INFO)</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     void Unload(ITypeManager* manager)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// };</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // main function</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     LoadPredefinedTypes();</div>
+			<div class="token cpp_comment ">///     GetGlobalTypeManager()-&gt;AddTypeLoader(new MyTypeLoader);</div>
+			<div class="token cpp_comment ">///     GetGlobalTypeManager()-&gt;Load();</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         ObservableList&lt;Ptr&lt;MyClass&gt;&gt; cs;</div>
+			<div class="token cpp_comment ">///         CopyFrom(cs, Range&lt;vint&gt;(1, 10)</div>
+			<div class="token cpp_comment ">///             .Select([](vint i)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 return MakePtr&lt;MyClass&gt;(i);</div>
+			<div class="token cpp_comment ">///             })</div>
+			<div class="token cpp_comment ">///         );</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         Value boxed = BoxValue(cs.GetWrapper());</div>
+			<div class="token cpp_comment ">///         auto list = UnboxValue&lt;Ptr&lt;IValueObservableList&gt;&gt;(boxed);</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             for (vint i = 0; i &lt; list-&gt;GetCount(); i++)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Console::Write(itow(UnboxValue&lt;Ptr&lt;MyClass&gt;&gt;(list-&gt;Get(i))-&gt;data) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             using CallbackType = Func&lt;void(vint, vint, vint)&gt;;</div>
+			<div class="token cpp_comment ">///             CallbackType callbackFunction = [](vint index, vint oldCount, vint newCount)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Console::WriteLine(L&quot;ItemChanged(&quot; + itow(index) + L&quot;, &quot; + itow(oldCount) + L&quot;, &quot; + itow(newCount) + L&quot;);&quot;);</div>
+			<div class="token cpp_comment ">///             };</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             auto handler = boxed.AttachEvent(L&quot;ItemChanged&quot;, BoxParameter&lt;CallbackType&gt;(callbackFunction));</div>
+			<div class="token cpp_comment ">///             for (vint i = 1; i &lt;= 5; i++)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 cs.RemoveAt(i);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             boxed.DetachEvent(L&quot;ItemChanged&quot;, handler);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             for (vint i = 0; i &lt; UnboxValue&lt;vint&gt;(boxed.GetProperty(L&quot;Count&quot;)); i++)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Console::Write(itow(UnboxValue&lt;vint&gt;(boxed.Invoke(L&quot;Get&quot;, (Value_xs(), i)).GetProperty(L&quot;data&quot;))) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">///     DestroyGlobalTypeManager();</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueObservableList"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList'], [], [])"><div class="token cpp_type">IValueObservableList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueList'], [], [])"><div class="token cpp_type">IValueList</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList'], [], [])"><div class="token cpp_type">IValueObservableList</div></div>&gt;
 			{
 				<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">void</div> <div class="def" id="NI$vl::reflection::description::IValueObservableList::ItemChangedProc"><div><div class="token cpp_type">ItemChangedProc</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> index, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> oldCount, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> newCount);
@@ -217,6 +559,121 @@ Collections
 			<div class="token cpp_comment ">/// The reflectable version of &lt;see cref=&quot;collections::Dictionary`4&quot;/&gt;.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;remarks&gt;&lt;see cref=&quot;BoxParameter`1&quot;/&gt; will create a &lt;see cref=&quot;Value&quot;/&gt; storing a shared pointer to an instance of this interface from a dictionary.&lt;/remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;example&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// // reflectable C++ types</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace mynamespace</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     class MyClass : public Object, public Description&lt;MyClass&gt;</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     public:</div>
+			<div class="token cpp_comment ">///         MyClass(vint _data = 0)</div>
+			<div class="token cpp_comment ">///             :data(_data)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         vint data;</div>
+			<div class="token cpp_comment ">///     };</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #define MY_TYPELIST(F)\</div>
+			<div class="token cpp_comment ">///     F(mynamespace::MyClass)\</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // it is recommended to put the content below in a separated header file</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace vl</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     namespace reflection</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         namespace description</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             MY_TYPELIST(DECL_TYPE_INFO)</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // it is recommended to put the content below in a separated cpp file</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// namespace vl</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     namespace reflection</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         namespace description</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             using namespace mynamespace;</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #define _ ,</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             MY_TYPELIST(IMPL_CPP_TYPE_INFO)</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///             BEGIN_CLASS_MEMBER(MyClass)</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(), NO_PARAMETER)</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_CONSTRUCTOR(Ptr&lt;MyClass&gt;(vint), { L&quot;data&quot; })</div>
+			<div class="token cpp_comment ">///                 CLASS_MEMBER_FIELD(data)</div>
+			<div class="token cpp_comment ">///             END_CLASS_MEMBER(MyClass)</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// #undef  _</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// class MyTypeLoader : public Object, public ITypeLoader</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">/// public:</div>
+			<div class="token cpp_comment ">///     void Load(ITypeManager* manager)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         MY_TYPELIST(ADD_TYPE_INFO)</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///     void Unload(ITypeManager* manager)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// };</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// // main function</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">/// int main()</div>
+			<div class="token cpp_comment ">/// {</div>
+			<div class="token cpp_comment ">///     LoadPredefinedTypes();</div>
+			<div class="token cpp_comment ">///     GetGlobalTypeManager()-&gt;AddTypeLoader(new MyTypeLoader);</div>
+			<div class="token cpp_comment ">///     GetGlobalTypeManager()-&gt;Load();</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         Dictionary&lt;vint, Ptr&lt;MyClass&gt;&gt; cs;</div>
+			<div class="token cpp_comment ">///         CopyFrom(cs, Range&lt;vint&gt;(1, 10)</div>
+			<div class="token cpp_comment ">///             .Select([](vint i) -&gt; Pair&lt;vint, Ptr&lt;MyClass&gt;&gt;</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 return { i, MakePtr&lt;MyClass&gt;(i * i) };</div>
+			<div class="token cpp_comment ">///             })</div>
+			<div class="token cpp_comment ">///         );</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         Value boxed = BoxParameter&lt;Dictionary&lt;vint, Ptr&lt;MyClass&gt;&gt;&gt;(cs);</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             auto dictionary = UnboxValue&lt;Ptr&lt;IValueDictionary&gt;&gt;(boxed);</div>
+			<div class="token cpp_comment ">///             for (vint i = 0; i &lt; dictionary-&gt;GetCount(); i++)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Value key = dictionary-&gt;GetKeys()-&gt;Get(i);</div>
+			<div class="token cpp_comment ">///                 Console::Write(itow(UnboxValue&lt;Ptr&lt;MyClass&gt;&gt;(dictionary-&gt;Get(key))-&gt;data) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         for (vint i = 1; i &lt;= 5; i++)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             cs.Remove(i * 2);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">/// </div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             for (vint i = 0; i &lt; UnboxValue&lt;vint&gt;(boxed.GetProperty(L&quot;Count&quot;)); i++)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Value key = boxed.GetProperty(L&quot;Keys&quot;).Invoke(L&quot;Get&quot;, (Value_xs(), i));</div>
+			<div class="token cpp_comment ">///                 Console::Write(itow(UnboxValue&lt;vint&gt;(boxed.Invoke(L&quot;Get&quot;, (Value_xs(), key)).GetProperty(L&quot;data&quot;))) + L&quot; &quot;);</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///             Console::WriteLine(L&quot;&quot;);</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">///     DestroyGlobalTypeManager();</div>
+			<div class="token cpp_comment ">/// }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/example&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IValueDictionary"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueDictionary'], [], [])"><div class="token cpp_type">IValueDictionary</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueDictionary'], [], [])"><div class="token cpp_type">IValueDictionary</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:

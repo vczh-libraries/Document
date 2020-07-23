@@ -2,6 +2,6 @@
  Returns true if the object is disposed.
  Returns false if the object cannot be disposed.
  An exception will be thrown if the reference counter is not 0.
-</returns><signature><![CDATA[bool DeleteRawPtr(
+</returns><example index="0"/><signature><![CDATA[bool DeleteRawPtr(
 );
 ]]></signature></Document>

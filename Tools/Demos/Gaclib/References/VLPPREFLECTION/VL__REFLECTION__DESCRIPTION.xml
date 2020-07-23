@@ -40,7 +40,7 @@
              MY_TYPELIST(DECL_TYPE_INFO)
          ]]></code></program></li><li><b>(in cpp files)</b> Connect type names and types:
          <program><code><![CDATA[
-             MY_TYPELIST(IMPL_VL_TYPE_INFO)
+             MY_TYPELIST(IMPL_CPP_TYPE_INFO)
          ]]></code></program></li><li><b>(in cpp files)</b> Register all members:
          <ul><li>
                  You will need to define a macro for commas, Whatever name is fine.
@@ -156,7 +156,7 @@
 
                          // 20) Add a getter function as a property with a property changed event
                          CLASS_MEMBER_EVENT(XChanged)
-                         CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(X)
+                         CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(X, XChanged)
                          // which is short for
                          CLASS_MEMBER_EVENT(XChanged)
                          CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)
@@ -164,7 +164,7 @@
 
                          // 21) Add a pair of getter and setter functions as a property with a property changed event
                          CLASS_MEMBER_EVENT(XChanged)
-                         CLASS_MEMBER_PROPERTY_EVENT_FAST(X)
+                         CLASS_MEMBER_PROPERTY_EVENT_FAST(X, XChanged)
                          // which is short for
                          CLASS_MEMBER_EVENT(XChanged)
                          CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)

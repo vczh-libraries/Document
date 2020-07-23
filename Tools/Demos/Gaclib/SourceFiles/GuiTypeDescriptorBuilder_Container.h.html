@@ -957,10 +957,14 @@ ParameterAccessor&lt;TContainer&gt;
 			<div class="token cpp_comment ">/// &lt;param name=&quot;start&quot;&gt;The index of the first item that are changed.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;count&quot;&gt;The number of items that are changed, the default value is 1.&lt;/param&gt;</div>
 			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
 			<div class="token cpp_comment ">/// This is useful when the container is not actually changed, but data in some items are changed.</div>
 			<div class="token cpp_comment ">/// For example, in an observable list of shared pointers,</div>
 			<div class="token cpp_comment ">/// properties of elements are changed does not trigger callbacks because it doesn&apos;t change pointers in the list.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
 			<div class="token cpp_comment ">/// If subscribers need to know about such change, calling this function is an easy way to do it.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::collections::ObservableListBase::NotifyUpdate@bool(::vl::vint, ::vl::vint)[impl0]"><div><div class="token cpp_function">NotifyUpdate</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::ObservableListBase::NotifyUpdate@bool(::vl::vint, ::vl::vint)[impl0]::start"><div><div class="token cpp_argument">start</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::collections::ObservableListBase::NotifyUpdate@bool(::vl::vint, ::vl::vint)[impl0]::count"><div><div class="token cpp_argument">count</div></div></div> = <div class="token cpp_number ">1</div>)
 			{
@@ -1132,10 +1136,12 @@ ParameterAccessor&lt;TContainer&gt;
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The maintained observable list.&lt;/returns&gt;</div>
 			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
 			<div class="token cpp_comment ">/// &lt;see cref=&quot;reflection::description::BoxParameter`1&quot;/&gt;</div>
 			<div class="token cpp_comment ">/// cannot turn any predefined C++ object to an reflectable observable list</div>
 			<div class="token cpp_comment ">/// and keep it binding to the C++ object.</div>
 			<div class="token cpp_comment ">/// When an reflectable observable list is required, ObservableList is strongly recommended.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueObservableList'], [], [])"><div class="token cpp_type">IValueObservableList</div></div>&gt; <div class="def" id="FB$vl::collections::ObservableList::GetWrapper@::vl::Ptr<::vl::reflection::description::IValueObservableList>()[impl0]"><div><div class="token cpp_function">GetWrapper</div></div></div>()
 			{

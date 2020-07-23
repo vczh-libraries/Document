@@ -1,0 +1,6 @@
+SharedClass::SharedClass()
+RawClass::RawClass()
+sharedClass is SharedPtr
+rawClass is RawPtr
+RawClass::~RawClass()
+SharedClass::~SharedClass()
