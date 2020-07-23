@@ -1,0 +1,3 @@
+<Document symbolId="vl::parsing::ParsingTreeObject::GetCreatorRules@::vl::parsing::ParsingTreeObject::RuleList &amp;()" accessor="public" category="Function" name="GetCreatorRules" declFile="ParsingTree.h" declId="FB$vl::parsing::ParsingTreeObject::GetCreatorRules@::vl::parsing::ParsingTreeObject::RuleList &amp;()[decl0]"><summary>Get names of all rules that return this object.</summary><returns>Names of all rules.</returns><signature><![CDATA[RuleList & GetCreatorRules(
+);
+]]></signature><seealsos><symbol name="RuleList" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeObject::RuleList"/></seealsos></Document>

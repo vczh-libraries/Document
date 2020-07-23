@@ -1,0 +1,83 @@
+<example><![CDATA[
+ // reflectable C++ types
+ 
+ namespace mynamespace
+ {
+     class MyClass : public Object, public Description<MyClass>
+     {
+     public:
+         void PrintHelloWorld(const WString& name)
+         {
+             Console::WriteLine(L"Hello, " + name + L"!");
+         }
+     };
+ }
+ 
+ #define MY_TYPELIST(F)\
+     F(mynamespace::MyClass)\
+ 
+ // it is recommended to put the content below in a separated header file
+ 
+ namespace vl
+ {
+     namespace reflection
+     {
+         namespace description
+         {
+             MY_TYPELIST(DECL_TYPE_INFO)
+         }
+     }
+ }
+ 
+ // it is recommended to put the content below in a separated cpp file
+ 
+ namespace vl
+ {
+     namespace reflection
+     {
+         namespace description
+         {
+             using namespace mynamespace;
+ 
+ #define _ ,
+ 
+             MY_TYPELIST(IMPL_CPP_TYPE_INFO)
+ 
+             BEGIN_CLASS_MEMBER(MyClass)
+                 CLASS_MEMBER_CONSTRUCTOR(Ptr<MyClass>(), NO_PARAMETER)
+                 CLASS_MEMBER_METHOD(PrintHelloWorld, { L"name" })
+             END_CLASS_MEMBER(MyClass)
+ 
+ #undef  _
+         }
+     }
+ }
+ 
+ class MyTypeLoader : public Object, public ITypeLoader
+ {
+ public:
+     void Load(ITypeManager* manager)
+     {
+         MY_TYPELIST(ADD_TYPE_INFO)
+     }
+ 
+     void Unload(ITypeManager* manager)
+     {
+     }
+ };
+ 
+ // main function
+ 
+ int main()
+ {
+     LoadPredefinedTypes();
+     GetGlobalTypeManager()->AddTypeLoader(new MyTypeLoader);
+     GetGlobalTypeManager()->Load();
+     {
+         auto td = GetTypeDescriptor(L"mynamespace::MyClass");
+         auto myClass = Value::Create(td);
+         myClass.Invoke(L"PrintHelloWorld", (Value_xs(), WString(L"Gaclib")));
+     }
+     DestroyGlobalTypeManager();
+ }
+ ]]></example>

@@ -21,5 +21,5 @@
  use <symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"/> instead of <symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/>,
  and call <symbol name="FinalizeAggregation" docId="vl::reflection::DescriptableObject::FinalizeAggregation@void()" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::FinalizeAggregation@void()[decl0]"/> in the destructor.
  If A inherits B and they are all aggregatable, do it in both destructors.
- </p></remarks><signature><![CDATA[class DescriptableObject;
+ </p></remarks><example index="0"/><signature><![CDATA[class DescriptableObject;
 ]]></signature></Document>

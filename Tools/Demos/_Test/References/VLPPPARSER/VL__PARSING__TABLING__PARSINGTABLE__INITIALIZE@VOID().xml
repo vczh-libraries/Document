@@ -1,0 +1,3 @@
+<Document symbolId="vl::parsing::tabling::ParsingTable::Initialize@void()" accessor="public" category="Function" name="Initialize" declFile="ParsingTable.h" declId="FB$vl::parsing::tabling::ParsingTable::Initialize@void()[decl0]"><summary>Initialize the parsing table. This function should be called after deserializing the table from a string.</summary><signature><![CDATA[void Initialize(
+);
+]]></signature></Document>

@@ -1,0 +1,82 @@
+<reference>
+  <namespace name="::vl::parsing">
+    <document name="class ParsingError" docId="vl::parsing::ParsingError" file="VL__PARSING__PARSINGERROR">
+      <document name="variable codeRange" docId="vl::parsing::ParsingError::codeRange" file="VL__PARSING__PARSINGERROR__CODERANGE"/>
+      <document name="variable errorMessage" docId="vl::parsing::ParsingError::errorMessage" file="VL__PARSING__PARSINGERROR__ERRORMESSAGE"/>
+      <document name="variable parsingTree" docId="vl::parsing::ParsingError::parsingTree" file="VL__PARSING__PARSINGERROR__PARSINGTREE"/>
+      <document name="variable token" docId="vl::parsing::ParsingError::token" file="VL__PARSING__PARSINGERROR__TOKEN"/>
+    </document>
+    <document name="struct ParsingTextPos" docId="vl::parsing::ParsingTextPos" file="VL__PARSING__PARSINGTEXTPOS">
+      <document name="function IsInvalid" docId="vl::parsing::ParsingTextPos::IsInvalid@bool()" file="VL__PARSING__PARSINGTEXTPOS__ISINVALID@BOOL()"/>
+      <document name="variable column" docId="vl::parsing::ParsingTextPos::column" file="VL__PARSING__PARSINGTEXTPOS__COLUMN"/>
+      <document name="variable index" docId="vl::parsing::ParsingTextPos::index" file="VL__PARSING__PARSINGTEXTPOS__INDEX"/>
+      <document name="variable row" docId="vl::parsing::ParsingTextPos::row" file="VL__PARSING__PARSINGTEXTPOS__ROW"/>
+    </document>
+    <document name="struct ParsingTextRange" docId="vl::parsing::ParsingTextRange" file="VL__PARSING__PARSINGTEXTRANGE">
+      <document name="variable codeIndex" docId="vl::parsing::ParsingTextRange::codeIndex" file="VL__PARSING__PARSINGTEXTRANGE__CODEINDEX"/>
+      <document name="variable end" docId="vl::parsing::ParsingTextRange::end" file="VL__PARSING__PARSINGTEXTRANGE__END"/>
+      <document name="variable start" docId="vl::parsing::ParsingTextRange::start" file="VL__PARSING__PARSINGTEXTRANGE__START"/>
+    </document>
+    <document name="class ParsingToken" docId="vl::parsing::ParsingToken" file="VL__PARSING__PARSINGTOKEN">
+      <document name="variable tokenIndex" docId="vl::parsing::ParsingToken::tokenIndex" file="VL__PARSING__PARSINGTOKEN__TOKENINDEX"/>
+      <document name="variable value" docId="vl::parsing::ParsingToken::value" file="VL__PARSING__PARSINGTOKEN__VALUE"/>
+    </document>
+    <document name="class ParsingTreeArray" docId="vl::parsing::ParsingTreeArray" file="VL__PARSING__PARSINGTREEARRAY">
+      <document name="function GetElementType" docId="vl::parsing::ParsingTreeArray::GetElementType@::vl::WString const &amp;()" file="VL__PARSING__PARSINGTREEARRAY__GETELEMENTTYPE@__VL__WSTRING_CONS"/>
+      <document name="function GetItem" docId="vl::parsing::ParsingTreeArray::GetItem@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::vint)" file="VL__PARSING__PARSINGTREEARRAY__GETITEM@__VL__PTR___VL__PARSING__"/>
+      <document name="function GetItems" docId="vl::parsing::ParsingTreeArray::GetItems@::vl::parsing::ParsingTreeArray::NodeArray &amp;()" file="VL__PARSING__PARSINGTREEARRAY__GETITEMS@__VL__PARSING__PARSINGTR"/>
+    </document>
+    <document name="class ParsingTreeCustomBase" docId="vl::parsing::ParsingTreeCustomBase" file="VL__PARSING__PARSINGTREECUSTOMBASE">
+      <document name="variable codeRange" docId="vl::parsing::ParsingTreeCustomBase::codeRange" file="VL__PARSING__PARSINGTREECUSTOMBASE__CODERANGE"/>
+      <document name="variable creatorRules" docId="vl::parsing::ParsingTreeCustomBase::creatorRules" file="VL__PARSING__PARSINGTREECUSTOMBASE__CREATORRULES"/>
+    </document>
+    <document name="class ParsingTreeNode" docId="vl::parsing::ParsingTreeNode" file="VL__PARSING__PARSINGTREENODE">
+      <document name="function ClearQueryCache" docId="vl::parsing::ParsingTreeNode::ClearQueryCache@void()" file="VL__PARSING__PARSINGTREENODE__CLEARQUERYCACHE@VOID()"/>
+      <document name="function FindDeepestNode" docId="vl::parsing::ParsingTreeNode::FindDeepestNode@::vl::parsing::ParsingTreeNode *(::vl::parsing::ParsingTextPos const &amp;)" file="VL__PARSING__PARSINGTREENODE__FINDDEEPESTNODE@__VL__PARSING__PAR"/>
+      <document name="function FindDeepestNode" docId="vl::parsing::ParsingTreeNode::FindDeepestNode@::vl::parsing::ParsingTreeNode *(::vl::parsing::ParsingTextRange const &amp;)" file="VL__PARSING__PARSINGTREENODE__FINDDEEPESTNODE@__VL__PARSING__PAR2"/>
+      <document name="function FindSubNode" docId="vl::parsing::ParsingTreeNode::FindSubNode@::vl::parsing::ParsingTreeNode *(::vl::parsing::ParsingTextPos const &amp;)" file="VL__PARSING__PARSINGTREENODE__FINDSUBNODE@__VL__PARSING__PARSING"/>
+      <document name="function FindSubNode" docId="vl::parsing::ParsingTreeNode::FindSubNode@::vl::parsing::ParsingTreeNode *(::vl::parsing::ParsingTextRange const &amp;)" file="VL__PARSING__PARSINGTREENODE__FINDSUBNODE@__VL__PARSING__PARSING2"/>
+      <document name="function GetParent" docId="vl::parsing::ParsingTreeNode::GetParent@::vl::parsing::ParsingTreeNode *()" file="VL__PARSING__PARSINGTREENODE__GETPARENT@__VL__PARSING__PARSINGTR"/>
+      <document name="function GetSubNodes" docId="vl::parsing::ParsingTreeNode::GetSubNodes@::vl::parsing::ParsingTreeNode::NodeList const &amp;()" file="VL__PARSING__PARSINGTREENODE__GETSUBNODES@__VL__PARSING__PARSING"/>
+      <document name="function InitializeQueryCache" docId="vl::parsing::ParsingTreeNode::InitializeQueryCache@void()" file="VL__PARSING__PARSINGTREENODE__INITIALIZEQUERYCACHE@VOID()"/>
+    </document>
+    <document name="class ParsingTreeObject" docId="vl::parsing::ParsingTreeObject" file="VL__PARSING__PARSINGTREEOBJECT">
+      <document name="function GetCreatorRules" docId="vl::parsing::ParsingTreeObject::GetCreatorRules@::vl::parsing::ParsingTreeObject::RuleList &amp;()" file="VL__PARSING__PARSINGTREEOBJECT__GETCREATORRULES@__VL__PARSING__P"/>
+      <document name="function GetMember" docId="vl::parsing::ParsingTreeObject::GetMember@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;)" file="VL__PARSING__PARSINGTREEOBJECT__GETMEMBER@__VL__PTR___VL__PARSIN"/>
+      <document name="function GetMemberNames" docId="vl::parsing::ParsingTreeObject::GetMemberNames@::vl::parsing::ParsingTreeObject::NameList const &amp;()" file="VL__PARSING__PARSINGTREEOBJECT__GETMEMBERNAMES@__VL__PARSING__PA"/>
+      <document name="function GetMembers" docId="vl::parsing::ParsingTreeObject::GetMembers@::vl::parsing::ParsingTreeObject::NodeMap &amp;()" file="VL__PARSING__PARSINGTREEOBJECT__GETMEMBERS@__VL__PARSING__PARSIN"/>
+      <document name="function GetType" docId="vl::parsing::ParsingTreeObject::GetType@::vl::WString const &amp;()" file="VL__PARSING__PARSINGTREEOBJECT__GETTYPE@__VL__WSTRING_CONST_&amp;()"/>
+    </document>
+    <document name="class ParsingTreeToken" docId="vl::parsing::ParsingTreeToken" file="VL__PARSING__PARSINGTREETOKEN">
+      <document name="function GetValue" docId="vl::parsing::ParsingTreeToken::GetValue@::vl::WString const &amp;()" file="VL__PARSING__PARSINGTREETOKEN__GETVALUE@__VL__WSTRING_CONST_&amp;()"/>
+    </document>
+  </namespace>
+  <namespace name="::vl::parsing::tabling">
+    <document name="function CreateAutoRecoverParser" docId="vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;)" file="VL__PARSING__TABLING__CREATEAUTORECOVERPARSER@__VL__PTR___VL__PA"/>
+    <document name="function CreateBootstrapAutoRecoverParser" docId="vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;()" file="VL__PARSING__TABLING__CREATEBOOTSTRAPAUTORECOVERPARSER@__VL__PTR"/>
+    <document name="function CreateBootstrapStrictParser" docId="vl::parsing::tabling::CreateBootstrapStrictParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;()" file="VL__PARSING__TABLING__CREATEBOOTSTRAPSTRICTPARSER@__VL__PTR___VL"/>
+    <document name="function CreateStrictParser" docId="vl::parsing::tabling::CreateStrictParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;)" file="VL__PARSING__TABLING__CREATESTRICTPARSER@__VL__PTR___VL__PARSING"/>
+    <document name="class ParsingAmbiguousParser" docId="vl::parsing::tabling::ParsingAmbiguousParser" file="VL__PARSING__TABLING__PARSINGAMBIGUOUSPARSER">
+      <document name="function $__ctor" docId="vl::parsing::tabling::ParsingAmbiguousParser::$__ctor@(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;)" file="VL__PARSING__TABLING__PARSINGAMBIGUOUSPARSER__$__CTOR@(__VL__PTR"/>
+    </document>
+    <document name="class ParsingAutoRecoverAmbiguousParser" docId="vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser" file="VL__PARSING__TABLING__PARSINGAUTORECOVERAMBIGUOUSPARSER">
+      <document name="function $__ctor" docId="vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__TABLING__PARSINGAUTORECOVERAMBIGUOUSPARSER__$__CTOR"/>
+    </document>
+    <document name="class ParsingAutoRecoverParser" docId="vl::parsing::tabling::ParsingAutoRecoverParser" file="VL__PARSING__TABLING__PARSINGAUTORECOVERPARSER">
+      <document name="function $__ctor" docId="vl::parsing::tabling::ParsingAutoRecoverParser::$__ctor@(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__TABLING__PARSINGAUTORECOVERPARSER__$__CTOR@(__VL__P"/>
+    </document>
+    <document name="class ParsingGeneralParser" docId="vl::parsing::tabling::ParsingGeneralParser" file="VL__PARSING__TABLING__PARSINGGENERALPARSER">
+      <document name="function BeginParse" docId="vl::parsing::tabling::ParsingGeneralParser::BeginParse@void()" file="VL__PARSING__TABLING__PARSINGGENERALPARSER__BEGINPARSE@VOID()"/>
+      <document name="function GetTable" docId="vl::parsing::tabling::ParsingGeneralParser::GetTable@::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;()" file="VL__PARSING__TABLING__PARSINGGENERALPARSER__GETTABLE@__VL__PTR__"/>
+      <document name="function Parse" docId="vl::parsing::tabling::ParsingGeneralParser::Parse@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__TABLING__PARSINGGENERALPARSER__PARSE@__VL__PTR___VL2"/>
+    </document>
+    <document name="class ParsingStrictParser" docId="vl::parsing::tabling::ParsingStrictParser" file="VL__PARSING__TABLING__PARSINGSTRICTPARSER">
+      <document name="function $__ctor" docId="vl::parsing::tabling::ParsingStrictParser::$__ctor@(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;)" file="VL__PARSING__TABLING__PARSINGSTRICTPARSER__$__CTOR@(__VL__PTR___"/>
+    </document>
+    <document name="class ParsingTable" docId="vl::parsing::tabling::ParsingTable" file="VL__PARSING__TABLING__PARSINGTABLE">
+      <document name="function $__ctor" docId="vl::parsing::tabling::ParsingTable::$__ctor@(::vl::stream::IStream &amp;)" file="VL__PARSING__TABLING__PARSINGTABLE__$__CTOR@(__VL__STREAM__ISTRE"/>
+      <document name="function Initialize" docId="vl::parsing::tabling::ParsingTable::Initialize@void()" file="VL__PARSING__TABLING__PARSINGTABLE__INITIALIZE@VOID()"/>
+      <document name="function Serialize" docId="vl::parsing::tabling::ParsingTable::Serialize@void(::vl::stream::IStream &amp;)" file="VL__PARSING__TABLING__PARSINGTABLE__SERIALIZE@VOID(__VL__STREAM_"/>
+    </document>
+  </namespace>
+</reference>

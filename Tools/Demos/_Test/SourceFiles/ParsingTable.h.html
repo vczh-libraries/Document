@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ParsingTable.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_PARSING_PARSINGTABLE</div>
+<div class="disabled">#define VCZH_PARSING_PARSINGTABLE</div>
+
+<div class="disabled">#include &quot;ParsingTree.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[59]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[4]$vl::parsing"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::parsing::tabling"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling'], [], [])">tabling</div></div>
+		{
+
+<div class="token cpp_comment ">/***********************************************************************
+Parsing Table
+***********************************************************************/</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// The parsing table. When you complete a grammar file, ParserGen.exe which is in the Tools project will generate the C++ code for you to create a parsing table.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// Here is a brief description of the grammar file format:</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// include:&quot;&lt;releative path to the Vlpp.h&gt;&quot;	// (multiple)	e.g. &quot;../Import/Vlpp.h&quot;</div>
+			<div class="token cpp_comment ">/// classPrefix:&lt;class prefix&gt;					// (single)		A prefix that will be add before all generated types and function. e.g. Xml</div>
+			<div class="token cpp_comment ">/// guard:&lt;C++ header guard&gt;					// (single)		The C++ header guard pattern macro name. e.g. VCZH_PARSING_XML_PARSINGXML_PARSER</div>
+			<div class="token cpp_comment ">/// namespace:&lt;C++ namespaces&gt;					// (single)		Namespaces separated by &quot;.&quot; to contain the generated code. e.g. vl.parsing.xml</div>
+			<div class="token cpp_comment ">/// reflection:&lt;namespace&gt;						// (single)		Namespaces separated by &quot;.&quot; to contain the name of reflectable types. In most of the cases this should be the same as namespace. e.g. vl.parsing.xml</div>
+			<div class="token cpp_comment ">/// parser:&lt;name&gt;(&lt;rule&gt;)						// (multiple)	Pair a function name to a rule name. ParserGen.exe will generate a function called &quot;&lt;prefix&gt;&lt;name&gt;&quot; to parse the input using rule named &quot;&lt;rule&gt;&quot;. e.g. ParseDocument(XDocument)</div>
+			<div class="token cpp_comment ">/// ambiguity:(enabled|disabled)				// (single)		Set to &quot;enabled&quot; indicating that the grammar is by design to have ambiguity.</div>
+			<div class="token cpp_comment ">/// serialization:(enabled|disabled)			// (single)		Set to &quot;enabled&quot; to serialize the parsing table as binary in the generated C++ code, so that when the &quot;&lt;prefix&gt;LoadTable&quot; function is called to load the table, it can deserialize from the binary data directly, instead of parsing the grammar again. But the grammar text will always be contained in the generated C++ code regardless of the value of &quot;serialization&quot;, it can always be retrived using the &quot;&lt;prefix&gt;GetParserTextBuffer&quot; function.</div>
+			<div class="token cpp_comment ">/// grammar:									// (single)		Configuration ends here. All content after &quot;grammar:&quot; will be treated as the grammar to define the input.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// Here is the brief description of the grammar.</div>
+			<div class="token cpp_comment ">/// The grammar is formed by 3 parts: types, token definitions and rule definitions. There is only one character escaping in strings: &quot;&quot;, which means the &quot; character.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// 1) Types:</div>
+			<div class="token cpp_comment ">///		You can write attributes like @AttributeName(&quot;argument1&quot;, &quot;argument2&quot;, ...) in the middle of types. But attributes don&apos;t affect the parsing. All attribute definitions will be stored in the generated parsing table, and who uses the table defines how attributes work. Multiple attributes are separated by &quot;,&quot;.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		a) Enum:</div>
+			<div class="token cpp_comment ">///			enum EnumName &lt;attributes&gt;</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///				Item1 &lt;attributes&gt;,</div>
+			<div class="token cpp_comment ">///				Item2 &lt;attributes&gt;,</div>
+			<div class="token cpp_comment ">///				... // cannot skip the last &quot;,&quot;</div>
+			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		b) Class:</div>
+			<div class="token cpp_comment ">///			class Name [ambiguous(AmbiguousType)] [: ParentType] &lt;attributes&gt;</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///				Type name [(UnescapingFunction)] &lt;attributes&gt; ;</div>
+			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///			UnescapingFunction is a callback, which will be called when the contained type is fully constructed. The generated C++ code will define forward declarations of all unescaping functions in the cpp file. You should implement them in other places, or you will get linking errors.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///			If the grammar enables ambiguity, then the parsing result may contain ambiguous results for the same part of the input. For example, in C++:</div>
+			<div class="token cpp_comment ">///			A*B;</div>
+			<div class="token cpp_comment ">///			has two meaning (if we only consider context-free parsing): multiplication expression and pointer variable definition.</div>
+			<div class="token cpp_comment ">///			So if the grammar doesn&apos;t enable ambiguity, ParserGen.exe will refuce to generate C++ codes because the grammar is wrong.</div>
+			<div class="token cpp_comment ">///			If the grammar enables ambiguity, than the syntax tree should be defined like this:</div>
+			<div class="token cpp_comment ">///			</div>
+			<div class="token cpp_comment ">///			class Statement ambiguous(AmbiguousStatement)</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///			class AmbiguousStatement : Statement // due to the definition of &quot;Statement&quot; class, &quot;AmbiguousStatement&quot; should inherit from &quot;Statement&quot;</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///				Statement[] items; // required by naming convention</div>
+			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///			class ExpressionStatement : Statement</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///				Expression expression;</div>
+			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///			class VariableDefinitionStatement : Statement</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///				Type type;</div>
+			<div class="token cpp_comment ">///				token name;</div>
+			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///			So for the &quot;A*B;&quot; part in the whole input, it will becomes an AmbiguousStatement, in which the &quot;items&quot; field contains 2 instance of &quot;ExpressionStatement&quot; and &quot;VariableDefinitionStatement&quot;.</div>
+			<div class="token cpp_comment ">///			And you can write C++ code to resolve the ambiguity in later passes.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		c) Type references:</div>
+			<div class="token cpp_comment ">///			Types can be defined globally or inside classes. Generic type is not supported. When you want to refer to a specific type, it could be:</div>
+			<div class="token cpp_comment ">///				token: Store a token, which will becomes [T:vl.parsing.ParsingToken].</div>
+			<div class="token cpp_comment ">///				Type[]: Array, which will becomes [T:vl.collections.List`2] to the element type. Token cannot be the element of arrays.</div>
+			<div class="token cpp_comment ">///				ClassName: Instance of a specified type, which will becomes [T:vl.Ptr`1] to that type.</div>
+			<div class="token cpp_comment ">///				OuterClass.InnerClass: Refer to the &quot;InnerClass&quot; defined inside the &quot;OuterClass&quot;.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// 2) Token definitions:</div>
+			<div class="token cpp_comment ">///		token TokenName = &quot;regular expression&quot; &lt;attributes&gt;;</div>
+			<div class="token cpp_comment ">///		discardtoken TokenName = &quot;regular expression&quot;;</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		&quot;discardtoken&quot; means if such a token is identified, it will not appear in the lexical analyzing result. And you cannot refer to names of &quot;discardtoken&quot; in the grammar.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// 3) Rule definitions:</div>
+			<div class="token cpp_comment ">///		rule RuleType RuleName &lt;attributes&gt;</div>
+			<div class="token cpp_comment ">///			= Grammar1</div>
+			<div class="token cpp_comment ">///			= Grammar2</div>
+			<div class="token cpp_comment ">///			...</div>
+			<div class="token cpp_comment ">///			;</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		It means rule &quot;RuleName&quot; is defined by those grammars, and matching this rule will create an instance of &quot;RuleType&quot; or its whatever types that inheriting &quot;RuleType&quot;.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// 4) Grammars:</div>
+			<div class="token cpp_comment ">///		RuleName: Defines an input that matches a rule.</div>
+			<div class="token cpp_comment ">///		TokenName: Defines an input that formed by the specified token.</div>
+			<div class="token cpp_comment ">///		&quot;StringConstant&quot;: Defins an input that formed by exactly the string constant. This constant should define a token in the token list.</div>
+			<div class="token cpp_comment ">///		Grammar : FieldName: Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field &quot;FieldName&quot; of a class, whose type will appear later.</div>
+			<div class="token cpp_comment ">///		!Grammar: Defines an input that matches Grammar, and the rule will return the result from this grammar. The input should still match other part of the rule, but result of other parts are ignored.</div>
+			<div class="token cpp_comment ">///		[Grammar]: Defines an input that, if match Grammar, will returns the result from that grammar; if not, the result is null.</div>
+			<div class="token cpp_comment ">///		{Grammar}: Defines an input that matches 0, 1 or more Grammar.</div>
+			<div class="token cpp_comment ">///		(Grammar): Defins an input that matches the the grammar. Brackets is only for changing operator associations.</div>
+			<div class="token cpp_comment ">///		Grammar1 Grammar2: Defines an input that should match Grammar1 right before Grammar2.</div>
+			<div class="token cpp_comment ">///		Grammar1 | Grammar2: Defines an input that match either Grammar1 or Grammar2.</div>
+			<div class="token cpp_comment ">///		Grammar as Type: Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type &quot;Type&quot;</div>
+			<div class="token cpp_comment ">///		Grammar with { FieldName = Value }: Defins an input that matches the Grammar, and will assign &quot;Value&quot;, which should be an enum item, to the field &quot;FieldName&quot; of the created instance.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// 5) Example</div>
+			<div class="token cpp_comment ">///		Here is an example to parse expression containing +, -, *, /, () and numbers:\</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		include:&quot;Vlpp.h&quot;</div>
+			<div class="token cpp_comment ">///		classPrefix:Calc</div>
+			<div class="token cpp_comment ">///		guard:VCZH_CALCULATOR_PARSER</div>
+			<div class="token cpp_comment ">///		namespace:vl.calculator</div>
+			<div class="token cpp_comment ">///		reflection:vl.calculator</div>
+			<div class="token cpp_comment ">///		parser:ParseExpression(Expr)</div>
+			<div class="token cpp_comment ">///		ambiguity:disabled</div>
+			<div class="token cpp_comment ">///		serialization:enabled</div>
+			<div class="token cpp_comment ">///		grammar:</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		class Expression</div>
+			<div class="token cpp_comment ">///		{</div>
+			<div class="token cpp_comment ">///		}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		enum BinaryOperator</div>
+			<div class="token cpp_comment ">///		{</div>
+			<div class="token cpp_comment ">///			Add, Sub, Mul, Div,</div>
+			<div class="token cpp_comment ">///		}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		class NumberExpression : Expression</div>
+			<div class="token cpp_comment ">///		{</div>
+			<div class="token cpp_comment ">///			token number;</div>
+			<div class="token cpp_comment ">///		}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		class BinaryExpression : Expression</div>
+			<div class="token cpp_comment ">///		{</div>
+			<div class="token cpp_comment ">///			BinaryOperator op;</div>
+			<div class="token cpp_comment ">///			Expression left;</div>
+			<div class="token cpp_comment ">///			Expression right;</div>
+			<div class="token cpp_comment ">///		}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		token ADD &quot;\+&quot;</div>
+			<div class="token cpp_comment ">///		token SUB &quot;-&quot;</div>
+			<div class="token cpp_comment ">///		token MUL &quot;\*&quot;</div>
+			<div class="token cpp_comment ">///		token DIV &quot;\/&quot;</div>
+			<div class="token cpp_comment ">///		token NUMBER &quot;\d+(.\d+)?&quot;</div>
+			<div class="token cpp_comment ">///		token OPEN &quot;(&quot;</div>
+			<div class="token cpp_comment ">///		token CLOSE &quot;)&quot;</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		rule Expression Factor</div>
+			<div class="token cpp_comment ">///			= NUMBER : number as NumberExpression</div>
+			<div class="token cpp_comment ">///			= &quot;(&quot; !Expr &quot;)&quot;</div>
+			<div class="token cpp_comment ">///			;</div>
+			<div class="token cpp_comment ">///		rule Expression Term</div>
+			<div class="token cpp_comment ">///			= !Factor</div>
+			<div class="token cpp_comment ">///			= Term : left &quot;*&quot; Factor : right as BinaryExpression with {op = &quot;Mul&quot;}</div>
+			<div class="token cpp_comment ">///			= Term : left &quot;/&quot; Factor : right as BinaryExpression with {op = &quot;Div&quot;}</div>
+			<div class="token cpp_comment ">///			;</div>
+			<div class="token cpp_comment ">///		rule Expression Expr</div>
+			<div class="token cpp_comment ">///			= !Term</div>
+			<div class="token cpp_comment ">///			= Expr : left &quot;+&quot; Term : right as BinaryExpression with {op = &quot;Add&quot;}</div>
+			<div class="token cpp_comment ">///			= Expr : left &quot;-&quot; Term : right as BinaryExpression with {op = &quot;Sub&quot;}</div>
+			<div class="token cpp_comment ">///			;</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		After using ParserGen.exe to generate C++ codes, you can do this:</div>
+			<div class="token cpp_comment ">///			auto table = CalcLoadTable(); // this table can be used several times, don&apos;t load each type for each parsing, it will have a big performance overhead.</div>
+			<div class="token cpp_comment ">///			List&lt;Ptr&lt;ParsingError&gt;&gt; errors;</div>
+			<div class="token cpp_comment ">///			auto expression = CalcParseExpression(L&quot;(1+2) * (3+4)&quot;, table, errors); // it should be a Ptr&lt;CalcExpression&gt;, will returns nullptr if the input is wrong, with all errors filled into the &quot;errors&quot; variable.</div>
+			<div class="token cpp_comment ">///			You don&apos;t need to define the &quot;errors&quot; if you don&apos;t actually care how the input is wrong. There will be a overloaded version of CalcParseExpression that doesn&apos;t need the error list.</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		If you want to parse a wrong input and do automatic error recovering, which means if the input is not too wrong, you can still get a syntax tree, but some fields are null, with errors filled into the &quot;error&quot; variable. It will be a little complex:</div>
+			<div class="token cpp_comment ">///			auto table = CalcLoadTable();					// Load the table.</div>
+			<div class="token cpp_comment ">///			ParsingState state(L&quot;(1+2) * (3+4)&quot;, table);	// Initialize a state with the input and the table.</div>
+			<div class="token cpp_comment ">///			state.Reset(L&quot;Expr&quot;);							// Set the rule to parse.</div>
+			<div class="token cpp_comment ">///			auto parser = CreateAutoRecoverParser(table);	// Create an appropriate automatic error recoverable parser.</div>
+			<div class="token cpp_comment ">///			List&lt;Ptr&lt;ParsingError&gt;&gt; errors;					// Define an error list.</div>
+			<div class="token cpp_comment ">///			auto node = parser-&gt;Parse(state, errors);		// Parse to get an abstract syntax tree, which is a Ptr&lt;ParsingTreeNode&gt;.</div>
+			<div class="token cpp_comment ">///			if (node)</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///				auto expression = CalcConvertParsingTreeNode(node, state.GetTokens()).Cast&lt;CalcExpression&gt;();</div>
+			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///		After you get a strong typed syntax tree, you can use the generated visitor interface to do something, like evaluate the results of the expression:</div>
+			<div class="token cpp_comment ">///			class Evaluator : public Object, public virtual CalcExpression::IVisitor</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///			private:</div>
+			<div class="token cpp_comment ">///				double result;</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///				double Call(CalcExpression* node)</div>
+			<div class="token cpp_comment ">///				{</div>
+			<div class="token cpp_comment ">///					node-&gt;Accept(this);</div>
+			<div class="token cpp_comment ">///					return result;</div>
+			<div class="token cpp_comment ">///				}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///			public:</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///				static double Evaluate(CalcExpression* node)</div>
+			<div class="token cpp_comment ">///				{</div>
+			<div class="token cpp_comment ">///					return Evaluator().Call(node);</div>
+			<div class="token cpp_comment ">///				}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///				void Visit(CalcNumberExpression* node)override</div>
+			<div class="token cpp_comment ">///				{</div>
+			<div class="token cpp_comment ">///					return wtof(node-&gt;number.value);</div>
+			<div class="token cpp_comment ">///				}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///				void Visit(CalcBinaryExpression* node)override</div>
+			<div class="token cpp_comment ">///				{</div>
+			<div class="token cpp_comment ">///					auto left = Calc(node-&gt;left.Obj());</div>
+			<div class="token cpp_comment ">///					auto right = Calc(node-&gt;right.Obj());</div>
+			<div class="token cpp_comment ">///					switch (node-&gt;op)</div>
+			<div class="token cpp_comment ">///					{</div>
+			<div class="token cpp_comment ">///					case CalcBinaryOperator::Add:</div>
+			<div class="token cpp_comment ">///						result = left + right;</div>
+			<div class="token cpp_comment ">///						break;</div>
+			<div class="token cpp_comment ">///					case CalcBinaryOperator::Sub:</div>
+			<div class="token cpp_comment ">///						result = left 0 right;</div>
+			<div class="token cpp_comment ">///						break;</div>
+			<div class="token cpp_comment ">///					case CalcBinaryOperator::Mul:</div>
+			<div class="token cpp_comment ">///						result = left * right;</div>
+			<div class="token cpp_comment ">///						break;</div>
+			<div class="token cpp_comment ">///					case CalcBinaryOperator::Div:</div>
+			<div class="token cpp_comment ">///						result = left / right;</div>
+			<div class="token cpp_comment ">///						break;</div>
+			<div class="token cpp_comment ">///					}</div>
+			<div class="token cpp_comment ">///				}</div>
+			<div class="token cpp_comment ">///			};</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">///			Nullable&lt;double&gt; EvaluateExpression(const WString&amp; input)</div>
+			<div class="token cpp_comment ">///			{</div>
+			<div class="token cpp_comment ">///				static auto table = CalcLoadTable();</div>
+			<div class="token cpp_comment ">///				auto expression = CalcParseExpression(input, table);</div>
+			<div class="token cpp_comment ">///				Nulllable&lt;double&gt; result;</div>
+			<div class="token cpp_comment ">///				if (expression)</div>
+			<div class="token cpp_comment ">///				{</div>
+			<div class="token cpp_comment ">///					result = Evaluator::Evaulate(expression.Obj());</div>
+			<div class="token cpp_comment ">///				}</div>
+			<div class="token cpp_comment ">///				return result;</div>
+			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable"><div><div class="token cpp_type">ParsingTable</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenBegin"><div><div class="token cpp_field">TokenBegin</div></div></div>=<div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenFinish"><div><div class="token cpp_field">TokenFinish</div></div></div>=<div class="token cpp_number ">1</div>;
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::parsing::tabling::ParsingTable::NormalReduce"><div><div class="token cpp_field">NormalReduce</div></div></div>=<div class="token cpp_number ">2</div>;
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::parsing::tabling::ParsingTable::LeftRecursiveReduce"><div><div class="token cpp_field">LeftRecursiveReduce</div></div></div>=<div class="token cpp_number ">3</div>;
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::parsing::tabling::ParsingTable::UserTokenStart"><div><div class="token cpp_field">UserTokenStart</div></div></div>=<div class="token cpp_number ">4</div>;
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::AttributeInfo"><div><div class="token cpp_type">AttributeInfo</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::AttributeInfo::name"><div><div class="token cpp_field">name</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;				<div class="def" id="NI$vl::parsing::tabling::ParsingTable::AttributeInfo::arguments"><div><div class="token cpp_field">arguments</div></div></div>;
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::AttributeInfo::$__ctor@(::vl::WString const &)[impl0]"><div><div class="token cpp_function">AttributeInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::AttributeInfo::$__ctor@(::vl::WString const &)[impl0]::_name"><div><div class="token cpp_argument">_name</div></div></div> = <div class="token cpp_string ">L&quot;&quot;</div>)
+						:name(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfo::$__ctor@(::vl::WString const &)[impl0]::_name'], [], [])"><div class="token cpp_argument">_name</div></div>)
+					{
+					}
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfo'], [], [])"><div class="token cpp_type">AttributeInfo</div></div>* <div class="def" id="FB$vl::parsing::tabling::ParsingTable::AttributeInfo::Argument@::vl::parsing::tabling::ParsingTable::AttributeInfo *(::vl::WString const &)[impl0]"><div><div class="token cpp_function">Argument</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::AttributeInfo::Argument@::vl::parsing::tabling::ParsingTable::AttributeInfo *(::vl::WString const &)[impl0]::argument"><div><div class="token cpp_argument">argument</div></div></div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfo::arguments'], [], [])"><div class="token cpp_field">arguments</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfo::Argument@::vl::parsing::tabling::ParsingTable::AttributeInfo *(::vl::WString const &)[impl0]::argument'], [], [])"><div class="token cpp_argument">argument</div></div>);
+						<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">this</div>;
+					}
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::AttributeInfoList"><div><div class="token cpp_type">AttributeInfoList</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfo'], [], [])"><div class="token cpp_type">AttributeInfo</div></div>&gt;&gt;	<div class="def" id="NI$vl::parsing::tabling::ParsingTable::AttributeInfoList::attributes"><div><div class="token cpp_field">attributes</div></div></div>;
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfo'], [], [])"><div class="token cpp_type">AttributeInfo</div></div>&gt; <div class="def" id="FB$vl::parsing::tabling::ParsingTable::AttributeInfoList::FindFirst@::vl::Ptr<::vl::parsing::tabling::ParsingTable::AttributeInfo>(::vl::WString const &)[decl0]"><div><div class="token cpp_function">FindFirst</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::AttributeInfoList::FindFirst@::vl::Ptr<::vl::parsing::tabling::ParsingTable::AttributeInfo>(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo"><div><div class="token cpp_type">TreeTypeInfo</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo::type"><div><div class="token cpp_field">type</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo::attributeIndex"><div><div class="token cpp_field">attributeIndex</div></div></div>;
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@()[impl0]"><div><div class="token cpp_function">TreeTypeInfo</div></div></div>()
+						:attributeIndex(-<div class="token cpp_number ">1</div>)
+					{
+					}
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]"><div><div class="token cpp_function">TreeTypeInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_type"><div><div class="token cpp_argument">_type</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex"><div><div class="token cpp_argument">_attributeIndex</div></div></div>)
+						:type(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_type'], [], [])"><div class="token cpp_argument">_type</div></div>)
+						,attributeIndex(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex'], [], [])"><div class="token cpp_argument">_attributeIndex</div></div>)
+					{
+					}
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo"><div><div class="token cpp_type">TreeFieldInfo</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::type"><div><div class="token cpp_field">type</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::field"><div><div class="token cpp_field">field</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::attributeIndex"><div><div class="token cpp_field">attributeIndex</div></div></div>;
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@()[impl0]"><div><div class="token cpp_function">TreeFieldInfo</div></div></div>()
+						:attributeIndex(-<div class="token cpp_number ">1</div>)
+					{
+					}
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]"><div><div class="token cpp_function">TreeFieldInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_type"><div><div class="token cpp_argument">_type</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_field"><div><div class="token cpp_argument">_field</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex"><div><div class="token cpp_argument">_attributeIndex</div></div></div>)
+						:type(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_type'], [], [])"><div class="token cpp_argument">_type</div></div>)
+						,field(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_field'], [], [])"><div class="token cpp_argument">_field</div></div>)
+						,attributeIndex(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex'], [], [])"><div class="token cpp_argument">_attributeIndex</div></div>)
+					{
+					}
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenInfo"><div><div class="token cpp_type">TokenInfo</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenInfo::name"><div><div class="token cpp_field">name</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenInfo::regex"><div><div class="token cpp_field">regex</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenInfo::regexTokenIndex"><div><div class="token cpp_field">regexTokenIndex</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenInfo::attributeIndex"><div><div class="token cpp_field">attributeIndex</div></div></div>;
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@()[impl0]"><div><div class="token cpp_function">TokenInfo</div></div></div>()
+						:regexTokenIndex(-<div class="token cpp_number ">1</div>)
+						,attributeIndex(-<div class="token cpp_number ">1</div>)
+					{
+					}
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]"><div><div class="token cpp_function">TokenInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_name"><div><div class="token cpp_argument">_name</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_regex"><div><div class="token cpp_argument">_regex</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex"><div><div class="token cpp_argument">_attributeIndex</div></div></div>)
+						:name(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_name'], [], [])"><div class="token cpp_argument">_name</div></div>)
+						,regex(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_regex'], [], [])"><div class="token cpp_argument">_regex</div></div>)
+						,regexTokenIndex(-<div class="token cpp_number ">1</div>)
+						,attributeIndex(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex'], [], [])"><div class="token cpp_argument">_attributeIndex</div></div>)
+					{
+					}
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::StateInfo"><div><div class="token cpp_type">StateInfo</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::StateInfo::ruleName"><div><div class="token cpp_field">ruleName</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::StateInfo::stateName"><div><div class="token cpp_field">stateName</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::StateInfo::stateExpression"><div><div class="token cpp_field">stateExpression</div></div></div>;
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::StateInfo::ruleAmbiguousType"><div><div class="token cpp_field">ruleAmbiguousType</div></div></div>;		<div class="token cpp_comment ">// filled in Initialize()</div>
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@()[impl0]"><div><div class="token cpp_function">StateInfo</div></div></div>()
+					{
+					}
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]"><div><div class="token cpp_function">StateInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_ruleName"><div><div class="token cpp_argument">_ruleName</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateName"><div><div class="token cpp_argument">_stateName</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateExpression"><div><div class="token cpp_argument">_stateExpression</div></div></div>)
+						:ruleName(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_ruleName'], [], [])"><div class="token cpp_argument">_ruleName</div></div>)
+						,stateName(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateName'], [], [])"><div class="token cpp_argument">_stateName</div></div>)
+						,stateExpression(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateExpression'], [], [])"><div class="token cpp_argument">_stateExpression</div></div>)
+					{
+					}
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo"><div><div class="token cpp_type">RuleInfo</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::name"><div><div class="token cpp_field">name</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::type"><div><div class="token cpp_field">type</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::ambiguousType"><div><div class="token cpp_field">ambiguousType</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::rootStartState"><div><div class="token cpp_field">rootStartState</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::attributeIndex"><div><div class="token cpp_field">attributeIndex</div></div></div>;
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@()[impl0]"><div><div class="token cpp_function">RuleInfo</div></div></div>()
+						:rootStartState(-<div class="token cpp_number ">1</div>)
+						,attributeIndex(-<div class="token cpp_number ">1</div>)
+					{
+					}
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]"><div><div class="token cpp_function">RuleInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_name"><div><div class="token cpp_argument">_name</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_type"><div><div class="token cpp_argument">_type</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_ambiguousType"><div><div class="token cpp_argument">_ambiguousType</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_rootStartState"><div><div class="token cpp_argument">_rootStartState</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_attributeIndex"><div><div class="token cpp_argument">_attributeIndex</div></div></div>)
+						:name(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_name'], [], [])"><div class="token cpp_argument">_name</div></div>)
+						,type(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_type'], [], [])"><div class="token cpp_argument">_type</div></div>)
+						,ambiguousType(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_ambiguousType'], [], [])"><div class="token cpp_argument">_ambiguousType</div></div>)
+						,rootStartState(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_rootStartState'], [], [])"><div class="token cpp_argument">_rootStartState</div></div>)
+						,attributeIndex(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_attributeIndex'], [], [])"><div class="token cpp_argument">_attributeIndex</div></div>)
+					{
+					}
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction"><div><div class="token cpp_type">Instruction</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType"><div><div class="token cpp_type">InstructionType</div></div></div>
+					{
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Create"><div><div class="token cpp_enum">Create</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Assign"><div><div class="token cpp_enum">Assign</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Item"><div><div class="token cpp_enum">Item</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Using"><div><div class="token cpp_enum">Using</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Setter"><div><div class="token cpp_enum">Setter</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Shift"><div><div class="token cpp_enum">Shift</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Reduce"><div><div class="token cpp_enum">Reduce</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::LeftRecursiveReduce"><div><div class="token cpp_enum">LeftRecursiveReduce</div></div></div>,
+					};
+
+					<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction::InstructionType'], [], [])"><div class="token cpp_type">InstructionType</div></div>							<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::instructionType"><div><div class="token cpp_field">instructionType</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::stateParameter"><div><div class="token cpp_field">stateParameter</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::nameParameter"><div><div class="token cpp_field">nameParameter</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::value"><div><div class="token cpp_field">value</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::creatorRule"><div><div class="token cpp_field">creatorRule</div></div></div>;
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@()[impl0]"><div><div class="token cpp_function">Instruction</div></div></div>()
+						:instructionType(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Create'], [], [])"><div class="token cpp_enum">Create</div></div>)
+						,stateParameter(<div class="token cpp_number ">0</div>)
+					{
+					}
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]"><div><div class="token cpp_function">Instruction</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction::InstructionType'], [], [])"><div class="token cpp_type">InstructionType</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_instructionType"><div><div class="token cpp_argument">_instructionType</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateParameter"><div><div class="token cpp_argument">_stateParameter</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_nameParameter"><div><div class="token cpp_argument">_nameParameter</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_value"><div><div class="token cpp_argument">_value</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_creatorRule"><div><div class="token cpp_argument">_creatorRule</div></div></div>)
+						:instructionType(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_instructionType'], [], [])"><div class="token cpp_argument">_instructionType</div></div>)
+						,stateParameter(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateParameter'], [], [])"><div class="token cpp_argument">_stateParameter</div></div>)
+						,nameParameter(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_nameParameter'], [], [])"><div class="token cpp_argument">_nameParameter</div></div>)
+						,value(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_value'], [], [])"><div class="token cpp_argument">_value</div></div>)
+						,creatorRule(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_creatorRule'], [], [])"><div class="token cpp_argument">_creatorRule</div></div>)
+					{
+					}
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo"><div><div class="token cpp_type">LookAheadInfo</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::tokens"><div><div class="token cpp_field">tokens</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::state"><div><div class="token cpp_field">state</div></div></div>;
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::LookAheadInfo::$__ctor@()[impl0]"><div><div class="token cpp_function">LookAheadInfo</div></div></div>()
+						:state(-<div class="token cpp_number ">1</div>)
+					{
+					}
+
+					<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult"><div><div class="token cpp_type">PrefixResult</div></div></div>
+					{
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult::Prefix"><div><div class="token cpp_enum">Prefix</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult::Equal"><div><div class="token cpp_enum">Equal</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult::NotPrefix"><div><div class="token cpp_enum">NotPrefix</div></div></div>,
+					};
+
+					<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult'], [], [])"><div class="token cpp_type">PrefixResult</div></div>						<div class="def" id="FB$vl::parsing::tabling::ParsingTable::LookAheadInfo::TestPrefix@::vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult(::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>)[decl0]"><div><div class="token cpp_function">TestPrefix</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::LookAheadInfo'], [], [])"><div class="token cpp_type">LookAheadInfo</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::TestPrefix@::vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult(::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>)[decl0]::a"><div>a</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::LookAheadInfo'], [], [])"><div class="token cpp_type">LookAheadInfo</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::TestPrefix@::vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult(::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>)[decl0]::b"><div>b</div></div>);
+					<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::tabling::ParsingTable::LookAheadInfo::WalkInternal@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::SortedList<::vl::vint> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]"><div><div class="token cpp_function">WalkInternal</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::WalkInternal@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::SortedList<::vl::vint> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::table"><div>table</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::LookAheadInfo'], [], [])"><div class="token cpp_type">LookAheadInfo</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::WalkInternal@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::SortedList<::vl::vint> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::previous"><div>previous</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::WalkInternal@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::SortedList<::vl::vint> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList'], [], [])"><div class="token cpp_type">SortedList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::WalkInternal@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::SortedList<::vl::vint> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::walkedStates"><div>walkedStates</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::LookAheadInfo'], [], [])"><div class="token cpp_type">LookAheadInfo</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::WalkInternal@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::SortedList<::vl::vint> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::newInfos"><div>newInfos</div></div>);
+					<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::tabling::ParsingTable::LookAheadInfo::Walk@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]"><div><div class="token cpp_function">Walk</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::Walk@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::table"><div>table</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::LookAheadInfo'], [], [])"><div class="token cpp_type">LookAheadInfo</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::Walk@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::previous"><div>previous</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::Walk@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::LookAheadInfo'], [], [])"><div class="token cpp_type">LookAheadInfo</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::Walk@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>, ::vl::vint, ::vl::collections::List<::vl::Ptr<::vl::parsing::tabling::ParsingTable::LookAheadInfo>> &)[decl0]::newInfos"><div>newInfos</div></div>);
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem"><div><div class="token cpp_type">TransitionItem</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::token"><div><div class="token cpp_field">token</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::targetState"><div><div class="token cpp_field">targetState</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::LookAheadInfo'], [], [])"><div class="token cpp_type">LookAheadInfo</div></div>&gt;&gt;	<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::lookAheads"><div><div class="token cpp_field">lookAheads</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::stackPattern"><div><div class="token cpp_field">stackPattern</div></div></div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::Instruction'], [], [])"><div class="token cpp_type">Instruction</div></div>&gt;			<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::instructions"><div><div class="token cpp_field">instructions</div></div></div>;
+
+					<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult"><div><div class="token cpp_type">OrderResult</div></div></div>
+					{
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult::CorrectOrder"><div><div class="token cpp_enum">CorrectOrder</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult::WrongOrder"><div><div class="token cpp_enum">WrongOrder</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult::SameOrder"><div><div class="token cpp_enum">SameOrder</div></div></div>,
+						<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult::UnknownOrder"><div><div class="token cpp_enum">UnknownOrder</div></div></div>,
+					};
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@()[impl0]"><div><div class="token cpp_function">TransitionItem</div></div></div>(){}
+
+					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]"><div><div class="token cpp_function">TransitionItem</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_token"><div><div class="token cpp_argument">_token</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_targetState"><div><div class="token cpp_argument">_targetState</div></div></div>)
+						:token(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_token'], [], [])"><div class="token cpp_argument">_token</div></div>)
+						,targetState(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_targetState'], [], [])"><div class="token cpp_argument">_targetState</div></div>)
+					{
+					}
+
+					<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult'], [], [])"><div class="token cpp_type">OrderResult</div></div>						<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TransitionItem::CheckOrder@::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult(::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult)[decl0]"><div><div class="token cpp_function">CheckOrder</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem'], [], [])"><div class="token cpp_type">TransitionItem</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::CheckOrder@::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult(::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult)[decl0]::t1"><div>t1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem'], [], [])"><div class="token cpp_type">TransitionItem</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::CheckOrder@::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult(::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult)[decl0]::t2"><div>t2</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult'], [], [])"><div class="token cpp_type">OrderResult</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::CheckOrder@::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult(::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult)[decl0]::defaultResult"><div>defaultResult</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult::UnknownOrder'], [], [])"><div class="token cpp_enum">UnknownOrder</div></div>);
+					<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>								<div class="def" id="FB$vl::parsing::tabling::ParsingTable::TransitionItem::Compare@::vl::vint(::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult)[decl0]"><div><div class="token cpp_function">Compare</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem'], [], [])"><div class="token cpp_type">TransitionItem</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::Compare@::vl::vint(::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult)[decl0]::t1"><div>t1</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem'], [], [])"><div class="token cpp_type">TransitionItem</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::Compare@::vl::vint(::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult)[decl0]::t2"><div>t2</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult'], [], [])"><div class="token cpp_type">OrderResult</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionItem::Compare@::vl::vint(::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionItem>, ::vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult)[decl0]::defaultResult"><div>defaultResult</div></div>);
+				};
+
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionBag"><div><div class="token cpp_type">TransitionBag</div></div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionItem'], [], [])"><div class="token cpp_type">TransitionItem</div></div>&gt;&gt;	<div class="def" id="NI$vl::parsing::tabling::ParsingTable::TransitionBag::transitionItems"><div><div class="token cpp_field">transitionItems</div></div></div>;
+				};
+
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="token cpp_comment ">// metadata</div>
+				<div class="token cpp_keyword ">bool</div>																<div class="def" id="NI$vl::parsing::tabling::ParsingTable::ambiguity"><div><div class="token cpp_field">ambiguity</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfoList'], [], [])"><div class="token cpp_type">AttributeInfoList</div></div>&gt;&gt;							<div class="def" id="NI$vl::parsing::tabling::ParsingTable::attributeInfos"><div><div class="token cpp_field">attributeInfos</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeTypeInfo'], [], [])"><div class="token cpp_type">TreeTypeInfo</div></div>&gt;									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::treeTypeInfos"><div><div class="token cpp_field">treeTypeInfos</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeFieldInfo'], [], [])"><div class="token cpp_type">TreeFieldInfo</div></div>&gt;									<div class="def" id="NI$vl::parsing::tabling::ParsingTable::treeFieldInfos"><div><div class="token cpp_field">treeFieldInfos</div></div></div>;
+
+				<div class="token cpp_comment ">// LALR table</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>																<div class="def" id="NI$vl::parsing::tabling::ParsingTable::tokenCount"><div><div class="token cpp_field">tokenCount</div></div></div>;			<div class="token cpp_comment ">// tokenInfos.Count() + discardTokenInfos.Count()</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>																<div class="def" id="NI$vl::parsing::tabling::ParsingTable::stateCount"><div><div class="token cpp_field">stateCount</div></div></div>;			<div class="token cpp_comment ">// stateInfos.Count()</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo'], [], [])"><div class="token cpp_type">TokenInfo</div></div>&gt;										<div class="def" id="NI$vl::parsing::tabling::ParsingTable::tokenInfos"><div><div class="token cpp_field">tokenInfos</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo'], [], [])"><div class="token cpp_type">TokenInfo</div></div>&gt;										<div class="def" id="NI$vl::parsing::tabling::ParsingTable::discardTokenInfos"><div><div class="token cpp_field">discardTokenInfos</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::StateInfo'], [], [])"><div class="token cpp_type">StateInfo</div></div>&gt;										<div class="def" id="NI$vl::parsing::tabling::ParsingTable::stateInfos"><div><div class="token cpp_field">stateInfos</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo'], [], [])"><div class="token cpp_type">RuleInfo</div></div>&gt;										<div class="def" id="NI$vl::parsing::tabling::ParsingTable::ruleInfos"><div><div class="token cpp_field">ruleInfos</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionBag'], [], [])"><div class="token cpp_type">TransitionBag</div></div>&gt;&gt;								<div class="def" id="NI$vl::parsing::tabling::ParsingTable::transitionBags"><div><div class="token cpp_field">transitionBags</div></div></div>;
+
+				<div class="token cpp_comment ">// generated data</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::regex'], [], [])">regex</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexer'], [], [])"><div class="token cpp_type">RegexLexer</div></div>&gt;												<div class="def" id="NI$vl::parsing::tabling::ParsingTable::lexer"><div><div class="token cpp_field">lexer</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;								<div class="def" id="NI$vl::parsing::tabling::ParsingTable::ruleMap"><div><div class="token cpp_field">ruleMap</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;								<div class="def" id="NI$vl::parsing::tabling::ParsingTable::treeTypeInfoMap"><div><div class="token cpp_field">treeTypeInfoMap</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Pair'], [], [])"><div class="token cpp_type">Pair</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;	<div class="def" id="NI$vl::parsing::tabling::ParsingTable::treeFieldInfoMap"><div><div class="token cpp_field">treeFieldInfoMap</div></div></div>;
+
+				<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::parsing::tabling::ParsingTable::IO@void([TIO] &)[decl0]::TIO"><div><div class="token cpp_type">TIO</div></div></div>&gt;
+				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::parsing::tabling::ParsingTable::IO@void([TIO] &)[decl0]"><div><div class="token cpp_function">IO</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::IO@void([TIO] &)[decl0]::TIO'], [], [])"><div class="token cpp_type">TIO</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::IO@void([TIO] &)[decl0]::io"><div>io</div></div>);
+
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]"><div><div class="token cpp_function">ParsingTable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_attributeInfoCount"><div>_attributeInfoCount</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_treeTypeInfoCount"><div>_treeTypeInfoCount</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_treeFieldInfoCount"><div>_treeFieldInfoCount</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_tokenCount"><div>_tokenCount</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_discardTokenCount"><div>_discardTokenCount</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_stateCount"><div>_stateCount</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]::_ruleCount"><div>_ruleCount</div></div>);
+				<div class="token cpp_comment ">/// &lt;summary&gt;Deserialize the parsing table from a stream. &lt;see cref=&quot;Initialize&quot;/&gt; should be before using this table.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;input&quot;&gt;The stream.&lt;/param&gt;</div>
+				<div class="def" id="FB$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::stream::IStream &)[decl0]"><div><div class="token cpp_function">ParsingTable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::$__ctor@(::vl::stream::IStream &)[decl0]::input"><div>input</div></div>);
+				<div class="def" id="FB$vl::parsing::tabling::ParsingTable::~ParsingTable@()[decl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">ParsingTable</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Serialize the parsing table to a stream.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;output&quot;&gt;The stream.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::Serialize@void(::vl::stream::IStream &)[decl0]"><div><div class="token cpp_function">Serialize</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::IStream'], [], [])"><div class="token cpp_type">IStream</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::Serialize@void(::vl::stream::IStream &)[decl0]::output"><div>output</div></div>);
+
+				<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetAmbiguity@bool()[decl0]"><div><div class="token cpp_function">GetAmbiguity</div></div></div>();
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetAmbiguity@void(bool)[decl0]"><div><div class="token cpp_function">SetAmbiguity</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetAmbiguity@void(bool)[decl0]::value"><div>value</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetAttributeInfoCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetAttributeInfoCount</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfoList'], [], [])"><div class="token cpp_type">AttributeInfoList</div></div>&gt;						<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetAttributeInfo@::vl::Ptr<::vl::parsing::tabling::ParsingTable::AttributeInfoList>(::vl::vint)[decl0]"><div><div class="token cpp_function">GetAttributeInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetAttributeInfo@::vl::Ptr<::vl::parsing::tabling::ParsingTable::AttributeInfoList>(::vl::vint)[decl0]::index"><div>index</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetAttributeInfo@void(::vl::vint, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::AttributeInfoList>)[decl0]"><div><div class="token cpp_function">SetAttributeInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetAttributeInfo@void(::vl::vint, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::AttributeInfoList>)[decl0]::index"><div>index</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::AttributeInfoList'], [], [])"><div class="token cpp_type">AttributeInfoList</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetAttributeInfo@void(::vl::vint, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::AttributeInfoList>)[decl0]::info"><div>info</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTreeTypeInfoCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetTreeTypeInfoCount</div></div></div>();
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeTypeInfo'], [], [])"><div class="token cpp_type">TreeTypeInfo</div></div>&amp;							<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTreeTypeInfo@::vl::parsing::tabling::ParsingTable::TreeTypeInfo const &(::vl::vint)[decl0]"><div><div class="token cpp_function">GetTreeTypeInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTreeTypeInfo@::vl::parsing::tabling::ParsingTable::TreeTypeInfo const &(::vl::vint)[decl0]::index"><div>index</div></div>);
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeTypeInfo'], [], [])"><div class="token cpp_type">TreeTypeInfo</div></div>&amp;							<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTreeTypeInfo@::vl::parsing::tabling::ParsingTable::TreeTypeInfo const &(::vl::WString const &)[decl0]"><div><div class="token cpp_function">GetTreeTypeInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTreeTypeInfo@::vl::parsing::tabling::ParsingTable::TreeTypeInfo const &(::vl::WString const &)[decl0]::type"><div>type</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetTreeTypeInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TreeTypeInfo const &)[decl0]"><div><div class="token cpp_function">SetTreeTypeInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTreeTypeInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TreeTypeInfo const &)[decl0]::index"><div>index</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeTypeInfo'], [], [])"><div class="token cpp_type">TreeTypeInfo</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTreeTypeInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TreeTypeInfo const &)[decl0]::info"><div>info</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTreeFieldInfoCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetTreeFieldInfoCount</div></div></div>();
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeFieldInfo'], [], [])"><div class="token cpp_type">TreeFieldInfo</div></div>&amp;						<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTreeFieldInfo@::vl::parsing::tabling::ParsingTable::TreeFieldInfo const &(::vl::vint)[decl0]"><div><div class="token cpp_function">GetTreeFieldInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTreeFieldInfo@::vl::parsing::tabling::ParsingTable::TreeFieldInfo const &(::vl::vint)[decl0]::index"><div>index</div></div>);
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeFieldInfo'], [], [])"><div class="token cpp_type">TreeFieldInfo</div></div>&amp;						<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTreeFieldInfo@::vl::parsing::tabling::ParsingTable::TreeFieldInfo const &(::vl::WString const &, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">GetTreeFieldInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTreeFieldInfo@::vl::parsing::tabling::ParsingTable::TreeFieldInfo const &(::vl::WString const &, ::vl::WString const &)[decl0]::type"><div>type</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTreeFieldInfo@::vl::parsing::tabling::ParsingTable::TreeFieldInfo const &(::vl::WString const &, ::vl::WString const &)[decl0]::field"><div>field</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetTreeFieldInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TreeFieldInfo const &)[decl0]"><div><div class="token cpp_function">SetTreeFieldInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTreeFieldInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TreeFieldInfo const &)[decl0]::index"><div>index</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TreeFieldInfo'], [], [])"><div class="token cpp_type">TreeFieldInfo</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTreeFieldInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TreeFieldInfo const &)[decl0]::info"><div>info</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTokenCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetTokenCount</div></div></div>();
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo'], [], [])"><div class="token cpp_type">TokenInfo</div></div>&amp;							<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTokenInfo@::vl::parsing::tabling::ParsingTable::TokenInfo const &(::vl::vint)[decl0]"><div><div class="token cpp_function">GetTokenInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTokenInfo@::vl::parsing::tabling::ParsingTable::TokenInfo const &(::vl::vint)[decl0]::token"><div>token</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetTokenInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TokenInfo const &)[decl0]"><div><div class="token cpp_function">SetTokenInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTokenInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TokenInfo const &)[decl0]::token"><div>token</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo'], [], [])"><div class="token cpp_type">TokenInfo</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTokenInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TokenInfo const &)[decl0]::info"><div>info</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetDiscardTokenCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetDiscardTokenCount</div></div></div>();
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo'], [], [])"><div class="token cpp_type">TokenInfo</div></div>&amp;							<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetDiscardTokenInfo@::vl::parsing::tabling::ParsingTable::TokenInfo const &(::vl::vint)[decl0]"><div><div class="token cpp_function">GetDiscardTokenInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetDiscardTokenInfo@::vl::parsing::tabling::ParsingTable::TokenInfo const &(::vl::vint)[decl0]::token"><div>token</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetDiscardTokenInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TokenInfo const &)[decl0]"><div><div class="token cpp_function">SetDiscardTokenInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetDiscardTokenInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TokenInfo const &)[decl0]::token"><div>token</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TokenInfo'], [], [])"><div class="token cpp_type">TokenInfo</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetDiscardTokenInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::TokenInfo const &)[decl0]::info"><div>info</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetStateCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetStateCount</div></div></div>();
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::StateInfo'], [], [])"><div class="token cpp_type">StateInfo</div></div>&amp;							<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetStateInfo@::vl::parsing::tabling::ParsingTable::StateInfo const &(::vl::vint)[decl0]"><div><div class="token cpp_function">GetStateInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetStateInfo@::vl::parsing::tabling::ParsingTable::StateInfo const &(::vl::vint)[decl0]::state"><div>state</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetStateInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::StateInfo const &)[decl0]"><div><div class="token cpp_function">SetStateInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetStateInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::StateInfo const &)[decl0]::state"><div>state</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::StateInfo'], [], [])"><div class="token cpp_type">StateInfo</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetStateInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::StateInfo const &)[decl0]::info"><div>info</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetRuleCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetRuleCount</div></div></div>();
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo'], [], [])"><div class="token cpp_type">RuleInfo</div></div>&amp;								<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetRuleInfo@::vl::parsing::tabling::ParsingTable::RuleInfo const &(::vl::WString const &)[decl0]"><div><div class="token cpp_function">GetRuleInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetRuleInfo@::vl::parsing::tabling::ParsingTable::RuleInfo const &(::vl::WString const &)[decl0]::ruleName"><div>ruleName</div></div>);
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo'], [], [])"><div class="token cpp_type">RuleInfo</div></div>&amp;								<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetRuleInfo@::vl::parsing::tabling::ParsingTable::RuleInfo const &(::vl::vint)[decl0]"><div><div class="token cpp_function">GetRuleInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetRuleInfo@::vl::parsing::tabling::ParsingTable::RuleInfo const &(::vl::vint)[decl0]::rule"><div>rule</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetRuleInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::RuleInfo const &)[decl0]"><div><div class="token cpp_function">SetRuleInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetRuleInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::RuleInfo const &)[decl0]::rule"><div>rule</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::RuleInfo'], [], [])"><div class="token cpp_type">RuleInfo</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetRuleInfo@void(::vl::vint, ::vl::parsing::tabling::ParsingTable::RuleInfo const &)[decl0]::info"><div>info</div></div>);
+
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::regex'], [], [])">regex</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::regex::RegexLexer'], [], [])"><div class="token cpp_type">RegexLexer</div></div>&amp;					<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetLexer@::vl::regex::RegexLexer const &()[decl0]"><div><div class="token cpp_function">GetLexer</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionBag'], [], [])"><div class="token cpp_type">TransitionBag</div></div>&gt;							<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTransitionBag@::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionBag>(::vl::vint, ::vl::vint)[decl0]"><div><div class="token cpp_function">GetTransitionBag</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTransitionBag@::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionBag>(::vl::vint, ::vl::vint)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTransitionBag@::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionBag>(::vl::vint, ::vl::vint)[decl0]::token"><div>token</div></div>);
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::SetTransitionBag@void(::vl::vint, ::vl::vint, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionBag>)[decl0]"><div><div class="token cpp_function">SetTransitionBag</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTransitionBag@void(::vl::vint, ::vl::vint, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionBag>)[decl0]::state"><div>state</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTransitionBag@void(::vl::vint, ::vl::vint, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionBag>)[decl0]::token"><div>token</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable::TransitionBag'], [], [])"><div class="token cpp_type">TransitionBag</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::ParsingTable::SetTransitionBag@void(::vl::vint, ::vl::vint, ::vl::Ptr<::vl::parsing::tabling::ParsingTable::TransitionBag>)[decl0]::bag"><div>bag</div></div>);
+				<div class="token cpp_comment ">/// &lt;summary&gt;Initialize the parsing table. This function should be called after deserializing the table from a string.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::Initialize@void()[decl0]"><div><div class="token cpp_function">Initialize</div></div></div>();
+				<div class="token cpp_keyword ">bool</div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::IsInputToken@bool(::vl::vint)[decl0]"><div><div class="token cpp_function">IsInputToken</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::IsInputToken@bool(::vl::vint)[decl0]::regexTokenIndex"><div>regexTokenIndex</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTableTokenIndex@::vl::vint(::vl::vint)[decl0]"><div><div class="token cpp_function">GetTableTokenIndex</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTableTokenIndex@::vl::vint(::vl::vint)[decl0]::regexTokenIndex"><div>regexTokenIndex</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>										<div class="def" id="FB$vl::parsing::tabling::ParsingTable::GetTableDiscardTokenIndex@::vl::vint(::vl::vint)[decl0]"><div><div class="token cpp_function">GetTableDiscardTokenIndex</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable::GetTableDiscardTokenIndex@::vl::vint(::vl::vint)[decl0]::regexTokenIndex"><div>regexTokenIndex</div></div>);
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Helper Functions
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::parsing::tabling::Log@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::stream::TextWriter &)[decl0]"><div><div class="token cpp_function">Log</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::parsing::tabling::Log@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::stream::TextWriter &)[decl0]::table"><div>table</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter'], [], [])"><div class="token cpp_type">TextWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::tabling::Log@void(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::stream::TextWriter &)[decl0]::writer"><div>writer</div></div>);
+		}
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections'
+        ]
+    },
+    'vl::collections::Array': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Array'
+        ],
+        'decls': []
+    },
+    'vl::collections::Dictionary': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Dictionary'
+        ],
+        'decls': []
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::Add@::vl::vint([T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
+        'impls': [
+            'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::Pair': {
+        'displayNameInHtml': '<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">K</span>, <span class="cpp_type">V</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Pair'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedList': {
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::SortedList'
+        ],
+        'decls': []
+    },
+    'vl::parsing': {
+        'displayNameInHtml': 'vl::parsing',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing',
+            'NF[1]$vl::parsing',
+            'NF[2]$vl::parsing',
+            'NF[3]$vl::parsing',
+            'NF[4]$vl::parsing',
+            'NF[5]$vl::parsing',
+            'NF[6]$vl::parsing',
+            'NF[7]$vl::parsing',
+            'NF[8]$vl::parsing',
+            'NF[9]$vl::parsing',
+            'NF[10]$vl::parsing',
+            'NF[11]$vl::parsing',
+            'NF[12]$vl::parsing',
+            'NF[13]$vl::parsing'
+        ]
+    },
+    'vl::parsing::tabling': {
+        'displayNameInHtml': 'vl::parsing::tabling',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing::tabling',
+            'NF[1]$vl::parsing::tabling',
+            'NF[2]$vl::parsing::tabling'
+        ]
+    },
+    'vl::parsing::tabling::ParsingTable': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::AttributeInfo': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">AttributeInfo</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::AttributeInfo'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::AttributeInfo::$__ctor@(::vl::WString const &)[impl0]::_name': {
+        'displayNameInHtml': '_name',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::AttributeInfo::$__ctor@(::vl::WString const &)[impl0]::_name'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::AttributeInfo::Argument@::vl::parsing::tabling::ParsingTable::AttributeInfo *(::vl::WString const &)[impl0]::argument': {
+        'displayNameInHtml': 'argument',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::AttributeInfo::Argument@::vl::parsing::tabling::ParsingTable::AttributeInfo *(::vl::WString const &)[impl0]::argument'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::AttributeInfo::arguments': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">AttributeInfo</span>::<span class="cpp_field">arguments</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::AttributeInfo::arguments'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::AttributeInfoList': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">AttributeInfoList</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::AttributeInfoList'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::IO@void([TIO] &)[decl0]::TIO': {
+        'displayNameInHtml': '<span class="cpp_type">TIO</span>',
+        'impls': [
+            'TA$vl::parsing::tabling::ParsingTable::IO@void([TIO] &)[decl0]::TIO'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::Instruction': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">Instruction</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::Instruction'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_creatorRule': {
+        'displayNameInHtml': '_creatorRule',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_creatorRule'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_instructionType': {
+        'displayNameInHtml': '_instructionType',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_instructionType'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_nameParameter': {
+        'displayNameInHtml': '_nameParameter',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_nameParameter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateParameter': {
+        'displayNameInHtml': '_stateParameter',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateParameter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_value': {
+        'displayNameInHtml': '_value',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_value'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::Instruction::InstructionType': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">Instruction</span>::<span class="cpp_type">InstructionType</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Create': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">Instruction</span>::<span class="cpp_type">InstructionType</span>::<span class="cpp_enum">Create</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Create'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::LookAheadInfo': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">LookAheadInfo</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::LookAheadInfo'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">LookAheadInfo</span>::<span class="cpp_type">PrefixResult</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::RuleInfo': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">RuleInfo</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::RuleInfo'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_ambiguousType': {
+        'displayNameInHtml': '_ambiguousType',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_ambiguousType'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_attributeIndex': {
+        'displayNameInHtml': '_attributeIndex',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_attributeIndex'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_name': {
+        'displayNameInHtml': '_name',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_name'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_rootStartState': {
+        'displayNameInHtml': '_rootStartState',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_rootStartState'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_type': {
+        'displayNameInHtml': '_type',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_type'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::StateInfo': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">StateInfo</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::StateInfo'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_ruleName': {
+        'displayNameInHtml': '_ruleName',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_ruleName'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateExpression': {
+        'displayNameInHtml': '_stateExpression',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateExpression'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateName': {
+        'displayNameInHtml': '_stateName',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateName'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TokenInfo': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">TokenInfo</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TokenInfo'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex': {
+        'displayNameInHtml': '_attributeIndex',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_name': {
+        'displayNameInHtml': '_name',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_name'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_regex': {
+        'displayNameInHtml': '_regex',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_regex'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TransitionBag': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">TransitionBag</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TransitionBag'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TransitionItem': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">TransitionItem</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TransitionItem'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_targetState': {
+        'displayNameInHtml': '_targetState',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_targetState'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_token': {
+        'displayNameInHtml': '_token',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_token'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">TransitionItem</span>::<span class="cpp_type">OrderResult</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult::UnknownOrder': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">TransitionItem</span>::<span class="cpp_type">OrderResult</span>::<span class="cpp_enum">UnknownOrder</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult::UnknownOrder'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TreeFieldInfo': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">TreeFieldInfo</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex': {
+        'displayNameInHtml': '_attributeIndex',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_field': {
+        'displayNameInHtml': '_field',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_field'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_type': {
+        'displayNameInHtml': '_type',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_type'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TreeTypeInfo': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>::<span class="cpp_type">TreeTypeInfo</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex': {
+        'displayNameInHtml': '_attributeIndex',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_type': {
+        'displayNameInHtml': '_type',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_type'
+        ],
+        'decls': []
+    },
+    'vl::regex': {
+        'displayNameInHtml': 'vl::regex',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::regex',
+            'NF[1]$vl::regex'
+        ]
+    },
+    'vl::regex::RegexLexer': {
+        'displayNameInHtml': '<span class="cpp_type">RegexLexer</span>',
+        'impls': [
+            'NI$vl::regex::RegexLexer'
+        ],
+        'decls': []
+    },
+    'vl::stream': {
+        'displayNameInHtml': 'vl::stream',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::stream',
+            'NF[1]$vl::stream',
+            'NF[2]$vl::stream',
+            'NF[3]$vl::stream',
+            'NF[4]$vl::stream',
+            'NF[5]$vl::stream',
+            'NF[6]$vl::stream',
+            'NF[7]$vl::stream',
+            'NF[8]$vl::stream',
+            'NF[9]$vl::stream',
+            'NF[10]$vl::stream'
+        ]
+    },
+    'vl::stream::IStream': {
+        'displayNameInHtml': '<span class="cpp_type">IStream</span>',
+        'impls': [
+            'NI$vl::stream::IStream'
+        ],
+        'decls': []
+    },
+    'vl::stream::TextWriter': {
+        'displayNameInHtml': '<span class="cpp_type">TextWriter</span>',
+        'impls': [
+            'NI$vl::stream::TextWriter'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::tabling': null,
+    'NF[0]$vl::regex': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[0]$vl::stream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[10]$vl::parsing': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[10]$vl::stream': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[11]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[13]$vl::parsing': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[1]$vl::parsing::tabling': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[1]$vl::regex': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[1]$vl::stream': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[28]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[29]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[2]$vl::parsing::tabling': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[2]$vl::stream': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[30]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[31]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[32]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[33]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[34]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[37]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[38]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[39]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::parsing': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[3]$vl::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[40]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[42]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[43]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[44]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[45]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[46]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[48]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[49]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::parsing': null,
+    'NF[4]$vl::stream': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[50]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[51]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[52]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[53]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[54]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[55]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[56]$vl': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[57]$vl': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[58]$vl': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[59]$vl': null,
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[5]$vl::stream': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[60]$vl': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[61]$vl': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[62]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[63]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[64]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[65]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[66]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[67]$vl': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[68]$vl': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[69]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::parsing': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[6]$vl::stream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[70]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[71]$vl': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[72]$vl': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::parsing': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[7]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[8]$vl::stream': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[9]$vl::stream': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::Array': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::Dictionary': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::Pair': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NI$vl::collections::SortedList': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::parsing::tabling::ParsingTable': null,
+    'NI$vl::parsing::tabling::ParsingTable::AttributeInfo': null,
+    'NI$vl::parsing::tabling::ParsingTable::AttributeInfo::$__ctor@(::vl::WString const &)[impl0]::_name': null,
+    'NI$vl::parsing::tabling::ParsingTable::AttributeInfo::Argument@::vl::parsing::tabling::ParsingTable::AttributeInfo *(::vl::WString const &)[impl0]::argument': null,
+    'NI$vl::parsing::tabling::ParsingTable::AttributeInfo::arguments': null,
+    'NI$vl::parsing::tabling::ParsingTable::AttributeInfoList': null,
+    'NI$vl::parsing::tabling::ParsingTable::Instruction': null,
+    'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_creatorRule': null,
+    'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_instructionType': null,
+    'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_nameParameter': null,
+    'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateParameter': null,
+    'NI$vl::parsing::tabling::ParsingTable::Instruction::$__ctor@(::vl::parsing::tabling::ParsingTable::Instruction::InstructionType, ::vl::vint, ::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_value': null,
+    'NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType': null,
+    'NI$vl::parsing::tabling::ParsingTable::Instruction::InstructionType::Create': null,
+    'NI$vl::parsing::tabling::ParsingTable::LookAheadInfo': null,
+    'NI$vl::parsing::tabling::ParsingTable::LookAheadInfo::PrefixResult': null,
+    'NI$vl::parsing::tabling::ParsingTable::RuleInfo': null,
+    'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_ambiguousType': null,
+    'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_attributeIndex': null,
+    'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_name': null,
+    'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_rootStartState': null,
+    'NI$vl::parsing::tabling::ParsingTable::RuleInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &, ::vl::vint, ::vl::vint)[impl0]::_type': null,
+    'NI$vl::parsing::tabling::ParsingTable::StateInfo': null,
+    'NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_ruleName': null,
+    'NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateExpression': null,
+    'NI$vl::parsing::tabling::ParsingTable::StateInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::WString const &)[impl0]::_stateName': null,
+    'NI$vl::parsing::tabling::ParsingTable::TokenInfo': null,
+    'NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex': null,
+    'NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_name': null,
+    'NI$vl::parsing::tabling::ParsingTable::TokenInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_regex': null,
+    'NI$vl::parsing::tabling::ParsingTable::TransitionBag': null,
+    'NI$vl::parsing::tabling::ParsingTable::TransitionItem': null,
+    'NI$vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_targetState': null,
+    'NI$vl::parsing::tabling::ParsingTable::TransitionItem::$__ctor@(::vl::vint, ::vl::vint)[impl0]::_token': null,
+    'NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult': null,
+    'NI$vl::parsing::tabling::ParsingTable::TransitionItem::OrderResult::UnknownOrder': null,
+    'NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo': null,
+    'NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex': null,
+    'NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_field': null,
+    'NI$vl::parsing::tabling::ParsingTable::TreeFieldInfo::$__ctor@(::vl::WString const &, ::vl::WString const &, ::vl::vint)[impl0]::_type': null,
+    'NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo': null,
+    'NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_attributeIndex': null,
+    'NI$vl::parsing::tabling::ParsingTable::TreeTypeInfo::$__ctor@(::vl::WString const &, ::vl::vint)[impl0]::_type': null,
+    'NI$vl::regex::RegexLexer': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NI$vl::stream::IStream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NI$vl::stream::TextWriter': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'TA$vl::parsing::tabling::ParsingTable::IO@void([TIO] &)[decl0]::TIO': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

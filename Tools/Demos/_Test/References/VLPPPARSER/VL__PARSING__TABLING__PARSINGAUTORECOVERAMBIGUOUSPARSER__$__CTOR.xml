@@ -1,0 +1,5 @@
+<Document symbolId="vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="Parsing.h" declId="FB$vl::parsing::tabling::ParsingAutoRecoverAmbiguousParser::$__ctor@(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)[decl0]"><summary>Create the parse using a parsing table.</summary><param name="_table">The parsing table.</param><param name="_maxInsertedTokenCount">The maximum number of tokens that allow to insert to recover an error.</param><signature><![CDATA[ ParsingAutoRecoverAmbiguousParser(
+    Ptr<ParsingTable> _table /* optional */,
+    vint _maxInsertedTokenCount /* optional */
+);
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="ParsingTable" docId="vl::parsing::tabling::ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,0 +1,4 @@
+<Document symbolId="vl::parsing::ParsingTreeToken" accessor="" category="Class" name="ParsingTreeToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeToken"><summary>Representing a token node in a abstract syntax tree.</summary><signature><![CDATA[class ParsingTreeToken
+    : ParsingTreeNode
+    , reflection::Description<ParsingTreeToken>;
+]]></signature><seealsos><symbol name="ParsingTreeToken" docId="vl::parsing::ParsingTreeToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeToken"/></seealsos><basetypes><symbol name="ParsingTreeNode" docId="vl::parsing::ParsingTreeNode" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

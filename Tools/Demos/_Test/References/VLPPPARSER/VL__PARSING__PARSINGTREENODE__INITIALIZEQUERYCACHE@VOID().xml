@@ -1,0 +1,3 @@
+<Document symbolId="vl::parsing::ParsingTreeNode::InitializeQueryCache@void()" accessor="public" category="Function" name="InitializeQueryCache" declFile="ParsingTree.h" declId="FB$vl::parsing::ParsingTreeNode::InitializeQueryCache@void()[decl0]"><summary>Precalculate for enhance searching performance for this node and all child nodes.</summary><signature><![CDATA[void InitializeQueryCache(
+);
+]]></signature></Document>

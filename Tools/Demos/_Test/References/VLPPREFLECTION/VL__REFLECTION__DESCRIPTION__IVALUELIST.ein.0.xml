@@ -1,0 +1,113 @@
+<example><![CDATA[
+ // reflectable C++ types
+ 
+ namespace mynamespace
+ {
+     class MyClass : public Object, public Description<MyClass>
+     {
+     public:
+         MyClass(vint _data = 0)
+             :data(_data)
+         {
+         }
+ 
+         vint data;
+     };
+ }
+ 
+ #define MY_TYPELIST(F)\
+     F(mynamespace::MyClass)\
+ 
+ // it is recommended to put the content below in a separated header file
+ 
+ namespace vl
+ {
+     namespace reflection
+     {
+         namespace description
+         {
+             MY_TYPELIST(DECL_TYPE_INFO)
+         }
+     }
+ }
+ 
+ // it is recommended to put the content below in a separated cpp file
+ 
+ namespace vl
+ {
+     namespace reflection
+     {
+         namespace description
+         {
+             using namespace mynamespace;
+ 
+ #define _ ,
+ 
+             MY_TYPELIST(IMPL_CPP_TYPE_INFO)
+ 
+             BEGIN_CLASS_MEMBER(MyClass)
+                 CLASS_MEMBER_CONSTRUCTOR(Ptr<MyClass>(), NO_PARAMETER)
+                 CLASS_MEMBER_CONSTRUCTOR(Ptr<MyClass>(vint), { L"data" })
+                 CLASS_MEMBER_FIELD(data)
+             END_CLASS_MEMBER(MyClass)
+ 
+ #undef  _
+         }
+     }
+ }
+ 
+ class MyTypeLoader : public Object, public ITypeLoader
+ {
+ public:
+     void Load(ITypeManager* manager)
+     {
+         MY_TYPELIST(ADD_TYPE_INFO)
+     }
+ 
+     void Unload(ITypeManager* manager)
+     {
+     }
+ };
+ 
+ // main function
+ 
+ int main()
+ {
+     LoadPredefinedTypes();
+     GetGlobalTypeManager()->AddTypeLoader(new MyTypeLoader);
+     GetGlobalTypeManager()->Load();
+     {
+         List<Ptr<MyClass>> cs;
+         CopyFrom(cs, Range<vint>(1, 10)
+             .Select([](vint i)
+             {
+                 return MakePtr<MyClass>(i);
+             })
+         );
+ 
+         Value boxed = BoxParameter<List<Ptr<MyClass>>>(cs);
+         {
+             auto list = UnboxValue<Ptr<IValueList>>(boxed);
+             for (vint i = 0; i < list->GetCount(); i++)
+             {
+                 Console::Write(itow(UnboxValue<Ptr<MyClass>>(list->Get(i))->data) + L" ");
+             }
+             Console::WriteLine(L"");
+         }
+
+         for (vint i = 1; i <= 5; i++)
+         {
+             cs.RemoveAt(i);
+         }
+
+         {
+             for (vint i = 0; i < UnboxValue<vint>(boxed.GetProperty(L"Count")); i++)
+             {
+                 Console::Write(itow(UnboxValue<vint>(boxed.Invoke(L"Get", (Value_xs(), i)).GetProperty(L"data"))) + L" ");
+             }
+             Console::WriteLine(L"");
+         }
+     }
+     DestroyGlobalTypeManager();
+ }
+ ]]></example>

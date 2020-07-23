@@ -3,4 +3,5 @@
   <category name="VlppOS" file="VLPPOS"/>
   <category name="VlppRegex" file="VLPPREGEX"/>
   <category name="VlppReflection" file="VLPPREFLECTION"/>
+  <category name="VlppParser" file="VLPPPARSER"/>
 </categories>

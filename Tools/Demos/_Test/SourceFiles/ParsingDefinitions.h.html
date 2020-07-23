@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ParsingDefinitions.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_PARSING_PARSINGDEFINITIONS</div>
+<div class="disabled">#define VCZH_PARSING_PARSINGDEFINITIONS</div>
+
+<div class="disabled">#include &quot;ParsingTree.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[57]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[2]$vl::parsing"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::parsing::definitions"><div>definitions</div></div>
+		{
+
+<div class="token cpp_comment ">/***********************************************************************
+Attributes
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttribute"><div><div class="token cpp_type">ParsingDefinitionAttribute</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttribute::name"><div><div class="token cpp_field">name</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttribute::arguments"><div><div class="token cpp_field">arguments</div></div></div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionBase"><div><div class="token cpp_type">ParsingDefinitionBase</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttribute'], [], [])"><div class="token cpp_type">ParsingDefinitionAttribute</div></div>&gt;&gt;				<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionBase::AttributeList"><div><div class="token cpp_type">AttributeList</div></div></div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionBase::AttributeList'], [], [])"><div class="token cpp_type">AttributeList</div></div>									<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionBase::attributes"><div><div class="token cpp_field">attributes</div></div></div>;
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Type
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionPrimitiveType"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionPrimitiveType'], [], [])"><div class="token cpp_type">ParsingDefinitionPrimitiveType</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionTokenType"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTokenType'], [], [])"><div class="token cpp_type">ParsingDefinitionTokenType</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionSubType"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSubType'], [], [])"><div class="token cpp_type">ParsingDefinitionSubType</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionArrayType"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionArrayType'], [], [])"><div class="token cpp_type">ParsingDefinitionArrayType</div></div></div>;
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionType"><div><div class="token cpp_type">ParsingDefinitionType</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionType::IVisitor"><div><div class="token cpp_type">IVisitor</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionType::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionPrimitiveType *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionPrimitiveType'], [], [])"><div class="token cpp_type">ParsingDefinitionPrimitiveType</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionType::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionPrimitiveType *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionType::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionTokenType *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTokenType'], [], [])"><div class="token cpp_type">ParsingDefinitionTokenType</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionType::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionTokenType *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionType::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionSubType *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSubType'], [], [])"><div class="token cpp_type">ParsingDefinitionSubType</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionType::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionSubType *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionType::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionArrayType *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionArrayType'], [], [])"><div class="token cpp_type">ParsingDefinitionArrayType</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionType::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionArrayType *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+				};
+
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)=<div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionPrimitiveType"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionPrimitiveType'], [], [])"><div class="token cpp_type">ParsingDefinitionPrimitiveType</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionPrimitiveType::name"><div><div class="token cpp_field">name</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionPrimitiveType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionPrimitiveType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenType"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTokenType'], [], [])"><div class="token cpp_type">ParsingDefinitionTokenType</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTokenType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSubType"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSubType'], [], [])"><div class="token cpp_type">ParsingDefinitionSubType</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSubType::parentType"><div><div class="token cpp_field">parentType</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSubType::subTypeName"><div><div class="token cpp_field">subTypeName</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionSubType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSubType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionArrayType"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionArrayType'], [], [])"><div class="token cpp_type">ParsingDefinitionArrayType</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionArrayType::elementType"><div><div class="token cpp_field">elementType</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionArrayType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionArrayType::Accept@void(::vl::parsing::definitions::ParsingDefinitionType::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Type Definition
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassMemberDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassMemberDefinition</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionClassDefinition"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinition</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumMemberDefinition</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionEnumDefinition"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumDefinition</div></div></div>;
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition"><div><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionBase'], [], [])"><div class="token cpp_type">ParsingDefinitionBase</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor"><div><div class="token cpp_type">IVisitor</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionClassMemberDefinition *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassMemberDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassMemberDefinition</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionClassMemberDefinition *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionClassDefinition *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinition</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionClassDefinition *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumMemberDefinition</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionEnumDefinition *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumDefinition</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionEnumDefinition *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+				};
+
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::name"><div><div class="token cpp_field">name</div></div></div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassMemberDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassMemberDefinition</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition::type"><div><div class="token cpp_field">type</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition::unescapingFunction"><div><div class="token cpp_field">unescapingFunction</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinition"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinition</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassMemberDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassMemberDefinition</div></div>&gt;&gt;	<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::MemberList"><div><div class="token cpp_type">MemberList</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>&gt;&gt;			<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::TypeList"><div><div class="token cpp_type">TypeList</div></div></div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::ambiguousType"><div><div class="token cpp_field">ambiguousType</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::parentType"><div><div class="token cpp_field">parentType</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinition::MemberList'], [], [])"><div class="token cpp_type">MemberList</div></div>										<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::members"><div><div class="token cpp_field">members</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinition::TypeList'], [], [])"><div class="token cpp_type">TypeList</div></div>										<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::subTypes"><div><div class="token cpp_field">subTypes</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumMemberDefinition</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinition"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumDefinition</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumMemberDefinition</div></div>&gt;&gt;	<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinition::MemberList"><div><div class="token cpp_type">MemberList</div></div></div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumDefinition::MemberList'], [], [])"><div class="token cpp_type">MemberList</div></div>										<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinition::members"><div><div class="token cpp_field">members</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionEnumDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinition::Accept@void(::vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Grammar
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionPrimitiveGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionTextGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTextGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionTextGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionSequenceGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSequenceGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionSequenceGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAlternativeGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionAlternativeGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionLoopGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionLoopGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionLoopGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionOptionalGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionOptionalGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionOptionalGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionCreateGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionCreateGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionCreateGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionAssignGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAssignGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionAssignGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionUseGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionUseGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionUseGrammar</div></div></div>;
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionSetterGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSetterGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionSetterGrammar</div></div></div>;
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar"><div><div class="token cpp_type">ParsingDefinitionGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor"><div><div class="token cpp_type">IVisitor</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
+				{
+				<div class="token cpp_keyword ">public</div>:
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionPrimitiveGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionTextGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTextGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionTextGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionTextGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionSequenceGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSequenceGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionSequenceGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionSequenceGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionAlternativeGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAlternativeGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionAlternativeGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionAlternativeGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionLoopGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionLoopGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionLoopGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionLoopGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionOptionalGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionOptionalGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionOptionalGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionOptionalGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionCreateGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionCreateGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionCreateGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionCreateGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionAssignGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAssignGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionAssignGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionAssignGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionUseGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionUseGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionUseGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionUseGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+					<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionSetterGrammar *)[decl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSetterGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionSetterGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor::Visit@void(::vl::parsing::definitions::ParsingDefinitionSetterGrammar *)[decl0]::node"><div>node</div></div>)=<div class="token cpp_number ">0</div>;
+				};
+
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)=<div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionPrimitiveGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar::name"><div><div class="token cpp_field">name</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTextGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTextGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionTextGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTextGrammar::text"><div><div class="token cpp_field">text</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTextGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTextGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSequenceGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSequenceGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionSequenceGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSequenceGrammar::first"><div><div class="token cpp_field">first</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSequenceGrammar::second"><div><div class="token cpp_field">second</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionSequenceGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSequenceGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAlternativeGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionAlternativeGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar::first"><div><div class="token cpp_field">first</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar::second"><div><div class="token cpp_field">second</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionLoopGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionLoopGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionLoopGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionLoopGrammar::grammar"><div><div class="token cpp_field">grammar</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionLoopGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionLoopGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionOptionalGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionOptionalGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionOptionalGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionOptionalGrammar::grammar"><div><div class="token cpp_field">grammar</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionOptionalGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionOptionalGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionCreateGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionCreateGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionCreateGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionCreateGrammar::grammar"><div><div class="token cpp_field">grammar</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionCreateGrammar::type"><div><div class="token cpp_field">type</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionCreateGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionCreateGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAssignGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAssignGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionAssignGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAssignGrammar::grammar"><div><div class="token cpp_field">grammar</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAssignGrammar::memberName"><div><div class="token cpp_field">memberName</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionAssignGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAssignGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionUseGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionUseGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionUseGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionUseGrammar::grammar"><div><div class="token cpp_field">grammar</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionUseGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionUseGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSetterGrammar"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionSetterGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionSetterGrammar</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSetterGrammar::grammar"><div><div class="token cpp_field">grammar</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSetterGrammar::memberName"><div><div class="token cpp_field">memberName</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSetterGrammar::value"><div><div class="token cpp_field">value</div></div></div>;
+
+				<div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionSetterGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]"><div><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'], [], [])"><div class="token cpp_type">IVisitor</div></div>* <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionSetterGrammar::Accept@void(::vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor *)[decl0]::visitor"><div>visitor</div></div>)<div class="token cpp_keyword ">override</div>;
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Token and Rule
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinition"><div><div class="token cpp_type">ParsingDefinitionTokenDefinition</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionBase'], [], [])"><div class="token cpp_type">ParsingDefinitionBase</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinition::name"><div><div class="token cpp_field">name</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinition::regex"><div><div class="token cpp_field">regex</div></div></div>;
+				<div class="token cpp_keyword ">bool</div>											<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinition::discard"><div><div class="token cpp_field">discard</div></div></div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinition"><div><div class="token cpp_type">ParsingDefinitionRuleDefinition</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionBase'], [], [])"><div class="token cpp_type">ParsingDefinitionBase</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>															<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinition::name"><div><div class="token cpp_field">name</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;										<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinition::type"><div><div class="token cpp_field">type</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;&gt;				<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinition::grammars"><div><div class="token cpp_field">grammars</div></div></div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinition"><div><div class="token cpp_type">ParsingDefinition</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>&gt;&gt;			<div class="def" id="NI$vl::parsing::definitions::ParsingDefinition::types"><div><div class="token cpp_field">types</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTokenDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTokenDefinition</div></div>&gt;&gt;		<div class="def" id="NI$vl::parsing::definitions::ParsingDefinition::tokens"><div><div class="token cpp_field">tokens</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionRuleDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionRuleDefinition</div></div>&gt;&gt;			<div class="def" id="NI$vl::parsing::definitions::ParsingDefinition::rules"><div><div class="token cpp_field">rules</div></div></div>;
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Attribute Writer
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttributeWriter"><div><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">friend</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttributeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div>			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionAttributeWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionAttributeWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Attribute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttributeWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionAttributeWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttribute'], [], [])"><div class="token cpp_type">ParsingDefinitionAttribute</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttributeWriter::attribute"><div><div class="token cpp_field">attribute</div></div></div>;
+
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionAttributeWriter::$__ctor@(::vl::WString const &)[decl0]"><div><div class="token cpp_function">ParsingDefinitionAttributeWriter</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttributeWriter::$__ctor@(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionAttributeWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]"><div><div class="token cpp_function">ParsingDefinitionAttributeWriter</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttributeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttributeWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]::attributeWriter"><div>attributeWriter</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttributeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div>&amp;				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionAttributeWriter::Argument@::vl::parsing::definitions::ParsingDefinitionAttributeWriter &(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Argument</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionAttributeWriter::Argument@::vl::parsing::definitions::ParsingDefinitionAttributeWriter &(::vl::WString const &)[decl0]::argument"><div>argument</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttribute'], [], [])"><div class="token cpp_type">ParsingDefinitionAttribute</div></div>&gt;					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionAttributeWriter::Attribute@::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionAttribute>()[decl0]"><div><div class="token cpp_function">Attribute</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			};
+
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttributeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div>				<div class="def" id="FB$vl::parsing::definitions::Attribute@::vl::parsing::definitions::ParsingDefinitionAttributeWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Attribute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Attribute@::vl::parsing::definitions::ParsingDefinitionAttributeWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+
+<div class="token cpp_comment ">/***********************************************************************
+Type Writer
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeWriter"><div><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">friend</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeWriter::Type@::vl::parsing::definitions::ParsingDefinitionTypeWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Type</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeWriter::Type@::vl::parsing::definitions::ParsingDefinitionTypeWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="token cpp_keyword ">friend</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeWriter::TokenType@::vl::parsing::definitions::ParsingDefinitionTypeWriter()[decl0]"><div><div class="token cpp_function">TokenType</div></div></div>();
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeWriter::type"><div><div class="token cpp_field">type</div></div></div>;
+
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeWriter::$__ctor@(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionType>)[decl0]"><div><div class="token cpp_function">ParsingDefinitionTypeWriter</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeWriter::$__ctor@(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionType>)[decl0]::internalType"><div>internalType</div></div>);
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeWriter::$__ctor@(::vl::WString const &)[decl0]"><div><div class="token cpp_function">ParsingDefinitionTypeWriter</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeWriter::$__ctor@(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]"><div><div class="token cpp_function">ParsingDefinitionTypeWriter</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::typeWriter"><div>typeWriter</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>						<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeWriter::Sub@::vl::parsing::definitions::ParsingDefinitionTypeWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Sub</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeWriter::Sub@::vl::parsing::definitions::ParsingDefinitionTypeWriter(::vl::WString const &)[decl0]::subTypeName"><div>subTypeName</div></div>)<div class="token cpp_keyword ">const</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>						<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeWriter::Array@::vl::parsing::definitions::ParsingDefinitionTypeWriter()[decl0]"><div><div class="token cpp_function">Array</div></div></div>()<div class="token cpp_keyword ">const</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>&gt;						<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeWriter::Type@::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionType>()[decl0]"><div><div class="token cpp_function">Type</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			};
+
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::Type@::vl::parsing::definitions::ParsingDefinitionTypeWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Type</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Type@::vl::parsing::definitions::ParsingDefinitionTypeWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::TokenType@::vl::parsing::definitions::ParsingDefinitionTypeWriter()[decl0]"><div><div class="token cpp_function">TokenType</div></div></div>();
+
+<div class="token cpp_comment ">/***********************************************************************
+Type Definition Writer
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter"><div><div class="token cpp_type">ParsingDefinitionTypeDefinitionWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>&gt;	<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter::Definition@::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionTypeDefinition>()[decl0]"><div><div class="token cpp_function">Definition</div></div></div>()<div class="token cpp_keyword ">const</div>=<div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter"><div><div class="token cpp_type">ParsingDefinitionClassDefinitionWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinitionWriter</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionBase'], [], [])"><div class="token cpp_type">ParsingDefinitionBase</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::currentDefinition"><div><div class="token cpp_field">currentDefinition</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinition</div></div>&gt;			<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::definition"><div><div class="token cpp_field">definition</div></div></div>;
+
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::$__ctor@(::vl::WString const &)[decl0]"><div><div class="token cpp_function">ParsingDefinitionClassDefinitionWriter</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::$__ctor@(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::$__ctor@(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]"><div><div class="token cpp_function">ParsingDefinitionClassDefinitionWriter</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::$__ctor@(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::$__ctor@(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::parentType"><div>parentType</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::AmbiguousType@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]"><div><div class="token cpp_function">AmbiguousType</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::AmbiguousType@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::ambiguousType"><div>ambiguousType</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::Member@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">Member</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::Member@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &, ::vl::WString const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::Member@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &, ::vl::WString const &)[decl0]::type"><div>type</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::Member@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &, ::vl::WString const &)[decl0]::unescapingFunction"><div>unescapingFunction</div></div>=<div class="token cpp_string ">L&quot;&quot;</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::SubType@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter const &)[decl0]"><div><div class="token cpp_function">SubType</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinitionWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::SubType@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter const &)[decl0]::type"><div>type</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]"><div><div class="token cpp_function">Attribute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttributeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]::attribute"><div>attribute</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>&gt;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter::Definition@::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionTypeDefinition>()[decl0]"><div><div class="token cpp_function">Definition</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>;
+			};
+			
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinitionWriter</div></div>		<div class="def" id="FB$vl::parsing::definitions::Class@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Class</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Class@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionClassDefinitionWriter</div></div>		<div class="def" id="FB$vl::parsing::definitions::Class@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]"><div><div class="token cpp_function">Class</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Class@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Class@::vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::parentType"><div>parentType</div></div>);
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter"><div><div class="token cpp_type">ParsingDefinitionEnumDefinitionWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinitionWriter</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionBase'], [], [])"><div class="token cpp_type">ParsingDefinitionBase</div></div>&gt;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::currentDefinition"><div><div class="token cpp_field">currentDefinition</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumDefinition</div></div>&gt;			<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::definition"><div><div class="token cpp_field">definition</div></div></div>;
+
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::$__ctor@(::vl::WString const &)[decl0]"><div><div class="token cpp_function">ParsingDefinitionEnumDefinitionWriter</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::$__ctor@(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::Member@::vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter &(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Member</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::Member@::vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter &(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]"><div><div class="token cpp_function">Attribute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttributeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]::attribute"><div>attribute</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinition</div></div>&gt;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter::Definition@::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionTypeDefinition>()[decl0]"><div><div class="token cpp_function">Definition</div></div></div>()<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">override</div>;
+			};
+
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionEnumDefinitionWriter</div></div>		<div class="def" id="FB$vl::parsing::definitions::Enum@::vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Enum</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Enum@::vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+
+<div class="token cpp_comment ">/***********************************************************************
+Grammar Writer
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter"><div><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">friend</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Rule@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Rule</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Rule@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="token cpp_keyword ">friend</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Text@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Text</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Text@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="token cpp_keyword ">friend</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Opt@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]"><div><div class="token cpp_function">Opt</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Opt@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]::writer"><div>writer</div></div>);
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::grammar"><div><div class="token cpp_field">grammar</div></div></div>;
+
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::$__ctor@(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionGrammar>)[decl0]"><div><div class="token cpp_function">ParsingDefinitionGrammarWriter</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::$__ctor@(::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionGrammar>)[decl0]::internalGrammar"><div>internalGrammar</div></div>);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]"><div><div class="token cpp_function">ParsingDefinitionGrammarWriter</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]::grammarWriter"><div>grammarWriter</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::operator +@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">+</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::operator +@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]::next"><div>next</div></div>)<div class="token cpp_keyword ">const</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::operator |@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">|</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::operator |@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]::next"><div>next</div></div>)<div class="token cpp_keyword ">const</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::operator *@::vl::parsing::definitions::ParsingDefinitionGrammarWriter()[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">*</div></div></div>()<div class="token cpp_keyword ">const</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::As@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]"><div><div class="token cpp_function">As</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::As@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::type"><div>type</div></div>)<div class="token cpp_keyword ">const</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::operator []@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">[</div><div class="token cpp_function">]</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::operator []@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]::memberName"><div>memberName</div></div>)<div class="token cpp_keyword ">const</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::operator !@::vl::parsing::definitions::ParsingDefinitionGrammarWriter()[decl0]"><div><div class="token cpp_keyword ">operator</div><div class="token cpp_function">!</div></div></div>()<div class="token cpp_keyword ">const</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Set@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">Set</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Set@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &, ::vl::WString const &)[decl0]::memberName"><div>memberName</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Set@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &, ::vl::WString const &)[decl0]::value"><div>value</div></div>)<div class="token cpp_keyword ">const</div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>&gt;					<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionGrammarWriter::Grammar@::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionGrammar>()[decl0]"><div><div class="token cpp_function">Grammar</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			};
+
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>				<div class="def" id="FB$vl::parsing::definitions::Rule@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Rule</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Rule@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]::name"><div>name</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>				<div class="def" id="FB$vl::parsing::definitions::Text@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]"><div><div class="token cpp_function">Text</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Text@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::WString const &)[decl0]::text"><div>text</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>				<div class="def" id="FB$vl::parsing::definitions::Opt@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]"><div><div class="token cpp_function">Opt</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Opt@::vl::parsing::definitions::ParsingDefinitionGrammarWriter(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]::writer"><div>writer</div></div>);
+
+<div class="token cpp_comment ">/***********************************************************************
+Token and Rule Writer
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::parsing::definitions::ParsingDefinitionWriter"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div></div>;
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter"><div><div class="token cpp_type">ParsingDefinitionTokenDefinitionWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTokenDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTokenDefinition</div></div>&gt;			<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter::token"><div><div class="token cpp_field">token</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter::owner"><div><div class="token cpp_field">owner</div></div></div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionWriter &, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionTokenDefinition>)[decl0]"><div><div class="token cpp_function">ParsingDefinitionTokenDefinitionWriter</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionWriter &, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionTokenDefinition>)[decl0]::_owner"><div>_owner</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTokenDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionTokenDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionWriter &, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionTokenDefinition>)[decl0]::_token"><div>_token</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTokenDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]"><div><div class="token cpp_function">Attribute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttributeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]::attribute"><div>attribute</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp;						<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter::EndToken@::vl::parsing::definitions::ParsingDefinitionWriter &()[decl0]"><div><div class="token cpp_function">EndToken</div></div></div>();
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter"><div><div class="token cpp_type">ParsingDefinitionRuleDefinitionWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionRuleDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionRuleDefinition</div></div>&gt;			<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::rule"><div><div class="token cpp_field">rule</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp;						<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::owner"><div><div class="token cpp_field">owner</div></div></div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionWriter &, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>)[decl0]"><div><div class="token cpp_function">ParsingDefinitionRuleDefinitionWriter</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionWriter &, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>)[decl0]::_owner"><div>_owner</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionRuleDefinition'], [], [])"><div class="token cpp_type">ParsingDefinitionRuleDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::$__ctor@(::vl::parsing::definitions::ParsingDefinitionWriter &, ::vl::Ptr<::vl::parsing::definitions::ParsingDefinitionRuleDefinition>)[decl0]::_rule"><div>_rule</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionRuleDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::Imply@::vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]"><div><div class="token cpp_function">Imply</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammarWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammarWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::Imply@::vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionGrammarWriter const &)[decl0]::grammar"><div>grammar</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionRuleDefinitionWriter</div></div>&amp;			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]"><div><div class="token cpp_function">Attribute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionAttributeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionAttributeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::Attribute@::vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionAttributeWriter const &)[decl0]::attribute"><div>attribute</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp;						<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter::EndRule@::vl::parsing::definitions::ParsingDefinitionWriter &()[decl0]"><div><div class="token cpp_function">EndRule</div></div></div>();
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter"><div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt;							<div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::definition"><div><div class="token cpp_field">definition</div></div></div>;
+
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionWriter::$__ctor@()[decl0]"><div><div class="token cpp_function">ParsingDefinitionWriter</div></div></div>();
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp;						<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionWriter::Type@::vl::parsing::definitions::ParsingDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter const &)[decl0]"><div><div class="token cpp_function">Type</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeDefinitionWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::Type@::vl::parsing::definitions::ParsingDefinitionWriter &(::vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter const &)[decl0]::type"><div>type</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp;						<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionWriter::Token@::vl::parsing::definitions::ParsingDefinitionWriter &(::vl::WString const &, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">Token</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::Token@::vl::parsing::definitions::ParsingDefinitionWriter &(::vl::WString const &, ::vl::WString const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::Token@::vl::parsing::definitions::ParsingDefinitionWriter &(::vl::WString const &, ::vl::WString const &)[decl0]::regex"><div>regex</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTokenDefinitionWriter</div></div>			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionWriter::TokenAtt@::vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter(::vl::WString const &, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">TokenAtt</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::TokenAtt@::vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter(::vl::WString const &, ::vl::WString const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::TokenAtt@::vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter(::vl::WString const &, ::vl::WString const &)[decl0]::regex"><div>regex</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionWriter</div></div>&amp;						<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionWriter::Discard@::vl::parsing::definitions::ParsingDefinitionWriter &(::vl::WString const &, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">Discard</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::Discard@::vl::parsing::definitions::ParsingDefinitionWriter &(::vl::WString const &, ::vl::WString const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::Discard@::vl::parsing::definitions::ParsingDefinitionWriter &(::vl::WString const &, ::vl::WString const &)[decl0]::regex"><div>regex</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionRuleDefinitionWriter</div></div>			<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionWriter::Rule@::vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]"><div><div class="token cpp_function">Rule</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::Rule@::vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::name"><div>name</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionTypeWriter'], [], [])"><div class="token cpp_type">ParsingDefinitionTypeWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::ParsingDefinitionWriter::Rule@::vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter(::vl::WString const &, ::vl::parsing::definitions::ParsingDefinitionTypeWriter const &)[decl0]::type"><div>type</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt;							<div class="def" id="FB$vl::parsing::definitions::ParsingDefinitionWriter::Definition@::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>()[decl0]"><div><div class="token cpp_function">Definition</div></div></div>()<div class="token cpp_keyword ">const</div>;
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Helper Functions
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>										<div class="def" id="FB$vl::parsing::definitions::TypeToString@::vl::WString(::vl::parsing::definitions::ParsingDefinitionType *)[decl0]"><div><div class="token cpp_function">TypeToString</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionType'], [], [])"><div class="token cpp_type">ParsingDefinitionType</div></div>* <div class="def" id="NI$vl::parsing::definitions::TypeToString@::vl::WString(::vl::parsing::definitions::ParsingDefinitionType *)[decl0]::type"><div>type</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>										<div class="def" id="FB$vl::parsing::definitions::GrammarToString@::vl::WString(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]"><div><div class="token cpp_function">GrammarToString</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::GrammarToString@::vl::WString(::vl::parsing::definitions::ParsingDefinitionGrammar *)[decl0]::grammar"><div>grammar</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>										<div class="def" id="FB$vl::parsing::definitions::GrammarStateToString@::vl::WString(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::definitions::ParsingDefinitionGrammar *, bool)[decl0]"><div><div class="token cpp_function">GrammarStateToString</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::GrammarStateToString@::vl::WString(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::definitions::ParsingDefinitionGrammar *, bool)[decl0]::grammar"><div>grammar</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::GrammarStateToString@::vl::WString(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::definitions::ParsingDefinitionGrammar *, bool)[decl0]::stateNode"><div>stateNode</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::parsing::definitions::GrammarStateToString@::vl::WString(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::definitions::ParsingDefinitionGrammar *, bool)[decl0]::beforeNode"><div>beforeNode</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>*					<div class="def" id="FB$vl::parsing::definitions::FindAppropriateGrammarState@::vl::parsing::definitions::ParsingDefinitionGrammar *(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::definitions::ParsingDefinitionGrammar *, bool)[decl0]"><div><div class="token cpp_function">FindAppropriateGrammarState</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::FindAppropriateGrammarState@::vl::parsing::definitions::ParsingDefinitionGrammar *(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::definitions::ParsingDefinitionGrammar *, bool)[decl0]::grammar"><div>grammar</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinitionGrammar'], [], [])"><div class="token cpp_type">ParsingDefinitionGrammar</div></div>* <div class="def" id="NI$vl::parsing::definitions::FindAppropriateGrammarState@::vl::parsing::definitions::ParsingDefinitionGrammar *(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::definitions::ParsingDefinitionGrammar *, bool)[decl0]::stateNode"><div>stateNode</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::parsing::definitions::FindAppropriateGrammarState@::vl::parsing::definitions::ParsingDefinitionGrammar *(::vl::parsing::definitions::ParsingDefinitionGrammar *, ::vl::parsing::definitions::ParsingDefinitionGrammar *, bool)[decl0]::beforeNode"><div>beforeNode</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>											<div class="def" id="FB$vl::parsing::definitions::Log@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::stream::TextWriter &)[decl0]"><div><div class="token cpp_function">Log</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt; <div class="def" id="NI$vl::parsing::definitions::Log@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::stream::TextWriter &)[decl0]::definition"><div>definition</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter'], [], [])"><div class="token cpp_type">TextWriter</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::Log@void(::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>, ::vl::stream::TextWriter &)[decl0]::writer"><div>writer</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>										<div class="def" id="FB$vl::parsing::definitions::DeserializeString@::vl::WString(::vl::WString const &)[decl0]"><div><div class="token cpp_function">DeserializeString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::DeserializeString@::vl::WString(::vl::WString const &)[decl0]::value"><div>value</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>										<div class="def" id="FB$vl::parsing::definitions::SerializeString@::vl::WString(::vl::WString const &)[decl0]"><div><div class="token cpp_function">SerializeString</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::parsing::definitions::SerializeString@::vl::WString(::vl::WString const &)[decl0]::value"><div>value</div></div>);
+
+<div class="token cpp_comment ">/***********************************************************************
+Bootstrap
+***********************************************************************/</div>
+			
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt;						<div class="def" id="FB$vl::parsing::definitions::CreateParserDefinition@::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>()[decl0]"><div><div class="token cpp_function">CreateParserDefinition</div></div></div>();
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::definitions::ParsingDefinition'], [], [])"><div class="token cpp_type">ParsingDefinition</div></div>&gt;						<div class="def" id="FB$vl::parsing::definitions::DeserializeDefinition@::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>(::vl::Ptr<::vl::parsing::ParsingTreeNode>)[decl0]"><div><div class="token cpp_function">DeserializeDefinition</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeNode'], [], [])"><div class="token cpp_type">ParsingTreeNode</div></div>&gt; <div class="def" id="NI$vl::parsing::definitions::DeserializeDefinition@::vl::Ptr<::vl::parsing::definitions::ParsingDefinition>(::vl::Ptr<::vl::parsing::ParsingTreeNode>)[decl0]::node"><div>node</div></div>);
+		}
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl'
+        ]
+    },
+    'vl::Interface': {
+        'displayNameInHtml': '<span class="cpp_type">Interface</span>',
+        'impls': [
+            'NI$vl::Interface'
+        ],
+        'decls': []
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections'
+        ]
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::parsing': {
+        'displayNameInHtml': 'vl::parsing',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing',
+            'NF[1]$vl::parsing',
+            'NF[2]$vl::parsing',
+            'NF[3]$vl::parsing',
+            'NF[4]$vl::parsing',
+            'NF[5]$vl::parsing',
+            'NF[6]$vl::parsing',
+            'NF[7]$vl::parsing',
+            'NF[8]$vl::parsing',
+            'NF[9]$vl::parsing',
+            'NF[10]$vl::parsing',
+            'NF[11]$vl::parsing',
+            'NF[12]$vl::parsing',
+            'NF[13]$vl::parsing'
+        ]
+    },
+    'vl::parsing::ParsingTreeCustomBase': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTreeCustomBase</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTreeCustomBase'
+        ],
+        'decls': []
+    },
+    'vl::parsing::ParsingTreeNode': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTreeNode</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTreeNode'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::ParsingTreeNode'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinition'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionAlternativeGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionAlternativeGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionArrayType': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionArrayType</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionArrayType'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionArrayType'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionAssignGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionAssignGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionAssignGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionAssignGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionAttribute': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionAttribute</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionAttribute'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionAttributeWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionAttributeWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionAttributeWriter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionBase': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionBase</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionBase'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionBase::AttributeList': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionBase</span>::<span class="cpp_type">AttributeList</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionBase::AttributeList'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionClassDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionClassDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionClassDefinition'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionClassDefinition'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionClassDefinition::MemberList': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionClassDefinition</span>::<span class="cpp_type">MemberList</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::MemberList'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionClassDefinition::TypeList': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionClassDefinition</span>::<span class="cpp_type">TypeList</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::TypeList'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionClassDefinitionWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionClassMemberDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionClassMemberDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionCreateGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionCreateGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionCreateGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionCreateGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionEnumDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionEnumDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionEnumDefinition'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionEnumDefinition'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionEnumDefinition::MemberList': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionEnumDefinition</span>::<span class="cpp_type">MemberList</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionEnumDefinition::MemberList'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionEnumDefinitionWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionEnumMemberDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionGrammar'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionGrammar</span>::<span class="cpp_type">IVisitor</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionGrammarWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionGrammarWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionLoopGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionLoopGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionLoopGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionLoopGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionOptionalGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionOptionalGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionOptionalGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionOptionalGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionPrimitiveGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionPrimitiveType': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionPrimitiveType</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionPrimitiveType'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionPrimitiveType'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionRuleDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionRuleDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionRuleDefinition'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionRuleDefinitionWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionSequenceGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionSequenceGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionSequenceGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionSequenceGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionSetterGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionSetterGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionSetterGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionSetterGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionSubType': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionSubType</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionSubType'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionSubType'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionTextGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionTextGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionTextGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionTextGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionTokenDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionTokenDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionTokenDefinition'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionTokenDefinitionWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionTokenType': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionTokenType</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionTokenType'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionTokenType'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionType': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionType</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionType'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionType::IVisitor': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionType</span>::<span class="cpp_type">IVisitor</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionType::IVisitor'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionTypeDefinition': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionTypeDefinition</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionTypeDefinition</span>::<span class="cpp_type">IVisitor</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionTypeDefinitionWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionTypeWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionTypeWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionTypeWriter'
+        ],
+        'decls': []
+    },
+    'vl::parsing::definitions::ParsingDefinitionUseGrammar': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionUseGrammar</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionUseGrammar'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionUseGrammar'
+        ]
+    },
+    'vl::parsing::definitions::ParsingDefinitionWriter': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingDefinitionWriter</span>',
+        'impls': [
+            'NI$vl::parsing::definitions::ParsingDefinitionWriter'
+        ],
+        'decls': [
+            'NF[0]$vl::parsing::definitions::ParsingDefinitionWriter'
+        ]
+    },
+    'vl::stream': {
+        'displayNameInHtml': 'vl::stream',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::stream',
+            'NF[1]$vl::stream',
+            'NF[2]$vl::stream',
+            'NF[3]$vl::stream',
+            'NF[4]$vl::stream',
+            'NF[5]$vl::stream',
+            'NF[6]$vl::stream',
+            'NF[7]$vl::stream',
+            'NF[8]$vl::stream',
+            'NF[9]$vl::stream',
+            'NF[10]$vl::stream'
+        ]
+    },
+    'vl::stream::TextWriter': {
+        'displayNameInHtml': '<span class="cpp_type">TextWriter</span>',
+        'impls': [
+            'NI$vl::stream::TextWriter'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::ParsingTreeNode': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionArrayType': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionAssignGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionClassDefinition': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionCreateGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionEnumDefinition': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionLoopGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionOptionalGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionPrimitiveType': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionSequenceGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionSetterGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionSubType': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionTextGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionTokenType': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionUseGrammar': null,
+    'NF[0]$vl::parsing::definitions::ParsingDefinitionWriter': null,
+    'NF[0]$vl::stream': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[10]$vl::parsing': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[10]$vl::stream': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[11]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[13]$vl::parsing': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[1]$vl::stream': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[28]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[29]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::parsing': null,
+    'NF[2]$vl::stream': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[30]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[31]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[32]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[33]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[34]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[37]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[38]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[39]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::parsing': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[3]$vl::stream': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[40]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[42]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[43]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[44]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[45]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[46]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[48]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[49]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::parsing': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[4]$vl::stream': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[50]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[51]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[52]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[53]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[54]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[55]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[56]$vl': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[57]$vl': null,
+    'NF[58]$vl': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[59]$vl': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[5]$vl::stream': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[60]$vl': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[61]$vl': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[62]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[63]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[64]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[65]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[66]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[67]$vl': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[68]$vl': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[69]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::parsing': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[6]$vl::stream': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[70]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[71]$vl': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[72]$vl': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::parsing': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[7]$vl::stream': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[8]$vl::stream': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[9]$vl::stream': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NI$vl::Interface': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::parsing::ParsingTreeCustomBase': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTreeNode': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::definitions::ParsingDefinition': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionAlternativeGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionArrayType': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionAssignGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionAttribute': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionAttributeWriter': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionBase': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionBase::AttributeList': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionClassDefinition': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::MemberList': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionClassDefinition::TypeList': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionClassDefinitionWriter': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionClassMemberDefinition': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionCreateGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionEnumDefinition': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionEnumDefinition::MemberList': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionEnumDefinitionWriter': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionEnumMemberDefinition': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionGrammar::IVisitor': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionGrammarWriter': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionLoopGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionOptionalGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionPrimitiveGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionPrimitiveType': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionRuleDefinition': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionRuleDefinitionWriter': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionSequenceGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionSetterGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionSubType': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionTextGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionTokenDefinition': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionTokenDefinitionWriter': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionTokenType': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionType': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionType::IVisitor': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionTypeDefinition::IVisitor': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionTypeDefinitionWriter': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionTypeWriter': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionUseGrammar': null,
+    'NI$vl::parsing::definitions::ParsingDefinitionWriter': null,
+    'NI$vl::stream::TextWriter': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>
