@@ -36,6 +36,7 @@
     - [ ] Add `header:` in codegen so that generated files have license comment
     - [ ] Enable writing XML documents for AST
     - [ ] Regenerate XML and JSON parser
+    - [ ] Automatically generate `registered types` list
   - [ ] Workflow
     - [ ] Mark license on source files, generated files and codegen tools
     - [ ] Add header and comments to generated file
