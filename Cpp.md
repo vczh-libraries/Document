@@ -31,14 +31,21 @@
   - [ ] `DocGen.ps1 copy` copies files from `website`, `website-doc1`, code index HTML files, `Cpp.js`, `Cpp.css`. `favicon.ico` to `vczh-libraries.github.io`.
   - [ ] Fix signature for Curry.
 - [ ] Refine document comment
-  - [ ] VlppReflection
-    - [ ] Mark license on source files, generated files and codegen tools
   - [ ] VlppParser
-    - [ ] Mark license on source files, generated files and codegen tools
+    - [ ] Fix document for `ParsingTable`
+    - [ ] Add `header:` in codegen so that generated files have license comment
+    - [ ] Enable writing XML documents for AST
+    - [ ] Regenerate XML and JSON parser
   - [ ] Workflow
     - [ ] Mark license on source files, generated files and codegen tools
+    - [ ] Add header and comments to generated file
+    - [ ] Syntax
   - [ ] GacUI
     - [ ] Mark license on source files, generated files and codegen tools
+    - [ ] Add header and comments to generated file
+    - [ ] XML Syntax
+    - [ ] XML virtual class list
+    - [ ] XML class to C++ class mapping
 - [ ] Improve `WebsiteSource`
   - [ ] Convert `<seealso cref="CREF"/>` to `<seealsos><symbol/>...</seealsos>`.
   - [ ] `FileIndex.xml`: file tree view
@@ -47,16 +54,6 @@
   - [ ] `Sources/Source.js`: hyper link information for `Source.html`
   - [ ] generate a completed list of article pages to a text file for `npm run download`.
 - [ ] Connect reflection symbols to C++ symbols
-- [ ] Author tutorial
-  - [ ] VlppReflection
-  - [ ] VlppParser
-    - [ ] Syntax
-  - [ ] Workflow
-    - [ ] Syntax
-  - [ ] GacUI
-    - [ ] XML Syntax
-    - [ ] XML virtual class list
-    - [ ] XML class to C++ class mapping
 
 ### Test Cases
 
