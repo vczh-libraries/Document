@@ -161,6 +161,12 @@
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{c322672b-5185-4c54-acfb-c06e6b33f9ec}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Lib\Lib.vcxproj">
+      <Project>{b0e7006b-d4e2-4312-a130-cdf4d2719a90}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Reflection\Reflection.vcxproj">
+      <Project>{361b8ccf-6e8d-4158-9091-7987e5d3be83}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Render\Render.vcxproj">
       <Project>{ae6c2e09-b96e-47f2-b360-e4316fe6407c}</Project>
     </ProjectReference>

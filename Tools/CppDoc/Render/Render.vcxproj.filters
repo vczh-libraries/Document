@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Import">
-      <UniqueIdentifier>{2c9a1c95-034a-4bad-a062-a145155d428f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Render.cpp">
@@ -57,12 +54,6 @@
     <ClCompile Include="Source\GenerateReferenceIndex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Import\VlppReflection.cpp">
-      <Filter>Import</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Import\VlppParser.cpp">
-      <Filter>Import</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GenerateReferenceIndex_Signature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,12 +64,6 @@
   <ItemGroup>
     <ClInclude Include="Source\Render.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Import\VlppParser.h">
-      <Filter>Import</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Import\VlppReflection.h">
-      <Filter>Import</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

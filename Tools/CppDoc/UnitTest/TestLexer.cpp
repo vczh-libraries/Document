@@ -400,7 +400,7 @@ u8'\''
 )";
 		List<RegexToken> tokens;
 		GlobalCppLexer()->Parse(input).ReadToEnd(tokens);
-		TEST_ASSERT(CheckTokens(tokens) == 21);
+		TEST_ASSERT(CheckTokens(tokens) == 19);
 	});
 
 	TEST_CASE(L"Hello, world!")
