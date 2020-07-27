@@ -18,6 +18,12 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\ExportReflectableTypes.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\ExportReflectableTypes.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{361B8CCF-6E8D-4158-9091-7987E5D3BE83}</ProjectGuid>
@@ -154,12 +160,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="ExportReflectableTypes.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ExportReflectableTypes.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -11,7 +11,7 @@ ExportReflectableTypes
 ***********************************************************************/
 
 extern void					ExportReflectableTypes(
-								FilePath outputPath
+	Folder outputPath
 							);
 
 #endif

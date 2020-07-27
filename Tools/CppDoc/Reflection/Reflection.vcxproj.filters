@@ -15,12 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExportReflectableTypes.cpp">
+    <ClCompile Include="Source\ExportReflectableTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ExportReflectableTypes.h">
+    <ClInclude Include="Source\ExportReflectableTypes.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
