@@ -32,242 +32,392 @@ Licensed under https://github.com/vczh-libraries/License
 Parsing Table
 ***********************************************************************/</div>
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;&lt;![CDATA[</div>
-			<div class="token cpp_comment ">/// The parsing table. When you complete a grammar file, ParserGen.exe which is in the Tools project will generate the C++ code for you to create a parsing table.</div>
-			<div class="token cpp_comment ">///</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The parsing table. When you complete a grammar file, use ParserGen.exe to generate the C++ code for you to create a parsing table.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
 			<div class="token cpp_comment ">/// Here is a brief description of the grammar file format:</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// The grammar file consists of four parts: configuration, types, tokens and grammar in order like this:</div>
+			<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">/// CONFIGURATION</div>
+			<div class="token cpp_comment ">/// grammar:</div>
+			<div class="token cpp_comment ">/// TYPES</div>
+			<div class="token cpp_comment ">/// TOKENS</div>
+			<div class="token cpp_comment ">/// GRAMMAR</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;Configuration&lt;/b&gt;</div>
+			<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;include:&quot;releative path to the VlppParser.h&quot;&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (multiple) e.g. &quot;../Import/Vlpp.h&quot;</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;namespace:C++-NAMESPACE&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (single) Namespaces separated by &quot;.&quot; to contain the generated code. e.g. vl.parsing.xml</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;reflection:REFLECTION-NAMESPACE&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (single) Namespaces separated by &quot;.&quot; to contain the name of reflectable types. In most of the cases this should be the same as namespace. e.g. vl.parsing.xml</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;filePrefix:FILE-PREFIX&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (single) A prefix that will be add before all generated files. e.g. ParsingXml</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;classPrefix:CLASS-PREFIX&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (single) A prefix that will be add before all generated types and function. e.g. Xml</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;classRoot:CLASS-ROOT&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (single) The class that represents the whole text being parsed.</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;guard:C++-HEADER-GUARD&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (single) The C++ header guard pattern macro name. e.g. VCZH_PARSING_XML_PARSINGXML_PARSER</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;parser:NAME(RULE)&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (multiple) Pair a function name to a rule name.</div>
+			<div class="token cpp_comment ">/// It will generate a function called &quot;XmlParseDocument&quot; to parse the input using the rule named &quot;XDocument&quot;,</div>
+			<div class="token cpp_comment ">/// if you have &quot;classPrefix:Xml&quot; and &quot;parser:ParseDocument(XDocument)&quot;.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;file:FEATURE(POSTFIX)&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (multiple) Generate code for a specified feature to &quot;&amp;lt;FILE-PREFIX&amp;gt;&amp;lt;POSTFIX&amp;gt;.h&quot; and &quot;&amp;lt;FILE-PREFIX&amp;gt;&amp;lt;POSTFIX&amp;gt;.cpp&quot;.</div>
+			<div class="token cpp_comment ">/// FEATURE could be Ast, Parser, Copy, Traverse and Empty.</div>
+			<div class="token cpp_comment ">/// Ast is the definition of all classes in the grammar file.</div>
+			<div class="token cpp_comment ">/// Parser is the implementation of all parsers.</div>
+			<div class="token cpp_comment ">/// Others are visitors for Ast with different traversing features.</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;ambiguity:(enabled|disabled)&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (single) Set to &quot;enabled&quot; indicating that the grammar is by design to have ambiguity.</div>
+			<div class="token cpp_comment ">/// If ambiguity happens during parser, but here is &quot;disabled&quot;, then an error will be generated.</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;serialization:(enabled|disabled)&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">/// (single) Set to &quot;enabled&quot; to serialize the parsing table as binary in the generated C++ code,</div>
+			<div class="token cpp_comment ">/// so that when the &quot;&amp;lt;CLASS-PREFIX&amp;gt;LoadTable&quot; function is called to load the table,</div>
+			<div class="token cpp_comment ">/// it can deserialize from the binary data directly,</div>
+			<div class="token cpp_comment ">/// instead of parsing the grammar again.</div>
+			<div class="token cpp_comment ">/// But the grammar text will always be in the generated C++ code regardless of the value of &quot;serialization&quot;,</div>
+			<div class="token cpp_comment ">/// it can always be retrived using the &quot;&amp;lt;CLASS-PREFIX&amp;gt;GetParserTextBuffer&quot; function.</div>
+			<div class="token cpp_comment ">/// &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;Character escaping in strings&lt;/b&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// There is only character escaping in strings: &quot;&quot;, which means the &quot; character.</div>
+			<div class="token cpp_comment ">/// For example, &quot;a&quot;&quot;b&quot;&quot;c&quot; means R&quot;TEXT(a&quot;b&quot;c)TEXT&quot; in C++.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;Types&lt;/b&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// You can write attributes like @AttributeName(&quot;argument1&quot;, &quot;argument2&quot;, ...) in the middle of types.</div>
+			<div class="token cpp_comment ">/// But attributes don&apos;t affect parsing.</div>
+			<div class="token cpp_comment ">/// All attribute definitions will be stored in the generated parsing table,</div>
+			<div class="token cpp_comment ">/// and who uses the table defines how attributes work. Multiple attributes are separated by &quot;,&quot;.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// If you only need parsing, usually you don&apos;t need to use attributes.</div>
+			<div class="token cpp_comment ">/// GacUI will use some attributes to drive colorizer and intellisense.</div>
+			<div class="token cpp_comment ">/// This part is subject to change in the next version, so it will not be described here.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;</div>
+			<div class="token cpp_comment ">///         &lt;b&gt;Enum&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///             enum EnumName &lt;attributes&gt;</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Item1 &lt;attributes&gt;,</div>
+			<div class="token cpp_comment ">///                 Item2 &lt;attributes&gt;,</div>
+			<div class="token cpp_comment ">///                 ... // cannot skip the last &quot;,&quot;</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;</div>
+			<div class="token cpp_comment ">///         &lt;p&gt;</div>
+			<div class="token cpp_comment ">///         &lt;b&gt;Class&lt;/b&gt;:</div>
+			<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///             class Name [ambiguous(AmbiguousType)] [: ParentType] &lt;attributes&gt;</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Type name [(UnescapingFunction)] &lt;attributes&gt; ;</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">///         &lt;/p&gt;</div>
+			<div class="token cpp_comment ">///         &lt;p&gt;</div>
+			<div class="token cpp_comment ">///         UnescapingFunction is a callback,</div>
+			<div class="token cpp_comment ">///         which will be called after the contained type is fully constructed.</div>
+			<div class="token cpp_comment ">///         The generated C++ code will define forward declarations of all unescaping functions in the cpp file.</div>
+			<div class="token cpp_comment ">///         You should implement them in other places, or you will get linking errors.</div>
+			<div class="token cpp_comment ">///         &lt;/p&gt;</div>
+			<div class="token cpp_comment ">///         &lt;p&gt;</div>
+			<div class="token cpp_comment ">///         If the grammar enables ambiguity, then the parsing result may contain ambiguous results for the same part of the input. For example, in C++:</div>
+			<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///         A*B;</div>
+			<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">///         has two meanings without considering the surrounding context: a multiplication expression or a pointer variable definition.</div>
+			<div class="token cpp_comment ">///         &lt;/p&gt;</div>
+			<div class="token cpp_comment ">///         &lt;p&gt;</div>
+			<div class="token cpp_comment ">///         If the grammar doesn&apos;t enable ambiguity, it will refuce to generate C++ codes because the grammar is wrong.</div>
+			<div class="token cpp_comment ">///         Note that it doesn&apos;t generate errors for every possible cases of ambiguity.</div>
+			<div class="token cpp_comment ">///         Do not rely on this to check ambiguity in the grammar.</div>
+			<div class="token cpp_comment ">///         &lt;/p&gt;</div>
+			<div class="token cpp_comment ">///         &lt;p&gt;</div>
+			<div class="token cpp_comment ">///         If the grammar enables ambiguity, than the syntax tree should be defined like this:</div>
+			<div class="token cpp_comment ">///         &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///             // when ambiguity happens for Statement, AmbiguiusStatement will be used to container all possible cases</div>
+			<div class="token cpp_comment ">///             class Statement ambiguous(AmbiguousStatement)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///             }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">/// include:&quot;&lt;releative path to the Vlpp.h&gt;&quot;	// (multiple)	e.g. &quot;../Import/Vlpp.h&quot;</div>
-			<div class="token cpp_comment ">/// classPrefix:&lt;class prefix&gt;					// (single)		A prefix that will be add before all generated types and function. e.g. Xml</div>
-			<div class="token cpp_comment ">/// guard:&lt;C++ header guard&gt;					// (single)		The C++ header guard pattern macro name. e.g. VCZH_PARSING_XML_PARSINGXML_PARSER</div>
-			<div class="token cpp_comment ">/// namespace:&lt;C++ namespaces&gt;					// (single)		Namespaces separated by &quot;.&quot; to contain the generated code. e.g. vl.parsing.xml</div>
-			<div class="token cpp_comment ">/// reflection:&lt;namespace&gt;						// (single)		Namespaces separated by &quot;.&quot; to contain the name of reflectable types. In most of the cases this should be the same as namespace. e.g. vl.parsing.xml</div>
-			<div class="token cpp_comment ">/// parser:&lt;name&gt;(&lt;rule&gt;)						// (multiple)	Pair a function name to a rule name. ParserGen.exe will generate a function called &quot;&lt;prefix&gt;&lt;name&gt;&quot; to parse the input using rule named &quot;&lt;rule&gt;&quot;. e.g. ParseDocument(XDocument)</div>
-			<div class="token cpp_comment ">/// ambiguity:(enabled|disabled)				// (single)		Set to &quot;enabled&quot; indicating that the grammar is by design to have ambiguity.</div>
-			<div class="token cpp_comment ">/// serialization:(enabled|disabled)			// (single)		Set to &quot;enabled&quot; to serialize the parsing table as binary in the generated C++ code, so that when the &quot;&lt;prefix&gt;LoadTable&quot; function is called to load the table, it can deserialize from the binary data directly, instead of parsing the grammar again. But the grammar text will always be contained in the generated C++ code regardless of the value of &quot;serialization&quot;, it can always be retrived using the &quot;&lt;prefix&gt;GetParserTextBuffer&quot; function.</div>
-			<div class="token cpp_comment ">/// grammar:									// (single)		Configuration ends here. All content after &quot;grammar:&quot; will be treated as the grammar to define the input.</div>
+			<div class="token cpp_comment ">///             // so that &quot;AmbiguousStatement&quot; should inherit from &quot;Statement&quot;</div>
+			<div class="token cpp_comment ">///             class AmbiguousStatement : Statement</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 // it should called &quot;items&quot;, and the type should be an array of the base type</div>
+			<div class="token cpp_comment ">///                 Statement[] items;</div>
+			<div class="token cpp_comment ">///             }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">/// Here is the brief description of the grammar.</div>
-			<div class="token cpp_comment ">/// The grammar is formed by 3 parts: types, token definitions and rule definitions. There is only one character escaping in strings: &quot;&quot;, which means the &quot; character.</div>
+			<div class="token cpp_comment ">///             class ExpressionStatement : Statement</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Expression expression;</div>
+			<div class="token cpp_comment ">///             }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">/// 1) Types:</div>
-			<div class="token cpp_comment ">///		You can write attributes like @AttributeName(&quot;argument1&quot;, &quot;argument2&quot;, ...) in the middle of types. But attributes don&apos;t affect the parsing. All attribute definitions will be stored in the generated parsing table, and who uses the table defines how attributes work. Multiple attributes are separated by &quot;,&quot;.</div>
+			<div class="token cpp_comment ">///             class VariableDefinitionStatement : Statement</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///                 Type type;</div>
+			<div class="token cpp_comment ">///                 token name;</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///         ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">///         For &quot;A*B;&quot; part in the whole input, it becomes an AmbiguousStatement.</div>
+			<div class="token cpp_comment ">///         The &quot;items&quot; field contains two instances, which are &quot;ExpressionStatement&quot; and &quot;VariableDefinitionStatement&quot;.</div>
+			<div class="token cpp_comment ">///         You could write C++ code to resolve the ambiguity in later passes.</div>
+			<div class="token cpp_comment ">///         &lt;/p&gt;</div>
+			<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;</div>
+			<div class="token cpp_comment ">///         &lt;p&gt;&lt;b&gt;Type references&lt;/b&gt;:&lt;/p&gt;</div>
+			<div class="token cpp_comment ">///         &lt;p&gt;</div>
+			<div class="token cpp_comment ">///         Types can be defined globally or inside classes. Generic type is not supported. You can use the following types for a class field:</div>
+			<div class="token cpp_comment ">///         &lt;ul&gt;</div>
+			<div class="token cpp_comment ">///             &lt;li&gt;&lt;b&gt;token&lt;/b&gt;: Store a token, which will becomes [T:vl.parsing.ParsingToken].&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///             &lt;li&gt;&lt;b&gt;ClassName&lt;/b&gt;: Instance of a specified type, which will becomes Ptr&amp;lt;ClassName&amp;gt;.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///             &lt;li&gt;</div>
+			<div class="token cpp_comment ">///                 &lt;p&gt;&lt;b&gt;ClassName[]&lt;/b&gt;: Array, which will becomes List&amp;lt;Ptr&amp;lt;ClassName&amp;gt;&amp;gt;. Array of tokens are not supported.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">///                 &lt;p&gt;A class name could also be&lt;b&gt;OuterClass.InnerClass&lt;/b&gt;, referring to the &quot;InnerClass&quot; defined inside the &quot;OuterClass&quot;.&lt;/p&gt;</div>
+			<div class="token cpp_comment ">///             &lt;/li&gt;</div>
+			<div class="token cpp_comment ">///         &lt;/ul&gt;</div>
+			<div class="token cpp_comment ">///         &lt;/p&gt;</div>
+			<div class="token cpp_comment ">///     &lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;Token definitions&lt;/b&gt;</div>
+			<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///     token TokenName = &quot;regular expression&quot; &lt;attributes&gt;;</div>
+			<div class="token cpp_comment ">///     discardtoken TokenName = &quot;regular expression&quot;;</div>
+			<div class="token cpp_comment ">/// ]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">/// &quot;discardtoken&quot; means that,</div>
+			<div class="token cpp_comment ">/// if such a token is identified,</div>
+			<div class="token cpp_comment ">/// it will not appear in the lexical analyzing result.</div>
+			<div class="token cpp_comment ">/// You cannot use tokens marked with &quot;discardtoken&quot; in the grammar.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;Grammar&lt;/b&gt;</div>
+			<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///     rule RuleType RuleName &lt;attributes&gt;</div>
+			<div class="token cpp_comment ">///         = Grammar1</div>
+			<div class="token cpp_comment ">///         = Grammar2</div>
+			<div class="token cpp_comment ">///         ...</div>
+			<div class="token cpp_comment ">///         ;</div>
+			<div class="token cpp_comment ">/// ]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// It means rule &quot;RuleName&quot; is defined by those grammars,</div>
+			<div class="token cpp_comment ">/// and matching this rule will create an instance of &quot;RuleType&quot; or one of its sub classes.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// Here are all supported grammars that:</div>
+			<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;RuleName&lt;/b&gt;: Defines an input that matches a rule.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;TokenName&lt;/b&gt;: Defines an input that formed by the specified token.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;&quot;StringConstant&quot;&lt;/b&gt;: Defines an input that formed by exactly the string constant. There should be exactly one token who can only be this string constant.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Grammar: FieldName&lt;/b&gt;: Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field &quot;FieldName&quot; of the created object.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;!Grammar&lt;/b&gt;: Defines an input that matches Grammar, and the rule will use the created object from this grammar. The input should still match other part of the rule, but result of other parts are ignored.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;[Grammar]&lt;/b&gt;: Defines an input that, if it matches Grammar, it returns the result from that grammar; otherwise, it returns null.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;{Grammar}&lt;/b&gt;: Defines an input that matches 0, 1 or more Grammar.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;(Grammar)&lt;/b&gt;: Defines an input that matches the the grammar. Brackets is only for changing operator associations.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Grammar1 Grammar2&lt;/b&gt;: Defines an input that should match Grammar1 followed by Grammar2.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Grammar1 | Grammar2&lt;/b&gt;: Defines an input that match either Grammar1 or Grammar2. When it matches Grammar1, Grammar2 will be ignored.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Grammar as Type&lt;/b&gt;: Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type &quot;Type&quot;.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Grammar with { FieldName = Value }&lt;/b&gt;: Defines an input that matches the Grammar, assign &quot;Value&quot; to the field &quot;FieldName&quot; of the created object.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+			<div class="token cpp_comment ">/// A grammar branch must be &quot;GRAMMAR as TYPE with {Field1 = Value1} with {Field2 = Value2} ...&quot;.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;b&gt;Example&lt;/b&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// Here is an example to parse expression containing +, -, *, /, () and numbers:</div>
+			<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///     include:&quot;Vlpp.h&quot;</div>
+			<div class="token cpp_comment ">///     namespace:vl.calculator</div>
+			<div class="token cpp_comment ">///     reflection:vl.calculator</div>
+			<div class="token cpp_comment ">///     filePrefix:Calc</div>
+			<div class="token cpp_comment ">///     classPrefix:Calc</div>
+			<div class="token cpp_comment ">///     classRoot:Expression</div>
+			<div class="token cpp_comment ">///     guard:VCZH_CALCULATOR_PARSER</div>
+			<div class="token cpp_comment ">///     parser:ParseExpression(Expr)</div>
+			<div class="token cpp_comment ">///     file:Ast(_Ast)</div>
+			<div class="token cpp_comment ">///     file:Parser(_Parser)</div>
+			<div class="token cpp_comment ">///     ambiguity:disabled</div>
+			<div class="token cpp_comment ">///     serialization:enabled</div>
+			<div class="token cpp_comment ">///     grammar:</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		a) Enum:</div>
-			<div class="token cpp_comment ">///			enum EnumName &lt;attributes&gt;</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///				Item1 &lt;attributes&gt;,</div>
-			<div class="token cpp_comment ">///				Item2 &lt;attributes&gt;,</div>
-			<div class="token cpp_comment ">///				... // cannot skip the last &quot;,&quot;</div>
-			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///     class Expression</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		b) Class:</div>
-			<div class="token cpp_comment ">///			class Name [ambiguous(AmbiguousType)] [: ParentType] &lt;attributes&gt;</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///				Type name [(UnescapingFunction)] &lt;attributes&gt; ;</div>
-			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///     enum BinaryOperator</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         Add, Sub, Mul, Div,</div>
+			<div class="token cpp_comment ">///     }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///			UnescapingFunction is a callback, which will be called when the contained type is fully constructed. The generated C++ code will define forward declarations of all unescaping functions in the cpp file. You should implement them in other places, or you will get linking errors.</div>
+			<div class="token cpp_comment ">///     class NumberExpression : Expression</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         token number;</div>
+			<div class="token cpp_comment ">///     }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///			If the grammar enables ambiguity, then the parsing result may contain ambiguous results for the same part of the input. For example, in C++:</div>
-			<div class="token cpp_comment ">///			A*B;</div>
-			<div class="token cpp_comment ">///			has two meaning (if we only consider context-free parsing): multiplication expression and pointer variable definition.</div>
-			<div class="token cpp_comment ">///			So if the grammar doesn&apos;t enable ambiguity, ParserGen.exe will refuce to generate C++ codes because the grammar is wrong.</div>
-			<div class="token cpp_comment ">///			If the grammar enables ambiguity, than the syntax tree should be defined like this:</div>
-			<div class="token cpp_comment ">///			</div>
-			<div class="token cpp_comment ">///			class Statement ambiguous(AmbiguousStatement)</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///     class BinaryExpression : Expression</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         BinaryOperator op;</div>
+			<div class="token cpp_comment ">///         Expression left;</div>
+			<div class="token cpp_comment ">///         Expression right;</div>
+			<div class="token cpp_comment ">///     }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///			class AmbiguousStatement : Statement // due to the definition of &quot;Statement&quot; class, &quot;AmbiguousStatement&quot; should inherit from &quot;Statement&quot;</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///				Statement[] items; // required by naming convention</div>
-			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///     token ADD &quot;\+&quot;</div>
+			<div class="token cpp_comment ">///     token SUB &quot;-&quot;</div>
+			<div class="token cpp_comment ">///     token MUL &quot;\*&quot;</div>
+			<div class="token cpp_comment ">///     token DIV &quot;\/&quot;</div>
+			<div class="token cpp_comment ">///     token NUMBER &quot;\d+(.\d+)?&quot;</div>
+			<div class="token cpp_comment ">///     token OPEN &quot;(&quot;</div>
+			<div class="token cpp_comment ">///     token CLOSE &quot;)&quot;</div>
+			<div class="token cpp_comment ">///     discardtoken SPACE = &quot;/s+&quot;;</div>
+			<div class="token cpp_comment ">///     </div>
+			<div class="token cpp_comment ">///     rule Expression Factor</div>
+			<div class="token cpp_comment ">///         = NUMBER : number as NumberExpression</div>
+			<div class="token cpp_comment ">///         = &quot;(&quot; !Expr &quot;)&quot;</div>
+			<div class="token cpp_comment ">///         ;</div>
+			<div class="token cpp_comment ">///     rule Expression Term</div>
+			<div class="token cpp_comment ">///         = !Factor</div>
+			<div class="token cpp_comment ">///         = Term : left &quot;*&quot; Factor : right as BinaryExpression with {op = &quot;Mul&quot;}</div>
+			<div class="token cpp_comment ">///         = Term : left &quot;/&quot; Factor : right as BinaryExpression with {op = &quot;Div&quot;}</div>
+			<div class="token cpp_comment ">///         ;</div>
+			<div class="token cpp_comment ">///     rule Expression Expr</div>
+			<div class="token cpp_comment ">///         = !Term</div>
+			<div class="token cpp_comment ">///         = Expr : left &quot;+&quot; Term : right as BinaryExpression with {op = &quot;Add&quot;}</div>
+			<div class="token cpp_comment ">///         = Expr : left &quot;-&quot; Term : right as BinaryExpression with {op = &quot;Sub&quot;}</div>
+			<div class="token cpp_comment ">///         ;</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// After using ParserGen.exe to generate C++ codes, you can do this:</div>
+			<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///     // this table can be used, please cache the result to improve the performance</div>
+			<div class="token cpp_comment ">///     auto table = CalcLoadTable();</div>
+			<div class="token cpp_comment ">///     List&lt;Ptr&lt;ParsingError&gt;&gt; errors;</div>
+			<div class="token cpp_comment ">///     // it should be a Ptr&lt;CalcExpression&gt;, will returns nullptr if the input contains syntax errors</div>
+			<div class="token cpp_comment ">///     auto expression = CalcParseExpression(L&quot;(1+2) * (3+4)&quot;, table, errors);</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">/// You don&apos;t need to define the &quot;errors&quot; if you don&apos;t actually care how the input is wrong.</div>
+			<div class="token cpp_comment ">/// There will be a overloaded version of CalcParseExpression that doesn&apos;t need the third argument.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// You can also automatically correct wrong input.</div>
+			<div class="token cpp_comment ">/// Ifthe input is not too wrong to recognize,</div>
+			<div class="token cpp_comment ">/// you can still get a syntax tree,</div>
+			<div class="token cpp_comment ">/// but some fields are nullptr,</div>
+			<div class="token cpp_comment ">/// with errors filled into the &quot;error&quot; variable.</div>
+			<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///     auto table = CalcLoadTable();                   // Load the table.</div>
+			<div class="token cpp_comment ">///     ParsingState state(L&quot;(1+2) * (3+4)&quot;, table);    // Initialize a state with the input and the table.</div>
+			<div class="token cpp_comment ">///     state.Reset(L&quot;Expr&quot;);                           // Set the rule to parse.</div>
+			<div class="token cpp_comment ">///     auto parser = CreateAutoRecoverParser(table);   // Create an appropriate automatic error recoverable parser.</div>
+			<div class="token cpp_comment ">///     List&lt;Ptr&lt;ParsingError&gt;&gt; errors;                 // Define an error list.</div>
+			<div class="token cpp_comment ">///     auto node = parser-&gt;Parse(state, errors);       // Parse to get an abstract syntax tree, which is a Ptr&lt;ParsingTreeNode&gt;.</div>
+			<div class="token cpp_comment ">///     if (node)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         auto expression = CalcConvertParsingTreeNode(node, state.GetTokens()).Cast&lt;CalcExpression&gt;();</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// After you get a strong typed syntax tree, you can use the generated visitor interface to do something, like evaluate the results of the expression:</div>
+			<div class="token cpp_comment ">/// &lt;program&gt;&lt;code&gt;&lt;![CDATA[</div>
+			<div class="token cpp_comment ">///     class Evaluator : public Object, public virtual CalcExpression::IVisitor</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///     private:</div>
+			<div class="token cpp_comment ">///         double result;</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///			class ExpressionStatement : Statement</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///				Expression expression;</div>
-			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///         double Call(CalcExpression* node)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             node-&gt;Accept(this);</div>
+			<div class="token cpp_comment ">///             return result;</div>
+			<div class="token cpp_comment ">///         }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///			class VariableDefinitionStatement : Statement</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///				Type type;</div>
-			<div class="token cpp_comment ">///				token name;</div>
-			<div class="token cpp_comment ">///			}</div>
+			<div class="token cpp_comment ">///     public:</div>
+			<div class="token cpp_comment ">///         static double Evaluate(CalcExpression* node)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             return Evaluator().Call(node);</div>
+			<div class="token cpp_comment ">///         }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///			So for the &quot;A*B;&quot; part in the whole input, it will becomes an AmbiguousStatement, in which the &quot;items&quot; field contains 2 instance of &quot;ExpressionStatement&quot; and &quot;VariableDefinitionStatement&quot;.</div>
-			<div class="token cpp_comment ">///			And you can write C++ code to resolve the ambiguity in later passes.</div>
+			<div class="token cpp_comment ">///         void Visit(CalcNumberExpression* node)override</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             return wtof(node-&gt;number.value);</div>
+			<div class="token cpp_comment ">///         }</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		c) Type references:</div>
-			<div class="token cpp_comment ">///			Types can be defined globally or inside classes. Generic type is not supported. When you want to refer to a specific type, it could be:</div>
-			<div class="token cpp_comment ">///				token: Store a token, which will becomes [T:vl.parsing.ParsingToken].</div>
-			<div class="token cpp_comment ">///				Type[]: Array, which will becomes [T:vl.collections.List`2] to the element type. Token cannot be the element of arrays.</div>
-			<div class="token cpp_comment ">///				ClassName: Instance of a specified type, which will becomes [T:vl.Ptr`1] to that type.</div>
-			<div class="token cpp_comment ">///				OuterClass.InnerClass: Refer to the &quot;InnerClass&quot; defined inside the &quot;OuterClass&quot;.</div>
+			<div class="token cpp_comment ">///         void Visit(CalcBinaryExpression* node)override</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             auto left = Calc(node-&gt;left.Obj());</div>
+			<div class="token cpp_comment ">///             auto right = Calc(node-&gt;right.Obj());</div>
+			<div class="token cpp_comment ">///             switch (node-&gt;op)</div>
+			<div class="token cpp_comment ">///             {</div>
+			<div class="token cpp_comment ">///             case CalcBinaryOperator::Add:</div>
+			<div class="token cpp_comment ">///                 result = left + right;</div>
+			<div class="token cpp_comment ">///                 break;</div>
+			<div class="token cpp_comment ">///             case CalcBinaryOperator::Sub:</div>
+			<div class="token cpp_comment ">///                 result = left 0 right;</div>
+			<div class="token cpp_comment ">///                 break;</div>
+			<div class="token cpp_comment ">///             case CalcBinaryOperator::Mul:</div>
+			<div class="token cpp_comment ">///                 result = left * right;</div>
+			<div class="token cpp_comment ">///                 break;</div>
+			<div class="token cpp_comment ">///             case CalcBinaryOperator::Div:</div>
+			<div class="token cpp_comment ">///                 result = left / right;</div>
+			<div class="token cpp_comment ">///                 break;</div>
+			<div class="token cpp_comment ">///             }</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///     };</div>
 			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">/// 2) Token definitions:</div>
-			<div class="token cpp_comment ">///		token TokenName = &quot;regular expression&quot; &lt;attributes&gt;;</div>
-			<div class="token cpp_comment ">///		discardtoken TokenName = &quot;regular expression&quot;;</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		&quot;discardtoken&quot; means if such a token is identified, it will not appear in the lexical analyzing result. And you cannot refer to names of &quot;discardtoken&quot; in the grammar.</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">/// 3) Rule definitions:</div>
-			<div class="token cpp_comment ">///		rule RuleType RuleName &lt;attributes&gt;</div>
-			<div class="token cpp_comment ">///			= Grammar1</div>
-			<div class="token cpp_comment ">///			= Grammar2</div>
-			<div class="token cpp_comment ">///			...</div>
-			<div class="token cpp_comment ">///			;</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		It means rule &quot;RuleName&quot; is defined by those grammars, and matching this rule will create an instance of &quot;RuleType&quot; or its whatever types that inheriting &quot;RuleType&quot;.</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">/// 4) Grammars:</div>
-			<div class="token cpp_comment ">///		RuleName: Defines an input that matches a rule.</div>
-			<div class="token cpp_comment ">///		TokenName: Defines an input that formed by the specified token.</div>
-			<div class="token cpp_comment ">///		&quot;StringConstant&quot;: Defins an input that formed by exactly the string constant. This constant should define a token in the token list.</div>
-			<div class="token cpp_comment ">///		Grammar : FieldName: Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field &quot;FieldName&quot; of a class, whose type will appear later.</div>
-			<div class="token cpp_comment ">///		!Grammar: Defines an input that matches Grammar, and the rule will return the result from this grammar. The input should still match other part of the rule, but result of other parts are ignored.</div>
-			<div class="token cpp_comment ">///		[Grammar]: Defines an input that, if match Grammar, will returns the result from that grammar; if not, the result is null.</div>
-			<div class="token cpp_comment ">///		{Grammar}: Defines an input that matches 0, 1 or more Grammar.</div>
-			<div class="token cpp_comment ">///		(Grammar): Defins an input that matches the the grammar. Brackets is only for changing operator associations.</div>
-			<div class="token cpp_comment ">///		Grammar1 Grammar2: Defines an input that should match Grammar1 right before Grammar2.</div>
-			<div class="token cpp_comment ">///		Grammar1 | Grammar2: Defines an input that match either Grammar1 or Grammar2.</div>
-			<div class="token cpp_comment ">///		Grammar as Type: Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type &quot;Type&quot;</div>
-			<div class="token cpp_comment ">///		Grammar with { FieldName = Value }: Defins an input that matches the Grammar, and will assign &quot;Value&quot;, which should be an enum item, to the field &quot;FieldName&quot; of the created instance.</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">/// 5) Example</div>
-			<div class="token cpp_comment ">///		Here is an example to parse expression containing +, -, *, /, () and numbers:\</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		include:&quot;Vlpp.h&quot;</div>
-			<div class="token cpp_comment ">///		classPrefix:Calc</div>
-			<div class="token cpp_comment ">///		guard:VCZH_CALCULATOR_PARSER</div>
-			<div class="token cpp_comment ">///		namespace:vl.calculator</div>
-			<div class="token cpp_comment ">///		reflection:vl.calculator</div>
-			<div class="token cpp_comment ">///		parser:ParseExpression(Expr)</div>
-			<div class="token cpp_comment ">///		ambiguity:disabled</div>
-			<div class="token cpp_comment ">///		serialization:enabled</div>
-			<div class="token cpp_comment ">///		grammar:</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		class Expression</div>
-			<div class="token cpp_comment ">///		{</div>
-			<div class="token cpp_comment ">///		}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		enum BinaryOperator</div>
-			<div class="token cpp_comment ">///		{</div>
-			<div class="token cpp_comment ">///			Add, Sub, Mul, Div,</div>
-			<div class="token cpp_comment ">///		}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		class NumberExpression : Expression</div>
-			<div class="token cpp_comment ">///		{</div>
-			<div class="token cpp_comment ">///			token number;</div>
-			<div class="token cpp_comment ">///		}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		class BinaryExpression : Expression</div>
-			<div class="token cpp_comment ">///		{</div>
-			<div class="token cpp_comment ">///			BinaryOperator op;</div>
-			<div class="token cpp_comment ">///			Expression left;</div>
-			<div class="token cpp_comment ">///			Expression right;</div>
-			<div class="token cpp_comment ">///		}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		token ADD &quot;\+&quot;</div>
-			<div class="token cpp_comment ">///		token SUB &quot;-&quot;</div>
-			<div class="token cpp_comment ">///		token MUL &quot;\*&quot;</div>
-			<div class="token cpp_comment ">///		token DIV &quot;\/&quot;</div>
-			<div class="token cpp_comment ">///		token NUMBER &quot;\d+(.\d+)?&quot;</div>
-			<div class="token cpp_comment ">///		token OPEN &quot;(&quot;</div>
-			<div class="token cpp_comment ">///		token CLOSE &quot;)&quot;</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		rule Expression Factor</div>
-			<div class="token cpp_comment ">///			= NUMBER : number as NumberExpression</div>
-			<div class="token cpp_comment ">///			= &quot;(&quot; !Expr &quot;)&quot;</div>
-			<div class="token cpp_comment ">///			;</div>
-			<div class="token cpp_comment ">///		rule Expression Term</div>
-			<div class="token cpp_comment ">///			= !Factor</div>
-			<div class="token cpp_comment ">///			= Term : left &quot;*&quot; Factor : right as BinaryExpression with {op = &quot;Mul&quot;}</div>
-			<div class="token cpp_comment ">///			= Term : left &quot;/&quot; Factor : right as BinaryExpression with {op = &quot;Div&quot;}</div>
-			<div class="token cpp_comment ">///			;</div>
-			<div class="token cpp_comment ">///		rule Expression Expr</div>
-			<div class="token cpp_comment ">///			= !Term</div>
-			<div class="token cpp_comment ">///			= Expr : left &quot;+&quot; Term : right as BinaryExpression with {op = &quot;Add&quot;}</div>
-			<div class="token cpp_comment ">///			= Expr : left &quot;-&quot; Term : right as BinaryExpression with {op = &quot;Sub&quot;}</div>
-			<div class="token cpp_comment ">///			;</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		After using ParserGen.exe to generate C++ codes, you can do this:</div>
-			<div class="token cpp_comment ">///			auto table = CalcLoadTable(); // this table can be used several times, don&apos;t load each type for each parsing, it will have a big performance overhead.</div>
-			<div class="token cpp_comment ">///			List&lt;Ptr&lt;ParsingError&gt;&gt; errors;</div>
-			<div class="token cpp_comment ">///			auto expression = CalcParseExpression(L&quot;(1+2) * (3+4)&quot;, table, errors); // it should be a Ptr&lt;CalcExpression&gt;, will returns nullptr if the input is wrong, with all errors filled into the &quot;errors&quot; variable.</div>
-			<div class="token cpp_comment ">///			You don&apos;t need to define the &quot;errors&quot; if you don&apos;t actually care how the input is wrong. There will be a overloaded version of CalcParseExpression that doesn&apos;t need the error list.</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		If you want to parse a wrong input and do automatic error recovering, which means if the input is not too wrong, you can still get a syntax tree, but some fields are null, with errors filled into the &quot;error&quot; variable. It will be a little complex:</div>
-			<div class="token cpp_comment ">///			auto table = CalcLoadTable();					// Load the table.</div>
-			<div class="token cpp_comment ">///			ParsingState state(L&quot;(1+2) * (3+4)&quot;, table);	// Initialize a state with the input and the table.</div>
-			<div class="token cpp_comment ">///			state.Reset(L&quot;Expr&quot;);							// Set the rule to parse.</div>
-			<div class="token cpp_comment ">///			auto parser = CreateAutoRecoverParser(table);	// Create an appropriate automatic error recoverable parser.</div>
-			<div class="token cpp_comment ">///			List&lt;Ptr&lt;ParsingError&gt;&gt; errors;					// Define an error list.</div>
-			<div class="token cpp_comment ">///			auto node = parser-&gt;Parse(state, errors);		// Parse to get an abstract syntax tree, which is a Ptr&lt;ParsingTreeNode&gt;.</div>
-			<div class="token cpp_comment ">///			if (node)</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///				auto expression = CalcConvertParsingTreeNode(node, state.GetTokens()).Cast&lt;CalcExpression&gt;();</div>
-			<div class="token cpp_comment ">///			}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///		After you get a strong typed syntax tree, you can use the generated visitor interface to do something, like evaluate the results of the expression:</div>
-			<div class="token cpp_comment ">///			class Evaluator : public Object, public virtual CalcExpression::IVisitor</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///			private:</div>
-			<div class="token cpp_comment ">///				double result;</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///				double Call(CalcExpression* node)</div>
-			<div class="token cpp_comment ">///				{</div>
-			<div class="token cpp_comment ">///					node-&gt;Accept(this);</div>
-			<div class="token cpp_comment ">///					return result;</div>
-			<div class="token cpp_comment ">///				}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///			public:</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///				static double Evaluate(CalcExpression* node)</div>
-			<div class="token cpp_comment ">///				{</div>
-			<div class="token cpp_comment ">///					return Evaluator().Call(node);</div>
-			<div class="token cpp_comment ">///				}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///				void Visit(CalcNumberExpression* node)override</div>
-			<div class="token cpp_comment ">///				{</div>
-			<div class="token cpp_comment ">///					return wtof(node-&gt;number.value);</div>
-			<div class="token cpp_comment ">///				}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///				void Visit(CalcBinaryExpression* node)override</div>
-			<div class="token cpp_comment ">///				{</div>
-			<div class="token cpp_comment ">///					auto left = Calc(node-&gt;left.Obj());</div>
-			<div class="token cpp_comment ">///					auto right = Calc(node-&gt;right.Obj());</div>
-			<div class="token cpp_comment ">///					switch (node-&gt;op)</div>
-			<div class="token cpp_comment ">///					{</div>
-			<div class="token cpp_comment ">///					case CalcBinaryOperator::Add:</div>
-			<div class="token cpp_comment ">///						result = left + right;</div>
-			<div class="token cpp_comment ">///						break;</div>
-			<div class="token cpp_comment ">///					case CalcBinaryOperator::Sub:</div>
-			<div class="token cpp_comment ">///						result = left 0 right;</div>
-			<div class="token cpp_comment ">///						break;</div>
-			<div class="token cpp_comment ">///					case CalcBinaryOperator::Mul:</div>
-			<div class="token cpp_comment ">///						result = left * right;</div>
-			<div class="token cpp_comment ">///						break;</div>
-			<div class="token cpp_comment ">///					case CalcBinaryOperator::Div:</div>
-			<div class="token cpp_comment ">///						result = left / right;</div>
-			<div class="token cpp_comment ">///						break;</div>
-			<div class="token cpp_comment ">///					}</div>
-			<div class="token cpp_comment ">///				}</div>
-			<div class="token cpp_comment ">///			};</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">///			Nullable&lt;double&gt; EvaluateExpression(const WString&amp; input)</div>
-			<div class="token cpp_comment ">///			{</div>
-			<div class="token cpp_comment ">///				static auto table = CalcLoadTable();</div>
-			<div class="token cpp_comment ">///				auto expression = CalcParseExpression(input, table);</div>
-			<div class="token cpp_comment ">///				Nulllable&lt;double&gt; result;</div>
-			<div class="token cpp_comment ">///				if (expression)</div>
-			<div class="token cpp_comment ">///				{</div>
-			<div class="token cpp_comment ">///					result = Evaluator::Evaulate(expression.Obj());</div>
-			<div class="token cpp_comment ">///				}</div>
-			<div class="token cpp_comment ">///				return result;</div>
-			<div class="token cpp_comment ">///			}</div>
-			<div class="token cpp_comment ">///</div>
-			<div class="token cpp_comment ">/// ]]&gt;&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">///     Nullable&lt;double&gt; EvaluateExpression(const WString&amp; input)</div>
+			<div class="token cpp_comment ">///     {</div>
+			<div class="token cpp_comment ">///         static auto table = CalcLoadTable();</div>
+			<div class="token cpp_comment ">///         auto expression = CalcParseExpression(input, table);</div>
+			<div class="token cpp_comment ">///         Nulllable&lt;double&gt; result;</div>
+			<div class="token cpp_comment ">///         if (expression)</div>
+			<div class="token cpp_comment ">///         {</div>
+			<div class="token cpp_comment ">///             result = Evaluator::Evaulate(expression.Obj());</div>
+			<div class="token cpp_comment ">///         }</div>
+			<div class="token cpp_comment ">///         return result;</div>
+			<div class="token cpp_comment ">///     }</div>
+			<div class="token cpp_comment ">/// ]]&gt;&lt;/code&gt;&lt;/program&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::parsing::tabling::ParsingTable"><div><div class="token cpp_type">ParsingTable</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
 			{
 			<div class="token cpp_keyword ">public</div>:

@@ -1,238 +1,310 @@
-<Document symbolId="vl::parsing::tabling::ParsingTable" accessor="" category="Class" name="ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"><summary><![CDATA[
- The parsing table. When you complete a grammar file, ParserGen.exe which is in the Tools project will generate the C++ code for you to create a parsing table.
-
+<Document symbolId="vl::parsing::tabling::ParsingTable" accessor="" category="Class" name="ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"><summary><p>
+ The parsing table. When you complete a grammar file, use ParserGen.exe to generate the C++ code for you to create a parsing table.
+ </p><p>
  Here is a brief description of the grammar file format:
+ </p><p>
+ The grammar file consists of four parts: configuration, types, tokens and grammar in order like this:
+ <program><code><![CDATA[
+ CONFIGURATION
+ grammar:
+ TYPES
+ TOKENS
+ GRAMMAR
+ ]]></code></program></p><p><b>Configuration</b><ul><li><b>include:&quot;releative path to the VlppParser.h&quot;</b>:
+ (multiple) e.g. &quot;../Import/Vlpp.h&quot;
+ </li><li><b>namespace:C++-NAMESPACE</b>:
+ (single) Namespaces separated by &quot;.&quot; to contain the generated code. e.g. vl.parsing.xml
+ </li><li><b>reflection:REFLECTION-NAMESPACE</b>:
+ (single) Namespaces separated by &quot;.&quot; to contain the name of reflectable types. In most of the cases this should be the same as namespace. e.g. vl.parsing.xml
+ </li><li><b>filePrefix:FILE-PREFIX</b>:
+ (single) A prefix that will be add before all generated files. e.g. ParsingXml
+ </li><li><b>classPrefix:CLASS-PREFIX</b>:
+ (single) A prefix that will be add before all generated types and function. e.g. Xml
+ </li><li><b>classRoot:CLASS-ROOT</b>:
+ (single) The class that represents the whole text being parsed.
+ </li><li><b>guard:C++-HEADER-GUARD</b>:
+ (single) The C++ header guard pattern macro name. e.g. VCZH_PARSING_XML_PARSINGXML_PARSER
+ </li><li><b>parser:NAME(RULE)</b>:
+ (multiple) Pair a function name to a rule name.
+ It will generate a function called &quot;XmlParseDocument&quot; to parse the input using the rule named &quot;XDocument&quot;,
+ if you have &quot;classPrefix:Xml&quot; and &quot;parser:ParseDocument(XDocument)&quot;.</li><li><b>file:FEATURE(POSTFIX)</b>:
+ (multiple) Generate code for a specified feature to &quot;&lt;FILE-PREFIX&gt;&lt;POSTFIX&gt;.h&quot; and &quot;&lt;FILE-PREFIX&gt;&lt;POSTFIX&gt;.cpp&quot;.
+ FEATURE could be Ast, Parser, Copy, Traverse and Empty.
+ Ast is the definition of all classes in the grammar file.
+ Parser is the implementation of all parsers.
+ Others are visitors for Ast with different traversing features.
+ </li><li><b>ambiguity:(enabled|disabled)</b>:
+ (single) Set to &quot;enabled&quot; indicating that the grammar is by design to have ambiguity.
+ If ambiguity happens during parser, but here is &quot;disabled&quot;, then an error will be generated.
+ </li><li><b>serialization:(enabled|disabled)</b>:
+ (single) Set to &quot;enabled&quot; to serialize the parsing table as binary in the generated C++ code,
+ so that when the &quot;&lt;CLASS-PREFIX&gt;LoadTable&quot; function is called to load the table,
+ it can deserialize from the binary data directly,
+ instead of parsing the grammar again.
+ But the grammar text will always be in the generated C++ code regardless of the value of &quot;serialization&quot;,
+ it can always be retrived using the &quot;&lt;CLASS-PREFIX&gt;GetParserTextBuffer&quot; function.
+ </li></ul></p><p><b>Character escaping in strings</b></p><p>
+ There is only character escaping in strings: &quot;&quot;, which means the &quot; character.
+ For example, &quot;a&quot;&quot;b&quot;&quot;c&quot; means R&quot;TEXT(a&quot;b&quot;c)TEXT&quot; in C++.
+ </p><p><b>Types</b></p><p>
+ You can write attributes like @AttributeName(&quot;argument1&quot;, &quot;argument2&quot;, ...) in the middle of types.
+ But attributes don&apos;t affect parsing.
+ All attribute definitions will be stored in the generated parsing table,
+ and who uses the table defines how attributes work. Multiple attributes are separated by &quot;,&quot;.
+ </p><p>
+ If you only need parsing, usually you don&apos;t need to use attributes.
+ GacUI will use some attributes to drive colorizer and intellisense.
+ This part is subject to change in the next version, so it will not be described here.
+ </p><p><ul><li><b>Enum</b>:
+         <program><code><![CDATA[
+             enum EnumName <attributes>
+             {
+                 Item1 <attributes>,
+                 Item2 <attributes>,
+                 ... // cannot skip the last ","
+             }
+         ]]></code></program></li><li><p><b>Class</b>:
+         <program><code><![CDATA[
+             class Name [ambiguous(AmbiguousType)] [: ParentType] <attributes>
+             {
+                 Type name [(UnescapingFunction)] <attributes> ;
+             }
+         ]]></code></program></p><p>
+         UnescapingFunction is a callback,
+         which will be called after the contained type is fully constructed.
+         The generated C++ code will define forward declarations of all unescaping functions in the cpp file.
+         You should implement them in other places, or you will get linking errors.
+         </p><p>
+         If the grammar enables ambiguity, then the parsing result may contain ambiguous results for the same part of the input. For example, in C++:
+         <program><code><![CDATA[
+         A*B;
+         ]]></code></program>
+         has two meanings without considering the surrounding context: a multiplication expression or a pointer variable definition.
+         </p><p>
+         If the grammar doesn&apos;t enable ambiguity, it will refuce to generate C++ codes because the grammar is wrong.
+         Note that it doesn&apos;t generate errors for every possible cases of ambiguity.
+         Do not rely on this to check ambiguity in the grammar.
+         </p><p>
+         If the grammar enables ambiguity, than the syntax tree should be defined like this:
+         <program><code><![CDATA[
+             // when ambiguity happens for Statement, AmbiguiusStatement will be used to container all possible cases
+             class Statement ambiguous(AmbiguousStatement)
+             {
+             }
 
- include:"<releative path to the Vlpp.h>"	// (multiple)	e.g. "../Import/Vlpp.h"
- classPrefix:<class prefix>					// (single)		A prefix that will be add before all generated types and function. e.g. Xml
- guard:<C++ header guard>					// (single)		The C++ header guard pattern macro name. e.g. VCZH_PARSING_XML_PARSINGXML_PARSER
- namespace:<C++ namespaces>					// (single)		Namespaces separated by "." to contain the generated code. e.g. vl.parsing.xml
- reflection:<namespace>						// (single)		Namespaces separated by "." to contain the name of reflectable types. In most of the cases this should be the same as namespace. e.g. vl.parsing.xml
- parser:<name>(<rule>)						// (multiple)	Pair a function name to a rule name. ParserGen.exe will generate a function called "<prefix><name>" to parse the input using rule named "<rule>". e.g. ParseDocument(XDocument)
- ambiguity:(enabled|disabled)				// (single)		Set to "enabled" indicating that the grammar is by design to have ambiguity.
- serialization:(enabled|disabled)			// (single)		Set to "enabled" to serialize the parsing table as binary in the generated C++ code, so that when the "<prefix>LoadTable" function is called to load the table, it can deserialize from the binary data directly, instead of parsing the grammar again. But the grammar text will always be contained in the generated C++ code regardless of the value of "serialization", it can always be retrived using the "<prefix>GetParserTextBuffer" function.
- grammar:									// (single)		Configuration ends here. All content after "grammar:" will be treated as the grammar to define the input.
+             // so that "AmbiguousStatement" should inherit from "Statement"
+             class AmbiguousStatement : Statement
+             {
+                 // it should called "items", and the type should be an array of the base type
+                 Statement[] items;
+             }
 
- Here is the brief description of the grammar.
- The grammar is formed by 3 parts: types, token definitions and rule definitions. There is only one character escaping in strings: "", which means the " character.
+             class ExpressionStatement : Statement
+             {
+                 Expression expression;
+             }
 
- 1) Types:
-		You can write attributes like @AttributeName("argument1", "argument2", ...) in the middle of types. But attributes don't affect the parsing. All attribute definitions will be stored in the generated parsing table, and who uses the table defines how attributes work. Multiple attributes are separated by ",".
+             class VariableDefinitionStatement : Statement
+             {
+                 Type type;
+                 token name;
+             }
+         ]]></code></program>
+         For &quot;A*B;&quot; part in the whole input, it becomes an AmbiguousStatement.
+         The &quot;items&quot; field contains two instances, which are &quot;ExpressionStatement&quot; and &quot;VariableDefinitionStatement&quot;.
+         You could write C++ code to resolve the ambiguity in later passes.
+         </p></li><li><p><b>Type references</b>:</p><p>
+         Types can be defined globally or inside classes. Generic type is not supported. You can use the following types for a class field:
+         <ul><li><b>token</b>: Store a token, which will becomes <symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/>.</li><li><b>ClassName</b>: Instance of a specified type, which will becomes Ptr&lt;ClassName&gt;.</li><li><p><b>ClassName[]</b>: Array, which will becomes List&lt;Ptr&lt;ClassName&gt;&gt;. Array of tokens are not supported.</p><p>A class name could also be<b>OuterClass.InnerClass</b>, referring to the &quot;InnerClass&quot; defined inside the &quot;OuterClass&quot;.</p></li></ul></p></li></ul></p><p><b>Token definitions</b><program><code><![CDATA[
+     token TokenName = "regular expression" <attributes>;
+     discardtoken TokenName = "regular expression";
+ ]></code></program>
+ "discardtoken" means that,
+ if such a token is identified,
+ it will not appear in the lexical analyzing result.
+ You cannot use tokens marked with "discardtoken" in the grammar.
+ </p>
+ <p>
+ <b>Grammar</b>
+ <program><code><![CDATA[
+     rule RuleType RuleName <attributes>
+         = Grammar1
+         = Grammar2
+         ...
+         ;
+ ]></code></program>
+ <p>
+ It means rule "RuleName" is defined by those grammars,
+ and matching this rule will create an instance of "RuleType" or one of its sub classes.
+ </p>
+ <p>
+ Here are all supported grammars that:
+ <ul>
+     <li><b>RuleName</b>: Defines an input that matches a rule.</li>
+     <li><b>TokenName</b>: Defines an input that formed by the specified token.</li>
+     <li><b>"StringConstant"</b>: Defines an input that formed by exactly the string constant. There should be exactly one token who can only be this string constant.</li>
+     <li><b>Grammar: FieldName</b>: Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field "FieldName" of the created object.</li>
+     <li><b>!Grammar</b>: Defines an input that matches Grammar, and the rule will use the created object from this grammar. The input should still match other part of the rule, but result of other parts are ignored.</li>
+     <li><b>[Grammar]</b>: Defines an input that, if it matches Grammar, it returns the result from that grammar; otherwise, it returns null.</li>
+     <li><b>{Grammar}</b>: Defines an input that matches 0, 1 or more Grammar.</li>
+     <li><b>(Grammar)</b>: Defines an input that matches the the grammar. Brackets is only for changing operator associations.</li>
+     <li><b>Grammar1 Grammar2</b>: Defines an input that should match Grammar1 followed by Grammar2.</li>
+     <li><b>Grammar1 | Grammar2</b>: Defines an input that match either Grammar1 or Grammar2. When it matches Grammar1, Grammar2 will be ignored.</li>
+     <li><b>Grammar as Type</b>: Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type "Type".</li>
+     <li><b>Grammar with { FieldName = Value }</b>: Defines an input that matches the Grammar, assign "Value" to the field "FieldName" of the created object.</li>
+ </ul>
+ A grammar branch must be "GRAMMAR as TYPE with {Field1 = Value1} with {Field2 = Value2} ...".
+ </p>
+ <p>
+ <b>Example</b>
+ </p>
+ <p>
+ Here is an example to parse expression containing +, -, *, /, () and numbers:
+ <program><code><![CDATA[
+     include:"Vlpp.h"
+     namespace:vl.calculator
+     reflection:vl.calculator
+     filePrefix:Calc
+     classPrefix:Calc
+     classRoot:Expression
+     guard:VCZH_CALCULATOR_PARSER
+     parser:ParseExpression(Expr)
+     file:Ast(_Ast)
+     file:Parser(_Parser)
+     ambiguity:disabled
+     serialization:enabled
+     grammar:
 
-		a) Enum:
-			enum EnumName <attributes>
-			{
-				Item1 <attributes>,
-				Item2 <attributes>,
-				... // cannot skip the last ","
-			}
+     class Expression
+     {
+     }
 
-		b) Class:
-			class Name [ambiguous(AmbiguousType)] [: ParentType] <attributes>
-			{
-				Type name [(UnescapingFunction)] <attributes> ;
-			}
+     enum BinaryOperator
+     {
+         Add, Sub, Mul, Div,
+     }
 
-			UnescapingFunction is a callback, which will be called when the contained type is fully constructed. The generated C++ code will define forward declarations of all unescaping functions in the cpp file. You should implement them in other places, or you will get linking errors.
+     class NumberExpression : Expression
+     {
+         token number;
+     }
 
-			If the grammar enables ambiguity, then the parsing result may contain ambiguous results for the same part of the input. For example, in C++:
-			A*B;
-			has two meaning (if we only consider context-free parsing): multiplication expression and pointer variable definition.
-			So if the grammar doesn't enable ambiguity, ParserGen.exe will refuce to generate C++ codes because the grammar is wrong.
-			If the grammar enables ambiguity, than the syntax tree should be defined like this:
-			
-			class Statement ambiguous(AmbiguousStatement)
-			{
-			}
+     class BinaryExpression : Expression
+     {
+         BinaryOperator op;
+         Expression left;
+         Expression right;
+     }
 
-			class AmbiguousStatement : Statement // due to the definition of "Statement" class, "AmbiguousStatement" should inherit from "Statement"
-			{
-				Statement[] items; // required by naming convention
-			}
+     token ADD "\+"
+     token SUB "-"
+     token MUL "\*"
+     token DIV "\/"
+     token NUMBER "\d+(.\d+)?"
+     token OPEN "("
+     token CLOSE ")"
+     discardtoken SPACE = "/s+";
+     
+     rule Expression Factor
+         = NUMBER : number as NumberExpression
+         = "(" !Expr ")"
+         ;
+     rule Expression Term
+         = !Factor
+         = Term : left "*" Factor : right as BinaryExpression with {op = "Mul"}
+         = Term : left "/" Factor : right as BinaryExpression with {op = "Div"}
+         ;
+     rule Expression Expr
+         = !Term
+         = Expr : left "+" Term : right as BinaryExpression with {op = "Add"}
+         = Expr : left "-" Term : right as BinaryExpression with {op = "Sub"}
+         ;
+ ]]></code></program></p><p>
+ After using ParserGen.exe to generate C++ codes, you can do this:
+ <program><code><![CDATA[
+     // this table can be used, please cache the result to improve the performance
+     auto table = CalcLoadTable();
+     List<Ptr<ParsingError>> errors;
+     // it should be a Ptr<CalcExpression>, will returns nullptr if the input contains syntax errors
+     auto expression = CalcParseExpression(L"(1+2) * (3+4)", table, errors);
+ ]]></code></program>
+ You don&apos;t need to define the &quot;errors&quot; if you don&apos;t actually care how the input is wrong.
+ There will be a overloaded version of CalcParseExpression that doesn&apos;t need the third argument.
+ </p><p>
+ You can also automatically correct wrong input.
+ Ifthe input is not too wrong to recognize,
+ you can still get a syntax tree,
+ but some fields are nullptr,
+ with errors filled into the &quot;error&quot; variable.
+ <program><code><![CDATA[
+     auto table = CalcLoadTable();                   // Load the table.
+     ParsingState state(L"(1+2) * (3+4)", table);    // Initialize a state with the input and the table.
+     state.Reset(L"Expr");                           // Set the rule to parse.
+     auto parser = CreateAutoRecoverParser(table);   // Create an appropriate automatic error recoverable parser.
+     List<Ptr<ParsingError>> errors;                 // Define an error list.
+     auto node = parser->Parse(state, errors);       // Parse to get an abstract syntax tree, which is a Ptr<ParsingTreeNode>.
+     if (node)
+     {
+         auto expression = CalcConvertParsingTreeNode(node, state.GetTokens()).Cast<CalcExpression>();
+     }
+ ]]></code></program></p><p>
+ After you get a strong typed syntax tree, you can use the generated visitor interface to do something, like evaluate the results of the expression:
+ <program><code><![CDATA[
+     class Evaluator : public Object, public virtual CalcExpression::IVisitor
+     {
+     private:
+         double result;
 
-			class ExpressionStatement : Statement
-			{
-				Expression expression;
-			}
+         double Call(CalcExpression* node)
+         {
+             node->Accept(this);
+             return result;
+         }
 
-			class VariableDefinitionStatement : Statement
-			{
-				Type type;
-				token name;
-			}
+     public:
+         static double Evaluate(CalcExpression* node)
+         {
+             return Evaluator().Call(node);
+         }
 
-			So for the "A*B;" part in the whole input, it will becomes an AmbiguousStatement, in which the "items" field contains 2 instance of "ExpressionStatement" and "VariableDefinitionStatement".
-			And you can write C++ code to resolve the ambiguity in later passes.
+         void Visit(CalcNumberExpression* node)override
+         {
+             return wtof(node->number.value);
+         }
 
-		c) Type references:
-			Types can be defined globally or inside classes. Generic type is not supported. When you want to refer to a specific type, it could be:
-				token: Store a token, which will becomes ]]><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/><![CDATA[.
-				Type[]: Array, which will becomes ]]><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><![CDATA[ to the element type. Token cannot be the element of arrays.
-				ClassName: Instance of a specified type, which will becomes ]]><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><![CDATA[ to that type.
-				OuterClass.InnerClass: Refer to the "InnerClass" defined inside the "OuterClass".
+         void Visit(CalcBinaryExpression* node)override
+         {
+             auto left = Calc(node->left.Obj());
+             auto right = Calc(node->right.Obj());
+             switch (node->op)
+             {
+             case CalcBinaryOperator::Add:
+                 result = left + right;
+                 break;
+             case CalcBinaryOperator::Sub:
+                 result = left 0 right;
+                 break;
+             case CalcBinaryOperator::Mul:
+                 result = left * right;
+                 break;
+             case CalcBinaryOperator::Div:
+                 result = left / right;
+                 break;
+             }
+         }
+     };
 
- 2) Token definitions:
-		token TokenName = "regular expression" <attributes>;
-		discardtoken TokenName = "regular expression";
-
-		"discardtoken" means if such a token is identified, it will not appear in the lexical analyzing result. And you cannot refer to names of "discardtoken" in the grammar.
-
- 3) Rule definitions:
-		rule RuleType RuleName <attributes>
-			= Grammar1
-			= Grammar2
-			...
-			;
-
-		It means rule "RuleName" is defined by those grammars, and matching this rule will create an instance of "RuleType" or its whatever types that inheriting "RuleType".
-
- 4) Grammars:
-		RuleName: Defines an input that matches a rule.
-		TokenName: Defines an input that formed by the specified token.
-		"StringConstant": Defins an input that formed by exactly the string constant. This constant should define a token in the token list.
-		Grammar : FieldName: Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field "FieldName" of a class, whose type will appear later.
-		!Grammar: Defines an input that matches Grammar, and the rule will return the result from this grammar. The input should still match other part of the rule, but result of other parts are ignored.
-		[Grammar]: Defines an input that, if match Grammar, will returns the result from that grammar; if not, the result is null.
-		{Grammar}: Defines an input that matches 0, 1 or more Grammar.
-		(Grammar): Defins an input that matches the the grammar. Brackets is only for changing operator associations.
-		Grammar1 Grammar2: Defines an input that should match Grammar1 right before Grammar2.
-		Grammar1 | Grammar2: Defines an input that match either Grammar1 or Grammar2.
-		Grammar as Type: Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type "Type"
-		Grammar with { FieldName = Value }: Defins an input that matches the Grammar, and will assign "Value", which should be an enum item, to the field "FieldName" of the created instance.
-
- 5) Example
-		Here is an example to parse expression containing +, -, *, /, () and numbers:\
-
-		include:"Vlpp.h"
-		classPrefix:Calc
-		guard:VCZH_CALCULATOR_PARSER
-		namespace:vl.calculator
-		reflection:vl.calculator
-		parser:ParseExpression(Expr)
-		ambiguity:disabled
-		serialization:enabled
-		grammar:
-
-		class Expression
-		{
-		}
-
-		enum BinaryOperator
-		{
-			Add, Sub, Mul, Div,
-		}
-
-		class NumberExpression : Expression
-		{
-			token number;
-		}
-
-		class BinaryExpression : Expression
-		{
-			BinaryOperator op;
-			Expression left;
-			Expression right;
-		}
-
-		token ADD "\+"
-		token SUB "-"
-		token MUL "\*"
-		token DIV "\/"
-		token NUMBER "\d+(.\d+)?"
-		token OPEN "("
-		token CLOSE ")"
-
-		rule Expression Factor
-			= NUMBER : number as NumberExpression
-			= "(" !Expr ")"
-			;
-		rule Expression Term
-			= !Factor
-			= Term : left "*" Factor : right as BinaryExpression with {op = "Mul"}
-			= Term : left "/" Factor : right as BinaryExpression with {op = "Div"}
-			;
-		rule Expression Expr
-			= !Term
-			= Expr : left "+" Term : right as BinaryExpression with {op = "Add"}
-			= Expr : left "-" Term : right as BinaryExpression with {op = "Sub"}
-			;
-
-		After using ParserGen.exe to generate C++ codes, you can do this:
-			auto table = CalcLoadTable(); // this table can be used several times, don't load each type for each parsing, it will have a big performance overhead.
-			List<Ptr<ParsingError>> errors;
-			auto expression = CalcParseExpression(L"(1+2) * (3+4)", table, errors); // it should be a Ptr<CalcExpression>, will returns nullptr if the input is wrong, with all errors filled into the "errors" variable.
-			You don't need to define the "errors" if you don't actually care how the input is wrong. There will be a overloaded version of CalcParseExpression that doesn't need the error list.
-
-		If you want to parse a wrong input and do automatic error recovering, which means if the input is not too wrong, you can still get a syntax tree, but some fields are null, with errors filled into the "error" variable. It will be a little complex:
-			auto table = CalcLoadTable();					// Load the table.
-			ParsingState state(L"(1+2) * (3+4)", table);	// Initialize a state with the input and the table.
-			state.Reset(L"Expr");							// Set the rule to parse.
-			auto parser = CreateAutoRecoverParser(table);	// Create an appropriate automatic error recoverable parser.
-			List<Ptr<ParsingError>> errors;					// Define an error list.
-			auto node = parser->Parse(state, errors);		// Parse to get an abstract syntax tree, which is a Ptr<ParsingTreeNode>.
-			if (node)
-			{
-				auto expression = CalcConvertParsingTreeNode(node, state.GetTokens()).Cast<CalcExpression>();
-			}
-
-		After you get a strong typed syntax tree, you can use the generated visitor interface to do something, like evaluate the results of the expression:
-			class Evaluator : public Object, public virtual CalcExpression::IVisitor
-			{
-			private:
-				double result;
-
-				double Call(CalcExpression* node)
-				{
-					node->Accept(this);
-					return result;
-				}
-
-			public:
-
-				static double Evaluate(CalcExpression* node)
-				{
-					return Evaluator().Call(node);
-				}
-
-				void Visit(CalcNumberExpression* node)override
-				{
-					return wtof(node->number.value);
-				}
-
-				void Visit(CalcBinaryExpression* node)override
-				{
-					auto left = Calc(node->left.Obj());
-					auto right = Calc(node->right.Obj());
-					switch (node->op)
-					{
-					case CalcBinaryOperator::Add:
-						result = left + right;
-						break;
-					case CalcBinaryOperator::Sub:
-						result = left 0 right;
-						break;
-					case CalcBinaryOperator::Mul:
-						result = left * right;
-						break;
-					case CalcBinaryOperator::Div:
-						result = left / right;
-						break;
-					}
-				}
-			};
-
-			Nullable<double> EvaluateExpression(const WString& input)
-			{
-				static auto table = CalcLoadTable();
-				auto expression = CalcParseExpression(input, table);
-				Nulllable<double> result;
-				if (expression)
-				{
-					result = Evaluator::Evaulate(expression.Obj());
-				}
-				return result;
-			}
-
- ]]></summary><signature><![CDATA[class ParsingTable
+     Nullable<double> EvaluateExpression(const WString& input)
+     {
+         static auto table = CalcLoadTable();
+         auto expression = CalcParseExpression(input, table);
+         Nulllable<double> result;
+         if (expression)
+         {
+             result = Evaluator::Evaulate(expression.Obj());
+         }
+         return result;
+     }
+ ]]></code></program></p></summary><signature><![CDATA[class ParsingTable
     : Object;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
