@@ -118,15 +118,12 @@
          <ul><li><b>token</b>: Store a token, which will becomes <symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/>.</li><li><b>ClassName</b>: Instance of a specified type, which will becomes Ptr&lt;ClassName&gt;.</li><li><p><b>ClassName[]</b>: Array, which will becomes List&lt;Ptr&lt;ClassName&gt;&gt;. Array of tokens are not supported.</p><p>A class name could also be<b>OuterClass.InnerClass</b>, referring to the &quot;InnerClass&quot; defined inside the &quot;OuterClass&quot;.</p></li></ul></p></li></ul></p><p><b>Token definitions</b><program><code><![CDATA[
      token TokenName = "regular expression" <attributes>;
      discardtoken TokenName = "regular expression";
- ]></code></program>
- "discardtoken" means that,
+ ]]></code></program>
+ &quot;discardtoken&quot; means that,
  if such a token is identified,
  it will not appear in the lexical analyzing result.
- You cannot use tokens marked with "discardtoken" in the grammar.
- </p>
- <p>
- <b>Grammar</b>
- <program><code><![CDATA[
+ You cannot use tokens marked with &quot;discardtoken&quot; in the grammar.
+ </p><p><b>Grammar</b><program><code><![CDATA[
      rule RuleType RuleName <attributes>
          = Grammar1
          = Grammar2
