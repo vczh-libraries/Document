@@ -31,6 +31,26 @@ void LogTypes(Ptr<XmlElement> xmlRoot, const WString& projectName, SortedList<WS
 		auto attr = MakePtr<XmlAttribute>();
 		attr->name.value = L"name";
 		attr->value.value = projectName;
+		xmlProject->attributes.Add(attr);
+	}
+
+	vint count = GetGlobalTypeManager()->GetTypeDescriptorCount();
+	for (vint i = 0; i < count; i++)
+	{
+		auto td = GetGlobalTypeManager()->GetTypeDescriptor(i);
+		WString tdName = td->GetTypeName();
+		if (loaded.Contains(tdName)) continue;
+		loaded.Add(tdName);
+
+		auto xmlType = MakePtr<XmlElement>();
+		xmlType->name.value = L"type";
+		xmlProject->subNodes.Add(xmlType);
+		{
+			auto attr = MakePtr<XmlAttribute>();
+			attr->name.value = L"registered";
+			attr->value.value = tdName;
+			xmlType->attributes.Add(attr);
+		}
 	}
 }
 
