@@ -39,16 +39,54 @@ void LogTypes(Ptr<XmlElement> xmlRoot, const WString& projectName, SortedList<WS
 	{
 		auto td = GetGlobalTypeManager()->GetTypeDescriptor(i);
 		WString tdName = td->GetTypeName();
+		WString cppName = CppGetFullName(td);
+
 		if (loaded.Contains(tdName)) continue;
 		loaded.Add(tdName);
 
 		auto xmlType = MakePtr<XmlElement>();
-		xmlType->name.value = L"type";
 		xmlProject->subNodes.Add(xmlType);
+
+		switch (td->GetTypeDescriptorFlags())
+		{
+		case TypeDescriptorFlags::Object:
+			xmlType->name.value = L"Object";
+			break;
+		case TypeDescriptorFlags::IDescriptable:
+			xmlType->name.value = L"IDescriptable";
+			break;
+		case TypeDescriptorFlags::Class:
+			xmlType->name.value = L"Class";
+			break;
+		case TypeDescriptorFlags::Interface:
+			xmlType->name.value = L"Interface";
+			break;
+		case TypeDescriptorFlags::Primitive:
+			xmlType->name.value = L"Primitive";
+			break;
+		case TypeDescriptorFlags::Struct:
+			xmlType->name.value = L"Struct";
+			break;
+		case TypeDescriptorFlags::FlagEnum:
+			xmlType->name.value = L"FlagEnum";
+			break;
+		case TypeDescriptorFlags::NormalEnum:
+			xmlType->name.value = L"NormalEnum";
+			break;
+		default:
+			xmlType->name.value = L"Undefined";
+		}
+
 		{
 			auto attr = MakePtr<XmlAttribute>();
-			attr->name.value = L"registered";
+			attr->name.value = L"name";
 			attr->value.value = tdName;
+			xmlType->attributes.Add(attr);
+		}
+		{
+			auto attr = MakePtr<XmlAttribute>();
+			attr->name.value = L"cpp";
+			attr->value.value = cppName;
 			xmlType->attributes.Add(attr);
 		}
 	}

@@ -1,4 +1,5 @@
 #include <Render.h>
+#include <ExportReflectableTypes.h>
 
 /***********************************************************************
 Main
@@ -69,6 +70,8 @@ int main()
 			folderFragment,
 			folderReference
 		);
+
+		ExportReflectableTypes(folderOutput);
 	}
 
 	return 0;

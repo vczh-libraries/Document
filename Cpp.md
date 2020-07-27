@@ -32,7 +32,6 @@
   - [ ] Fix signature for Curry.
 - [ ] Refine document comment
   - [ ] Generate `C++ name -> <symbols>` file, so that `<article>` could have hyper-links to document pages
-  - [ ] Automatically generate `registered types` list
   - [ ] VlppParser
     - [ ] Fix document for `ParsingTable`
     - [ ] Add `header:` in codegen so that generated files have license comment

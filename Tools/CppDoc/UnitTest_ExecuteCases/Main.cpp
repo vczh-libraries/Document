@@ -19,7 +19,6 @@ int main()
 	preprocessedFiles.Add(File(L"../UnitTest_Cases/TypePrinter.i"));
 	preprocessedFiles.Add(File(L"../UnitTest_Cases/STL.i"));
 
-#if 0
 	Console::WriteLine(L"Cleaning ...");
 	FOREACH(File, file, preprocessedFiles)
 	{
@@ -81,7 +80,6 @@ int main()
 			folderReference
 		);
 	}
-#endif
 
 	{
 		Folder folderOutput(L"../../Demos/_Test");
