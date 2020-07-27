@@ -24,7 +24,10 @@
  </p><p>
  Some of the predefined type has already been registered.
  If your types depend on these types, you should load those types by calling some or all of them:
- <ul><li><symbol name="LoadPredefinedTypes" declFile="GuiTypeDescriptorReflection.cpp" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[impl0]"/></li><li><symbol name="LoadParsingTypes" declFile="Parsing.cpp" declId="FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]"/></li><li><symbol name="JsonLoadTypes" declFile="ParsingJson_Ast.cpp" declId="FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]"/></li><li><symbol name="XmlLoadTypes" declFile="ParsingXml_Ast.cpp" declId="FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]"/></li></ul></p><p>
+ <ul><li><symbol name="LoadPredefinedTypes" docId="vl::reflection::description::LoadPredefinedTypes@bool()" declFile="GuiTypeDescriptorReflection.h" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[decl0]"/></li><li><symbol name="LoadParsingTypes" declFile="Parsing.cpp" declId="FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]"/></li><li><symbol name="JsonLoadTypes" declFile="ParsingJson_Ast.cpp" declId="FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]"/></li><li><symbol name="XmlLoadTypes" declFile="ParsingXml_Ast.cpp" declId="FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]"/></li></ul>
+ But if you link <b>GacUIReflection.cpp</b> in your project and set <b>VCZH_DEBUG_NO_REFLECTION</b> to off,
+ all types will be automatically loaded before <b>GuiMain</b> is called.
+ </p><p>
  The order does not matter, because content of types are lazily loaded.
  </p><p>
  Everything below should be put in <b>vl::reflection::description</b> namespaces.

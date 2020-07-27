@@ -24,12 +24,27 @@
   <namespace name="::vl::reflection::description">
     <document name="function BoxParameter" docId="vl::reflection::description::BoxParameter@::vl::reflection::description::Value(::vl::reflection::description::TypeInfoRetriver::ResultReferenceType, ::vl::reflection::description::ITypeDescriptor *)" file="VL__REFLECTION__DESCRIPTION__BOXPARAMETER@__VL__REFLECTION__DESC"/>
     <document name="function BoxValue" docId="vl::reflection::description::BoxValue@::vl::reflection::description::Value([T] const &amp;, ::vl::reflection::description::ITypeDescriptor *)" file="VL__REFLECTION__DESCRIPTION__BOXVALUE@__VL__REFLECTION__DESCRIPT"/>
+    <document name="function DestroyGlobalTypeManager" docId="vl::reflection::description::DestroyGlobalTypeManager@bool()" file="VL__REFLECTION__DESCRIPTION__DESTROYGLOBALTYPEMANAGER@BOOL()"/>
+    <document name="function GetGlobalTypeManager" docId="vl::reflection::description::GetGlobalTypeManager@::vl::reflection::description::ITypeManager *()" file="VL__REFLECTION__DESCRIPTION__GETGLOBALTYPEMANAGER@__VL__REFLECTI"/>
     <document name="function GetLazyList" docId="vl::reflection::description::GetLazyList@::vl::collections::LazyList&lt;[T]&gt;(::vl::Ptr&lt;::vl::reflection::description::IValueEnumerable&gt;)" file="VL__REFLECTION__DESCRIPTION__GETLAZYLIST@__VL__COLLECTIONS__LAZY"/>
     <document name="function GetLazyList" docId="vl::reflection::description::GetLazyList@::vl::collections::LazyList&lt;[T]&gt;(::vl::Ptr&lt;::vl::reflection::description::IValueReadonlyList&gt;)" file="VL__REFLECTION__DESCRIPTION__GETLAZYLIST@__VL__COLLECTIONS__LAZY2"/>
     <document name="function GetLazyList" docId="vl::reflection::description::GetLazyList@::vl::collections::LazyList&lt;[T]&gt;(::vl::Ptr&lt;::vl::reflection::description::IValueList&gt;)" file="VL__REFLECTION__DESCRIPTION__GETLAZYLIST@__VL__COLLECTIONS__LAZY3"/>
     <document name="function GetLazyList" docId="vl::reflection::description::GetLazyList@::vl::collections::LazyList&lt;[T]&gt;(::vl::Ptr&lt;::vl::reflection::description::IValueObservableList&gt;)" file="VL__REFLECTION__DESCRIPTION__GETLAZYLIST@__VL__COLLECTIONS__LAZY4"/>
     <document name="function GetLazyList" docId="vl::reflection::description::GetLazyList@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;[K], [V]&gt;&gt;(::vl::Ptr&lt;::vl::reflection::description::IValueReadonlyDictionary&gt;)" file="VL__REFLECTION__DESCRIPTION__GETLAZYLIST@__VL__COLLECTIONS__LAZY5"/>
     <document name="function GetLazyList" docId="vl::reflection::description::GetLazyList@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;[K], [V]&gt;&gt;(::vl::Ptr&lt;::vl::reflection::description::IValueDictionary&gt;)" file="VL__REFLECTION__DESCRIPTION__GETLAZYLIST@__VL__COLLECTIONS__LAZY6"/>
+    <document name="function GetTypeDescriptor" docId="vl::reflection::description::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::WString const &amp;)" file="VL__REFLECTION__DESCRIPTION__GETTYPEDESCRIPTOR@__VL__REFLECTION_"/>
+    <document name="function GetTypeDescriptor" docId="vl::reflection::description::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()" file="VL__REFLECTION__DESCRIPTION__GETTYPEDESCRIPTOR@__VL__REFLECTION_2"/>
+    <document name="class ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor" file="VL__REFLECTION__DESCRIPTION__ITYPEDESCRIPTOR"/>
+    <document name="class ITypeLoader" docId="vl::reflection::description::ITypeLoader" file="VL__REFLECTION__DESCRIPTION__ITYPELOADER">
+      <document name="function Load" docId="vl::reflection::description::ITypeLoader::Load@void(::vl::reflection::description::ITypeManager *)" file="VL__REFLECTION__DESCRIPTION__ITYPELOADER__LOAD@VOID(__VL__REFLEC"/>
+      <document name="function Unload" docId="vl::reflection::description::ITypeLoader::Unload@void(::vl::reflection::description::ITypeManager *)" file="VL__REFLECTION__DESCRIPTION__ITYPELOADER__UNLOAD@VOID(__VL__REFL"/>
+    </document>
+    <document name="class ITypeManager" docId="vl::reflection::description::ITypeManager" file="VL__REFLECTION__DESCRIPTION__ITYPEMANAGER">
+      <document name="function AddTypeLoader" docId="vl::reflection::description::ITypeManager::AddTypeLoader@bool(::vl::Ptr&lt;::vl::reflection::description::ITypeLoader&gt;)" file="VL__REFLECTION__DESCRIPTION__ITYPEMANAGER__ADDTYPELOADER@BOOL(__"/>
+      <document name="function GetTypeDescriptor" docId="vl::reflection::description::ITypeManager::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::vint)" file="VL__REFLECTION__DESCRIPTION__ITYPEMANAGER__GETTYPEDESCRIPTOR@__V"/>
+      <document name="function GetTypeDescriptorCount" docId="vl::reflection::description::ITypeManager::GetTypeDescriptorCount@::vl::vint()" file="VL__REFLECTION__DESCRIPTION__ITYPEMANAGER__GETTYPEDESCRIPTORCOUN"/>
+      <document name="function Load" docId="vl::reflection::description::ITypeManager::Load@bool()" file="VL__REFLECTION__DESCRIPTION__ITYPEMANAGER__LOAD@BOOL()"/>
+    </document>
     <document name="class IValueDictionary" docId="vl::reflection::description::IValueDictionary" file="VL__REFLECTION__DESCRIPTION__IVALUEDICTIONARY">
       <document name="function Clear" docId="vl::reflection::description::IValueDictionary::Clear@void()" file="VL__REFLECTION__DESCRIPTION__IVALUEDICTIONARY__CLEAR@VOID()"/>
       <document name="function Create" docId="vl::reflection::description::IValueDictionary::Create@::vl::Ptr&lt;::vl::reflection::description::IValueDictionary&gt;()" file="VL__REFLECTION__DESCRIPTION__IVALUEDICTIONARY__CREATE@__VL__PTR_"/>
@@ -85,6 +100,8 @@
       <document name="function Update" docId="vl::reflection::description::IValueSubscription::Update@bool()" file="VL__REFLECTION__DESCRIPTION__IVALUESUBSCRIPTION__UPDATE@BOOL()"/>
       <document name="variable ValueChanged" docId="vl::reflection::description::IValueSubscription::ValueChanged" file="VL__REFLECTION__DESCRIPTION__IVALUESUBSCRIPTION__VALUECHANGED"/>
     </document>
+    <document name="function LoadPredefinedTypes" docId="vl::reflection::description::LoadPredefinedTypes@bool()" file="VL__REFLECTION__DESCRIPTION__LOADPREDEFINEDTYPES@BOOL()"/>
+    <document name="function ResetGlobalTypeManager" docId="vl::reflection::description::ResetGlobalTypeManager@bool()" file="VL__REFLECTION__DESCRIPTION__RESETGLOBALTYPEMANAGER@BOOL()"/>
     <document name="function UnboxParameter" docId="vl::reflection::description::UnboxParameter@void(::vl::reflection::description::Value const &amp;, [T] &amp;, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &amp;)" file="VL__REFLECTION__DESCRIPTION__UNBOXPARAMETER@VOID(__VL__REFLECTIO"/>
     <document name="function UnboxValue" docId="vl::reflection::description::UnboxValue@[T](::vl::reflection::description::Value const &amp;, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &amp;)" file="VL__REFLECTION__DESCRIPTION__UNBOXVALUE@[T](__VL__REFLECTION__DE"/>
     <document name="class Value" docId="vl::reflection::description::Value" file="VL__REFLECTION__DESCRIPTION__VALUE">

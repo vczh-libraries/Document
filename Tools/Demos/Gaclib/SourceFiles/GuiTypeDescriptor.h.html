@@ -314,6 +314,8 @@ Attribute
 		<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.JsonLoadTypes]&lt;/li&gt;</div>
 		<div class="token cpp_comment ">///     &lt;li&gt;[F:vl.reflection.description.XmlLoadTypes]&lt;/li&gt;</div>
 		<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+		<div class="token cpp_comment ">/// But if you link &lt;b&gt;GacUIReflection.cpp&lt;/b&gt; in your project and set &lt;b&gt;VCZH_DEBUG_NO_REFLECTION&lt;/b&gt; to off,</div>
+		<div class="token cpp_comment ">/// all types will be automatically loaded before &lt;b&gt;GuiMain&lt;/b&gt; is called.</div>
 		<div class="token cpp_comment ">/// &lt;/p&gt;</div>
 		<div class="token cpp_comment ">/// &lt;p&gt;</div>
 		<div class="token cpp_comment ">/// The order does not matter, because content of types are lazily loaded.</div>
@@ -2144,6 +2146,7 @@ ITypeDescriptor
 				<div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeDescriptorFlags'], [], [])"><div class="token cpp_type">TypeDescriptorFlags</div></div>)((<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::operator |@::vl::reflection::description::TypeDescriptorFlags(::vl::reflection::description::TypeDescriptorFlags, ::vl::reflection::description::TypeDescriptorFlags)[impl0]::a'], [], [])"><div class="token cpp_argument">a</div></div> | (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::operator |@::vl::reflection::description::TypeDescriptorFlags(::vl::reflection::description::TypeDescriptorFlags, ::vl::reflection::description::TypeDescriptorFlags)[impl0]::b'], [], [])"><div class="token cpp_argument">b</div></div>);
 			}
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;Metadata class for reflectable types.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ITypeDescriptor"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
@@ -2202,23 +2205,57 @@ ITypeManager
 
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NF[0]$vl::reflection::description::ITypeManager"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeManager'], [], [])"><div class="token cpp_type">ITypeManager</div></div></div>;
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;Delay loading for registering reflectable types.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ITypeLoader"><div><div class="token cpp_type">ITypeLoader</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
 			{
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Called when it is time to register types.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;manager&quot;&gt;The type manager.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::reflection::description::ITypeLoader::Load@void(::vl::reflection::description::ITypeManager *)[decl0]"><div><div class="token cpp_function">Load</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeManager'], [], [])"><div class="token cpp_type">ITypeManager</div></div>* <div class="def" id="NI$vl::reflection::description::ITypeLoader::Load@void(::vl::reflection::description::ITypeManager *)[decl0]::manager"><div>manager</div></div>)=<div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Called when it is time to unregister types.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;manager&quot;&gt;The type manager.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// Types cannot be unregistered one by one,</div>
+				<div class="token cpp_comment ">/// they are removed at the same time by calling</div>
+				<div class="token cpp_comment ">/// [F:vl.reflection.description.DestroyGlobalTypeManager] or</div>
+				<div class="token cpp_comment ">/// [F:vl.reflection.description.ResetGlobalTypeManager].</div>
+				<div class="token cpp_comment ">/// Here is just a chance for reverse extra steps, when these steps are taken in &lt;see cref=&quot;Load&quot;/&gt;.</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::reflection::description::ITypeLoader::Unload@void(::vl::reflection::description::ITypeManager *)[decl0]"><div><div class="token cpp_function">Unload</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeManager'], [], [])"><div class="token cpp_type">ITypeManager</div></div>* <div class="def" id="NI$vl::reflection::description::ITypeLoader::Unload@void(::vl::reflection::description::ITypeManager *)[decl0]::manager"><div>manager</div></div>)=<div class="token cpp_number ">0</div>;
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;A type manager to access all reflectable types.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ITypeManager"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeManager'], [], [])"><div class="token cpp_type">ITypeManager</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
 			{
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the number of all registered types.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The number of all registered types.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>					<div class="def" id="FB$vl::reflection::description::ITypeManager::GetTypeDescriptorCount@::vl::vint()[decl0]"><div><div class="token cpp_function">GetTypeDescriptorCount</div></div></div>()=<div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get one registered type.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;A registered type specified by the index.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index for retriving the registered type.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// The index itself does not has any specific meaning.</div>
+				<div class="token cpp_comment ">/// And it is no guarantee that an index will always return the same type for each execution of the same process.</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>*		<div class="def" id="FB$vl::reflection::description::ITypeManager::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::vint)[decl0]"><div><div class="token cpp_function">GetTypeDescriptor</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::description::ITypeManager::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::vint)[decl0]::index"><div>index</div></div>)=<div class="token cpp_number ">0</div>;
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>*		<div class="def" id="FB$vl::reflection::description::ITypeManager::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::WString const &)[decl0]"><div><div class="token cpp_function">GetTypeDescriptor</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::ITypeManager::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::WString const &)[decl0]::name"><div>name</div></div>)=<div class="token cpp_number ">0</div>;
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::ITypeManager::SetTypeDescriptor@bool(::vl::WString const &, ::vl::Ptr<::vl::reflection::description::ITypeDescriptor>)[decl0]"><div><div class="token cpp_function">SetTypeDescriptor</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::ITypeManager::SetTypeDescriptor@bool(::vl::WString const &, ::vl::Ptr<::vl::reflection::description::ITypeDescriptor>)[decl0]::name"><div>name</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>&gt; <div class="def" id="NI$vl::reflection::description::ITypeManager::SetTypeDescriptor@bool(::vl::WString const &, ::vl::Ptr<::vl::reflection::description::ITypeDescriptor>)[decl0]::typeDescriptor"><div>typeDescriptor</div></div>)=<div class="token cpp_number ">0</div>;
 
+				<div class="token cpp_comment ">/// &lt;summary&gt;Delay register some types.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;typeLoader&quot;&gt;A type loader for delay registering.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// You can still call this function after &lt;see cref=&quot;Load&quot;/&gt; is called.</div>
+				<div class="token cpp_comment ">/// In this case, there is no delay registering, all types in this loader will be registered immediately.</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::ITypeManager::AddTypeLoader@bool(::vl::Ptr<::vl::reflection::description::ITypeLoader>)[decl0]"><div><div class="token cpp_function">AddTypeLoader</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeLoader'], [], [])"><div class="token cpp_type">ITypeLoader</div></div>&gt; <div class="def" id="NI$vl::reflection::description::ITypeManager::AddTypeLoader@bool(::vl::Ptr<::vl::reflection::description::ITypeLoader>)[decl0]::typeLoader"><div>typeLoader</div></div>)=<div class="token cpp_number ">0</div>;
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::ITypeManager::RemoveTypeLoader@bool(::vl::Ptr<::vl::reflection::description::ITypeLoader>)[decl0]"><div><div class="token cpp_function">RemoveTypeLoader</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeLoader'], [], [])"><div class="token cpp_type">ITypeLoader</div></div>&gt; <div class="def" id="NI$vl::reflection::description::ITypeManager::RemoveTypeLoader@bool(::vl::Ptr<::vl::reflection::description::ITypeLoader>)[decl0]::typeLoader"><div>typeLoader</div></div>)=<div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Load all added type loaders.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::ITypeManager::Load@bool()[decl0]"><div><div class="token cpp_function">Load</div></div></div>()=<div class="token cpp_number ">0</div>;
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::ITypeManager::Unload@bool()[decl0]"><div><div class="token cpp_function">Unload</div></div></div>()=<div class="token cpp_number ">0</div>;
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::reflection::description::ITypeManager::Reload@bool()[decl0]"><div><div class="token cpp_function">Reload</div></div></div>()=<div class="token cpp_number ">0</div>;
@@ -2226,9 +2263,45 @@ ITypeManager
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>*		<div class="def" id="FB$vl::reflection::description::ITypeManager::GetRootType@::vl::reflection::description::ITypeDescriptor *()[decl0]"><div><div class="token cpp_function">GetRootType</div></div></div>()=<div class="token cpp_number ">0</div>;
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get the type manager.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the type manager.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeManager'], [], [])"><div class="token cpp_type">ITypeManager</div></div>*				<div class="def" id="FB$vl::reflection::description::GetGlobalTypeManager@::vl::reflection::description::ITypeManager *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::GetGlobalTypeManager@::vl::reflection::description::ITypeManager *()'], [], [])"><div class="token cpp_function">GetGlobalTypeManager</div></div></div>();
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Unload all types and free the type manager.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remakrs&gt;</div>
+			<div class="token cpp_comment ">/// After calling this function, you can no longer register new types,</div>
+			<div class="token cpp_comment ">/// and calling &lt;see cref=&quot;GetGlobalTypeManager&quot;/&gt; will always get null.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
+
 			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::DestroyGlobalTypeManager@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::DestroyGlobalTypeManager@bool()'], [], [])"><div class="token cpp_function">DestroyGlobalTypeManager</div></div></div>();
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Unload all types and reset the type manager.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remakrs&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// This function is similar to &lt;see cref=&quot;DestroyGlobalTypeManager&quot;/&gt;,</div>
+			<div class="token cpp_comment ">/// but calling this function allows types to be registsred again.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// This function is very useful for unit testing.</div>
+			<div class="token cpp_comment ">/// In each test case, you can first register all types,</div>
+			<div class="token cpp_comment ">/// and after the test case is finished, call this function to reset all types.</div>
+			<div class="token cpp_comment ">/// You can do this again and again in the other test cases,</div>
+			<div class="token cpp_comment ">/// so that these test cases don&apos;t affect each other.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::ResetGlobalTypeManager@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ResetGlobalTypeManager@bool()'], [], [])"><div class="token cpp_function">ResetGlobalTypeManager</div></div></div>();
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Get a registered type given the registered name.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;Returns the metadata class for this registered type.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;</div>
+			<div class="token cpp_comment ">/// The registered name.</div>
+			<div class="token cpp_comment ">/// Note that this is not the full name of the C++ type,</div>
+			<div class="token cpp_comment ">/// it is the name what is used to registere this type.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// Returning null means the type registration is declared but the type manager has not started.</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>*				<div class="def" id="FB$vl::reflection::description::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::WString const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::WString const &)'], [], [])"><div class="token cpp_function">GetTypeDescriptor</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::reflection::description::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::WString const &)[decl0]::name"><div>name</div></div>);
 			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::IsInterfaceType@bool(::vl::reflection::description::ITypeDescriptor *, bool &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IsInterfaceType@bool(::vl::reflection::description::ITypeDescriptor *, bool &)'], [], [])"><div class="token cpp_function">IsInterfaceType</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeDescriptor'], [], [])"><div class="token cpp_type">ITypeDescriptor</div></div>* <div class="def" id="NI$vl::reflection::description::IsInterfaceType@bool(::vl::reflection::description::ITypeDescriptor *, bool &)[decl0]::typeDescriptor"><div>typeDescriptor</div></div>, <div class="token cpp_keyword ">bool</div>&amp; <div class="def" id="NI$vl::reflection::description::IsInterfaceType@bool(::vl::reflection::description::ITypeDescriptor *, bool &)[decl0]::acceptProxy"><div>acceptProxy</div></div>);
 			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::reflection::description::LogTypeManager@void(::vl::stream::TextWriter &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::LogTypeManager@void(::vl::stream::TextWriter &)'], [], [])"><div class="token cpp_function">LogTypeManager</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::stream'], [], [])">stream</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::stream::TextWriter'], [], [])"><div class="token cpp_type">TextWriter</div></div>&amp; <div class="def" id="NI$vl::reflection::description::LogTypeManager@void(::vl::stream::TextWriter &)[decl0]::writer"><div>writer</div></div>);

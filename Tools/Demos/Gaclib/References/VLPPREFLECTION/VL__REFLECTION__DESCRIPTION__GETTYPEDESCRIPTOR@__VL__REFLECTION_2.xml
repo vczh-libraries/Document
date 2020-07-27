@@ -1,0 +1,10 @@
+<Document symbolId="vl::reflection::description::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()" accessor="" category="Function" name="GetTypeDescriptor" declFile="GuiTypeDescriptorBuilder.h" declId="FB$vl::reflection::description::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *()[impl0]"><summary>Get a registered type given a C++ type.</summary><returns>Returns the metadata class for this registered type.</returns><typeparam name="T">The C++ type to get the registered type.</typeparam><remarks>
+ Returning null means the type registration is declared but the type manager has not started.
+ Failing to compile means that the type registration is not declared.
+ See <symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/> about how to register a type.
+ </remarks><signature><![CDATA[template <
+    typename T
+>
+ITypeDescriptor * GetTypeDescriptor(
+);
+]]></signature><seealsos><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"/></seealsos></Document>
