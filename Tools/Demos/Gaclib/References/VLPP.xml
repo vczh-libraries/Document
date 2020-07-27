@@ -364,7 +364,7 @@ TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" file="VL__FUNC@_[R]([TAR
   </namespace>
   <namespace name="::vl::function_lambda">
     <document name="function ConvertToFunction" docId="vl::function_lambda::ConvertToFunction@::vl::function_lambda::FunctionObjectRetriveType::Type([T])" file="VL__FUNCTION_LAMBDA__CONVERTTOFUNCTION@__VL__FUNCTION_LAMBDA__FU"/>
-    <document name="function Lambda" docId="vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@&lt;[R]([TArgs]...) ([TObject] ::) *&gt;::Type([T])" file="VL__FUNCTION_LAMBDA__LAMBDA@__VL__FUNCTION_LAMBDA__LAMBDARETRIVE"/>
+    <document name="function Lambda" docId="vl::function_lambda::Lambda@::vl::function_lambda::LambdaRetriveType@&lt;[R]([TArgs]...) ([TObject] ::) *&gt;2::Type([T])" file="VL__FUNCTION_LAMBDA__LAMBDA@__VL__FUNCTION_LAMBDA__LAMBDARETRIVE"/>
   </namespace>
   <namespace name="::vl::unittest">
     <document name="class UnitTest" docId="vl::unittest::UnitTest" file="VL__UNITTEST__UNITTEST">

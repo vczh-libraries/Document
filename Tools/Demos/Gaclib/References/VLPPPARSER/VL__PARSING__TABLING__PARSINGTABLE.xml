@@ -129,33 +129,14 @@
          = Grammar2
          ...
          ;
- ]></code></program>
- <p>
- It means rule "RuleName" is defined by those grammars,
- and matching this rule will create an instance of "RuleType" or one of its sub classes.
- </p>
- <p>
+ ]]></code></program>
+ It means rule &quot;RuleName&quot; is defined by those grammars,
+ and matching this rule will create an instance of &quot;RuleType&quot; or one of its sub classes.
+ </p><p>
  Here are all supported grammars that:
- <ul>
-     <li><b>RuleName</b>: Defines an input that matches a rule.</li>
-     <li><b>TokenName</b>: Defines an input that formed by the specified token.</li>
-     <li><b>"StringConstant"</b>: Defines an input that formed by exactly the string constant. There should be exactly one token who can only be this string constant.</li>
-     <li><b>Grammar: FieldName</b>: Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field "FieldName" of the created object.</li>
-     <li><b>!Grammar</b>: Defines an input that matches Grammar, and the rule will use the created object from this grammar. The input should still match other part of the rule, but result of other parts are ignored.</li>
-     <li><b>[Grammar]</b>: Defines an input that, if it matches Grammar, it returns the result from that grammar; otherwise, it returns null.</li>
-     <li><b>{Grammar}</b>: Defines an input that matches 0, 1 or more Grammar.</li>
-     <li><b>(Grammar)</b>: Defines an input that matches the the grammar. Brackets is only for changing operator associations.</li>
-     <li><b>Grammar1 Grammar2</b>: Defines an input that should match Grammar1 followed by Grammar2.</li>
-     <li><b>Grammar1 | Grammar2</b>: Defines an input that match either Grammar1 or Grammar2. When it matches Grammar1, Grammar2 will be ignored.</li>
-     <li><b>Grammar as Type</b>: Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type "Type".</li>
-     <li><b>Grammar with { FieldName = Value }</b>: Defines an input that matches the Grammar, assign "Value" to the field "FieldName" of the created object.</li>
- </ul>
- A grammar branch must be "GRAMMAR as TYPE with {Field1 = Value1} with {Field2 = Value2} ...".
- </p>
- <p>
- <b>Example</b>
- </p>
- <p>
+ <ul><li><b>RuleName</b>: Defines an input that matches a rule.</li><li><b>TokenName</b>: Defines an input that formed by the specified token.</li><li><b>&quot;StringConstant&quot;</b>: Defines an input that formed by exactly the string constant. There should be exactly one token who can only be this string constant.</li><li><b>Grammar: FieldName</b>: Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field &quot;FieldName&quot; of the created object.</li><li><b>!Grammar</b>: Defines an input that matches Grammar, and the rule will use the created object from this grammar. The input should still match other part of the rule, but result of other parts are ignored.</li><li><b>[Grammar]</b>: Defines an input that, if it matches Grammar, it returns the result from that grammar; otherwise, it returns null.</li><li><b>{Grammar}</b>: Defines an input that matches 0, 1 or more Grammar.</li><li><b>(Grammar)</b>: Defines an input that matches the the grammar. Brackets is only for changing operator associations.</li><li><b>Grammar1 Grammar2</b>: Defines an input that should match Grammar1 followed by Grammar2.</li><li><b>Grammar1 | Grammar2</b>: Defines an input that match either Grammar1 or Grammar2. When it matches Grammar1, Grammar2 will be ignored.</li><li><b>Grammar as Type</b>: Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type &quot;Type&quot;.</li><li><b>Grammar with { FieldName = Value }</b>: Defines an input that matches the Grammar, assign &quot;Value&quot; to the field &quot;FieldName&quot; of the created object.</li></ul>
+ A grammar branch must be &quot;GRAMMAR as TYPE with {Field1 = Value1} with {Field2 = Value2} ...&quot;.
+ </p><p><b>Example</b></p><p>
  Here is an example to parse expression containing +, -, *, /, () and numbers:
  <program><code><![CDATA[
      include:"Vlpp.h"
