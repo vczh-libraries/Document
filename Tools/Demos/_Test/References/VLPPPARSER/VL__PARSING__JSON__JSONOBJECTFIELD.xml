@@ -1,0 +1,4 @@
+<Document symbolId="vl::parsing::json::JsonObjectField" accessor="" category="Class" name="JsonObjectField" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonObjectField"><summary>Object property node.</summary><signature><![CDATA[class JsonObjectField
+    : JsonNode
+    , vl::reflection::Description<JsonObjectField>;
+]]></signature><seealsos><symbol name="JsonObjectField" docId="vl::parsing::json::JsonObjectField" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonObjectField"/></seealsos><basetypes><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

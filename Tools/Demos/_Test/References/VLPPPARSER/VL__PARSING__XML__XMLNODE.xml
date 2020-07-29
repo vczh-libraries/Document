@@ -1,0 +1,4 @@
+<Document symbolId="vl::parsing::xml::XmlNode" accessor="" category="Class" name="XmlNode" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode"><summary>Base class of XML nodes.</summary><signature><![CDATA[class XmlNode
+    : vl::parsing::ParsingTreeCustomBase
+    , vl::reflection::Description<XmlNode>;
+]]></signature><seealsos><symbol name="XmlNode" docId="vl::parsing::xml::XmlNode" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode"/></seealsos><basetypes><symbol name="ParsingTreeCustomBase" docId="vl::parsing::ParsingTreeCustomBase" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeCustomBase"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

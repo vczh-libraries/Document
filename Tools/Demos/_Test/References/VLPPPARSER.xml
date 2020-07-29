@@ -51,6 +51,47 @@
       <document name="function GetValue" docId="vl::parsing::ParsingTreeToken::GetValue@::vl::WString const &amp;()" file="VL__PARSING__PARSINGTREETOKEN__GETVALUE@__VL__WSTRING_CONST_&amp;()"/>
     </document>
   </namespace>
+  <namespace name="::vl::parsing::json">
+    <document name="class JsonArray" docId="vl::parsing::json::JsonArray" file="VL__PARSING__JSON__JSONARRAY">
+      <document name="variable items" docId="vl::parsing::json::JsonArray::items" file="VL__PARSING__JSON__JSONARRAY__ITEMS"/>
+    </document>
+    <document name="function JsonConvertParsingTreeNode" docId="vl::parsing::json::JsonConvertParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeCustomBase&gt;(::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;, ::vl::collections::List&lt;::vl::regex::RegexToken&gt; const &amp;)" file="VL__PARSING__JSON__JSONCONVERTPARSINGTREENODE@__VL__PTR___VL__PA"/>
+    <document name="function JsonGetParserTextBuffer" docId="vl::parsing::json::JsonGetParserTextBuffer@::vl::WString()" file="VL__PARSING__JSON__JSONGETPARSERTEXTBUFFER@__VL__WSTRING()"/>
+    <document name="class JsonLiteral" docId="vl::parsing::json::JsonLiteral" file="VL__PARSING__JSON__JSONLITERAL">
+      <document name="enum class JsonValue" docId="vl::parsing::json::JsonLiteral::JsonValue" file="VL__PARSING__JSON__JSONLITERAL__JSONVALUE"/>
+      <document name="variable value" docId="vl::parsing::json::JsonLiteral::value" file="VL__PARSING__JSON__JSONLITERAL__VALUE"/>
+    </document>
+    <document name="function JsonLoadTable" docId="vl::parsing::json::JsonLoadTable@::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;()" file="VL__PARSING__JSON__JSONLOADTABLE@__VL__PTR___VL__PARSING__TABLIN"/>
+    <document name="class JsonNode" docId="vl::parsing::json::JsonNode" file="VL__PARSING__JSON__JSONNODE">
+      <document name="function Accept" docId="vl::parsing::json::JsonNode::Accept@void(::vl::parsing::json::JsonNode::IVisitor *)" file="VL__PARSING__JSON__JSONNODE__ACCEPT@VOID(__VL__PARSING__JSON__JS"/>
+      <document name="class IVisitor" docId="vl::parsing::json::JsonNode::IVisitor" file="VL__PARSING__JSON__JSONNODE__IVISITOR">
+        <document name="function Visit" docId="vl::parsing::json::JsonNode::IVisitor::Visit@void(::vl::parsing::json::JsonLiteral *)" file="VL__PARSING__JSON__JSONNODE__IVISITOR__VISIT@VOID(__VL__PARSING_"/>
+        <document name="function Visit" docId="vl::parsing::json::JsonNode::IVisitor::Visit@void(::vl::parsing::json::JsonString *)" file="VL__PARSING__JSON__JSONNODE__IVISITOR__VISIT@VOID(__VL__PARSING_2"/>
+        <document name="function Visit" docId="vl::parsing::json::JsonNode::IVisitor::Visit@void(::vl::parsing::json::JsonNumber *)" file="VL__PARSING__JSON__JSONNODE__IVISITOR__VISIT@VOID(__VL__PARSING_3"/>
+        <document name="function Visit" docId="vl::parsing::json::JsonNode::IVisitor::Visit@void(::vl::parsing::json::JsonArray *)" file="VL__PARSING__JSON__JSONNODE__IVISITOR__VISIT@VOID(__VL__PARSING_4"/>
+        <document name="function Visit" docId="vl::parsing::json::JsonNode::IVisitor::Visit@void(::vl::parsing::json::JsonObjectField *)" file="VL__PARSING__JSON__JSONNODE__IVISITOR__VISIT@VOID(__VL__PARSING_5"/>
+        <document name="function Visit" docId="vl::parsing::json::JsonNode::IVisitor::Visit@void(::vl::parsing::json::JsonObject *)" file="VL__PARSING__JSON__JSONNODE__IVISITOR__VISIT@VOID(__VL__PARSING_6"/>
+      </document>
+    </document>
+    <document name="class JsonNumber" docId="vl::parsing::json::JsonNumber" file="VL__PARSING__JSON__JSONNUMBER">
+      <document name="variable content" docId="vl::parsing::json::JsonNumber::content" file="VL__PARSING__JSON__JSONNUMBER__CONTENT"/>
+    </document>
+    <document name="class JsonObject" docId="vl::parsing::json::JsonObject" file="VL__PARSING__JSON__JSONOBJECT">
+      <document name="variable fields" docId="vl::parsing::json::JsonObject::fields" file="VL__PARSING__JSON__JSONOBJECT__FIELDS"/>
+    </document>
+    <document name="class JsonObjectField" docId="vl::parsing::json::JsonObjectField" file="VL__PARSING__JSON__JSONOBJECTFIELD">
+      <document name="variable name" docId="vl::parsing::json::JsonObjectField::name" file="VL__PARSING__JSON__JSONOBJECTFIELD__NAME"/>
+      <document name="variable value" docId="vl::parsing::json::JsonObjectField::value" file="VL__PARSING__JSON__JSONOBJECTFIELD__VALUE"/>
+    </document>
+    <document name="function JsonParse" docId="vl::parsing::json::JsonParse@::vl::Ptr&lt;::vl::parsing::json::JsonNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__JSON__JSONPARSE@__VL__PTR___VL__PARSING__JSON__JSON"/>
+    <document name="function JsonParse" docId="vl::parsing::json::JsonParse@::vl::Ptr&lt;::vl::parsing::json::JsonNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__JSON__JSONPARSE@__VL__PTR___VL__PARSING__JSON__JSON2"/>
+    <document name="function JsonParseAsParsingTreeNode" docId="vl::parsing::json::JsonParseAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__JSON__JSONPARSEASPARSINGTREENODE@__VL__PTR___VL__PA"/>
+    <document name="function JsonParseAsParsingTreeNode" docId="vl::parsing::json::JsonParseAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__JSON__JSONPARSEASPARSINGTREENODE@__VL__PTR___VL__PA2"/>
+    <document name="enum class JsonParserTokenIndex" docId="vl::parsing::json::JsonParserTokenIndex" file="VL__PARSING__JSON__JSONPARSERTOKENINDEX"/>
+    <document name="class JsonString" docId="vl::parsing::json::JsonString" file="VL__PARSING__JSON__JSONSTRING">
+      <document name="variable content" docId="vl::parsing::json::JsonString::content" file="VL__PARSING__JSON__JSONSTRING__CONTENT"/>
+    </document>
+  </namespace>
   <namespace name="::vl::parsing::tabling">
     <document name="function CreateAutoRecoverParser" docId="vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;)" file="VL__PARSING__TABLING__CREATEAUTORECOVERPARSER@__VL__PTR___VL__PA"/>
     <document name="function CreateBootstrapAutoRecoverParser" docId="vl::parsing::tabling::CreateBootstrapAutoRecoverParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;()" file="VL__PARSING__TABLING__CREATEBOOTSTRAPAUTORECOVERPARSER@__VL__PTR"/>
@@ -78,5 +119,62 @@
       <document name="function Initialize" docId="vl::parsing::tabling::ParsingTable::Initialize@void()" file="VL__PARSING__TABLING__PARSINGTABLE__INITIALIZE@VOID()"/>
       <document name="function Serialize" docId="vl::parsing::tabling::ParsingTable::Serialize@void(::vl::stream::IStream &amp;)" file="VL__PARSING__TABLING__PARSINGTABLE__SERIALIZE@VOID(__VL__STREAM_"/>
     </document>
+  </namespace>
+  <namespace name="::vl::parsing::xml">
+    <document name="class XmlAttribute" docId="vl::parsing::xml::XmlAttribute" file="VL__PARSING__XML__XMLATTRIBUTE">
+      <document name="variable name" docId="vl::parsing::xml::XmlAttribute::name" file="VL__PARSING__XML__XMLATTRIBUTE__NAME"/>
+      <document name="variable value" docId="vl::parsing::xml::XmlAttribute::value" file="VL__PARSING__XML__XMLATTRIBUTE__VALUE"/>
+    </document>
+    <document name="class XmlCData" docId="vl::parsing::xml::XmlCData" file="VL__PARSING__XML__XMLCDATA">
+      <document name="variable content" docId="vl::parsing::xml::XmlCData::content" file="VL__PARSING__XML__XMLCDATA__CONTENT"/>
+    </document>
+    <document name="class XmlComment" docId="vl::parsing::xml::XmlComment" file="VL__PARSING__XML__XMLCOMMENT">
+      <document name="variable content" docId="vl::parsing::xml::XmlComment::content" file="VL__PARSING__XML__XMLCOMMENT__CONTENT"/>
+    </document>
+    <document name="function XmlConvertParsingTreeNode" docId="vl::parsing::xml::XmlConvertParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeCustomBase&gt;(::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;, ::vl::collections::List&lt;::vl::regex::RegexToken&gt; const &amp;)" file="VL__PARSING__XML__XMLCONVERTPARSINGTREENODE@__VL__PTR___VL__PARS"/>
+    <document name="class XmlDocument" docId="vl::parsing::xml::XmlDocument" file="VL__PARSING__XML__XMLDOCUMENT">
+      <document name="variable prologs" docId="vl::parsing::xml::XmlDocument::prologs" file="VL__PARSING__XML__XMLDOCUMENT__PROLOGS"/>
+      <document name="variable rootElement" docId="vl::parsing::xml::XmlDocument::rootElement" file="VL__PARSING__XML__XMLDOCUMENT__ROOTELEMENT"/>
+    </document>
+    <document name="class XmlElement" docId="vl::parsing::xml::XmlElement" file="VL__PARSING__XML__XMLELEMENT">
+      <document name="variable attributes" docId="vl::parsing::xml::XmlElement::attributes" file="VL__PARSING__XML__XMLELEMENT__ATTRIBUTES"/>
+      <document name="variable closingName" docId="vl::parsing::xml::XmlElement::closingName" file="VL__PARSING__XML__XMLELEMENT__CLOSINGNAME"/>
+      <document name="variable name" docId="vl::parsing::xml::XmlElement::name" file="VL__PARSING__XML__XMLELEMENT__NAME"/>
+      <document name="variable subNodes" docId="vl::parsing::xml::XmlElement::subNodes" file="VL__PARSING__XML__XMLELEMENT__SUBNODES"/>
+    </document>
+    <document name="function XmlGetParserTextBuffer" docId="vl::parsing::xml::XmlGetParserTextBuffer@::vl::WString()" file="VL__PARSING__XML__XMLGETPARSERTEXTBUFFER@__VL__WSTRING()"/>
+    <document name="class XmlInstruction" docId="vl::parsing::xml::XmlInstruction" file="VL__PARSING__XML__XMLINSTRUCTION">
+      <document name="variable attributes" docId="vl::parsing::xml::XmlInstruction::attributes" file="VL__PARSING__XML__XMLINSTRUCTION__ATTRIBUTES"/>
+      <document name="variable name" docId="vl::parsing::xml::XmlInstruction::name" file="VL__PARSING__XML__XMLINSTRUCTION__NAME"/>
+    </document>
+    <document name="function XmlLoadTable" docId="vl::parsing::xml::XmlLoadTable@::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;()" file="VL__PARSING__XML__XMLLOADTABLE@__VL__PTR___VL__PARSING__TABLING_"/>
+    <document name="class XmlNode" docId="vl::parsing::xml::XmlNode" file="VL__PARSING__XML__XMLNODE">
+      <document name="function Accept" docId="vl::parsing::xml::XmlNode::Accept@void(::vl::parsing::xml::XmlNode::IVisitor *)" file="VL__PARSING__XML__XMLNODE__ACCEPT@VOID(__VL__PARSING__XML__XMLNO"/>
+      <document name="class IVisitor" docId="vl::parsing::xml::XmlNode::IVisitor" file="VL__PARSING__XML__XMLNODE__IVISITOR">
+        <document name="function Visit" docId="vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlText *)" file="VL__PARSING__XML__XMLNODE__IVISITOR__VISIT@VOID(__VL__PARSING__X"/>
+        <document name="function Visit" docId="vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlCData *)" file="VL__PARSING__XML__XMLNODE__IVISITOR__VISIT@VOID(__VL__PARSING__X2"/>
+        <document name="function Visit" docId="vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlAttribute *)" file="VL__PARSING__XML__XMLNODE__IVISITOR__VISIT@VOID(__VL__PARSING__X3"/>
+        <document name="function Visit" docId="vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlComment *)" file="VL__PARSING__XML__XMLNODE__IVISITOR__VISIT@VOID(__VL__PARSING__X4"/>
+        <document name="function Visit" docId="vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlElement *)" file="VL__PARSING__XML__XMLNODE__IVISITOR__VISIT@VOID(__VL__PARSING__X5"/>
+        <document name="function Visit" docId="vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlInstruction *)" file="VL__PARSING__XML__XMLNODE__IVISITOR__VISIT@VOID(__VL__PARSING__X6"/>
+        <document name="function Visit" docId="vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlDocument *)" file="VL__PARSING__XML__XMLNODE__IVISITOR__VISIT@VOID(__VL__PARSING__X7"/>
+      </document>
+    </document>
+    <document name="function XmlParseDocument" docId="vl::parsing::xml::XmlParseDocument@::vl::Ptr&lt;::vl::parsing::xml::XmlDocument&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEDOCUMENT@__VL__PTR___VL__PARSING__XML_"/>
+    <document name="function XmlParseDocument" docId="vl::parsing::xml::XmlParseDocument@::vl::Ptr&lt;::vl::parsing::xml::XmlDocument&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEDOCUMENT@__VL__PTR___VL__PARSING__XML_2"/>
+    <document name="function XmlParseDocumentAsParsingTreeNode" docId="vl::parsing::xml::XmlParseDocumentAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEDOCUMENTASPARSINGTREENODE@__VL__PTR___"/>
+    <document name="function XmlParseDocumentAsParsingTreeNode" docId="vl::parsing::xml::XmlParseDocumentAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEDOCUMENTASPARSINGTREENODE@__VL__PTR___2"/>
+    <document name="function XmlParseElement" docId="vl::parsing::xml::XmlParseElement@::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEELEMENT@__VL__PTR___VL__PARSING__XML__"/>
+    <document name="function XmlParseElement" docId="vl::parsing::xml::XmlParseElement@::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEELEMENT@__VL__PTR___VL__PARSING__XML__2"/>
+    <document name="function XmlParseElementAsParsingTreeNode" docId="vl::parsing::xml::XmlParseElementAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEELEMENTASPARSINGTREENODE@__VL__PTR___V"/>
+    <document name="function XmlParseElementAsParsingTreeNode" docId="vl::parsing::xml::XmlParseElementAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEELEMENTASPARSINGTREENODE@__VL__PTR___V2"/>
+    <document name="enum class XmlParserTokenIndex" docId="vl::parsing::xml::XmlParserTokenIndex" file="VL__PARSING__XML__XMLPARSERTOKENINDEX"/>
+    <document name="class XmlText" docId="vl::parsing::xml::XmlText" file="VL__PARSING__XML__XMLTEXT">
+      <document name="variable content" docId="vl::parsing::xml::XmlText::content" file="VL__PARSING__XML__XMLTEXT__CONTENT"/>
+    </document>
+  </namespace>
+  <namespace name="::vl::reflection::description">
+    <document name="function JsonLoadTypes" docId="vl::reflection::description::JsonLoadTypes@bool()" file="VL__REFLECTION__DESCRIPTION__JSONLOADTYPES@BOOL()"/>
+    <document name="function XmlLoadTypes" docId="vl::reflection::description::XmlLoadTypes@bool()" file="VL__REFLECTION__DESCRIPTION__XMLLOADTYPES@BOOL()"/>
   </namespace>
 </reference>
