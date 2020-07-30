@@ -1,0 +1,2 @@
+<Document symbolId="vl::parsing::xml::XmlElement::closingName" accessor="public" category="Variable" name="closingName" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlElement::closingName"><summary>(Optional): Element name of the closing element node. The name is ignored when serializing XML to text.</summary><signature><![CDATA[vl::parsing::ParsingToken closingName;
+]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/></seealsos></Document>

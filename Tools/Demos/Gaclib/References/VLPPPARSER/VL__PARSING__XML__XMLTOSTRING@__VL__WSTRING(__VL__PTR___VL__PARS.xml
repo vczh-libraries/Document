@@ -1,0 +1,4 @@
+<Document symbolId="vl::parsing::xml::XmlToString@::vl::WString(::vl::Ptr&lt;::vl::parsing::xml::XmlNode&gt;)" accessor="" category="Function" name="XmlToString" declFile="ParsingXml.h" declId="FB$vl::parsing::xml::XmlToString@::vl::WString(::vl::Ptr&lt;::vl::parsing::xml::XmlNode&gt;)[decl0]"><summary>Serialize XML to string.</summary><returns>The serialized string.</returns><param name="node">The XML node to serialize.</param><signature><![CDATA[WString XmlToString(
+    Ptr<XmlNode> node
+);
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="XmlNode" docId="vl::parsing::xml::XmlNode" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode"/></seealsos></Document>

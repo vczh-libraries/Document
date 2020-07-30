@@ -1,0 +1,4 @@
+<Document symbolId="vl::parsing::json::JsonNode::IVisitor::Visit@void(::vl::parsing::json::JsonObjectField *)" accessor="public" category="Function" name="Visit" declFile="ParsingJson_Ast.h" declId="FB$vl::parsing::json::JsonNode::IVisitor::Visit@void(::vl::parsing::json::JsonObjectField *)[decl0]"><summary>A callback that is called if the node accepting this visitor is <symbol name="JsonObjectField" docId="vl::parsing::json::JsonObjectField" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonObjectField"/>.</summary><param name="node">The strong-typed AST node in its real type.</param><signature><![CDATA[void Visit(
+    JsonObjectField * node
+);
+]]></signature><seealsos><symbol name="JsonObjectField" docId="vl::parsing::json::JsonObjectField" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonObjectField"/></seealsos></Document>

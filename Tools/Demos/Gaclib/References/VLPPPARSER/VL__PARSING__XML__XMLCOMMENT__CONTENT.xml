@@ -1,0 +1,2 @@
+<Document symbolId="vl::parsing::xml::XmlComment::content" accessor="public" category="Variable" name="content" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlComment::content"><summary>Content of the comment node.</summary><signature><![CDATA[vl::parsing::ParsingToken content;
+]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/></seealsos></Document>
