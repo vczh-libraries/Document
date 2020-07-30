@@ -88,9 +88,11 @@
     <document name="function JsonParseAsParsingTreeNode" docId="vl::parsing::json::JsonParseAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__JSON__JSONPARSEASPARSINGTREENODE@__VL__PTR___VL__PA"/>
     <document name="function JsonParseAsParsingTreeNode" docId="vl::parsing::json::JsonParseAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__JSON__JSONPARSEASPARSINGTREENODE@__VL__PTR___VL__PA2"/>
     <document name="enum class JsonParserTokenIndex" docId="vl::parsing::json::JsonParserTokenIndex" file="VL__PARSING__JSON__JSONPARSERTOKENINDEX"/>
+    <document name="function JsonPrint" docId="vl::parsing::json::JsonPrint@void(::vl::Ptr&lt;::vl::parsing::json::JsonNode&gt;, ::vl::stream::TextWriter &amp;)" file="VL__PARSING__JSON__JSONPRINT@VOID(__VL__PTR___VL__PARSING__JSON_"/>
     <document name="class JsonString" docId="vl::parsing::json::JsonString" file="VL__PARSING__JSON__JSONSTRING">
       <document name="variable content" docId="vl::parsing::json::JsonString::content" file="VL__PARSING__JSON__JSONSTRING__CONTENT"/>
     </document>
+    <document name="function JsonToString" docId="vl::parsing::json::JsonToString@::vl::WString(::vl::Ptr&lt;::vl::parsing::json::JsonNode&gt;)" file="VL__PARSING__JSON__JSONTOSTRING@__VL__WSTRING(__VL__PTR___VL__PA"/>
   </namespace>
   <namespace name="::vl::parsing::tabling">
     <document name="function CreateAutoRecoverParser" docId="vl::parsing::tabling::CreateAutoRecoverParser@::vl::Ptr&lt;::vl::parsing::tabling::ParsingGeneralParser&gt;(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;)" file="VL__PARSING__TABLING__CREATEAUTORECOVERPARSER@__VL__PTR___VL__PA"/>
@@ -142,7 +144,12 @@
       <document name="variable name" docId="vl::parsing::xml::XmlElement::name" file="VL__PARSING__XML__XMLELEMENT__NAME"/>
       <document name="variable subNodes" docId="vl::parsing::xml::XmlElement::subNodes" file="VL__PARSING__XML__XMLELEMENT__SUBNODES"/>
     </document>
+    <document name="function XmlGetAttribute" docId="vl::parsing::xml::XmlGetAttribute@::vl::Ptr&lt;::vl::parsing::xml::XmlAttribute&gt;(::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;, ::vl::WString const &amp;)" file="VL__PARSING__XML__XMLGETATTRIBUTE@__VL__PTR___VL__PARSING__XML__"/>
+    <document name="function XmlGetElement" docId="vl::parsing::xml::XmlGetElement@::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;(::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;, ::vl::WString const &amp;)" file="VL__PARSING__XML__XMLGETELEMENT@__VL__PTR___VL__PARSING__XML__XM"/>
+    <document name="function XmlGetElements" docId="vl::parsing::xml::XmlGetElements@::vl::collections::LazyList&lt;::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;&gt;(::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;)" file="VL__PARSING__XML__XMLGETELEMENTS@__VL__COLLECTIONS__LAZYLIST___V"/>
+    <document name="function XmlGetElements" docId="vl::parsing::xml::XmlGetElements@::vl::collections::LazyList&lt;::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;&gt;(::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;, ::vl::WString const &amp;)" file="VL__PARSING__XML__XMLGETELEMENTS@__VL__COLLECTIONS__LAZYLIST___V2"/>
     <document name="function XmlGetParserTextBuffer" docId="vl::parsing::xml::XmlGetParserTextBuffer@::vl::WString()" file="VL__PARSING__XML__XMLGETPARSERTEXTBUFFER@__VL__WSTRING()"/>
+    <document name="function XmlGetValue" docId="vl::parsing::xml::XmlGetValue@::vl::WString(::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;)" file="VL__PARSING__XML__XMLGETVALUE@__VL__WSTRING(__VL__PTR___VL__PARS"/>
     <document name="class XmlInstruction" docId="vl::parsing::xml::XmlInstruction" file="VL__PARSING__XML__XMLINSTRUCTION">
       <document name="variable attributes" docId="vl::parsing::xml::XmlInstruction::attributes" file="VL__PARSING__XML__XMLINSTRUCTION__ATTRIBUTES"/>
       <document name="variable name" docId="vl::parsing::xml::XmlInstruction::name" file="VL__PARSING__XML__XMLINSTRUCTION__NAME"/>
@@ -169,9 +176,12 @@
     <document name="function XmlParseElementAsParsingTreeNode" docId="vl::parsing::xml::XmlParseElementAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEELEMENTASPARSINGTREENODE@__VL__PTR___V"/>
     <document name="function XmlParseElementAsParsingTreeNode" docId="vl::parsing::xml::XmlParseElementAsParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::vint)" file="VL__PARSING__XML__XMLPARSEELEMENTASPARSINGTREENODE@__VL__PTR___V2"/>
     <document name="enum class XmlParserTokenIndex" docId="vl::parsing::xml::XmlParserTokenIndex" file="VL__PARSING__XML__XMLPARSERTOKENINDEX"/>
+    <document name="function XmlPrint" docId="vl::parsing::xml::XmlPrint@void(::vl::Ptr&lt;::vl::parsing::xml::XmlNode&gt;, ::vl::stream::TextWriter &amp;)" file="VL__PARSING__XML__XMLPRINT@VOID(__VL__PTR___VL__PARSING__XML__XM"/>
+    <document name="function XmlPrintContent" docId="vl::parsing::xml::XmlPrintContent@void(::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;, ::vl::stream::TextWriter &amp;)" file="VL__PARSING__XML__XMLPRINTCONTENT@VOID(__VL__PTR___VL__PARSING__"/>
     <document name="class XmlText" docId="vl::parsing::xml::XmlText" file="VL__PARSING__XML__XMLTEXT">
       <document name="variable content" docId="vl::parsing::xml::XmlText::content" file="VL__PARSING__XML__XMLTEXT__CONTENT"/>
     </document>
+    <document name="function XmlToString" docId="vl::parsing::xml::XmlToString@::vl::WString(::vl::Ptr&lt;::vl::parsing::xml::XmlNode&gt;)" file="VL__PARSING__XML__XMLTOSTRING@__VL__WSTRING(__VL__PTR___VL__PARS"/>
   </namespace>
   <namespace name="::vl::reflection::description">
     <document name="function JsonLoadTypes" docId="vl::reflection::description::JsonLoadTypes@bool()" file="VL__REFLECTION__DESCRIPTION__JSONLOADTYPES@BOOL()"/>
