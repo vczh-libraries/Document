@@ -82,6 +82,14 @@ IsExpressionDependOnExpectedType(Expression)
 					}
 				}
 
+				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfBinaryExpression *)[impl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfBinaryExpression'], [], [])"><div class="token cpp_type">WfBinaryExpression</div></div>* <div class="def" id="NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfBinaryExpression *)[impl0]::node"><div><div class="token cpp_argument">node</div></div></div>)<div class="token cpp_keyword ">override</div>
+				{
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfBinaryExpression *)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfBinaryExpression::op'], [], [])"><div class="token cpp_field">op</div></div> == <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfBinaryOperator'], [], [])"><div class="token cpp_type">WfBinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfBinaryOperator::FlagOr'], [], [])"><div class="token cpp_enum">FlagOr</div></div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::result'], [], [])"><div class="token cpp_field">result</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)'], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)'], [], [])"><div class="token cpp_function">Execute</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfBinaryExpression *)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfBinaryExpression::first'], [], [])"><div class="token cpp_field">first</div></div>) &amp;&amp; <div class="ref" onclick="jumpToSymbol(['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)'], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)'], [], [])"><div class="token cpp_function">Execute</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfBinaryExpression *)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfBinaryExpression::second'], [], [])"><div class="token cpp_field">second</div></div>);
+					}
+				}
+
 				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfIfExpression *)[impl0]"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfIfExpression'], [], [])"><div class="token cpp_type">WfIfExpression</div></div>* <div class="def" id="NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfIfExpression *)[impl0]::node"><div><div class="token cpp_argument">node</div></div></div>)<div class="token cpp_keyword ">override</div>
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::result'], [], [])"><div class="token cpp_field">result</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)'], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)'], [], [])"><div class="token cpp_function">Execute</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfIfExpression *)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfIfExpression::trueBranch'], [], [])"><div class="token cpp_field">trueBranch</div></div>) &amp;&amp; <div class="ref" onclick="jumpToSymbol(['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)'], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)'], [], [])"><div class="token cpp_function">Execute</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfIfExpression *)[impl0]::node'], [], [])"><div class="token cpp_argument">node</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfIfExpression::falseBranch'], [], [])"><div class="token cpp_field">falseBranch</div></div>);
@@ -989,6 +997,50 @@ referencedSymbols = {
             'NF[79]$vl::workflow'
         ]
     },
+    'vl::workflow::WfBinaryExpression': {
+        'displayNameInHtml': '<span class="cpp_type">WfBinaryExpression</span>',
+        'impls': [
+            'NI$vl::workflow::WfBinaryExpression'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfBinaryExpression'
+        ]
+    },
+    'vl::workflow::WfBinaryExpression::first': {
+        'displayNameInHtml': '<span class="cpp_type">WfBinaryExpression</span>::<span class="cpp_field">first</span>',
+        'impls': [
+            'NI$vl::workflow::WfBinaryExpression::first'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfBinaryExpression::op': {
+        'displayNameInHtml': '<span class="cpp_type">WfBinaryExpression</span>::<span class="cpp_field">op</span>',
+        'impls': [
+            'NI$vl::workflow::WfBinaryExpression::op'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfBinaryExpression::second': {
+        'displayNameInHtml': '<span class="cpp_type">WfBinaryExpression</span>::<span class="cpp_field">second</span>',
+        'impls': [
+            'NI$vl::workflow::WfBinaryExpression::second'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfBinaryOperator': {
+        'displayNameInHtml': '<span class="cpp_type">WfBinaryOperator</span>',
+        'impls': [
+            'NI$vl::workflow::WfBinaryOperator'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfBinaryOperator::FlagOr': {
+        'displayNameInHtml': '<span class="cpp_type">WfBinaryOperator</span>::<span class="cpp_enum">FlagOr</span>',
+        'impls': [
+            'NI$vl::workflow::WfBinaryOperator::FlagOr'
+        ],
+        'decls': []
+    },
     'vl::workflow::WfChildExpression': {
         'displayNameInHtml': '<span class="cpp_type">WfChildExpression</span>',
         'impls': [
@@ -1437,6 +1489,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfBinaryExpression *)[impl0]::node': {
+        'displayNameInHtml': 'node',
+        'impls': [
+            'NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfBinaryExpression *)[impl0]::node'
+        ],
+        'decls': []
+    },
     'vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfConstructorExpression *)[impl0]::__foreach_iterator__': {
         'displayNameInHtml': '__foreach_iterator__',
         'impls': [
@@ -1651,6 +1710,7 @@ symbolToFiles = {
     'NF[0]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
     'NF[0]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
     'NF[0]$vl::workflow': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[0]$vl::workflow::WfBinaryExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NF[0]$vl::workflow::WfChildExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NF[0]$vl::workflow::WfConstructorArgument': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NF[0]$vl::workflow::WfConstructorExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
@@ -2360,6 +2420,12 @@ symbolToFiles = {
     'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'NI$vl::parsing::ParsingToken::value': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
     'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::workflow::WfBinaryExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfBinaryExpression::first': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfBinaryExpression::op': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfBinaryExpression::second': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfBinaryOperator': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfBinaryOperator::FlagOr': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NI$vl::workflow::WfChildExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NI$vl::workflow::WfChildExpression::name': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NI$vl::workflow::WfConstructorArgument': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
@@ -2408,6 +2474,7 @@ symbolToFiles = {
     'NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Dispatch@void(::vl::workflow::WfVirtualCfeExpression *)[impl0]::node': null,
     'NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Dispatch@void(::vl::workflow::WfVirtualCseExpression *)[impl0]::node': null,
     'NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Execute@bool(::vl::Ptr<::vl::workflow::WfExpression>)[impl0]::expression': null,
+    'NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfBinaryExpression *)[impl0]::node': null,
     'NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfConstructorExpression *)[impl0]::__foreach_iterator__': null,
     'NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfConstructorExpression *)[impl0]::__scope_variable_flag__': null,
     'NI$vl::workflow::analyzer::IsExpressionDependOnExpectedTypeVisitor::Visit@void(::vl::workflow::WfConstructorExpression *)[impl0]::argument': null,

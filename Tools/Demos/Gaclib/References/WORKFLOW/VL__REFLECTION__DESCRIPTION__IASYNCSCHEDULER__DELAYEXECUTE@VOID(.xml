@@ -1,0 +1,9 @@
+<Document symbolId="vl::reflection::description::IAsyncScheduler::DelayExecute@void(::vl::Func&lt;void()&gt; const &amp;, ::vl::vint)" accessor="public" category="Function" name="DelayExecute" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::IAsyncScheduler::DelayExecute@void(::vl::Func&lt;void()&gt; const &amp;, ::vl::vint)[decl0]"><summary>Called when a callback needs to be executed in any thread after a specified moment of time.</summary><param name="callback">The callback to execute.</param><param name="milliseconds">The time in milliseconds to wait.</param><remarks>
+ You can decide which thread to execute.
+ For GacUI, the scheduler that attached to the UI thread will execute this callback in the UI thread.
+ </remarks><signature><![CDATA[void DelayExecute(
+    Func<void(
+)> const & callback,
+    vint milliseconds
+);
+]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -36,13 +36,18 @@ Interfaces:
 Coroutine
 ***********************************************************************/</div>
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;Status of a coroutine.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">enum</div> <div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::CoroutineStatus"><div><div class="token cpp_type">CoroutineStatus</div></div></div>
 			{
+				<div class="token cpp_comment ">/// &lt;summary&gt;The coroutine is waiting for resuming.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::reflection::description::CoroutineStatus::Waiting"><div><div class="token cpp_enum">Waiting</div></div></div>,
+				<div class="token cpp_comment ">/// &lt;summary&gt;The coroutine is being executed.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::reflection::description::CoroutineStatus::Executing"><div><div class="token cpp_enum">Executing</div></div></div>,
+				<div class="token cpp_comment ">/// &lt;summary&gt;The coroutine has stopped.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::reflection::description::CoroutineStatus::Stopped"><div><div class="token cpp_enum">Stopped</div></div></div>,
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;An object providing input information when resuming a coroutine.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::CoroutineResult"><div><div class="token cpp_type">CoroutineResult</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineResult'], [], [])"><div class="token cpp_type">CoroutineResult</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">protected</div>:
@@ -50,17 +55,38 @@ Coroutine
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div>&gt;					<div class="def" id="NI$vl::reflection::description::CoroutineResult::failure"><div><div class="token cpp_field">failure</div></div></div>;
 
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the object provided to the coroutine. This object is the return value for the pending async operation, like $Await.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The object provided to the coroutine.&lt;/returns&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>									<div class="def" id="FB$vl::reflection::description::CoroutineResult::GetResult@::vl::reflection::description::Value()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineResult::GetResult@::vl::reflection::description::Value()'], [], [])"><div class="token cpp_function">GetResult</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Set the object provided to the coroutine.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The object provided to the coroutine.&lt;/summary&gt;</div>
 				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::description::CoroutineResult::SetResult@void(::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineResult::SetResult@void(::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">SetResult</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::CoroutineResult::SetResult@void(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the error provided to the coroutine. When it is not nullptr, the return value of &lt;see cref=&quot;GetResult&quot;/&gt; is ignored.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The error provided to the coroutine.&lt;/returns&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div>&gt;					<div class="def" id="FB$vl::reflection::description::CoroutineResult::GetFailure@::vl::Ptr<::vl::reflection::description::IValueException>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineResult::GetFailure@::vl::Ptr<::vl::reflection::description::IValueException>()'], [], [])"><div class="token cpp_function">GetFailure</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Set the error provided to the coroutine.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;The error provided to the coroutine.&lt;/summary&gt;</div>
 				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::description::CoroutineResult::SetFailure@void(::vl::Ptr<::vl::reflection::description::IValueException>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineResult::SetFailure@void(::vl::Ptr<::vl::reflection::description::IValueException>)'], [], [])"><div class="token cpp_function">SetFailure</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div>&gt; <div class="def" id="NI$vl::reflection::description::CoroutineResult::SetFailure@void(::vl::Ptr<::vl::reflection::description::IValueException>)[decl0]::value"><div>value</div></div>);
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;A coroutine. This is typically created by a Workflow script.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::ICoroutine"><div><div class="token cpp_type">ICoroutine</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ICoroutine'], [], [])"><div class="token cpp_type">ICoroutine</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Resume the coroutine.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;raiseException&quot;&gt;Set to true to raise an exception that the coroutine encountered. The same exception is accessible by &lt;see cref=&quot;GetFailure&quot;/&gt;.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;output&quot;&gt;Input for the coroutine in this resuming.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::reflection::description::ICoroutine::Resume@void(bool, ::vl::Ptr<::vl::reflection::description::CoroutineResult>)[decl0]"><div><div class="token cpp_function">Resume</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::reflection::description::ICoroutine::Resume@void(bool, ::vl::Ptr<::vl::reflection::description::CoroutineResult>)[decl0]::raiseException"><div>raiseException</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineResult'], [], [])"><div class="token cpp_type">CoroutineResult</div></div>&gt; <div class="def" id="NI$vl::reflection::description::ICoroutine::Resume@void(bool, ::vl::Ptr<::vl::reflection::description::CoroutineResult>)[decl0]::output"><div>output</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Returns the current exception.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The current exception. It could cause by the Workflow script that creates this coroutine, or by calling &lt;see cref=&quot;Resume&quot;/&gt; when this coroutine is in an inappropriate state.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div>&gt;			<div class="def" id="FB$vl::reflection::description::ICoroutine::GetFailure@::vl::Ptr<::vl::reflection::description::IValueException>()[decl0]"><div><div class="token cpp_function">GetFailure</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Returns the status of the coroutine.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The status of the coroutine. &lt;see cref=&quot;Resume&quot;/&gt; can be called only when this function returns &lt;see cref=&quot;CoroutineStatus::Waiting&quot;/&gt;.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineStatus'], [], [])"><div class="token cpp_type">CoroutineStatus</div></div>					<div class="def" id="FB$vl::reflection::description::ICoroutine::GetStatus@::vl::reflection::description::CoroutineStatus()[decl0]"><div><div class="token cpp_function">GetStatus</div></div></div>() = <div class="token cpp_number ">0</div>;
 			};
 
@@ -90,13 +116,18 @@ Coroutine (Enumerable)
 Coroutine (Async)
 ***********************************************************************/</div>
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;Status of am async operation.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">enum</div> <div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::AsyncStatus"><div><div class="token cpp_type">AsyncStatus</div></div></div>
 			{
+				<div class="token cpp_comment ">/// &lt;summary&gt;The async operation is ready to execute.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::reflection::description::AsyncStatus::Ready"><div><div class="token cpp_enum">Ready</div></div></div>,
+				<div class="token cpp_comment ">/// &lt;summary&gt;The async operation is being executed.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::reflection::description::AsyncStatus::Executing"><div><div class="token cpp_enum">Executing</div></div></div>,
+				<div class="token cpp_comment ">/// &lt;summary&gt;The async operation has stopped.&lt;/summary&gt;</div>
 				<div class="def" id="NI$vl::reflection::description::AsyncStatus::Stopped"><div><div class="token cpp_enum">Stopped</div></div></div>,
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;A context providing communication between the caller and the async operation.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::AsyncContext"><div><div class="token cpp_type">AsyncContext</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext'], [], [])"><div class="token cpp_type">AsyncContext</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">protected</div>:
@@ -105,51 +136,128 @@ Coroutine (Async)
 				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>									<div class="def" id="NI$vl::reflection::description::AsyncContext::context"><div><div class="token cpp_field">context</div></div></div>;
 
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a context.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_context&quot;&gt;(optional) Set the initial return value for &lt;see cref=&quot;GetContext&quot;/&gt;. The default value is null.&lt;/param&gt;</div>
 				<div class="def" id="FB$vl::reflection::description::AsyncContext::$__ctor@(::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext::$__ctor@(::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">AsyncContext</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::AsyncContext::$__ctor@(::vl::reflection::description::Value const &)[decl0]::_context"><div>_context</div></div> = {});
 				<div class="def" id="FB$vl::reflection::description::AsyncContext::~AsyncContext@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext::~AsyncContext@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">AsyncContext</div></div></div>();
 
+				<div class="token cpp_comment ">/// &lt;summary&gt;Test if the current async operation is expected to cancel.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the current async operation is expected to cancel.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// This function is accessible by &quot;$.IsCancelled&quot; in an $Async coroutine.</div>
+				<div class="token cpp_comment ">/// A cancelable async operation should check this value when it is able to stop properly, and stop when it is true.</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::reflection::description::AsyncContext::IsCancelled@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext::IsCancelled@bool()'], [], [])"><div class="token cpp_function">IsCancelled</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Set &lt;see cref=&quot;IsCancelled&quot;/&gt; to true.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true when this operation succeeded.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::reflection::description::AsyncContext::Cancel@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext::Cancel@bool()'], [], [])"><div class="token cpp_function">Cancel</div></div></div>();
 
+				<div class="token cpp_comment ">/// &lt;summary&gt;Returns a value that is accessible in Workflow script by &quot;$.Context&quot; in an $Async coroutine.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;A value that is accessible in Workflow script by &quot;$.Context&quot; in an $Async coroutine.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp;				<div class="def" id="FB$vl::reflection::description::AsyncContext::GetContext@::vl::reflection::description::Value const &()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext::GetContext@::vl::reflection::description::Value const &()'], [], [])"><div class="token cpp_function">GetContext</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Set a value that is accessible F&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;A value that is accessible in Workflow script by &quot;$.Context&quot; in an $Async coroutine.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::reflection::description::AsyncContext::SetContext@void(::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext::SetContext@void(::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">SetContext</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::AsyncContext::SetContext@void(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>);
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;An async operation.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IAsync"><div><div class="token cpp_type">IAsync</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsync'], [], [])"><div class="token cpp_type">IAsync</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the status of this async operation.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The status of this async operation.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncStatus'], [], [])"><div class="token cpp_type">AsyncStatus</div></div>						<div class="def" id="FB$vl::reflection::description::IAsync::GetStatus@::vl::reflection::description::AsyncStatus()[decl0]"><div><div class="token cpp_function">GetStatus</div></div></div>() = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Run this async operation.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true when this operation succeeded. This function cannot be called twice on the same object.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;callback&quot;&gt;A callback to execute when the async operation finished.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;context&quot;&gt;(optional) A context object that is accessible in Workflow script by &quot;$&quot; in an $Async coroutine. The default value is nullptr.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::IAsync::Execute@bool(::vl::Func<void(::vl::Ptr<::vl::reflection::description::CoroutineResult>)> const &, ::vl::Ptr<::vl::reflection::description::AsyncContext>)[decl0]"><div><div class="token cpp_function">Execute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineResult'], [], [])"><div class="token cpp_type">CoroutineResult</div></div>&gt;)&gt;&amp; <div class="def" id="NI$vl::reflection::description::IAsync::Execute@bool(::vl::Func<void(::vl::Ptr<::vl::reflection::description::CoroutineResult>)> const &, ::vl::Ptr<::vl::reflection::description::AsyncContext>)[decl0]::callback"><div>callback</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext'], [], [])"><div class="token cpp_type">AsyncContext</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IAsync::Execute@bool(::vl::Func<void(::vl::Ptr<::vl::reflection::description::CoroutineResult>)> const &, ::vl::Ptr<::vl::reflection::description::AsyncContext>)[decl0]::context"><div>context</div></div> = <div class="token cpp_keyword ">nullptr</div>) = <div class="token cpp_number ">0</div>;
 
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create an async operation that finished after a specified moment of time.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns the created async operation.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;milliseconds&quot;&gt;The time in milliseconds to wait. It counts from when this function is called, not from when this async operation is executed.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsync'], [], [])"><div class="token cpp_type">IAsync</div></div>&gt;						<div class="def" id="FB$vl::reflection::description::IAsync::Delay@::vl::Ptr<::vl::reflection::description::IAsync>(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsync::Delay@::vl::Ptr<::vl::reflection::description::IAsync>(::vl::vint)'], [], [])"><div class="token cpp_function">Delay</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::description::IAsync::Delay@::vl::Ptr<::vl::reflection::description::IAsync>(::vl::vint)[decl0]::milliseconds"><div>milliseconds</div></div>);
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;A promise object that controls a &lt;see cref=&quot;IFuture&quot;/&gt; object.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IPromise"><div><div class="token cpp_type">IPromise</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IPromise'], [], [])"><div class="token cpp_type">IPromise</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Mark the &lt;see cref=&quot;IFuture&quot;/&gt; object as finished by providing a value.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true when this operation succeeded. Multiple calls to &lt;see cref=&quot;SendResult&quot;/&gt; and &lt;see cref=&quot;SendFailure&quot;/&gt; cause a failure.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;result&quot;&gt;The result of the &lt;see cref=&quot;IFuture&quot;/&gt; object.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::IPromise::SendResult@bool(::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">SendResult</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::IPromise::SendResult@bool(::vl::reflection::description::Value const &)[decl0]::result"><div>result</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Mark the &lt;see cref=&quot;IFuture&quot;/&gt; object as finished by providing an exception.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true when this operation succeeded. Multiple calls to &lt;see cref=&quot;SendResult&quot;/&gt; and &lt;see cref=&quot;SendFailure&quot;/&gt; cause a failure.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;failure&quot;&gt;The exception of the &lt;see cref=&quot;IFuture&quot;/&gt; object.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::IPromise::SendFailure@bool(::vl::Ptr<::vl::reflection::description::IValueException>)[decl0]"><div><div class="token cpp_function">SendFailure</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IPromise::SendFailure@bool(::vl::Ptr<::vl::reflection::description::IValueException>)[decl0]::failure"><div>failure</div></div>) = <div class="token cpp_number ">0</div>;
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;An async operation in the future-promise pattern.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IFuture"><div><div class="token cpp_type">IFuture</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsync'], [], [])"><div class="token cpp_type">IAsync</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IFuture'], [], [])"><div class="token cpp_type">IFuture</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the &lt;see cref=&quot;IPromise&quot;/&gt; that controls this future object.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The &lt;see cref=&quot;IPromise&quot;/&gt; that controls this future object.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IPromise'], [], [])"><div class="token cpp_type">IPromise</div></div>&gt;					<div class="def" id="FB$vl::reflection::description::IFuture::GetPromise@::vl::Ptr<::vl::reflection::description::IPromise>()[decl0]"><div><div class="token cpp_function">GetPromise</div></div></div>() = <div class="token cpp_number ">0</div>;
 
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a future object.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The created future object.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IFuture'], [], [])"><div class="token cpp_type">IFuture</div></div>&gt;						<div class="def" id="FB$vl::reflection::description::IFuture::Create@::vl::Ptr<::vl::reflection::description::IFuture>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IFuture::Create@::vl::Ptr<::vl::reflection::description::IFuture>()'], [], [])"><div class="token cpp_function">Create</div></div></div>();
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;A scheduler that controls how async operations are executed. It needs to be implemented and attached to threads that run async operations.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;See &lt;a href=&quot;/workflow/lang/coroutine_async.html&quot;&gt;Async Coroutine&lt;/a&gt; for more information.&lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::IAsyncScheduler"><div><div class="token cpp_type">IAsyncScheduler</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler'], [], [])"><div class="token cpp_type">IAsyncScheduler</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Called when a callback needs to be executed in any thread.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;callback&quot;&gt;The callback to execute.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// You can decide which thread to execute.</div>
+				<div class="token cpp_comment ">/// For GacUI, the scheduler that attached to the UI thread will execute this callback in the UI thread.</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::reflection::description::IAsyncScheduler::Execute@void(::vl::Func<void()> const &)[decl0]"><div><div class="token cpp_function">Execute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>()&gt;&amp; <div class="def" id="NI$vl::reflection::description::IAsyncScheduler::Execute@void(::vl::Func<void()> const &)[decl0]::callback"><div>callback</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Called when a callback needs to be executed in another thread.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;callback&quot;&gt;The callback to execute.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// You can decide which thread to execute except the current one.</div>
+				<div class="token cpp_comment ">/// For GacUI, the scheduler that attached to any thread will execute this callback in a random background thread.</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::reflection::description::IAsyncScheduler::ExecuteInBackground@void(::vl::Func<void()> const &)[decl0]"><div><div class="token cpp_function">ExecuteInBackground</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>()&gt;&amp; <div class="def" id="NI$vl::reflection::description::IAsyncScheduler::ExecuteInBackground@void(::vl::Func<void()> const &)[decl0]::callback"><div>callback</div></div>) = <div class="token cpp_number ">0</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Called when a callback needs to be executed in any thread after a specified moment of time.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;callback&quot;&gt;The callback to execute.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;milliseconds&quot;&gt;The time in milliseconds to wait.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// You can decide which thread to execute.</div>
+				<div class="token cpp_comment ">/// For GacUI, the scheduler that attached to the UI thread will execute this callback in the UI thread.</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::reflection::description::IAsyncScheduler::DelayExecute@void(::vl::Func<void()> const &, ::vl::vint)[decl0]"><div><div class="token cpp_function">DelayExecute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>()&gt;&amp; <div class="def" id="NI$vl::reflection::description::IAsyncScheduler::DelayExecute@void(::vl::Func<void()> const &, ::vl::vint)[decl0]::callback"><div>callback</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::reflection::description::IAsyncScheduler::DelayExecute@void(::vl::Func<void()> const &, ::vl::vint)[decl0]::milliseconds"><div>milliseconds</div></div>) = <div class="token cpp_number ">0</div>;
 
+				<div class="token cpp_comment ">/// &lt;summary&gt;Attach a scheduler for all threads.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;scheduler&quot;&gt;The scheduler to attach.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::reflection::description::IAsyncScheduler::RegisterDefaultScheduler@void(::vl::Ptr<::vl::reflection::description::IAsyncScheduler>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler::RegisterDefaultScheduler@void(::vl::Ptr<::vl::reflection::description::IAsyncScheduler>)'], [], [])"><div class="token cpp_function">RegisterDefaultScheduler</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler'], [], [])"><div class="token cpp_type">IAsyncScheduler</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IAsyncScheduler::RegisterDefaultScheduler@void(::vl::Ptr<::vl::reflection::description::IAsyncScheduler>)[decl0]::scheduler"><div>scheduler</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Attach a scheduler for the current thread.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;scheduler&quot;&gt;The scheduler to attach.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::reflection::description::IAsyncScheduler::RegisterSchedulerForCurrentThread@void(::vl::Ptr<::vl::reflection::description::IAsyncScheduler>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler::RegisterSchedulerForCurrentThread@void(::vl::Ptr<::vl::reflection::description::IAsyncScheduler>)'], [], [])"><div class="token cpp_function">RegisterSchedulerForCurrentThread</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler'], [], [])"><div class="token cpp_type">IAsyncScheduler</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IAsyncScheduler::RegisterSchedulerForCurrentThread@void(::vl::Ptr<::vl::reflection::description::IAsyncScheduler>)[decl0]::scheduler"><div>scheduler</div></div>);
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Detach the scheduler for all threads.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The previously attached scheduler.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler'], [], [])"><div class="token cpp_type">IAsyncScheduler</div></div>&gt;				<div class="def" id="FB$vl::reflection::description::IAsyncScheduler::UnregisterDefaultScheduler@::vl::Ptr<::vl::reflection::description::IAsyncScheduler>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler::UnregisterDefaultScheduler@::vl::Ptr<::vl::reflection::description::IAsyncScheduler>()'], [], [])"><div class="token cpp_function">UnregisterDefaultScheduler</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Detach the scheduler for the current thread.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The previously attached scheduler.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler'], [], [])"><div class="token cpp_type">IAsyncScheduler</div></div>&gt;				<div class="def" id="FB$vl::reflection::description::IAsyncScheduler::UnregisterSchedulerForCurrentThread@::vl::Ptr<::vl::reflection::description::IAsyncScheduler>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler::UnregisterSchedulerForCurrentThread@::vl::Ptr<::vl::reflection::description::IAsyncScheduler>()'], [], [])"><div class="token cpp_function">UnregisterSchedulerForCurrentThread</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the attached scheduler for the current thread.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The attached scheduler. If there is no scheduler that is attached to this particular thread, the default scheduler kicks in.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler'], [], [])"><div class="token cpp_type">IAsyncScheduler</div></div>&gt;				<div class="def" id="FB$vl::reflection::description::IAsyncScheduler::GetSchedulerForCurrentThread@::vl::Ptr<::vl::reflection::description::IAsyncScheduler>()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IAsyncScheduler::GetSchedulerForCurrentThread@::vl::Ptr<::vl::reflection::description::IAsyncScheduler>()'], [], [])"><div class="token cpp_function">GetSchedulerForCurrentThread</div></div></div>();
 			};
 
@@ -201,6 +309,7 @@ Coroutine (State Machine)
 Libraries
 ***********************************************************************/</div>
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;system::Sys includes a lot of utility functions for type conversion, string operations and date time operations for a Workflow script.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::Sys"><div><div class="token cpp_type">Sys</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Sys'], [], [])"><div class="token cpp_type">Sys</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
@@ -247,6 +356,7 @@ Libraries
 				<div class="token cpp_keyword ">static</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerable'], [], [])"><div class="token cpp_type">IValueEnumerable</div></div>&gt;		<div class="def" id="FB$vl::reflection::description::Sys::ReverseEnumerable@::vl::Ptr<::vl::reflection::description::IValueEnumerable>(::vl::Ptr<::vl::reflection::description::IValueEnumerable>)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Sys::ReverseEnumerable@::vl::Ptr<::vl::reflection::description::IValueEnumerable>(::vl::Ptr<::vl::reflection::description::IValueEnumerable>)'], [], [])"><div class="token cpp_function">ReverseEnumerable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueEnumerable'], [], [])"><div class="token cpp_type">IValueEnumerable</div></div>&gt; <div class="def" id="NI$vl::reflection::description::Sys::ReverseEnumerable@::vl::Ptr<::vl::reflection::description::IValueEnumerable>(::vl::Ptr<::vl::reflection::description::IValueEnumerable>)[decl0]::value"><div>value</div></div>);
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;system::Math includes math functions for a Workflow script.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::Math"><div><div class="token cpp_type">Math</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Math'], [], [])"><div class="token cpp_type">Math</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
@@ -288,6 +398,17 @@ Libraries
 				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">double</div>		<div class="def" id="FB$vl::reflection::description::Math::Trunc@double(double)[impl0]"><div><div class="token cpp_function">Trunc</div></div></div>(<div class="token cpp_keyword ">double</div> <div class="def" id="NI$vl::reflection::description::Math::Trunc@double(double)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)				{ <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['trunc@double(double)'], ['trunc@double(double)'], [], [])"><div class="token cpp_function">trunc</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Math::Trunc@double(double)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>); }
 			};
 
+			<div class="token cpp_comment ">/// &lt;summary&gt;system::Math includes localization awared formatting operations for a Workflow script.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// There are three locales that reflect the configuration of the operating system:</div>
+			<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Invariant&lt;/b&gt;: An invariant locale for general languages.&lt;/li&gt;.</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;System&lt;/b&gt;: Locale for the operating system, including the file system.&lt;/li&gt;.</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;User&lt;/b&gt;: Locale for UI of the operating system.&lt;/li&gt;.</div>
+			<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::reflection::description::Localization"><div><div class="token cpp_type">Localization</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Localization'], [], [])"><div class="token cpp_type">Localization</div></div>&gt;
 			{
 			<div class="token cpp_keyword ">public</div>:
