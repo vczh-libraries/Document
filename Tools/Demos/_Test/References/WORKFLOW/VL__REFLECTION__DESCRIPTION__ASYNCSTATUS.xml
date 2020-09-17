@@ -1,0 +1,7 @@
+<Document symbolId="vl::reflection::description::AsyncStatus" accessor="" category="Enum" name="AsyncStatus" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::AsyncStatus"><summary>Status of am async operation.</summary><enumitem name="Executing">The async operation is being executed.</enumitem><enumitem name="Ready">The async operation is ready to execute.</enumitem><enumitem name="Stopped">The async operation has stopped.</enumitem><signature><![CDATA[enum class AsyncStatus
+{
+    Ready,
+    Executing,
+    Stopped,
+};
+]]></signature></Document>

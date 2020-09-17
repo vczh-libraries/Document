@@ -6,4 +6,4 @@
 // so even if your program has multiple cpp files,
 // you need to create one cpp file to include all of them and then generate the preprocessed file.
 
-#include "../../../../VlppParser/Release/IncludeOnly/VlppParser.h"
+#include "../../../../Workflow/Release/IncludeOnly/VlppWorkflowLibrary.h"

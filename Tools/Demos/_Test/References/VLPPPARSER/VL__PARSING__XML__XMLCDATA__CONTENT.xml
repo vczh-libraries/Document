@@ -1,2 +1,0 @@
-<Document symbolId="vl::parsing::xml::XmlCData::content" accessor="public" category="Variable" name="content" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlCData::content"><summary>Content of the cdata node</summary><signature><![CDATA[vl::parsing::ParsingToken content;
-]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/></seealsos></Document>

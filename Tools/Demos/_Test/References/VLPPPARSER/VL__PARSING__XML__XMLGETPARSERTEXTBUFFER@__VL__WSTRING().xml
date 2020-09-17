@@ -1,3 +1,0 @@
-<Document symbolId="vl::parsing::xml::XmlGetParserTextBuffer@::vl::WString()" accessor="" category="Function" name="XmlGetParserTextBuffer" declFile="ParsingXml_Parser.h" declId="FB$vl::parsing::xml::XmlGetParserTextBuffer@::vl::WString()[decl0]"><summary>Get the grammar definition for this parser.</summary><returns>The grammar definition for this parser.</returns><signature><![CDATA[vl::WString XmlGetParserTextBuffer(
-);
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

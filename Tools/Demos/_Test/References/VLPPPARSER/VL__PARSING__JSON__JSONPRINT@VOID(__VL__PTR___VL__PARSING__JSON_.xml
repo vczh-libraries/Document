@@ -1,5 +1,0 @@
-<Document symbolId="vl::parsing::json::JsonPrint@void(::vl::Ptr&lt;::vl::parsing::json::JsonNode&gt;, ::vl::stream::TextWriter &amp;)" accessor="" category="Function" name="JsonPrint" declFile="ParsingJson.h" declId="FB$vl::parsing::json::JsonPrint@void(::vl::Ptr&lt;::vl::parsing::json::JsonNode&gt;, ::vl::stream::TextWriter &amp;)[decl0]"><summary>Serialize JSON to string.</summary><param name="node">The JSON node to serialize.</param><param name="writer">The text writer to receive the string.</param><signature><![CDATA[void JsonPrint(
-    Ptr<JsonNode> node,
-    stream::TextWriter & writer
-);
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/><symbol name="TextWriter" docId="vl::stream::TextWriter" declFile="Accessor.h" declId="NI$vl::stream::TextWriter"/></seealsos></Document>

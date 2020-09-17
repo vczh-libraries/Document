@@ -1,4 +1,0 @@
-<Document symbolId="vl::parsing::json::JsonString" accessor="" category="Class" name="JsonString" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonString"><summary>String literal value node.</summary><signature><![CDATA[class JsonString
-    : JsonNode
-    , vl::reflection::Description<JsonString>;
-]]></signature><seealsos><symbol name="JsonString" docId="vl::parsing::json::JsonString" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonString"/></seealsos><basetypes><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

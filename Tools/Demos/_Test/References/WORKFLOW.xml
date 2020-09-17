@@ -1,0 +1,50 @@
+<reference>
+  <namespace name="::vl::reflection::description">
+    <document name="class AsyncContext" docId="vl::reflection::description::AsyncContext" file="VL__REFLECTION__DESCRIPTION__ASYNCCONTEXT">
+      <document name="function $__ctor" docId="vl::reflection::description::AsyncContext::$__ctor@(::vl::reflection::description::Value const &amp;)" file="VL__REFLECTION__DESCRIPTION__ASYNCCONTEXT__$__CTOR@(__VL__REFLEC"/>
+      <document name="function Cancel" docId="vl::reflection::description::AsyncContext::Cancel@bool()" file="VL__REFLECTION__DESCRIPTION__ASYNCCONTEXT__CANCEL@BOOL()"/>
+      <document name="function GetContext" docId="vl::reflection::description::AsyncContext::GetContext@::vl::reflection::description::Value const &amp;()" file="VL__REFLECTION__DESCRIPTION__ASYNCCONTEXT__GETCONTEXT@__VL__REFL"/>
+      <document name="function IsCancelled" docId="vl::reflection::description::AsyncContext::IsCancelled@bool()" file="VL__REFLECTION__DESCRIPTION__ASYNCCONTEXT__ISCANCELLED@BOOL()"/>
+      <document name="function SetContext" docId="vl::reflection::description::AsyncContext::SetContext@void(::vl::reflection::description::Value const &amp;)" file="VL__REFLECTION__DESCRIPTION__ASYNCCONTEXT__SETCONTEXT@VOID(__VL_"/>
+    </document>
+    <document name="enum class AsyncStatus" docId="vl::reflection::description::AsyncStatus" file="VL__REFLECTION__DESCRIPTION__ASYNCSTATUS"/>
+    <document name="class CoroutineResult" docId="vl::reflection::description::CoroutineResult" file="VL__REFLECTION__DESCRIPTION__COROUTINERESULT">
+      <document name="function GetFailure" docId="vl::reflection::description::CoroutineResult::GetFailure@::vl::Ptr&lt;::vl::reflection::description::IValueException&gt;()" file="VL__REFLECTION__DESCRIPTION__COROUTINERESULT__GETFAILURE@__VL__P"/>
+      <document name="function GetResult" docId="vl::reflection::description::CoroutineResult::GetResult@::vl::reflection::description::Value()" file="VL__REFLECTION__DESCRIPTION__COROUTINERESULT__GETRESULT@__VL__RE"/>
+      <document name="function SetFailure" docId="vl::reflection::description::CoroutineResult::SetFailure@void(::vl::Ptr&lt;::vl::reflection::description::IValueException&gt;)" file="VL__REFLECTION__DESCRIPTION__COROUTINERESULT__SETFAILURE@VOID(__"/>
+      <document name="function SetResult" docId="vl::reflection::description::CoroutineResult::SetResult@void(::vl::reflection::description::Value const &amp;)" file="VL__REFLECTION__DESCRIPTION__COROUTINERESULT__SETRESULT@VOID(__V"/>
+    </document>
+    <document name="enum class CoroutineStatus" docId="vl::reflection::description::CoroutineStatus" file="VL__REFLECTION__DESCRIPTION__COROUTINESTATUS"/>
+    <document name="class IAsync" docId="vl::reflection::description::IAsync" file="VL__REFLECTION__DESCRIPTION__IASYNC">
+      <document name="function Delay" docId="vl::reflection::description::IAsync::Delay@::vl::Ptr&lt;::vl::reflection::description::IAsync&gt;(::vl::vint)" file="VL__REFLECTION__DESCRIPTION__IASYNC__DELAY@__VL__PTR___VL__REFLE"/>
+      <document name="function Execute" docId="vl::reflection::description::IAsync::Execute@bool(::vl::Func&lt;void(::vl::Ptr&lt;::vl::reflection::description::CoroutineResult&gt;)&gt; const &amp;, ::vl::Ptr&lt;::vl::reflection::description::AsyncContext&gt;)" file="VL__REFLECTION__DESCRIPTION__IASYNC__EXECUTE@BOOL(__VL__FUNC_VOI"/>
+      <document name="function GetStatus" docId="vl::reflection::description::IAsync::GetStatus@::vl::reflection::description::AsyncStatus()" file="VL__REFLECTION__DESCRIPTION__IASYNC__GETSTATUS@__VL__REFLECTION_"/>
+    </document>
+    <document name="class IAsyncScheduler" docId="vl::reflection::description::IAsyncScheduler" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER">
+      <document name="function DelayExecute" docId="vl::reflection::description::IAsyncScheduler::DelayExecute@void(::vl::Func&lt;void()&gt; const &amp;, ::vl::vint)" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER__DELAYEXECUTE@VOID("/>
+      <document name="function Execute" docId="vl::reflection::description::IAsyncScheduler::Execute@void(::vl::Func&lt;void()&gt; const &amp;)" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER__EXECUTE@VOID(__VL_"/>
+      <document name="function ExecuteInBackground" docId="vl::reflection::description::IAsyncScheduler::ExecuteInBackground@void(::vl::Func&lt;void()&gt; const &amp;)" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER__EXECUTEINBACKGROUN"/>
+      <document name="function GetSchedulerForCurrentThread" docId="vl::reflection::description::IAsyncScheduler::GetSchedulerForCurrentThread@::vl::Ptr&lt;::vl::reflection::description::IAsyncScheduler&gt;()" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER__GETSCHEDULERFORCUR"/>
+      <document name="function RegisterDefaultScheduler" docId="vl::reflection::description::IAsyncScheduler::RegisterDefaultScheduler@void(::vl::Ptr&lt;::vl::reflection::description::IAsyncScheduler&gt;)" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER__REGISTERDEFAULTSCH"/>
+      <document name="function RegisterSchedulerForCurrentThread" docId="vl::reflection::description::IAsyncScheduler::RegisterSchedulerForCurrentThread@void(::vl::Ptr&lt;::vl::reflection::description::IAsyncScheduler&gt;)" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER__REGISTERSCHEDULERF"/>
+      <document name="function UnregisterDefaultScheduler" docId="vl::reflection::description::IAsyncScheduler::UnregisterDefaultScheduler@::vl::Ptr&lt;::vl::reflection::description::IAsyncScheduler&gt;()" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER__UNREGISTERDEFAULTS"/>
+      <document name="function UnregisterSchedulerForCurrentThread" docId="vl::reflection::description::IAsyncScheduler::UnregisterSchedulerForCurrentThread@::vl::Ptr&lt;::vl::reflection::description::IAsyncScheduler&gt;()" file="VL__REFLECTION__DESCRIPTION__IASYNCSCHEDULER__UNREGISTERSCHEDULE"/>
+    </document>
+    <document name="class ICoroutine" docId="vl::reflection::description::ICoroutine" file="VL__REFLECTION__DESCRIPTION__ICOROUTINE">
+      <document name="function GetFailure" docId="vl::reflection::description::ICoroutine::GetFailure@::vl::Ptr&lt;::vl::reflection::description::IValueException&gt;()" file="VL__REFLECTION__DESCRIPTION__ICOROUTINE__GETFAILURE@__VL__PTR___"/>
+      <document name="function GetStatus" docId="vl::reflection::description::ICoroutine::GetStatus@::vl::reflection::description::CoroutineStatus()" file="VL__REFLECTION__DESCRIPTION__ICOROUTINE__GETSTATUS@__VL__REFLECT"/>
+      <document name="function Resume" docId="vl::reflection::description::ICoroutine::Resume@void(bool, ::vl::Ptr&lt;::vl::reflection::description::CoroutineResult&gt;)" file="VL__REFLECTION__DESCRIPTION__ICOROUTINE__RESUME@VOID(BOOL,___VL_"/>
+    </document>
+    <document name="class IFuture" docId="vl::reflection::description::IFuture" file="VL__REFLECTION__DESCRIPTION__IFUTURE">
+      <document name="function Create" docId="vl::reflection::description::IFuture::Create@::vl::Ptr&lt;::vl::reflection::description::IFuture&gt;()" file="VL__REFLECTION__DESCRIPTION__IFUTURE__CREATE@__VL__PTR___VL__REF"/>
+      <document name="function GetPromise" docId="vl::reflection::description::IFuture::GetPromise@::vl::Ptr&lt;::vl::reflection::description::IPromise&gt;()" file="VL__REFLECTION__DESCRIPTION__IFUTURE__GETPROMISE@__VL__PTR___VL_"/>
+    </document>
+    <document name="class IPromise" docId="vl::reflection::description::IPromise" file="VL__REFLECTION__DESCRIPTION__IPROMISE">
+      <document name="function SendFailure" docId="vl::reflection::description::IPromise::SendFailure@bool(::vl::Ptr&lt;::vl::reflection::description::IValueException&gt;)" file="VL__REFLECTION__DESCRIPTION__IPROMISE__SENDFAILURE@BOOL(__VL__PT"/>
+      <document name="function SendResult" docId="vl::reflection::description::IPromise::SendResult@bool(::vl::reflection::description::Value const &amp;)" file="VL__REFLECTION__DESCRIPTION__IPROMISE__SENDRESULT@BOOL(__VL__REF"/>
+    </document>
+    <document name="class Localization" docId="vl::reflection::description::Localization" file="VL__REFLECTION__DESCRIPTION__LOCALIZATION"/>
+    <document name="class Math" docId="vl::reflection::description::Math" file="VL__REFLECTION__DESCRIPTION__MATH"/>
+    <document name="class Sys" docId="vl::reflection::description::Sys" file="VL__REFLECTION__DESCRIPTION__SYS"/>
+  </namespace>
+</reference>

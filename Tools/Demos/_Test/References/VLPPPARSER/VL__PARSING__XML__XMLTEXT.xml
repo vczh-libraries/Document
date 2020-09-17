@@ -1,4 +1,0 @@
-<Document symbolId="vl::parsing::xml::XmlText" accessor="" category="Class" name="XmlText" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlText"><summary>Text node.</summary><signature><![CDATA[class XmlText
-    : XmlNode
-    , vl::reflection::Description<XmlText>;
-]]></signature><seealsos><symbol name="XmlText" docId="vl::parsing::xml::XmlText" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlText"/></seealsos><basetypes><symbol name="XmlNode" docId="vl::parsing::xml::XmlNode" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

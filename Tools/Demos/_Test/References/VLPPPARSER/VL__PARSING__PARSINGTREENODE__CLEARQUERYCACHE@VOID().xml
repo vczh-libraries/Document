@@ -1,3 +1,0 @@
-<Document symbolId="vl::parsing::ParsingTreeNode::ClearQueryCache@void()" accessor="public" category="Function" name="ClearQueryCache" declFile="ParsingTree.h" declId="FB$vl::parsing::ParsingTreeNode::ClearQueryCache@void()[decl0]"><summary>Clear all cache made by <symbol name="InitializeQueryCache" docId="vl::parsing::ParsingTreeNode::InitializeQueryCache@void()" declFile="ParsingTree.h" declId="FB$vl::parsing::ParsingTreeNode::InitializeQueryCache@void()[decl0]"/>.</summary><signature><![CDATA[void ClearQueryCache(
-);
-]]></signature></Document>

@@ -1,2 +1,0 @@
-<Document symbolId="vl::parsing::json::JsonObjectField::name" accessor="public" category="Variable" name="name" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonObjectField::name"><summary>Property name.</summary><signature><![CDATA[vl::parsing::ParsingToken name;
-]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/></seealsos></Document>

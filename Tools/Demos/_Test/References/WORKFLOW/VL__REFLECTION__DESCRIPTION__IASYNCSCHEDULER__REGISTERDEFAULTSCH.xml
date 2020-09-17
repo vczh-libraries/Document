@@ -1,0 +1,4 @@
+<Document symbolId="vl::reflection::description::IAsyncScheduler::RegisterDefaultScheduler@void(::vl::Ptr&lt;::vl::reflection::description::IAsyncScheduler&gt;)" accessor="public" category="Function" name="RegisterDefaultScheduler" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::IAsyncScheduler::RegisterDefaultScheduler@void(::vl::Ptr&lt;::vl::reflection::description::IAsyncScheduler&gt;)[decl0]"><summary>Attach a scheduler for all threads.</summary><param name="scheduler">The scheduler to attach.</param><signature><![CDATA[static void RegisterDefaultScheduler(
+    Ptr<IAsyncScheduler> scheduler
+);
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IAsyncScheduler" docId="vl::reflection::description::IAsyncScheduler" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IAsyncScheduler"/></seealsos></Document>

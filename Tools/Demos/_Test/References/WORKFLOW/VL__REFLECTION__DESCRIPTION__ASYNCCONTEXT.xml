@@ -1,0 +1,4 @@
+<Document symbolId="vl::reflection::description::AsyncContext" accessor="" category="Class" name="AsyncContext" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::AsyncContext"><summary>A context providing communication between the caller and the async operation.</summary><signature><![CDATA[class AsyncContext
+    : IDescriptable
+    , Description<AsyncContext>;
+]]></signature><seealsos><symbol name="AsyncContext" docId="vl::reflection::description::AsyncContext" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::AsyncContext"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

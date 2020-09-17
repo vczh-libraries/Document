@@ -1,3 +1,0 @@
-<Document symbolId="vl::parsing::tabling::ParsingGeneralParser" accessor="" category="Class" name="ParsingGeneralParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingGeneralParser"><summary>Base type of all parser strategy.</summary><signature><![CDATA[class ParsingGeneralParser
-    : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
