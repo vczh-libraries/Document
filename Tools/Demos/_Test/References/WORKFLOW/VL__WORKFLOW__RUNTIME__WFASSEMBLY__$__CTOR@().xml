@@ -1,0 +1,3 @@
+<Document symbolId="vl::workflow::runtime::WfAssembly::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="WfRuntimeAssembly.h" declId="FB$vl::workflow::runtime::WfAssembly::$__ctor@()[decl0]"><summary>Create an empty assembly.</summary><signature><![CDATA[ WfAssembly(
+);
+]]></signature></Document>

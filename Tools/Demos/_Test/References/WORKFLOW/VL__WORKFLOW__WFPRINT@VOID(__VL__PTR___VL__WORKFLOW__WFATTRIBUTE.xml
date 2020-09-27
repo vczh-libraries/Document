@@ -1,0 +1,6 @@
+<Document symbolId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfAttribute&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" accessor="" category="Function" name="WfPrint" declFile="WfExpression.h" declId="FB$vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfAttribute&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)[decl0]"><summary>Print a Workflow attribute.</summary><param name="node">The Workflow attribute.</param><param name="indent">The indentation.</param><param name="writer">The target writer.</param><signature><![CDATA[void WfPrint(
+    Ptr<WfAttribute> node,
+    WString const & indent,
+    parsing::ParsingWriter & writer
+);
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="ParsingWriter" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingWriter"/><symbol name="WfAttribute" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfAttribute"/></seealsos></Document>

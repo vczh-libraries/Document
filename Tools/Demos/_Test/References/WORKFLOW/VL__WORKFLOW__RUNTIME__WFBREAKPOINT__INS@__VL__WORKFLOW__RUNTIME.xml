@@ -1,0 +1,5 @@
+<Document symbolId="vl::workflow::runtime::WfBreakPoint::Ins@::vl::workflow::runtime::WfBreakPoint(::vl::workflow::runtime::WfAssembly *, ::vl::vint)" accessor="public" category="Function" name="Ins" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfBreakPoint::Ins@::vl::workflow::runtime::WfBreakPoint(::vl::workflow::runtime::WfAssembly *, ::vl::vint)[decl0]"><summary>Create an instruction break point.</summary><returns>The created break point.</returns><param name="assembly">The assembly that contains the instruction.</param><param name="instruction">The index of the instruction.</param><signature><![CDATA[static WfBreakPoint Ins(
+    WfAssembly * assembly,
+    vint instruction
+);
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol name="WfAssembly" docId="vl::workflow::runtime::WfAssembly" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly"/><symbol name="WfBreakPoint" docId="vl::workflow::runtime::WfBreakPoint" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::WfBreakPoint"/></seealsos></Document>

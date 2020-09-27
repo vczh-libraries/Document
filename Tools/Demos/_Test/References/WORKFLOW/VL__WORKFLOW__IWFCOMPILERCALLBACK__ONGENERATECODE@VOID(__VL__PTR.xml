@@ -1,0 +1,4 @@
+<Document symbolId="vl::workflow::IWfCompilerCallback::OnGenerateCode@void(::vl::Ptr&lt;::vl::workflow::WfModule&gt;)" accessor="public" category="Function" name="OnGenerateCode" declFile="WfAnalyzer.h" declId="FB$vl::workflow::IWfCompilerCallback::OnGenerateCode@void(::vl::Ptr&lt;::vl::workflow::WfModule&gt;)[decl0]"><summary>5th step: Called before generating instructions for a Workflow module. This could be called multiple times for each module.</summary><param name="module">The module for generating code.</param><signature><![CDATA[void OnGenerateCode(
+    Ptr<WfModule> module
+);
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WfModule" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfModule"/></seealsos></Document>

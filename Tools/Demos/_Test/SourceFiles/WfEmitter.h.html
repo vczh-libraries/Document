@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WfEmitter.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Workflow::Analyzer
+
+Interfaces:
+**********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_WORKFLOW_ANALYZER_WFEMITTER</div>
+<div class="disabled">#define VCZH_WORKFLOW_ANALYZER_WFEMITTER</div>
+
+<div class="disabled">#include &quot;../Analyzer/WfAnalyzer.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[90]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[14]$vl::workflow"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow'], [], [])">workflow</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[0]$vl::workflow::emitter"><div>emitter</div></div>
+		{
+
+<div class="token cpp_comment ">/***********************************************************************
+Attribute Evaluator
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator"><div><div class="token cpp_type">WfAttributeEvaluator</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>														<div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::Value"><div><div class="token cpp_type">Value</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfAttribute'], [], [])"><div class="token cpp_type">WfAttribute</div></div>&gt;, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfAttributeEvaluator::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;									<div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::AttributeValueMap"><div><div class="token cpp_type">AttributeValueMap</div></div></div>;
+
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScopeManager'], [], [])"><div class="token cpp_type">WfLexicalScopeManager</div></div>*			<div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::manager"><div><div class="token cpp_field">manager</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfAttributeEvaluator::AttributeValueMap'], [], [])"><div class="token cpp_type">AttributeValueMap</div></div>							<div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::attributeValues"><div><div class="token cpp_field">attributeValues</div></div></div>;				<div class="token cpp_comment ">// cached value for attribute</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt;					<div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::attributeAssembly"><div><div class="token cpp_field">attributeAssembly</div></div></div>;				<div class="token cpp_comment ">// shared assembly for evaluating attribute value</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeGlobalContext'], [], [])"><div class="token cpp_type">WfRuntimeGlobalContext</div></div>&gt;		<div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::attributeGlobalContext"><div><div class="token cpp_field">attributeGlobalContext</div></div></div>;			<div class="token cpp_comment ">// shared shared context for evaluating attribute value</div>
+
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::workflow::emitter::WfAttributeEvaluator::$__ctor@(::vl::workflow::analyzer::WfLexicalScopeManager *)[decl0]"><div><div class="token cpp_function">WfAttributeEvaluator</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScopeManager'], [], [])"><div class="token cpp_type">WfLexicalScopeManager</div></div>* <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::$__ctor@(::vl::workflow::analyzer::WfLexicalScopeManager *)[decl0]::_manager"><div>_manager</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfAttribute'], [], [])"><div class="token cpp_type">WfAttribute</div></div>&gt;							<div class="def" id="FB$vl::workflow::emitter::WfAttributeEvaluator::GetAttribute@::vl::Ptr<::vl::workflow::WfAttribute>(::vl::collections::List<::vl::Ptr<::vl::workflow::WfAttribute>> &, ::vl::WString const &, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">GetAttribute</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfAttribute'], [], [])"><div class="token cpp_type">WfAttribute</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::GetAttribute@::vl::Ptr<::vl::workflow::WfAttribute>(::vl::collections::List<::vl::Ptr<::vl::workflow::WfAttribute>> &, ::vl::WString const &, ::vl::WString const &)[decl0]::atts"><div>atts</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::GetAttribute@::vl::Ptr<::vl::workflow::WfAttribute>(::vl::collections::List<::vl::Ptr<::vl::workflow::WfAttribute>> &, ::vl::WString const &, ::vl::WString const &)[decl0]::category"><div>category</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::GetAttribute@::vl::Ptr<::vl::workflow::WfAttribute>(::vl::collections::List<::vl::Ptr<::vl::workflow::WfAttribute>> &, ::vl::WString const &, ::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::LazyList'], [], [])"><div class="token cpp_type">LazyList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfAttribute'], [], [])"><div class="token cpp_type">WfAttribute</div></div>&gt;&gt;		<div class="def" id="FB$vl::workflow::emitter::WfAttributeEvaluator::GetAttributes@::vl::collections::LazyList<::vl::Ptr<::vl::workflow::WfAttribute>>(::vl::collections::List<::vl::Ptr<::vl::workflow::WfAttribute>> &, ::vl::WString const &, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">GetAttributes</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfAttribute'], [], [])"><div class="token cpp_type">WfAttribute</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::GetAttributes@::vl::collections::LazyList<::vl::Ptr<::vl::workflow::WfAttribute>>(::vl::collections::List<::vl::Ptr<::vl::workflow::WfAttribute>> &, ::vl::WString const &, ::vl::WString const &)[decl0]::atts"><div>atts</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::GetAttributes@::vl::collections::LazyList<::vl::Ptr<::vl::workflow::WfAttribute>>(::vl::collections::List<::vl::Ptr<::vl::workflow::WfAttribute>> &, ::vl::WString const &, ::vl::WString const &)[decl0]::category"><div>category</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::GetAttributes@::vl::collections::LazyList<::vl::Ptr<::vl::workflow::WfAttribute>>(::vl::collections::List<::vl::Ptr<::vl::workflow::WfAttribute>> &, ::vl::WString const &, ::vl::WString const &)[decl0]::name"><div>name</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfAttributeEvaluator::Value'], [], [])"><div class="token cpp_type">Value</div></div>										<div class="def" id="FB$vl::workflow::emitter::WfAttributeEvaluator::GetAttributeValue@::vl::workflow::emitter::WfAttributeEvaluator::Value(::vl::Ptr<::vl::workflow::WfAttribute>)[decl0]"><div><div class="token cpp_function">GetAttributeValue</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfAttribute'], [], [])"><div class="token cpp_type">WfAttribute</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::WfAttributeEvaluator::GetAttributeValue@::vl::workflow::emitter::WfAttributeEvaluator::Value(::vl::Ptr<::vl::workflow::WfAttribute>)[decl0]::att"><div>att</div></div>);
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Code Generation
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::workflow::emitter::WfCodegenLambdaContext"><div><div class="token cpp_type">WfCodegenLambdaContext</div></div></div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfFunctionDeclaration'], [], [])"><div class="token cpp_type">WfFunctionDeclaration</div></div>*				<div class="def" id="NI$vl::workflow::emitter::WfCodegenLambdaContext::functionDeclaration"><div><div class="token cpp_field">functionDeclaration</div></div></div> = <div class="token cpp_number ">0</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfFunctionExpression'], [], [])"><div class="token cpp_type">WfFunctionExpression</div></div>*				<div class="def" id="NI$vl::workflow::emitter::WfCodegenLambdaContext::functionExpression"><div><div class="token cpp_field">functionExpression</div></div></div> = <div class="token cpp_number ">0</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfOrderedLambdaExpression'], [], [])"><div class="token cpp_type">WfOrderedLambdaExpression</div></div>*			<div class="def" id="NI$vl::workflow::emitter::WfCodegenLambdaContext::orderedLambdaExpression"><div><div class="token cpp_field">orderedLambdaExpression</div></div></div> = <div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_keyword ">enum</div> <div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeType"><div><div class="token cpp_type">WfCodegenScopeType</div></div></div>
+			{
+				<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeType::Function"><div><div class="token cpp_enum">Function</div></div></div>,	<div class="token cpp_comment ">// contains the whole function</div>
+				<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeType::Loop"><div><div class="token cpp_enum">Loop</div></div></div>,		<div class="token cpp_comment ">// contains all loops</div>
+				<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeType::TryCatch"><div><div class="token cpp_enum">TryCatch</div></div></div>,	<div class="token cpp_comment ">// contains try and catch, not finally</div>
+				<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeType::Block"><div><div class="token cpp_enum">Block</div></div></div>,		<div class="token cpp_comment ">// contains labeled blocks</div>
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext"><div><div class="token cpp_type">WfCodegenScopeContext</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;										<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::InstructionIndexList"><div><div class="token cpp_type">InstructionIndexList</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfInstruction'], [], [])"><div class="token cpp_type">WfInstruction</div></div>&gt;					<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::InstructionList"><div><div class="token cpp_type">InstructionList</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTextRange'], [], [])"><div class="token cpp_type">ParsingTextRange</div></div>&gt;				<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::RangeMap"><div><div class="token cpp_type">RangeMap</div></div></div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeType'], [], [])"><div class="token cpp_type">WfCodegenScopeType</div></div>					<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::type"><div><div class="token cpp_field">type</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeType'], [], [])"><div class="token cpp_type">WfCodegenScopeType</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeType::Function'], [], [])"><div class="token cpp_enum">Function</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext::InstructionIndexList'], [], [])"><div class="token cpp_type">InstructionIndexList</div></div>				<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::continueInstructions"><div><div class="token cpp_field">continueInstructions</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext::InstructionIndexList'], [], [])"><div class="token cpp_type">InstructionIndexList</div></div>				<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::breakInstructions"><div><div class="token cpp_field">breakInstructions</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>								<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::name"><div><div class="token cpp_field">name</div></div></div>;
+				
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext::InstructionList'], [], [])"><div class="token cpp_type">InstructionList</div></div>						<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::exitInstructions"><div><div class="token cpp_field">exitInstructions</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext::RangeMap'], [], [])"><div class="token cpp_type">RangeMap</div></div>							<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::instructionCodeMappingBeforeCodegen"><div><div class="token cpp_field">instructionCodeMappingBeforeCodegen</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext::RangeMap'], [], [])"><div class="token cpp_type">RangeMap</div></div>							<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::instructionCodeMappingAfterCodegen"><div><div class="token cpp_field">instructionCodeMappingAfterCodegen</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfStatement'], [], [])"><div class="token cpp_type">WfStatement</div></div>&gt;					<div class="def" id="NI$vl::workflow::emitter::WfCodegenScopeContext::exitStatement"><div><div class="token cpp_field">exitStatement</div></div></div>;
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext"><div><div class="token cpp_type">WfCodegenFunctionContext</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalSymbol'], [], [])"><div class="token cpp_type">WfLexicalSymbol</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;	<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::VariableIndexMap"><div><div class="token cpp_type">VariableIndexMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenLambdaContext'], [], [])"><div class="token cpp_type">WfCodegenLambdaContext</div></div>&gt;		<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::ClosureIndexMap"><div><div class="token cpp_type">ClosureIndexMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext'], [], [])"><div class="token cpp_type">WfCodegenScopeContext</div></div>&gt;&gt;				<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::ScopeContextList"><div><div class="token cpp_type">ScopeContextList</div></div></div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssemblyFunction'], [], [])"><div class="token cpp_type">WfAssemblyFunction</div></div>&gt;	<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::function"><div><div class="token cpp_field">function</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenFunctionContext::VariableIndexMap'], [], [])"><div class="token cpp_type">VariableIndexMap</div></div>					<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::capturedVariables"><div><div class="token cpp_field">capturedVariables</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenFunctionContext::VariableIndexMap'], [], [])"><div class="token cpp_type">VariableIndexMap</div></div>					<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::arguments"><div><div class="token cpp_field">arguments</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenFunctionContext::VariableIndexMap'], [], [])"><div class="token cpp_type">VariableIndexMap</div></div>					<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::localVariables"><div><div class="token cpp_field">localVariables</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenFunctionContext::ClosureIndexMap'], [], [])"><div class="token cpp_type">ClosureIndexMap</div></div>						<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::closuresToCodegen"><div><div class="token cpp_field">closuresToCodegen</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenFunctionContext::ScopeContextList'], [], [])"><div class="token cpp_type">ScopeContextList</div></div>					<div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::scopeContextStack"><div><div class="token cpp_field">scopeContextStack</div></div></div>;
+
+				<div class="def" id="FB$vl::workflow::emitter::WfCodegenFunctionContext::$__ctor@()[decl0]"><div><div class="token cpp_function">WfCodegenFunctionContext</div></div></div>();
+				
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext'], [], [])"><div class="token cpp_type">WfCodegenScopeContext</div></div>&gt;			<div class="def" id="FB$vl::workflow::emitter::WfCodegenFunctionContext::GetCurrentScopeContext@::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>()[decl0]"><div><div class="token cpp_function">GetCurrentScopeContext</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext'], [], [])"><div class="token cpp_type">WfCodegenScopeContext</div></div>&gt;			<div class="def" id="FB$vl::workflow::emitter::WfCodegenFunctionContext::GetCurrentScopeContext@::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>(::vl::workflow::emitter::WfCodegenScopeType, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">GetCurrentScopeContext</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeType'], [], [])"><div class="token cpp_type">WfCodegenScopeType</div></div> <div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::GetCurrentScopeContext@::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>(::vl::workflow::emitter::WfCodegenScopeType, ::vl::WString const &)[decl0]::type"><div>type</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::GetCurrentScopeContext@::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>(::vl::workflow::emitter::WfCodegenScopeType, ::vl::WString const &)[decl0]::name"><div>name</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Empty'], [], [])"><div class="token cpp_field">Empty</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext'], [], [])"><div class="token cpp_type">WfCodegenScopeContext</div></div>&gt;			<div class="def" id="FB$vl::workflow::emitter::WfCodegenFunctionContext::PushScopeContext@::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>(::vl::workflow::emitter::WfCodegenScopeType, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">PushScopeContext</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeType'], [], [])"><div class="token cpp_type">WfCodegenScopeType</div></div> <div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::PushScopeContext@::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>(::vl::workflow::emitter::WfCodegenScopeType, ::vl::WString const &)[decl0]::type"><div>type</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::WfCodegenFunctionContext::PushScopeContext@::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>(::vl::workflow::emitter::WfCodegenScopeType, ::vl::WString const &)[decl0]::name"><div>name</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::ObjectString::Empty'], [], [])"><div class="token cpp_field">Empty</div></div>);
+				<div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::workflow::emitter::WfCodegenFunctionContext::PopScopeContext@void()[decl0]"><div><div class="token cpp_function">PopScopeContext</div></div></div>();
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext"><div><div class="token cpp_type">WfCodegenContext</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalSymbol'], [], [])"><div class="token cpp_type">WfLexicalSymbol</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;								<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::SymbolIndexMap"><div><div class="token cpp_type">SymbolIndexMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfConstructorDeclaration'], [], [])"><div class="token cpp_type">WfConstructorDeclaration</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;								<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::ConstructorIndexMap"><div><div class="token cpp_type">ConstructorIndexMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfDestructorDeclaration'], [], [])"><div class="token cpp_type">WfDestructorDeclaration</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;									<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::DestructorIndexMap"><div><div class="token cpp_type">DestructorIndexMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTextRange'], [], [])"><div class="token cpp_type">ParsingTextRange</div></div>&gt;		<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::NodePositionMap"><div><div class="token cpp_type">NodePositionMap</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalFunctionConfig'], [], [])"><div class="token cpp_type">WfLexicalFunctionConfig</div></div>&gt;, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;					<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::ThisStackCountMap"><div><div class="token cpp_type">ThisStackCountMap</div></div></div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt;			<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::assembly"><div><div class="token cpp_field">assembly</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScopeManager'], [], [])"><div class="token cpp_type">WfLexicalScopeManager</div></div>*	<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::manager"><div><div class="token cpp_field">manager</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext::SymbolIndexMap'], [], [])"><div class="token cpp_type">SymbolIndexMap</div></div>						<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::globalVariables"><div><div class="token cpp_field">globalVariables</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext::SymbolIndexMap'], [], [])"><div class="token cpp_type">SymbolIndexMap</div></div>						<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::globalFunctions"><div><div class="token cpp_field">globalFunctions</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext::ConstructorIndexMap'], [], [])"><div class="token cpp_type">ConstructorIndexMap</div></div>					<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::constructors"><div><div class="token cpp_field">constructors</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext::DestructorIndexMap'], [], [])"><div class="token cpp_type">DestructorIndexMap</div></div>					<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::destructors"><div><div class="token cpp_field">destructors</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext::SymbolIndexMap'], [], [])"><div class="token cpp_type">SymbolIndexMap</div></div>						<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::closureFunctions"><div><div class="token cpp_field">closureFunctions</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenFunctionContext'], [], [])"><div class="token cpp_type">WfCodegenFunctionContext</div></div>&gt;		<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::functionContext"><div><div class="token cpp_field">functionContext</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext::NodePositionMap'], [], [])"><div class="token cpp_type">NodePositionMap</div></div>						<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::nodePositionsBeforeCodegen"><div><div class="token cpp_field">nodePositionsBeforeCodegen</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext::NodePositionMap'], [], [])"><div class="token cpp_type">NodePositionMap</div></div>						<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::nodePositionsAfterCodegen"><div><div class="token cpp_field">nodePositionsAfterCodegen</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext::ThisStackCountMap'], [], [])"><div class="token cpp_type">ThisStackCountMap</div></div>					<div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::thisStackCounts"><div><div class="token cpp_field">thisStackCounts</div></div></div>;
+
+				<div class="def" id="FB$vl::workflow::emitter::WfCodegenContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfAssembly>, ::vl::workflow::analyzer::WfLexicalScopeManager *)[decl0]"><div><div class="token cpp_function">WfCodegenContext</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfAssembly>, ::vl::workflow::analyzer::WfLexicalScopeManager *)[decl0]::_assembly"><div>_assembly</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScopeManager'], [], [])"><div class="token cpp_type">WfLexicalScopeManager</div></div>* <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfAssembly>, ::vl::workflow::analyzer::WfLexicalScopeManager *)[decl0]::_manager"><div>_manager</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>								<div class="def" id="FB$vl::workflow::emitter::WfCodegenContext::AddInstruction@::vl::vint(::vl::parsing::ParsingTreeCustomBase *, ::vl::workflow::runtime::WfInstruction const &)[decl0]"><div><div class="token cpp_function">AddInstruction</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>* <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::AddInstruction@::vl::vint(::vl::parsing::ParsingTreeCustomBase *, ::vl::workflow::runtime::WfInstruction const &)[decl0]::node"><div>node</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfInstruction'], [], [])"><div class="token cpp_type">WfInstruction</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::AddInstruction@::vl::vint(::vl::parsing::ParsingTreeCustomBase *, ::vl::workflow::runtime::WfInstruction const &)[decl0]::ins"><div>ins</div></div>);
+				<div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::workflow::emitter::WfCodegenContext::AddExitInstruction@void(::vl::parsing::ParsingTreeCustomBase *, ::vl::workflow::runtime::WfInstruction const &)[decl0]"><div><div class="token cpp_function">AddExitInstruction</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingTreeCustomBase'], [], [])"><div class="token cpp_type">ParsingTreeCustomBase</div></div>* <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::AddExitInstruction@void(::vl::parsing::ParsingTreeCustomBase *, ::vl::workflow::runtime::WfInstruction const &)[decl0]::node"><div>node</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfInstruction'], [], [])"><div class="token cpp_type">WfInstruction</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::AddExitInstruction@void(::vl::parsing::ParsingTreeCustomBase *, ::vl::workflow::runtime::WfInstruction const &)[decl0]::ins"><div>ins</div></div>);
+				<div class="token cpp_keyword ">void</div>								<div class="def" id="FB$vl::workflow::emitter::WfCodegenContext::ApplyExitInstructions@void(::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>)[decl0]"><div><div class="token cpp_function">ApplyExitInstructions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenScopeContext'], [], [])"><div class="token cpp_type">WfCodegenScopeContext</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::ApplyExitInstructions@void(::vl::Ptr<::vl::workflow::emitter::WfCodegenScopeContext>)[decl0]::scopeContext"><div>scopeContext</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>								<div class="def" id="FB$vl::workflow::emitter::WfCodegenContext::GetThisStackCount@::vl::vint(::vl::workflow::analyzer::WfLexicalScope *)[decl0]"><div><div class="token cpp_function">GetThisStackCount</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScope'], [], [])"><div class="token cpp_type">WfLexicalScope</div></div>* <div class="def" id="NI$vl::workflow::emitter::WfCodegenContext::GetThisStackCount@::vl::vint(::vl::workflow::analyzer::WfLexicalScope *)[decl0]::scope"><div>scope</div></div>);
+			};
+
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::workflow::emitter::GenerateFunctionDeclarationMetadata@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::workflow::WfFunctionDeclaration *, ::vl::Ptr<::vl::workflow::runtime::WfAssemblyFunction>)[decl0]"><div><div class="token cpp_function">GenerateFunctionDeclarationMetadata</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateFunctionDeclarationMetadata@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::workflow::WfFunctionDeclaration *, ::vl::Ptr<::vl::workflow::runtime::WfAssemblyFunction>)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfFunctionDeclaration'], [], [])"><div class="token cpp_type">WfFunctionDeclaration</div></div>* <div class="def" id="NI$vl::workflow::emitter::GenerateFunctionDeclarationMetadata@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::workflow::WfFunctionDeclaration *, ::vl::Ptr<::vl::workflow::runtime::WfAssemblyFunction>)[decl0]::node"><div>node</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssemblyFunction'], [], [])"><div class="token cpp_type">WfAssemblyFunction</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateFunctionDeclarationMetadata@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::workflow::WfFunctionDeclaration *, ::vl::Ptr<::vl::workflow::runtime::WfAssemblyFunction>)[decl0]::meta"><div>meta</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::workflow::emitter::GenerateGlobalDeclarationMetadata@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">GenerateGlobalDeclarationMetadata</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateGlobalDeclarationMetadata@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::WString const &)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfDeclaration'], [], [])"><div class="token cpp_type">WfDeclaration</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateGlobalDeclarationMetadata@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::WString const &)[decl0]::declaration"><div>declaration</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateGlobalDeclarationMetadata@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>, ::vl::WString const &)[decl0]::namePrefix"><div>namePrefix</div></div> = <div class="token cpp_string ">L&quot;&quot;</div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::workflow::emitter::GenerateClosureInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::emitter::WfCodegenFunctionContext>)[decl0]"><div><div class="token cpp_function">GenerateClosureInstructions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateClosureInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::emitter::WfCodegenFunctionContext>)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenFunctionContext'], [], [])"><div class="token cpp_type">WfCodegenFunctionContext</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateClosureInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::emitter::WfCodegenFunctionContext>)[decl0]::functionContext"><div>functionContext</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::workflow::emitter::GenerateInitializeInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>)[decl0]"><div><div class="token cpp_function">GenerateInitializeInstructions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateInitializeInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfDeclaration'], [], [])"><div class="token cpp_type">WfDeclaration</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateInitializeInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>)[decl0]::declaration"><div>declaration</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::workflow::emitter::GenerateDeclarationInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>)[decl0]"><div><div class="token cpp_function">GenerateDeclarationInstructions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateDeclarationInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfDeclaration'], [], [])"><div class="token cpp_type">WfDeclaration</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateDeclarationInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfDeclaration>)[decl0]::declaration"><div>declaration</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::workflow::emitter::GenerateStatementInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfStatement>)[decl0]"><div><div class="token cpp_function">GenerateStatementInstructions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateStatementInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfStatement>)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfStatement'], [], [])"><div class="token cpp_type">WfStatement</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateStatementInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfStatement>)[decl0]::statement"><div>statement</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeInfo'], [], [])"><div class="token cpp_type">ITypeInfo</div></div>&gt;	<div class="def" id="FB$vl::workflow::emitter::GenerateExpressionInstructions@::vl::Ptr<::vl::reflection::description::ITypeInfo>(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfExpression>, ::vl::Ptr<::vl::reflection::description::ITypeInfo>)[decl0]"><div><div class="token cpp_function">GenerateExpressionInstructions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateExpressionInstructions@::vl::Ptr<::vl::reflection::description::ITypeInfo>(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfExpression>, ::vl::Ptr<::vl::reflection::description::ITypeInfo>)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfExpression'], [], [])"><div class="token cpp_type">WfExpression</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateExpressionInstructions@::vl::Ptr<::vl::reflection::description::ITypeInfo>(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfExpression>, ::vl::Ptr<::vl::reflection::description::ITypeInfo>)[decl0]::expression"><div>expression</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeInfo'], [], [])"><div class="token cpp_type">ITypeInfo</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateExpressionInstructions@::vl::Ptr<::vl::reflection::description::ITypeInfo>(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::workflow::WfExpression>, ::vl::Ptr<::vl::reflection::description::ITypeInfo>)[decl0]::expectedType"><div>expectedType</div></div> = <div class="token cpp_number ">0</div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::workflow::emitter::GenerateTypeCastInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, bool, ::vl::workflow::WfExpression *)[decl0]"><div><div class="token cpp_function">GenerateTypeCastInstructions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateTypeCastInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, bool, ::vl::workflow::WfExpression *)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeInfo'], [], [])"><div class="token cpp_type">ITypeInfo</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateTypeCastInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, bool, ::vl::workflow::WfExpression *)[decl0]::expectedType"><div>expectedType</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::emitter::GenerateTypeCastInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, bool, ::vl::workflow::WfExpression *)[decl0]::strongCast"><div>strongCast</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfExpression'], [], [])"><div class="token cpp_type">WfExpression</div></div>* <div class="def" id="NI$vl::workflow::emitter::GenerateTypeCastInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, bool, ::vl::workflow::WfExpression *)[decl0]::node"><div>node</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="token cpp_keyword ">void</div>										<div class="def" id="FB$vl::workflow::emitter::GenerateTypeTestingInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, ::vl::workflow::WfExpression *)[decl0]"><div><div class="token cpp_function">GenerateTypeTestingInstructions</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::emitter::WfCodegenContext'], [], [])"><div class="token cpp_type">WfCodegenContext</div></div>&amp; <div class="def" id="NI$vl::workflow::emitter::GenerateTypeTestingInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, ::vl::workflow::WfExpression *)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeInfo'], [], [])"><div class="token cpp_type">ITypeInfo</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GenerateTypeTestingInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, ::vl::workflow::WfExpression *)[decl0]::expectedType"><div>expectedType</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfExpression'], [], [])"><div class="token cpp_type">WfExpression</div></div>* <div class="def" id="NI$vl::workflow::emitter::GenerateTypeTestingInstructions@void(::vl::workflow::emitter::WfCodegenContext &, ::vl::Ptr<::vl::reflection::description::ITypeInfo>, ::vl::workflow::WfExpression *)[decl0]::node"><div>node</div></div>);
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfInsType'], [], [])"><div class="token cpp_type">WfInsType</div></div>						<div class="def" id="FB$vl::workflow::emitter::GetInstructionTypeArgument@::vl::workflow::runtime::WfInsType(::vl::Ptr<::vl::reflection::description::ITypeInfo>)[decl0]"><div><div class="token cpp_function">GetInstructionTypeArgument</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::ITypeInfo'], [], [])"><div class="token cpp_type">ITypeInfo</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::GetInstructionTypeArgument@::vl::workflow::runtime::WfInsType(::vl::Ptr<::vl::reflection::description::ITypeInfo>)[decl0]::expectedType"><div>expectedType</div></div>);
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Generate an assembly from semantic analyzed modules. [M:vl.workflow.analyzer.WfLexicalScopeManager.Rebuild] should be called before using this function.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The generated assembly.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;manager&quot;&gt;The scope manager that is used to perform semantic analyzing.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;callback&quot;&gt;The callback to receive progress information (optional).&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt;					<div class="def" id="FB$vl::workflow::emitter::GenerateAssembly@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::workflow::IWfCompilerCallback *)[decl0]"><div><div class="token cpp_function">GenerateAssembly</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScopeManager'], [], [])"><div class="token cpp_type">WfLexicalScopeManager</div></div>* <div class="def" id="NI$vl::workflow::emitter::GenerateAssembly@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::workflow::IWfCompilerCallback *)[decl0]::manager"><div>manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::IWfCompilerCallback'], [], [])"><div class="token cpp_type">IWfCompilerCallback</div></div>* <div class="def" id="NI$vl::workflow::emitter::GenerateAssembly@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::workflow::IWfCompilerCallback *)[decl0]::callback"><div>callback</div></div> = <div class="token cpp_keyword ">nullptr</div>);
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Compile a Workflow program.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The generated assembly. Return nullptr if failed to compile.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;table&quot;&gt;The workflow parser table. It can be retrived from [M:vl.workflow.WfLoadTable]. This is reusable, it is recommended to keep this object alive between multiple compiling to improve performance.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;manager&quot;&gt;The scope manager. This is reusable, it is recommended to keep this object alive between multiple compiling to improve performance.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;moduleCodes&quot;&gt;All workflow module codes.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;errors&quot;&gt;Container to get all errors generated during compiling.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt;					<div class="def" id="FB$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div><div class="token cpp_function">Compile</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling'], [], [])">tabling</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::table"><div>table</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer'], [], [])">analyzer</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::analyzer::WfLexicalScopeManager'], [], [])"><div class="token cpp_type">WfLexicalScopeManager</div></div>* <div class="def" id="NI$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::manager"><div>manager</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::moduleCodes"><div>moduleCodes</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Compile a Workflow program. Use the other one whenever possible, which alloes reusing &lt;see cref=&quot;analyzer::WfLexicalScopeManager&quot;/&gt; to improve performance.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The generated assembly. Return nullptr if failed to compile.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;table&quot;&gt;The workflow parser table. It can be retrived from [M:vl.workflow.WfLoadTable]. This is reusable, it is recommended to keep this object alive between multiple compiling to improve performance.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;moduleCodes&quot;&gt;All workflow module codes.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;errors&quot;&gt;Container to get all errors generated during compiling.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt;					<div class="def" id="FB$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]"><div><div class="token cpp_function">Compile</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling'], [], [])">tabling</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::tabling::ParsingTable'], [], [])"><div class="token cpp_type">ParsingTable</div></div>&gt; <div class="def" id="NI$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::table"><div>table</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::moduleCodes"><div>moduleCodes</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::parsing'], [], [])">parsing</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::parsing::ParsingError'], [], [])"><div class="token cpp_type">ParsingError</div></div>&gt;&gt;&amp; <div class="def" id="NI$vl::workflow::emitter::Compile@::vl::Ptr<::vl::workflow::runtime::WfAssembly>(::vl::Ptr<::vl::parsing::tabling::ParsingTable>, ::vl::collections::List<::vl::WString> &, ::vl::collections::List<::vl::Ptr<::vl::parsing::ParsingError>> &)[decl0]::errors"><div>errors</div></div>);
+		}
+	}
+}
+
+<div class="disabled">#endif</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl',
+            'NF[73]$vl',
+            'NF[74]$vl',
+            'NF[75]$vl',
+            'NF[76]$vl',
+            'NF[77]$vl',
+            'NF[78]$vl',
+            'NF[79]$vl',
+            'NF[80]$vl',
+            'NF[81]$vl',
+            'NF[82]$vl',
+            'NF[83]$vl',
+            'NF[84]$vl',
+            'NF[85]$vl',
+            'NF[86]$vl',
+            'NF[87]$vl',
+            'NF[88]$vl',
+            'NF[89]$vl',
+            'NF[90]$vl',
+            'NF[91]$vl'
+        ]
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::ObjectString::Empty': {
+        'displayNameInHtml': '<span class="cpp_type">ObjectString</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_field">Empty</span>',
+        'impls': [
+            'NI$vl::ObjectString::Empty'
+        ],
+        'decls': [
+            'NF[0]$vl::ObjectString::Empty'
+        ]
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections'
+        ]
+    },
+    'vl::collections::Dictionary': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Dictionary'
+        ],
+        'decls': []
+    },
+    'vl::collections::LazyList': {
+        'displayNameInHtml': '<span class="cpp_type">LazyList</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::collections::LazyList'
+        ],
+        'decls': []
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::parsing': {
+        'displayNameInHtml': 'vl::parsing',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing',
+            'NF[1]$vl::parsing',
+            'NF[2]$vl::parsing',
+            'NF[3]$vl::parsing',
+            'NF[4]$vl::parsing',
+            'NF[5]$vl::parsing',
+            'NF[6]$vl::parsing',
+            'NF[7]$vl::parsing',
+            'NF[8]$vl::parsing',
+            'NF[9]$vl::parsing',
+            'NF[10]$vl::parsing',
+            'NF[11]$vl::parsing',
+            'NF[12]$vl::parsing',
+            'NF[13]$vl::parsing'
+        ]
+    },
+    'vl::parsing::ParsingError': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingError</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingError'
+        ],
+        'decls': []
+    },
+    'vl::parsing::ParsingTextRange': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTextRange</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTextRange'
+        ],
+        'decls': []
+    },
+    'vl::parsing::ParsingTreeCustomBase': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTreeCustomBase</span>',
+        'impls': [
+            'NI$vl::parsing::ParsingTreeCustomBase'
+        ],
+        'decls': []
+    },
+    'vl::parsing::tabling': {
+        'displayNameInHtml': 'vl::parsing::tabling',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::parsing::tabling',
+            'NF[1]$vl::parsing::tabling',
+            'NF[2]$vl::parsing::tabling'
+        ]
+    },
+    'vl::parsing::tabling::ParsingTable': {
+        'displayNameInHtml': '<span class="cpp_type">ParsingTable</span>',
+        'impls': [
+            'NI$vl::parsing::tabling::ParsingTable'
+        ],
+        'decls': []
+    },
+    'vl::reflection': {
+        'displayNameInHtml': 'vl::reflection',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection',
+            'NF[1]$vl::reflection',
+            'NF[2]$vl::reflection',
+            'NF[3]$vl::reflection',
+            'NF[4]$vl::reflection',
+            'NF[5]$vl::reflection',
+            'NF[6]$vl::reflection',
+            'NF[7]$vl::reflection',
+            'NF[8]$vl::reflection',
+            'NF[9]$vl::reflection',
+            'NF[10]$vl::reflection',
+            'NF[11]$vl::reflection',
+            'NF[12]$vl::reflection',
+            'NF[13]$vl::reflection',
+            'NF[14]$vl::reflection',
+            'NF[15]$vl::reflection',
+            'NF[16]$vl::reflection'
+        ]
+    },
+    'vl::reflection::description': {
+        'displayNameInHtml': 'vl::reflection::description',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection::description',
+            'NF[1]$vl::reflection::description',
+            'NF[2]$vl::reflection::description',
+            'NF[3]$vl::reflection::description',
+            'NF[4]$vl::reflection::description',
+            'NF[5]$vl::reflection::description',
+            'NF[6]$vl::reflection::description',
+            'NF[7]$vl::reflection::description',
+            'NF[8]$vl::reflection::description',
+            'NF[9]$vl::reflection::description',
+            'NF[10]$vl::reflection::description',
+            'NF[11]$vl::reflection::description',
+            'NF[12]$vl::reflection::description',
+            'NF[13]$vl::reflection::description',
+            'NF[14]$vl::reflection::description',
+            'NF[15]$vl::reflection::description'
+        ]
+    },
+    'vl::reflection::description::ITypeInfo': {
+        'displayNameInHtml': '<span class="cpp_type">ITypeInfo</span>',
+        'impls': [
+            'NI$vl::reflection::description::ITypeInfo'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::ITypeInfo'
+        ]
+    },
+    'vl::reflection::description::Value': {
+        'displayNameInHtml': '<span class="cpp_type">Value</span>',
+        'impls': [
+            'NI$vl::reflection::description::Value'
+        ],
+        'decls': []
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    },
+    'vl::workflow': {
+        'displayNameInHtml': 'vl::workflow',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::workflow',
+            'NF[1]$vl::workflow',
+            'NF[2]$vl::workflow',
+            'NF[3]$vl::workflow',
+            'NF[4]$vl::workflow',
+            'NF[5]$vl::workflow',
+            'NF[6]$vl::workflow',
+            'NF[7]$vl::workflow',
+            'NF[8]$vl::workflow',
+            'NF[9]$vl::workflow',
+            'NF[10]$vl::workflow',
+            'NF[11]$vl::workflow',
+            'NF[12]$vl::workflow',
+            'NF[13]$vl::workflow',
+            'NF[14]$vl::workflow',
+            'NF[15]$vl::workflow'
+        ]
+    },
+    'vl::workflow::IWfCompilerCallback': {
+        'displayNameInHtml': '<span class="cpp_type">IWfCompilerCallback</span>',
+        'impls': [
+            'NI$vl::workflow::IWfCompilerCallback'
+        ],
+        'decls': []
+    },
+    'vl::workflow::WfAttribute': {
+        'displayNameInHtml': '<span class="cpp_type">WfAttribute</span>',
+        'impls': [
+            'NI$vl::workflow::WfAttribute'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfAttribute'
+        ]
+    },
+    'vl::workflow::WfConstructorDeclaration': {
+        'displayNameInHtml': '<span class="cpp_type">WfConstructorDeclaration</span>',
+        'impls': [
+            'NI$vl::workflow::WfConstructorDeclaration'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfConstructorDeclaration'
+        ]
+    },
+    'vl::workflow::WfDeclaration': {
+        'displayNameInHtml': '<span class="cpp_type">WfDeclaration</span>',
+        'impls': [
+            'NI$vl::workflow::WfDeclaration'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfDeclaration'
+        ]
+    },
+    'vl::workflow::WfDestructorDeclaration': {
+        'displayNameInHtml': '<span class="cpp_type">WfDestructorDeclaration</span>',
+        'impls': [
+            'NI$vl::workflow::WfDestructorDeclaration'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfDestructorDeclaration'
+        ]
+    },
+    'vl::workflow::WfExpression': {
+        'displayNameInHtml': '<span class="cpp_type">WfExpression</span>',
+        'impls': [
+            'NI$vl::workflow::WfExpression'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfExpression'
+        ]
+    },
+    'vl::workflow::WfFunctionDeclaration': {
+        'displayNameInHtml': '<span class="cpp_type">WfFunctionDeclaration</span>',
+        'impls': [
+            'NI$vl::workflow::WfFunctionDeclaration'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfFunctionDeclaration'
+        ]
+    },
+    'vl::workflow::WfFunctionExpression': {
+        'displayNameInHtml': '<span class="cpp_type">WfFunctionExpression</span>',
+        'impls': [
+            'NI$vl::workflow::WfFunctionExpression'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfFunctionExpression'
+        ]
+    },
+    'vl::workflow::WfOrderedLambdaExpression': {
+        'displayNameInHtml': '<span class="cpp_type">WfOrderedLambdaExpression</span>',
+        'impls': [
+            'NI$vl::workflow::WfOrderedLambdaExpression'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfOrderedLambdaExpression'
+        ]
+    },
+    'vl::workflow::WfStatement': {
+        'displayNameInHtml': '<span class="cpp_type">WfStatement</span>',
+        'impls': [
+            'NI$vl::workflow::WfStatement'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::WfStatement'
+        ]
+    },
+    'vl::workflow::analyzer': {
+        'displayNameInHtml': 'vl::workflow::analyzer',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::workflow::analyzer',
+            'NF[1]$vl::workflow::analyzer'
+        ]
+    },
+    'vl::workflow::analyzer::WfLexicalFunctionConfig': {
+        'displayNameInHtml': '<span class="cpp_type">WfLexicalFunctionConfig</span>',
+        'impls': [
+            'NI$vl::workflow::analyzer::WfLexicalFunctionConfig'
+        ],
+        'decls': []
+    },
+    'vl::workflow::analyzer::WfLexicalScope': {
+        'displayNameInHtml': '<span class="cpp_type">WfLexicalScope</span>',
+        'impls': [
+            'NI$vl::workflow::analyzer::WfLexicalScope'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::analyzer::WfLexicalScope'
+        ]
+    },
+    'vl::workflow::analyzer::WfLexicalScopeManager': {
+        'displayNameInHtml': '<span class="cpp_type">WfLexicalScopeManager</span>',
+        'impls': [
+            'NI$vl::workflow::analyzer::WfLexicalScopeManager'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::analyzer::WfLexicalScopeManager'
+        ]
+    },
+    'vl::workflow::analyzer::WfLexicalSymbol': {
+        'displayNameInHtml': '<span class="cpp_type">WfLexicalSymbol</span>',
+        'impls': [
+            'NI$vl::workflow::analyzer::WfLexicalSymbol'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::analyzer::WfLexicalSymbol'
+        ]
+    },
+    'vl::workflow::emitter::WfAttributeEvaluator::AttributeValueMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfAttributeEvaluator</span>::<span class="cpp_type">AttributeValueMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfAttributeEvaluator::AttributeValueMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfAttributeEvaluator::Value': {
+        'displayNameInHtml': '<span class="cpp_type">WfAttributeEvaluator</span>::<span class="cpp_type">Value</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfAttributeEvaluator::Value'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenContext': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenContext</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenContext'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenContext::ConstructorIndexMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenContext</span>::<span class="cpp_type">ConstructorIndexMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenContext::ConstructorIndexMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenContext::DestructorIndexMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenContext</span>::<span class="cpp_type">DestructorIndexMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenContext::DestructorIndexMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenContext::NodePositionMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenContext</span>::<span class="cpp_type">NodePositionMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenContext::NodePositionMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenContext::SymbolIndexMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenContext</span>::<span class="cpp_type">SymbolIndexMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenContext::SymbolIndexMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenContext::ThisStackCountMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenContext</span>::<span class="cpp_type">ThisStackCountMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenContext::ThisStackCountMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenFunctionContext': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenFunctionContext</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenFunctionContext'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenFunctionContext::ClosureIndexMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenFunctionContext</span>::<span class="cpp_type">ClosureIndexMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenFunctionContext::ClosureIndexMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenFunctionContext::ScopeContextList': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenFunctionContext</span>::<span class="cpp_type">ScopeContextList</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenFunctionContext::ScopeContextList'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenFunctionContext::VariableIndexMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenFunctionContext</span>::<span class="cpp_type">VariableIndexMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenFunctionContext::VariableIndexMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenLambdaContext': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenLambdaContext</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenLambdaContext'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenScopeContext': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenScopeContext</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenScopeContext'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenScopeContext::InstructionIndexList': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenScopeContext</span>::<span class="cpp_type">InstructionIndexList</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenScopeContext::InstructionIndexList'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenScopeContext::InstructionList': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenScopeContext</span>::<span class="cpp_type">InstructionList</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenScopeContext::InstructionList'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenScopeContext::RangeMap': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenScopeContext</span>::<span class="cpp_type">RangeMap</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenScopeContext::RangeMap'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenScopeType': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenScopeType</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenScopeType'
+        ],
+        'decls': []
+    },
+    'vl::workflow::emitter::WfCodegenScopeType::Function': {
+        'displayNameInHtml': '<span class="cpp_type">WfCodegenScopeType</span>::<span class="cpp_enum">Function</span>',
+        'impls': [
+            'NI$vl::workflow::emitter::WfCodegenScopeType::Function'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime': {
+        'displayNameInHtml': 'vl::workflow::runtime',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::workflow::runtime',
+            'NF[1]$vl::workflow::runtime',
+            'NF[2]$vl::workflow::runtime',
+            'NF[3]$vl::workflow::runtime',
+            'NF[4]$vl::workflow::runtime',
+            'NF[5]$vl::workflow::runtime'
+        ]
+    },
+    'vl::workflow::runtime::WfAssembly': {
+        'displayNameInHtml': '<span class="cpp_type">WfAssembly</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfAssembly'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfAssemblyFunction': {
+        'displayNameInHtml': '<span class="cpp_type">WfAssemblyFunction</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfAssemblyFunction'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfInsType': {
+        'displayNameInHtml': '<span class="cpp_type">WfInsType</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfInsType'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfInstruction': {
+        'displayNameInHtml': '<span class="cpp_type">WfInstruction</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfInstruction'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeGlobalContext': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeGlobalContext</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeGlobalContext'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::runtime::WfRuntimeGlobalContext',
+            'NF[1]$vl::workflow::runtime::WfRuntimeGlobalContext'
+        ]
+    }
+};
+symbolToFiles = {
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::ObjectString::Empty': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[0]$vl::parsing::tabling': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[0]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::ITypeInfo': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::workflow': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[0]$vl::workflow::WfAttribute': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfConstructorDeclaration': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfDeclaration': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfDestructorDeclaration': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfFunctionDeclaration': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfFunctionExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfOrderedLambdaExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::WfStatement': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[0]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[0]$vl::workflow::analyzer::WfLexicalScope': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[0]$vl::workflow::analyzer::WfLexicalScopeManager': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[0]$vl::workflow::analyzer::WfLexicalSymbol': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[0]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[0]$vl::workflow::runtime::WfRuntimeGlobalContext': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[10]$vl::parsing': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[10]$vl::reflection': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[10]$vl::reflection::description': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[10]$vl::workflow': { 'htmlFileName': 'WfExpression_Parser.h', 'displayName': 'WfExpression_Parser.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[11]$vl::parsing': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[11]$vl::reflection': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[11]$vl::reflection::description': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[11]$vl::workflow': { 'htmlFileName': 'WfExpression_Traverse.h', 'displayName': 'WfExpression_Traverse.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl::parsing': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[12]$vl::reflection': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[12]$vl::reflection::description': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[12]$vl::workflow': { 'htmlFileName': 'WfExpression.h', 'displayName': 'WfExpression.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[13]$vl::parsing': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[13]$vl::reflection': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[13]$vl::reflection::description': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[13]$vl::workflow': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[14]$vl::reflection': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[14]$vl::reflection::description': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[14]$vl::workflow': null,
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl::reflection': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[15]$vl::reflection::description': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[15]$vl::workflow': { 'htmlFileName': 'WfCpp.h', 'displayName': 'WfCpp.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl::reflection': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::parsing': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[1]$vl::parsing::tabling': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[1]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::workflow': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[1]$vl::workflow::analyzer': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[1]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[1]$vl::workflow::runtime::WfRuntimeGlobalContext': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[28]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[29]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::parsing': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[2]$vl::parsing::tabling': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[2]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[2]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[2]$vl::workflow': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[2]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NF[30]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[31]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[32]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[33]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[34]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[37]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[38]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[39]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::parsing': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[3]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::workflow': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NF[3]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[40]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[42]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[43]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[44]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[45]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[46]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[48]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[49]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::parsing': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[4]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::workflow': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[4]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[50]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[51]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[52]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[53]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[54]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[55]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[56]$vl': { 'htmlFileName': 'WfLibraryCppHelper.h', 'displayName': 'WfLibraryCppHelper.h' },
+    'NF[57]$vl': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[58]$vl': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[59]$vl': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::parsing': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[5]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::workflow': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[5]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntime.h', 'displayName': 'WfRuntime.h' },
+    'NF[60]$vl': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[61]$vl': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[62]$vl': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[63]$vl': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[64]$vl': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[65]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[66]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[67]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[68]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[69]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::parsing': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[6]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::workflow': { 'htmlFileName': 'WfRuntime.h', 'displayName': 'WfRuntime.h' },
+    'NF[70]$vl': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[71]$vl': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[72]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[73]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[74]$vl': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[75]$vl': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[76]$vl': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[77]$vl': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[78]$vl': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NF[79]$vl': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::parsing': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[7]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[7]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[7]$vl::workflow': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[80]$vl': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[81]$vl': { 'htmlFileName': 'WfRuntime.h', 'displayName': 'WfRuntime.h' },
+    'NF[82]$vl': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[83]$vl': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[84]$vl': { 'htmlFileName': 'WfExpression_Copy.h', 'displayName': 'WfExpression_Copy.h' },
+    'NF[85]$vl': { 'htmlFileName': 'WfExpression_Empty.h', 'displayName': 'WfExpression_Empty.h' },
+    'NF[86]$vl': { 'htmlFileName': 'WfExpression_Parser.h', 'displayName': 'WfExpression_Parser.h' },
+    'NF[87]$vl': { 'htmlFileName': 'WfExpression_Traverse.h', 'displayName': 'WfExpression_Traverse.h' },
+    'NF[88]$vl': { 'htmlFileName': 'WfExpression.h', 'displayName': 'WfExpression.h' },
+    'NF[89]$vl': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::parsing': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[8]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::workflow': { 'htmlFileName': 'WfExpression_Copy.h', 'displayName': 'WfExpression_Copy.h' },
+    'NF[90]$vl': null,
+    'NF[91]$vl': { 'htmlFileName': 'WfCpp.h', 'displayName': 'WfCpp.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::parsing': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[9]$vl::reflection': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[9]$vl::reflection::description': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[9]$vl::workflow': { 'htmlFileName': 'WfExpression_Empty.h', 'displayName': 'WfExpression_Empty.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::ObjectString::Empty': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::Dictionary': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NI$vl::collections::LazyList': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::parsing::ParsingError': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTextRange': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::ParsingTreeCustomBase': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NI$vl::parsing::tabling::ParsingTable': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NI$vl::reflection::description::ITypeInfo': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::Value': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::workflow::IWfCompilerCallback': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NI$vl::workflow::WfAttribute': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfConstructorDeclaration': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfDeclaration': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfDestructorDeclaration': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfFunctionDeclaration': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfFunctionExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfOrderedLambdaExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::WfStatement': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NI$vl::workflow::analyzer::WfLexicalFunctionConfig': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NI$vl::workflow::analyzer::WfLexicalScope': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NI$vl::workflow::analyzer::WfLexicalScopeManager': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NI$vl::workflow::analyzer::WfLexicalSymbol': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NI$vl::workflow::emitter::WfAttributeEvaluator::AttributeValueMap': null,
+    'NI$vl::workflow::emitter::WfAttributeEvaluator::Value': null,
+    'NI$vl::workflow::emitter::WfCodegenContext': null,
+    'NI$vl::workflow::emitter::WfCodegenContext::ConstructorIndexMap': null,
+    'NI$vl::workflow::emitter::WfCodegenContext::DestructorIndexMap': null,
+    'NI$vl::workflow::emitter::WfCodegenContext::NodePositionMap': null,
+    'NI$vl::workflow::emitter::WfCodegenContext::SymbolIndexMap': null,
+    'NI$vl::workflow::emitter::WfCodegenContext::ThisStackCountMap': null,
+    'NI$vl::workflow::emitter::WfCodegenFunctionContext': null,
+    'NI$vl::workflow::emitter::WfCodegenFunctionContext::ClosureIndexMap': null,
+    'NI$vl::workflow::emitter::WfCodegenFunctionContext::ScopeContextList': null,
+    'NI$vl::workflow::emitter::WfCodegenFunctionContext::VariableIndexMap': null,
+    'NI$vl::workflow::emitter::WfCodegenLambdaContext': null,
+    'NI$vl::workflow::emitter::WfCodegenScopeContext': null,
+    'NI$vl::workflow::emitter::WfCodegenScopeContext::InstructionIndexList': null,
+    'NI$vl::workflow::emitter::WfCodegenScopeContext::InstructionList': null,
+    'NI$vl::workflow::emitter::WfCodegenScopeContext::RangeMap': null,
+    'NI$vl::workflow::emitter::WfCodegenScopeType': null,
+    'NI$vl::workflow::emitter::WfCodegenScopeType::Function': null,
+    'NI$vl::workflow::runtime::WfAssembly': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NI$vl::workflow::runtime::WfAssemblyFunction': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NI$vl::workflow::runtime::WfInsType': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NI$vl::workflow::runtime::WfInstruction': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NI$vl::workflow::runtime::WfRuntimeGlobalContext': { 'htmlFileName': 'WfRuntime.h', 'displayName': 'WfRuntime.h' }
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

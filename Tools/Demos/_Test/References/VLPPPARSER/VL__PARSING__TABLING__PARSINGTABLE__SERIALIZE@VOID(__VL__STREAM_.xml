@@ -1,0 +1,4 @@
+<Document symbolId="vl::parsing::tabling::ParsingTable::Serialize@void(::vl::stream::IStream &amp;)" accessor="public" category="Function" name="Serialize" declFile="ParsingTable.h" declId="FB$vl::parsing::tabling::ParsingTable::Serialize@void(::vl::stream::IStream &amp;)[decl0]"><summary>Serialize the parsing table to a stream.</summary><param name="output">The stream.</param><signature><![CDATA[void Serialize(
+    stream::IStream & output
+);
+]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>

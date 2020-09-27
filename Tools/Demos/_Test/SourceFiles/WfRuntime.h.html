@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WfRuntime.h</title>
+    <link rel="stylesheet" href="../../Cpp.css" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <script type="text/javascript" src="../../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="../FileIndex.html">File Index</a>
+<a class="button" href="../SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+Workflow::Runtime
+
+Interfaces:
+**********************************************************************/</div>
+
+<div class="disabled">#ifndef VCZH_WORKFLOW_RUNTIME_WFRUNTIME</div>
+<div class="disabled">#define VCZH_WORKFLOW_RUNTIME_WFRUNTIME</div>
+
+<div class="disabled">#include &quot;WfRuntimeAssembly.h&quot;</div>
+<div class="disabled">#include &quot;WfRuntimeConstructions.h&quot;</div>
+<div class="disabled">#include &quot;WfRuntimeDebugger.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[81]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
+{
+	<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[6]$vl::workflow"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow'], [], [])">workflow</div></div>
+	{
+		<div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[5]$vl::workflow::runtime"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime'], [], [])">runtime</div></div>
+		{
+
+<div class="token cpp_comment ">/***********************************************************************
+RuntimeEnvironment
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeVariableContext"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt;
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;		<div class="def" id="NI$vl::workflow::runtime::WfRuntimeVariableContext::VariableArray"><div><div class="token cpp_type">VariableArray</div></div></div>;
+
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext::VariableArray'], [], [])"><div class="token cpp_type">VariableArray</div></div>					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeVariableContext::variables"><div><div class="token cpp_field">variables</div></div></div>;
+			};
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Global context for executing a Workflow program. After the context is prepared, use [M:vl.workflow.runtime.LoadFunction] to call any functions inside the assembly. Function &quot;&amp;lt;initialize&amp;gt;&quot; should be the first to execute.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeGlobalContext"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeGlobalContext'], [], [])"><div class="token cpp_type">WfRuntimeGlobalContext</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeGlobalContext'], [], [])"><div class="token cpp_type">WfRuntimeGlobalContext</div></div>&gt;
+			{
+			<div class="token cpp_keyword ">public</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt;					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeGlobalContext::assembly"><div><div class="token cpp_field">assembly</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeGlobalContext::globalVariables"><div><div class="token cpp_field">globalVariables</div></div></div>;
+				
+				<div class="token cpp_comment ">/// &lt;summary&gt;Create a global context for executing a Workflow program.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_assembly&quot;&gt;The assembly.&lt;/param&gt;</div>
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfAssembly>)[decl0]"><div><div class="token cpp_function">WfRuntimeGlobalContext</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfAssembly>)[decl0]::_assembly"><div>_assembly</div></div>);
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeGlobalContext::~WfRuntimeGlobalContext@()[decl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">WfRuntimeGlobalContext</div></div></div>();
+			};
+
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeStackFrame"><div><div class="token cpp_type">WfRuntimeStackFrame</div></div></div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeStackFrame::capturedVariables"><div><div class="token cpp_field">capturedVariables</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeStackFrame::functionIndex"><div><div class="token cpp_field">functionIndex</div></div></div> = -<div class="token cpp_number ">1</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeStackFrame::nextInstructionIndex"><div><div class="token cpp_field">nextInstructionIndex</div></div></div> = -<div class="token cpp_number ">1</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeStackFrame::stackBase"><div><div class="token cpp_field">stackBase</div></div></div> = <div class="token cpp_number ">0</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeStackFrame::fixedVariableCount"><div><div class="token cpp_field">fixedVariableCount</div></div></div> = <div class="token cpp_number ">0</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeStackFrame::freeStackBase"><div><div class="token cpp_field">freeStackBase</div></div></div> = <div class="token cpp_number ">0</div>;
+			};
+
+			<div class="token cpp_keyword ">struct</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeTrapFrame"><div><div class="token cpp_type">WfRuntimeTrapFrame</div></div></div>
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeTrapFrame::stackFrameIndex"><div><div class="token cpp_field">stackFrameIndex</div></div></div> = -<div class="token cpp_number ">1</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeTrapFrame::instructionIndex"><div><div class="token cpp_field">instructionIndex</div></div></div> = -<div class="token cpp_number ">1</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeTrapFrame::stackPatternCount"><div><div class="token cpp_field">stackPatternCount</div></div></div> = -<div class="token cpp_number ">1</div>;
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+RuntimeException
+***********************************************************************/</div>
+
+			<div class="token cpp_comment ">/// &lt;summary&gt;Representing a call stack item.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo"><div><div class="token cpp_type">WfRuntimeCallStackInfo</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueCallStack'], [], [])"><div class="token cpp_type">IValueCallStack</div></div>
+			{
+				<div class="token cpp_keyword ">using</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary"><div><div class="token cpp_type">IValueReadonlyDictionary</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>;
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::cachedLocalVariables"><div><div class="token cpp_field">cachedLocalVariables</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::cachedLocalArguments"><div><div class="token cpp_field">cachedLocalArguments</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::cachedCapturedVariables"><div><div class="token cpp_field">cachedCapturedVariables</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::cachedGlobalVariables"><div><div class="token cpp_field">cachedGlobalVariables</div></div></div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetVariables@::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary>(::vl::collections::List<::vl::WString> &, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeVariableContext>, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary> &)[decl0]"><div><div class="token cpp_function">GetVariables</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::GetVariables@::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary>(::vl::collections::List<::vl::WString> &, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeVariableContext>, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary> &)[decl0]::names"><div>names</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::GetVariables@::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary>(::vl::collections::List<::vl::WString> &, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeVariableContext>, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary> &)[decl0]::context"><div>context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::GetVariables@::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary>(::vl::collections::List<::vl::WString> &, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeVariableContext>, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary> &)[decl0]::cache"><div>cache</div></div>);
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::$__ctor@()[decl0]"><div><div class="token cpp_function">WfRuntimeCallStackInfo</div></div></div>();
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::$__ctor@(::vl::workflow::runtime::WfRuntimeThreadContext *, ::vl::workflow::runtime::WfRuntimeStackFrame const &)[decl0]"><div><div class="token cpp_function">WfRuntimeCallStackInfo</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContext'], [], [])"><div class="token cpp_type">WfRuntimeThreadContext</div></div>* <div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::$__ctor@(::vl::workflow::runtime::WfRuntimeThreadContext *, ::vl::workflow::runtime::WfRuntimeStackFrame const &)[decl0]::context"><div>context</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeStackFrame'], [], [])"><div class="token cpp_type">WfRuntimeStackFrame</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::$__ctor@(::vl::workflow::runtime::WfRuntimeThreadContext *, ::vl::workflow::runtime::WfRuntimeStackFrame const &)[decl0]::stackFrame"><div>stackFrame</div></div>);
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::~WfRuntimeCallStackInfo@()[decl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">WfRuntimeCallStackInfo</div></div></div>();
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;The executing assembly.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt;					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::assembly"><div><div class="token cpp_field">assembly</div></div></div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Global variable values.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::global"><div><div class="token cpp_field">global</div></div></div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Captured variable values.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::captured"><div><div class="token cpp_field">captured</div></div></div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Argument values.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::arguments"><div><div class="token cpp_field">arguments</div></div></div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Local variable values.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt;	<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::localVariables"><div><div class="token cpp_field">localVariables</div></div></div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;The executing function.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::functionIndex"><div><div class="token cpp_field">functionIndex</div></div></div> = -<div class="token cpp_number ">1</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;The executing instruction.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::instruction"><div><div class="token cpp_field">instruction</div></div></div> = -<div class="token cpp_number ">1</div>;
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetLocalVariables@::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary>()[decl0]"><div><div class="token cpp_function">GetLocalVariables</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetLocalArguments@::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary>()[decl0]"><div><div class="token cpp_function">GetLocalArguments</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetCapturedVariables@::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary>()[decl0]"><div><div class="token cpp_function">GetCapturedVariables</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'], [], [])"><div class="token cpp_type">IValueReadonlyDictionary</div></div>&gt;	<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetGlobalVariables@::vl::Ptr<::vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary>()[decl0]"><div><div class="token cpp_function">GetGlobalVariables</div></div></div>()<div class="token cpp_keyword ">override</div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the name of the executing function.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The name of the execution function.&lt;/returns&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetFunctionName@::vl::WString()[decl0]"><div><div class="token cpp_function">GetFunctionName</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the source code of the executing module.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The source code.&lt;/returns&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetSourceCodeBeforeCodegen@::vl::WString()[decl0]"><div><div class="token cpp_function">GetSourceCodeBeforeCodegen</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the source code of the executing module from generated syntax trees from the final compiling pass.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The source code.&lt;/returns&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetSourceCodeAfterCodegen@::vl::WString()[decl0]"><div><div class="token cpp_function">GetSourceCodeAfterCodegen</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the row number (starts at 0) of the source code of the executing module.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The row number.&lt;/returns&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetRowBeforeCodegen@::vl::vint()[decl0]"><div><div class="token cpp_function">GetRowBeforeCodegen</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the row number (starts at 0) of the source code of the executing module from generated syntax trees from the final compiling pass.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The row number.&lt;/returns&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>							<div class="def" id="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetRowAfterCodegen@::vl::vint()[decl0]"><div><div class="token cpp_function">GetRowAfterCodegen</div></div></div>()<div class="token cpp_keyword ">override</div>;
+			};
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Representing an raised exception.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo'], [], [])"><div class="token cpp_type">WfRuntimeExceptionInfo</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueException'], [], [])"><div class="token cpp_type">IValueException</div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeCallStackInfo'], [], [])"><div class="token cpp_type">WfRuntimeCallStackInfo</div></div>&gt;&gt;		<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::CallStackList"><div><div class="token cpp_type">CallStackList</div></div></div>;
+				<div class="token cpp_keyword ">using</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::IValueReadonlyList"><div><div class="token cpp_type">IValueReadonlyList</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>;
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>&gt;			<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::cachedCallStack"><div><div class="token cpp_field">cachedCallStack</div></div></div>;
+
+			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;Exception message.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::message"><div><div class="token cpp_field">message</div></div></div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;Fatal error flag.&lt;/summary&gt;</div>
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::fatal"><div><div class="token cpp_field">fatal</div></div></div> = <div class="token cpp_keyword ">false</div>;
+				<div class="token cpp_comment ">/// &lt;summary&gt;All call stack items.&lt;/summary&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo::CallStackList'], [], [])"><div class="token cpp_type">CallStackList</div></div>					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::callStack"><div><div class="token cpp_field">callStack</div></div></div>;
+
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeExceptionInfo::$__ctor@(::vl::WString const &, bool)[decl0]"><div><div class="token cpp_function">WfRuntimeExceptionInfo</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::$__ctor@(::vl::WString const &, bool)[decl0]::_message"><div>_message</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::$__ctor@(::vl::WString const &, bool)[decl0]::_fatal"><div>_fatal</div></div>);
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeExceptionInfo::~WfRuntimeExceptionInfo@()[decl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">WfRuntimeExceptionInfo</div></div></div>();
+				
+<div class="disabled">#pragma push_macro(&quot;GetMessage&quot;)</div>
+<div class="disabled">#if defined GetMessage</div>
+<div class="disabled">#undef GetMessage
+#endif</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>							<div class="def" id="FB$vl::workflow::runtime::WfRuntimeExceptionInfo::GetMessage@::vl::WString()[decl0]"><div><div class="token cpp_function">GetMessage</div></div></div>()<div class="token cpp_keyword ">override</div>;
+<div class="disabled">#pragma pop_macro(&quot;GetMessage&quot;)</div>
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::workflow::runtime::WfRuntimeExceptionInfo::GetFatal@bool()[decl0]"><div><div class="token cpp_function">GetFatal</div></div></div>()<div class="token cpp_keyword ">override</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo::IValueReadonlyList'], [], [])"><div class="token cpp_type">IValueReadonlyList</div></div>&gt;			<div class="def" id="FB$vl::workflow::runtime::WfRuntimeExceptionInfo::GetCallStack@::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo::IValueReadonlyList>()[decl0]"><div><div class="token cpp_function">GetCallStack</div></div></div>()<div class="token cpp_keyword ">override</div>;
+			};
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Representing an raised exception object for upper level C++ code.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeException"><div><div class="token cpp_type">WfRuntimeException</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeDescriptorException'], [], [])"><div class="token cpp_type">TypeDescriptorException</div></div>
+			{
+			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo'], [], [])"><div class="token cpp_type">WfRuntimeExceptionInfo</div></div>&gt;		<div class="def" id="NI$vl::workflow::runtime::WfRuntimeException::info"><div><div class="token cpp_field">info</div></div></div>;
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="NI$vl::workflow::runtime::WfRuntimeException::fatal"><div><div class="token cpp_field">fatal</div></div></div> = <div class="token cpp_keyword ">false</div>;
+			<div class="token cpp_keyword ">public</div>:
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>)[impl0]"><div><div class="token cpp_function">WfRuntimeException</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo'], [], [])"><div class="token cpp_type">WfRuntimeExceptionInfo</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>)[impl0]::_info"><div><div class="token cpp_argument">_info</div></div></div>)
+					:<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeDescriptorException'], [], [])"><div class="token cpp_type">TypeDescriptorException</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>)[impl0]::_info'], [], [])"><div class="token cpp_argument">_info</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo::message'], [], [])"><div class="token cpp_field">message</div></div>)
+					, info(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>)[impl0]::_info'], [], [])"><div class="token cpp_argument">_info</div></div>)
+					, fatal(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>)[impl0]::_info'], [], [])"><div class="token cpp_argument">_info</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo::fatal'], [], [])"><div class="token cpp_field">fatal</div></div>)
+				{
+				}
+
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]"><div><div class="token cpp_function">WfRuntimeException</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_message"><div><div class="token cpp_argument">_message</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_fatal"><div><div class="token cpp_argument">_fatal</div></div></div>)
+					:<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeDescriptorException'], [], [])"><div class="token cpp_type">TypeDescriptorException</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_message'], [], [])"><div class="token cpp_argument">_message</div></div>)
+					, fatal(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_fatal'], [], [])"><div class="token cpp_argument">_fatal</div></div>)
+				{
+				}
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the detailed information.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;The detailed information.&lt;/returns&gt;</div>
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo'], [], [])"><div class="token cpp_type">WfRuntimeExceptionInfo</div></div>&gt; <div class="def" id="FB$vl::workflow::runtime::WfRuntimeException::GetInfo@::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>()[impl0]"><div><div class="token cpp_function">GetInfo</div></div></div>()<div class="token cpp_keyword ">const</div>
+				{
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeException::info'], [], [])"><div class="token cpp_field">info</div></div>;
+				}
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get the fatal error flag.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this exception is a fatal error, which normally means state corruption in a Workflow runtime.&lt;/returns&gt;</div>
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::workflow::runtime::WfRuntimeException::IsFatal@bool()[impl0]"><div><div class="token cpp_function">IsFatal</div></div></div>()<div class="token cpp_keyword ">const</div>
+				{
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeException::fatal'], [], [])"><div class="token cpp_field">fatal</div></div>;
+				}
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+RuntimeThreadContext
+***********************************************************************/</div>
+
+			<div class="token cpp_keyword ">enum</div> <div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionStatus"><div><div class="token cpp_type">WfRuntimeExecutionStatus</div></div></div>
+			{
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionStatus::Ready"><div><div class="token cpp_enum">Ready</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionStatus::Executing"><div><div class="token cpp_enum">Executing</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionStatus::RaisedException"><div><div class="token cpp_enum">RaisedException</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionStatus::Finished"><div><div class="token cpp_enum">Finished</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionStatus::FatalError"><div><div class="token cpp_enum">FatalError</div></div></div>,
+			};
+
+			<div class="token cpp_keyword ">enum</div> <div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionAction"><div><div class="token cpp_type">WfRuntimeExecutionAction</div></div></div>
+			{
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionAction::ExecuteInstruction"><div><div class="token cpp_enum">ExecuteInstruction</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionAction::UnwrapStack"><div><div class="token cpp_enum">UnwrapStack</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionAction::EnterStackFrame"><div><div class="token cpp_enum">EnterStackFrame</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionAction::ExitStackFrame"><div><div class="token cpp_enum">ExitStackFrame</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeExecutionAction::Nop"><div><div class="token cpp_enum">Nop</div></div></div>,
+			};
+
+			<div class="token cpp_keyword ">enum</div> <div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError"><div><div class="token cpp_type">WfRuntimeThreadContextError</div></div></div>
+			{
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::Success"><div><div class="token cpp_enum">Success</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::WrongStackItemIndex"><div><div class="token cpp_enum">WrongStackItemIndex</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::WrongVariableIndex"><div><div class="token cpp_enum">WrongVariableIndex</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::WrongFunctionIndex"><div><div class="token cpp_enum">WrongFunctionIndex</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::WrongArgumentCount"><div><div class="token cpp_enum">WrongArgumentCount</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::WrongCapturedVariableCount"><div><div class="token cpp_enum">WrongCapturedVariableCount</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::EmptyStackFrame"><div><div class="token cpp_enum">EmptyStackFrame</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::EmptyTrapFrame"><div><div class="token cpp_enum">EmptyTrapFrame</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::EmptyStack"><div><div class="token cpp_enum">EmptyStack</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::TrapFrameCorrupted"><div><div class="token cpp_enum">TrapFrameCorrupted</div></div></div>,
+				<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContextError::StackCorrupted"><div><div class="token cpp_enum">StackCorrupted</div></div></div>,
+			};
+
+			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContext'], [], [])"><div class="token cpp_type">WfRuntimeThreadContext</div></div></div>
+			{
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&gt;		<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::VariableList"><div><div class="token cpp_type">VariableList</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeStackFrame'], [], [])"><div class="token cpp_type">WfRuntimeStackFrame</div></div>&gt;					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::StackFrameList"><div><div class="token cpp_type">StackFrameList</div></div></div>;
+				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeTrapFrame'], [], [])"><div class="token cpp_type">WfRuntimeTrapFrame</div></div>&gt;					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::TrapFrameList"><div><div class="token cpp_type">TrapFrameList</div></div></div>;
+			<div class="token cpp_keyword ">public</div>:
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeGlobalContext'], [], [])"><div class="token cpp_type">WfRuntimeGlobalContext</div></div>&gt;		<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::globalContext"><div><div class="token cpp_field">globalContext</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo'], [], [])"><div class="token cpp_type">WfRuntimeExceptionInfo</div></div>&gt;		<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::exceptionInfo"><div><div class="token cpp_field">exceptionInfo</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContext::VariableList'], [], [])"><div class="token cpp_type">VariableList</div></div>					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::stack"><div><div class="token cpp_field">stack</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContext::StackFrameList'], [], [])"><div class="token cpp_type">StackFrameList</div></div>					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::stackFrames"><div><div class="token cpp_field">stackFrames</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContext::TrapFrameList'], [], [])"><div class="token cpp_type">TrapFrameList</div></div>					<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::trapFrames"><div><div class="token cpp_field">trapFrames</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExecutionStatus'], [], [])"><div class="token cpp_type">WfRuntimeExecutionStatus</div></div>		<div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::status"><div><div class="token cpp_field">status</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExecutionStatus'], [], [])"><div class="token cpp_type">WfRuntimeExecutionStatus</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExecutionStatus::Finished'], [], [])"><div class="token cpp_enum">Finished</div></div>;
+
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>)[decl0]"><div><div class="token cpp_function">WfRuntimeThreadContext</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeGlobalContext'], [], [])"><div class="token cpp_type">WfRuntimeGlobalContext</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>)[decl0]::_context"><div>_context</div></div>);
+				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfAssembly>)[decl0]"><div><div class="token cpp_function">WfRuntimeThreadContext</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfAssembly'], [], [])"><div class="token cpp_type">WfAssembly</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfAssembly>)[decl0]::_assembly"><div>_assembly</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeStackFrame'], [], [])"><div class="token cpp_type">WfRuntimeStackFrame</div></div>&amp;			<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::GetCurrentStackFrame@::vl::workflow::runtime::WfRuntimeStackFrame &()[decl0]"><div><div class="token cpp_function">GetCurrentStackFrame</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::PushStackFrame@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::vint, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeVariableContext>)[decl0]"><div><div class="token cpp_function">PushStackFrame</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::PushStackFrame@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::vint, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeVariableContext>)[decl0]::functionIndex"><div>functionIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::PushStackFrame@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::vint, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeVariableContext>)[decl0]::argumentCount"><div>argumentCount</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeVariableContext'], [], [])"><div class="token cpp_type">WfRuntimeVariableContext</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::PushStackFrame@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::vint, ::vl::Ptr<::vl::workflow::runtime::WfRuntimeVariableContext>)[decl0]::capturedVariables"><div>capturedVariables</div></div> = <div class="token cpp_number ">0</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::PopStackFrame@::vl::workflow::runtime::WfRuntimeThreadContextError()[decl0]"><div><div class="token cpp_function">PopStackFrame</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeTrapFrame'], [], [])"><div class="token cpp_type">WfRuntimeTrapFrame</div></div>&amp;				<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::GetCurrentTrapFrame@::vl::workflow::runtime::WfRuntimeTrapFrame &()[decl0]"><div><div class="token cpp_function">GetCurrentTrapFrame</div></div></div>();
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::PushTrapFrame@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint)[decl0]"><div><div class="token cpp_function">PushTrapFrame</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::PushTrapFrame@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint)[decl0]::instructionIndex"><div>instructionIndex</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::PopTrapFrame@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint)[decl0]"><div><div class="token cpp_function">PopTrapFrame</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::PopTrapFrame@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint)[decl0]::saveStackPatternCount"><div>saveStackPatternCount</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::PushValue@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">PushValue</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::PushValue@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::PopValue@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::reflection::description::Value &)[decl0]"><div><div class="token cpp_function">PopValue</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::PopValue@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::reflection::description::Value &)[decl0]::value"><div>value</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::RaiseException@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::WString const &, bool, bool)[decl0]"><div><div class="token cpp_function">RaiseException</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::RaiseException@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::WString const &, bool, bool)[decl0]::exception"><div>exception</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::RaiseException@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::WString const &, bool, bool)[decl0]::fatalError"><div>fatalError</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::RaiseException@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::WString const &, bool, bool)[decl0]::skipDebugger"><div>skipDebugger</div></div> = <div class="token cpp_keyword ">false</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::RaiseException@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>, bool)[decl0]"><div><div class="token cpp_function">RaiseException</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExceptionInfo'], [], [])"><div class="token cpp_type">WfRuntimeExceptionInfo</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::RaiseException@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>, bool)[decl0]::info"><div>info</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::RaiseException@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>, bool)[decl0]::skipDebugger"><div>skipDebugger</div></div> = <div class="token cpp_keyword ">false</div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::LoadStackValue@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]"><div><div class="token cpp_function">LoadStackValue</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::LoadStackValue@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]::stackItemIndex"><div>stackItemIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::LoadStackValue@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]::value"><div>value</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::LoadGlobalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]"><div><div class="token cpp_function">LoadGlobalVariable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::LoadGlobalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]::variableIndex"><div>variableIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::LoadGlobalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]::value"><div>value</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::StoreGlobalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">StoreGlobalVariable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::StoreGlobalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::variableIndex"><div>variableIndex</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::StoreGlobalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::LoadCapturedVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]"><div><div class="token cpp_function">LoadCapturedVariable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::LoadCapturedVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]::variableIndex"><div>variableIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::LoadCapturedVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]::value"><div>value</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::StoreCapturedVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">StoreCapturedVariable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::StoreCapturedVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::variableIndex"><div>variableIndex</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::StoreCapturedVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::LoadLocalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]"><div><div class="token cpp_function">LoadLocalVariable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::LoadLocalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]::variableIndex"><div>variableIndex</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::LoadLocalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value &)[decl0]::value"><div>value</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeThreadContextError'], [], [])"><div class="token cpp_type">WfRuntimeThreadContextError</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::StoreLocalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]"><div><div class="token cpp_function">StoreLocalVariable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::StoreLocalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::variableIndex"><div>variableIndex</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::StoreLocalVariable@::vl::workflow::runtime::WfRuntimeThreadContextError(::vl::vint, ::vl::reflection::description::Value const &)[decl0]::value"><div>value</div></div>);
+
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExecutionAction'], [], [])"><div class="token cpp_type">WfRuntimeExecutionAction</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::ExecuteInternal@::vl::workflow::runtime::WfRuntimeExecutionAction(::vl::workflow::runtime::WfInstruction &, ::vl::workflow::runtime::WfRuntimeStackFrame &, ::vl::workflow::runtime::IWfDebuggerCallback *)[decl0]"><div><div class="token cpp_function">ExecuteInternal</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfInstruction'], [], [])"><div class="token cpp_type">WfInstruction</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::ExecuteInternal@::vl::workflow::runtime::WfRuntimeExecutionAction(::vl::workflow::runtime::WfInstruction &, ::vl::workflow::runtime::WfRuntimeStackFrame &, ::vl::workflow::runtime::IWfDebuggerCallback *)[decl0]::ins"><div>ins</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeStackFrame'], [], [])"><div class="token cpp_type">WfRuntimeStackFrame</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::ExecuteInternal@::vl::workflow::runtime::WfRuntimeExecutionAction(::vl::workflow::runtime::WfInstruction &, ::vl::workflow::runtime::WfRuntimeStackFrame &, ::vl::workflow::runtime::IWfDebuggerCallback *)[decl0]::stackFrame"><div>stackFrame</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::IWfDebuggerCallback'], [], [])"><div class="token cpp_type">IWfDebuggerCallback</div></div>* <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::ExecuteInternal@::vl::workflow::runtime::WfRuntimeExecutionAction(::vl::workflow::runtime::WfInstruction &, ::vl::workflow::runtime::WfRuntimeStackFrame &, ::vl::workflow::runtime::IWfDebuggerCallback *)[decl0]::callback"><div>callback</div></div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeExecutionAction'], [], [])"><div class="token cpp_type">WfRuntimeExecutionAction</div></div>		<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::Execute@::vl::workflow::runtime::WfRuntimeExecutionAction(::vl::workflow::runtime::IWfDebuggerCallback *)[decl0]"><div><div class="token cpp_function">Execute</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::IWfDebuggerCallback'], [], [])"><div class="token cpp_type">IWfDebuggerCallback</div></div>* <div class="def" id="NI$vl::workflow::runtime::WfRuntimeThreadContext::Execute@::vl::workflow::runtime::WfRuntimeExecutionAction(::vl::workflow::runtime::IWfDebuggerCallback *)[decl0]::callback"><div>callback</div></div>);
+				<div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::workflow::runtime::WfRuntimeThreadContext::ExecuteToEnd@void()[decl0]"><div><div class="token cpp_function">ExecuteToEnd</div></div></div>();
+			};
+
+<div class="token cpp_comment ">/***********************************************************************
+Helper Functions
+***********************************************************************/</div>
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Load a function from a global context, raise an exception if multiple functions are found under the same name. Function &quot;&amp;gt;initialize&amp;lt;&quot; should be the first to execute.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The loaded function.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;context&quot;&gt;The context to the evaluation environment.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The function name.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">extern</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::IValueFunctionProxy'], [], [])"><div class="token cpp_type">IValueFunctionProxy</div></div>&gt;		<div class="def" id="FB$vl::workflow::runtime::LoadFunction@::vl::Ptr<::vl::reflection::description::IValueFunctionProxy>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[decl0]"><div><div class="token cpp_function">LoadFunction</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeGlobalContext'], [], [])"><div class="token cpp_type">WfRuntimeGlobalContext</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::LoadFunction@::vl::Ptr<::vl::reflection::description::IValueFunctionProxy>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[decl0]::context"><div>context</div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::LoadFunction@::vl::Ptr<::vl::reflection::description::IValueFunctionProxy>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[decl0]::name"><div>name</div></div>);
+			
+			<div class="token cpp_comment ">/// &lt;summary&gt;Load a C++ friendly function from a global context, raise an exception if multiple functions are found under the same name. Function &quot;&amp;gt;initialize&amp;lt;&quot; should be the first to execute.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;typeparam name=&quot;TFunction&quot;&gt;Type of the function.&lt;/typeparam&gt;</div>
+			<div class="token cpp_comment ">/// &lt;returns&gt;The loaded C++ friendly function.&lt;/returns&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;context&quot;&gt;The context to the evaluation environment.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;name&quot;&gt;The function name.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">template</div>&lt;<div class="token cpp_keyword ">typename</div> <div class="def" id="TA$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::TFunction"><div><div class="token cpp_type">TFunction</div></div></div>&gt;
+			<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::TFunction'], [], [])"><div class="token cpp_type">TFunction</div></div>&gt; <div class="def" id="FB$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]"><div><div class="token cpp_function">LoadFunction</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfRuntimeGlobalContext'], [], [])"><div class="token cpp_type">WfRuntimeGlobalContext</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::context"><div><div class="token cpp_argument">context</div></div></div>, <div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::name"><div><div class="token cpp_argument">name</div></div></div>)
+			{
+				<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::proxy"><div>proxy</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::workflow::runtime::LoadFunction@::vl::Ptr<::vl::reflection::description::IValueFunctionProxy>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)'], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)', 'vl::workflow::runtime::LoadFunction@::vl::Ptr<::vl::reflection::description::IValueFunctionProxy>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)'], [], [])"><div class="token cpp_function">LoadFunction</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::context'], [], [])"><div class="token cpp_argument">context</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::name'], [], [])"><div class="token cpp_argument">name</div></div>);
+				<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::TFunction'], [], [])"><div class="token cpp_type">TFunction</div></div>&gt; <div class="def" id="NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::function"><div>function</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol(['vl::reflection::description::UnboxParameter@void(::vl::reflection::description::Value const &, [T] &, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &)'], ['vl::reflection::description::UnboxParameter@void(::vl::reflection::description::Value const &, [T] &, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &)'], [], [])"><div class="token cpp_function">UnboxParameter</div></div>&lt;<div class="ref" onclick="jumpToSymbol(['vl::Func', 'vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::TFunction'], [], [])"><div class="token cpp_type">TFunction</div></div>&gt;&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>::<div class="ref" onclick="jumpToSymbol(['vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::DescriptableObject>)'], ['vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::DescriptableObject>)', 'vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IBoxedValue>, ::vl::reflection::description::ITypeDescriptor *)', 'vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)'], [], [])"><div class="token cpp_function">From</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::proxy'], [], [])">proxy</div>), <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::function'], [], [])">function</div>);
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::function'], [], [])">function</div>;
+			}
+		}
+	}
+}
+
+<div class="disabled">#endif
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'vl': {
+        'displayNameInHtml': 'vl',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl',
+            'NF[1]$vl',
+            'NF[2]$vl',
+            'NF[3]$vl',
+            'NF[4]$vl',
+            'NF[5]$vl',
+            'NF[6]$vl',
+            'NF[7]$vl',
+            'NF[8]$vl',
+            'NF[9]$vl',
+            'NF[10]$vl',
+            'NF[11]$vl',
+            'NF[12]$vl',
+            'NF[13]$vl',
+            'NF[14]$vl',
+            'NF[15]$vl',
+            'NF[16]$vl',
+            'NF[17]$vl',
+            'NF[18]$vl',
+            'NF[19]$vl',
+            'NF[20]$vl',
+            'NF[21]$vl',
+            'NF[22]$vl',
+            'NF[23]$vl',
+            'NF[24]$vl',
+            'NF[25]$vl',
+            'NF[26]$vl',
+            'NF[27]$vl',
+            'NF[28]$vl',
+            'NF[29]$vl',
+            'NF[30]$vl',
+            'NF[31]$vl',
+            'NF[32]$vl',
+            'NF[33]$vl',
+            'NF[34]$vl',
+            'NF[35]$vl',
+            'NF[36]$vl',
+            'NF[37]$vl',
+            'NF[38]$vl',
+            'NF[39]$vl',
+            'NF[40]$vl',
+            'NF[41]$vl',
+            'NF[42]$vl',
+            'NF[43]$vl',
+            'NF[44]$vl',
+            'NF[45]$vl',
+            'NF[46]$vl',
+            'NF[47]$vl',
+            'NF[48]$vl',
+            'NF[49]$vl',
+            'NF[50]$vl',
+            'NF[51]$vl',
+            'NF[52]$vl',
+            'NF[53]$vl',
+            'NF[54]$vl',
+            'NF[55]$vl',
+            'NF[56]$vl',
+            'NF[57]$vl',
+            'NF[58]$vl',
+            'NF[59]$vl',
+            'NF[60]$vl',
+            'NF[61]$vl',
+            'NF[62]$vl',
+            'NF[63]$vl',
+            'NF[64]$vl',
+            'NF[65]$vl',
+            'NF[66]$vl',
+            'NF[67]$vl',
+            'NF[68]$vl',
+            'NF[69]$vl',
+            'NF[70]$vl',
+            'NF[71]$vl',
+            'NF[72]$vl',
+            'NF[73]$vl',
+            'NF[74]$vl',
+            'NF[75]$vl',
+            'NF[76]$vl',
+            'NF[77]$vl',
+            'NF[78]$vl',
+            'NF[79]$vl',
+            'NF[80]$vl',
+            'NF[81]$vl',
+            'NF[82]$vl',
+            'NF[83]$vl',
+            'NF[84]$vl',
+            'NF[85]$vl',
+            'NF[86]$vl',
+            'NF[87]$vl',
+            'NF[88]$vl',
+            'NF[89]$vl',
+            'NF[90]$vl',
+            'NF[91]$vl'
+        ]
+    },
+    'vl::Func': {
+        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::Func'
+        ]
+    },
+    'vl::Func@<[R]([TArgs]...)>': {
+        'displayNameInHtml': '<span class="cpp_type">Func</span>&lt;<span class="cpp_type">R</span>(<span class="cpp_type">TArgs</span>...)&gt;',
+        'impls': [
+            'NI$vl::Func@<[R]([TArgs]...)>'
+        ],
+        'decls': []
+    },
+    'vl::Object': {
+        'displayNameInHtml': '<span class="cpp_type">Object</span>',
+        'impls': [
+            'NI$vl::Object'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator ->@[T] *()': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator -&gt;</span>()',
+        'impls': [
+            'FB$vl::Ptr::operator ->@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::WString': {
+        'displayNameInHtml': '<span class="cpp_type">WString</span>',
+        'impls': [
+            'NI$vl::WString'
+        ],
+        'decls': []
+    },
+    'vl::collections': {
+        'displayNameInHtml': 'vl::collections',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::collections',
+            'NF[1]$vl::collections',
+            'NF[2]$vl::collections',
+            'NF[3]$vl::collections',
+            'NF[4]$vl::collections',
+            'NF[5]$vl::collections',
+            'NF[6]$vl::collections',
+            'NF[7]$vl::collections',
+            'NF[8]$vl::collections',
+            'NF[9]$vl::collections',
+            'NF[10]$vl::collections',
+            'NF[11]$vl::collections',
+            'NF[12]$vl::collections',
+            'NF[13]$vl::collections',
+            'NF[14]$vl::collections',
+            'NF[15]$vl::collections',
+            'NF[16]$vl::collections',
+            'NF[17]$vl::collections',
+            'NF[18]$vl::collections'
+        ]
+    },
+    'vl::collections::Array': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::Array'
+        ],
+        'decls': []
+    },
+    'vl::collections::List': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::List'
+        ],
+        'decls': []
+    },
+    'vl::reflection': {
+        'displayNameInHtml': 'vl::reflection',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection',
+            'NF[1]$vl::reflection',
+            'NF[2]$vl::reflection',
+            'NF[3]$vl::reflection',
+            'NF[4]$vl::reflection',
+            'NF[5]$vl::reflection',
+            'NF[6]$vl::reflection',
+            'NF[7]$vl::reflection',
+            'NF[8]$vl::reflection',
+            'NF[9]$vl::reflection',
+            'NF[10]$vl::reflection',
+            'NF[11]$vl::reflection',
+            'NF[12]$vl::reflection',
+            'NF[13]$vl::reflection',
+            'NF[14]$vl::reflection',
+            'NF[15]$vl::reflection',
+            'NF[16]$vl::reflection'
+        ]
+    },
+    'vl::reflection::Description': {
+        'displayNameInHtml': '<span class="cpp_type">Description</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::reflection::Description'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description': {
+        'displayNameInHtml': 'vl::reflection::description',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::reflection::description',
+            'NF[1]$vl::reflection::description',
+            'NF[2]$vl::reflection::description',
+            'NF[3]$vl::reflection::description',
+            'NF[4]$vl::reflection::description',
+            'NF[5]$vl::reflection::description',
+            'NF[6]$vl::reflection::description',
+            'NF[7]$vl::reflection::description',
+            'NF[8]$vl::reflection::description',
+            'NF[9]$vl::reflection::description',
+            'NF[10]$vl::reflection::description',
+            'NF[11]$vl::reflection::description',
+            'NF[12]$vl::reflection::description',
+            'NF[13]$vl::reflection::description',
+            'NF[14]$vl::reflection::description',
+            'NF[15]$vl::reflection::description'
+        ]
+    },
+    'vl::reflection::description::IValueCallStack': {
+        'displayNameInHtml': '<span class="cpp_type">IValueCallStack</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueCallStack'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueCallStack'
+        ]
+    },
+    'vl::reflection::description::IValueException': {
+        'displayNameInHtml': '<span class="cpp_type">IValueException</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueException'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueException'
+        ]
+    },
+    'vl::reflection::description::IValueFunctionProxy': {
+        'displayNameInHtml': '<span class="cpp_type">IValueFunctionProxy</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueFunctionProxy'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueFunctionProxy'
+        ]
+    },
+    'vl::reflection::description::IValueReadonlyDictionary': {
+        'displayNameInHtml': '<span class="cpp_type">IValueReadonlyDictionary</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueReadonlyDictionary'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueReadonlyDictionary'
+        ]
+    },
+    'vl::reflection::description::IValueReadonlyList': {
+        'displayNameInHtml': '<span class="cpp_type">IValueReadonlyList</span>',
+        'impls': [
+            'NI$vl::reflection::description::IValueReadonlyList'
+        ],
+        'decls': [
+            'NF[0]$vl::reflection::description::IValueReadonlyList'
+        ]
+    },
+    'vl::reflection::description::TypeDescriptorException': {
+        'displayNameInHtml': '<span class="cpp_type">TypeDescriptorException</span>',
+        'impls': [
+            'NI$vl::reflection::description::TypeDescriptorException'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::UnboxParameter@void(::vl::reflection::description::Value const &, [T] &, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_function">UnboxParameter</span>&lt;<span class="cpp_type">T</span>&gt;(<span class="cpp_type">Value</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">T</span> &, <span class="cpp_type">ITypeDescriptor</span> *, <span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
+        'impls': [
+            'FB$vl::reflection::description::UnboxParameter@void(::vl::reflection::description::Value const &, [T] &, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::Value': {
+        'displayNameInHtml': '<span class="cpp_type">Value</span>',
+        'impls': [
+            'NI$vl::reflection::description::Value'
+        ],
+        'decls': []
+    },
+    'vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::DescriptableObject>)': {
+        'displayNameInHtml': '<span class="cpp_type">Value</span>::<span class="cpp_function">From</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">DescriptableObject</span>&gt;)',
+        'impls': [],
+        'decls': [
+            'FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::DescriptableObject>)[decl0]'
+        ]
+    },
+    'vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IBoxedValue>, ::vl::reflection::description::ITypeDescriptor *)': {
+        'displayNameInHtml': '<span class="cpp_type">Value</span>::<span class="cpp_function">From</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">IBoxedValue</span>&gt;, <span class="cpp_type">ITypeDescriptor</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IBoxedValue>, ::vl::reflection::description::ITypeDescriptor *)[decl0]'
+        ]
+    },
+    'vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)': {
+        'displayNameInHtml': '<span class="cpp_type">Value</span>::<span class="cpp_function">From</span>(<span class="cpp_type">DescriptableObject</span> *)',
+        'impls': [],
+        'decls': [
+            'FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)[decl0]'
+        ]
+    },
+    'vl::vint': {
+        'displayNameInHtml': '<span class="cpp_type">vint</span>',
+        'impls': [
+            'NI$vl::vint'
+        ],
+        'decls': []
+    },
+    'vl::workflow': {
+        'displayNameInHtml': 'vl::workflow',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::workflow',
+            'NF[1]$vl::workflow',
+            'NF[2]$vl::workflow',
+            'NF[3]$vl::workflow',
+            'NF[4]$vl::workflow',
+            'NF[5]$vl::workflow',
+            'NF[6]$vl::workflow',
+            'NF[7]$vl::workflow',
+            'NF[8]$vl::workflow',
+            'NF[9]$vl::workflow',
+            'NF[10]$vl::workflow',
+            'NF[11]$vl::workflow',
+            'NF[12]$vl::workflow',
+            'NF[13]$vl::workflow',
+            'NF[14]$vl::workflow',
+            'NF[15]$vl::workflow'
+        ]
+    },
+    'vl::workflow::runtime': {
+        'displayNameInHtml': 'vl::workflow::runtime',
+        'impls': [],
+        'decls': [
+            'NF[0]$vl::workflow::runtime',
+            'NF[1]$vl::workflow::runtime',
+            'NF[2]$vl::workflow::runtime',
+            'NF[3]$vl::workflow::runtime',
+            'NF[4]$vl::workflow::runtime',
+            'NF[5]$vl::workflow::runtime'
+        ]
+    },
+    'vl::workflow::runtime::IWfDebuggerCallback': {
+        'displayNameInHtml': '<span class="cpp_type">IWfDebuggerCallback</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::IWfDebuggerCallback'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::runtime::IWfDebuggerCallback'
+        ]
+    },
+    'vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_function">LoadFunction</span>&lt;<span class="cpp_type">TFunction</span>&gt;(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">WfRuntimeGlobalContext</span>&gt;, <span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
+        'impls': [
+            'FB$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::TFunction': {
+        'displayNameInHtml': '<span class="cpp_type">TFunction</span>',
+        'impls': [
+            'TA$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::TFunction'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::context': {
+        'displayNameInHtml': 'context',
+        'impls': [
+            'NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::context'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::function': {
+        'displayNameInHtml': 'function',
+        'impls': [
+            'NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::function'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::name': {
+        'displayNameInHtml': 'name',
+        'impls': [
+            'NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::name'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::proxy': {
+        'displayNameInHtml': 'proxy',
+        'impls': [
+            'NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::proxy'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::LoadFunction@::vl::Ptr<::vl::reflection::description::IValueFunctionProxy>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_function">LoadFunction</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">WfRuntimeGlobalContext</span>&gt;, <span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
+        'impls': [],
+        'decls': [
+            'FB$vl::workflow::runtime::LoadFunction@::vl::Ptr<::vl::reflection::description::IValueFunctionProxy>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::workflow::runtime::WfAssembly': {
+        'displayNameInHtml': '<span class="cpp_type">WfAssembly</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfAssembly'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfInstruction': {
+        'displayNameInHtml': '<span class="cpp_type">WfInstruction</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfInstruction'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeCallStackInfo': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeCallStackInfo</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeCallStackInfo'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeCallStackInfo</span>::<span class="cpp_type">IValueReadonlyDictionary</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>)[impl0]::_info': {
+        'displayNameInHtml': '_info',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>)[impl0]::_info'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_fatal': {
+        'displayNameInHtml': '_fatal',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_fatal'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_message': {
+        'displayNameInHtml': '_message',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_message'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeException::fatal': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeException</span>::<span class="cpp_field">fatal</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeException::fatal'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeException::info': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeException</span>::<span class="cpp_field">info</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeException::info'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeExceptionInfo': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeExceptionInfo</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeExceptionInfo'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::runtime::WfRuntimeExceptionInfo'
+        ]
+    },
+    'vl::workflow::runtime::WfRuntimeExceptionInfo::CallStackList': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeExceptionInfo</span>::<span class="cpp_type">CallStackList</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeExceptionInfo::CallStackList'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeExceptionInfo::IValueReadonlyList': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeExceptionInfo</span>::<span class="cpp_type">IValueReadonlyList</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeExceptionInfo::IValueReadonlyList'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeExceptionInfo::fatal': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeExceptionInfo</span>::<span class="cpp_field">fatal</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeExceptionInfo::fatal'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeExceptionInfo::message': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeExceptionInfo</span>::<span class="cpp_field">message</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeExceptionInfo::message'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeExecutionAction': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeExecutionAction</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeExecutionAction'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeExecutionStatus': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeExecutionStatus</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeExecutionStatus'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeExecutionStatus::Finished': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeExecutionStatus</span>::<span class="cpp_enum">Finished</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeExecutionStatus::Finished'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeGlobalContext': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeGlobalContext</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeGlobalContext'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::runtime::WfRuntimeGlobalContext',
+            'NF[1]$vl::workflow::runtime::WfRuntimeGlobalContext'
+        ]
+    },
+    'vl::workflow::runtime::WfRuntimeStackFrame': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeStackFrame</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeStackFrame'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeThreadContext': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeThreadContext</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeThreadContext'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::runtime::WfRuntimeThreadContext'
+        ]
+    },
+    'vl::workflow::runtime::WfRuntimeThreadContext::StackFrameList': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeThreadContext</span>::<span class="cpp_type">StackFrameList</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeThreadContext::StackFrameList'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeThreadContext::TrapFrameList': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeThreadContext</span>::<span class="cpp_type">TrapFrameList</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeThreadContext::TrapFrameList'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeThreadContext::VariableList': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeThreadContext</span>::<span class="cpp_type">VariableList</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeThreadContext::VariableList'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeThreadContextError': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeThreadContextError</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeThreadContextError'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeTrapFrame': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeTrapFrame</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeTrapFrame'
+        ],
+        'decls': []
+    },
+    'vl::workflow::runtime::WfRuntimeVariableContext': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeVariableContext</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeVariableContext'
+        ],
+        'decls': [
+            'NF[0]$vl::workflow::runtime::WfRuntimeVariableContext'
+        ]
+    },
+    'vl::workflow::runtime::WfRuntimeVariableContext::VariableArray': {
+        'displayNameInHtml': '<span class="cpp_type">WfRuntimeVariableContext</span>::<span class="cpp_type">VariableArray</span>',
+        'impls': [
+            'NI$vl::workflow::runtime::WfRuntimeVariableContext::VariableArray'
+        ],
+        'decls': []
+    }
+};
+symbolToFiles = {
+    'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::reflection::description::UnboxParameter@void(::vl::reflection::description::Value const &, [T] &, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &)[impl0]': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::DescriptableObject>)[decl0]': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::Ptr<::vl::reflection::description::IBoxedValue>, ::vl::reflection::description::ITypeDescriptor *)[decl0]': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)[decl0]': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'FB$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]': null,
+    'FB$vl::workflow::runtime::LoadFunction@::vl::Ptr<::vl::reflection::description::IValueFunctionProxy>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[decl0]': null,
+    'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NF[0]$vl::Func': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[0]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueCallStack': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueException': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueFunctionProxy': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueReadonlyDictionary': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::reflection::description::IValueReadonlyList': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[0]$vl::workflow': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[0]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[0]$vl::workflow::runtime::IWfDebuggerCallback': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[0]$vl::workflow::runtime::WfRuntimeExceptionInfo': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[0]$vl::workflow::runtime::WfRuntimeGlobalContext': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[0]$vl::workflow::runtime::WfRuntimeThreadContext': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[0]$vl::workflow::runtime::WfRuntimeVariableContext': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[10]$vl': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[10]$vl::collections': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[10]$vl::reflection': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[10]$vl::reflection::description': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[10]$vl::workflow': { 'htmlFileName': 'WfExpression_Parser.h', 'displayName': 'WfExpression_Parser.h' },
+    'NF[11]$vl': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[11]$vl::collections': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[11]$vl::reflection': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[11]$vl::reflection::description': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[11]$vl::workflow': { 'htmlFileName': 'WfExpression_Traverse.h', 'displayName': 'WfExpression_Traverse.h' },
+    'NF[12]$vl': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[12]$vl::collections': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[12]$vl::reflection': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[12]$vl::reflection::description': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[12]$vl::workflow': { 'htmlFileName': 'WfExpression.h', 'displayName': 'WfExpression.h' },
+    'NF[13]$vl': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[13]$vl::collections': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[13]$vl::reflection': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[13]$vl::reflection::description': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[13]$vl::workflow': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[14]$vl': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[14]$vl::collections': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[14]$vl::reflection': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[14]$vl::reflection::description': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[14]$vl::workflow': { 'htmlFileName': 'WfEmitter.h', 'displayName': 'WfEmitter.h' },
+    'NF[15]$vl': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[15]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[15]$vl::reflection': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[15]$vl::reflection::description': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[15]$vl::workflow': { 'htmlFileName': 'WfCpp.h', 'displayName': 'WfCpp.h' },
+    'NF[16]$vl': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[16]$vl::collections': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[16]$vl::reflection': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[17]$vl': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[17]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[18]$vl': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[18]$vl::collections': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[19]$vl': { 'htmlFileName': 'OperationSequence.h', 'displayName': 'OperationSequence.h' },
+    'NF[1]$vl': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NF[1]$vl::collections': { 'htmlFileName': 'Interfaces.h', 'displayName': 'Interfaces.h' },
+    'NF[1]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[1]$vl::workflow': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[1]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[1]$vl::workflow::runtime::WfRuntimeGlobalContext': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[20]$vl': { 'htmlFileName': 'OperationSet.h', 'displayName': 'OperationSet.h' },
+    'NF[21]$vl': { 'htmlFileName': 'OperationString.h', 'displayName': 'OperationString.h' },
+    'NF[22]$vl': { 'htmlFileName': 'OperationWhere.h', 'displayName': 'OperationWhere.h' },
+    'NF[23]$vl': { 'htmlFileName': 'Operation.h', 'displayName': 'Operation.h' },
+    'NF[24]$vl': { 'htmlFileName': 'Event.h', 'displayName': 'Event.h' },
+    'NF[25]$vl': { 'htmlFileName': 'PartialOrdering.h', 'displayName': 'PartialOrdering.h' },
+    'NF[26]$vl': { 'htmlFileName': 'UnitTest.h', 'displayName': 'UnitTest.h' },
+    'NF[27]$vl': { 'htmlFileName': 'HttpUtility.h', 'displayName': 'HttpUtility.h' },
+    'NF[28]$vl': { 'htmlFileName': 'Locale.h', 'displayName': 'Locale.h' },
+    'NF[29]$vl': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
+    'NF[2]$vl': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NF[2]$vl::collections': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NF[2]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[2]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[2]$vl::workflow': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[2]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NF[30]$vl': { 'htmlFileName': 'Interfaces.h2', 'displayName': 'Interfaces.h' },
+    'NF[31]$vl': { 'htmlFileName': 'BroadcastStream.h', 'displayName': 'BroadcastStream.h' },
+    'NF[32]$vl': { 'htmlFileName': 'CacheStream.h', 'displayName': 'CacheStream.h' },
+    'NF[33]$vl': { 'htmlFileName': 'CompressionStream.h', 'displayName': 'CompressionStream.h' },
+    'NF[34]$vl': { 'htmlFileName': 'FileStream.h', 'displayName': 'FileStream.h' },
+    'NF[35]$vl': { 'htmlFileName': 'MemoryStream.h', 'displayName': 'MemoryStream.h' },
+    'NF[36]$vl': { 'htmlFileName': 'Accessor.h', 'displayName': 'Accessor.h' },
+    'NF[37]$vl': { 'htmlFileName': 'MemoryWrapperStream.h', 'displayName': 'MemoryWrapperStream.h' },
+    'NF[38]$vl': { 'htmlFileName': 'CharFormat.h', 'displayName': 'CharFormat.h' },
+    'NF[39]$vl': { 'htmlFileName': 'FileSystem.h', 'displayName': 'FileSystem.h' },
+    'NF[3]$vl': { 'htmlFileName': 'Lazy.h', 'displayName': 'Lazy.h' },
+    'NF[3]$vl::collections': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'NF[3]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[3]$vl::workflow': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NF[3]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[40]$vl': { 'htmlFileName': 'RecorderStream.h', 'displayName': 'RecorderStream.h' },
+    'NF[41]$vl': { 'htmlFileName': 'Regex.h', 'displayName': 'Regex.h' },
+    'NF[42]$vl': { 'htmlFileName': 'RegexData.h', 'displayName': 'RegexData.h' },
+    'NF[43]$vl': { 'htmlFileName': 'RegexAutomaton.h', 'displayName': 'RegexAutomaton.h' },
+    'NF[44]$vl': { 'htmlFileName': 'RegexExpression.h', 'displayName': 'RegexExpression.h' },
+    'NF[45]$vl': { 'htmlFileName': 'RegexPure.h', 'displayName': 'RegexPure.h' },
+    'NF[46]$vl': { 'htmlFileName': 'RegexRich.h', 'displayName': 'RegexRich.h' },
+    'NF[47]$vl': { 'htmlFileName': 'RegexWriter.h', 'displayName': 'RegexWriter.h' },
+    'NF[48]$vl': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NF[49]$vl': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NF[4]$vl': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NF[4]$vl::collections': { 'htmlFileName': 'OperationCopyFrom.h', 'displayName': 'OperationCopyFrom.h' },
+    'NF[4]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[4]$vl::workflow': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[4]$vl::workflow::runtime': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[50]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder.h', 'displayName': 'GuiTypeDescriptorBuilder.h' },
+    'NF[51]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
+    'NF[52]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[53]$vl': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[54]$vl': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[55]$vl': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[56]$vl': { 'htmlFileName': 'WfLibraryCppHelper.h', 'displayName': 'WfLibraryCppHelper.h' },
+    'NF[57]$vl': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[58]$vl': { 'htmlFileName': 'WfLibraryReflection.h', 'displayName': 'WfLibraryReflection.h' },
+    'NF[59]$vl': { 'htmlFileName': 'ParsingTree.h', 'displayName': 'ParsingTree.h' },
+    'NF[5]$vl': { 'htmlFileName': 'Console.h', 'displayName': 'Console.h' },
+    'NF[5]$vl::collections': { 'htmlFileName': 'OperationEnumerable.h', 'displayName': 'OperationEnumerable.h' },
+    'NF[5]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Function.h', 'displayName': 'GuiTypeDescriptorBuilder_Function.h' },
+    'NF[5]$vl::workflow': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[5]$vl::workflow::runtime': null,
+    'NF[60]$vl': { 'htmlFileName': 'ParsingDefinitions.h', 'displayName': 'ParsingDefinitions.h' },
+    'NF[61]$vl': { 'htmlFileName': 'ParsingAnalyzer.h', 'displayName': 'ParsingAnalyzer.h' },
+    'NF[62]$vl': { 'htmlFileName': 'ParsingTable.h', 'displayName': 'ParsingTable.h' },
+    'NF[63]$vl': { 'htmlFileName': 'ParsingAutomaton.h', 'displayName': 'ParsingAutomaton.h' },
+    'NF[64]$vl': { 'htmlFileName': 'ParsingState.h', 'displayName': 'ParsingState.h' },
+    'NF[65]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[66]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[67]$vl': { 'htmlFileName': 'Parsing.h', 'displayName': 'Parsing.h' },
+    'NF[68]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[69]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
+    'NF[6]$vl': { 'htmlFileName': 'Exception.h', 'displayName': 'Exception.h' },
+    'NF[6]$vl::collections': { 'htmlFileName': 'OperationConcat.h', 'displayName': 'OperationConcat.h' },
+    'NF[6]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Struct.h', 'displayName': 'GuiTypeDescriptorBuilder_Struct.h' },
+    'NF[6]$vl::workflow': null,
+    'NF[70]$vl': { 'htmlFileName': 'ParsingJson_Parser.h', 'displayName': 'ParsingJson_Parser.h' },
+    'NF[71]$vl': { 'htmlFileName': 'ParsingJson.h', 'displayName': 'ParsingJson.h' },
+    'NF[72]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[73]$vl': { 'htmlFileName': 'ParsingXml_Ast.h', 'displayName': 'ParsingXml_Ast.h' },
+    'NF[74]$vl': { 'htmlFileName': 'ParsingXml_Parser.h', 'displayName': 'ParsingXml_Parser.h' },
+    'NF[75]$vl': { 'htmlFileName': 'ParsingXml.h', 'displayName': 'ParsingXml.h' },
+    'NF[76]$vl': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NF[77]$vl': { 'htmlFileName': 'WfRuntimeTypeDescriptor.h', 'displayName': 'WfRuntimeTypeDescriptor.h' },
+    'NF[78]$vl': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NF[79]$vl': { 'htmlFileName': 'WfRuntimeConstructions.h', 'displayName': 'WfRuntimeConstructions.h' },
+    'NF[7]$vl': { 'htmlFileName': 'GlobalStorage.h', 'displayName': 'GlobalStorage.h' },
+    'NF[7]$vl::collections': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
+    'NF[7]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[7]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorMacros.h', 'displayName': 'GuiTypeDescriptorMacros.h' },
+    'NF[7]$vl::workflow': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[80]$vl': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NF[81]$vl': null,
+    'NF[82]$vl': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[83]$vl': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
+    'NF[84]$vl': { 'htmlFileName': 'WfExpression_Copy.h', 'displayName': 'WfExpression_Copy.h' },
+    'NF[85]$vl': { 'htmlFileName': 'WfExpression_Empty.h', 'displayName': 'WfExpression_Empty.h' },
+    'NF[86]$vl': { 'htmlFileName': 'WfExpression_Parser.h', 'displayName': 'WfExpression_Parser.h' },
+    'NF[87]$vl': { 'htmlFileName': 'WfExpression_Traverse.h', 'displayName': 'WfExpression_Traverse.h' },
+    'NF[88]$vl': { 'htmlFileName': 'WfExpression.h', 'displayName': 'WfExpression.h' },
+    'NF[89]$vl': { 'htmlFileName': 'WfAnalyzer.h', 'displayName': 'WfAnalyzer.h' },
+    'NF[8]$vl': { 'htmlFileName': 'Tuple.h', 'displayName': 'Tuple.h' },
+    'NF[8]$vl::collections': { 'htmlFileName': 'OperationPair.h', 'displayName': 'OperationPair.h' },
+    'NF[8]$vl::reflection': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::reflection::description': { 'htmlFileName': 'GuiTypeDescriptorReflection.h', 'displayName': 'GuiTypeDescriptorReflection.h' },
+    'NF[8]$vl::workflow': { 'htmlFileName': 'WfExpression_Copy.h', 'displayName': 'WfExpression_Copy.h' },
+    'NF[90]$vl': { 'htmlFileName': 'WfEmitter.h', 'displayName': 'WfEmitter.h' },
+    'NF[91]$vl': { 'htmlFileName': 'WfCpp.h', 'displayName': 'WfCpp.h' },
+    'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
+    'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
+    'NF[9]$vl::reflection': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[9]$vl::reflection::description': { 'htmlFileName': 'WfLibraryPredefined.h', 'displayName': 'WfLibraryPredefined.h' },
+    'NF[9]$vl::workflow': { 'htmlFileName': 'WfExpression_Empty.h', 'displayName': 'WfExpression_Empty.h' },
+    'NI$vl::Func@<[R]([TArgs]...)>': { 'htmlFileName': 'Function.h', 'displayName': 'Function.h' },
+    'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
+    'NI$vl::collections::Array': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::reflection::Description': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::IValueCallStack': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NI$vl::reflection::description::IValueException': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NI$vl::reflection::description::IValueFunctionProxy': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NI$vl::reflection::description::IValueReadonlyDictionary': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NI$vl::reflection::description::IValueReadonlyList': { 'htmlFileName': 'GuiTypeDescriptorPredefined.h', 'displayName': 'GuiTypeDescriptorPredefined.h' },
+    'NI$vl::reflection::description::TypeDescriptorException': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::reflection::description::Value': { 'htmlFileName': 'GuiTypeDescriptor.h', 'displayName': 'GuiTypeDescriptor.h' },
+    'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::workflow::runtime::IWfDebuggerCallback': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::context': null,
+    'NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::function': null,
+    'NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::name': null,
+    'NI$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::proxy': null,
+    'NI$vl::workflow::runtime::WfAssembly': { 'htmlFileName': 'WfRuntimeAssembly.h', 'displayName': 'WfRuntimeAssembly.h' },
+    'NI$vl::workflow::runtime::WfInstruction': { 'htmlFileName': 'WfRuntimeInstruction.h', 'displayName': 'WfRuntimeInstruction.h' },
+    'NI$vl::workflow::runtime::WfRuntimeCallStackInfo': null,
+    'NI$vl::workflow::runtime::WfRuntimeCallStackInfo::IValueReadonlyDictionary': null,
+    'NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::Ptr<::vl::workflow::runtime::WfRuntimeExceptionInfo>)[impl0]::_info': null,
+    'NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_fatal': null,
+    'NI$vl::workflow::runtime::WfRuntimeException::$__ctor@(::vl::WString const &, bool)[impl0]::_message': null,
+    'NI$vl::workflow::runtime::WfRuntimeException::fatal': null,
+    'NI$vl::workflow::runtime::WfRuntimeException::info': null,
+    'NI$vl::workflow::runtime::WfRuntimeExceptionInfo': null,
+    'NI$vl::workflow::runtime::WfRuntimeExceptionInfo::CallStackList': null,
+    'NI$vl::workflow::runtime::WfRuntimeExceptionInfo::IValueReadonlyList': null,
+    'NI$vl::workflow::runtime::WfRuntimeExceptionInfo::fatal': null,
+    'NI$vl::workflow::runtime::WfRuntimeExceptionInfo::message': null,
+    'NI$vl::workflow::runtime::WfRuntimeExecutionAction': null,
+    'NI$vl::workflow::runtime::WfRuntimeExecutionStatus': null,
+    'NI$vl::workflow::runtime::WfRuntimeExecutionStatus::Finished': null,
+    'NI$vl::workflow::runtime::WfRuntimeGlobalContext': null,
+    'NI$vl::workflow::runtime::WfRuntimeStackFrame': null,
+    'NI$vl::workflow::runtime::WfRuntimeThreadContext': null,
+    'NI$vl::workflow::runtime::WfRuntimeThreadContext::StackFrameList': null,
+    'NI$vl::workflow::runtime::WfRuntimeThreadContext::TrapFrameList': null,
+    'NI$vl::workflow::runtime::WfRuntimeThreadContext::VariableList': null,
+    'NI$vl::workflow::runtime::WfRuntimeThreadContextError': null,
+    'NI$vl::workflow::runtime::WfRuntimeTrapFrame': null,
+    'NI$vl::workflow::runtime::WfRuntimeVariableContext': null,
+    'NI$vl::workflow::runtime::WfRuntimeVariableContext::VariableArray': null,
+    'TA$vl::workflow::runtime::LoadFunction@::vl::Func<[TFunction]>(::vl::Ptr<::vl::workflow::runtime::WfRuntimeGlobalContext>, ::vl::WString const &)[impl0]::TFunction': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

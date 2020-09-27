@@ -1,0 +1,4 @@
+<Document symbolId="vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlElement *)" accessor="public" category="Function" name="Visit" declFile="ParsingXml_Ast.h" declId="FB$vl::parsing::xml::XmlNode::IVisitor::Visit@void(::vl::parsing::xml::XmlElement *)[decl0]"><summary>A callback that is called if the node accepting this visitor is <symbol name="XmlElement" docId="vl::parsing::xml::XmlElement" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlElement"/>.</summary><param name="node">The strong-typed AST node in its real type.</param><signature><![CDATA[void Visit(
+    XmlElement * node
+);
+]]></signature><seealsos><symbol name="XmlElement" docId="vl::parsing::xml::XmlElement" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlElement"/></seealsos></Document>

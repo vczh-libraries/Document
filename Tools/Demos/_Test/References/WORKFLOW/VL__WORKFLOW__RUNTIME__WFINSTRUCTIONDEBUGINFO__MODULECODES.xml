@@ -1,0 +1,2 @@
+<Document symbolId="vl::workflow::runtime::WfInstructionDebugInfo::moduleCodes" accessor="public" category="Variable" name="moduleCodes" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfInstructionDebugInfo::moduleCodes"><summary>Module codes.</summary><signature><![CDATA[collections::List<WString> moduleCodes;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/></seealsos></Document>

@@ -1,0 +1,7 @@
+<Document symbolId="vl::parsing::json::JsonLiteral::JsonValue" accessor="public" category="Enum" name="JsonValue" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonLiteral::JsonValue"><summary>Literal value.</summary><enumitem name="False">A boolean literal: false.</enumitem><enumitem name="Null">A null literal.</enumitem><enumitem name="True">A boolean literal: true.</enumitem><signature><![CDATA[enum class JsonValue
+{
+    True,
+    False,
+    Null,
+};
+]]></signature></Document>

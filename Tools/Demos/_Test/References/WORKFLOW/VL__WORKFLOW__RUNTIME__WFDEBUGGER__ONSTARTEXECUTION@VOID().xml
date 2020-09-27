@@ -1,0 +1,3 @@
+<Document symbolId="vl::workflow::runtime::WfDebugger::OnStartExecution@void()" accessor="protected" category="Function" name="OnStartExecution" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::OnStartExecution@void()[decl0]"><summary>Called when a new Workflow program is about to run.</summary><signature><![CDATA[void OnStartExecution(
+);
+]]></signature></Document>

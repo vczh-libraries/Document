@@ -1,0 +1,4 @@
+<Document symbolId="vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &amp;)" accessor="public" category="Function" name="AddBreakPoint" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &amp;)[decl0]"><summary>Add a new break point.</summary><returns>Returns the index of this break point. Returns -1 if failed.</returns><param name="breakPoint">The break point.</param><signature><![CDATA[vint AddBreakPoint(
+    WfBreakPoint const & breakPoint
+);
+]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol name="WfBreakPoint" docId="vl::workflow::runtime::WfBreakPoint" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::WfBreakPoint"/></seealsos></Document>

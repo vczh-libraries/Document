@@ -1,0 +1,5 @@
+<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)" accessor="public" category="Function" name="Rebuild" declFile="WfAnalyzer.h" declId="FB$vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)[decl0]"><summary>Perform semantic analyzing for added modules.</summary><param name="keepTypeDescriptorNames">The same to the argument in <symbol name="Clear" docId="vl::workflow::analyzer::WfLexicalScopeManager::Clear@void(bool, bool)" declFile="WfAnalyzer.h" declId="FB$vl::workflow::analyzer::WfLexicalScopeManager::Clear@void(bool, bool)[decl0]"/>.</param><param name="callback">The callback to receive progress information (optional).</param><signature><![CDATA[void Rebuild(
+    bool keepTypeDescriptorNames,
+    IWfCompilerCallback * callback /* optional */
+);
+]]></signature><seealsos><symbol name="IWfCompilerCallback" docId="vl::workflow::IWfCompilerCallback" declFile="WfAnalyzer.h" declId="NI$vl::workflow::IWfCompilerCallback"/></seealsos></Document>

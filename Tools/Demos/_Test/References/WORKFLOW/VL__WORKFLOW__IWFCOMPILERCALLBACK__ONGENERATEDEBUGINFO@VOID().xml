@@ -1,0 +1,3 @@
+<Document symbolId="vl::workflow::IWfCompilerCallback::OnGenerateDebugInfo@void()" accessor="public" category="Function" name="OnGenerateDebugInfo" declFile="WfAnalyzer.h" declId="FB$vl::workflow::IWfCompilerCallback::OnGenerateDebugInfo@void()[decl0]"><summary>6th step: Called before generating debug information.</summary><signature><![CDATA[void OnGenerateDebugInfo(
+);
+]]></signature></Document>

@@ -1,0 +1,3 @@
+<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetFunctionName@::vl::WString()" accessor="public" category="Function" name="GetFunctionName" declFile="WfRuntime.h" declId="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetFunctionName@::vl::WString()[decl0]"><summary>Get the name of the executing function.</summary><returns>The name of the execution function.</returns><signature><![CDATA[WString GetFunctionName(
+);
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

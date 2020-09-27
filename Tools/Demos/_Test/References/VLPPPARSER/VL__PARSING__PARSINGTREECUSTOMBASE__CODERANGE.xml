@@ -1,0 +1,2 @@
+<Document symbolId="vl::parsing::ParsingTreeCustomBase::codeRange" accessor="public" category="Variable" name="codeRange" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeCustomBase::codeRange"><summary>Range of all tokens that form this object.</summary><signature><![CDATA[ParsingTextRange codeRange;
+]]></signature><seealsos><symbol name="ParsingTextRange" docId="vl::parsing::ParsingTextRange" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextRange"/></seealsos></Document>

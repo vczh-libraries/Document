@@ -1,0 +1,2 @@
+<Document symbolId="vl::parsing::json::JsonString::content" accessor="public" category="Variable" name="content" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonString::content"><summary>Content of the string literal.</summary><signature><![CDATA[vl::parsing::ParsingToken content;
+]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/></seealsos></Document>

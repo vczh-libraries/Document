@@ -1,0 +1,4 @@
+<Document symbolId="vl::parsing::json::JsonToString@::vl::WString(::vl::Ptr&lt;::vl::parsing::json::JsonNode&gt;)" accessor="" category="Function" name="JsonToString" declFile="ParsingJson.h" declId="FB$vl::parsing::json::JsonToString@::vl::WString(::vl::Ptr&lt;::vl::parsing::json::JsonNode&gt;)[decl0]"><summary>Serialize JSON to string.</summary><returns>The serialized string.</returns><param name="node">The JSON node to serialize.</param><signature><![CDATA[WString JsonToString(
+    Ptr<JsonNode> node
+);
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/></seealsos></Document>

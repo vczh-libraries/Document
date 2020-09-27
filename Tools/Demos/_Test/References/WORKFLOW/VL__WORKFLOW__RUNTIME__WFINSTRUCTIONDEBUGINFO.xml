@@ -1,0 +1,3 @@
+<Document symbolId="vl::workflow::runtime::WfInstructionDebugInfo" accessor="" category="Class" name="WfInstructionDebugInfo" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfInstructionDebugInfo"><summary>Representing debug informations.</summary><signature><![CDATA[class WfInstructionDebugInfo
+    : Object;
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

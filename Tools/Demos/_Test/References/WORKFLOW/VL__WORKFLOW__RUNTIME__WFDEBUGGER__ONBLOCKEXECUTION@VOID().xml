@@ -1,0 +1,3 @@
+<Document symbolId="vl::workflow::runtime::WfDebugger::OnBlockExecution@void()" accessor="protected" category="Function" name="OnBlockExecution" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::OnBlockExecution@void()[decl0]"><summary>Called for doing something when a break point is activated. This function will be called multiple times before some one let the debugger to continue.</summary><remarks>This function must be overrided, or the Workflow script will hang when it is paused by any reason.</remarks><signature><![CDATA[void OnBlockExecution(
+);
+]]></signature></Document>
