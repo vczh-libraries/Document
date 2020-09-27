@@ -1,0 +1,13 @@
+<Document symbolId="vl::workflow::runtime::WfRuntimeThreadContext" accessor="" category="Class" name="WfRuntimeThreadContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeThreadContext"><summary>A Workflow script call stack.</summary><remarks><p>
+ This object could be obtained by <symbol name="GetCurrentThreadContext" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::GetCurrentThreadContext@::vl::workflow::runtime::WfRuntimeThreadContext *()[decl0]"/>.
+ A thread could have multiple thread contexts,
+ a full list could be obtained by <symbol name="GetThreadContexts" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::GetThreadContexts@::vl::workflow::runtime::WfDebugger::ThreadContextList const &amp;()[decl0]"/>.
+ </p><p>
+ You are not recommended to update the call stack using this object.
+ </p><p>
+ In the current version,
+ the debug information doesn&apos;t contain enough data,
+ so that it could be difficult to read local variables in high-level function constructions,
+ like lambda expression or coroutines.
+ </p></remarks><signature><![CDATA[class WfRuntimeThreadContext;
+]]></signature></Document>

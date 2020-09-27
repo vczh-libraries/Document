@@ -187,6 +187,12 @@
     </document>
     <document name="class WfRuntimeGlobalContext" docId="vl::workflow::runtime::WfRuntimeGlobalContext" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEGLOBALCONTEXT">
       <document name="function $__ctor" docId="vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;)" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEGLOBALCONTEXT__$__CTOR@(__VL__PT"/>
+      <document name="variable assembly" docId="vl::workflow::runtime::WfRuntimeGlobalContext::assembly" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEGLOBALCONTEXT__ASSEMBLY"/>
+      <document name="variable globalVariables" docId="vl::workflow::runtime::WfRuntimeGlobalContext::globalVariables" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEGLOBALCONTEXT__GLOBALVARIABLES"/>
+    </document>
+    <document name="class WfRuntimeThreadContext" docId="vl::workflow::runtime::WfRuntimeThreadContext" file="VL__WORKFLOW__RUNTIME__WFRUNTIMETHREADCONTEXT"/>
+    <document name="class WfRuntimeVariableContext" docId="vl::workflow::runtime::WfRuntimeVariableContext" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEVARIABLECONTEXT">
+      <document name="variable variables" docId="vl::workflow::runtime::WfRuntimeVariableContext::variables" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEVARIABLECONTEXT__VARIABLES"/>
     </document>
   </namespace>
 </reference>
