@@ -48,6 +48,14 @@
     <document name="class Sys" docId="vl::reflection::description::Sys" file="VL__REFLECTION__DESCRIPTION__SYS"/>
   </namespace>
   <namespace name="::vl::workflow">
+    <document name="class IWfCompilerCallback" docId="vl::workflow::IWfCompilerCallback" file="VL__WORKFLOW__IWFCOMPILERCALLBACK">
+      <document name="function OnGenerateCode" docId="vl::workflow::IWfCompilerCallback::OnGenerateCode@void(::vl::Ptr&lt;::vl::workflow::WfModule&gt;)" file="VL__WORKFLOW__IWFCOMPILERCALLBACK__ONGENERATECODE@VOID(__VL__PTR"/>
+      <document name="function OnGenerateDebugInfo" docId="vl::workflow::IWfCompilerCallback::OnGenerateDebugInfo@void()" file="VL__WORKFLOW__IWFCOMPILERCALLBACK__ONGENERATEDEBUGINFO@VOID()"/>
+      <document name="function OnGenerateMetadata" docId="vl::workflow::IWfCompilerCallback::OnGenerateMetadata@void()" file="VL__WORKFLOW__IWFCOMPILERCALLBACK__ONGENERATEMETADATA@VOID()"/>
+      <document name="function OnInitialize" docId="vl::workflow::IWfCompilerCallback::OnInitialize@void(::vl::workflow::analyzer::WfLexicalScopeManager *)" file="VL__WORKFLOW__IWFCOMPILERCALLBACK__ONINITIALIZE@VOID(__VL__WORKF"/>
+      <document name="function OnLoadEnvironment" docId="vl::workflow::IWfCompilerCallback::OnLoadEnvironment@void()" file="VL__WORKFLOW__IWFCOMPILERCALLBACK__ONLOADENVIRONMENT@VOID()"/>
+      <document name="function OnValidateModule" docId="vl::workflow::IWfCompilerCallback::OnValidateModule@void(::vl::Ptr&lt;::vl::workflow::WfModule&gt;)" file="VL__WORKFLOW__IWFCOMPILERCALLBACK__ONVALIDATEMODULE@VOID(__VL__P"/>
+    </document>
     <document name="function WfPrint" docId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfAttribute&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" file="VL__WORKFLOW__WFPRINT@VOID(__VL__PTR___VL__WORKFLOW__WFATTRIBUTE"/>
     <document name="function WfPrint" docId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfType&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" file="VL__WORKFLOW__WFPRINT@VOID(__VL__PTR___VL__WORKFLOW__WFTYPE_,___"/>
     <document name="function WfPrint" docId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfExpression&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" file="VL__WORKFLOW__WFPRINT@VOID(__VL__PTR___VL__WORKFLOW__WFEXPRESSIO"/>
@@ -81,7 +89,7 @@
     <document name="function GetDebuggerForCurrentThread" docId="vl::workflow::runtime::GetDebuggerForCurrentThread@::vl::Ptr&lt;::vl::workflow::runtime::WfDebugger&gt;()" file="VL__WORKFLOW__RUNTIME__GETDEBUGGERFORCURRENTTHREAD@__VL__PTR___V"/>
     <document name="class IWfBreakPointAction" docId="vl::workflow::runtime::IWfBreakPointAction" file="VL__WORKFLOW__RUNTIME__IWFBREAKPOINTACTION">
       <document name="function EvaluateCondition" docId="vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)" file="VL__WORKFLOW__RUNTIME__IWFBREAKPOINTACTION__EVALUATECONDITION@BO"/>
-      <document name="function PostAction" docId="vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)" file="VL__WORKFLOW__RUNTIME__IWFBREAKPOINTACTION__POSTACTION@VOID(__VL"/>
+      <document name="function PostAction" docId="vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)" file="VL__WORKFLOW__RUNTIME__IWFBREAKPOINTACTION__POSTACTION@VOID(__VL"/>
     </document>
     <document name="function LoadFunction" docId="vl::workflow::runtime::LoadFunction@::vl::Ptr&lt;::vl::reflection::description::IValueFunctionProxy&gt;(::vl::Ptr&lt;::vl::workflow::runtime::WfRuntimeGlobalContext&gt;, ::vl::WString const &amp;)" file="VL__WORKFLOW__RUNTIME__LOADFUNCTION@__VL__PTR___VL__REFLECTION__"/>
     <document name="function LoadFunction" docId="vl::workflow::runtime::LoadFunction@::vl::Func&lt;[TFunction]&gt;(::vl::Ptr&lt;::vl::workflow::runtime::WfRuntimeGlobalContext&gt;, ::vl::WString const &amp;)" file="VL__WORKFLOW__RUNTIME__LOADFUNCTION@__VL__FUNC_[TFUNCTION]_(__VL"/>
@@ -106,7 +114,11 @@
       <document name="variable localVariableNames" docId="vl::workflow::runtime::WfAssemblyFunction::localVariableNames" file="VL__WORKFLOW__RUNTIME__WFASSEMBLYFUNCTION__LOCALVARIABLENAMES"/>
       <document name="variable name" docId="vl::workflow::runtime::WfAssemblyFunction::name" file="VL__WORKFLOW__RUNTIME__WFASSEMBLYFUNCTION__NAME"/>
     </document>
-    <document name="class WfAssemblyLoadErrors" docId="vl::workflow::runtime::WfAssemblyLoadErrors" file="VL__WORKFLOW__RUNTIME__WFASSEMBLYLOADERRORS"/>
+    <document name="class WfAssemblyLoadErrors" docId="vl::workflow::runtime::WfAssemblyLoadErrors" file="VL__WORKFLOW__RUNTIME__WFASSEMBLYLOADERRORS">
+      <document name="variable duplicatedTypes" docId="vl::workflow::runtime::WfAssemblyLoadErrors::duplicatedTypes" file="VL__WORKFLOW__RUNTIME__WFASSEMBLYLOADERRORS__DUPLICATEDTYPES"/>
+      <document name="variable unresolvedMembers" docId="vl::workflow::runtime::WfAssemblyLoadErrors::unresolvedMembers" file="VL__WORKFLOW__RUNTIME__WFASSEMBLYLOADERRORS__UNRESOLVEDMEMBERS"/>
+      <document name="variable unresolvedTypes" docId="vl::workflow::runtime::WfAssemblyLoadErrors::unresolvedTypes" file="VL__WORKFLOW__RUNTIME__WFASSEMBLYLOADERRORS__UNRESOLVEDTYPES"/>
+    </document>
     <document name="struct WfBreakPoint" docId="vl::workflow::runtime::WfBreakPoint" file="VL__WORKFLOW__RUNTIME__WFBREAKPOINT">
       <document name="function Attach" docId="vl::workflow::runtime::WfBreakPoint::Attach@::vl::workflow::runtime::WfBreakPoint(::vl::reflection::DescriptableObject *, ::vl::reflection::description::IEventInfo *)" file="VL__WORKFLOW__RUNTIME__WFBREAKPOINT__ATTACH@__VL__WORKFLOW__RUNT"/>
       <document name="function Create" docId="vl::workflow::runtime::WfBreakPoint::Create@::vl::workflow::runtime::WfBreakPoint(::vl::reflection::description::ITypeDescriptor *)" file="VL__WORKFLOW__RUNTIME__WFBREAKPOINT__CREATE@__VL__WORKFLOW__RUNT"/>
@@ -132,6 +144,7 @@
       <document name="function GetRunningType" docId="vl::workflow::runtime::WfDebugger::GetRunningType@::vl::workflow::runtime::WfDebugger::RunningType()" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__GETRUNNINGTYPE@__VL__WORKFLOW"/>
       <document name="function GetState" docId="vl::workflow::runtime::WfDebugger::GetState@::vl::workflow::runtime::WfDebugger::State()" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__GETSTATE@__VL__WORKFLOW__RUNT"/>
       <document name="function GetValueByName" docId="vl::workflow::runtime::WfDebugger::GetValueByName@::vl::reflection::description::Value(::vl::WString const &amp;, ::vl::workflow::runtime::WfRuntimeThreadContext *, ::vl::vint)" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__GETVALUEBYNAME@__VL__REFLECTI"/>
+      <document name="function IsBreakPointAvailable" docId="vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__ISBREAKPOINTAVAILABLE@BOOL(__"/>
       <document name="function OnBlockExecution" docId="vl::workflow::runtime::WfDebugger::OnBlockExecution@void()" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__ONBLOCKEXECUTION@VOID()"/>
       <document name="function OnStartExecution" docId="vl::workflow::runtime::WfDebugger::OnStartExecution@void()" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__ONSTARTEXECUTION@VOID()"/>
       <document name="function OnStopExecution" docId="vl::workflow::runtime::WfDebugger::OnStopExecution@void()" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__ONSTOPEXECUTION@VOID()"/>
@@ -139,6 +152,7 @@
       <document name="function RemoveBreakPoint" docId="vl::workflow::runtime::WfDebugger::RemoveBreakPoint@bool(::vl::vint)" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__REMOVEBREAKPOINT@BOOL(__VL__V"/>
       <document name="function Run" docId="vl::workflow::runtime::WfDebugger::Run@bool()" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__RUN@BOOL()"/>
       <document name="function SetBreakException" docId="vl::workflow::runtime::WfDebugger::SetBreakException@void(bool)" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__SETBREAKEXCEPTION@VOID(BOOL)"/>
+      <document name="enum State" docId="vl::workflow::runtime::WfDebugger::State" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__STATE"/>
       <document name="function StepInto" docId="vl::workflow::runtime::WfDebugger::StepInto@bool(bool)" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__STEPINTO@BOOL(BOOL)"/>
       <document name="function StepOver" docId="vl::workflow::runtime::WfDebugger::StepOver@bool(bool)" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__STEPOVER@BOOL(BOOL)"/>
       <document name="function Stop" docId="vl::workflow::runtime::WfDebugger::Stop@bool()" file="VL__WORKFLOW__RUNTIME__WFDEBUGGER__STOP@BOOL()"/>
@@ -173,6 +187,12 @@
     </document>
     <document name="class WfRuntimeGlobalContext" docId="vl::workflow::runtime::WfRuntimeGlobalContext" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEGLOBALCONTEXT">
       <document name="function $__ctor" docId="vl::workflow::runtime::WfRuntimeGlobalContext::$__ctor@(::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;)" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEGLOBALCONTEXT__$__CTOR@(__VL__PT"/>
+      <document name="variable assembly" docId="vl::workflow::runtime::WfRuntimeGlobalContext::assembly" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEGLOBALCONTEXT__ASSEMBLY"/>
+      <document name="variable globalVariables" docId="vl::workflow::runtime::WfRuntimeGlobalContext::globalVariables" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEGLOBALCONTEXT__GLOBALVARIABLES"/>
+    </document>
+    <document name="class WfRuntimeThreadContext" docId="vl::workflow::runtime::WfRuntimeThreadContext" file="VL__WORKFLOW__RUNTIME__WFRUNTIMETHREADCONTEXT"/>
+    <document name="class WfRuntimeVariableContext" docId="vl::workflow::runtime::WfRuntimeVariableContext" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEVARIABLECONTEXT">
+      <document name="variable variables" docId="vl::workflow::runtime::WfRuntimeVariableContext::variables" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEVARIABLECONTEXT__VARIABLES"/>
     </document>
   </namespace>
 </reference>

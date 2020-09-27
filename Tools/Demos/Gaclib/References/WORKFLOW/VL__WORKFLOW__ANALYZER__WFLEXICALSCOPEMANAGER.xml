@@ -1,3 +1,3 @@
-<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager" accessor="" category="Class" name="WfLexicalScopeManager" declFile="WfAnalyzer.h" declId="NI$vl::workflow::analyzer::WfLexicalScopeManager"><summary>Workflow compiler.</summary><signature><![CDATA[class WfLexicalScopeManager
+<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager" accessor="" category="Class" name="WfLexicalScopeManager" declFile="WfAnalyzer.h" declId="NI$vl::workflow::analyzer::WfLexicalScopeManager"><summary>Scope manager for storing all information generated from Workflow modules during compiling.</summary><signature><![CDATA[class WfLexicalScopeManager
     : Object;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

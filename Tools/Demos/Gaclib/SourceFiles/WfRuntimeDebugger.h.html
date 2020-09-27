@@ -39,7 +39,7 @@ Interfaces:
 Debugger
 ***********************************************************************/</div>
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Break point action.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Break point action. It will &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::IWfBreakPointAction"><div><div class="token cpp_type">IWfBreakPointAction</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
 			{
 			<div class="token cpp_keyword ">public</div>:
@@ -49,7 +49,8 @@ Debugger
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)[decl0]"><div><div class="token cpp_function">EvaluateCondition</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>* <div class="def" id="NI$vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)[decl0]::debugger"><div>debugger</div></div>) = <div class="token cpp_number ">0</div>;
 				<div class="token cpp_comment ">/// &lt;summary&gt;Called when a break point is about to activate, even &lt;see cref=&quot;EvaluateCondition&quot;/&gt; returns false.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;debugger&quot;&gt;The current attached debugger.&lt;/param&gt;</div>
-				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)[decl0]"><div><div class="token cpp_function">PostAction</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>* <div class="def" id="NI$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)[decl0]::debugger"><div>debugger</div></div>) = <div class="token cpp_number ">0</div>;
+				<div class="token cpp_comment ">/// &lt;param name=&quot;activated&quot;&gt;The return value from &lt;see cref=&quot;EvaluateCondition&quot;/&gt;.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)[decl0]"><div><div class="token cpp_function">PostAction</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>* <div class="def" id="NI$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)[decl0]::debugger"><div>debugger</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)[decl0]::activated"><div>activated</div></div>) = <div class="token cpp_number ">0</div>;
 			};
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Break point.&lt;/summary&gt;</div>
@@ -171,6 +172,28 @@ Debugger
 			};
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;Workflow debugger.&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;see cref=&quot;SetDebuggerForCurrentThread&quot;/&gt; needs to be called to make a debugger works for any Workflow script that is running in the current thread.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;see cref=&quot;OnBlockExecution&quot;/&gt; needs to be overrided to make a debugger work properly.</div>
+			<div class="token cpp_comment ">/// When the target Workflow script stops,</div>
+			<div class="token cpp_comment ">/// this function will be called.</div>
+			<div class="token cpp_comment ">/// In this function,</div>
+			<div class="token cpp_comment ">/// one of &lt;see cref=&quot;Run&quot;/&gt;, &lt;see cref=&quot;Pause&quot;/&gt;, &lt;see cref=&quot;Stop&quot;/&gt;, &lt;see cref=&quot;StepOver&quot;/&gt; and &lt;see cref=&quot;StepInto&quot;/&gt;</div>
+			<div class="token cpp_comment ">/// must be called to make the target Workflow script continues.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// You are allowed to run the debugger logic in another thread,</div>
+			<div class="token cpp_comment ">/// for example,</div>
+			<div class="token cpp_comment ">/// an GUI application is debugging a Workflow script which is running in another thread.</div>
+			<div class="token cpp_comment ">/// In this case, &lt;see cref=&quot;OnBlockExecution&quot;/&gt; needs to be blocked until it is ready to continue.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;p&gt;</div>
+			<div class="token cpp_comment ">/// Locks are a good choice for this.</div>
+			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfDebugger"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Object'], [], [])"><div class="token cpp_type">Object</div></div>, <div class="token cpp_keyword ">protected</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::IWfDebuggerCallback'], [], [])"><div class="token cpp_type">IWfDebuggerCallback</div></div>
 			{
 				<div class="token cpp_keyword ">friend</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::IWfDebuggerCallback'], [], [])"><div class="token cpp_type">IWfDebuggerCallback</div></div>* <div class="def" id="FB$vl::workflow::runtime::WfDebugger::GetDebuggerCallback@::vl::workflow::runtime::IWfDebuggerCallback *(::vl::workflow::runtime::WfDebugger *)[decl0]"><div><div class="token cpp_function">GetDebuggerCallback</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>* <div class="def" id="NI$vl::workflow::runtime::WfDebugger::GetDebuggerCallback@::vl::workflow::runtime::IWfDebuggerCallback *(::vl::workflow::runtime::WfDebugger *)[decl0]::debugger"><div>debugger</div></div>);
@@ -190,15 +213,36 @@ Debugger
 				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::MethodKey'], [], [])"><div class="token cpp_type">MethodKey</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;		<div class="def" id="NI$vl::workflow::runtime::WfDebugger::MethodBreakPointMap"><div><div class="token cpp_type">MethodBreakPointMap</div></div></div>;
 				<div class="token cpp_keyword ">typedef</div> <div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::TypeKey'], [], [])"><div class="token cpp_type">TypeKey</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>&gt;			<div class="def" id="NI$vl::workflow::runtime::WfDebugger::TypeBreakPointMap"><div><div class="token cpp_type">TypeBreakPointMap</div></div></div>;
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;The state of the debugger.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;</div>
+				<div class="token cpp_comment ">/// &lt;p&gt;</div>
+				<div class="token cpp_comment ">/// The state is affected by break points and the following operations:</div>
+				<div class="token cpp_comment ">/// &lt;ul&gt;</div>
+				<div class="token cpp_comment ">///   &lt;li&gt;&lt;b&gt;&lt;see cref=&quot;Run&quot;/&gt;&lt;/b&gt;: If the Workflow script is paused, it continues the script.&lt;/li&gt;</div>
+				<div class="token cpp_comment ">///   &lt;li&gt;&lt;b&gt;&lt;see cref=&quot;Pause&quot;/&gt;&lt;/b&gt;: If the Workflow script is running, it pauses the script, following by a call to &lt;see cref=&quot;OnBlockExecution&quot;/&gt;.&lt;/li&gt;</div>
+				<div class="token cpp_comment ">///   &lt;li&gt;&lt;b&gt;&lt;see cref=&quot;Stop&quot;/&gt;&lt;/b&gt;: If the Workflow script is not stopped, it stops the script by throwing in exception in the script.&lt;/li&gt;</div>
+				<div class="token cpp_comment ">///   &lt;li&gt;&lt;b&gt;&lt;see cref=&quot;StepOver&quot;/&gt;&lt;/b&gt;: Stop over to the next code line and pause. It doesn&apos;t jump into the function to be called.&lt;/li&gt;</div>
+				<div class="token cpp_comment ">///   &lt;li&gt;&lt;b&gt;&lt;see cref=&quot;StepInto&quot;/&gt;&lt;/b&gt;: Stop into the new code line and pause.&lt;/li&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
+				<div class="token cpp_comment ">/// Operations are expected to be called in &lt;see cref=&quot;OnBlockExecution&quot;/&gt;.</div>
+				<div class="token cpp_comment ">/// &lt;/p&gt;</div>
+				<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::workflow::runtime::WfDebugger::State"><div><div class="token cpp_type">State</div></div></div>
 				{						<div class="token cpp_comment ">//		Run		Pause	Stop	StepOver	StepInto</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The associated thread is running Workflow script.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::Running"><div><div class="token cpp_enum">Running</div></div></div>,			<div class="token cpp_comment ">// R			*RTP	*RTS</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The target Workflow script is paused by operations other than break points.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::PauseByOperation"><div><div class="token cpp_enum">PauseByOperation</div></div></div>,	<div class="token cpp_comment ">// PBO	*C				*RTS	*C			*C</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The target Workflow script is paused by break points.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::PauseByBreakPoint"><div><div class="token cpp_enum">PauseByBreakPoint</div></div></div>,	<div class="token cpp_comment ">// PBB	*C				*RTS	*C			*C</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The associated thread has stopped running Workflow script.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::Stopped"><div><div class="token cpp_enum">Stopped</div></div></div>,			<div class="token cpp_comment ">// S			*RTP			*			*</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The debugger allows the target Workflow script to continue.&lt;/summary&gt;</div>
 					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::Continue"><div><div class="token cpp_enum">Continue</div></div></div>,			<div class="token cpp_comment ">// C	soon becomes Running</div>
-					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::RequiredToPause"><div><div class="token cpp_enum">RequiredToPause</div></div></div>,	<div class="token cpp_comment ">// RTP	soon becomes PauseByOperation</div>
-					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::RequiredToStop"><div><div class="token cpp_enum">RequiredToStop</div></div></div>,		<div class="token cpp_comment ">// RTS	soon becomes Stop</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The target Workflow script is required to pause. This value can be observed in &lt;see cref=&quot;OnBlockExecution&quot;/&gt;. Operations to continue executing the Workflow script await to be called.&lt;/summary&gt;</div>
+					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::RequiredToPause"><div><div class="token cpp_enum">RequiredToPause</div></div></div>,	<div class="token cpp_comment ">// RTP	soon becomes PauseByOperation (should be triggered in OnBlockExecution)</div>
+					<div class="token cpp_comment ">/// &lt;summary&gt;The target Workflow script is required to stop. It caused to Workflow script to stop by throwing an exception saying this.&lt;/summary&gt;</div>
+					<div class="def" id="NI$vl::workflow::runtime::WfDebugger::State::RequiredToStop"><div><div class="token cpp_enum">RequiredToStop</div></div></div>,		<div class="token cpp_comment ">// RTS	soon becomes Stopped          (should be triggered in OnBlockExecution)</div>
 				};
 
 				<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::workflow::runtime::WfDebugger::RunningType"><div><div class="token cpp_type">RunningType</div></div></div>
@@ -247,6 +291,7 @@ Debugger
 				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::TypeBreakPointMap'], [], [])"><div class="token cpp_type">TypeBreakPointMap</div></div>						<div class="def" id="NI$vl::workflow::runtime::WfDebugger::createObjectBreakPoints"><div><div class="token cpp_field">createObjectBreakPoints</div></div></div>;
 
 				<div class="token cpp_comment ">/// &lt;summary&gt;Called for doing something when a break point is activated. This function will be called multiple times before some one let the debugger to continue.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;This function must be overrided, or the Workflow script will hang when it is paused by any reason.&lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::workflow::runtime::WfDebugger::OnBlockExecution@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::OnBlockExecution@void()'], [], [])"><div class="token cpp_function">OnBlockExecution</div></div></div>();
 				<div class="token cpp_comment ">/// &lt;summary&gt;Called when a new Workflow program is about to run.&lt;/summary&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::workflow::runtime::WfDebugger::OnStartExecution@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::OnStartExecution@void()'], [], [])"><div class="token cpp_function">OnStartExecution</div></div></div>();
@@ -291,13 +336,18 @@ Debugger
 				<div class="token cpp_comment ">/// &lt;summary&gt;Get the number of all break points.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;The number of all break points.&lt;/returns&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div>									<div class="def" id="FB$vl::workflow::runtime::WfDebugger::GetBreakPointCount@::vl::vint()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::GetBreakPointCount@::vl::vint()'], [], [])"><div class="token cpp_function">GetBreakPointCount</div></div></div>();
-				<div class="token cpp_comment ">/// &lt;summary&gt;Get a specified break point.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;summary&gt;Test if an index is an available break point.&lt;/summary&gt;</div>
+				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if an index is an available break point. This function returns true for all disabled break points.&lt;/returns&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the break point.&lt;/param&gt;</div>
+				<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)'], [], [])"><div class="token cpp_function">IsBreakPointAvailable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[decl0]::index"><div>index</div></div>);
+				<div class="token cpp_comment ">/// &lt;summary&gt;Get a specified break point. For unavailable break points, &lt;see cref=&quot;WfBreakPoint::available&quot;/&gt; is false.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;The break point.&lt;/returns&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the break point.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint'], [], [])"><div class="token cpp_type">WfBreakPoint</div></div>&amp;						<div class="def" id="FB$vl::workflow::runtime::WfDebugger::GetBreakPoint@::vl::workflow::runtime::WfBreakPoint const &(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::GetBreakPoint@::vl::workflow::runtime::WfBreakPoint const &(::vl::vint)'], [], [])"><div class="token cpp_function">GetBreakPoint</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfDebugger::GetBreakPoint@::vl::workflow::runtime::WfBreakPoint const &(::vl::vint)[decl0]::index"><div>index</div></div>);
 				<div class="token cpp_comment ">/// &lt;summary&gt;Delete a specified break point.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation is succeeded.&lt;/returns&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;index&quot;&gt;The index of the break point.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;remarks&gt;After removing a break point, the break point becomes unavailable. The index will be reused later when a new break point is added to the debugger.&lt;/remarks&gt;</div>
 				<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::workflow::runtime::WfDebugger::RemoveBreakPoint@bool(::vl::vint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::RemoveBreakPoint@bool(::vl::vint)'], [], [])"><div class="token cpp_function">RemoveBreakPoint</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfDebugger::RemoveBreakPoint@bool(::vl::vint)[decl0]::index"><div>index</div></div>);
 				<div class="token cpp_comment ">/// &lt;summary&gt;Enable or disable a specified break point.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation is succeeded.&lt;/returns&gt;</div>
@@ -1724,6 +1774,15 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">WfDebugger</span>::<span class="cpp_function">IsBreakPointAvailable</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[decl0]'
+        ]
+    },
     'vl::workflow::runtime::WfDebugger::LeaveThreadContext@void(::vl::workflow::runtime::WfRuntimeThreadContext *)': {
         'displayNameInHtml': '<span class="cpp_type">WfDebugger</span>::<span class="cpp_function">LeaveThreadContext</span>(<span class="cpp_type">WfRuntimeThreadContext</span> *)',
         'impls': [
@@ -2042,6 +2101,8 @@ symbolToFiles = {
     'FB$vl::workflow::runtime::WfDebugger::InstructionLocation::BreakStepInto@bool(::vl::workflow::runtime::WfDebugger::InstructionLocation const &, bool)[impl0]': { 'htmlFileName': 'WfRuntimeDebugger.cpp', 'displayName': 'WfRuntimeDebugger.cpp' },
     'FB$vl::workflow::runtime::WfDebugger::InstructionLocation::BreakStepOver@bool(::vl::workflow::runtime::WfDebugger::InstructionLocation const &, bool)[decl0]': null,
     'FB$vl::workflow::runtime::WfDebugger::InstructionLocation::BreakStepOver@bool(::vl::workflow::runtime::WfDebugger::InstructionLocation const &, bool)[impl0]': { 'htmlFileName': 'WfRuntimeDebugger.cpp', 'displayName': 'WfRuntimeDebugger.cpp' },
+    'FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[decl0]': null,
+    'FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]': { 'htmlFileName': 'WfRuntimeDebugger.cpp', 'displayName': 'WfRuntimeDebugger.cpp' },
     'FB$vl::workflow::runtime::WfDebugger::LeaveThreadContext@void(::vl::workflow::runtime::WfRuntimeThreadContext *)[decl0]': null,
     'FB$vl::workflow::runtime::WfDebugger::LeaveThreadContext@void(::vl::workflow::runtime::WfRuntimeThreadContext *)[impl0]': { 'htmlFileName': 'WfRuntimeDebugger.cpp', 'displayName': 'WfRuntimeDebugger.cpp' },
     'FB$vl::workflow::runtime::WfDebugger::MakeCurrentInstructionLocation@::vl::workflow::runtime::WfDebugger::InstructionLocation()[decl0]': null,

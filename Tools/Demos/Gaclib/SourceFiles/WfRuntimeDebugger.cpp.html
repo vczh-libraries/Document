@@ -154,7 +154,7 @@ InstructionLocation
 			}
 
 <div class="token cpp_comment ">/***********************************************************************
-WfDebugger
+WfDebugger Callback Handlers
 ***********************************************************************/</div>
 
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>::<div class="def" id="FB$vl::workflow::runtime::WfDebugger::OnBlockExecution@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::OnBlockExecution@void()'], [], [])"><div class="token cpp_function">OnBlockExecution</div></div></div>()
@@ -200,7 +200,7 @@ WfDebugger
 						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::HandleBreakPoint@bool([TKey] const &, ::vl::collections::Dictionary<[TKey], ::vl::vint> &)[impl0]::breakPoint'], [], [])">breakPoint</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint::action'], [], [])"><div class="token cpp_field">action</div></div>)
 						{
 							<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::HandleBreakPoint@bool([TKey] const &, ::vl::collections::Dictionary<[TKey], ::vl::vint> &)[impl0]::activated'], [], [])">activated</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::HandleBreakPoint@bool([TKey] const &, ::vl::collections::Dictionary<[TKey], ::vl::vint> &)[impl0]::breakPoint'], [], [])">breakPoint</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint::action'], [], [])"><div class="token cpp_field">action</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)'], ['vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)'], [], [])"><div class="token cpp_function">EvaluateCondition</div></div>(<div class="token cpp_keyword ">this</div>);
-							<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::HandleBreakPoint@bool([TKey] const &, ::vl::collections::Dictionary<[TKey], ::vl::vint> &)[impl0]::breakPoint'], [], [])">breakPoint</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint::action'], [], [])"><div class="token cpp_field">action</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)'], ['vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)'], [], [])"><div class="token cpp_function">PostAction</div></div>(<div class="token cpp_keyword ">this</div>);
+							<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::HandleBreakPoint@bool([TKey] const &, ::vl::collections::Dictionary<[TKey], ::vl::vint> &)[impl0]::breakPoint'], [], [])">breakPoint</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint::action'], [], [])"><div class="token cpp_field">action</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)'], ['vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)'], [], [])"><div class="token cpp_function">PostAction</div></div>(<div class="token cpp_keyword ">this</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::HandleBreakPoint@bool([TKey] const &, ::vl::collections::Dictionary<[TKey], ::vl::vint> &)[impl0]::activated'], [], [])">activated</div>);
 						}
 						<div class="token cpp_keyword ">else</div>
 						{
@@ -376,7 +376,7 @@ WfDebugger
 			}
 
 <div class="token cpp_comment ">/***********************************************************************
-WfDebugger
+WfDebugger BreakPoints
 ***********************************************************************/</div>
 
 <div class="disabled">#define TEST(AVAILABLE, KEY, MAP) if (AVAILABLE &amp;&amp; available == MAP.Keys().Contains(KEY)) return false;</div>
@@ -547,6 +547,7 @@ WfDebugger
 				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::breakPoints'], [], [])"><div class="token cpp_field">breakPoints</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &)[impl0]::index'], [], [])">index</div>].<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint::id'], [], [])"><div class="token cpp_field">id</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &)[impl0]::index'], [], [])">index</div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::breakPoints'], [], [])"><div class="token cpp_field">breakPoints</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &)[impl0]::index'], [], [])">index</div>].<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint::available'], [], [])"><div class="token cpp_field">available</div></div> = <div class="token cpp_keyword ">true</div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::breakPoints'], [], [])"><div class="token cpp_field">breakPoints</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &)[impl0]::index'], [], [])">index</div>].<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint::enabled'], [], [])"><div class="token cpp_field">enabled</div></div> = <div class="token cpp_keyword ">true</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::breakPoints'], [], [])"><div class="token cpp_field">breakPoints</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &)[impl0]::index'], [], [])">index</div>].<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint::action'], [], [])"><div class="token cpp_field">action</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="token cpp_keyword ">nullptr</div>;
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &)[impl0]::index'], [], [])">index</div>;
 			}
 
@@ -562,6 +563,11 @@ WfDebugger
 
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfDebugger::AddCodeLineBreakPoint@::vl::vint(::vl::workflow::runtime::WfAssembly *, ::vl::vint, ::vl::vint, bool)[impl0]::ins"><div>ins</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddCodeLineBreakPoint@::vl::vint(::vl::workflow::runtime::WfAssembly *, ::vl::vint, ::vl::vint, bool)[impl0]::codeInsMap'], [], [])">codeInsMap</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &(::vl::vint)'], ['vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &(::vl::vint)'], [], [])"><div class="token cpp_function">GetByIndex</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddCodeLineBreakPoint@::vl::vint(::vl::workflow::runtime::WfAssembly *, ::vl::vint, ::vl::vint, bool)[impl0]::index'], [], [])">index</div>)<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="token cpp_number ">0</div>];
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &)'], ['vl::workflow::runtime::WfDebugger::AddBreakPoint@::vl::vint(::vl::workflow::runtime::WfBreakPoint const &)'], [], [])"><div class="token cpp_function">AddBreakPoint</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfBreakPoint'], [], [])"><div class="token cpp_type">WfBreakPoint</div></div>::<div class="ref" onclick="jumpToSymbol(['vl::workflow::runtime::WfBreakPoint::Ins@::vl::workflow::runtime::WfBreakPoint(::vl::workflow::runtime::WfAssembly *, ::vl::vint)'], ['vl::workflow::emitter::Ins', 'vl::workflow::runtime::WfBreakPoint::Ins@::vl::workflow::runtime::WfBreakPoint(::vl::workflow::runtime::WfAssembly *, ::vl::vint)'], [], [])"><div class="token cpp_function">Ins</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddCodeLineBreakPoint@::vl::vint(::vl::workflow::runtime::WfAssembly *, ::vl::vint, ::vl::vint, bool)[impl0]::assembly'], [], [])"><div class="token cpp_argument">assembly</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::AddCodeLineBreakPoint@::vl::vint(::vl::workflow::runtime::WfAssembly *, ::vl::vint, ::vl::vint, bool)[impl0]::ins'], [], [])">ins</div>));
+			}
+
+			<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>::<div class="def" id="FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)'], [], [])"><div class="token cpp_function">IsBreakPointAvailable</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>)
+			{
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div> &lt;= <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::breakPoints'], [], [])"><div class="token cpp_field">breakPoints</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>() &amp;&amp; !<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::freeBreakPointIndices'], [], [])"><div class="token cpp_field">freeBreakPointIndices</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Contains@bool([K] const &)'], ['vl::collections::List::Contains@bool([K] const &)'], [], [])"><div class="token cpp_function">Contains</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>);
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>::<div class="def" id="FB$vl::workflow::runtime::WfDebugger::GetBreakPointCount@::vl::vint()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::GetBreakPointCount@::vl::vint()'], [], [])"><div class="token cpp_function">GetBreakPointCount</div></div></div>()
@@ -615,6 +621,10 @@ WfDebugger
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::breakException'], [], [])"><div class="token cpp_field">breakException</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::SetBreakException@void(bool)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>;
 			}
+
+<div class="token cpp_comment ">/***********************************************************************
+WfDebugger Operations
+***********************************************************************/</div>
 
 			<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>::<div class="def" id="FB$vl::workflow::runtime::WfDebugger::Run@bool()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::Run@bool()'], [], [])"><div class="token cpp_function">Run</div></div></div>()
 			{
@@ -679,6 +689,10 @@ WfDebugger
 				<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::stepBeforeCodegen'], [], [])"><div class="token cpp_field">stepBeforeCodegen</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::StepInto@bool(bool)[impl0]::beforeCodegen'], [], [])"><div class="token cpp_argument">beforeCodegen</div></div>;
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
 			}
+
+<div class="token cpp_comment ">/***********************************************************************
+WfDebugger
+***********************************************************************/</div>
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::State'], [], [])"><div class="token cpp_type">State</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger'], [], [])"><div class="token cpp_type">WfDebugger</div></div>::<div class="def" id="FB$vl::workflow::runtime::WfDebugger::GetState@::vl::workflow::runtime::WfDebugger::State()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfDebugger::GetState@::vl::workflow::runtime::WfDebugger::State()'], [], [])"><div class="token cpp_function">GetState</div></div></div>()
 			{
@@ -1302,6 +1316,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">T</span> *)',
+        'impls': [
+            'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]'
+        ],
+        'decls': []
+    },
     'vl::ThreadVariable': {
         'displayNameInHtml': '<span class="cpp_type">ThreadVariable</span>&lt;<span class="cpp_type">T</span>&gt;',
         'impls': [
@@ -1453,6 +1474,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::List::Contains@bool([K] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
+        'impls': [
+            'FB$vl::collections::List::Contains@bool([K] const &)[impl0]'
         ],
         'decls': []
     },
@@ -1905,11 +1933,11 @@ referencedSymbols = {
             'FB$vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)[decl0]'
         ]
     },
-    'vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)': {
-        'displayNameInHtml': '<span class="cpp_type">IWfBreakPointAction</span>::<span class="cpp_function">PostAction</span>(<span class="cpp_type">WfDebugger</span> *)',
+    'vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">IWfBreakPointAction</span>::<span class="cpp_function">PostAction</span>(<span class="cpp_type">WfDebugger</span> *, <span class="cpp_keyword">bool</span>)',
         'impls': [],
         'decls': [
-            'FB$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)[decl0]'
+            'FB$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)[decl0]'
         ]
     },
     'vl::workflow::runtime::IWfDebuggerCallback': {
@@ -3354,6 +3382,22 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">WfDebugger</span>::<span class="cpp_function">IsBreakPointAvailable</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[decl0]'
+        ]
+    },
+    'vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]::index'
+        ],
+        'decls': []
+    },
     'vl::workflow::runtime::WfDebugger::LeaveThreadContext@void(::vl::workflow::runtime::WfRuntimeThreadContext *)': {
         'displayNameInHtml': '<span class="cpp_type">WfDebugger</span>::<span class="cpp_function">LeaveThreadContext</span>(<span class="cpp_type">WfRuntimeThreadContext</span> *)',
         'impls': [
@@ -4057,6 +4101,7 @@ referencedSymbols = {
 symbolToFiles = {
     'FB$vl::Ptr::Obj@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::ThreadVariable::Get@[T] &()[impl0]': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
     'FB$vl::ThreadVariable::HasData@bool()[impl0]': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
     'FB$vl::ThreadVariable::Set@void([T] const &)[impl0]': { 'htmlFileName': 'Threading.h', 'displayName': 'Threading.h' },
@@ -4071,6 +4116,7 @@ symbolToFiles = {
     'FB$vl::collections::Group::GetByIndex@::vl::collections::Group::ValueContainer const &(::vl::vint)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Group::Keys@::vl::collections::Group::KeyContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::Contains@bool([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::List::IndexOf@::vl::vint([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::ListBase::RemoveAt@bool(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
@@ -4088,7 +4134,7 @@ symbolToFiles = {
     'FB$vl::workflow::runtime::GetDebuggerForCurrentThread@::vl::Ptr<::vl::workflow::runtime::WfDebugger>()[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
     'FB$vl::workflow::runtime::GetDebuggerForCurrentThread@::vl::Ptr<::vl::workflow::runtime::WfDebugger>()[impl0]': null,
     'FB$vl::workflow::runtime::IWfBreakPointAction::EvaluateCondition@bool(::vl::workflow::runtime::WfDebugger *)[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
-    'FB$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *)[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'FB$vl::workflow::runtime::IWfBreakPointAction::PostAction@void(::vl::workflow::runtime::WfDebugger *, bool)[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
     'FB$vl::workflow::runtime::SetDebuggerForCurrentThread@void(::vl::Ptr<::vl::workflow::runtime::WfDebugger>)[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
     'FB$vl::workflow::runtime::SetDebuggerForCurrentThread@void(::vl::Ptr<::vl::workflow::runtime::WfDebugger>)[impl0]': null,
     'FB$vl::workflow::runtime::WfBreakPoint::Attach@::vl::workflow::runtime::WfBreakPoint(::vl::reflection::DescriptableObject *, ::vl::reflection::description::IEventInfo *)[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
@@ -4169,6 +4215,8 @@ symbolToFiles = {
     'FB$vl::workflow::runtime::WfDebugger::InstructionLocation::BreakStepInto@bool(::vl::workflow::runtime::WfDebugger::InstructionLocation const &, bool)[impl0]': null,
     'FB$vl::workflow::runtime::WfDebugger::InstructionLocation::BreakStepOver@bool(::vl::workflow::runtime::WfDebugger::InstructionLocation const &, bool)[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
     'FB$vl::workflow::runtime::WfDebugger::InstructionLocation::BreakStepOver@bool(::vl::workflow::runtime::WfDebugger::InstructionLocation const &, bool)[impl0]': null,
+    'FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]': null,
     'FB$vl::workflow::runtime::WfDebugger::LeaveThreadContext@void(::vl::workflow::runtime::WfRuntimeThreadContext *)[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
     'FB$vl::workflow::runtime::WfDebugger::LeaveThreadContext@void(::vl::workflow::runtime::WfRuntimeThreadContext *)[impl0]': null,
     'FB$vl::workflow::runtime::WfDebugger::MakeCurrentInstructionLocation@::vl::workflow::runtime::WfDebugger::InstructionLocation()[decl0]': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
@@ -5084,6 +5132,7 @@ symbolToFiles = {
     'NI$vl::workflow::runtime::WfDebugger::InstructionLocation::instruction': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
     'NI$vl::workflow::runtime::WfDebugger::InstructionLocation::stackFrameIndex': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
     'NI$vl::workflow::runtime::WfDebugger::InvalidBreakPoint': { 'htmlFileName': 'WfRuntimeDebugger.h', 'displayName': 'WfRuntimeDebugger.h' },
+    'NI$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[impl0]::index': null,
     'NI$vl::workflow::runtime::WfDebugger::LeaveThreadContext@void(::vl::workflow::runtime::WfRuntimeThreadContext *)[impl0]::context': null,
     'NI$vl::workflow::runtime::WfDebugger::LeaveThreadContext@void(::vl::workflow::runtime::WfRuntimeThreadContext *)[impl0]::oldContext': null,
     'NI$vl::workflow::runtime::WfDebugger::MakeCurrentInstructionLocation@::vl::workflow::runtime::WfDebugger::InstructionLocation()[impl0]::context': null,

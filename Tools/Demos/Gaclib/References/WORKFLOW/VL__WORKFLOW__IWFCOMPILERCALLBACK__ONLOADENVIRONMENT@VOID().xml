@@ -1,0 +1,3 @@
+<Document symbolId="vl::workflow::IWfCompilerCallback::OnLoadEnvironment@void()" accessor="public" category="Function" name="OnLoadEnvironment" declFile="WfAnalyzer.h" declId="FB$vl::workflow::IWfCompilerCallback::OnLoadEnvironment@void()[decl0]"><summary>1st step: Called before loading global type information.</summary><signature><![CDATA[void OnLoadEnvironment(
+);
+]]></signature></Document>

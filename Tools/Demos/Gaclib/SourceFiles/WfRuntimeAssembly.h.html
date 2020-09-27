@@ -70,12 +70,17 @@ Assembly
 				<div class="token cpp_keyword ">void</div>												<div class="def" id="FB$vl::workflow::runtime::WfInstructionDebugInfo::Initialize@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::runtime::WfInstructionDebugInfo::Initialize@void()'], [], [])"><div class="token cpp_function">Initialize</div></div></div>();
 			};
 
-			<div class="token cpp_comment ">/// &lt;summary&gt;Representing failures during loading an assembly&lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;summary&gt;Representing metadata errors during loading an assembly.&lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::runtime::WfAssemblyLoadErrors"><div><div class="token cpp_type">WfAssemblyLoadErrors</div></div></div>
 			{
 			<div class="token cpp_keyword ">public</div>:
+				<div class="token cpp_comment ">/// &lt;summary&gt;All unresolvable types.&lt;/summary&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;							<div class="def" id="NI$vl::workflow::runtime::WfAssemblyLoadErrors::unresolvedTypes"><div><div class="token cpp_field">unresolvedTypes</div></div></div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;All duplicated types. Types are shared in the process, there is no isolation between assemblies.&lt;/summary&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;							<div class="def" id="NI$vl::workflow::runtime::WfAssemblyLoadErrors::duplicatedTypes"><div><div class="token cpp_field">duplicatedTypes</div></div></div>;
+
+				<div class="token cpp_comment ">/// &lt;summary&gt;All unresolvable members in resolved types.&lt;/summary&gt;</div>
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;							<div class="def" id="NI$vl::workflow::runtime::WfAssemblyLoadErrors::unresolvedMembers"><div><div class="token cpp_field">unresolvedMembers</div></div></div>;
 			};
 

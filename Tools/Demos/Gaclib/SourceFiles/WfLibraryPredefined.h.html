@@ -137,7 +137,7 @@ Coroutine (Async)
 
 			<div class="token cpp_keyword ">public</div>:
 				<div class="token cpp_comment ">/// &lt;summary&gt;Create a context.&lt;/summary&gt;</div>
-				<div class="token cpp_comment ">/// &lt;param name=&quot;_context&quot;&gt;(optional) Set the initial return value for &lt;see cref=&quot;GetContext&quot;/&gt;. The default value is null.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;_context&quot;&gt;Set the initial return value for &lt;see cref=&quot;GetContext&quot;/&gt; (optional)..&lt;/param&gt;</div>
 				<div class="def" id="FB$vl::reflection::description::AsyncContext::$__ctor@(::vl::reflection::description::Value const &)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext::$__ctor@(::vl::reflection::description::Value const &)'], [], [])"><div class="token cpp_function">AsyncContext</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::Value'], [], [])"><div class="token cpp_type">Value</div></div>&amp; <div class="def" id="NI$vl::reflection::description::AsyncContext::$__ctor@(::vl::reflection::description::Value const &)[decl0]::_context"><div>_context</div></div> = {});
 				<div class="def" id="FB$vl::reflection::description::AsyncContext::~AsyncContext@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext::~AsyncContext@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">AsyncContext</div></div></div>();
 
@@ -173,7 +173,7 @@ Coroutine (Async)
 				<div class="token cpp_comment ">/// &lt;summary&gt;Run this async operation.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true when this operation succeeded. This function cannot be called twice on the same object.&lt;/returns&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;callback&quot;&gt;A callback to execute when the async operation finished.&lt;/param&gt;</div>
-				<div class="token cpp_comment ">/// &lt;param name=&quot;context&quot;&gt;(optional) A context object that is accessible in Workflow script by &quot;$&quot; in an $Async coroutine. The default value is nullptr.&lt;/param&gt;</div>
+				<div class="token cpp_comment ">/// &lt;param name=&quot;context&quot;&gt;A context object that is accessible in Workflow script by &quot;$&quot; in an $Async coroutine (optional).&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>							<div class="def" id="FB$vl::reflection::description::IAsync::Execute@bool(::vl::Func<void(::vl::Ptr<::vl::reflection::description::CoroutineResult>)> const &, ::vl::Ptr<::vl::reflection::description::AsyncContext>)[decl0]"><div><div class="token cpp_function">Execute</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::CoroutineResult'], [], [])"><div class="token cpp_type">CoroutineResult</div></div>&gt;)&gt;&amp; <div class="def" id="NI$vl::reflection::description::IAsync::Execute@bool(::vl::Func<void(::vl::Ptr<::vl::reflection::description::CoroutineResult>)> const &, ::vl::Ptr<::vl::reflection::description::AsyncContext>)[decl0]::callback"><div>callback</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::AsyncContext'], [], [])"><div class="token cpp_type">AsyncContext</div></div>&gt; <div class="def" id="NI$vl::reflection::description::IAsync::Execute@bool(::vl::Func<void(::vl::Ptr<::vl::reflection::description::CoroutineResult>)> const &, ::vl::Ptr<::vl::reflection::description::AsyncContext>)[decl0]::context"><div>context</div></div> = <div class="token cpp_keyword ">nullptr</div>) = <div class="token cpp_number ">0</div>;
 
 				<div class="token cpp_comment ">/// &lt;summary&gt;Create an async operation that finished after a specified moment of time.&lt;/summary&gt;</div>
@@ -403,9 +403,9 @@ Libraries
 			<div class="token cpp_comment ">/// &lt;p&gt;</div>
 			<div class="token cpp_comment ">/// There are three locales that reflect the configuration of the operating system:</div>
 			<div class="token cpp_comment ">/// &lt;ul&gt;</div>
-			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Invariant&lt;/b&gt;: An invariant locale for general languages.&lt;/li&gt;.</div>
-			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;System&lt;/b&gt;: Locale for the operating system, including the file system.&lt;/li&gt;.</div>
-			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;User&lt;/b&gt;: Locale for UI of the operating system.&lt;/li&gt;.</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;Invariant&lt;/b&gt;: An invariant locale for general languages.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;System&lt;/b&gt;: Locale for the operating system, including the file system.&lt;/li&gt;</div>
+			<div class="token cpp_comment ">///     &lt;li&gt;&lt;b&gt;User&lt;/b&gt;: Locale for UI of the operating system.&lt;/li&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/ul&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/p&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/remarks&gt;</div>

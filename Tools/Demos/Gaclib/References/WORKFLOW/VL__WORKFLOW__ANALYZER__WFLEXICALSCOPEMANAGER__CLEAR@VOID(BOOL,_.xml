@@ -1,4 +1,9 @@
-<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager::Clear@void(bool, bool)" accessor="public" category="Function" name="Clear" declFile="WfAnalyzer.h" declId="FB$vl::workflow::analyzer::WfLexicalScopeManager::Clear@void(bool, bool)[decl0]"><summary>Clean compiling results.</summary><param name="keepTypeDescriptorNames">Set to false to delete all cache of reflectable C++ types.</param><param name="deleteModules">Set to true to delete all added modules.</param><signature><![CDATA[void Clear(
+<Document symbolId="vl::workflow::analyzer::WfLexicalScopeManager::Clear@void(bool, bool)" accessor="public" category="Function" name="Clear" declFile="WfAnalyzer.h" declId="FB$vl::workflow::analyzer::WfLexicalScopeManager::Clear@void(bool, bool)[decl0]"><summary>Clean all generated information from the last called to <symbol name="Rebuild" docId="vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)" declFile="WfAnalyzer.h" declId="FB$vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)[decl0]"/>.</summary><param name="keepTypeDescriptorNames">
+ Set to true so that only scopes for types in Workflow modules are deleted.
+ Set to false to also delete scopes for cached global types.
+ If there is no new reflectable native type that is registered after the last call to <symbol name="Rebuild" docId="vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)" declFile="WfAnalyzer.h" declId="FB$vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)[decl0]"/>,
+ using true for this argument saves times by reusing scopes created from global types.
+ </param><param name="deleteModules">Set to true to delete all added modules.</param><signature><![CDATA[void Clear(
     bool keepTypeDescriptorNames,
     bool deleteModules
 );
